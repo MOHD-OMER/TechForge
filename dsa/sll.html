@@ -168,7 +168,9 @@
 
 /* ── MOBILE NAV (inline override) ── */
 @media (max-width: 900px) {
-  header.topbar .tb-nav { display: none !important; }
+  header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
+  header.topbar .tb-nav.mobile-visible { display: flex !important; flex-direction: column; position: fixed; top: calc(var(--topbar-h) + var(--safe-top, 0px)); left: 0; right: 0; background: var(--bg2, #0d1117); border-bottom: 1px solid var(--border, #1f2d42); padding: 8px 16px 16px; z-index: 90; box-shadow: 0 16px 48px rgba(0,0,0,0.4); gap: 2px; }
+  header.topbar .tb-nav.mobile-visible .tb-link { min-height: 48px; padding: 12px 16px; font-size: 16px; font-weight: 600; border-radius: 10px; display: flex; align-items: center; }
   header.topbar .topbar-actions { display: flex !important; margin-left: auto !important; }
   header.topbar .nav-toggle { display: inline-flex !important; }
 }
