@@ -1,10 +1,5 @@
 <div align="center">
 
-<img src="assets/og-image.png" alt="TechForge — Free Interactive CS Learning" width="100%" />
-
-<br/>
-<br/>
-
 <img src="assets/favicon.svg" width="52" height="52" alt="TechForge Logo" />
 
 # TechForge
@@ -28,6 +23,10 @@ DSA visualizations · Python reference · Backend guides · SQL & MongoDB · AI/
 TechForge is a fully static, zero-dependency CS learning platform with live Canvas 2D animations for every data structure and algorithm, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
 
 It runs entirely in the browser. No build step, no npm, no backend.
+
+<div align="center">
+<img src="assets/og-image.png" alt="TechForge — Free Interactive CS Learning" width="100%" />
+</div>
 
 ---
 
