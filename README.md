@@ -264,8 +264,8 @@ Free to use, modify, and distribute. Attribution appreciated but not required.
 
 ## Author
 
-**Mohd Omer**
-B.E. Computer Science & Engineering (AI/ML), Lords Institute of Engineering and Technology, Hyderabad
+**Mohd Abdul Omer**
+CS (AI/ML) Engineer
 
 - GitHub: [@MOHD-OMER](https://github.com/MOHD-OMER)
 - Live site: [tech-forge-dev.vercel.app](https://tech-forge-dev.vercel.app)
