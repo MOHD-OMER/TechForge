@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>AI/ML Interview Q&A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <style>
+  :root {
+    --accent: var(--purple);
+    --surface: var(--card);
+    --surface2: rgba(167,139,250,0.05);
+    --display: var(--font-display);
+    --mono: var(--font-mono);
+    --orange: #f97316;
+    --bg2: rgba(0,0,0,.25);
+  }
+  .int-page-hero{position:relative;padding:40px 0 32px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .int-page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(167,139,250,.06) 0%,transparent 58%);}
+  .iph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .iph-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 5px var(--purple);animation:iphdot 2s ease infinite;}
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .iph-title span{background:linear-gradient(135deg,var(--purple),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .iph-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:560px;margin-bottom:18px;}
+  .iph-badges{display:flex;gap:7px;flex-wrap:wrap;}
+  .iph-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid;}
+  .int-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:28px;}
+  .is-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .is-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--is-c,var(--purple));opacity:0;transition:opacity .2s;}
+  .is-box:hover{background:rgba(255,255,255,.02);}.is-box:hover::after{opacity:1;}
+  .is-val{font-family:var(--font-mono);font-size:20px;font-weight:900;line-height:1;}
+  .is-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+  .ftab{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:var(--r-full);font-family:var(--font-mono);font-size:10px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none;}
+  .ftab:hover{border-color:var(--border2);color:var(--text2);}
+  .ftab.active{background:rgba(167,139,250,.09);border-color:rgba(167,139,250,.3);color:var(--purple);}
+  .ftab-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+  .filter-sep{width:1px;height:20px;background:var(--border);}
+  .qna-list{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .qna-item{border-bottom:1px solid var(--border);transition:background .2s;}
+  .qna-item:last-child{border-bottom:none;}
+  .qna-item.open{background:rgba(167,139,250,.04);}
+  .qna-q{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;}
+  .qna-q:hover{background:rgba(255,255,255,.02);}
+  .qna-cb{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;}
+  .qna-cb.checked{background:var(--green);border-color:var(--green);}
+  .qna-cb.checked::after{content:'✓';font-size:10px;font-weight:700;color:#000;}
+  .qna-num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text3);min-width:24px;flex-shrink:0;}
+  .qna-text{font-weight:500;color:var(--text);flex:1;line-height:1.5;font-size:14px;}
+  .qna-tag{font-family:var(--font-mono);font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:var(--r-full);flex-shrink:0;}
+  .tag-dsa{background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.2);}
+  .tag-py{background:rgba(77,142,247,.08);color:var(--blue);border:1px solid rgba(77,142,247,.2);}
+  .tag-oop{background:rgba(52,211,153,.08);color:var(--green);border:1px solid rgba(52,211,153,.2);}
+  .tag-aiml{background:rgba(167,139,250,.08);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+  .tag-sql{background:rgba(251,191,36,.08);color:var(--amber);border:1px solid rgba(251,191,36,.2);}
+  .qna-chevron{font-size:12px;color:var(--text3);flex-shrink:0;transition:transform .2s;}
+  .qna-item.open .qna-chevron{transform:rotate(180deg);}
+  .qna-a{padding:0 20px 20px 56px;display:none;color:var(--text2);line-height:1.75;font-size:13.5px;}
+  .qna-item.open .qna-a{display:block;}
+  .qna-a ul,.qna-a ol{padding-left:20px;margin:8px 0;}
+  .qna-a li{margin-bottom:4px;}
+  .qna-a strong{color:var(--text);}
+  .qna-a code{font-family:var(--font-mono);font-size:11.5px;background:rgba(167,139,250,.07);color:var(--purple);padding:1px 5px;border-radius:3px;}
+  .ans-code{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:12px 0;}
+  .ans-code-hdr{display:flex;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);}
+  .ans-code-lang{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .ans-code pre{margin:0;padding:14px 16px;font-family:var(--font-mono);font-size:11.5px;line-height:1.72;color:var(--text2);overflow-x:auto;}
+  .kw{color:#c792ea;}.fn{color:#82aaff;}.cm{color:#546e7a;font-style:italic;}.nm{color:#f78c6c;}
+  .callout{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-lg);margin:10px 0;font-size:13px;line-height:1.65;}
+  .callout-cyan{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.18);color:var(--text2);}
+  .callout-amber{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);color:var(--text2);}
+  .callout-green{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:var(--text2);}
+  .callout-blue{background:rgba(77,142,247,.07);border:1px solid rgba(77,142,247,.18);color:var(--text2);}
+  .callout-purple{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.18);color:var(--text2);}
+  .section-label{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin:36px 0 14px;}
+  .section-label::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--purple),transparent);}
+  .progress-banner{background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(167,139,250,.04));border:1px solid rgba(52,211,153,.15);border-radius:var(--r-xl);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+  .pb-icon{font-size:22px;flex-shrink:0;}
+  .pb-text{flex:1;font-size:12.5px;color:var(--text3);line-height:1.6;}
+  .pb-text strong{color:var(--text);}
+  .pb-count{font-family:var(--font-mono);font-size:28px;font-weight:900;color:var(--green);flex-shrink:0;text-align:center;}
+  .pb-lbl{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .no-results{display:none;text-align:center;padding:40px;color:var(--text3);font-family:var(--font-mono);font-size:13px;}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:900px){.int-stats{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:640px){.int-stats{grid-template-columns:repeat(2,1fr);}.qna-a{padding-left:20px;}}
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link current" href="index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">Interview Topics</div>
+      <a class="sb-link" href="dsa-interview.html"> DSA</a>
+      <a class="sb-link" href="python-interview.html"> Python</a>
+      <a class="sb-link" href="oop-interview.html"> OOP</a>
+      <a class="sb-link active" href="aiml-interview.html"> AI/ML</a>
+      <a class="sb-link" href="sql-interview.html"> SQL</a>
+    </aside>
+    <main class="main" id="mainContent">
+  
+    <div class="int-page-hero anim-in">
+      <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — AI/ML Track</div>
+      <h1 class="iph-title">AI / ML <span>Interview Questions</span></h1>
+      <p class="iph-sub">25+ AI/ML questions — transformers, backprop, loss functions, bias-variance, attention, and LLMs. Tagged for FAANG and ML-first companies.</p>
+      <div class="iph-badges"><span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">ML Basics</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Deep Learning</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07);">NLP & LLMs</span><span class="iph-badge" style="color:var(--pink,#ec4899);border-color:rgba(236,72,153,.25);background:rgba(236,72,153,.07);">Math & Theory</span></div>
+    </div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">25+</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">8</span><span class="is-label">ML Basics</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">7</span><span class="is-label">Deep Learning</span></div><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">NLP & LLMs</span></div><div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">4</span><span class="is-label">Math</span></div></div>
+    <div class="progress-banner anim-in">
+      <div class="pb-icon">📌</div>
+      <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
+      <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 25 Done</div></div>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text3);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
+    </div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">25+</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('ml',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>ML Basics</button><button class="ftab" onclick="filterQna('dl',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Deep Learning</button><button class="ftab" onclick="filterQna('nlp',this)"><span class="ftab-dot" style="color:var(--green)"></span>NLP & LLMs</button><button class="ftab" onclick="filterQna('math',this)"><span class="ftab-dot" style="color:var(--amber)"></span>Math</button></div>
+    <div class="qna-list anim-in" id="list-main">
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">01</span>
+<span class="qna-text">Why is data visualization important before building AI models?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Visualization helps identify:</strong>
+<ul>
+<li><strong>Patterns & trends</strong> — Understand how data behaves over time</li>
+<li><strong>Correlations</strong> — Find relationships between features</li>
+<li><strong>Outliers</strong> — Detect anomalies that could skew model training</li>
+<li><strong>Data distribution</strong> — Check for skewness, normality, class imbalance</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>Key insight:</strong> Even the best AI engineers always visualize data before training. It answers: What does the data look like? Are there missing patterns? Which features matter most? Is the dataset balanced?
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">02</span>
+<span class="qna-text">What are the essential Matplotlib plots for AI/ML and when do you use them?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Essential plots:</strong>
+<ul>
+<li><strong>Line plots</strong> — Show trends over time (e.g., loss curves during training)</li>
+<li><strong>Bar charts</strong> — Compare categorical data (e.g., class distribution)</li>
+<li><strong>Scatter plots</strong> — Analyze relationships between two variables</li>
+<li><strong>Histograms</strong> — Check data distribution, detect skewness</li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+<pre><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+x = [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>]
+y = [<span class="nm">10</span>,<span class="nm">20</span>,<span class="nm">25</span>,<span class="nm">30</span>]
+plt.plot(x,y)
+plt.show()</pre>
+</div>
+<strong>Why important for AI:</strong> Understand trends, analyze variable relationships, check data distribution before model selection.
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">03</span>
+<span class="qna-text">What is Seaborn used for and how does it differ from Matplotlib?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Seaborn</strong> is built on top of Matplotlib for statistical visualizations with simpler syntax and better defaults.
+<br/><br/>
+<strong>Key Seaborn plots for AI:</strong>
+<ul>
+<li><strong>Heatmaps</strong> — Correlation analysis between features</li>
+<li><strong>Boxplots</strong> — Outlier detection, distribution visualization</li>
+<li><strong>Pairplots</strong> — Scatter matrix for all feature combinations</li>
+<li><strong>Distribution plots</strong> — KDE plots, histograms with curves</li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+<pre><span class="kw">import</span> seaborn <span class="kw">as</span> sns
+sns.heatmap(data.corr())</pre>
+</div>
+<strong>Why important for AI:</strong> Detect feature relationships, identify strong predictors, understand dataset patterns quickly.
+</div>
+</div>
+
+</div><!-- /list-viz -->
+
+<!-- ═══════════════ DATA HANDLING & PROCESSING SECTION ═══════════════ -->
+<div class="section-label" id="sec-data">
+      💾 Data Handling & Preprocessing
+     </div>
+<div class="qna-list" id="list-data">
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">04</span>
+<span class="qna-text">What are the essential NumPy operations for AI/ML?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>NumPy</strong> is the foundation for numerical computing in Python. Essential operations:
+<ul>
+<li><strong>Arrays</strong> — 1D, 2D, 3D arrays for storing data</li>
+<li><strong>Shape & dimensions</strong> — Understand data structure (<code>arr.shape</code>, <code>arr.ndim</code>)</li>
+<li><strong>Indexing & slicing</strong> — Access subsets of data</li>
+<li><strong>Vectorized operations</strong> — Fast element-wise operations without loops</li>
+<li><strong>Matrix multiplication</strong> — Core of neural network computations</li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+arr = np.array([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>])
+<span class="fn">print</span>(arr * <span class="nm">2</span>)  <span class="cm"># [2 4 6] — vectorized</span></pre>
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">05</span>
+<span class="qna-text">What are the essential Pandas operations for data manipulation?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Pandas</strong> is the primary tool for data manipulation in Python.
+<br/><br/>
+<strong>Essential operations:</strong>
+<ul>
+<li><strong>Series & DataFrame</strong> — 1D and 2D data structures</li>
+<li><strong>Reading CSV files</strong> — <code>pd.read_csv("data.csv")</code></li>
+<li><strong>Filtering data</strong> — Select rows/columns based on conditions</li>
+<li><strong>GroupBy</strong> — Aggregate data by categories</li>
+<li><strong>Handling missing values</strong> — <code>dropna()</code>, <code>fillna()</code></li>
+<li><strong>Dropping duplicates</strong> — <code>df.drop_duplicates()</code></li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+df = pd.read_csv(<span class="st">"data.csv"</span>)
+df = df.dropna()  <span class="cm"># Remove missing values</span></pre>
+</div>
+<div class="callout callout-cyan">
+<strong>Reality check:</strong> 70% of an AI engineer's time goes into data cleaning and preprocessing, not model building.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">06</span>
+<span class="qna-text">What does data cleaning involve and why is it critical for AI?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Data cleaning</strong> prepares raw data for model training. AI models are sensitive to noisy data and incorrect formats.
+<br/><br/>
+<strong>Key tasks:</strong>
+<ul>
+<li><strong>Missing value handling</strong> — Impute or remove incomplete records</li>
+<li><strong>Outlier detection</strong> — Identify and handle extreme values</li>
+<li><strong>Data type correction</strong> — Ensure correct types (numeric, categorical, datetime)</li>
+<li><strong>Removing duplicates</strong> — Eliminate redundant records</li>
+</ul>
+<div class="callout callout-amber">
+<strong>Garbage in, garbage out:</strong> Even the best algorithms fail with dirty data. Cleaning is more important than model selection.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">07</span>
+<span class="qna-text">What is feature engineering and why is it called the "hidden superpower" of ML?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Feature engineering</strong> is creating new useful features from existing raw data.
+<br/><br/>
+<strong>Examples:</strong>
+<ul>
+<li>Convert date → year, month, day, day_of_week</li>
+<li>Extract text length, word count from strings</li>
+<li>Create interaction features (price × quantity = total)</li>
+<li>Binning continuous variables into categories</li>
+</ul>
+<div class="callout callout-purple">
+<strong>Why it matters:</strong> Well-engineered features often improve model performance more than switching algorithms. Domain knowledge + creativity = better features.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="data">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">08</span>
+<span class="qna-text">What are the key data preprocessing steps before training ML models?</span>
+<span class="qna-tag tag-aiml">Data</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Preprocessing</strong> transforms cleaned data into model-ready format. ML models need numerical inputs and scaling improves performance.
+<br/><br/>
+<strong>Key steps:</strong>
+<ul>
+<li><strong>Feature Scaling</strong> — Bring all features to similar ranges</li>
+<li><strong>Normalization</strong> — Scale to [0, 1] range (MinMaxScaler)</li>
+<li><strong>Standardization</strong> — Scale to mean=0, std=1 (StandardScaler)</li>
+<li><strong>Encoding</strong> — Convert categories to numbers (Label Encoding, One-Hot Encoding)</li>
+<li><strong>Train-Test Split</strong> — Separate data for training and evaluation</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>Rule:</strong> Always fit scalers on training data only, then transform test data — prevents data leakage.
+</div>
+</div>
+</div>
+
+</div><!-- /list-data -->
+
+<!-- ═══════════════ AI/ML SECTION ═══════════════ -->
+<div class="section-label" id="sec-aiml">
+      🤖 AI / Machine Learning
+     </div>
+<div class="qna-list" id="list-aiml">
+<div class="qna-item" data-cat="aiml" data-subtopic="behavioral">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         01
+        </span>
+<span class="qna-text">
+         Tell me about yourself (AI Engineer role)
+        </span>
+<span class="qna-tag tag-aiml">
+         Behavioral
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Sample Answer:</strong>
+"I have 3+ years building AI systems with Python, TensorFlow, and LLMs. Core skills: Deep learning, NLP, MLOps, and model deployment. Recently deployed RAG chatbots reducing support tickets by 40%. Passionate about production-ready AI solutions."
+<div class="callout callout-cyan">
+<strong>Tip:</strong> Keep it concise. Highlight: years of experience, key technologies, recent impactful project, and what drives you.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         02
+        </span>
+<span class="qna-text">
+         What is the difference between supervised, unsupervised, and reinforcement learning?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>
+           Supervised Learning:
+          </strong>
+          Labelled data. Model learns input→output mapping. Examples: regression, classification (Linear Regression, SVM, Neural Networks).
+         </li>
+<li>
+<strong>
+           Unsupervised Learning:
+          </strong>
+          Unlabelled data. Model finds patterns/structure. Examples: clustering (K-Means), dimensionality reduction (PCA), anomaly detection.
+         </li>
+<li>
+<strong>
+           Reinforcement Learning:
+          </strong>
+          Agent learns by interacting with environment, receiving rewards/penalties. Examples: game playing (AlphaGo), robotics, recommendation systems.
+         </li>
+<li>
+<strong>
+           Semi-supervised:
+          </strong>
+          Mix of labelled and unlabelled data.
+         </li>
+<li>
+<strong>
+           Self-supervised:
+          </strong>
+          Model generates its own labels (e.g., GPT predicting next token).
+         </li>
+</ul>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         03
+        </span>
+<span class="qna-text">
+         What is the difference between Artificial Narrow Intelligence (ANI) and Artificial General Intelligence (AGI)?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>ANI (Narrow AI):</strong> Specialized systems designed for specific tasks. Examples: ChatGPT (text only), Siri, image classifiers, chess engines. Excels in one domain but cannot generalize.
+</li>
+<li>
+<strong>AGI (General AI):</strong> Hypothetical human-level intelligence across all cognitive tasks. Can learn, reason, and apply knowledge to any domain. Does not exist yet.
+</li>
+</ul>
+<div class="callout callout-amber">
+<strong>Example:</strong> Siri (ANI) can set reminders but cannot learn to play a new game like a human could. AGI would adapt to any intellectual task.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         04
+        </span>
+<span class="qna-text">
+         What is overfitting and underfitting? How do you prevent them?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Overfitting:
+        </strong>
+        Model memorises training data, performs poorly on unseen data (high variance).
+        <br/>
+<strong>
+         Underfitting:
+        </strong>
+        Model too simple, fails to capture patterns (high bias).
+        <br/>
+<br/>
+<strong>
+         Preventing overfitting:
+        </strong>
+        <ul>
+<li>
+          Regularisation (L1/Lasso, L2/Ridge) — penalise large weights
+         </li>
+<li>
+          Dropout (neural networks)
+         </li>
+<li>
+          More training data / data augmentation
+         </li>
+<li>
+          Early stopping
+         </li>
+<li>
+          Cross-validation (k-fold)
+         </li>
+<li>
+          Reduce model complexity (fewer layers/features)
+         </li>
+</ul>
+<div class="callout callout-amber">
+<strong>
+          Bias-Variance tradeoff:
+         </strong>
+         Increasing model complexity reduces bias but increases variance. Optimal is the sweet spot.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         05
+        </span>
+<span class="qna-text">
+         Explain gradient descent and its variants.
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Gradient Descent
+        </strong>
+        minimises a loss function by iteratively moving in the direction of steepest descent (negative gradient).
+        <br/>
+<code>
+         θ = θ − α × ∇L(θ)
+        </code>
+        where α is the learning rate.
+        <ul>
+<li>
+<strong>
+           Batch GD:
+          </strong>
+          Uses entire dataset per update. Stable but slow for large data.
+         </li>
+<li>
+<strong>
+           Stochastic GD (SGD):
+          </strong>
+          One sample per update. Fast, noisy convergence.
+         </li>
+<li>
+<strong>
+           Mini-batch GD:
+          </strong>
+          Small batches (32-256). Best of both — most commonly used.
+         </li>
+<li>
+<strong>
+           Adam:
+          </strong>
+          Adaptive learning rates + momentum. Most popular optimizer for deep learning.
+         </li>
+<li>
+<strong>
+           RMSProp:
+          </strong>
+          Adapts learning rate per parameter. Good for RNNs.
+         </li>
+</ul>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         06
+        </span>
+<span class="qna-text">
+         What is the difference between precision, recall, F1 score, and accuracy?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>
+           Accuracy:
+          </strong>
+          (TP+TN)/(Total). Misleading for imbalanced datasets.
+         </li>
+<li>
+<strong>
+           Precision:
+          </strong>
+          TP/(TP+FP). Of all predicted positives, how many were correct? (Minimise false positives)
+         </li>
+<li>
+<strong>
+           Recall (Sensitivity):
+          </strong>
+          TP/(TP+FN). Of all actual positives, how many did we catch? (Minimise false negatives)
+         </li>
+<li>
+<strong>
+           F1 Score:
+          </strong>
+          2 × (Precision × Recall)/(Precision + Recall). Harmonic mean — balanced metric when both matter.
+         </li>
+</ul>
+<div class="callout callout-cyan">
+<strong>
+          When to use what:
+         </strong>
+         Medical diagnosis → prioritise Recall. Spam filter → prioritise Precision. General → use F1. Balanced data → Accuracy is fine.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="dl">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         07
+        </span>
+<span class="qna-text">
+         Explain how a neural network works and what backpropagation is.
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A
+        <strong>
+         neural network
+        </strong>
+        is a sequence of layers: input → hidden layers → output. Each layer computes:
+        <code>
+         output = activation(W × input + b)
+        </code>
+        .
+        <br/>
+<br/>
+<strong>
+         Forward pass:
+        </strong>
+        Data flows through the network, producing a prediction and computing loss.
+        <br/>
+<strong>
+         Backpropagation:
+        </strong>
+        Compute gradients of loss w.r.t. every weight using the chain rule (calculus), propagating from output back to input.
+        <br/>
+<strong>
+         Weight update:
+        </strong>
+        Gradient descent adjusts weights to reduce loss.
+        <div class="callout callout-purple">
+<strong>
+          Common activations:
+         </strong>
+         ReLU (hidden layers), Sigmoid (binary output), Softmax (multi-class output), Tanh (normalised output).
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="dl">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         08
+        </span>
+<span class="qna-text">
+         What is a Convolutional Neural Network (CNN) and what is it used for?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A
+        <strong>
+         CNN
+        </strong>
+        uses convolutional layers to automatically learn spatial features (edges, textures, patterns) from images without manual feature engineering.
+        <ul>
+<li>
+<strong>
+           Convolutional layer:
+          </strong>
+          Applies filters/kernels to detect features
+         </li>
+<li>
+<strong>
+           Pooling layer:
+          </strong>
+          Reduces spatial dimensions (max pooling, average pooling)
+         </li>
+<li>
+<strong>
+           Fully connected layer:
+          </strong>
+          Final classification/regression
+         </li>
+</ul>
+<strong>
+         Uses:
+        </strong>
+        Image classification, object detection, facial recognition, medical imaging.
+       </div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="dl">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         09
+        </span>
+<span class="qna-text">
+         What is the vanishing gradient problem and how do you fix it?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        In deep networks, gradients can become exponentially small during backpropagation, preventing early layers from learning.
+        <br/>
+<br/>
+<strong>
+         Causes:
+        </strong>
+        Sigmoid/tanh activations, deep architectures, small learning rates.
+        <br/>
+<br/>
+<strong>
+         Solutions:
+        </strong>
+        <ul>
+<li>
+          Use ReLU activation (doesn't saturate for positive values)
+         </li>
+<li>
+          Batch Normalization (normalizes inputs to each layer)
+         </li>
+<li>
+          Residual connections (skip connections in ResNet)
+         </li>
+<li>
+          Proper weight initialization (He/Xavier initialization)
+         </li>
+<li>
+          Gradient clipping (for RNNs)
+         </li>
+</ul>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="dl">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         10
+        </span>
+<span class="qna-text">
+         What is the difference between Batch Normalization and Layer Normalization?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<table style="width:100%; border-collapse: collapse; margin: 12px 0;">
+<thead>
+<tr style="border-bottom: 1px solid var(--border);">
+<th style="text-align: left; padding: 8px;">Aspect</th>
+<th style="text-align: left; padding: 8px;">Batch Norm</th>
+<th style="text-align: left; padding: 8px;">Layer Norm</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Normalizes</strong></td>
+<td style="padding: 8px;">Across batch dimension</td>
+<td style="padding: 8px;">Across feature dimension</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Batch size</strong></td>
+<td style="padding: 8px;">Needs large batch</td>
+<td style="padding: 8px;">Works with any batch</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Use case</strong></td>
+<td style="padding: 8px;">CNNs</td>
+<td style="padding: 8px;">RNNs, Transformers</td>
+</tr>
+<tr>
+<td style="padding: 8px;"><strong>Training vs Inference</strong></td>
+<td style="padding: 8px;">Different (uses running stats)</td>
+<td style="padding: 8px;">Same</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="nlp">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         11
+        </span>
+<span class="qna-text">
+         What are Transformers and why are they important?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Transformers</strong> are a neural architecture using self-attention mechanisms for parallel sequence processing.
+<ul>
+<li><strong>Key innovation:</strong> Self-attention allows each token to attend to all other tokens simultaneously.</li>
+<li><strong>Handles long-range dependencies</strong> better than RNNs/LSTMs — no gradient decay over distance.</li>
+<li><strong>Parallelizable</strong> — processes entire sequence at once, not sequentially.</li>
+</ul>
+<div class="callout callout-purple">
+<strong>Impact:</strong> Powers GPT, BERT, and all modern LLMs. Enabled the generative AI revolution.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="nlp">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         12
+        </span>
+<span class="qna-text">
+         What are word embeddings? Explain Word2Vec and GloVe.
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Word embeddings
+        </strong>
+        are dense vector representations of words that capture semantic meaning.
+        <br/>
+<br/>
+<strong>
+         Word2Vec:
+        </strong>
+        Neural network-based. Two approaches:
+        <ul>
+<li>
+          CBOW — predicts word from context
+         </li>
+<li>
+          Skip-gram — predicts context from word
+         </li>
+</ul>
+<strong>
+         GloVe:
+        </strong>
+        Global Vectors — uses matrix factorization on word co-occurrence statistics.
+        <div class="callout callout-cyan">
+<strong>
+          Key insight:
+         </strong>
+         "king" - "man" + "woman" ≈ "queen" — embeddings capture relationships.
+        </div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="nlp">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         13
+        </span>
+<span class="qna-text">
+         Explain the Transformer architecture and why it's better than RNNs.
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Transformer
+        </strong>
+        uses self-attention mechanisms instead of recurrence.
+        <br/>
+<br/>
+<strong>
+         Key components:
+        </strong>
+        <ul>
+<li>
+          Self-attention — weighs importance of all words simultaneously
+         </li>
+<li>
+          Multi-head attention — multiple attention subspaces
+         </li>
+<li>
+          Position encoding — adds sequence order information
+         </li>
+<li>
+          Feed-forward layers — per-position processing
+         </li>
+</ul>
+<strong>
+         Advantages over RNNs:
+        </strong>
+        <ul>
+<li>
+          Parallelization (process all tokens at once)
+         </li>
+<li>
+          Better long-range dependencies
+         </li>
+<li>
+          Faster training
+         </li>
+</ul>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="nlp">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         14
+        </span>
+<span class="qna-text">
+         What is self-attention and how does it work?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Self-attention
+        </strong>
+        computes weighted relationships between all words in a sequence.
+        <br/>
+<br/>
+<strong>
+         Process:
+        </strong>
+        <ol>
+<li>
+          Create Query (Q), Key (K), Value (V) vectors for each word
+         </li>
+<li>
+          Compute attention scores: Q × K^T / √d_k
+         </li>
+<li>
+          Apply softmax to get weights
+         </li>
+<li>
+          Weighted sum: attention × V
+         </li>
+</ol>
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="cm"># Scaled dot-product attention</span>
+attention = softmax(Q @ K.T / sqrt(d_k)) @ V</pre>
+</div>
+<em>
+         √d_k scaling prevents dot products from growing too large.
+        </em>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="nlp">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         15
+        </span>
+<span class="qna-text">
+         What is tokenization? Why does it matter?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Tokenization</strong> is splitting text into tokens (words, subwords, or characters) before feeding to a model.
+<ul>
+<li><strong>Impacts:</strong> Model input size, vocabulary size, context window efficiency.</li>
+<li><strong>BPE (Byte Pair Encoding):</strong> Used in GPT models — balances vocabulary size with OOV (out-of-vocabulary) handling.</li>
+<li><strong>WordPiece:</strong> Used in BERT — similar subword approach.</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>Example:</strong> "unhappy" → ["un", "happy"] — model can handle rare words by composing known subwords.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="llm">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         16
+        </span>
+<span class="qna-text">
+         What is the difference between BERT and GPT?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<table style="width:100%; border-collapse: collapse; margin: 12px 0;">
+<thead>
+<tr style="border-bottom: 1px solid var(--border);">
+<th style="text-align: left; padding: 8px;">Aspect</th>
+<th style="text-align: left; padding: 8px;">BERT</th>
+<th style="text-align: left; padding: 8px;">GPT</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Architecture</strong></td>
+<td style="padding: 8px;">Encoder-only</td>
+<td style="padding: 8px;">Decoder-only</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Attention</strong></td>
+<td style="padding: 8px;">Bidirectional</td>
+<td style="padding: 8px;">Causal (masked)</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Training</strong></td>
+<td style="padding: 8px;">Masked LM + NSP</td>
+<td style="padding: 8px;">Next token prediction</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Best for</strong></td>
+<td style="padding: 8px;">Classification, QA, NER</td>
+<td style="padding: 8px;">Text generation</td>
+</tr>
+<tr>
+<td style="padding: 8px;"><strong>Company</strong></td>
+<td style="padding: 8px;">Google</td>
+<td style="padding: 8px;">OpenAI</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="llm">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         17
+        </span>
+<span class="qna-text">
+         What is fine-tuning? Explain transfer learning in NLP.
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Transfer learning
+        </strong>
+        uses a pre-trained model and adapts it to a specific task.
+        <br/>
+<br/>
+<strong>
+         Fine-tuning process:
+        </strong>
+        <ol>
+<li>
+          Start with pre-trained model (e.g., BERT, GPT)
+         </li>
+<li>
+          Add task-specific head (classification layer)
+         </li>
+<li>
+          Train on task-specific data with lower learning rate
+         </li>
+</ol>
+<strong>
+         Benefits:
+        </strong>
+        <ul>
+<li>
+          Works with small datasets
+         </li>
+<li>
+          Faster training than from scratch
+         </li>
+<li>
+          Better performance on most tasks
+         </li>
+</ul>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="llm">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         18
+        </span>
+<span class="qna-text">
+         What is RAG (Retrieval-Augmented Generation)?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         RAG
+        </strong>
+        combines a retrieval system with a generative LLM. Instead of relying solely on what the LLM memorised during training, it retrieves relevant documents at inference time and uses them as context.
+        <br/>
+<br/>
+<strong>
+         Pipeline:
+        </strong>
+        <ul>
+<li>
+          User query → embed → vector similarity search over document store
+         </li>
+<li>
+          Top-k relevant chunks retrieved
+         </li>
+<li>
+          Chunks + query → LLM → grounded answer
+         </li>
+</ul>
+<div class="callout callout-cyan">
+<strong>
+          Benefits:
+         </strong>
+         Reduces hallucination, enables knowledge updates without retraining, cites sources. Used in enterprise Q&A, chatbots, search systems.
+        </div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         19
+        </span>
+<span class="qna-text">
+         What is cross-validation and why is it important?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Cross-validation
+        </strong>
+        evaluates model performance by training and testing on different data splits.
+        <br/>
+<br/>
+<strong>
+         K-Fold Cross-Validation:
+        </strong>
+        <ol>
+<li>
+          Split data into K equal folds
+         </li>
+<li>
+          For each fold: train on K-1 folds, test on 1 fold
+         </li>
+<li>
+          Average results across all K iterations
+         </li>
+</ol>
+<strong>
+         Benefits:
+        </strong>
+        <ul>
+<li>
+          More reliable performance estimate
+         </li>
+<li>
+          Uses all data for both training and testing
+         </li>
+<li>
+          Reduces variance in evaluation
+         </li>
+</ul>
+<em>
+         Common choice: K=5 or K=10
+        </em>
+</div>
+</div>
+
+
+<div class="qna-item" data-cat="aiml" data-subtopic="llm">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         20
+        </span>
+<span class="qna-text">
+         What is the difference between fine-tuning and prompt engineering?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>Fine-tuning:</strong> Updates model weights with domain-specific data. Requires compute, training infrastructure, and labeled examples. Produces a new model variant.</li>
+<li>
+<strong>Prompt Engineering:</strong> Crafts better inputs/instructions without any training. Zero cost, instant iteration. Works with frozen models.</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>When to use:</strong> Prompt engineering first (fast, cheap). Fine-tune when you need consistent domain behavior and have 1000s of examples.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="llm">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         21
+        </span>
+<span class="qna-text">
+         How do you evaluate LLM performance?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Metrics:</strong>
+<ul>
+<li><strong>BLEU/ROUGE:</strong> Text similarity against reference outputs (translation, summarization).</li>
+<li><strong>BERTScore:</strong> Semantic similarity using embeddings, not exact match.</li>
+<li><strong>Human Evaluation:</strong> Rate helpfulness, accuracy, coherence (gold standard).</li>
+</ul>
+<strong>For RAG systems:</strong>
+<ul>
+<li>Answer relevance (does it address the query?)</li>
+<li>Faithfulness (is it grounded in retrieved docs?)</li>
+<li>Context precision (did retrieval find relevant docs?)</li>
+</ul>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="behavioral">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         22
+        </span>
+<span class="qna-text">
+         Walk through an AI project you've built
+        </span>
+<span class="qna-tag tag-aiml">
+         Behavioral
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Strong Answer:</strong>
+"Built RAG-based enterprise chatbot using LangChain + Pinecone. Indexed 10k+ docs, fine-tuned Llama2-7B, deployed on AWS SageMaker. Achieved 92% answer accuracy, reduced support costs 35%."
+<div class="callout callout-purple">
+<strong>Structure:</strong> Problem → Tech Stack → Your Role → Measurable Impact. Keep it under 2 minutes.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="mlops">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         23
+        </span>
+<span class="qna-text">
+         What is quantization and why use it?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Quantization</strong> reduces model precision (FP32 → INT8 or FP16) for faster inference and lower memory usage.
+<ul>
+<li><strong>Benefits:</strong> 4x smaller model, 2-4x faster inference, runs on edge devices.</li>
+<li><strong>Tradeoff:</strong> Slight accuracy drop (typically 1-3%).</li>
+<li><strong>Types:</strong> Post-training quantization (easy), Quantization-aware training (better accuracy).</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>Use case:</strong> Essential for mobile/edge deployment and high-throughput serving.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="mlops">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         24
+        </span>
+<span class="qna-text">
+         What tools and frameworks have you used?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Sample Answer:</strong>
+<ul>
+<li><strong>Languages:</strong> Python, SQL</li>
+<li><strong>DL Frameworks:</strong> PyTorch, TensorFlow, Keras</li>
+<li><strong>NLP/LLMs:</strong> Hugging Face Transformers, LangChain, LlamaIndex</li>
+<li><strong>Vector DBs:</strong> Pinecone, FAISS, Chroma, Weaviate</li>
+<li><strong>Deployment:</strong> Docker, Kubernetes, AWS SageMaker, GCP Vertex AI</li>
+<li><strong>MLOps:</strong> MLflow, Weights &amp; Biases, DVC</li>
+</ul>
+<div class="callout callout-amber">
+<strong>Tip:</strong> Mention 2-3 tools you've used deeply, not just names. Be ready for follow-ups.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="ethics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         25
+        </span>
+<span class="qna-text">
+         How do you handle AI bias and fairness?
+        </span>
+<span class="qna-tag tag-aiml">
+         AI/ML
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Approaches:</strong>
+<ul>
+<li><strong>Monitor metrics</strong> by demographic groups (age, gender, ethnicity)</li>
+<li><strong>Fairness constraints</strong> during model training</li>
+<li><strong>Diverse training data</strong> — audit dataset representation</li>
+<li><strong>Debiasing techniques</strong> — reweighting, adversarial debiasing</li>
+<li><strong>Regular audits</strong> in production — drift detection</li>
+</ul>
+<div class="callout callout-purple">
+<strong>Important:</strong> Fairness is not just technical — involves stakeholder input, domain experts, and continuous monitoring.
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="aiml" data-subtopic="behavioral">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         26
+        </span>
+<span class="qna-text">
+         Tell me about a production AI challenge you solved
+        </span>
+<span class="qna-tag tag-aiml">
+         Behavioral
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Strong Answer:</strong>
+"LLM response latency &gt;5s was unacceptable. Implemented model distillation (7B→3B) + quantization + caching. Reduced p95 latency from 5.2s to 800ms while maintaining 95% accuracy."
+<div class="callout callout-cyan">
+<strong>Structure:</strong> Problem (with metric) → Solution (specific techniques) → Result (quantified improvement). Shows you ship production AI.
+</div>
+</div>
+</div>
+
+<!-- /list-aiml -->
+
+<!-- ═══ AI INTERVIEW TOPICS REFERENCE ═══ -->
+<div class="section-label" style="margin-top:40px;">🗺️ AI/ML Interview Topics Checklist</div>
+<div class="callout callout-purple" style="margin-bottom:20px;background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);">
+  <strong>Use this as a self-assessment guide</strong> — check off topic areas you can confidently explain before your interview.
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px;">
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--purple);margin-bottom:12px;">🧠 AI FUNDAMENTALS</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--purple);">▸</span>Difference between AI, ML, and DL</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--purple);">▸</span>Rule-based vs learning-based systems</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--purple);">▸</span>Symbolic AI vs Statistical AI</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--purple);">▸</span>Turing Test, AI ethics &amp; explainability</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--purple);">▸</span>Weak AI vs Strong AI</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px;">🧬 DEEP LEARNING</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Artificial Neural Networks</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>CNNs, RNNs, LSTMs</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Activation functions (ReLU, Sigmoid, Softmax)</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Backpropagation &amp; gradient flow</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Transfer Learning</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--blue);">▸</span>Attention mechanisms &amp; Transformers</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);margin-bottom:12px;">📊 NLP CONCEPTS</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--cyan);">▸</span>Tokenization, lemmatization, stopwords</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--cyan);">▸</span>Bag of Words, TF-IDF</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--cyan);">▸</span>Word embeddings (Word2Vec, GloVe, BERT)</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--cyan);">▸</span>Sequence-to-sequence models</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--cyan);">▸</span>Named Entity Recognition (NER)</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--green);margin-bottom:12px;">👁️ COMPUTER VISION</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">▸</span>Image classification &amp; object detection</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">▸</span>Convolutional layers &amp; filters</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--green);">▸</span>YOLO, RCNN, OpenCV basics</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--amber);margin-bottom:12px;">⚙️ REINFORCEMENT LEARNING</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--amber);">▸</span>Agent, Environment, Reward</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--amber);">▸</span>Markov Decision Processes</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--amber);">▸</span>Q-learning vs Policy Gradient</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px 18px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f87171,transparent);opacity:.7;"></div>
+    <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:#f87171;margin-bottom:12px;">🔧 MODEL OPTIMIZATION</div>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#f87171;">▸</span>Loss functions (MSE, Cross-Entropy)</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#f87171;">▸</span>Learning rate &amp; schedulers</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#f87171;">▸</span>Overfitting in deep networks</li>
+      <li style="font-size:12.5px;color:var(--text2);padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#f87171;">▸</span>Dropout, Batch Normalization</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- 3 new interview Q&A from notes -->
+<div class="section-label">❓ Additional Interview Questions</div>
+<div class="qna-list" style="margin-bottom:32px;">
+
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">26</span>
+<span class="qna-text">What is the difference between AI, Machine Learning, and Deep Learning?</span>
+<span class="qna-tag tag-aiml">AI/ML</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>AI (Artificial Intelligence)</strong> is the broad field of making machines perform tasks that require human intelligence — reasoning, planning, language, perception.
+<br/><br/>
+<strong>Machine Learning (ML)</strong> is a subset of AI where machines <em>learn from data</em> rather than following explicit rules. Instead of programming every rule, you feed data and let the model find patterns.
+<br/><br/>
+<strong>Deep Learning (DL)</strong> is a subset of ML that uses <em>neural networks with many layers</em> to learn hierarchical representations. It excels at unstructured data — images, audio, text.
+<div class="callout callout-blue" style="margin-top:10px;background:rgba(77,142,247,.07);border-color:rgba(77,142,247,.2);">
+<strong>Analogy:</strong> AI is the goal (make machines smart). ML is a method to achieve it (learn from data). Deep Learning is a specific powerful technique within ML (layered neural nets).
+</div>
+<strong>Interview tip:</strong> Always follow up by explaining <em>when to use each</em>:
+<ul>
+<li>Rule-based AI → small, well-defined problems</li>
+<li>Traditional ML → structured tabular data</li>
+<li>Deep Learning → images, audio, text, sequences</li>
+</ul>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">27</span>
+<span class="qna-text">What is the Turing Test and what are its limitations as a measure of AI intelligence?</span>
+<span class="qna-tag tag-aiml">AI/ML</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>The Turing Test</strong> (Alan Turing, 1950) proposes that a machine is "intelligent" if a human evaluator cannot reliably distinguish its responses from a human's through natural language conversation.
+<br/><br/>
+<strong>How it works:</strong> A human judge chats with both a human and a machine. If the judge can't tell which is which more than 70% of the time, the machine passes.
+<br/><br/>
+<strong>Limitations:</strong>
+<ul>
+<li><strong>Measures deception, not understanding</strong> — a machine can fool humans without any real comprehension</li>
+<li><strong>Language-centric</strong> — ignores vision, physical reasoning, emotional intelligence</li>
+<li><strong>Judge-dependent</strong> — naive evaluators are easier to fool</li>
+<li><strong>LLMs already pass it</strong> — yet nobody claims GPT-4 is "truly intelligent"</li>
+<li><strong>Chinese Room argument</strong> (Searle) — symbol manipulation ≠ understanding</li>
+</ul>
+<div class="callout callout-amber" style="background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.2);">
+<strong>Modern view:</strong> The AI community has moved beyond the Turing Test. Better benchmarks: MMLU, HumanEval, BIG-Bench — they test specific capabilities rather than human mimicry.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="aiml" data-subtopic="fundamentals">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">28</span>
+<span class="qna-text">What is Weak AI vs Strong AI? Do any current systems qualify as Strong AI?</span>
+<span class="qna-tag tag-aiml">AI/ML</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Weak AI (Narrow AI)</strong> — systems designed and trained for a <em>specific task</em>. They cannot transfer knowledge outside their domain.
+<ul>
+<li>Examples: Chess engines, image classifiers, recommendation systems, ChatGPT</li>
+<li>Current reality: <em>All deployed AI is Weak AI</em></li>
+</ul>
+<strong>Strong AI (AGI — Artificial General Intelligence)</strong> — hypothetical systems with <em>human-level reasoning</em> across all domains. Can transfer knowledge, reason abstractly, learn new tasks without retraining.
+<ul>
+<li>No system today qualifies as Strong AI</li>
+<li>LLMs seem general but fail at consistent reasoning, grounding, and self-directed learning</li>
+</ul>
+<div class="callout callout-blue" style="background:rgba(77,142,247,.07);border-color:rgba(77,142,247,.2);">
+<strong>Interview angle:</strong> Interviewers often ask this to probe AI literacy. Key answer — <em>all current AI is narrow</em>, even GPT-4. AGI is still an open research problem, with no consensus on timeline or definition.
+</div>
+</div>
+</div>
+
+</div><!-- /additional qna-list -->
+
+</div><!-- end #list-aiml -->
+    </main>
+  </div>
+
+  <a class="back-top" id="backTop" href="#">↑</a>
+
+  <div class="page-nav">
+    <a class="nav-link" href="oop-interview.html">← OOP</a>
+    <a class="nav-link next" href="sql-interview.html">SQL →</a>
+  </div>
+
+  <script src="../assets/js/utils.js?v=3"></script>
+<script>
+const TRACK='aiml',TOTAL=25;
+function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
+function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
+function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}
+function renderProgress(){let done=0;document.querySelectorAll('.qna-cb').forEach(cb=>{if(isChecked(cb.dataset.n)){cb.classList.add('checked');done++;}else cb.classList.remove('checked');});const el=document.getElementById('doneCount');if(el)el.textContent=done;}
+function resetProgress(){if(!confirm('Reset all AI/ML Track progress?'))return;document.querySelectorAll('.qna-cb').forEach(cb=>setChecked(cb.dataset.n,false));renderProgress();}
+function toggleQ(qEl){const item=qEl.closest('.qna-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.qna-item.open').forEach(el=>el.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+function filterQna(sub,btn){document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const show=sub==='all'||item.dataset.subtopic===sub||item.dataset.cat===sub;item.style.display=show?'':'none';if(show)v++;});document.getElementById('no-results').style.display=v===0?'block':'none';const inp=document.getElementById('qna-search');if(inp)inp.value='';}
+function searchQna(val){const q=val.trim().toLowerCase();let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const t=item.querySelector('.qna-text'),a=item.querySelector('.qna-a');const m=!q||(t?.textContent.toLowerCase().includes(q)||a?.textContent.toLowerCase().includes(q));item.style.display=m?'':'none';if(m)v++;if(q)item.classList.remove('open');});document.getElementById('no-results').style.display=v===0?'block':'none';}
+const pf=document.getElementById('progressFill'),bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>{const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;if(pf)pf.style.width=(h>0?(s/h)*100:0)+'%';if(bt)bt.classList.toggle('visible',s>400);},{passive:true});
+if(bt)bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('qna-search')?.focus();}});
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{const n=item.dataset.n||String(i+1).padStart(2,'0');item.dataset.n=n;const qEl=item.querySelector('.qna-q');if(qEl&&!qEl.querySelector('.qna-cb')){const cb=document.createElement('div');cb.className='qna-cb';cb.dataset.n=n;cb.addEventListener('click',e=>{e.stopPropagation();const c=!cb.classList.contains('checked');setChecked(n,c);renderProgress();});qEl.insertBefore(cb,qEl.firstChild);}});
+const ao=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ao.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';ao.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>
+</html>

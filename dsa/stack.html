@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Stack (LIFO) — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --bg: #07090f; --bg2: #0d1117; --bg3: #111722; --surface: #141b26; --surface2: #1a2234; --border: #1f2d42; --border2: #263449; --text: #e2e8f4; --text2: #8da0bb; --text3: #5a7094; --accent: #4d9ef7; --blue: #4d9ef7; --blue-dim: #0c2444; --green: #34d399; --green-dim: #063a28; --amber: #fbbf24; --amber-dim: #431d00; --red: #f87171; --red-dim: #3b0a0a; --cyan: #22d3ee; --purple: #a78bfa; --purple-dim: #200d45; --orange: #fb923c; --orange-dim: #431200; --code-kw: #f7cc45; --code-fn: #4d9ef7; --code-str: #34d399; --code-nm: #c084fc; --code-cm: #4a6078; --radius: 10px; --radius-lg: 16px; --mono: 'JetBrains Mono', monospace; --sans: 'DM Sans', sans-serif; --display: 'Syne', sans-serif; --topbar-h: 58px; --sidebar-w: 275px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--topbar-h) + 24px); }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-track { background: var(--bg2); } ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+    .layout { display: flex; min-height: 100vh; padding-top: var(--topbar-h); }
+    .sidebar { width: var(--sidebar-w); flex-shrink: 0; position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border); background: var(--bg2); }
+    .sidebar-label { font-family: var(--display); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); padding: 0 8px; margin-bottom: 8px; }
+    .sb-link { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 8px; text-decoration: none; color: var(--text2); font-size: 12.5px; font-weight: 500; transition: all .15s; }
+    .sb-link:hover { color: var(--text); background: var(--surface); }
+    .sb-link.active { color: var(--accent); background: rgba(77, 158, 247, .08); }
+    .sb-num { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); width: 22px; flex-shrink: 0; text-align: right; }
+    .sb-link.active .sb-num { color: var(--accent); }
+    .search-wrap { padding: 0 6px 14px; }
+    .search-input { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px 7px 30px; color: var(--text); font-size: 12.5px; outline: none; }
+    .search-input:focus { border-color: var(--accent); }
+    .main { flex: 1; min-width: 0; padding: 48px 56px 100px; max-width: 920px; }
+    .pg-head { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .pg-crumb { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+    .pg-crumb::before { content: ''; display: inline-block; width: 18px; height: 2px; background: var(--accent); border-radius: 1px; margin-right: 8px; }
+    .pg-title { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+    .pg-title span { color: var(--accent); }
+    .pg-sub { font-size: 15px; color: var(--text2); max-width: 640px; line-height: 1.7; margin-bottom: 24px; }
+    .pg-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 100px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; }
+    .b-py { background: rgba(247, 204, 69, .12); color: var(--accent); border: 1px solid rgba(247, 204, 69, .25); }
+    .b-green { background: rgba(52, 211, 153, .1); color: var(--green); border: 1px solid rgba(52, 211, 153, .2); }
+    .b-blue { background: rgba(77, 158, 247, .1); color: var(--blue); border: 1px solid rgba(77, 158, 247, .2); }
+    .b-accent { background: rgba(77, 158, 247, .1); color: var(--accent); border: 1px solid rgba(77, 158, 247, .2); }
+    .b-surface { background: var(--surface); color: var(--text2); border: 1px solid var(--border); }
+    .b-red { background: rgba(248, 113, 113, .1); color: var(--red); border: 1px solid rgba(248, 113, 113, .2); }
+    .b-time { background: rgba(52, 211, 153, .1); color: var(--green); border: 1px solid rgba(52, 211, 153, .2); }
+    .b-space { background: rgba(77, 158, 247, .1); color: var(--blue); border: 1px solid rgba(77, 158, 247, .2); }
+    .b-type { background: rgba(34, 211, 238, .1); color: var(--cyan); border: 1px solid rgba(34, 211, 238, .2); }
+    .py-section { margin-bottom: 64px; scroll-margin-top: calc(var(--topbar-h) + 20px); animation: fadeUp .35s ease both; }
+    .sec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .sec-num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(77, 158, 247, .1); border: 1px solid rgba(77, 158, 247, .2); padding: 3px 9px; border-radius: 5px; }
+    .sec-icon { font-size: 20px; }
+    .sec-title { font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--text); }
+    .section-divider { height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); margin-bottom: 24px; }
+    .prose { color: var(--text2); font-size: 14.5px; line-height: 1.8; margin-bottom: 18px; }
+    .prose strong { color: var(--text); font-weight: 600; }
+    .prose code { font-family: var(--mono); font-size: 12.5px; background: var(--surface); color: var(--accent); padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border); }
+    .code-block { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 18px; position: relative; }
+    .code-hdr { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .code-lang { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; }
+    .code-dots { display: flex; gap: 6px; }
+    .cd { width: 12px; height: 12px; border-radius: 50%; opacity: .85; }
+    .code-pre { font-family: var(--mono); font-size: 13px; line-height: 1.75; padding: 18px 20px; overflow-x: auto; color: var(--text); }
+    .kw { color: var(--code-kw); font-weight: 600; }
+    .fn { color: var(--code-fn); }
+    .st { color: var(--code-str); }
+    .nm { color: var(--code-nm); }
+    .cm { color: var(--code-cm); font-style: italic; }
+    .copy-btn { position: absolute; top: 8px; right: 14px; background: var(--surface2); border: 1px solid var(--border2); color: var(--text3); font-family: var(--mono); font-size: 10px; padding: 3px 8px; border-radius: 5px; cursor: pointer; opacity: 0; transition: all .15s; }
+    .code-block:hover .copy-btn { opacity: 1; }
+    .copy-btn.copied { color: var(--green); border-color: var(--green); }
+    .table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; margin-bottom: 18px; }
+    .py-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .py-table th { font-weight: 600; font-size: 11px; text-transform: uppercase; color: var(--text3); text-align: left; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .py-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); color: var(--text2); }
+    .py-table tr:last-child td { border-bottom: none; }
+    .py-table code { font-family: var(--mono); font-size: 12px; background: var(--surface); color: var(--accent); padding: 1px 6px; border-radius: 4px; }
+    .callout { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--radius); font-size: 13.5px; margin-bottom: 16px; border-left: 3px solid; }
+    .callout-icon { font-size: 16px; flex-shrink: 0; }
+    .callout-blue { background: var(--blue-dim); border-color: var(--blue); color: #9ec8f9; }
+    .callout-green { background: var(--green-dim); border-color: var(--green); color: #6ee7b7; }
+    .callout-amber { background: var(--amber-dim); border-color: var(--amber); color: #fcd34d; }
+    .progress-bar { position: fixed; top: var(--topbar-h); left: 0; right: 0; height: 2px; z-index: 99; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--cyan)); width: 0%; transition: width .1s; }
+    .back-top { position: fixed; bottom: 28px; right: 28px; width: 40px; height: 40px; background: var(--surface); border: 1px solid var(--border2); border-radius: 50%; display: grid; place-items: center; color: var(--text2); font-size: 18px; opacity: 0; pointer-events: none; transition: all .2s; text-decoration: none; }
+    .back-top.visible { opacity: 1; pointer-events: auto; }
+    .back-top:hover { border-color: var(--accent); color: var(--accent); }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 20px; }
+    .nav-link { display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text2); text-decoration: none; font-size: 13.5px; font-weight: 500; transition: all .17s; }
+    .nav-link:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-link.disabled { opacity: 0.5; pointer-events: none; }
+    .sidebar-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; color: var(--text2); font-size: 22px; }
+
+    /* Stack Visualization Styles */
+    .viz-block { margin-bottom: 40px; }
+    .viz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .viz-label { font-family: var(--mono); font-size: 11px; color: var(--text3); background: var(--surface); padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); }
+    .viz-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    .inp { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--text); font-family: var(--mono); font-size: 12px; width: 80px; }
+    .btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; color: var(--text); font-size: 12px; font-weight: 500; cursor: pointer; transition: all .15s; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn.go { background: rgba(77, 158, 247, .1); border-color: var(--blue); color: var(--blue); }
+    .btn.soft-red { background: rgba(248, 113, 113, .1); border-color: var(--red); color: var(--red); }
+    .viz-body { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; min-height: 200px; }
+    .stack-items { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+    .stack-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); min-width: 120px; justify-content: space-between; }
+    .stack-item.s-top { border-color: var(--accent); background: rgba(77, 158, 247, .1); }
+    .itag { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+    .itag-blue { background: var(--blue); color: var(--bg); }
+    .status { font-family: var(--mono); font-size: 12px; color: var(--text2); margin-top: 12px; }
+    .s-ok { color: var(--green); }
+    .s-err { color: var(--red); }
+
+    .info-section { margin-top: 40px; }
+    .info-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; flex-wrap: wrap; }
+    .info-tab { padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2); transition: all .15s; white-space: nowrap; }
+    .info-tab:hover { color: var(--text); background: var(--surface); }
+    .info-tab.active { color: var(--accent); background: rgba(77, 158, 247, .08); }
+    .info-pane { display: none; animation: fadeUp .25s ease; }
+    .info-pane.active { display: block; }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step { display: flex; gap: 16px; padding: 16px; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); }
+    .step-num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(77, 158, 247, .1); padding: 4px 8px; border-radius: 5px; height: fit-content; }
+    .step-body { flex: 1; }
+    .step-title { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 13.5px; color: var(--text2); }
+    .step-code { font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--bg2); padding: 6px 10px; border-radius: 4px; margin-top: 8px; display: inline-block; }
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .concept-card { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); text-align: center; }
+    .cc-val { font-family: var(--mono); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .cc-name { font-size: 12px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+    .cc-desc { font-size: 11px; color: var(--text2); }
+    .quiz-wrap { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+    .quiz-q { font-weight: 600; color: var(--text); margin-bottom: 16px; font-size: 14px; }
+    .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt { padding: 12px 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text2); cursor: pointer; text-align: left; font-size: 13.5px; transition: all .15s; }
+    .quiz-opt:hover { border-color: var(--accent); }
+    .quiz-opt.correct { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .quiz-opt.wrong { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+    .quiz-feedback { margin-top: 16px; padding: 12px; border-radius: 8px; font-size: 13px; display: none; }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+    .quiz-feedback.wrong { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+    .pq-progress { margin-bottom: 20px; }
+    .pq-progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+    .pq-bar { height: 6px; background: var(--surface); border-radius: 3px; overflow: hidden; }
+    .pq-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); border-radius: 3px; }
+    .practice-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .practice-count { font-size: 12px; color: var(--text2); }
+    .practice-filters { display: flex; gap: 6px; }
+    .pf-btn { padding: 6px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; color: var(--text2); font-size: 11px; cursor: pointer; transition: all .15s; }
+    .pf-btn:hover { border-color: var(--accent); }
+    .pf-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .pq-list { display: flex; flex-direction: column; gap: 10px; }
+    .pq-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: all .15s; }
+    .pq-item:hover { border-color: var(--accent); }
+    .pq-done-toggle { width: 20px; height: 20px; border: 2px solid var(--border2); border-radius: 4px; cursor: pointer; display: grid; place-items: center; font-size: 12px; background: none; color: inherit; }
+    .pq-done-toggle.done { background: var(--green); border-color: var(--green); color: var(--bg); }
+    .pq-num { font-family: var(--mono); font-size: 11px; color: var(--text3); width: 45px; }
+    .pq-name { flex: 1; font-size: 13.5px; color: var(--text); }
+    .pq-asked { font-size: 10px; color: var(--text3); }
+    .pq-badge { font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    .pq-pbc { background: rgba(247, 204, 69, .15); color: var(--accent); }
+    .pq-startup { background: rgba(34, 211, 238, .15); color: var(--cyan); }
+    .pq-arrow { font-size: 16px; color: var(--text3); }
+    .pq-empty { display: none; padding: 40px; text-align: center; color: var(--text2); }
+
+    @media (max-width: 900px) { .sidebar { display: none; } .sidebar.open { display: block; position: fixed; top: var(--topbar-h); left: 0; bottom: 0; z-index: 80; width: 85%; max-width: 300px; box-shadow: 4px 0 24px rgba(0,0,0,.5); } .sidebar-toggle { display: block; } .main { padding: 32px 20px 70px; } .pg-title { font-size: 32px; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link current" href="./">DSA</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link active" href="#stack"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </aside>
+    <main class="main">
+      
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Linear DS</div>
+        <h1 class="dh2-title">Stack <span>(LIFO)</span></h1>
+        <p class="dh2-sub">Last In, First Out. Push adds to top, pop removes from top. Think: stack of plates.</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Push</span></div><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Pop</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(n)</span><span class="dss-label">Search</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">LIFO</span><span class="dss-label">Order</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">✓</span><span class="dss-label">Call Stack</span></div></div>
+      <!-- STACK VISUALIZATION -->
+      <div class="viz-block">
+        <div class="viz-top">
+          <span class="viz-label">// STACK OPERATIONS</span>
+          <div class="viz-controls">
+            <input class="inp" id="sk-v" placeholder="Value" value="42"/>
+            <button class="btn go" onclick="skPush()">Push</button>
+            <button class="btn soft-red" onclick="skPop()">Pop</button>
+            <button class="btn" onclick="skPeek()">Peek</button>
+            <button class="btn" onclick="skReset()">Reset</button>
+          </div>
+        </div>
+        <div class="viz-body">
+          <div class="stack-items" id="sk-items"></div>
+          <div class="status" id="sk-status">Use Push/Pop to operate</div>
+        </div>
+      </div>
+
+      <!-- INFO TABS -->
+      <div class="info-section">
+        <div class="info-tabs">
+          <div class="info-tab active" onclick="switchTab(this,'tp-stack-0')">How It Works</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-stack-1')">Python Code</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-stack-2')">Complexity</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-stack-3')">Quiz</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-stack-prac')">Practice 🏆</div>
+        </div>
+
+        <div class="info-pane active" id="tp-stack-0">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div class="step-body">
+                <div class="step-title">Push</div>
+                <div class="step-desc">Add element to top — O(1).</div>
+                <div class="step-code">stack.append(x)</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div class="step-body">
+                <div class="step-title">Pop</div>
+                <div class="step-desc">Remove and return top element — O(1).</div>
+                <div class="step-code">stack.pop()</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div class="step-body">
+                <div class="step-title">Peek</div>
+                <div class="step-desc">View top without removing — O(1).</div>
+                <div class="step-code">stack[-1]</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">04</div>
+              <div class="step-body">
+                <div class="step-title">Uses</div>
+                <div class="step-desc">Call stack, undo/redo, balanced parentheses, DFS.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-pane" id="tp-stack-1">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — Stack &amp; Balanced Parens</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="cm"># Python list as stack</span>
+stack = []
+stack.append(<span class="nm">10</span>)     <span class="cm"># push — O(1)</span>
+stack.append(<span class="nm">20</span>)
+stack.append(<span class="nm">30</span>)
+top = stack[-<span class="nm">1</span>]      <span class="cm"># peek — O(1) → 30</span>
+val = stack.pop()    <span class="cm"># pop  — O(1) → 30</span>
+
+<span class="cm"># Balanced parentheses</span>
+<span class="kw">def</span> <span class="fn">is_valid</span>(s):
+    st = []
+    <span class="kw">for</span> c <span class="kw">in</span> s:
+        <span class="kw">if</span> c == <span class="st">'('</span>: st.append(c)
+        <span class="kw">elif</span> st: st.pop()
+        <span class="kw">else</span>: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return not</span> st</pre>
+          </div>
+        </div>
+
+        <div class="info-pane" id="tp-stack-2">
+          <div class="concept-grid">
+            <div class="concept-card">
+              <div class="cc-val" style="color:var(--green)">O(1)</div>
+              <div class="cc-name">Push</div>
+              <div class="cc-desc">Append to end of list</div>
+            </div>
+            <div class="concept-card">
+              <div class="cc-val" style="color:var(--green)">O(1)</div>
+              <div class="cc-name">Pop</div>
+              <div class="cc-desc">Remove from end of list</div>
+            </div>
+            <div class="concept-card">
+              <div class="cc-val" style="color:var(--blue)">O(1)</div>
+              <div class="cc-name">Peek</div>
+              <div class="cc-desc">Read last element</div>
+            </div>
+            <div class="concept-card">
+              <div class="cc-val" style="color:var(--purple)">DFS</div>
+              <div class="cc-name">Graph Use</div>
+              <div class="cc-desc">Stack implements iterative DFS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-pane" id="tp-stack-3">
+          <div class="quiz-wrap">
+            <div class="quiz-q">What order does a stack return elements?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="quizAnswer(this,false)">FIFO (first in first out)</button>
+              <button class="quiz-opt" onclick="quizAnswer(this,true)">LIFO (last in first out)</button>
+              <button class="quiz-opt" onclick="quizAnswer(this,false)">Sorted order</button>
+              <button class="quiz-opt" onclick="quizAnswer(this,false)">Random order</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+        </div>
+
+        <div class="info-pane" id="tp-stack-prac">
+          <div class="pq-progress">
+            <div class="pq-progress-label"><span>Progress</span><span id="prog-stack">0 / 9 solved</span></div>
+            <div class="pq-bar"><div class="pq-bar-fill" id="bar-stack" style="width:0%"></div></div>
+          </div>
+          <div class="practice-header">
+            <div class="practice-count">9 problems · 5 PBC · 4 Startup</div>
+            <div class="practice-filters">
+              <button class="pf-btn active" onclick="filterQ(this,'all','stack')">ALL</button>
+              <button class="pf-btn" onclick="filterQ(this,'pbc','stack')">PBC</button>
+              <button class="pf-btn" onclick="filterQ(this,'startup','stack')">STARTUP</button>
+            </div>
+          </div>
+          <div class="pq-list" id="pql-stack">
+            <div class="pq-item" data-id="1401" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/next-greater-element-i/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1401,'stack')"></button>
+              <span class="pq-num">#061</span>
+              <span class="pq-name">Next Greater Element</span>
+              <span class="pq-asked">Amazon, Google</span>
+              <span class="pq-badge pq-pbc">PBC</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1402" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-parentheses/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1402,'stack')"></button>
+              <span class="pq-num">#062</span>
+              <span class="pq-name">Valid Parentheses</span>
+              <span class="pq-asked">Meta, Microsoft</span>
+              <span class="pq-badge pq-pbc">PBC</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1403" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/evaluate-reverse-polish-notation/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1403,'stack')"></button>
+              <span class="pq-num">#063</span>
+              <span class="pq-name">Evaluate Reverse Polish Notation</span>
+              <span class="pq-asked">Google</span>
+              <span class="pq-badge pq-pbc">PBC</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1404" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/implement-queue-using-stacks/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1404,'stack')"></button>
+              <span class="pq-num">#064</span>
+              <span class="pq-name">Implement Queue using Stacks</span>
+              <span class="pq-asked">Amazon</span>
+              <span class="pq-badge pq-pbc">PBC</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1405" data-type="pbc" onclick="openQ(event,'https://www.geeksforgeeks.org/the-celebrity-problem/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1405,'stack')"></button>
+              <span class="pq-num">#065</span>
+              <span class="pq-name">The Celebrity Problem</span>
+              <span class="pq-asked">Microsoft, Google</span>
+              <span class="pq-badge pq-pbc">PBC</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1406" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/the-stock-span-problem/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1406,'stack')"></button>
+              <span class="pq-num">#066</span>
+              <span class="pq-name">Stock Span Problem</span>
+              <span class="pq-asked">Meesho, Ola</span>
+              <span class="pq-badge pq-startup">STARTUP</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1407" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/implement-stack-using-queues/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1407,'stack')"></button>
+              <span class="pq-num">#068</span>
+              <span class="pq-name">Implement Stack using Queues</span>
+              <span class="pq-asked">Cure.fit</span>
+              <span class="pq-badge pq-startup">STARTUP</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1408" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/find-first-non-repeating-character-stream-characters/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1408,'stack')"></button>
+              <span class="pq-num">#069</span>
+              <span class="pq-name">First Non-Repeating Char in Stream</span>
+              <span class="pq-asked">Zepto</span>
+              <span class="pq-badge pq-startup">STARTUP</span>
+              <span class="pq-arrow">→</span>
+            </div>
+            <div class="pq-item" data-id="1409" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/lru-cache/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,1409,'stack')"></button>
+              <span class="pq-num">#070</span>
+              <span class="pq-name">LRU Cache Design</span>
+              <span class="pq-asked">Cogoport</span>
+              <span class="pq-badge pq-startup">STARTUP</span>
+              <span class="pq-arrow">→</span>
+            </div>
+          </div>
+          <div class="pq-empty" id="pqe-stack"></div>
+        </div>
+      </div>
+
+      <div class="page-nav">
+
+        <a class="nav-link" href="cll.html">← Circular Linked List</a>
+
+        <a class="nav-link next" href="queue.html">Queue & Deque →</a>
+
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+
+    function switchTab(el, paneId) {
+      document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.info-pane').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById(paneId).classList.add('active');
+    }
+
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+
+    function openQ(e, url) {
+      e.stopPropagation();
+      window.open(url, '_blank');
+    }
+
+    function setStatus(id, txt) { document.getElementById(id).innerHTML = txt; }
+
+    let doneState = {};
+    try { doneState = JSON.parse(localStorage.getItem('dsa_done_stack') || '{}'); } catch(e){}
+
+    function refreshProg(topic) {
+      const items = document.querySelectorAll('.pq-item');
+      let doneCount = 0;
+      items.forEach(item => {
+        const id = item.dataset.id;
+        const btn = item.querySelector('.pq-done-toggle');
+        if (doneState[id]) {
+          btn.classList.add('done');
+          btn.textContent = '✓';
+          doneCount++;
+        } else {
+          btn.classList.remove('done');
+          btn.textContent = '';
+        }
+      });
+      const pct = (doneCount / items.length) * 100;
+      document.getElementById('bar-' + topic).style.width = pct + '%';
+      document.getElementById('prog-' + topic).textContent = doneCount + ' / ' + items.length + ' solved';
+    }
+
+    function toggleDone(e, id, topic) {
+      e.stopPropagation();
+      doneState[id] = !doneState[id];
+      try { localStorage.setItem('dsa_done_' + topic, JSON.stringify(doneState)); } catch(err) {}
+      refreshProg(topic);
+    }
+
+    function filterQ(btn, type, topic) {
+      document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const items = document.querySelectorAll('#pql-' + topic + ' .pq-item');
+      let visible = 0;
+      items.forEach(item => {
+        if (type === 'all' || item.dataset.type === type) {
+          item.style.display = 'flex';
+          visible++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      document.getElementById('pqe-' + topic).style.display = visible ? 'none' : 'block';
+    }
+
+    function quizAnswer(btn, correct) {
+      const fb = btn.closest('.quiz-wrap').querySelector('.quiz-feedback');
+      btn.parentElement.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
+      if (correct) {
+        btn.classList.add('correct');
+        fb.textContent = '✓ Correct! Stacks use LIFO (Last In, First Out) order — the last element pushed is the first one popped.';
+        fb.className = 'quiz-feedback show correct';
+      } else {
+        btn.classList.add('wrong');
+        fb.textContent = '✗ Incorrect. Stacks use LIFO order, not FIFO. Think of a stack of plates — you take from the top.';
+        fb.className = 'quiz-feedback show wrong';
+      }
+    }
+
+    // Stack Visualization
+    let skD = [];
+    function skDraw(top) {
+      let w = document.getElementById('sk-items');
+      if (!w) return;
+      if (!skD.length) {
+        w.innerHTML = '<div style="color:var(--text2);font-family:var(--mono);font-size:12px;padding:10px">Stack is empty</div>';
+        return;
+      }
+      w.innerHTML = skD.map(function(v, i) {
+        let isTop = i === skD.length - 1;
+        return '<div class="stack-item' + (isTop ? ' s-top' : '') + '"><span>' + v + '</span>' + (isTop ? '<span class="itag itag-blue">TOP</span>' : '') + '</div>';
+      }).join('');
+    }
+    let skRunning = false;
+
+    async function skPush() {
+      if (skRunning) return; skRunning = true;
+      let v = parseInt(document.getElementById('sk-v').value) || 42;
+      skD.push(v); skDraw(true);
+      setStatus('sk-status', '<span class="s-ok">Pushed <b>' + v + '</b> to top &mdash; O(1)</span>');
+      skRunning = false;
+    }
+
+    async function skPop() {
+      if (skRunning) return; skRunning = true;
+      if (!skD.length) { setStatus('sk-status', '<span class="s-err">Stack underflow &mdash; empty!</span>'); return; }
+      let v = skD.pop(); skDraw(false);
+      setStatus('sk-status', '<span class="s-ok">Popped <b>' + v + '</b> from top &mdash; O(1)</span>');
+      skRunning = false;
+    }
+
+    function skPeek() {
+      if (!skD.length) { setStatus('sk-status', '<span class="s-err">Stack is empty!</span>'); return; }
+      setStatus('sk-status', 'Peek: top element is <b>' + skD[skD.length - 1] + '</b> (not removed)');
+    }
+
+    function skReset() { skD = []; skDraw(false); setStatus('sk-status', 'Stack cleared'); }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      skDraw();
+      refreshProg('stack');
+    });
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

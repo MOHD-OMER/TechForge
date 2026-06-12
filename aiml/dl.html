@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Deep Learning — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--pink); --accent-dim: var(--purple-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link active" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+  </aside>
+
+  <main class="main" id="mainContent">
+
+    <div class="aim-hero anim-in">
+      <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — Deep Learning</div>
+      <h1 class="aim-title">🧬 <span>Deep Learning</span></h1>
+      <p class="aim-sub">Neural networks from scratch — perceptrons, CNNs, RNNs, LSTMs, attention mechanisms, and GANs. The architecture powering everything from image recognition to language models.</p>
+      <div class="aim-badges"><span class="aim-badge">Intermediate</span><span class="aim-badge">PyTorch / TF</span><span class="aim-badge">Neural Nets</span></div>
+    </div>
+    <div class="aim-stats anim-in"><div class="bks-box" style="--bks-c:var(--pink)"><span class="bks-val" style="color:var(--pink)">12</span><span class="bks-label">Topics</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">CNNs</span><span class="bks-label">& RNNs</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">GANs</span><span class="bks-label">& VAEs</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">Backprop</span><span class="bks-label">Training</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">45m</span><span class="bks-label">Read Time</span></div></div>
+
+
+    <div class="info-section">
+      <div class="info-tabs">
+        <div class="info-tab active" onclick="switchTab(this,'dl-nn')">Neural Networks</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-backprop')">Training &amp; Backprop</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-activations')">Activations</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-cnn')">CNN</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-rnn')">RNN / LSTM</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-transformer')">Transformer</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-generative')">GANs &amp; Diffusion</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-code')">Code</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-compare')">Architecture Guide</div>
+        <div class="info-tab" onclick="switchTab(this,'dl-quiz')">Quiz</div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 1: NEURAL NETWORKS
+      ═══════════════════════════ -->
+      <div class="info-pane active" id="dl-nn">
+        <div class="dl-stat-bar">
+          <div class="dl-stat"><span class="dl-stat-num" style="color:var(--pink)">7+</span><span class="dl-stat-lbl">Architectures</span></div>
+          <div class="dl-stat"><span class="dl-stat-num" style="color:var(--purple)">1000+</span><span class="dl-stat-lbl">Layers (GPT)</span></div>
+          <div class="dl-stat"><span class="dl-stat-num" style="color:var(--cyan)">GPU</span><span class="dl-stat-lbl">Required</span></div>
+          <div class="dl-stat"><span class="dl-stat-num" style="color:var(--green)">2012</span><span class="dl-stat-lbl">Modern Era</span></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">What is Deep Learning?</div>
+              <div class="step-desc">Deep Learning = neural networks with many layers that automatically learn hierarchical representations from raw data. No manual feature engineering needed. The core loop: <strong>Input → Hidden Layers → Output → Loss → Backprop → Update → Repeat</strong>.</div>
+              <div class="step-code">Input (pixels/text/audio) → [Layer 1: edges] → [Layer 2: shapes] → [Layer N: faces] → Output</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">The Neuron — Basic Computing Unit</div>
+              <div class="step-desc">Each neuron receives inputs, multiplies by learned weights, adds a bias, passes through a nonlinear activation function. Inspired loosely by biological neurons but far simpler. Single neuron = linear classifier; stack them and they approximate anything.</div>
+              <div class="step-code">output = activation(w₁x₁ + w₂x₂ + ... + wₙxₙ + b) = activation(Wᵀx + b)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Input → Hidden → Output Layers</div>
+              <div class="step-desc"><strong>Input layer:</strong> Raw features (784 pixels for MNIST, 512 tokens for text). No computation — just passes data forward. <strong>Hidden layers:</strong> Learn increasingly abstract representations. More layers = more abstraction. <strong>Output layer:</strong> Task-specific — sigmoid for binary, softmax for multiclass, linear for regression.</div>
+              <div class="step-code">Dense(784) → Dense(256,ReLU) → Dense(128,ReLU) → Dense(10,Softmax)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Universal Approximation Theorem</div>
+              <div class="step-desc">A single hidden layer with enough neurons can approximate any continuous function to arbitrary precision. This mathematical guarantee is why neural networks are so powerful — in theory, they can learn any mapping. In practice, depth is far more efficient than width.</div>
+              <div class="step-code">∀ε &gt; 0, ∃NN: |f(x) − NN(x)| &lt; ε &nbsp;·&nbsp; depth wins over width in practice</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Deep vs Shallow — Why Depth Matters</div>
+              <div class="step-desc">Shallow networks need exponentially more neurons to match deep ones. Deep networks learn compositional features hierarchically — pixels → edges → shapes → objects → faces. This matches the structure of natural data and is exponentially more parameter-efficient.</div>
+              <div class="step-code">Layer 1: edges &amp; gradients → Layer 2: textures → Layer 3: parts → Layer N: objects</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Core DL Architectures</div>
+        <div class="arch-grid">
+          <div class="arch-card ac-cyan">
+            <div class="arch-icon">🔲</div>
+            <div class="arch-name">ANN / MLP</div>
+            <div class="arch-tag tag-cyan">Fully Connected</div>
+            <div class="arch-desc">Every neuron connects to every next-layer neuron. Good for structured tabular data and simple pattern recognition.</div>
+            <div class="arch-use">📌 Tabular data · churn · pricing · regression</div>
+          </div>
+          <div class="arch-card ac-pink">
+            <div class="arch-icon">🖼️</div>
+            <div class="arch-name">CNN</div>
+            <div class="arch-tag tag-pink">Convolutional</div>
+            <div class="arch-desc">Sliding filters detect local spatial patterns. Translation invariant. Hierarchical feature learning from pixels to objects.</div>
+            <div class="arch-use">📌 Images · video · medical imaging · OCR</div>
+          </div>
+          <div class="arch-card ac-green">
+            <div class="arch-icon">🔄</div>
+            <div class="arch-name">RNN / LSTM</div>
+            <div class="arch-tag tag-green">Recurrent</div>
+            <div class="arch-desc">Maintains hidden state across time steps. LSTM gates solve vanishing gradient. Processes sequences left-to-right.</div>
+            <div class="arch-use">📌 Time series · text (legacy) · speech</div>
+          </div>
+          <div class="arch-card ac-purple">
+            <div class="arch-icon">⚡</div>
+            <div class="arch-name">Transformer</div>
+            <div class="arch-tag tag-purple">Attention</div>
+            <div class="arch-desc">Self-attention: every token attends to every other. Fully parallelizable. No sequential bottleneck. Powers all modern LLMs.</div>
+            <div class="arch-use">📌 NLP · vision · audio · multimodal</div>
+          </div>
+          <div class="arch-card ac-amber">
+            <div class="arch-icon">🎨</div>
+            <div class="arch-name">GAN</div>
+            <div class="arch-tag tag-amber">Generative</div>
+            <div class="arch-desc">Generator vs Discriminator adversarial game. Generator fools discriminator with increasingly realistic outputs.</div>
+            <div class="arch-use">📌 Image synthesis · deepfakes · style transfer</div>
+          </div>
+          <div class="arch-card ac-blue">
+            <div class="arch-icon">🔃</div>
+            <div class="arch-name">Autoencoder</div>
+            <div class="arch-tag tag-blue">Self-Supervised</div>
+            <div class="arch-desc">Compresses input to bottleneck latent space, reconstructs it. Learns representations without labels. VAE adds probabilistic latent space.</div>
+            <div class="arch-use">📌 Anomaly detection · compression · generation</div>
+          </div>
+        </div>
+
+        <div class="callout callout-pink" style="margin-top:20px;">
+          <span class="callout-icon">🧠</span>
+          <div><strong>Why Deep Learning dominates unstructured data:</strong> Images, audio, and text have spatial/temporal structure that CNNs and Transformers exploit natively. For tabular data, XGBoost still often beats neural networks — always try both.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 2: TRAINING & BACKPROP
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-backprop">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">The 3-Step Learning Loop</div>
+              <div class="step-desc">Every neural network training run repeats this loop thousands or millions of times: <strong>1.</strong> Forward pass — make a prediction. <strong>2.</strong> Compute loss — measure how wrong it is. <strong>3.</strong> Backprop — compute gradients and update weights to reduce loss.</div>
+              <div class="step-code">Predict → Measure Loss → Backprop Gradients → Update Weights → Repeat</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Forward Pass</div>
+              <div class="step-desc">Input flows through the network layer by layer. Each layer applies: weighted sum → activation → next layer. Final layer produces prediction ŷ. Loss function measures error: gap between ŷ and true label y.</div>
+              <div class="step-code">ŷ = forward(x) &nbsp;·&nbsp; L = CrossEntropy(ŷ, y) &nbsp;·&nbsp; lower L = better prediction</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Backpropagation &amp; Chain Rule</div>
+              <div class="step-desc">Compute gradient of loss with respect to every weight using the chain rule. Flow gradients backwards from output to input. Each weight receives a gradient — the direction and magnitude to adjust to reduce loss. This is the most important algorithm in modern AI.</div>
+              <div class="step-code">∂L/∂w = ∂L/∂ŷ · ∂ŷ/∂h · ∂h/∂w &nbsp;(chain rule all the way back)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Gradient Descent &amp; Optimizers</div>
+              <div class="step-desc"><strong>SGD:</strong> vanilla — stable but slow. <strong>SGD + Momentum:</strong> accumulates velocity, escapes local minima faster. <strong>Adam:</strong> adaptive learning rates per parameter + momentum — the default for most DL tasks. <strong>AdamW:</strong> Adam + weight decay — standard for Transformers.</div>
+              <div class="step-code">w ← w − α·∂L/∂w &nbsp;·&nbsp; Adam: m̂/(√v̂+ε) &nbsp;·&nbsp; AdamW adds λw decay</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Epochs, Batches &amp; Iterations</div>
+              <div class="step-desc"><strong>Epoch:</strong> one full pass through all training data. <strong>Batch size:</strong> samples processed before one weight update. <strong>Iteration:</strong> one forward + backward + update = one batch. Mini-batches (32–512) give stable gradients + efficient GPU utilization. Powers of 2 for GPU efficiency.</div>
+              <div class="step-code">1000 samples, batch=100 → 1 epoch = 10 iterations &nbsp;·&nbsp; typical: 32, 64, 128, 256</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Learning Rate &amp; Schedulers</div>
+              <div class="step-desc">Too high → loss diverges or oscillates. Too low → extremely slow convergence. <strong>Warmup + cosine decay</strong> is standard for Transformers. <strong>ReduceLROnPlateau:</strong> decay when val_loss stagnates. <strong>Cyclic LR:</strong> periodically vary rate to escape local minima.</div>
+              <div class="step-code">CosineAnnealingLR(optimizer, T_max=100) &nbsp;·&nbsp; typical lr: 1e-3 (Adam), 0.1 (SGD)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">Vanishing &amp; Exploding Gradients</div>
+              <div class="step-desc"><strong>Vanishing:</strong> gradients shrink exponentially in deep networks with sigmoid/tanh. Layers near input stop learning. Fixed by: ReLU activations, skip connections (ResNet), proper weight init (Xavier/He). <strong>Exploding:</strong> gradients blow up — fixed by gradient clipping.</div>
+              <div class="step-code">clip_grad_norm_(params, max_norm=1.0) &nbsp;·&nbsp; He init for ReLU, Xavier for tanh</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">07</div>
+            <div class="step-body">
+              <div class="step-title">Regularization Techniques</div>
+              <div class="step-desc"><strong>Dropout:</strong> randomly zero neurons during training (p=0.1–0.5) — forces redundant representations. <strong>L2 / Weight Decay:</strong> penalize large weights. <strong>Batch Normalization:</strong> normalize activations per batch — dramatically stabilizes and accelerates training. <strong>Early Stopping:</strong> halt when val_loss stops improving (patience=5–10).</div>
+              <div class="step-code">Dropout(p=0.3) → BatchNorm → EarlyStopping(patience=7) → weight_decay=1e-4</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Loss Functions by Task</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">MSE</div><div class="cc-name">Mean Squared Error</div><div class="cc-desc">Regression. Penalises large errors heavily. (ŷ − y)² averaged. Standard for continuous prediction.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">BCE</div><div class="cc-name">Binary Cross-Entropy</div><div class="cc-desc">Binary classification (0 or 1 output). −[y·log(ŷ) + (1−y)·log(1−ŷ)]. Use with sigmoid output.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">CCE</div><div class="cc-name">Categorical Cross-Entropy</div><div class="cc-desc">Multi-class classification. −Σy·log(ŷ). Use with softmax output. The standard classification loss.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Huber</div><div class="cc-name">Huber Loss</div><div class="cc-desc">Regression with outliers. MSE for small errors, MAE for large — robust blend. Use when target has outliers.</div></div>
+        </div>
+
+        <div class="callout callout-amber" style="margin-top:20px;">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>Training checklist:</strong> Start with lr=1e-3 + Adam. Use BatchNorm before activation. Add Dropout after large Dense layers. Always plot train vs val loss — the gap reveals overfitting instantly. Use early stopping in production.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 3: ACTIVATIONS
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-activations">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Why Activations Matter</div>
+              <div class="step-desc">Without activation functions, stacking layers collapses to a single linear transformation — no matter how deep. Activations introduce nonlinearity, enabling the network to learn complex, curved decision boundaries and hierarchical patterns.</div>
+              <div class="step-code">No activations: N layers = 1 linear layer &nbsp;·&nbsp; With activations: can approximate any function</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Activation Function Reference</div>
+        <div class="activation-grid">
+          <div class="act-card">
+            <div class="act-name" style="color:var(--red)">Sigmoid</div>
+            <div class="act-formula">σ(x) = 1/(1+e⁻ˣ)</div>
+            <div class="act-range">Output: (0, 1)</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#f8717133,#f87171);"></div>
+            <div class="act-use">Binary output layer only. Suffers vanishing gradient — avoid in hidden layers.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name" style="color:var(--amber)">Tanh</div>
+            <div class="act-formula">tanh(x) = (eˣ−e⁻ˣ)/(eˣ+e⁻ˣ)</div>
+            <div class="act-range">Output: (−1, 1)</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#fbbf2433,#fbbf24);"></div>
+            <div class="act-use">Zero-centred (better than sigmoid). Still vanishes in very deep networks.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name" style="color:var(--cyan)">ReLU</div>
+            <div class="act-formula">max(0, x)</div>
+            <div class="act-range">Output: [0, ∞)</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#00d4ff33,#00d4ff);"></div>
+            <div class="act-use">Default for hidden layers. Fast, no vanishing for x&gt;0. Can "die" (neurons stuck at 0).</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name" style="color:var(--blue)">Leaky ReLU</div>
+            <div class="act-formula">max(αx, x), α=0.01</div>
+            <div class="act-range">Output: (−∞, ∞)</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#60a5fa33,#60a5fa);"></div>
+            <div class="act-use">Fixes dying ReLU — small negative slope keeps neurons active. Robust choice.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name" style="color:var(--green)">GELU</div>
+            <div class="act-formula">x·Φ(x)</div>
+            <div class="act-range">Smooth, unbounded</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#43ffb533,#43ffb5);"></div>
+            <div class="act-use">Used in BERT, GPT, Transformers. Smooth approximation of ReLU. Better gradient flow.</div>
+          </div>
+          <div class="act-card">
+            <div class="act-name" style="color:var(--purple)">Softmax</div>
+            <div class="act-formula">eˣⁱ / Σⱼ eˣʲ</div>
+            <div class="act-range">Output: (0,1), sums=1</div>
+            <div class="act-bar" style="background:linear-gradient(90deg,#a78bfa33,#a78bfa);"></div>
+            <div class="act-use">Multi-class output only. Converts raw logits to probability distribution.</div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Quick Selection Guide</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">Hidden</div><div class="cc-name">Hidden Layers</div><div class="cc-desc">Use ReLU by default. GELU for Transformers. Leaky ReLU if seeing dead neurons. Never Sigmoid/Tanh in hidden layers of deep nets.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--pink)">Binary</div><div class="cc-name">Binary Output</div><div class="cc-desc">Sigmoid — outputs probability (0–1). Loss: binary cross-entropy. Threshold at 0.5 by default (adjust for precision/recall tradeoff).</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">Multi</div><div class="cc-name">Multi-class Output</div><div class="cc-desc">Softmax — outputs class probability distribution summing to 1. Loss: categorical cross-entropy. One output per class.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Regression</div><div class="cc-name">Regression Output</div><div class="cc-desc">Linear (no activation) — unbounded output. Loss: MSE or Huber. Can also use ReLU if output must be non-negative.</div></div>
+        </div>
+
+        <div class="tip-box tip-pink" style="margin-top:20px;">
+          <strong>Rule of thumb:</strong> Start every hidden layer with ReLU + BatchNorm. Switch to GELU if building attention-based models. The output activation is always determined by your task — never apply softmax in hidden layers.
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 4: CNN
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-cnn">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">The Convolution Operation</div>
+              <div class="step-desc">A small filter (kernel) slides across the input, computing a dot product at each position to produce a feature map. Learns to detect local patterns: edges, textures, gradients. Key property: shared weights across positions → <strong>translation invariance</strong> (a cat is a cat wherever it is in the image).</div>
+              <div class="step-code">output[i,j] = Σₘ Σₙ kernel[m,n] · input[i+m, j+n] &nbsp;·&nbsp; one kernel = one feature map</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Padding &amp; Stride</div>
+              <div class="step-desc"><strong>Padding='same':</strong> add zeros around border to preserve spatial size. <strong>Padding='valid':</strong> no padding — output smaller than input. <strong>Stride:</strong> step size of the filter. Stride=2 halves the spatial dimensions without a pooling layer.</div>
+              <div class="step-code">Output size = (W − K + 2P)/S + 1 &nbsp;·&nbsp; W=input, K=kernel, P=pad, S=stride</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Pooling — Spatial Downsampling</div>
+              <div class="step-desc"><strong>Max pooling:</strong> keeps the most prominent feature in each window — the standard choice. <strong>Average pooling:</strong> takes mean — smoother. <strong>Global Average Pooling:</strong> collapses each feature map to a single number — replaces Flatten+Dense, greatly reduces parameters.</div>
+              <div class="step-code">MaxPool2d(2,2) → halves H and W &nbsp;·&nbsp; AdaptiveAvgPool2d(1) → [B, C, 1, 1]</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">CNN Architecture Pattern</div>
+              <div class="step-desc">Stack [Conv → BatchNorm → ReLU → Pool] blocks. Early blocks: low-level features (edges, textures). Later blocks: high-level semantics (eyes, wheels). Flatten or Global Avg Pool → Dense head for classification.</div>
+              <div class="step-code">[Conv→BN→ReLU→Pool] × N → GlobalAvgPool → Dense → Softmax</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Landmark CNN Architectures</div>
+              <div class="step-desc"><strong>LeNet (1998):</strong> first practical CNN for handwritten digits. <strong>AlexNet (2012):</strong> won ImageNet by 10%, launched the DL era. <strong>VGG:</strong> deep stacks of 3×3 convs, simple but heavy. <strong>ResNet (2015):</strong> skip connections allow 50–152 layers without degradation. <strong>EfficientNet:</strong> compound scaling of all dimensions optimally. <strong>ViT:</strong> pure Transformer on image patches — beats CNNs at scale.</div>
+              <div class="step-code">ResNet skip: output = F(x) + x &nbsp;·&nbsp; prevents vanishing, enables very deep networks</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">Transfer Learning — Practical Power</div>
+              <div class="step-desc">Load a pretrained CNN (ResNet, EfficientNet) trained on ImageNet (1.2M images, 1000 classes). Freeze early layers (generic edge detectors). Replace classification head. Fine-tune last few layers on your task. Works with only hundreds of images — the most practical DL technique for most projects.</div>
+              <div class="step-code">model = resnet50(pretrained=True) &nbsp;·&nbsp; model.fc = nn.Linear(2048, n_classes)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-blue" style="margin-top:20px;">
+          <span class="callout-icon">💡</span>
+          <div><strong>Real talk:</strong> In production, you almost never train a CNN from scratch. Always start with a pretrained backbone (ResNet-50, EfficientNet-B4, ViT-B/16) and fine-tune. Training from scratch requires millions of images and weeks of GPU time.</div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 5: RNN / LSTM
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-rnn">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Recurrent Neural Network (RNN)</div>
+              <div class="step-desc">Processes sequences by maintaining a hidden state hₜ that carries information from previous time steps. At each step: new input xₜ + previous hidden state hₜ₋₁ → new state. This "memory" enables modeling temporal dependencies in text, audio, and time series.</div>
+              <div class="step-code">hₜ = tanh(Wₕ·hₜ₋₁ + Wₓ·xₜ + b) &nbsp;·&nbsp; same weights used at every step</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">The Vanishing Gradient Problem</div>
+              <div class="step-desc">Gradients decay exponentially through time steps during backprop-through-time. With 100 steps, the gradient from step 1 is multiplied by Wₕ 100 times. If |Wₕ| &lt; 1, gradient → 0; if |Wₕ| &gt; 1, gradient explodes. RNNs can't remember what happened 50+ steps ago.</div>
+              <div class="step-code">gradient ∝ Wₕᵗ → 0 as t → ∞ (if |Wₕ| &lt; 1) &nbsp;·&nbsp; makes long-range memory impossible</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">LSTM — Long Short-Term Memory</div>
+              <div class="step-desc">Solves vanishing gradient with a <strong>cell state cₜ</strong> that acts as a memory highway. Three gates control information flow: <strong>Forget gate fₜ:</strong> what to erase from memory. <strong>Input gate iₜ:</strong> what new information to store. <strong>Output gate oₜ:</strong> what to output. Gradients can flow unchanged through the cell state.</div>
+              <div class="step-code">cₜ = fₜ⊙cₜ₋₁ + iₜ⊙c̃ₜ &nbsp;·&nbsp; hₜ = oₜ⊙tanh(cₜ) &nbsp;·&nbsp; all gates use sigmoid (0–1)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">GRU — Gated Recurrent Unit</div>
+              <div class="step-desc">Simplified LSTM — merges cell state and hidden state, uses 2 gates instead of 3. <strong>Reset gate:</strong> how much past to forget. <strong>Update gate:</strong> how much to update state. ~33% fewer parameters than LSTM. Similar performance, faster training. Often preferred when compute is limited.</div>
+              <div class="step-code">hₜ = (1−zₜ)⊙hₜ₋₁ + zₜ⊙h̃ₜ &nbsp;·&nbsp; simpler than LSTM, comparable performance</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Bidirectional RNNs</div>
+              <div class="step-desc">Run one LSTM left-to-right and another right-to-left. Concatenate both hidden states. This lets the model use both past and future context — crucial for NLP understanding tasks (BERT does this implicitly with attention, not recurrence).</div>
+              <div class="step-code">BiLSTM: hₜ = [→hₜ ; ←hₜ] &nbsp;·&nbsp; doubles hidden size · used in NER, QA</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">Status: Largely Replaced by Transformers</div>
+              <div class="step-desc">Transformers parallelise over sequence length — LSTMs are sequential and can't be parallelised during training. For NLP, Transformers (BERT, GPT) dominate since 2018. LSTMs still competitive for: streaming time series (lower latency), small datasets, edge deployment (fewer parameters).</div>
+              <div class="step-code">LSTM still wins: streaming · resource-constrained · structured time series</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 6: TRANSFORMER
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-transformer">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Self-Attention — The Core Idea</div>
+              <div class="step-desc">Every token attends to every other token simultaneously. In "The bank by the river" — "bank" attends strongly to "river" (financial meaning suppressed). No sequential processing — all positions computed in parallel. This is why Transformers are both more powerful and faster to train than RNNs.</div>
+              <div class="step-code">Attention(Q,K,V) = softmax(QKᵀ / √d_k) · V &nbsp;·&nbsp; √d_k prevents vanishing softmax gradients</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Query, Key, Value — The Retrieval Analogy</div>
+              <div class="step-desc">Each token produces three vectors via learned matrices: <strong>Q (Query):</strong> "what am I looking for?" <strong>K (Key):</strong> "what do I offer to others?" <strong>V (Value):</strong> "what information do I contain?" Attention score = Q·K similarity. Output = weighted sum of Vs (high-scoring tokens contribute more).</div>
+              <div class="step-code">Q = X·Wq &nbsp; K = X·Wk &nbsp; V = X·Wv &nbsp;·&nbsp; all Wq, Wk, Wv are learned</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Multi-Head Attention</div>
+              <div class="step-desc">Run attention H times in parallel with different weight matrices. Each head learns to focus on a different aspect — one head may track syntax, another semantics, another coreference. Concatenate all head outputs, project to original dimension. GPT-3 uses 96 heads.</div>
+              <div class="step-code">MultiHead(Q,K,V) = Concat(head₁,...,headₕ)·Wₒ &nbsp;·&nbsp; each headᵢ = Attention(QWᵢq, KWᵢk, VWᵢv)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Positional Encoding</div>
+              <div class="step-desc">Attention is permutation-invariant — it doesn't know word order. Fix: add a position signal to each token embedding before the first attention layer. Original paper uses sinusoidal encoding. Modern models (BERT, GPT) use learned positional embeddings. RoPE (Rotary Position Embedding) is now standard for long contexts.</div>
+              <div class="step-code">PE(pos,2i) = sin(pos/10000^(2i/d)) &nbsp;·&nbsp; modern: learned or RoPE</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Transformer Block Architecture</div>
+              <div class="step-desc">One Transformer block = Multi-Head Attention → Add&amp;Norm → Feed-Forward → Add&amp;Norm. Residual connections (Add) prevent degradation and allow gradient flow in very deep stacks. LayerNorm stabilizes training. FFN is typically 4× wider than model dim.</div>
+              <div class="step-code">x = x + MHA(LN(x)) &nbsp;·&nbsp; x = x + FFN(LN(x)) &nbsp;·&nbsp; stack N of these (GPT-3: 96 blocks)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">Encoder vs Decoder Transformers</div>
+              <div class="step-desc"><strong>Encoder-only (BERT):</strong> bidirectional attention, sees all tokens simultaneously. Pre-trained with MLM. Best for understanding: classification, NER, QA. <strong>Decoder-only (GPT, Claude, Llama):</strong> causal mask — only attends left-to-right. Pre-trained with next-token prediction. Best for generation. <strong>Encoder-Decoder (T5, BART):</strong> translation, summarization.</div>
+              <div class="step-code">BERT: [MASK] prediction · GPT: predict next token · T5: text-to-text everything</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="concept-grid" style="margin-top:24px;">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">BERT</div><div class="cc-name">Encoder · 110M params</div><div class="cc-desc">Bidirectional. MLM + NSP pretraining. Dominates classification, NER, QA tasks. Fine-tune on your task in minutes.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">GPT-4</div><div class="cc-name">Decoder · ~1.8T params</div><div class="cc-desc">Causal autoregressive. Powers ChatGPT. In-context learning — no fine-tuning needed for many tasks.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">T5</div><div class="cc-name">Enc-Dec · 11B params</div><div class="cc-desc">Text-to-text framework — treats every NLP task as generating text from text. Translation, summarization, QA.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">ViT</div><div class="cc-name">Vision Transformer</div><div class="cc-desc">Split image into 16×16 patches, treat as sequence tokens. Beats CNNs on large-scale vision with enough data.</div></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 7: GANs & DIFFUSION
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-generative">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">GAN — Generative Adversarial Network</div>
+              <div class="step-desc">Two networks in competition: <strong>Generator G:</strong> takes random noise z, produces fake data (images). <strong>Discriminator D:</strong> tells real from fake. G trains to fool D; D trains to not be fooled. At equilibrium, G produces data indistinguishable from real. Training is notoriously unstable — mode collapse is a common failure.</div>
+              <div class="step-code">G objective: max log D(G(z)) &nbsp;·&nbsp; D objective: max [log D(x) + log(1−D(G(z)))]</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">VAE — Variational Autoencoder</div>
+              <div class="step-desc">Encoder maps input x to a <em>distribution</em> (μ, σ) in latent space rather than a single point. Decoder samples z ~ N(μ, σ²) and reconstructs x. The KL divergence term forces the latent space to be smooth and continuous — enabling interpolation and controlled generation.</div>
+              <div class="step-code">z ~ N(μ(x), σ²(x)) &nbsp;·&nbsp; Loss = Recon + β·KL(N(μ,σ²) ‖ N(0,1))</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Diffusion Models — The New SOTA</div>
+              <div class="step-desc"><strong>Forward process:</strong> Gradually add Gaussian noise to data over T steps until pure noise. <strong>Reverse process:</strong> Train a U-Net to predict and remove noise one step at a time. At inference: start from pure noise and iteratively denoise. Produces stunning image quality — DALL-E 2, Midjourney, Stable Diffusion all use this approach.</div>
+              <div class="step-code">Forward: x₀→xₜ add noise · Reverse: xₜ→x₀ denoise with ε-prediction network</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Conditional Generation &amp; Guidance</div>
+              <div class="step-desc">Condition generation on text, class, or other signals. <strong>Classifier-Free Guidance (CFG):</strong> trains both conditioned and unconditioned models, combines at inference — the standard for text-to-image. Higher CFG scale → more faithful to prompt, less diverse. Stable Diffusion uses CFG ≈ 7.5.</div>
+              <div class="step-code">ε̂ = (1+w)·ε_cond − w·ε_uncond &nbsp;·&nbsp; w=CFG scale, typical 5–15</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Generative Model Comparison</div>
+        <table class="comp-table">
+          <thead><tr><th>Model</th><th>Quality</th><th>Speed</th><th>Stability</th><th>Diversity</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>GAN</td><td style="color:var(--green)">⭐⭐⭐⭐</td><td style="color:var(--green)">Fast</td><td style="color:var(--red)">Hard to train</td><td style="color:var(--amber)">Medium</td><td>Real-time synthesis, style transfer</td></tr>
+            <tr><td>VAE</td><td style="color:var(--amber)">⭐⭐⭐</td><td style="color:var(--green)">Fast</td><td style="color:var(--green)">Stable</td><td style="color:var(--green)">High</td><td>Latent interpolation, anomaly detection</td></tr>
+            <tr><td>Diffusion</td><td style="color:var(--green)">⭐⭐⭐⭐⭐</td><td style="color:var(--red)">Slow inference</td><td style="color:var(--green)">Very stable</td><td style="color:var(--green)">Very high</td><td>Text-to-image (DALL-E, SD, Midjourney)</td></tr>
+            <tr><td>Flow-based</td><td style="color:var(--amber)">⭐⭐⭐</td><td style="color:var(--amber)">Medium</td><td style="color:var(--green)">Stable</td><td style="color:var(--green)">High</td><td>Exact likelihood, audio (WaveGlow)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 8: CODE
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-code">
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">python — PyTorch CNN Training Loop (MNIST)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> torch.optim <span class="kw">as</span> optim
+
+<span class="kw">class</span> <span class="fn">CNN</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>):
+        super().<span class="fn">__init__</span>()
+        <span class="kw">self</span>.features = nn.Sequential(
+            nn.Conv2d(<span class="num">1</span>, <span class="num">32</span>, <span class="num">3</span>, padding=<span class="num">1</span>), nn.BatchNorm2d(<span class="num">32</span>), nn.ReLU(),
+            nn.MaxPool2d(<span class="num">2</span>),
+            nn.Conv2d(<span class="num">32</span>, <span class="num">64</span>, <span class="num">3</span>, padding=<span class="num">1</span>), nn.BatchNorm2d(<span class="num">64</span>), nn.ReLU(),
+            nn.AdaptiveAvgPool2d(<span class="num">1</span>), nn.Flatten()
+        )
+        <span class="kw">self</span>.classifier = nn.Sequential(
+            nn.Dropout(<span class="num">0.3</span>), nn.Linear(<span class="num">64</span>, <span class="num">10</span>)
+        )
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="kw">self</span>, x):
+        <span class="kw">return</span> <span class="kw">self</span>.classifier(<span class="kw">self</span>.features(x))
+
+device = <span class="st">'cuda'</span> <span class="kw">if</span> torch.cuda.is_available() <span class="kw">else</span> <span class="st">'cpu'</span>
+model     = CNN().to(device)
+optimizer = optim.AdamW(model.parameters(), lr=<span class="num">1e-3</span>, weight_decay=<span class="num">1e-4</span>)
+criterion = nn.CrossEntropyLoss()
+scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=<span class="num">10</span>)
+
+<span class="kw">for</span> epoch <span class="kw">in</span> range(<span class="num">10</span>):
+    model.train()
+    <span class="kw">for</span> imgs, labels <span class="kw">in</span> train_loader:
+        imgs, labels = imgs.to(device), labels.to(device)
+        optimizer.zero_grad()
+        loss = criterion(model(imgs), labels)
+        loss.backward()
+        nn.utils.clip_grad_norm_(model.parameters(), <span class="num">1.0</span>)
+        optimizer.step()
+    scheduler.step()
+    <span class="cm"># eval loop</span>
+    model.eval()
+    <span class="kw">with</span> torch.no_grad():
+        correct = sum((model(x.to(device)).argmax(<span class="num">1</span>) == y.to(device)).sum().item()
+                      <span class="kw">for</span> x, y <span class="kw">in</span> val_loader)
+    <span class="fn">print</span>(<span class="st">f"Epoch {epoch+1} · Val acc: {correct/len(val_loader.dataset):.3f}"</span>)</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — Transfer Learning with ResNet-50</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> torchvision.models <span class="kw">as</span> models
+
+<span class="cm"># Load pretrained backbone</span>
+model = models.resnet50(weights=<span class="st">'IMAGENET1K_V2'</span>)
+
+<span class="cm"># Freeze all layers</span>
+<span class="kw">for</span> p <span class="kw">in</span> model.parameters():
+    p.requires_grad = <span class="kw">False</span>
+
+<span class="cm"># Replace classification head for your task</span>
+model.fc = nn.Sequential(
+    nn.Linear(<span class="num">2048</span>, <span class="num">512</span>), nn.ReLU(), nn.Dropout(<span class="num">0.3</span>),
+    nn.Linear(<span class="num">512</span>, num_classes)
+)
+
+<span class="cm"># Only train the new head</span>
+optimizer = optim.Adam(model.fc.parameters(), lr=<span class="num">1e-3</span>)
+<span class="cm"># After a few epochs, unfreeze and fine-tune everything at lower lr</span>
+<span class="kw">for</span> p <span class="kw">in</span> model.parameters():
+    p.requires_grad = <span class="kw">True</span>
+optimizer = optim.AdamW(model.parameters(), lr=<span class="num">1e-5</span>, weight_decay=<span class="num">1e-4</span>)</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — Keras Sequential (Quick Prototyping)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> tensorflow <span class="kw">import</span> keras
+
+model = keras.Sequential([
+    keras.layers.Dense(<span class="num">256</span>, activation=<span class="st">'relu'</span>, input_shape=(<span class="num">20</span>,)),
+    keras.layers.BatchNormalization(),
+    keras.layers.Dropout(<span class="num">0.3</span>),
+    keras.layers.Dense(<span class="num">128</span>, activation=<span class="st">'relu'</span>),
+    keras.layers.Dense(<span class="num">1</span>, activation=<span class="st">'sigmoid'</span>)
+])
+model.compile(optimizer=<span class="st">'adam'</span>, loss=<span class="st">'binary_crossentropy'</span>, metrics=[<span class="st">'accuracy'</span>])
+cb = [keras.callbacks.EarlyStopping(patience=<span class="num">7</span>, restore_best_weights=<span class="kw">True</span>),
+      keras.callbacks.ReduceLROnPlateau(patience=<span class="num">3</span>)]
+model.fit(X_train, y_train, epochs=<span class="num">100</span>, batch_size=<span class="num">64</span>,
+          validation_split=<span class="num">0.2</span>, callbacks=cb)</pre>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 9: ARCHITECTURE GUIDE
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-compare">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">💡</span>
+          <div>Use this guide to pick the right architecture for your problem. When in doubt: start with a pretrained Transformer for text/multimodal, pretrained CNN for images, XGBoost for tabular.</div>
+        </div>
+
+        <div class="sub-heading">Architecture Selection Table</div>
+        <table class="comp-table">
+          <thead><tr><th>Architecture</th><th>Best Data</th><th>Parallelise?</th><th>Long Context</th><th>Params (typical)</th><th>Start With</th></tr></thead>
+          <tbody>
+            <tr><td>MLP / ANN</td><td>Tabular</td><td style="color:var(--green)">Yes</td><td style="color:var(--red)">No</td><td>1K–10M</td><td><code>nn.Linear</code></td></tr>
+            <tr><td>CNN</td><td>Images, audio spectrograms</td><td style="color:var(--green)">Yes</td><td style="color:var(--amber)">Limited</td><td>1M–100M</td><td>ResNet-50, EfficientNet</td></tr>
+            <tr><td>RNN / LSTM</td><td>Short sequences</td><td style="color:var(--red)">No (sequential)</td><td style="color:var(--red)">Poor</td><td>1M–50M</td><td><code>nn.LSTM</code></td></tr>
+            <tr><td>Transformer</td><td>Text, images, audio, video</td><td style="color:var(--green)">Yes</td><td style="color:var(--green)">Excellent</td><td>100M–1T+</td><td>BERT, GPT-2, ViT</td></tr>
+            <tr><td>GAN</td><td>Images, audio</td><td style="color:var(--green)">Yes</td><td>N/A</td><td>5M–500M</td><td>StyleGAN2, DCGAN</td></tr>
+            <tr><td>Diffusion</td><td>Images, video, audio</td><td style="color:var(--green)">Yes</td><td>N/A</td><td>100M–3B</td><td>Stable Diffusion</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-heading">Optimizer Comparison</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">SGD</div><div class="cc-name">+ Momentum</div><div class="cc-desc">Best final accuracy for CNNs with careful tuning. Slow to converge. lr=0.1 with cosine decay. Rarely the default anymore.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--pink)">Adam</div><div class="cc-name">Adaptive Moments</div><div class="cc-desc">Adaptive lr per parameter + momentum. Fast convergence. Default for most tasks. lr=1e-3. Can generalize slightly worse than SGD on images.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">AdamW</div><div class="cc-name">Adam + Weight Decay</div><div class="cc-desc">Decouples weight decay from gradient update. Standard for Transformers. lr=1e-4 to 3e-4. Always prefer over Adam for LLMs.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Lion</div><div class="cc-name">EvoLved Sign</div><div class="cc-desc">Sign-based update. More memory-efficient than Adam. Good for large models. Use weight decay=0.1 (10× higher than usual).</div></div>
+        </div>
+
+        <div class="sub-heading">Regularization Techniques Summary</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">Dropout</div><div class="cc-name">Random Zeroing</div><div class="cc-desc">p=0.1–0.5. Applied during training only. Forces redundant representations. Essential for Dense layers. Less used after BatchNorm became standard.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--pink)">BatchNorm</div><div class="cc-name">Batch Normalisation</div><div class="cc-desc">Normalises activations per mini-batch. Dramatically stabilises training, allows higher lr. Place before activation. Standard in CNNs.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">LayerNorm</div><div class="cc-name">Layer Normalisation</div><div class="cc-desc">Normalises across features (not batch). Standard in Transformers. Works at batch_size=1. Replace BatchNorm when using attention.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">MixUp/CutMix</div><div class="cc-name">Data Augmentation</div><div class="cc-desc">Blend pairs of training images (MixUp) or cut-paste patches (CutMix). State-of-the-art image regularization. Easy gains with 2 lines of code.</div></div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           TAB 10: QUIZ
+      ═══════════════════════════ -->
+      <div class="info-pane" id="dl-quiz">
+        <div id="dlQuizContainer"></div>
+      </div>
+
+    </div><!-- /info-section -->
+
+    <!-- PAGE NAV -->
+    <div class="page-nav">
+      <a class="nav-link" href="ml.html">← Machine Learning</a>
+      <a class="nav-link next" href="nlp.html">NLP &amp; LLMs →</a>
+    </div>
+
+  </main>
+</div><!-- /layout -->
+
+<a class="back-top" id="backTop" href="#">↑</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+/* ── PROGRESS ── */
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+/* ── SIDEBAR ── */
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() {
+  const c = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', !c);
+  sidebarOverlay.classList.toggle('visible', c);
+  document.body.classList.toggle('tf-nav-open', c);
+}
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open'));
+}
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.add('closed'); sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+/* ── TAB SWITCH ── */
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+/* ── QUIZ ── */
+const DL_QUIZ = [
+  {
+    q: "What problem do skip connections (residuals) in ResNet primarily solve?",
+    opts: ["Overfitting on small datasets","Vanishing gradients in very deep networks","Slow training on CPU","High memory usage"],
+    correct: 1,
+    exp: "Skip connections (x + F(x)) allow gradients to bypass layers and flow directly back to early weights. Without them, gradients shrink to near-zero in 50+ layer networks — layers near the input stop learning entirely."
+  },
+  {
+    q: "In the Transformer attention formula Attention(Q,K,V) = softmax(QKᵀ/√d)·V, why divide by √d?",
+    opts: ["To normalise the output to sum to 1","To prevent dot products from getting too large, which would saturate softmax and kill gradients","To speed up matrix multiplication","To match the VAE latent space dimension"],
+    correct: 1,
+    exp: "With large d_k, the QKᵀ dot products grow large in magnitude, pushing softmax into regions where gradients are near-zero. Dividing by √d_k keeps attention scores in a range where softmax has healthy gradients."
+  },
+  {
+    q: "What is the key difference between LSTM and vanilla RNN?",
+    opts: ["LSTM uses more layers","LSTM has a cell state with gates that allows gradients to flow without vanishing","LSTM only works on images","LSTM doesn't need backpropagation"],
+    correct: 1,
+    exp: "LSTM's cell state acts as a 'memory highway' — the forget and input gates control what to remember or erase, and gradients can flow through the cell state without being multiplied repeatedly by weights (no vanishing)."
+  },
+  {
+    q: "Diffusion models generate images by:",
+    opts: ["A generator competing with a discriminator","Learning to reverse a noise-adding process step by step","Compressing images to a latent space and sampling","Predicting the next pixel given all previous pixels"],
+    correct: 1,
+    exp: "Diffusion models learn a denoising function: given a noisy image xₜ, predict the noise ε added, then subtract it. At inference, start from pure Gaussian noise and iteratively denoise. This is how DALL-E 2, Midjourney, and Stable Diffusion work."
+  },
+  {
+    q: "BatchNorm and LayerNorm differ mainly in:",
+    opts: ["LayerNorm is always faster","BatchNorm normalises across features; LayerNorm normalises across the batch","BatchNorm normalises across the batch dimension; LayerNorm normalises across the feature dimension","They are equivalent"],
+    correct: 2,
+    exp: "BatchNorm computes mean/std across the batch (needs batch_size > 1, works well in CNNs). LayerNorm computes mean/std across features for each example independently (works at batch_size=1, standard in Transformers)."
+  }
+];
+
+let dlQ = 0, dlScore = 0, dlAnswered = false;
+function renderDLQuiz() {
+  const c = document.getElementById('dlQuizContainer'); if (!c) return;
+  if (dlQ >= DL_QUIZ.length) {
+    c.innerHTML = `<div class="quiz-wrap"><div class="quiz-q" style="font-size:20px;text-align:center;">Quiz Complete! 🎉<br><span style="font-family:var(--font-mono);color:var(--pink);font-size:32px;">${dlScore}/${DL_QUIZ.length}</span></div>
+    <div class="quiz-feedback" style="text-align:center;margin-top:8px;">${dlScore===DL_QUIZ.length?'🏆 Perfect! You know your deep learning.':dlScore>=3?'✅ Good work. Review the missed concepts above.':'📚 Revisit the tabs and try again.'}</div>
+    <div style="text-align:center;margin-top:20px;"><button class="quiz-opt" style="max-width:200px;text-align:center;" onclick="dlQ=0;dlScore=0;renderDLQuiz()">↺ Retry</button></div></div>`;
+    return;
+  }
+  const q = DL_QUIZ[dlQ]; dlAnswered = false;
+  c.innerHTML = `<div class="quiz-wrap"><div class="quiz-score">Question ${dlQ+1} of ${DL_QUIZ.length} · Score: ${dlScore}</div>
+  <div class="quiz-q">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="dlAnswer(this,${i===q.correct},${i})">${o}</button>`).join('')}</div>
+  <div class="quiz-feedback" id="dlFeedback"></div></div>`;
+}
+function dlAnswer(btn, isCorrect, idx) {
+  if (dlAnswered) return; dlAnswered = true;
+  const q = DL_QUIZ[dlQ];
+  btn.parentElement.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isCorrect)b.classList.add('wrong');});
+  if (isCorrect) dlScore++;
+  const fb = document.getElementById('dlFeedback');
+  if (fb) fb.innerHTML = `${isCorrect?'✅ Correct!':'❌ Incorrect.'} — ${q.exp}`;
+  setTimeout(()=>{dlQ++;renderDLQuiz();}, 3000);
+}
+window.addEventListener('load', renderDLQuiz);
+
+/* Scroll animations */
+const _aio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_aio.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_aio.observe(el);});
+
+const _aio2=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_aio2.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_aio2.observe(el);});
+</script>
+</body>
+</html>

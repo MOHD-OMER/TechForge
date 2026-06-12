@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Computer Vision — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link active" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+</aside>
+
+  <main class="main" id="mainContent">
+  
+      <div class="aim-hero anim-in">
+        <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — Computer Vision</div>
+        <h1 class="aim-title">👁️ <span>Computer Vision</span></h1>
+        <p class="aim-sub">Object detection, image segmentation, YOLO, feature extraction, and Vision Transformers — teaching machines to see and understand the visual world.</p>
+        <div class="aim-badges"><span class="aim-badge">Intermediate</span><span class="aim-badge">OpenCV / YOLO</span><span class="aim-badge">ViT</span></div>
+      </div>
+      <div class="aim-stats anim-in"><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">8</span><span class="bks-label">Topics</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">Detection</span><span class="bks-label">& Segm.</span></div><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">YOLO</span><span class="bks-label">& RCNN</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">ViTs</span><span class="bks-label">New Wave</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">35m</span><span class="bks-label">Read Time</span></div></div>
+
+<div class="info-section">
+      <div class="info-tabs">
+        <div class="info-tab active" onclick="switchTab(this,'cv-what')">What is CV?</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-cnn')">CNNs</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-classification')">Classification</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-detection')">Object Detection</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-segmentation')">Segmentation</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-architectures')">Architectures</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-generative')">Generative CV</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-code')">Code</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-interview')">Interview Q&amp;A</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-cheatsheet')">⚡ Cheat Sheet</div>
+        <div class="info-tab" onclick="switchTab(this,'cv-quiz')">Quiz</div>
+      </div>
+
+      <!-- ══ TAB 1: WHAT IS CV ══ -->
+      <div class="info-pane active" id="cv-what">
+        <div class="stat-bar">
+          <div class="stat-item"><span class="stat-num" style="color:var(--blue)">91%</span><span class="stat-lbl">ImageNet Top-1 (ViT-G)</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--cyan)">200+</span><span class="stat-lbl">FPS (YOLOv8-nano)</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--green)">1B+</span><span class="stat-lbl">Masks (SAM training)</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--amber)">2012</span><span class="stat-lbl">AlexNet revolution</span></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">What is Computer Vision?</div>
+              <div class="step-desc">Computer Vision (CV) is the field of AI that enables machines to interpret and understand visual data — images and video. The goal: go from raw pixels to meaning. A human glances at a scene and instantly knows "there's a cat on the sofa." CV systems replicate this by learning statistical patterns from millions of labelled images.</div>
+              <div class="step-code">Pixels → Features (edges/textures/shapes) → Semantics (objects/scenes) → Actions</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Images are Matrices of Numbers</div>
+              <div class="step-desc">A digital image is a 3D array of pixel values. <strong>Grayscale:</strong> [H × W × 1], each pixel 0–255. <strong>RGB:</strong> [H × W × 3], three channels for Red, Green, Blue. A 224×224 RGB image = 150,528 individual numbers. Before training, images are resized to a uniform dimension and normalised (scaled to 0–1 or standardised to mean=0, std=1 — critical for stable gradient flow).</div>
+              <div class="step-code">224×224 RGB: shape [224, 224, 3] = 150,528 values · normalise: x/255 or (x-μ)/σ</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">The Five Core CV Tasks</div>
+              <div class="step-desc"><strong>Classification:</strong> one label per image ("cat"). <strong>Detection:</strong> locate + classify each object with a bounding box. <strong>Segmentation:</strong> classify every pixel (semantic) or separate each instance (instance). <strong>Keypoint:</strong> locate body joints, facial landmarks. <strong>Depth:</strong> estimate distance of each pixel from camera. Each task is progressively harder and provides richer spatial understanding.</div>
+              <div class="step-code">Classify → Detect → Segment → Keypoints → Depth (increasing spatial detail)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">The CV Revolution: AlexNet → ViT</div>
+              <div class="step-desc">Pre-2012: hand-crafted features (SIFT, HOG) + SVM. 2012: AlexNet trains a deep CNN on GPUs and wins ImageNet by 10 percentage points — the deep learning era begins. 2015: ResNet reaches human-level accuracy on ImageNet. 2020+: Vision Transformers (ViT) apply self-attention to image patches — beating CNNs at scale with enough data.</div>
+              <div class="step-code">HOG+SVM (2011) → AlexNet (2012) → ResNet (2015) → EfficientNet (2019) → ViT (2020)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-grid" style="margin-top:28px;">
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">📱</span><span class="task-name">Face Recognition</span></div>
+            <div class="task-desc">Identify or verify identity from facial images. Used in phone unlock, security systems, border control.</div>
+            <div class="task-detail">Model: ArcFace / FaceNet · Metric: LFW accuracy</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🚗</span><span class="task-name">Autonomous Driving</span></div>
+            <div class="task-desc">Detect lanes, vehicles, pedestrians, traffic signs in real time. Fuse camera, LiDAR, radar. Tesla Autopilot, Waymo.</div>
+            <div class="task-detail">Model: YOLOv8 + BEV · Metric: mAP, NDS</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🏥</span><span class="task-name">Medical Imaging</span></div>
+            <div class="task-desc">Detect tumours in X-rays/CT/MRI, segment organs, classify skin lesions. Reaches radiologist-level on specific tasks.</div>
+            <div class="task-detail">Model: U-Net, ViT · Metric: Dice score, AUC</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🏭</span><span class="task-name">Industrial Inspection</span></div>
+            <div class="task-desc">Detect manufacturing defects, surface anomalies, component misalignments. Faster and more consistent than human inspection.</div>
+            <div class="task-detail">Model: Anomaly detection (PatchCore, FastFlow)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 2: CNNs ══ -->
+      <div class="info-pane" id="cv-cnn">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Why CNNs for Images?</div>
+              <div class="step-desc">A fully-connected network applied to a 224×224 image would need 150,528 input neurons — computationally explosive and prone to overfitting. CNNs exploit two key properties of images: <strong>Local connectivity</strong> (nearby pixels are related) and <strong>Translation invariance</strong> (a cat is a cat regardless of where it appears). Convolution filters share weights across the entire image — a dramatic reduction in parameters.</div>
+              <div class="step-code">FC on 224×224: ~150k×128 = 19M params in first layer alone · CNN: 3×3 kernel = 9 params shared</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">The Convolution Operation</div>
+              <div class="step-desc">A filter (kernel) of size K×K slides across the input with stride S, computing a dot product at each position to produce a feature map. One kernel detects one type of pattern (e.g., vertical edges). Use 64 kernels → 64 feature maps, each detecting a different low-level pattern. Key formula: output size = (W − K + 2P) / S + 1.</div>
+              <div class="step-code">out[i,j] = Σₘ Σₙ kernel[m,n] · input[i+m, j+n] · output size = (W-K+2P)/S + 1</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Padding &amp; Stride</div>
+              <div class="step-desc"><strong>Padding='same':</strong> add zeros around the border to preserve spatial dimensions (H×W unchanged). <strong>Padding='valid':</strong> no padding — output shrinks by K-1 pixels per side. <strong>Stride=2:</strong> skip every other position — halves spatial dimensions more efficiently than pooling, with learnable downsampling. Standard pattern: stride=2 at block boundaries instead of MaxPool.</div>
+              <div class="step-code">same: output W = W · valid: output W = W-K+1 · stride=2: output W = ⌊W/2⌋</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Pooling — Spatial Downsampling</div>
+              <div class="step-desc"><strong>MaxPool2d(2,2):</strong> take the maximum in each 2×2 window — halves H and W, retains the strongest feature activation. Provides mild translation invariance. <strong>AvgPool:</strong> takes mean — smoother. <strong>Global Average Pooling (GAP):</strong> collapses each feature map to a single number — replaces Flatten+Dense, dramatically reduces parameters and acts as a regulariser. GAP is the modern standard.</div>
+              <div class="step-code">MaxPool(2,2): [B,C,H,W] → [B,C,H/2,W/2] · GAP: [B,C,H,W] → [B,C,1,1]</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Feature Hierarchy — What CNNs Learn</div>
+              <div class="step-desc">CNNs learn a hierarchical decomposition of visual structure: <strong>Early layers</strong> detect edges, gradients, colour blobs (universal, dataset-agnostic — these features transfer!). <strong>Middle layers</strong> detect textures, patterns, object parts. <strong>Deep layers</strong> detect high-level semantics — faces, wheels, text. This hierarchy is why ImageNet pretrained features transfer so well to other vision tasks.</div>
+              <div class="step-code">Layer 1: edges · Layer 3: textures · Layer 7: parts · Layer 12: objects · Last: semantics</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Batch Normalisation in CNNs</div>
+              <div class="step-desc">Apply after Conv, before ReLU. Normalises across the batch per channel. Dramatically stabilises training, allows higher learning rates, reduces sensitivity to weight initialisation. In modern CNNs: [Conv → BN → ReLU → (Pool)] repeated N times → GAP → Linear. Replace BN with LayerNorm for very small batches or ViTs.</div>
+              <div class="step-code">[Conv → BN → ReLU] × N → GlobalAvgPool → Dropout(0.2) → Linear(num_classes)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 3: CLASSIFICATION ══ -->
+      <div class="info-pane" id="cv-classification">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Image Classification</div>
+              <div class="step-desc">Assign one (or multiple) label(s) to an entire image. The ImageNet Large Scale Visual Recognition Challenge (ILSVRC) — 1.2M images, 1000 classes — drove a decade of CV progress. Top-1 accuracy jumped from 72% (2010, hand-crafted) to 91%+ (2022, ViT-G/14) through deep learning advances.</div>
+              <div class="step-code">f(image) → [p_cat=0.92, p_dog=0.05, p_bird=0.02, ...] · argmax → predicted class</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Data Augmentation — Essential for CV</div>
+              <div class="step-desc">Randomly transform training images to create diversity and prevent overfitting. Standard: random horizontal flip, random crop, colour jitter (brightness/contrast/saturation). Advanced: MixUp (blend two images + labels), CutMix (paste patch from one image to another), RandAugment (random policy search). Can be worth 2–5% accuracy, equivalent to 2× the training data.</div>
+              <div class="step-code">transforms.Compose([RandomHFlip(p=0.5), RandomCrop(224), ColorJitter(0.4,0.4,0.4,0.1)])</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Transfer Learning — The Production Pattern</div>
+              <div class="step-desc">Almost never train from scratch. Load ImageNet pretrained weights — the model has already learned universal visual features (edges → textures → objects). Strategy: (1) Freeze backbone, add new classification head, train head (lr=1e-3). (2) Unfreeze all, fine-tune at low lr (1e-5). Works with as few as 100 images per class. Use <code>timm</code> for the best pretrained models.</div>
+              <div class="step-code">model = timm.create_model('efficientnet_b4', pretrained=True, num_classes=YOUR_N)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Multi-Label vs Multi-Class Classification</div>
+              <div class="step-desc"><strong>Multi-class:</strong> exactly one correct label per image (cat OR dog OR bird). Use Softmax + CrossEntropy. <strong>Multi-label:</strong> multiple labels can be true simultaneously (image has both a cat AND a sofa). Use Sigmoid + BinaryCrossEntropy per class. Instagram photo tagging, product attributes, chest X-ray pathologies are all multi-label tasks.</div>
+              <div class="step-code">Multi-class: softmax, CE · Multi-label: sigmoid, BCE per class · chest X-ray: multi-label</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Classification Model Comparison</div>
+        <table class="comp-table">
+          <thead><tr><th>Model</th><th>Top-1 (ImageNet)</th><th>Params</th><th>Speed</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>MobileNetV3-S</td><td>67.4%</td><td>2.5M</td><td style="color:var(--green)">Very fast</td><td>Mobile / edge deployment</td></tr>
+            <tr><td>ResNet-50</td><td>80.9%</td><td>25M</td><td style="color:var(--green)">Fast</td><td>General backbone, widely supported</td></tr>
+            <tr><td>EfficientNet-B4</td><td>83.8%</td><td>19M</td><td style="color:var(--green)">Fast</td><td>Accuracy/efficiency sweet spot</td></tr>
+            <tr><td>ConvNeXt-B</td><td>85.8%</td><td>89M</td><td style="color:var(--amber)">Medium</td><td>Strong CNN baseline, no ViT complexity</td></tr>
+            <tr><td>ViT-B/16</td><td>85.5%</td><td>86M</td><td style="color:var(--amber)">Medium</td><td>Best with large data; Hugging Face friendly</td></tr>
+            <tr><td>ViT-G/14</td><td>90.9%</td><td>1.8B</td><td style="color:var(--red)">Slow</td><td>Maximum accuracy, research</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══ TAB 4: OBJECT DETECTION ══ -->
+      <div class="info-pane" id="cv-detection">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">The Detection Task</div>
+              <div class="step-desc">For each object in an image: predict class label + bounding box [x_min, y_min, x_max, y_max] + confidence score. Multiple objects, different scales, partial occlusions. Primary metric: mAP (mean Average Precision) — averaged over classes and IoU thresholds. COCO benchmark: 80 classes, 330k images, the standard for detection research.</div>
+              <div class="step-code">output: [(class, x1,y1,x2,y2, conf), ...] · mAP@[0.5:0.95] = COCO standard metric</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">IoU — Intersection over Union</div>
+              <div class="step-desc">The fundamental metric for bounding box quality. IoU = area of overlap / area of union between predicted and ground-truth boxes. IoU=1 is perfect; IoU=0 means no overlap. Used in: (1) defining true positives (IoU ≥ 0.5 threshold). (2) NMS — removing duplicate detections. (3) Training loss (DIoU, CIoU improve convergence).</div>
+              <div class="step-code">IoU = |pred ∩ gt| / |pred ∪ gt| · TP: IoU≥0.5 · NMS threshold: keep if IoU&lt;0.45</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Two-Stage Detectors — R-CNN Family</div>
+              <div class="step-desc"><strong>Faster R-CNN:</strong> Region Proposal Network (RPN) generates candidate boxes → ROI Align extracts fixed features → classifier + box regressor. High accuracy (mAP ~55+ on COCO) but slower (~5fps). Best for accuracy-critical applications where speed is secondary (medical, satellite imagery). Torchvision includes production-ready Faster R-CNN.</div>
+              <div class="step-code">Image → Backbone → FPN → RPN → ROI Align → Head → (class, box) · ~5fps</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">YOLO — The Real-Time Standard</div>
+              <div class="step-desc">Single-stage: divide image into a grid; predict bounding boxes + class probabilities for each cell in one forward pass. No region proposal step. YOLOv8 (Ultralytics, 2023): 37.3 mAP at 200fps (nano), 53.9 mAP at 87fps (large) on COCO. The default choice for production real-time detection. Tiny API, easy to fine-tune on custom data.</div>
+              <div class="step-code">from ultralytics import YOLO · YOLO('yolov8n.pt') · train + inference in &lt;10 lines</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Feature Pyramid Network (FPN)</div>
+              <div class="step-desc">Multi-scale detection: small objects need high-resolution features; large objects need large receptive fields. FPN builds a pyramid of feature maps by combining high-level semantic features (top-down) with high-resolution spatial features (bottom-up). All modern detectors (YOLO, Faster R-CNN, DETR) use FPN or a variant. Critical for detecting objects at multiple scales.</div>
+              <div class="step-code">P3 (small objects) + P4 + P5 (large objects) → predict at all scales → NMS to merge</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">DETR — Detection Transformer</div>
+              <div class="step-desc">Facebook AI (2020). Frames detection as a set-prediction problem using Transformers. No anchors, no NMS — outputs exactly N (100) box predictions directly. Hungarian matching assigns predictions to ground truths. Elegant but slow to train (500 epochs vs 12 for Faster R-CNN). RT-DETR (2023) achieves real-time speeds with Transformer quality.</div>
+              <div class="step-code">CNN backbone → Transformer encoder/decoder → N object queries → (class, box) pairs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 5: SEGMENTATION ══ -->
+      <div class="info-pane" id="cv-segmentation">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Three Types of Segmentation</div>
+              <div class="step-desc"><strong>Semantic:</strong> classify every pixel into a category. Two people = same "person" mask. Road, sky, building each get their own colour. <strong>Instance:</strong> separate mask per object instance. Two people = two distinct masks, even when overlapping. <strong>Panoptic:</strong> combines both — semantic for "stuff" (road, sky) and instance for "things" (people, cars). Metric: IoU per class (semantic), mAP (instance).</div>
+              <div class="step-code">Semantic: pixel → class · Instance: pixel → (class, instance_id) · Panoptic: both</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">U-Net — The Segmentation Workhorse</div>
+              <div class="step-desc">Encoder-decoder with skip connections. Encoder: conv blocks + max pooling — extract features, shrink spatial dims. Decoder: transposed convolutions upsample back to original resolution. <strong>Skip connections</strong> concatenate encoder features to corresponding decoder layers — preserve fine spatial details lost during downsampling. Essential for medical imaging segmentation. Simple, fast, works with small datasets.</div>
+              <div class="step-code">[Conv→Pool]×4 → bottleneck → [Upsample+Skip→Conv]×4 → 1×1 conv → mask</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Mask R-CNN — Instance Segmentation</div>
+              <div class="step-desc">Extends Faster R-CNN by adding a parallel mask prediction branch. After ROI Align: (1) box regression + classification (from Faster R-CNN), (2) a small FCN predicts a binary mask for each ROI. Train with multi-task loss: classification + box regression + binary mask cross-entropy. Accurate but slower — ~5fps. The basis for most instance segmentation systems.</div>
+              <div class="step-code">ROI Align → [class head | box head | mask FCN] · loss = L_cls + L_box + L_mask</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">SAM — Segment Anything Model</div>
+              <div class="step-desc">Meta AI (2023). Foundation model for segmentation. Trained on 1B+ mask annotations from SA-1B dataset. Accepts prompts: points, bounding boxes, or text — and segments the corresponding object in any image. Zero-shot generalisation across domains. SAM 2 (2024) extends to video. Paradigm shift — from training per-dataset models to universal promptable segmentation.</div>
+              <div class="step-code">predictor.predict(point_coords=[[x,y]], point_labels=[1]) → masks, scores, logits</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Evaluation: Dice Score &amp; IoU</div>
+              <div class="step-desc"><strong>IoU (Jaccard):</strong> intersection / union per class. Average across classes = mIoU — standard for semantic segmentation. <strong>Dice score:</strong> 2×|A∩B| / (|A|+|B|). More sensitive to small regions. Standard for medical segmentation (lung nodules, tumours). Both range 0–1; higher is better. Dice = 2×IoU / (1+IoU) — mathematically related.</div>
+              <div class="step-code">IoU = |A∩B|/|A∪B| · Dice = 2|A∩B|/(|A|+|B|) · mIoU = mean over all classes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 6: ARCHITECTURES ══ -->
+      <div class="info-pane" id="cv-architectures">
+        <div class="arch-timeline">
+          <div class="arch-item">
+            <div class="arch-dot hl"></div>
+            <div class="arch-year">1998</div>
+            <div class="arch-body">
+              <div class="arch-name">LeNet-5</div>
+              <div class="arch-desc">First practical CNN for handwritten digit recognition (MNIST). 5 layers, ~60k parameters. Established the [Conv→Pool]×N pattern still used today.</div>
+              <span class="arch-tag tag-blue">Pioneer</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot hl"></div>
+            <div class="arch-year">2012</div>
+            <div class="arch-body">
+              <div class="arch-name">AlexNet</div>
+              <div class="arch-desc">8 layers, 60M params, trained on 2 GPUs. Won ImageNet by 10.9% — the moment that launched the deep learning era. Introduced: ReLU activations, dropout, data augmentation, GPU training.</div>
+              <span class="arch-tag tag-blue">Revolution</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot"></div>
+            <div class="arch-year">2014</div>
+            <div class="arch-body">
+              <div class="arch-name">VGG-16 / VGG-19</div>
+              <div class="arch-desc">Very deep stacks of 3×3 convolutions. Simple, uniform architecture. Still widely used as a feature extractor baseline. 138M parameters — large but interpretable.</div>
+              <span class="arch-tag tag-blue">Backbone</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot hl"></div>
+            <div class="arch-year">2015</div>
+            <div class="arch-body">
+              <div class="arch-name">ResNet-50 / 101 / 152</div>
+              <div class="arch-desc">Residual (skip) connections: output = F(x) + x. Enables training networks 50–152 layers deep without degradation. Won ImageNet + COCO 2015. ResNet-50 remains the most widely used backbone in production CV.</div>
+              <span class="arch-tag tag-green">Gold Standard</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot"></div>
+            <div class="arch-year">2018</div>
+            <div class="arch-body">
+              <div class="arch-name">MobileNetV2 / V3</div>
+              <div class="arch-desc">Depthwise separable convolutions — 8–9× fewer operations than standard conv. Designed for mobile and edge devices. 2.5M params (MobileNetV3-Small). Used in on-device ML (TFLite, CoreML).</div>
+              <span class="arch-tag tag-amber">Edge / Mobile</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot hl"></div>
+            <div class="arch-year">2019</div>
+            <div class="arch-body">
+              <div class="arch-name">EfficientNet (B0–B7)</div>
+              <div class="arch-desc">Compound scaling: simultaneously scale width, depth, and resolution by a fixed ratio. EfficientNet-B4 (19M params) matches ResNet-152 (60M) accuracy. The accuracy/efficiency Pareto frontier for CNNs.</div>
+              <span class="arch-tag tag-green">Efficient</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot hl"></div>
+            <div class="arch-year">2020</div>
+            <div class="arch-body">
+              <div class="arch-name">Vision Transformer (ViT)</div>
+              <div class="arch-desc">Split image into 16×16 patches, linearly embed each, treat as a sequence of tokens. Apply standard Transformer. With enough pretraining data (JFT-300M), beats CNNs at every scale. DeiT makes ViT data-efficient for smaller datasets.</div>
+              <span class="arch-tag tag-purple">Transformer</span>
+            </div>
+          </div>
+          <div class="arch-item">
+            <div class="arch-dot"></div>
+            <div class="arch-year">2022</div>
+            <div class="arch-body">
+              <div class="arch-name">ConvNeXt</div>
+              <div class="arch-desc">Pure CNN modernised with Transformer design choices: large kernels (7×7), LayerNorm, fewer activations, inverted bottleneck. Matches or beats ViT on ImageNet without the complexity of self-attention. Best of both worlds.</div>
+              <span class="arch-tag tag-blue">Modern CNN</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 7: GENERATIVE CV ══ -->
+      <div class="info-pane" id="cv-generative">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">CLIP — Connecting Images and Language</div>
+              <div class="step-desc">OpenAI (2021). Train an image encoder and a text encoder jointly on 400M (image, caption) pairs using contrastive loss — matching image and caption embeddings. Result: a shared visual-language embedding space. Enables zero-shot classification: compare image embedding to text embeddings of class names ("a photo of a cat"). Foundation for DALL-E, Stable Diffusion text conditioning, and VLMs.</div>
+              <div class="step-code">L = -log[exp(sim(Iᵢ,Tᵢ)/τ) / Σⱼ exp(sim(Iᵢ,Tⱼ)/τ)] · contrastive across batch</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Stable Diffusion — Latent Diffusion</div>
+              <div class="step-desc">Run diffusion in a compressed <strong>latent space</strong> (4×64×64) rather than pixel space (3×512×512) — 48× more efficient. VAE encodes image to latent; VAE decoder reconstructs. U-Net denoises in latent space, conditioned on CLIP text embeddings via cross-attention. Classifier-Free Guidance (CFG) amplifies the text conditioning signal. Open-source (Stability AI, 2022).</div>
+              <div class="step-code">z = VAE.encode(x) → denoise(z, text_emb, T steps) → x̂ = VAE.decode(z₀)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">ControlNet — Structured Control</div>
+              <div class="step-desc">Add conditioning signals to Stable Diffusion beyond text: depth maps, edge maps (Canny), human pose skeletons (OpenPose), semantic segmentation, normal maps. Adds a trainable copy of SD's encoder, conditioned on the control image. Enables precise control: "generate a person in this exact pose, in a photorealistic style." The key enabler for professional creative workflows.</div>
+              <div class="step-code">SD(text + canny_edges) → image that follows both prompt and edge structure</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Video Generation — Sora &amp; Beyond</div>
+              <div class="step-desc">OpenAI Sora (2024): extends latent diffusion to spacetime — treat video as a sequence of 3D patches. Generates up to 60s photorealistic video. Key insight: represents the world as a 3D physical simulation, not just frame interpolation. Runway Gen-3, Kling, Pika Labs offer accessible video generation APIs. 2025 is becoming the year of practical video AI.</div>
+              <div class="step-code">3D patches + spacetime attention → coherent long video · ~30B params estimated</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout callout-blue" style="margin-top:20px;">
+          <span class="callout-icon">💡</span>
+          <div><strong>The CLIP → Diffusion stack:</strong> CLIP provides the image-text bridge. Diffusion provides generative quality. Every major image generation system (DALL-E 3, Midjourney, SD) uses both. Understanding CLIP is the prerequisite for understanding why text-to-image works at all.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 8: CODE ══ -->
+      <div class="info-pane" id="cv-code">
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">python — YOLOv8 detection + custom fine-tuning</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> ultralytics <span class="kw">import</span> YOLO
+
+<span class="cm"># ── Inference on image / video ──</span>
+model = YOLO(<span class="st">'yolov8m.pt'</span>)          <span class="cm"># n/s/m/l/x variants</span>
+results = model(<span class="st">'street.jpg'</span>, conf=<span class="num">0.5</span>, iou=<span class="num">0.45</span>)
+<span class="kw">for</span> r <span class="kw">in</span> results:
+    boxes = r.boxes.xyxy.cpu().numpy()   <span class="cm"># [x1,y1,x2,y2]</span>
+    cls   = r.boxes.cls.cpu().numpy()    <span class="cm"># class IDs</span>
+    conf  = r.boxes.conf.cpu().numpy()   <span class="cm"># confidences</span>
+    r.show()                             <span class="cm"># display annotated image</span>
+    r.save(<span class="st">'result.jpg'</span>)
+
+<span class="cm"># ── Fine-tune on custom data ──</span>
+<span class="cm"># custom.yaml: path/train, path/val, nc (num classes), names</span>
+model.train(data=<span class="st">'custom.yaml'</span>, epochs=<span class="num">100</span>, imgsz=<span class="num">640</span>,
+            batch=<span class="num">16</span>, device=<span class="num">0</span>, workers=<span class="num">8</span>,
+            lr0=<span class="num">0.01</span>, weight_decay=<span class="num">0.0005</span>,
+            augment=<span class="kw">True</span>, mosaic=<span class="num">1.0</span>, mixup=<span class="num">0.1</span>)
+metrics = model.val()
+<span class="fn">print</span>(<span class="st">f"mAP50: {metrics.box.map50:.3f}"</span>)</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — Transfer learning (EfficientNet via timm)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> timm, torch, torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> torchvision <span class="kw">import</span> transforms, datasets
+<span class="kw">from</span> torch.optim <span class="kw">import</span> AdamW
+<span class="kw">from</span> torch.optim.lr_scheduler <span class="kw">import</span> CosineAnnealingLR
+
+NUM_CLASSES = <span class="num">10</span>
+
+<span class="cm"># 1. Load pretrained model (no head)</span>
+model = timm.create_model(<span class="st">'efficientnet_b4'</span>, pretrained=<span class="kw">True</span>, num_classes=NUM_CLASSES)
+
+<span class="cm"># 2. Transforms — use model's recommended config</span>
+cfg = timm.data.resolve_model_data_config(model)
+train_tf = timm.data.create_transform(**cfg, is_training=<span class="kw">True</span>)
+val_tf   = timm.data.create_transform(**cfg, is_training=<span class="kw">False</span>)
+
+<span class="cm"># 3. Dataset + DataLoader</span>
+train_ds = datasets.ImageFolder(<span class="st">'data/train'</span>, transform=train_tf)
+val_ds   = datasets.ImageFolder(<span class="st">'data/val'</span>,   transform=val_tf)
+train_dl = torch.utils.data.DataLoader(train_ds, batch_size=<span class="num">32</span>, shuffle=<span class="kw">True</span>,  num_workers=<span class="num">4</span>)
+val_dl   = torch.utils.data.DataLoader(val_ds,   batch_size=<span class="num">32</span>, shuffle=<span class="kw">False</span>, num_workers=<span class="num">4</span>)
+
+<span class="cm"># 4. Train</span>
+device = <span class="st">'cuda'</span> <span class="kw">if</span> torch.cuda.is_available() <span class="kw">else</span> <span class="st">'cpu'</span>
+model  = model.to(device)
+opt    = AdamW(model.parameters(), lr=<span class="num">1e-4</span>, weight_decay=<span class="num">1e-4</span>)
+sched  = CosineAnnealingLR(opt, T_max=<span class="num">20</span>)
+loss_fn = nn.CrossEntropyLoss(label_smoothing=<span class="num">0.1</span>)
+
+<span class="kw">for</span> epoch <span class="kw">in</span> range(<span class="num">20</span>):
+    model.train()
+    <span class="kw">for</span> x, y <span class="kw">in</span> train_dl:
+        x, y = x.to(device), y.to(device)
+        opt.zero_grad()
+        loss_fn(model(x), y).backward()
+        nn.utils.clip_grad_norm_(model.parameters(), <span class="num">1.0</span>)
+        opt.step()
+    sched.step()</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — U-Net segmentation (medical imaging)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> segmentation_models_pytorch <span class="kw">as</span> smp
+
+<span class="cm"># U-Net with ResNet-34 encoder, pretrained on ImageNet</span>
+model = smp.Unet(
+    encoder_name=<span class="st">"resnet34"</span>, encoder_weights=<span class="st">"imagenet"</span>,
+    in_channels=<span class="num">3</span>, classes=<span class="num">1</span>  <span class="cm"># binary segmentation</span>
+)
+
+<span class="cm"># Losses suited for segmentation</span>
+dice_loss = smp.losses.DiceLoss(mode=<span class="st">'binary'</span>)
+bce_loss  = smp.losses.SoftBCEWithLogitsLoss()
+loss_fn   = <span class="kw">lambda</span> pred, gt: dice_loss(pred, gt) + bce_loss(pred, gt)
+
+<span class="cm"># Metrics</span>
+tp, fp, fn, tn = smp.metrics.get_stats(preds, masks, mode=<span class="st">'binary'</span>, threshold=<span class="num">0.5</span>)
+iou  = smp.metrics.iou_score(tp, fp, fn, tn, reduction=<span class="st">"micro"</span>)
+dice = smp.metrics.f1_score(tp, fp, fn, tn, reduction=<span class="st">"micro"</span>)</pre>
+        </div>
+      </div>
+
+      <!-- ══ TAB 9: INTERVIEW Q&A ══ -->
+      <div class="info-pane" id="cv-interview">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">💡</span>
+          <div>The most commonly asked Computer Vision interview questions at Google, Meta, Tesla, NVIDIA, and CV-focused ML roles.</div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">Q1</div>
+            <div class="step-body">
+              <div class="step-title">Why do CNNs work so well for images?</div>
+              <div class="step-desc">Three structural properties: <strong>(1) Local connectivity:</strong> each neuron connects to a small local region, exploiting the fact that nearby pixels are correlated. <strong>(2) Weight sharing:</strong> the same filter is applied across all spatial positions — a massive parameter reduction (3×3 kernel = 9 shared weights vs millions for FC). <strong>(3) Translation invariance:</strong> a cat detector works regardless of where the cat appears — the convolution slides over the whole image. These inductive biases make CNNs extremely data-efficient for visual data.</div>
+              <div class="step-code">FC: O(H×W×C) params · CNN: O(K×K×C_in×C_out) shared params — orders of magnitude fewer</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q2</div>
+            <div class="step-body">
+              <div class="step-title">What is IoU and how is it used in object detection?</div>
+              <div class="step-desc">IoU (Intersection over Union) = area of overlap between predicted and ground-truth box / area of their union. Used in three ways: (1) <strong>Defining TPs:</strong> a detection is a true positive if its class is correct AND IoU ≥ threshold (typically 0.5). (2) <strong>NMS:</strong> suppress boxes with IoU > NMS threshold (0.45) with a higher-scoring box. (3) <strong>Loss:</strong> DIoU, CIoU losses add penalty terms for centre distance and aspect ratio mismatch to improve convergence.</div>
+              <div class="step-code">IoU = |A∩B| / |A∪B| · TP: class correct + IoU≥0.5 · NMS: remove if IoU>0.45</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q3</div>
+            <div class="step-body">
+              <div class="step-title">ResNet vs ViT — which do you choose?</div>
+              <div class="step-desc"><strong>ResNet / CNN:</strong> better with &lt;100k images (stronger inductive bias), faster inference, lower compute, more deployment options (TFLite, ONNX, CoreML). <strong>ViT:</strong> better with large data (&gt;1M images, or with strong pretraining like ImageNet-21k or CLIP). Scales better with compute. Better for fine-grained tasks requiring global context. In practice: start with EfficientNet-B4 as a strong baseline; upgrade to ViT-B/16 if you have ImageNet-21k pretrained weights and enough data.</div>
+              <div class="step-code">&lt;100k images: EfficientNet · &gt;1M images: ViT · production inference: EfficientNet (faster)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q4</div>
+            <div class="step-body">
+              <div class="step-title">Explain semantic vs instance vs panoptic segmentation.</div>
+              <div class="step-desc"><strong>Semantic:</strong> assign a class to every pixel, no distinction between instances. Two cars = same mask colour. metric: mIoU. <strong>Instance:</strong> separate mask per object instance — two cars = two distinct masks. Can handle overlapping objects. Metric: mAP. Model: Mask R-CNN. <strong>Panoptic:</strong> unified: semantic for amorphous "stuff" (road, sky, grass) + instance for countable "things" (cars, people). Metric: PQ (Panoptic Quality). Most complete scene understanding.</div>
+              <div class="step-code">Semantic: pixel→class · Instance: pixel→(class,instance_id) · Panoptic: both unified</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q5</div>
+            <div class="step-body">
+              <div class="step-title">How does transfer learning work in CV, and when does it fail?</div>
+              <div class="step-desc">Pretrained ImageNet models learn universal visual features (edges, textures, shapes) that transfer to almost any visual task. Protocol: freeze backbone → train new head → unfreeze and fine-tune all at low lr. Fails when: (1) Target domain is very different from source (satellite imagery, medical microscopy — retrain with domain-specific pretrained weights like RadImageNet, BigEarthNet). (2) Target classes are extremely fine-grained (species identification — use specialist backbones). (3) Extreme class imbalance or label noise — domain-adaptive pretraining helps.</div>
+              <div class="step-code">Freeze → train head (lr=1e-3) → unfreeze → fine-tune (lr=1e-5) · fails: domain mismatch</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q6</div>
+            <div class="step-body">
+              <div class="step-title">What is data augmentation and why is it critical in CV?</div>
+              <div class="step-desc">Augmentation creates training diversity by applying random transformations (flip, crop, colour jitter, rotation). Without it, CNNs memorise exact training images rather than generalising. In CV, augmentation is often the single highest-impact improvement available — equivalent to 2–5× more data. Advanced: MixUp, CutMix (blend images/labels) and RandAugment (automatic policy search) add 1–3% accuracy. Always apply augmentation to training only — never to validation or test sets.</div>
+              <div class="step-code">train: RandomHFlip+Crop+ColorJitter+MixUp · val: Resize+CenterCrop only</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q7</div>
+            <div class="step-body">
+              <div class="step-title">How does CLIP enable zero-shot image classification?</div>
+              <div class="step-desc">CLIP trains image and text encoders to produce aligned embeddings — matching images and their captions are close in the shared embedding space. For zero-shot classification: (1) For each class, create a text prompt: "a photo of a [class name]." (2) Encode all prompts with the text encoder. (3) Encode the query image with the image encoder. (4) Compute cosine similarity between image embedding and all text embeddings. (5) The highest-similarity class is the prediction — no labelled training data needed for the target task.</div>
+              <div class="step-code">score(class) = cos(CLIP_img(image), CLIP_txt("a photo of a {class}")) · argmax = prediction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 10: CHEAT SHEET ══ -->
+      <div class="info-pane" id="cv-cheatsheet">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">⚡</span>
+          <div>Complete Computer Vision reference — task → model → metric mapping, architecture guide, and essential formulas.</div>
+        </div>
+
+        <div class="sub-heading">Task → Model → Metric</div>
+        <div class="cheat-table">
+          <div class="cheat-row cheat-4 cheat-head"><div>Task</div><div>Recommended Model</div><div>Production Start</div><div>Metric</div></div>
+          <div class="cheat-row cheat-4"><div>Image Classification</div><div style="color:var(--blue)">EfficientNet-B4</div><div style="color:var(--green)">timm pretrained</div><div>Top-1 Accuracy</div></div>
+          <div class="cheat-row cheat-4"><div>Large-scale Classification</div><div style="color:var(--blue)">ViT-B/16</div><div style="color:var(--green)">ImageNet-21k weights</div><div>Top-1 Accuracy</div></div>
+          <div class="cheat-row cheat-4"><div>Real-time Detection</div><div style="color:var(--blue)">YOLOv8m</div><div style="color:var(--green)">ultralytics pretrained</div><div>mAP@0.5:0.95</div></div>
+          <div class="cheat-row cheat-4"><div>Accurate Detection</div><div style="color:var(--blue)">Faster R-CNN</div><div style="color:var(--green)">torchvision pretrained</div><div>mAP@0.5:0.95</div></div>
+          <div class="cheat-row cheat-4"><div>Semantic Segmentation</div><div style="color:var(--blue)">U-Net / DeepLabV3+</div><div style="color:var(--green)">smp library</div><div>mIoU</div></div>
+          <div class="cheat-row cheat-4"><div>Instance Segmentation</div><div style="color:var(--blue)">Mask R-CNN / YOLO-Seg</div><div style="color:var(--green)">torchvision / ultralytics</div><div>mAP</div></div>
+          <div class="cheat-row cheat-4"><div>Universal Segmentation</div><div style="color:var(--blue)">SAM / SAM 2</div><div style="color:var(--green)">Meta checkpoints</div><div>IoU</div></div>
+          <div class="cheat-row cheat-4"><div>Mobile / Edge Inference</div><div style="color:var(--blue)">MobileNetV3 / YOLO-nano</div><div style="color:var(--green)">TFLite / ONNX</div><div>Latency ms</div></div>
+        </div>
+
+        <div class="sub-heading">Architecture Selection Guide</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">&lt;100k</div><div class="cc-name">Small Dataset</div><div class="cc-desc">EfficientNet or ResNet with heavy augmentation + transfer learning. Never train from scratch. Strong inductive bias of CNNs helps with limited data.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">&gt;1M</div><div class="cc-name">Large Dataset</div><div class="cc-desc">ViT-B/16 or ViT-L/16 with ImageNet-21k initialisation. Transformer scales better with data — global attention captures long-range dependencies that CNNs miss.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Edge</div><div class="cc-name">Mobile / Real-time</div><div class="cc-desc">MobileNetV3, EfficientNet-B0, YOLO-nano. Use TFLite or ONNX for deployment. Quantise to INT8 for 4× speedup with &lt;1% accuracy drop.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Med</div><div class="cc-name">Medical Imaging</div><div class="cc-desc">U-Net for segmentation. Use Dice + BCE loss. Pretrain on RadImageNet (not ImageNet). Heavy augmentation with domain-specific transforms (elastic deformation, staining normalisation).</div></div>
+        </div>
+
+        <div class="sub-heading">Key Formulas</div>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="formula-name">Conv Output Size</div>
+            <div class="formula-eq">(W − K + 2P) / S + 1</div>
+            <div class="formula-note">W=input · K=kernel · P=padding · S=stride</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">IoU</div>
+            <div class="formula-eq">|A ∩ B| / |A ∪ B|</div>
+            <div class="formula-note">0=no overlap · 1=perfect · TP threshold: 0.5</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Dice Score</div>
+            <div class="formula-eq">2|A ∩ B| / (|A| + |B|)</div>
+            <div class="formula-note">Standard for medical segmentation · Dice = 2IoU/(1+IoU)</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Average Precision</div>
+            <div class="formula-eq">AP = ∫ P(R) dR</div>
+            <div class="formula-note">Area under P-R curve · mAP = mean over classes</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">CLIP Contrastive Loss</div>
+            <div class="formula-eq">-log[sim(Iᵢ,Tᵢ) / Σⱼ sim(Iᵢ,Tⱼ)]</div>
+            <div class="formula-note">Align image + text embedding space · cosine similarity</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">CFG (Diffusion)</div>
+            <div class="formula-eq">ε̂ = (1+w)·ε_cond − w·ε_uncond</div>
+            <div class="formula-note">w = guidance scale · 7.5 default for SD</div>
+          </div>
+        </div>
+
+        <div class="callout callout-amber" style="margin-top:20px;">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>3 rules to never break in CV:</strong> (1) Augmentation on training only — never apply random transforms to val/test. (2) Always normalise inputs with ImageNet statistics (mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]) when using pretrained models. (3) Use mAP, not accuracy, for detection and segmentation evaluation — accuracy is meaningless for these tasks.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 11: QUIZ ══ -->
+      <div class="info-pane" id="cv-quiz">
+        <div id="cvQuizContainer"></div>
+      </div>
+
+    </div><!-- /info-section -->
+
+    <div class="page-nav">
+      <a class="nav-link" href="nlp.html">← NLP &amp; LLMs</a>
+      <a class="nav-link next" href="rl.html">Reinforcement Learning →</a>
+    </div>
+
+  </main>
+</div><!-- /layout -->
+
+<a class="back-top" id="backTop" href="#">↑</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() { const c=sidebar.classList.contains('closed'); sidebar.classList.toggle('closed',!c); sidebarOverlay.classList.toggle('visible',c); document.body.classList.toggle('tf-nav-open',c); }
+function toggleNav() { topNav.classList.toggle('mobile-open'); navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open')); }
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => { sidebar.classList.add('closed'); sidebarOverlay.classList.remove('visible'); document.body.classList.remove('tf-nav-open'); });
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = e.target.value.toLowerCase().trim(); if (!q) return;
+    document.querySelectorAll('.sb-link').forEach(link => {
+      if (link.textContent.toLowerCase().includes(q)) {
+        link.scrollIntoView({behavior:'smooth',block:'center'});
+        link.style.background='rgba(96,165,250,0.16)';
+        setTimeout(()=>link.style.background='',1600);
+      }
+    });
+  });
+}
+
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+/* ── QUIZ ── */
+const CV_QUIZ = [
+  { q:"Why do CNNs use weight sharing (the same filter applied everywhere)?", opts:["It makes training faster by using GPUs","It exploits translation invariance — a feature detector should work regardless of where in the image the pattern appears","It prevents overfitting by reducing batch size","It increases the number of parameters"], correct:1, exp:"Weight sharing means the same convolutional filter is applied at every spatial position. This exploits the fact that a useful feature (e.g., edge detector) should fire wherever that feature appears in the image — translation invariance. It also dramatically reduces parameters: a 3×3 filter has 9 weights regardless of input size." },
+  { q:"What does IoU measure and what threshold is typically used to define a True Positive in object detection?", opts:["Pixel accuracy; threshold 0.9","Overlap between predicted and ground-truth boxes; threshold 0.5","Feature map similarity; threshold 0.7","Class probability; threshold 0.5"], correct:1, exp:"IoU (Intersection over Union) = area of overlap / area of union between predicted and ground-truth bounding boxes. A detection is a True Positive if the class is correct AND IoU ≥ 0.5 (PASCAL VOC standard). COCO uses multiple thresholds from 0.5 to 0.95." },
+  { q:"What is the key advantage of YOLO over two-stage detectors like Faster R-CNN?", opts:["YOLO is always more accurate","YOLO processes the entire image in a single forward pass, enabling real-time detection speeds","YOLO uses more anchors for better localisation","YOLO doesn't need any training data"], correct:1, exp:"YOLO (You Only Look Once) is single-stage: it divides the image into a grid and predicts bounding boxes and class probabilities in one forward pass — no separate region proposal step. This makes it 10–100× faster than two-stage detectors. Trade-off: slightly lower accuracy on small objects compared to Faster R-CNN." },
+  { q:"What is the difference between semantic and instance segmentation?", opts:["Semantic is faster; instance is more accurate","Semantic assigns one class per pixel with no instance distinction; instance gives each object its own separate mask","Semantic uses CNNs; instance uses Transformers","Semantic segments background only; instance segments foreground only"], correct:1, exp:"Semantic segmentation classifies every pixel into a category — two people would be labelled the same 'person' class. Instance segmentation assigns individual masks per object — two people get two distinct masks that can be separated even if overlapping. Panoptic segmentation combines both." },
+  { q:"Why is data augmentation especially important in Computer Vision?", opts:["It reduces GPU memory usage","It creates training diversity that prevents overfitting and can be worth 2–5× more data","It speeds up inference on new images","It replaces the need for pretrained weights"], correct:1, exp:"Without augmentation, CNNs memorise exact training images. Random flips, crops, colour jitter etc. teach the model that a cat is a cat regardless of exact position, brightness, or orientation. Advanced augmentation (MixUp, CutMix) can add 1–3% accuracy — equivalent to having much more training data." },
+  { q:"How does CLIP enable zero-shot image classification?", opts:["By fine-tuning on the target classes before inference","By computing similarity between an image's embedding and text embeddings of class name prompts","By using a GAN to generate training examples for each class","By training a separate classifier head for each new task"], correct:1, exp:"CLIP trains image and text encoders to align their embeddings. For zero-shot classification: encode the query image + encode text prompts like 'a photo of a [class]' for each class. The class whose text embedding has the highest cosine similarity with the image embedding is the prediction — no labelled training data needed." }
+];
+
+let cQ=0,cScore=0,cAnswered=false;
+function renderCVQuiz(){
+  const c=document.getElementById('cvQuizContainer'); if(!c)return;
+  if(cQ>=CV_QUIZ.length){
+    c.innerHTML=`<div class="quiz-wrap"><div class="quiz-q" style="font-size:20px;text-align:center;">Quiz Complete! 🎉<br><span style="font-family:var(--font-mono);color:#60a5fa;font-size:32px;">${cScore}/${CV_QUIZ.length}</span></div><div class="quiz-feedback" style="text-align:center;margin-top:8px;">${cScore===CV_QUIZ.length?'🏆 Perfect! CV mastered.':cScore>=4?'✅ Great work. Review what you missed.':'📚 Revisit the tabs above and try again.'}</div><div style="text-align:center;margin-top:20px;"><button class="quiz-opt" style="max-width:200px;text-align:center;" onclick="cQ=0;cScore=0;renderCVQuiz()">↺ Retry</button></div></div>`;
+    return;
+  }
+  const q=CV_QUIZ[cQ]; cAnswered=false;
+  c.innerHTML=`<div class="quiz-wrap"><div class="quiz-score">Question ${cQ+1} of ${CV_QUIZ.length} · Score: ${cScore}</div><div class="quiz-q">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="cAnswer(this,${i===q.correct},${i})">${o}</button>`).join('')}</div><div class="quiz-feedback" id="cFeedback"></div></div>`;
+}
+function cAnswer(btn,isCorrect,idx){
+  if(cAnswered)return; cAnswered=true;
+  const q=CV_QUIZ[cQ];
+  btn.parentElement.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isCorrect)b.classList.add('wrong');});
+  if(isCorrect)cScore++;
+  const fb=document.getElementById('cFeedback');
+  if(fb)fb.innerHTML=`${isCorrect?'✅ Correct!':'❌ Incorrect.'} — ${q.exp}`;
+  setTimeout(()=>{cQ++;renderCVQuiz();},3000);
+}
+window.addEventListener('load', renderCVQuiz);
+
+/* Scroll animations */
+const _aio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_aio.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_aio.observe(el);});
+</script>
+</body>
+</html>

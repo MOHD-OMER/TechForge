@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Machine Learning — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">&#x2b21;</div><span>TECH</span>&#xb7;FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#x2630;</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">&#x22ee;</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link active" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+</aside>
+  <main class="main" id="mainContent">
+  <div class="page">
+    <div class="pg-head">
+      <div class="pg-head-glow"></div>
+      <div class="pg-crumb"><a href="aiml-explained.html">AI / ML</a><span class="pg-crumb-sep">&#x203a;</span>Machine Learning</div>
+      <div class="pg-title">Machine Learning</div>
+      <div class="pg-sub">Systems that learn patterns from data to make predictions and decisions &#x2014; without being explicitly programmed for each task.</div>
+      <div class="pg-badges">
+        <span class="badge b-type">Core Paradigm</span>
+        <span class="badge b-time">Data-Driven</span>
+        <span class="badge b-space">Subset of AI</span>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-tabs" id="mlTabs">
+        <div class="info-tab active" onclick="switchTab(this,'ml-what')">What is ML?</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-supervised')">Supervised</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-unsupervised')">Unsupervised</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-algorithms')">Algorithms</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-pipeline')">ML Pipeline</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-eval')">Evaluation</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-code')">Python Code</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-tools')">Tools</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-math')">Mathematics</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-data')">Data Prep</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-glossary')">DS A&#x2013;Z</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-roadmap')">Roadmap</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-interview')">Interview Q&amp;A</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-quiz')">Quiz</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-cheatsheet')">⚡ Cheat Sheet</div>
+      </div>
+
+      <!-- TAB 1: WHAT IS ML -->
+      <div class="info-pane active" id="ml-what">
+        <div class="ml-stat-bar">
+          <div class="ml-stat"><span class="ml-stat-num" style="color:var(--cyan)">4</span><span class="ml-stat-lbl">Learning Types</span></div>
+          <div class="ml-stat"><span class="ml-stat-num" style="color:var(--purple)">12+</span><span class="ml-stat-lbl">Algorithms</span></div>
+          <div class="ml-stat"><span class="ml-stat-num" style="color:var(--green)">80%</span><span class="ml-stat-lbl">Is Data Prep</span></div>
+          <div class="ml-stat"><span class="ml-stat-num" style="color:var(--amber)">∞</span><span class="ml-stat-lbl">Applications</span></div>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">00</div><div class="step-body"><div class="step-title">What is Machine Learning?</div><div class="step-desc">Machine Learning is a subset of AI where systems learn patterns from data rather than following hand-coded rules. Give the machine labelled examples, let it figure out the rules itself. ML powers most AI products today.</div><div class="step-code">Data + Algorithm &#x2192; Trained Model &#x2192; Predictions on new data</div></div></div>
+          <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-title">Why ML Beats Rule-Based Systems</div><div class="step-desc"><strong>Rule-based:</strong> You write every if-else manually. Breaks on edge cases. Never improves. <strong>Machine Learning:</strong> You provide examples, the model finds patterns. Gets better with more data. Scales automatically to millions of cases.</div><div class="step-code">Rules: 500+ if-else blocks &#x2192; fails on edge cases | ML: one model &#x2192; generalises</div></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-title">The Four Types of Machine Learning</div><div class="step-desc"><strong>Supervised:</strong> Labelled data (X &#x2192; y). <strong>Unsupervised:</strong> No labels &#x2014; find hidden structure. <strong>Semi-Supervised:</strong> Mix of labelled and unlabelled. <strong>Reinforcement Learning:</strong> Agent learns from environment rewards. Most production ML is supervised.</div><div class="step-code">Supervised | Unsupervised | Semi-Supervised | Reinforcement Learning</div></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-title">The Bias&#x2013;Variance Tradeoff</div><div class="step-desc"><strong>Underfitting (high bias):</strong> Model too simple &#x2014; misses real patterns. Poor on train and test. <strong>Overfitting (high variance):</strong> Memorises training data, fails on new data. Goal: the sweet spot that generalises.</div><div class="step-code">Total Error = Bias&#xb2; + Variance + Irreducible Noise</div></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-title">Features, Labels, and Weights</div><div class="step-desc"><strong>Features (X):</strong> Input variables &#x2014; pixel values, age, income, word count. <strong>Labels (y):</strong> The target output to predict. <strong>Weights:</strong> Learned parameters mapping X &#x2192; y. Training = finding weights that minimise prediction error.</div><div class="step-code">&#x177; = f(X; weights) &#xb7; training: minimise loss(&#x177;, y) over all examples</div></div></div>
+          <div class="step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Real-World ML Applications</div><div class="step-desc">Spam detection &#xb7; House price prediction &#xb7; Credit card fraud &#xb7; Netflix recommendations &#xb7; Google Search ranking &#xb7; Medical diagnosis &#xb7; Autonomous driving &#xb7; YouTube autoplay &#xb7; Amazon "also bought".</div><div class="step-code">If a product makes predictions at scale &#x2014; it&#x2019;s almost certainly ML</div></div></div>
+        </div>
+        <div class="concept-grid" style="margin-top:28px;">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">Regression</div><div class="cc-name">Continuous Output</div><div class="cc-desc">Predict a number: house price, temperature, sales revenue</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">Classification</div><div class="cc-name">Discrete Output</div><div class="cc-desc">Predict a category: spam/not-spam, cat/dog, fraud/legit</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Clustering</div><div class="cc-name">Group Discovery</div><div class="cc-desc">Find natural groups: customer segments, topic clusters</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Anomaly</div><div class="cc-name">Outlier Detection</div><div class="cc-desc">Find unusual points: fraud transactions, sensor faults</div></div>
+        </div>
+        <div class="callout callout-blue" style="margin-top:20px;"><span class="callout-icon">&#x1f4a1;</span><div><strong>Golden rule:</strong> Always start with the simplest model (logistic regression, decision tree). Only add complexity when simpler models fall short. A well-engineered feature often beats a more complex model.</div></div>
+      </div>
+
+      <!-- TAB 2: SUPERVISED -->
+      <div class="info-pane" id="ml-supervised">
+        <div class="steps">
+          <div class="step"><div class="step-num">00</div><div class="step-body"><div class="step-title">Supervised Learning</div><div class="step-desc">You provide both inputs (X) and correct outputs (y) during training. The model supervises itself against known answers, adjusting until its predictions match. Every prediction task where you have labelled historical data is supervised.</div><div class="step-code">Training: {(x&#x2081;,y&#x2081;), (x&#x2082;,y&#x2082;), ..., (x&#x2099;,y&#x2099;)} &#x2192; Model &#x2192; Predict &#x177; on new x</div></div></div>
+          <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-title">Linear Regression</div><div class="step-desc">Fits a line through labelled data to predict a continuous value. Minimises Mean Squared Error. Highly interpretable &#x2014; each weight is the feature&#x2019;s marginal contribution. Foundation of all linear models.</div><div class="step-code">&#x177; = w&#x2080; + w&#x2081;x&#x2081; + w&#x2082;x&#x2082; + ... &#xb7; Loss = MSE = (1/n)&#x3a3;(y&#x1d62; - &#x177;&#x1d62;)&#xb2;</div></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-title">Logistic Regression</div><div class="step-desc">Binary or multiclass classification using the sigmoid function. Despite the name, it&#x2019;s a classifier. Outputs probability (0&#x2013;1). Fast, interpretable baseline &#x2014; always run this first before complex models.</div><div class="step-code">&#x3c3;(z) = 1/(1+e&#x207b;&#x1d63;) &#xb7; Loss = Binary Cross-Entropy &#xb7; Use cases: fraud, churn, spam</div></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-title">Decision Trees</div><div class="step-desc">Splits data on feature thresholds &#x2014; tree of if-else rules. Every split maximises Information Gain or minimises Gini Impurity. Interpretable but prone to overfitting. Solved by ensembles (Random Forest, XGBoost).</div><div class="step-code">Split by feature threshold: max(Info Gain) or min(Gini) at each node</div></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-title">Random Forest</div><div class="step-desc">Ensemble of N decision trees, each trained on a random data and feature subset. Prediction = majority vote or mean. Dramatically reduces overfitting. Excellent out-of-the-box performance on tabular data.</div><div class="step-code">&#x177; = mode/mean(tree&#x2081;(x), tree&#x2082;(x), ..., tree&#x2099;(x)) &#xb7; n_estimators=100&#x2013;500</div></div></div>
+          <div class="step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Gradient Boosting &#x2014; XGBoost / LightGBM</div><div class="step-desc">Builds trees sequentially, each correcting residual errors of the previous. The most powerful algorithm for tabular data. Wins Kaggle. Hyperparameter-sensitive &#x2014; tune carefully with cross-validation.</div><div class="step-code">F(x) = f&#x2081;(x) + &#x3b1;&#xb7;f&#x2082;(residuals) + &#x3b1;&#xb7;f&#x2083;(...) &#xb7; lr=0.05&#x2013;0.3, depth=3&#x2013;7</div></div></div>
+          <div class="step"><div class="step-num">06</div><div class="step-body"><div class="step-title">Support Vector Machine (SVM)</div><div class="step-desc">Finds the hyperplane maximising the margin between classes. Kernel trick (RBF) maps data to higher dimensions for non-linear separation. Powerful for small, high-dimensional datasets. Slow on large data.</div><div class="step-code">max margin between classes &#xb7; Kernel: RBF best default &#xb7; C controls margin-error tradeoff</div></div></div>
+          <div class="step"><div class="step-num">07</div><div class="step-body"><div class="step-title">K-Nearest Neighbors (KNN)</div><div class="step-desc">No training step (lazy learner). At predict time, find K nearest training points and use majority vote. O(n) per prediction &#x2014; unusable at scale. K controls bias-variance. Always normalise features before using KNN.</div><div class="step-code">predict(x) = majority_vote(k nearest points) &#xb7; start K = &#x221an;, use odd K</div></div></div>
+          <div class="step"><div class="step-num">08</div><div class="step-body"><div class="step-title">Naive Bayes</div><div class="step-desc">Probabilistic classifier using Bayes&#x2019; theorem. Assumes features are independent. Fast, handles high-dimensional sparse data. Best choice for text classification baselines.</div><div class="step-code">P(y|X) &#x221d; P(y) &#xb7; &#x220f; P(x&#x1d62;|y) &#xb7; Use: spam, sentiment, news classification</div></div></div>
+        </div>
+        <div class="code-block" style="margin-top:24px;">
+          <div class="code-hdr"><span class="code-lang">python &#x2014; Sklearn Pipeline (production pattern)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score, train_test_split
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> classification_report
+
+<span class="cm"># Pipeline prevents data leakage</span>
+pipe = Pipeline([
+    (<span class="st">'scaler'</span>, StandardScaler()),
+    (<span class="st">'model'</span>,  RandomForestClassifier(n_estimators=<span class="num">200</span>, random_state=<span class="num">42</span>))
+])
+scores = cross_val_score(pipe, X_train, y_train, cv=<span class="num">5</span>, scoring=<span class="st">'f1'</span>)
+<span class="fn">print</span>(<span class="st">f"CV F1: {scores.mean():.3f} +/- {scores.std():.3f}"</span>)
+pipe.fit(X_train, y_train)
+<span class="fn">print</span>(classification_report(y_test, pipe.predict(X_test)))</pre>
+        </div>
+        <div class="tip-box tip-green" style="margin-top:16px;"><strong>Algorithm selection:</strong> Tabular data &#x2192; XGBoost/LightGBM. Need interpretability &#x2192; LogReg or Decision Tree. Sparse text &#x2192; Naive Bayes or linear SVM. Quick baseline &#x2192; Logistic Regression always first.</div>
+      </div>
+
+      <!-- TAB 3: UNSUPERVISED -->
+      <div class="info-pane" id="ml-unsupervised">
+        <div class="steps">
+          <div class="step"><div class="step-num">00</div><div class="step-body"><div class="step-title">Unsupervised Learning</div><div class="step-desc">No labels &#x2014; the model discovers hidden structure in raw data on its own. Used when labelling data is expensive, impossible, or when you don&#x2019;t know what categories exist.</div><div class="step-code">Input X (no labels) &#x2192; Discover structure &#x2192; Clusters / Representations / Rules</div></div></div>
+          <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-title">K-Means Clustering</div><div class="step-desc">Assign each point to one of K clusters by minimising distance to cluster centroids. Iterate: assign &#x2192; recompute centroids &#x2192; repeat until stable. Fast and scalable. Assumes spherical clusters. Use Elbow Method or Silhouette Score to choose K.</div><div class="step-code">centroid&#x2c7c; = mean(all points in cluster j) &#xb7; repeat until no reassignments</div></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-title">DBSCAN</div><div class="step-desc">Density-based clustering &#x2014; finds clusters of arbitrary shape, marks sparse-region points as outliers. No need to specify K. Parameters: &#x3b5; (neighbourhood radius) and minPts (minimum neighbours). Great for spatial data and anomaly detection.</div><div class="step-code">core point: &#x2265; minPts neighbours within &#x3b5; &#xb7; outlier: no core neighbour within &#x3b5;</div></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-title">PCA &#x2014; Principal Component Analysis</div><div class="step-desc">Linear dimensionality reduction. Finds orthogonal directions (principal components) of maximum variance. Projects high-dimensional data to fewer dimensions while preserving structure. Used for visualisation, noise reduction, preprocessing.</div><div class="step-code">PCA: eigenvectors of X&#x1d40;X &#x2192; top-k components &#x2192; project X &#x2192; X_reduced</div></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-title">t-SNE &amp; UMAP</div><div class="step-desc">Non-linear dimensionality reduction for visualisation only. t-SNE preserves local cluster structure. UMAP is faster and preserves global structure better. Both used extensively to visualise high-dimensional embeddings from neural networks or LLMs.</div><div class="step-code">t-SNE: minimise KL divergence between distributions &#xb7; UMAP: graph-based, faster</div></div></div>
+          <div class="step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Autoencoders</div><div class="step-desc">Neural network compressing data to a compact latent representation then reconstructing it. Learns meaningful representations without labels. Used for anomaly detection (high reconstruction error = anomaly), denoising, and as building blocks for VAEs and generative models.</div><div class="step-code">input &#x2192; [Encoder] &#x2192; latent z (bottleneck) &#x2192; [Decoder] &#x2192; reconstruction</div></div></div>
+          <div class="step"><div class="step-num">06</div><div class="step-body"><div class="step-title">Association Rule Learning</div><div class="step-desc">Discovers co-occurrence rules in transactional data. "People who buy diapers also buy beer." Three metrics: Support (frequency), Confidence (rule accuracy), Lift (better than random). Used in recommendation systems and market basket analysis.</div><div class="step-code">support(A&#x2192;B) = P(A&#x2229;B) &#xb7; confidence = P(B|A) &#xb7; lift = confidence / P(B)</div></div></div>
+        </div>
+        <div class="callout callout-blue" style="margin-top:20px;"><span class="callout-icon">&#x1f4a1;</span><div><strong>Supervised vs Unsupervised:</strong> Supervised = you have labels, measure prediction error. Unsupervised = no labels, measure cluster quality. Semi-supervised: a few labels + many unlabelled &#x2014; use both when labelling is expensive (medical imaging, speech).</div></div>
+      </div>
+
+      <!-- TAB 4: ALGORITHMS -->
+      <div class="info-pane" id="ml-algorithms">
+        <div class="sub-heading">Algorithm Quick Reference</div>
+        <table class="algo-table">
+          <thead><tr><th>Algorithm</th><th>Type</th><th>Task</th><th>Strengths</th><th>Weaknesses</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>Linear Regression</td><td>Supervised</td><td>Regression</td><td>Fast, interpretable</td><td>Linear assumption</td><td>Baseline, pricing</td></tr>
+            <tr><td>Logistic Regression</td><td>Supervised</td><td>Classification</td><td>Probabilistic, fast</td><td>Linear boundary</td><td>Baseline, fraud, churn</td></tr>
+            <tr><td>Decision Tree</td><td>Supervised</td><td>Both</td><td>Interpretable, no scaling</td><td>Overfits badly</td><td>Rule extraction</td></tr>
+            <tr><td>Random Forest</td><td>Supervised</td><td>Both</td><td>Robust, feature importance</td><td>Slow predict</td><td>General tabular</td></tr>
+            <tr><td>XGBoost / LGBM</td><td>Supervised</td><td>Both</td><td>Best tabular accuracy</td><td>Many hyperparams</td><td>Kaggle, production</td></tr>
+            <tr><td>SVM</td><td>Supervised</td><td>Both</td><td>High-dim, small data</td><td>Slow on large data</td><td>Text, bio</td></tr>
+            <tr><td>KNN</td><td>Supervised</td><td>Both</td><td>Simple, no training</td><td>O(n) predict</td><td>Small datasets</td></tr>
+            <tr><td>Naive Bayes</td><td>Supervised</td><td>Classification</td><td>Extremely fast, sparse</td><td>Independence assumption</td><td>Text classification</td></tr>
+            <tr><td>K-Means</td><td>Unsupervised</td><td>Clustering</td><td>Fast, scalable</td><td>Need K, spherical clusters</td><td>Customer segments</td></tr>
+            <tr><td>DBSCAN</td><td>Unsupervised</td><td>Clustering</td><td>Arbitrary shape, outliers</td><td>Sensitive to params</td><td>Geo, anomaly</td></tr>
+            <tr><td>PCA</td><td>Unsupervised</td><td>Dim Reduction</td><td>Fast, linear</td><td>Linear only</td><td>Preprocessing, viz</td></tr>
+            <tr><td>t-SNE / UMAP</td><td>Unsupervised</td><td>Visualisation</td><td>Non-linear, beautiful</td><td>Not for preprocessing</td><td>Embedding viz</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-heading">Interactive Algorithm Selector</div>
+        <div class="decision-flow" id="decisionFlow">
+          <div class="df-question" id="df-q0">
+            <div class="df-q-text">Do you have labelled data (known outputs)?</div>
+            <div class="df-buttons">
+              <button class="df-btn" onclick="dfAnswer('supervised')">✅ Yes — I have labels</button>
+              <button class="df-btn" onclick="dfAnswer('unsupervised')">❌ No labels available</button>
+            </div>
+          </div>
+          <div class="df-question" id="df-q-supervised" style="display:none">
+            <div class="df-q-text">What is your output type?</div>
+            <div class="df-buttons">
+              <button class="df-btn" onclick="dfAnswer('regression')">📈 Continuous number</button>
+              <button class="df-btn" onclick="dfAnswer('classification')">🏷️ Category / class</button>
+            </div>
+          </div>
+          <div class="df-question" id="df-q-regression" style="display:none">
+            <div class="df-q-text">Data type?</div>
+            <div class="df-buttons">
+              <button class="df-btn" onclick="dfResult('🥇 XGBoost / LightGBM\n📋 Tabular structured data → gradient boosting wins. Use early stopping + cross-validation. Try Random Forest as a strong baseline.\n\n⚡ Code: xgb.XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=5)')">📊 Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('🥇 LSTM or Transformer\n📋 Time series with temporal dependencies → recurrent or attention models. For classical forecasting: ARIMA / Holt-Winters or LightGBM with lag features.\n\n⚡ Code: from statsmodels.tsa.arima.model import ARIMA')">📅 Time series</button>
+              <button class="df-btn" onclick="dfResult('🥇 CNN + Regression Head\n📋 Images with continuous output (e.g. age from photo, price from image) → CNN backbone + linear output layer. Use pretrained ResNet and fine-tune.\n\n⚡ Code: torchvision.models.resnet50(pretrained=True)')">🖼️ Images</button>
+            </div>
+          </div>
+          <div class="df-question" id="df-q-classification" style="display:none">
+            <div class="df-q-text">Data type?</div>
+            <div class="df-buttons">
+              <button class="df-btn" onclick="dfResult('🥇 XGBoost / LightGBM\n📋 Best for tabular classification. Start with Logistic Regression as baseline, then XGBoost. Use F1/AUC for imbalanced classes. Apply SMOTE if &lt;15% minority.\n\n⚡ Code: xgb.XGBClassifier(n_estimators=300, scale_pos_weight=neg/pos)')">📊 Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('🥇 Transformers (BERT / RoBERTa)\n📋 Short text: TF-IDF + Logistic Regression as baseline. Long text / semantic: Sentence Transformers + cosine similarity. Fine-tune BERT for highest accuracy.\n\n⚡ Code: from transformers import AutoModelForSequenceClassification')">📝 Text / NLP</button>
+              <button class="df-btn" onclick="dfResult('🥇 CNN (ResNet / EfficientNet)\n📋 Images → CNN is standard. Pretrain on ImageNet, fine-tune on your data. &lt;1k images → data augmentation + transfer learning. ViT for &gt;1M images.\n\n⚡ Code: torchvision.models.efficientnet_b0(pretrained=True)')">🖼️ Images</button>
+            </div>
+          </div>
+          <div class="df-question" id="df-q-unsupervised" style="display:none">
+            <div class="df-q-text">What do you want to discover?</div>
+            <div class="df-buttons">
+              <button class="df-btn" onclick="dfResult('🥇 K-Means + DBSCAN\n📋 K-Means: fast, scalable, use Elbow Method for K. DBSCAN: arbitrary-shape clusters + outlier detection. Run both and compare Silhouette scores.\n\n⚡ Code: KMeans(n_clusters=5) | DBSCAN(eps=0.5, min_samples=5)')">👥 Groups / clusters</button>
+              <button class="df-btn" onclick="dfResult('🥇 Isolation Forest / Autoencoder\n📋 Isolation Forest: fast, no labels needed. Autoencoder: high reconstruction error = anomaly. DBSCAN marks outliers as noise. Use contamination param to tune.\n\n⚡ Code: IsolationForest(contamination=0.05)')">⚠️ Anomalies / outliers</button>
+              <button class="df-btn" onclick="dfResult('🥇 PCA → then t-SNE / UMAP\n📋 PCA first to reduce to ~50 dims. Then t-SNE/UMAP for 2D visualisation. Never use t-SNE for downstream ML features — visualisation only.\n\n⚡ Code: PCA(n_components=50) → UMAP(n_components=2)')">📉 Reduce dimensions</button>
+            </div>
+          </div>
+          <div class="df-result" id="df-result" style="display:none">
+            <div class="df-result-icon">🎯</div>
+            <div class="df-result-text" id="df-result-text"></div>
+            <button class="df-btn" style="margin-top:16px;" onclick="dfReset()">↺ Start over</button>
+          </div>
+        </div>
+
+        <div class="sub-heading">When to Use Each</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">Tabular</div><div class="cc-name">Structured Data</div><div class="cc-desc">Default order: LogReg → Random Forest → XGBoost. Never jump to neural networks for tables without trying these first.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">Text</div><div class="cc-name">NLP Tasks</div><div class="cc-desc">Short text: TF-IDF + Naive Bayes/SVM. Semantic or long text: Transformers (BERT, sentence-transformers).</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Images</div><div class="cc-name">Visual Data</div><div class="cc-desc">Always use CNNs or ViTs. Pre-train on ImageNet, fine-tune on your data. Never train from scratch without millions of images.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Time Series</div><div class="cc-name">Sequential Data</div><div class="cc-desc">Classical: ARIMA, Holt-Winters. ML: LightGBM with lag features. DL: LSTMs, Transformers, N-BEATS.</div></div>
+        </div>
+      </div>
+
+      <!-- TAB 5: ML PIPELINE -->
+      <div class="info-pane" id="ml-pipeline">
+        <div class="pipe-step"><div class="pipe-num">1</div><div class="pipe-body"><div class="pipe-title">Problem Definition</div><div class="pipe-desc">Define task type (classification/regression/clustering), success metric, constraints, and a non-ML baseline. Wrong problem framing is the #1 ML project failure mode.</div><div class="pipe-code">Define: task &#xb7; metric &#xb7; baseline &#xb7; constraints before touching data</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">2</div><div class="pipe-body"><div class="pipe-title">Data Collection &amp; EDA</div><div class="pipe-desc">Gather data. Explore distributions, correlations, missing values, class balance. 70% of real ML work happens here. Understand the data before modelling. Tools: Pandas, Matplotlib, Seaborn, Pandas Profiling.</div><div class="pipe-code">df.describe() &#xb7; df.isnull().sum() &#xb7; sns.heatmap(df.corr()) &#xb7; df.value_counts()</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">3</div><div class="pipe-body"><div class="pipe-title">Data Preprocessing</div><div class="pipe-desc">Handle missing values. Encode categoricals (one-hot for nominal, ordinal for ordered). Scale features (StandardScaler for SVM, KNN, PCA). Remove or cap outliers. Split train/val/test (80/10/10).</div><div class="pipe-code">X_train, X_test = train_test_split(X, y, test_size=0.2, stratify=y)</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">4</div><div class="pipe-body"><div class="pipe-title">Feature Engineering</div><div class="pipe-desc">Create new features from existing ones. Date decomposition (year, month, weekday, hour). Polynomial features. Domain-specific combinations. This step often provides the biggest performance lift &#x2014; more than switching models.</div><div class="pipe-code">df['age_income'] = df['age'] * df['income'] &#xb7; df['month'] = df['date'].dt.month</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">5</div><div class="pipe-body"><div class="pipe-title">Model Selection &amp; Training</div><div class="pipe-desc">Start with Logistic Regression baseline. Then try tree ensembles. Use 5-fold cross-validation. Tune with GridSearchCV or RandomizedSearchCV. Always use Pipelines to prevent data leakage.</div><div class="pipe-code">GridSearchCV(model, param_grid, cv=5, scoring='f1', n_jobs=-1)</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">6</div><div class="pipe-body"><div class="pipe-title">Evaluation &amp; Error Analysis</div><div class="pipe-desc">Evaluate on held-out test set. Check confusion matrix. Where does it fail? Is error random or systematic? Examine individual wrong predictions. Real improvement comes from understanding failure patterns.</div><div class="pipe-code">classification_report(y_test, y_pred) &#xb7; inspect wrong predictions directly</div></div></div>
+        <div class="pipe-step"><div class="pipe-num">7</div><div class="pipe-body"><div class="pipe-title">Deployment &amp; Monitoring</div><div class="pipe-desc">Serialise model (joblib). Build REST API (FastAPI). Monitor for data drift &#x2014; real-world data changes over time and performance degrades silently. Set alerts on prediction distribution shifts. Retrain periodically.</div><div class="pipe-code">joblib.dump(model, 'model.pkl') &#xb7; monitor: input drift + output drift + performance</div></div></div>
+        <div class="callout callout-amber" style="margin-top:20px;"><span class="callout-icon">&#x26a0;&#xfe0f;</span><div><strong>Data leakage &#x2014; the silent killer:</strong> Never fit your scaler or encoder on the full dataset before splitting. Fit only on training data. Always use Sklearn Pipelines &#x2014; they enforce this automatically and prevent the #1 source of unrealistically high CV scores.</div></div>
+      </div>
+
+      <!-- TAB 6: EVALUATION -->
+      <div class="info-pane" id="ml-eval">
+        <div class="sub-heading">Classification Metrics</div>
+        <div class="concept-grid">
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--cyan)">Acc</div><div class="cc-name">Accuracy</div><div class="metric-formula">= (TP + TN) / Total</div><div class="cc-desc">Overall correctness. Misleading on imbalanced datasets &#x2014; 95/5 split gives 95% accuracy by predicting majority always.</div><div class="metric-use">&#x2705; Use when: classes are balanced</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--blue)">Prec</div><div class="cc-name">Precision</div><div class="metric-formula">= TP / (TP + FP)</div><div class="cc-desc">Of all predicted positives, how many are actually correct? High precision = low false alarm rate.</div><div class="metric-use">&#x2705; Use when: FP cost is high (spam filter)</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--green)">Rec</div><div class="cc-name">Recall</div><div class="metric-formula">= TP / (TP + FN)</div><div class="cc-desc">Of all actual positives, how many did the model catch? High recall = low miss rate.</div><div class="metric-use">&#x2705; Use when: FN cost is high (cancer screening)</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--amber)">F1</div><div class="cc-name">F1 Score</div><div class="metric-formula">= 2&#xb7;P&#xb7;R / (P + R)</div><div class="cc-desc">Harmonic mean of precision and recall. Balances both. Best single metric for imbalanced binary classification.</div><div class="metric-use">&#x2705; Use when: classes are imbalanced</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--purple)">AUC</div><div class="cc-name">ROC-AUC</div><div class="metric-formula">Area under ROC curve</div><div class="cc-desc">Threshold-independent. 0.5 = random, 1.0 = perfect. Measures rank discrimination. Best for ranking tasks.</div><div class="metric-use">&#x2705; Use when: threshold selection matters</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--pink)">MCC</div><div class="cc-name">Matthews CC</div><div class="metric-formula">Balanced on all skew levels</div><div class="cc-desc">Most informative metric for binary classification. Considers all four confusion matrix quadrants. -1 to +1 scale.</div><div class="metric-use">&#x2705; Use when: severe class imbalance</div></div>
+        </div>
+        <div class="sub-heading">Regression Metrics</div>
+        <div class="concept-grid">
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--cyan)">MSE</div><div class="cc-name">Mean Squared Error</div><div class="metric-formula">= (1/n) &#x3a3;(y&#x1d62; &#x2212; &#x177;&#x1d62;)&#xb2;</div><div class="cc-desc">Penalises large errors heavily. Sensitive to outliers. Standard loss for training regression models.</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--blue)">RMSE</div><div class="cc-name">Root MSE</div><div class="metric-formula">= &#x221a;MSE</div><div class="cc-desc">Same as MSE in original units &#x2014; interpretable. "On average, predictions are off by &#xb1; X units."</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--green)">MAE</div><div class="cc-name">Mean Absolute Error</div><div class="metric-formula">= (1/n) &#x3a3;|y&#x1d62; &#x2212; &#x177;&#x1d62;|</div><div class="cc-desc">Average absolute deviation. Robust to outliers. Better when outlier errors shouldn&#x2019;t dominate the metric.</div></div>
+          <div class="concept-card metric-card"><div class="cc-val" style="color:var(--amber)">R&#xb2;</div><div class="cc-name">R-Squared</div><div class="metric-formula">= 1 &#x2212; SS_res/SS_tot</div><div class="cc-desc">Proportion of variance explained. R&#xb2;=1 perfect, R&#xb2;=0 predicts mean, R&#xb2;&lt;0 worse than mean.</div></div>
+        </div>
+        <div class="tip-box tip-cyan" style="margin-top:16px;"><strong>Metric selection:</strong> Imbalanced classes &#x2192; F1 or AUC, never accuracy. Regression with outliers &#x2192; MAE not RMSE. Ranking &#x2192; AUC. Need single number for imbalanced binary &#x2192; MCC. Stakeholders &#x2192; RMSE (interpretable in units) or accuracy%.</div>
+      </div>
+
+      <!-- TAB 7: PYTHON CODE -->
+      <div class="info-pane" id="ml-code">
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">python &#x2014; Complete ML Workflow (Titanic)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split, cross_val_score
+<span class="kw">from</span> sklearn.preprocessing <span class="kw">import</span> StandardScaler
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> classification_report, roc_auc_score
+<span class="kw">from</span> sklearn.pipeline <span class="kw">import</span> Pipeline
+<span class="kw">from</span> sklearn.impute <span class="kw">import</span> SimpleImputer
+<span class="kw">import</span> joblib
+
+df = pd.read_csv(<span class="st">'titanic.csv'</span>)
+df[<span class="st">'FamilySize'</span>] = df[<span class="st">'SibSp'</span>] + df[<span class="st">'Parch'</span>] + <span class="num">1</span>
+X = df[[<span class="st">'Pclass'</span>, <span class="st">'Age'</span>, <span class="st">'Fare'</span>, <span class="st">'FamilySize'</span>]]
+y = df[<span class="st">'Survived'</span>]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=<span class="num">0.2</span>, stratify=y, random_state=<span class="num">42</span>)
+
+pipe = Pipeline([
+    (<span class="st">'imputer'</span>, SimpleImputer(strategy=<span class="st">'median'</span>)),
+    (<span class="st">'scaler'</span>,  StandardScaler()),
+    (<span class="st">'model'</span>,   RandomForestClassifier(n_estimators=<span class="num">200</span>, random_state=<span class="num">42</span>))
+])
+scores = cross_val_score(pipe, X_train, y_train, cv=<span class="num">5</span>, scoring=<span class="st">'f1'</span>)
+<span class="fn">print</span>(<span class="st">f"CV F1: {scores.mean():.3f} +/- {scores.std():.3f}"</span>)
+pipe.fit(X_train, y_train)
+y_pred = pipe.predict(X_test)
+y_prob = pipe.predict_proba(X_test)[:, <span class="num">1</span>]
+<span class="fn">print</span>(classification_report(y_test, y_pred))
+<span class="fn">print</span>(<span class="st">f"AUC: {roc_auc_score(y_test, y_prob):.3f}"</span>)
+joblib.dump(pipe, <span class="st">'model.pkl'</span>)</pre>
+        </div>
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python &#x2014; XGBoost with RandomizedSearchCV</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> xgboost <span class="kw">as</span> xgb
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> RandomizedSearchCV
+
+param_grid = {
+    <span class="st">'max_depth'</span>:     [<span class="num">3</span>, <span class="num">5</span>, <span class="num">7</span>],
+    <span class="st">'learning_rate'</span>: [<span class="num">0.01</span>, <span class="num">0.05</span>, <span class="num">0.1</span>],
+    <span class="st">'n_estimators'</span>:  [<span class="num">200</span>, <span class="num">500</span>],
+    <span class="st">'subsample'</span>:     [<span class="num">0.6</span>, <span class="num">0.8</span>, <span class="num">1.0</span>],
+}
+search = RandomizedSearchCV(
+    xgb.XGBClassifier(eval_metric=<span class="st">'logloss'</span>), param_grid,
+    n_iter=<span class="num">30</span>, cv=<span class="num">5</span>, scoring=<span class="st">'roc_auc'</span>, n_jobs=-<span class="num">1</span>
+)
+search.fit(X_train, y_train)
+<span class="fn">print</span>(<span class="st">"Best AUC:"</span>, search.best_score_)
+<span class="fn">print</span>(<span class="st">"Best params:"</span>, search.best_params_)</pre>
+        </div>
+      </div>
+
+      <!-- TAB 8: TOOLS -->
+      <div class="info-pane" id="ml-tools">
+        <div class="tool-grid">
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--cyan)">sklearn</div><div class="tool-name">Scikit-Learn</div></div><div class="tool-desc">The ML standard library. Every classical algorithm: regression, classification, clustering, preprocessing, pipelines, evaluation. Start here for all tabular ML.</div><div class="tool-snippet">from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline</div></div>
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--blue)">XGB</div><div class="tool-name">XGBoost / LightGBM</div></div><div class="tool-desc">Best-in-class for tabular data. Sequential gradient boosting. LightGBM is faster on large datasets. Both win Kaggle. Always try before neural networks on tables.</div><div class="tool-snippet">import xgboost as xgb
+import lightgbm as lgb</div></div>
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--red)">torch</div><div class="tool-name">PyTorch</div></div><div class="tool-desc">The researcher&#x2019;s deep learning framework. Dynamic graphs, Pythonic, flexible. Dominates academic research. Best for learning DL and custom architectures.</div><div class="tool-snippet">import torch
+import torch.nn as nn</div></div>
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--amber)">TF</div><div class="tool-name">TensorFlow / Keras</div></div><div class="tool-desc">Google&#x2019;s production DL framework. Keras API makes neural networks accessible. Best for deployment (TF Serving), mobile (TF Lite), and TPU training at scale.</div><div class="tool-snippet">import tensorflow as tf
+from tensorflow import keras</div></div>
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--purple)">&#x1f917;</div><div class="tool-name">Hugging Face</div></div><div class="tool-desc">Pretrained transformer models for NLP and CV. 200k+ models. Access GPT, BERT, LLaMA, Stable Diffusion in 3 lines. Essential for modern NLP and GenAI.</div><div class="tool-snippet">from transformers import pipeline
+nlp = pipeline("text-classification")</div></div>
+          <div class="tool-card"><div class="tool-header"><div class="tool-abbr" style="color:var(--green)">Optuna</div><div class="tool-name">Hyperparameter Tuning</div></div><div class="tool-desc">Bayesian optimisation &#x2014; smarter than grid search. Integrates with XGBoost, PyTorch, sklearn. Reduces tuning time by 5&#x2013;10x vs grid search.</div><div class="tool-snippet">import optuna
+study = optuna.create_study(direction="maximize")</div></div>
+        </div>
+        <div class="callout callout-blue" style="margin-top:20px;"><span class="callout-icon">&#x1f5fa;&#xfe0f;</span><div><strong>Learning order:</strong> NumPy + Pandas &#x2192; Matplotlib/Seaborn &#x2192; Scikit-Learn &#x2192; XGBoost &#x2192; PyTorch or TensorFlow &#x2192; Hugging Face. Don&#x2019;t jump to PyTorch before mastering sklearn pipelines.</div></div>
+      </div>
+
+      <!-- TAB 9: MATHEMATICS -->
+      <div class="info-pane" id="ml-math">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;"><span class="callout-icon">&#x1f4a1;</span><div>You don&#x2019;t need deep proofs. You need <strong>intuition</strong> &#x2014; understanding why each formula exists and what it does. Focus on: what problem does this solve? What happens when this value is too large or too small?</div></div>
+        <div class="sub-heading">Core Math Topics</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">LinAlg</div><div class="cc-name">Linear Algebra &#x2b50;</div><div class="cc-desc">Vectors store data records. Matrices store datasets. Dot products compute predictions. Matrix multiply = batch predictions. Neural networks are matrix operations.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--blue)">Stats</div><div class="cc-name">Statistics</div><div class="cc-desc">Mean, variance, distributions. Understand your data before modelling. Feature selection, outlier detection, evaluation interpretation.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Prob</div><div class="cc-name">Probability</div><div class="cc-desc">AI makes probabilistic predictions. Bayes theorem, conditional probability, distributions. Core to Naive Bayes, logistic regression, uncertainty estimation.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Calc</div><div class="cc-name">Calculus</div><div class="cc-desc">Derivatives = direction of steepest change. Gradients = multivariable derivatives. Chain rule = backpropagation. How neural networks learn.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">Optim</div><div class="cc-name">Optimisation</div><div class="cc-desc">Loss functions measure error. Gradient descent minimises loss. Learning rate controls step size. The engine of all ML training.</div></div>
+        </div>
+        <div class="sub-heading">Essential Formulas</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">GD</div><div class="step-body"><div class="step-title">Gradient Descent</div><div class="step-desc">The fundamental learning algorithm. Iteratively moves weights in the direction of steepest descent of the loss. Too high &#x3b1; overshoots; too low &#x3b1; takes forever.</div><div class="step-code">&#x3b8; &#x2190; &#x3b8; &#x2212; &#x3b1; &#xb7; &#x2207;J(&#x3b8;) &#xb7; &#x3b1; = learning rate &#xb7; &#x2207;J(&#x3b8;) = gradient of loss</div></div></div>
+          <div class="step"><div class="step-num">B&#x2013;V</div><div class="step-body"><div class="step-title">Bias&#x2013;Variance Decomposition</div><div class="step-desc">Every model&#x2019;s error decomposes into these three terms. Irreducible noise is unavoidable. Your job is to minimise bias&#xb2; + variance. Regularisation reduces variance at the cost of slight bias.</div><div class="step-code">E[error] = Bias&#xb2; + Variance + &#x3c3;&#xb2;(noise) &#xb7; High bias &#x2192; underfit &#xb7; High var &#x2192; overfit</div></div></div>
+          <div class="step"><div class="step-num">L1/L2</div><div class="step-body"><div class="step-title">Regularisation</div><div class="step-desc"><strong>L1 (Lasso):</strong> Adds |w| to loss &#x2192; drives weights exactly to zero &#x2192; automatic feature selection. <strong>L2 (Ridge):</strong> Adds w&#xb2; to loss &#x2192; shrinks weights but doesn&#x2019;t zero them. <strong>ElasticNet:</strong> Mix of both.</div><div class="step-code">Loss_L1 = Loss + &#x3bb;&#x3a3;|w&#x1d62;| &#x2003; Loss_L2 = Loss + &#x3bb;&#x3a3;w&#x1d62;&#xb2;</div></div></div>
+          <div class="step"><div class="step-num">Soft</div><div class="step-body"><div class="step-title">Softmax (Multi-class Output)</div><div class="step-desc">Converts raw logits into a probability distribution across classes. Output sums to 1. Used in the final layer of any multi-class classifier or language model next-token prediction.</div><div class="step-code">softmax(x&#x1d62;) = exp(x&#x1d62;) / &#x3a3;&#x2c7c; exp(x&#x2c7c;) &#xb7; &#x3a3; softmax(x) = 1.0</div></div></div>
+          <div class="step"><div class="step-num">BCE</div><div class="step-body"><div class="step-title">Cross-Entropy Loss</div><div class="step-desc">Standard loss for classification. Penalises confident wrong predictions heavily (log scale). Binary cross-entropy for two classes; categorical for multiple.</div><div class="step-code">BCE = &#x2212;(y&#xb7;log(&#x177;) + (1&#x2212;y)&#xb7;log(1&#x2212;&#x177;)) &#xb7; lower = better predictions</div></div></div>
+        </div>
+        <div class="tip-box tip-green" style="margin-top:20px;"><strong>Math learning timeline:</strong> Basic intuition &#x2192; 3&#x2013;4 weeks with practice. Practical AI usage &#x2192; 6&#x2013;8 weeks. You do NOT need: complex derivations, formal proofs, advanced calculus. You DO need: intuition behind formulas and how they connect to model behaviour.</div>
+      </div>
+
+      <!-- TAB 10: DATA PREP -->
+      <div class="info-pane" id="ml-data">
+        <div class="steps">
+          <div class="step"><div class="step-num">00</div><div class="step-body"><div class="step-title">Why Data Prep Dominates ML Work</div><div class="step-desc">Real-world data is messy, incomplete, and inconsistent. 70&#x2013;80% of ML project time is data preparation. No algorithm can rescue bad data. Garbage in, garbage out &#x2014; always.</div><div class="step-code">EDA &#x2192; Clean &#x2192; Engineer Features &#x2192; Encode &#x2192; Scale &#x2192; Split &#x2192; Model</div></div></div>
+          <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-title">EDA &#x2014; Exploratory Data Analysis</div><div class="step-desc">Before modelling: understand distributions, correlations, missing rates, class balance, outliers. Never skip EDA &#x2014; it determines your entire preprocessing strategy and often reveals the most important features.</div><div class="step-code">df.describe() &#xb7; df.isnull().sum() &#xb7; sns.heatmap(df.corr()) &#xb7; sns.pairplot(df)</div></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-title">Handling Missing Values</div><div class="step-desc"><strong>Drop:</strong> If &gt;70% missing or completely random. <strong>Median/Mean impute:</strong> For numerical when missing at random. <strong>Mode impute:</strong> For categorical. <strong>KNN impute:</strong> Structured missingness. <strong>Indicator feature:</strong> Add binary column flagging "was missing" &#x2014; the absence itself is often informative.</div><div class="step-code">SimpleImputer(strategy='median') &#xb7; KNNImputer() &#xb7; never drop blindly</div></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-title">Encoding Categorical Variables</div><div class="step-desc"><strong>Label Encoding:</strong> Ordinal categories (Small=0, Medium=1, Large=2). <strong>One-Hot Encoding:</strong> Nominal categories (colour, city) &#x2014; use drop='first' to avoid multicollinearity. <strong>Target Encoding:</strong> High cardinality &#x2014; replace category with mean target value (apply only on training data to avoid leakage).</div><div class="step-code">pd.get_dummies(df, drop_first=True) &#xb7; OrdinalEncoder() &#xb7; TargetEncoder()</div></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-title">Feature Scaling</div><div class="step-desc"><strong>StandardScaler:</strong> Zero mean, unit variance. Required for SVM, KNN, PCA, logistic regression. <strong>MinMaxScaler:</strong> Scale to [0,1]. For neural networks with bounded activations. <strong>Not needed:</strong> Tree-based models (RF, XGBoost) are scale-invariant.</div><div class="step-code">StandardScaler: z = (x&#x2212;&#x3bc;)/&#x3c3; &#xb7; MinMaxScaler: x' = (x&#x2212;min)/(max&#x2212;min)</div></div></div>
+          <div class="step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Feature Engineering &#x2014; The Biggest Lever</div><div class="step-desc">Create new features from existing data. Date &#x2192; year, month, day, weekday, hour, is_holiday. Text &#x2192; word count, char count, sentiment. Combine &#x2192; income/household_size = per_capita. Good features often beat more complex models.</div><div class="step-code">df['per_capita'] = df['income'] / df['household_size'] &#xb7; domain knowledge wins</div></div></div>
+          <div class="step"><div class="step-num">06</div><div class="step-body"><div class="step-title">Handling Imbalanced Classes</div><div class="step-desc"><strong>SMOTE:</strong> Generates synthetic minority examples. Apply to training data only. <strong>Class weights:</strong> class_weight='balanced' in sklearn. <strong>Threshold tuning:</strong> Adjust from default 0.5 using precision-recall curve. <strong>Never:</strong> apply SMOTE to the test set.</div><div class="step-code">SMOTE() from imblearn &#xb7; class_weight='balanced' &#xb7; precision-recall curve for threshold</div></div></div>
+        </div>
+      </div>
+
+      <!-- TAB 11: DS A-Z GLOSSARY -->
+      <div class="info-pane" id="ml-glossary">
+        <div class="gloss-search-wrap">
+          <span class="gloss-search-icon">&#x1f50d;</span>
+          <input class="gloss-search" id="glossSearchML" type="text" placeholder="Filter terms&#x2026; e.g. overfitting, xgboost, confusion matrix">
+        </div>
+        <div class="concept-grid" id="mlGlossGrid">
+          <div class="concept-card" data-term="algorithms supervised unsupervised models"><div class="cc-val" style="color:var(--cyan)">A</div><div class="cc-name">Algorithms</div><div class="cc-desc">ML models: linear regression, decision trees, clustering, SVM, neural networks. Choose based on data type, size, and problem type.</div></div>
+          <div class="concept-card" data-term="business understanding problem framing objectives"><div class="cc-val" style="color:var(--blue)">B</div><div class="cc-name">Business Understanding</div><div class="cc-desc">Translate business problems into data science tasks. Define objectives, success metrics, and constraints before touching data.</div></div>
+          <div class="concept-card" data-term="cleaning data missing outliers duplicates types"><div class="cc-val" style="color:var(--green)">C</div><div class="cc-name">Cleaning Data</div><div class="cc-desc">Handle missing values, outliers, duplicates, type errors. Crucial &#x2014; 70% of DS time spent here. Garbage in, garbage out.</div></div>
+          <div class="concept-card" data-term="data visualization matplotlib seaborn plotly tableau"><div class="cc-val" style="color:var(--amber)">D</div><div class="cc-name">Data Visualization</div><div class="cc-desc">Matplotlib, Seaborn, Plotly. Identify patterns, trends, outliers visually before any modelling attempt.</div></div>
+          <div class="concept-card" data-term="eda exploratory data analysis correlation distribution missing"><div class="cc-val" style="color:var(--purple)">E</div><div class="cc-name">EDA</div><div class="cc-desc">Exploratory Data Analysis. Understand data before modelling. Summary statistics, distributions, correlations, missing value analysis.</div></div>
+          <div class="concept-card" data-term="features feature engineering selection importance domain"><div class="cc-val" style="color:var(--pink)">F</div><div class="cc-name">Feature Engineering</div><div class="cc-desc">Create and select features to improve performance. Domain knowledge + creativity = better predictions than model complexity.</div></div>
+          <div class="concept-card" data-term="gradient descent optimisation loss learning rate weights"><div class="cc-val" style="color:var(--cyan)">G</div><div class="cc-name">Gradient Descent</div><div class="cc-desc">Optimisation: &#x3b8; &#x2190; &#x3b8; &#x2212; &#x3b1;&#xb7;&#x2207;L. Iteratively move weights in direction of steepest loss decrease. The learning engine.</div></div>
+          <div class="concept-card" data-term="hypothesis testing p-value ab test confidence interval"><div class="cc-val" style="color:var(--blue)">H</div><div class="cc-name">Hypothesis Testing</div><div class="cc-desc">Validate assumptions statistically. p-values, confidence intervals, t-tests, A/B testing. Essential for data-driven decisions.</div></div>
+          <div class="concept-card" data-term="imbalanced data smote class weight oversample minority"><div class="cc-val" style="color:var(--green)">I</div><div class="cc-name">Imbalanced Data</div><div class="cc-desc">When one class dominates. Use SMOTE, class_weight='balanced', or AUC/F1 instead of accuracy. Never apply SMOTE to test data.</div></div>
+          <div class="concept-card" data-term="jupyter notebook python interactive experiment cell"><div class="cc-val" style="color:var(--amber)">J</div><div class="cc-name">Jupyter Notebooks</div><div class="cc-desc">Interactive coding environment combining code, output, and docs. The standard tool for ML experimentation.</div></div>
+          <div class="concept-card" data-term="k-means clustering centroid groups unsupervised elbow"><div class="cc-val" style="color:var(--purple)">K</div><div class="cc-name">K-Means Clustering</div><div class="cc-desc">Unsupervised algorithm grouping similar data into K clusters by minimising distance to centroids. Fast and scalable.</div></div>
+          <div class="concept-card" data-term="logistic regression sigmoid classification binary probability"><div class="cc-val" style="color:var(--pink)">L</div><div class="cc-name">Logistic Regression</div><div class="cc-desc">Binary classification using sigmoid output. Fast, interpretable baseline. Always run this before complex models.</div></div>
+          <div class="concept-card" data-term="model evaluation accuracy precision recall f1 auc confusion"><div class="cc-val" style="color:var(--cyan)">M</div><div class="cc-name">Model Evaluation</div><div class="cc-desc">Accuracy, Precision, Recall, F1, AUC-ROC, RMSE, R&#xb2;. Choose metric based on problem type &#x2014; F1 for imbalanced, RMSE for regression.</div></div>
+          <div class="concept-card" data-term="numpy numerical arrays matrix operations vectorised"><div class="cc-val" style="color:var(--blue)">N</div><div class="cc-name">NumPy</div><div class="cc-desc">Foundation of Python ML. Vectorised array operations, matrix multiply, linear algebra. All ML libraries build on NumPy.</div></div>
+          <div class="concept-card" data-term="overfitting memorise variance train test regularisation dropout"><div class="cc-val" style="color:var(--green)">O</div><div class="cc-name">Overfitting</div><div class="cc-desc">Model memorises training data, fails on new data. High variance. Fix: regularisation, dropout, cross-validation, more data.</div></div>
+          <div class="concept-card" data-term="pandas dataframe series data manipulation groupby merge"><div class="cc-val" style="color:var(--amber)">P</div><div class="cc-name">Pandas</div><div class="cc-desc">Data manipulation and analysis. DataFrames, groupby, merge, pivot. The primary tool for structured data wrangling.</div></div>
+          <div class="concept-card" data-term="quantitative math statistics calculus linear algebra probability"><div class="cc-val" style="color:var(--purple)">Q</div><div class="cc-name">Quantitative Skills</div><div class="cc-desc">Linear algebra, probability, statistics, calculus. Need intuition &#x2014; not proofs. Foundation for understanding ML deeply.</div></div>
+          <div class="concept-card" data-term="regularisation lasso ridge l1 l2 overfitting penalty"><div class="cc-val" style="color:var(--pink)">R</div><div class="cc-name">Regularisation</div><div class="cc-desc">Penalise large weights to avoid overfitting. L1 (Lasso): sparse weights, feature selection. L2 (Ridge): shrinks weights evenly.</div></div>
+          <div class="concept-card" data-term="sql database query select join group window function"><div class="cc-val" style="color:var(--cyan)">S</div><div class="cc-name">SQL</div><div class="cc-desc">Query data from databases. SELECT, JOIN, GROUP BY, window functions. Essential for every data scientist &#x2014; most data lives in SQL.</div></div>
+          <div class="concept-card" data-term="time series forecasting arima lstm seasonal lag"><div class="cc-val" style="color:var(--blue)">T</div><div class="cc-name">Time Series</div><div class="cc-desc">Forecasting temporal data. Classical: ARIMA. ML: LightGBM with lag features. DL: LSTM, N-BEATS, Transformers.</div></div>
+          <div class="concept-card" data-term="underfitting bias simple model train low accuracy"><div class="cc-val" style="color:var(--green)">U</div><div class="cc-name">Underfitting</div><div class="cc-desc">Model too simple &#x2014; misses real patterns. High bias. Fix: more features, increase model complexity, reduce regularisation.</div></div>
+          <div class="concept-card" data-term="validation cross-validation k-fold holdout split stratified"><div class="cc-val" style="color:var(--amber)">V</div><div class="cc-name">Validation</div><div class="cc-desc">K-fold cross-validation ensures the model works on unseen data. Always use CV &#x2014; never evaluate on training data alone.</div></div>
+          <div class="concept-card" data-term="web scraping beautifulsoup scrapy selenium html parse"><div class="cc-val" style="color:var(--purple)">W</div><div class="cc-name">Web Scraping</div><div class="cc-desc">Collect data from websites. BeautifulSoup, Scrapy, Selenium. Extract and parse HTML to build custom datasets.</div></div>
+          <div class="concept-card" data-term="xgboost extreme gradient boosting tabular kaggle competition"><div class="cc-val" style="color:var(--pink)">X</div><div class="cc-name">XGBoost</div><div class="cc-desc">Extreme Gradient Boosting. Best algorithm for tabular data. Wins Kaggle. Always try before neural networks on structured data.</div></div>
+          <div class="concept-card" data-term="yellowbrick sklearn visualisation model diagnostic learning curve"><div class="cc-val" style="color:var(--cyan)">Y</div><div class="cc-name">Yellowbrick</div><div class="cc-desc">sklearn-compatible visualisations for model diagnosis. Residual plots, classification reports, feature ranking, learning curves.</div></div>
+          <div class="concept-card" data-term="z-score outlier standardisation mean standard deviation normal"><div class="cc-val" style="color:var(--blue)">Z</div><div class="cc-name">Z-Score</div><div class="cc-desc">Standard score: z = (x &#x2212; &#x3bc;) / &#x3c3;. Used for standardisation and outlier detection &#x2014; |z| &gt; 3 typically flags an outlier.</div></div>
+        </div>
+      </div>
+
+      <!-- TAB 12: ROADMAP -->
+      <div class="info-pane" id="ml-roadmap">
+        <div class="roadmap-phase"><div class="phase-header"><span class="phase-badge pb-1">Phase 1</span><span class="phase-title">Foundation</span><span class="phase-timeline">Weeks 1&#x2013;4</span></div><div class="phase-items"><div class="phase-item"><strong>Week 1&#x2013;2</strong>Python basics + NumPy arrays and vectorised operations</div><div class="phase-item"><strong>Week 3</strong>Pandas: DataFrames, groupby, merge, EDA workflow</div><div class="phase-item"><strong>Week 4</strong>Matplotlib + Seaborn: visualisation fundamentals</div></div><div class="phase-project">&#x1f3d7; Project: Titanic survival prediction &#x2014; EDA + feature engineering + logistic regression</div></div>
+        <div class="roadmap-phase"><div class="phase-header"><span class="phase-badge pb-2">Phase 2</span><span class="phase-title">Core ML</span><span class="phase-timeline">Weeks 5&#x2013;10</span></div><div class="phase-items"><div class="phase-item"><strong>Supervised</strong>LogReg, Decision Trees, Random Forest, XGBoost &#x2014; all from sklearn</div><div class="phase-item"><strong>Unsupervised</strong>K-Means, DBSCAN, PCA, t-SNE</div><div class="phase-item"><strong>Evaluation</strong>Accuracy, F1, AUC, confusion matrix, cross-validation</div><div class="phase-item"><strong>Pipeline</strong>Sklearn Pipelines, GridSearchCV, leakage prevention</div></div><div class="phase-project">&#x1f3d7; Project: Customer churn classifier &#x2014; full pipeline from EDA to deployment</div></div>
+        <div class="roadmap-phase"><div class="phase-header"><span class="phase-badge pb-3">Phase 3</span><span class="phase-title">Deep Learning</span><span class="phase-timeline">Weeks 11&#x2013;18</span></div><div class="phase-items"><div class="phase-item"><strong>Foundations</strong>Perceptrons, activations, backpropagation, gradient descent</div><div class="phase-item"><strong>Framework</strong>PyTorch or TensorFlow &#x2014; pick one, master it</div><div class="phase-item"><strong>Architectures</strong>CNNs for images, RNNs/LSTMs for sequences, Transformers</div></div><div class="phase-project">&#x1f3d7; Project: MNIST digit classifier CNN &#xb7; IMDB sentiment LSTM</div></div>
+        <div class="roadmap-phase"><div class="phase-header"><span class="phase-badge pb-4">Phase 4</span><span class="phase-title">Specialisation</span><span class="phase-timeline">Weeks 19+</span></div><div class="phase-items"><div class="phase-item"><strong>NLP Track</strong>Hugging Face, BERT, GPT fine-tuning, RAG pipelines</div><div class="phase-item"><strong>CV Track</strong>YOLO, Faster R-CNN, segmentation, OpenCV</div><div class="phase-item"><strong>GenAI Track</strong>LLMs, prompt engineering, agents, LangChain</div><div class="phase-item"><strong>MLOps</strong>MLflow, FastAPI serving, Docker, monitoring, retraining</div></div><div class="phase-project">&#x1f3d7; Project: Deploy a real product &#x2014; chatbot, image classifier, or recommendation engine</div></div>
+        <div class="callout callout-blue" style="margin-top:20px;"><span class="callout-icon">&#x1f4a1;</span><div><strong>Key principle:</strong> Build projects at every phase &#x2014; theory without code doesn&#x2019;t stick. Enter Kaggle after Phase 2. Contribute to open source after Phase 3. Your GitHub portfolio matters more than certificates.</div></div>
+      </div>
+
+      <!-- TAB 13: INTERVIEW Q&A -->
+      <div class="info-pane" id="ml-interview">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;"><span class="callout-icon">&#x1f4a1;</span><div>Most frequently asked ML interview questions at Google, Amazon, Meta, and AI startups. Use STAR format for applied questions.</div></div>
+        <div class="steps">
+          <div class="step"><div class="step-num">Q1</div><div class="step-body"><div class="step-title">Supervised vs Unsupervised Learning</div><div class="step-desc"><strong>Supervised:</strong> Labelled data, predict output (regression/classification). Loss measured against known y. <strong>Unsupervised:</strong> No labels, discover structure (clustering, dim reduction). Evaluated with silhouette or visual inspection. <strong>Semi-supervised:</strong> Mix &#x2014; few labels + many unlabelled to improve learning.</div><div class="step-code">Supervised: y known &#x2192; minimise loss(&#x177;, y) | Unsupervised: y unknown &#x2192; find structure in X</div></div></div>
+          <div class="step"><div class="step-num">Q2</div><div class="step-body"><div class="step-title">How do you handle missing data?</div><div class="step-desc">Analyse first: Is it MCAR, MAR, or MNAR? Options: Drop rows (if &lt;5% missing), median/mean impute (numerical, MCAR), mode impute (categorical), KNN impute (structured missingness), add binary indicator column (missingness may be informative).</div><div class="step-code">Never blindly drop &#x2014; always check if missingness is random or a signal.</div></div></div>
+          <div class="step"><div class="step-num">Q3</div><div class="step-body"><div class="step-title">What is overfitting and how do you fix it?</div><div class="step-desc">High train accuracy, low test accuracy = high variance. Fixes: L1/L2 regularisation, dropout, cross-validation, more data, simpler model, early stopping, feature selection, data augmentation.</div><div class="step-code">Signs: train=98%, test=72% | Fix order: more data &#x2192; simpler model &#x2192; regularise</div></div></div>
+          <div class="step"><div class="step-num">Q4</div><div class="step-body"><div class="step-title">Bagging vs Boosting</div><div class="step-desc"><strong>Bagging</strong> (Random Forest): independent models on bootstrap samples &#x2192; average &#x2192; reduces variance. <strong>Boosting</strong> (XGBoost, AdaBoost): sequential, each corrects previous errors &#x2192; reduces bias. Both reduce total error.</div><div class="step-code">Bagging: parallel, reduces variance | Boosting: sequential, reduces bias</div></div></div>
+          <div class="step"><div class="step-num">Q5</div><div class="step-body"><div class="step-title">When should you NOT use ML?</div><div class="step-desc">When simple rules solve it. When you have &lt;1000 labelled examples (overfitting risk). When interpretability is legally required. When prediction errors are catastrophic and confidence can&#x2019;t be verified. When data changes faster than retraining cadence.</div></div></div>
+          <div class="step"><div class="step-num">Q6</div><div class="step-body"><div class="step-title">Precision vs Recall &#x2014; which matters when?</div><div class="step-desc"><strong>Precision</strong>: minimise false positives. Spam filter (don&#x2019;t flag legit email). Fraud alerts (don&#x2019;t block legit transactions). <strong>Recall</strong>: minimise false negatives. Cancer screening (don&#x2019;t miss sick patients). <strong>F1</strong>: when both matter equally.</div><div class="step-code">FP costly &#x2192; Precision | FN costly &#x2192; Recall | both &#x2192; F1</div></div></div>
+          <div class="step"><div class="step-num">Q7</div><div class="step-body"><div class="step-title">L1 vs L2 Regularisation</div><div class="step-desc"><strong>L1 (Lasso):</strong> Penalty = &#x3bb;&#x3a3;|w&#x1d62;|. Drives weights exactly to zero &#x2192; feature selection. Use when many features are irrelevant. <strong>L2 (Ridge):</strong> Penalty = &#x3bb;&#x3a3;w&#x1d62;&#xb2;. Shrinks proportionally &#x2014; none zero. Better when most features contribute.</div><div class="step-code">L1 &#x2192; sparse (selection) | L2 &#x2192; small weights (multicollinearity) | choose with CV</div></div></div>
+          <div class="step"><div class="step-num">Q8</div><div class="step-body"><div class="step-title">Explain data leakage and how to prevent it.</div><div class="step-desc">Data leakage = future/test information accidentally influencing training. Example: fitting StandardScaler on full dataset before splitting. Causes unrealistically high CV scores that collapse in production. Prevention: always use Pipelines &#x2014; fit preprocessing only on X_train.</div><div class="step-code">Pipeline ensures scaler.fit() only on X_train &#x2014; never on X_test</div></div></div>
+          <div class="step"><div class="step-num">Q9</div><div class="step-body"><div class="step-title">Dataset with 95% class A, 5% class B &#x2014; how do you handle it?</div><div class="step-desc">Never use accuracy (95% baseline by always predicting A). Use F1 or AUC. Try: class_weight='balanced', SMOTE oversampling on train set only, threshold tuning (precision-recall curve), collect more minority class data.</div><div class="step-code">metric: F1/AUC | fix: class_weight &#x2192; SMOTE &#x2192; threshold &#x2192; data collection</div></div></div>
+          <div class="step"><div class="step-num">Q10</div><div class="step-body"><div class="step-title">How do you deploy an ML model?</div><div class="step-desc">Serialise with joblib. Build REST API (FastAPI). Containerise with Docker. Host on cloud (AWS SageMaker, GCP Vertex AI). Monitor input drift, output drift, performance decay. Retrain when metrics drop.</div><div class="step-code">joblib.dump(model) &#x2192; FastAPI &#x2192; Docker &#x2192; Cloud &#x2192; Monitor &#x2192; Retrain</div></div></div>
+        </div>
+      </div>
+
+      <!-- TAB 14: QUIZ -->
+      <div class="info-pane" id="ml-quiz">
+        <div id="mlQuizContainer"></div>
+      </div>
+
+      <!-- TAB 15: CHEAT SHEET -->
+      <div class="info-pane" id="ml-cheatsheet">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;"><span class="callout-icon">⚡</span><div>Everything you need for an ML interview or project — on one page. Bookmark this tab.</div></div>
+
+        <div class="sub-heading">Algorithm Selection</div>
+        <div class="cheat-row">
+          <div class="cheat-cell cheat-head">Data Type</div>
+          <div class="cheat-cell cheat-head">Task</div>
+          <div class="cheat-cell cheat-head">Start With</div>
+          <div class="cheat-cell cheat-head">Best Model</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Tabular</div>
+          <div class="cheat-cell">Classification</div>
+          <div class="cheat-cell" style="color:var(--cyan);">LogReg</div>
+          <div class="cheat-cell" style="color:var(--green);">XGBoost / LGBM</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Tabular</div>
+          <div class="cheat-cell">Regression</div>
+          <div class="cheat-cell" style="color:var(--cyan);">Linear Regression</div>
+          <div class="cheat-cell" style="color:var(--green);">XGBoost / LGBM</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Text</div>
+          <div class="cheat-cell">Classification</div>
+          <div class="cheat-cell" style="color:var(--cyan);">TF-IDF + NB</div>
+          <div class="cheat-cell" style="color:var(--green);">BERT / RoBERTa</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Images</div>
+          <div class="cheat-cell">Classification</div>
+          <div class="cheat-cell" style="color:var(--cyan);">ResNet-18</div>
+          <div class="cheat-cell" style="color:var(--green);">EfficientNet / ViT</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Time Series</div>
+          <div class="cheat-cell">Forecasting</div>
+          <div class="cheat-cell" style="color:var(--cyan);">ARIMA</div>
+          <div class="cheat-cell" style="color:var(--green);">LGBM + lag features</div>
+        </div>
+        <div class="cheat-row">
+          <div class="cheat-cell">Unlabelled</div>
+          <div class="cheat-cell">Clustering</div>
+          <div class="cheat-cell" style="color:var(--cyan);">K-Means</div>
+          <div class="cheat-cell" style="color:var(--green);">DBSCAN + K-Means</div>
+        </div>
+
+        <div class="sub-heading">Metric Selection</div>
+        <div class="cheat-row">
+          <div class="cheat-cell cheat-head">Situation</div>
+          <div class="cheat-cell cheat-head">Use This Metric</div>
+          <div class="cheat-cell cheat-head">Avoid</div>
+        </div>
+        <div class="cheat-row"><div class="cheat-cell">Balanced classes</div><div class="cheat-cell" style="color:var(--cyan);">Accuracy or F1</div><div class="cheat-cell" style="color:#f87171;">—</div></div>
+        <div class="cheat-row"><div class="cheat-cell">Imbalanced classes</div><div class="cheat-cell" style="color:var(--cyan);">F1 or AUC-ROC</div><div class="cheat-cell" style="color:#f87171;">Accuracy</div></div>
+        <div class="cheat-row"><div class="cheat-cell">FP is costly (spam)</div><div class="cheat-cell" style="color:var(--cyan);">Precision</div><div class="cheat-cell" style="color:#f87171;">Recall alone</div></div>
+        <div class="cheat-row"><div class="cheat-cell">FN is costly (cancer)</div><div class="cheat-cell" style="color:var(--cyan);">Recall</div><div class="cheat-cell" style="color:#f87171;">Precision alone</div></div>
+        <div class="cheat-row"><div class="cheat-cell">Ranking / scoring</div><div class="cheat-cell" style="color:var(--cyan);">AUC-ROC</div><div class="cheat-cell" style="color:#f87171;">Accuracy</div></div>
+        <div class="cheat-row"><div class="cheat-cell">Regression + outliers</div><div class="cheat-cell" style="color:var(--cyan);">MAE</div><div class="cheat-cell" style="color:#f87171;">RMSE / MSE</div></div>
+        <div class="cheat-row"><div class="cheat-cell">Regression, interpretable</div><div class="cheat-cell" style="color:var(--cyan);">RMSE + R²</div><div class="cheat-cell" style="color:#f87171;">—</div></div>
+
+        <div class="sub-heading">Key Formulas</div>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="formula-name">Gradient Descent</div>
+            <div class="formula-eq">θ ← θ − α · ∇J(θ)</div>
+            <div class="formula-note">α = learning rate · ∇J = gradient of loss</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Linear Regression</div>
+            <div class="formula-eq">ŷ = w₀ + w₁x₁ + w₂x₂ + ...</div>
+            <div class="formula-note">Loss = MSE = (1/n)Σ(yᵢ − ŷᵢ)²</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Logistic Regression</div>
+            <div class="formula-eq">σ(z) = 1 / (1 + e⁻ᶻ)</div>
+            <div class="formula-note">Loss = Binary Cross-Entropy</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Bias–Variance</div>
+            <div class="formula-eq">Error = Bias² + Variance + Noise</div>
+            <div class="formula-note">High bias → underfit · High var → overfit</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Precision &amp; Recall</div>
+            <div class="formula-eq">P = TP/(TP+FP) · R = TP/(TP+FN)</div>
+            <div class="formula-note">F1 = 2·P·R / (P + R)</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">L1 / L2 Regularisation</div>
+            <div class="formula-eq">L1: Loss + λΣ|wᵢ| · L2: Loss + λΣwᵢ²</div>
+            <div class="formula-note">L1 → sparse (selection) · L2 → shrink</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Softmax</div>
+            <div class="formula-eq">softmax(xᵢ) = exp(xᵢ) / Σⱼ exp(xⱼ)</div>
+            <div class="formula-note">Multi-class output · sums to 1.0</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">K-Means Update</div>
+            <div class="formula-eq">μⱼ = mean(all x where assign=j)</div>
+            <div class="formula-note">Repeat: assign → update → converge</div>
+          </div>
+        </div>
+
+        <div class="sub-heading">The ML Pipeline in 60 Seconds</div>
+        <div class="mini-pipeline">
+          <div class="mp-step"><div class="mp-num">1</div><div class="mp-label">Define Problem</div><div class="mp-note">Task + metric + baseline</div></div>
+          <div class="mp-arrow">→</div>
+          <div class="mp-step"><div class="mp-num">2</div><div class="mp-label">EDA</div><div class="mp-note">Understand data first</div></div>
+          <div class="mp-arrow">→</div>
+          <div class="mp-step"><div class="mp-num">3</div><div class="mp-label">Clean + Engineer</div><div class="mp-note">Missing · encode · scale</div></div>
+          <div class="mp-arrow">→</div>
+          <div class="mp-step"><div class="mp-num">4</div><div class="mp-label">Train + CV</div><div class="mp-note">Pipeline · 5-fold · tune</div></div>
+          <div class="mp-arrow">→</div>
+          <div class="mp-step"><div class="mp-num">5</div><div class="mp-label">Evaluate</div><div class="mp-note">Test set · error analysis</div></div>
+          <div class="mp-arrow">→</div>
+          <div class="mp-step"><div class="mp-num">6</div><div class="mp-label">Deploy + Monitor</div><div class="mp-note">FastAPI · drift alerts</div></div>
+        </div>
+
+        <div class="callout callout-amber" style="margin-top:24px;"><span class="callout-icon">⚠️</span><div><strong>3 rules to never break:</strong> (1) Never evaluate on training data. (2) Never fit scalers/encoders before the train/test split. (3) Never use accuracy on imbalanced classes.</div></div>
+      </div>
+
+    </div>
+      <a class="nav-link" href="aiml-explained.html">&#x2190; Overview</a>
+      <a class="nav-link next" href="dl.html">Deep Learning &#x2192;</a>
+    </div>
+  </div>
+  </main>
+</div>
+
+<a class="back-top" id="backTop" href="#">&#x2191;</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', !isClosed);
+  sidebarOverlay.classList.toggle('visible', isClosed);
+  document.body.classList.toggle('tf-nav-open', isClosed);
+}
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open'));
+}
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) return;
+    document.querySelectorAll('.sb-link').forEach(link => {
+      if (link.textContent.toLowerCase().includes(q)) {
+        link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        link.style.background = 'rgba(0,212,255,0.14)';
+        setTimeout(() => link.style.background = '', 1600);
+      }
+    });
+  });
+}
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+const glossSearchML = document.getElementById('glossSearchML');
+if (glossSearchML) {
+  glossSearchML.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('#mlGlossGrid .concept-card').forEach(card => {
+      const text = (card.dataset.term || '') + card.textContent.toLowerCase();
+      card.classList.toggle('gloss-hidden', q && !text.includes(q));
+    });
+  });
+}
+const ML_QUIZ = [
+  { q: "You have 95% class A and 5% class B. Which metric should you prioritise?", opts: ["Accuracy", "F1 Score or AUC-ROC", "Mean Squared Error", "R-Squared"], correct: 1, explanation: "Accuracy is misleading on imbalanced data. A model predicting 'A' always gets 95% accuracy. F1 balances precision/recall. AUC-ROC is threshold-independent. Both are far more informative than accuracy on skewed classes." },
+  { q: "What is the key difference between Bagging and Boosting?", opts: ["Bagging uses more data", "Bagging trains models in parallel (reduces variance); Boosting trains sequentially to fix errors (reduces bias)", "Boosting is always faster", "Bagging works only for regression"], correct: 1, explanation: "Bagging (Random Forest) trains N independent models on bootstrap samples and averages them — reduces variance. Boosting (XGBoost) trains sequentially, each model correcting the previous — reduces bias." },
+  { q: "What causes data leakage and how do you prevent it?", opts: ["Using too many features — fix with PCA", "Future or test information influencing training — fix with Sklearn Pipelines", "Having missing values — fix by imputation", "Using gradient descent — fix with Adam"], correct: 1, explanation: "Data leakage = future/test information leaking into training. Classic example: fitting a StandardScaler on the full dataset before splitting. Fix: always use Sklearn Pipelines so preprocessing is fit only on training data." },
+  { q: "When should you use L1 (Lasso) over L2 (Ridge) regularisation?", opts: ["When all features are equally important", "When many features are irrelevant and you want automatic feature selection", "When you have very few training examples", "When accuracy matters more than interpretability"], correct: 1, explanation: "L1 drives weights exactly to zero — ideal for high-dimensional data with many irrelevant features. L2 shrinks all weights proportionally but never zeros them — better when most features are informative." },
+  { q: "Which algorithm typically wins on tabular/structured data?", opts: ["CNNs", "XGBoost or LightGBM", "RNNs", "Transformers"], correct: 1, explanation: "XGBoost/LightGBM consistently outperform neural networks on tabular data. They handle missing values natively, need less data, require no feature scaling, and are faster to train and tune." },
+  { q: "What is K-fold cross-validation and why use it?", opts: ["Training on multiple machines", "Splitting into K folds, rotating which fold is the test set — gives robust performance estimates", "Running K times with different seeds", "Making train loss equal test loss"], correct: 1, explanation: "K-fold CV trains on K-1 folds and tests on the remaining fold, rotating K times. The average of K scores gives a much more reliable estimate than a single train/test split, avoiding lucky or unlucky splits." }
+];
+let mlQ = 0, mlScore = 0, mlAnswered = false;
+function renderMLQuiz() {
+  const c = document.getElementById('mlQuizContainer');
+  if (!c) return;
+  if (mlQ >= ML_QUIZ.length) {
+    c.innerHTML = '<div class="quiz-wrap"><div class="quiz-q" style="font-size:20px;text-align:center;">Quiz Complete! &#x1f389;<br><span style="font-family:var(--font-mono);color:var(--cyan);font-size:32px;">' + mlScore + '/' + ML_QUIZ.length + '</span></div><div class="quiz-feedback" style="text-align:center;margin-top:8px;">' + (mlScore === ML_QUIZ.length ? '&#x1f3c6; Perfect! You know ML fundamentals cold.' : mlScore >= 4 ? '&#x2705; Solid. Review the ones you missed and you\'re interview-ready.' : '&#x1f4da; Keep going &#x2014; revisit the tabs above, then try again.') + '</div><div style="text-align:center;margin-top:20px;"><button class="quiz-opt" style="max-width:200px;text-align:center;" onclick="mlQ=0;mlScore=0;renderMLQuiz()">&#x21ba; Retry</button></div></div>';
+    return;
+  }
+  const q = ML_QUIZ[mlQ];
+  mlAnswered = false;
+  c.innerHTML = '<div class="quiz-wrap"><div class="quiz-score">Question ' + (mlQ+1) + ' of ' + ML_QUIZ.length + ' &nbsp;&middot;&nbsp; Score: ' + mlScore + '</div><div class="quiz-q">' + q.q + '</div><div class="quiz-opts">' + q.opts.map((opt, i) => '<button class="quiz-opt" onclick="mlAnswer(this,' + (i===q.correct) + ',' + i + ')">' + opt + '</button>').join('') + '</div><div class="quiz-feedback" id="mlFeedback"></div></div>';
+}
+function mlAnswer(btn, isCorrect, idx) {
+  if (mlAnswered) return;
+  mlAnswered = true;
+  const q = ML_QUIZ[mlQ];
+  btn.parentElement.querySelectorAll('.quiz-opt').forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.correct) b.classList.add('correct');
+    else if (i === idx && !isCorrect) b.classList.add('wrong');
+  });
+  if (isCorrect) mlScore++;
+  const fb = document.getElementById('mlFeedback');
+  if (fb) fb.innerHTML = (isCorrect ? '&#x2705; Correct!' : '&#x274c; Incorrect.') + ' &#x2014; ' + q.explanation;
+  setTimeout(() => { mlQ++; renderMLQuiz(); }, 3000);
+}
+window.addEventListener('load', renderMLQuiz);
+
+/* ── ALGORITHM DECISION FLOW ── */
+function dfAnswer(key) {
+  document.querySelectorAll('.df-question').forEach(q => q.style.display = 'none');
+  const next = document.getElementById('df-q-' + key);
+  if (next) { next.style.display = 'block'; }
+}
+function dfResult(text) {
+  document.querySelectorAll('.df-question').forEach(q => q.style.display = 'none');
+  const res = document.getElementById('df-result');
+  const txt = document.getElementById('df-result-text');
+  if (res && txt) { txt.textContent = text; res.style.display = 'block'; }
+}
+function dfReset() {
+  document.querySelectorAll('.df-question').forEach(q => q.style.display = 'none');
+  document.getElementById('df-result').style.display = 'none';
+  document.getElementById('df-q0').style.display = 'block';
+}
+</script>
+</body>
+</html>

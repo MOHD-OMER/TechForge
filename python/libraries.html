@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Libraries — NumPy, Pandas, Matplotlib & More | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+    .lib-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 18px; }
+    .lib-card h3 { font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .lib-card .lib-desc { font-size: 13.5px; color: var(--text2); margin-bottom: 14px; }
+    .lib-card .lib-why { font-size: 12.5px; color: var(--text3); margin-bottom: 6px; }
+    .lib-card .lib-why strong { color: var(--accent); }
+    .sub-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--accent); margin: 24px 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <div class="sidebar-label" style="margin-top:14px;">Libraries</div>
+      <a class="sb-link active" href="#sec-pip"><span class="sb-num">01</span> pip & venv</a>
+      <a class="sb-link" href="#sec-datetime"><span class="sb-num">02</span> datetime</a>
+      <a class="sb-link" href="#sec-math"><span class="sb-num">03</span> math</a>
+      <a class="sb-link" href="#sec-random"><span class="sb-num">04</span> random</a>
+      <a class="sb-link" href="#sec-os-sys"><span class="sb-num">05</span> os & sys</a>
+      <a class="sb-link" href="#sec-json"><span class="sb-num">06</span> json</a>
+      <a class="sb-link" href="#sec-numpy"><span class="sb-num">07</span> NumPy Basics</a>
+      <a class="sb-link" href="#sec-pandas"><span class="sb-num">08</span> Pandas</a>
+      <a class="sb-link" href="#sec-matplotlib"><span class="sb-num">09</span> Matplotlib</a>
+      <a class="sb-link" href="#sec-sklearn"><span class="sb-num">10</span> Scikit-Learn</a>
+      <a class="sb-link" href="#sec-requests"><span class="sb-num">11</span> Requests</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Libraries</div>
+        <h1 class="pg-title">Essential Python <span>Libraries</span></h1>
+        <p class="pg-sub">Master Python's essential libraries from built-in modules (datetime, math, random) to powerful third-party tools (NumPy, Pandas, Matplotlib, Requests) for data science, web development, and automation.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-blue">📦 11 Topics</span>
+          <span class="badge b-green">✓ Standard + Third-party</span>
+          <span class="badge b-orange">🔥 Real-World</span>
+        </div>
+      </header>
+
+      <section class="py-section" id="sec-pip">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">📦</span><h2 class="sec-title">pip & Virtual Environments</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>Working with External Packages</h3>
+          <p class="lib-desc">So far you used built-in libraries (math, datetime, json). Now learn how to install external packages created by the Python community. Popular examples: <code>requests</code> (API calls), <code>numpy</code> (numerical computing), <code>pandas</code> (data analysis), <code>flask</code>/<code>django</code> (web frameworks).</p>
+        </div>
+
+        <div class="sub-title">1️⃣ What is pip?</div>
+        <p class="prose"><strong>pip</strong> is Python's package manager. It installs external libraries from <strong>PyPI</strong> (Python Package Index).</p>
+
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Terminal — pip Commands</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Install a package</span>
+pip install requests
+
+<span class="cm"># After installing, use in Python:</span>
+<span class="kw">import</span> requests
+
+<span class="cm"># List all installed packages</span>
+pip list
+
+<span class="cm"># Show package information</span>
+pip show requests
+<span class="cm"># Displays: version, location, dependencies</span>
+
+<span class="cm"># Upgrade a package</span>
+pip install --upgrade requests
+
+<span class="cm"># Uninstall a package</span>
+pip uninstall requests</pre>
+        </div>
+
+        <div class="sub-title">2️⃣ What is a Virtual Environment?</div>
+        <p class="prose">A <strong>virtual environment</strong> isolates project dependencies. Without it, conflicts occur when different projects need different versions of the same package.</p>
+
+        <div class="callout callout-amber">
+          <span class="callout-icon">⚠</span>
+          <span><strong>Problem without venv:</strong> Project A needs <code>requests 2.25</code>, Project B needs <code>requests 3.0</code>. Virtual environments solve this by giving each project its own isolated packages.</span>
+        </div>
+
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Terminal — Virtual Environment</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Create a virtual environment</span>
+python -m venv myenv
+<span class="cm"># This creates a folder: myenv/</span>
+
+<span class="cm"># Activate Virtual Environment</span>
+<span class="cm"># Windows:</span>
+myenv\Scripts\activate
+
+<span class="cm"># Mac/Linux:</span>
+source myenv/bin/activate
+
+<span class="cm"># Terminal will show: (myenv)</span>
+<span class="cm"># Now packages install only in this environment</span>
+
+<span class="cm"># Install package inside environment</span>
+pip install requests
+
+<span class="cm"># Deactivate environment</span>
+deactivate</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-datetime">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">📅</span><h2 class="sec-title">datetime — Date and Time</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is datetime?</h3>
+          <p class="lib-desc">The datetime module supplies classes for manipulating dates and times. It's part of Python's standard library, so no installation is required.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Handle timestamps, calculate time differences, format dates for display, schedule tasks, and work with time zones.</p>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — datetime Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">from</span> datetime <span class="kw">import</span> datetime, date, timedelta
+
+<span class="cm"># Current date and time</span>
+now = datetime.now()
+<span class="fn">print</span>(now)                  <span class="cm"># 2025-01-15 14:30:45.123456</span>
+<span class="fn">print</span>(now.date())           <span class="cm"># 2025-01-15</span>
+<span class="fn">print</span>(now.time())           <span class="cm"># 14:30:45.123456</span>
+
+<span class="cm"># Formatting dates</span>
+formatted = now.strftime(<span class="st">"%Y-%m-%d %H:%M:%S"</span>)
+<span class="fn">print</span>(formatted)            <span class="cm"># 2025-01-15 14:30:45</span>
+
+<span class="cm"># Common format codes</span>
+<span class="cm"># %Y - 4-digit year</span>
+<span class="cm"># %m - 2-digit month</span>
+<span class="cm"># %d - 2-digit day</span>
+<span class="cm"># %H - Hour (24h)</span>
+<span class="cm"># %M - Minute</span>
+<span class="cm"># %S - Second</span>
+
+<span class="cm"># Creating specific dates</span>
+my_date = date(<span class="nm">2025</span>, <span class="nm">1</span>, <span class="nm">15</span>)
+<span class="fn">print</span>(my_date)              <span class="cm"># 2025-01-15</span>
+
+<span class="cm"># Date arithmetic</span>
+tomorrow = my_date + timedelta(days=<span class="nm">1</span>)
+<span class="fn">print</span>(tomorrow)             <span class="cm"># 2025-01-16</span>
+
+<span class="cm"># Parse string to date</span>
+date_str = <span class="st">"2025-01-15"</span>
+parsed = datetime.strptime(date_str, <span class="st">"%Y-%m-%d"</span>)</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-math">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">🧮</span><h2 class="sec-title">math — Mathematical Functions</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is math?</h3>
+          <p class="lib-desc">The math module provides access to mathematical functions defined by the C standard. It includes trigonometric, logarithmic, and exponential functions.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Perform complex mathematical calculations, work with constants like π and e, and access functions not available in built-in Python.</p>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — math Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="cm"># Mathematical constants</span>
+<span class="fn">print</span>(math.pi)              <span class="cm"># 3.141592653589793</span>
+<span class="fn">print</span>(math.e)               <span class="cm"># 2.718281828459045</span>
+
+<span class="cm"># Square root and powers</span>
+<span class="fn">print</span>(math.sqrt(<span class="nm">16</span>))        <span class="cm"># 4.0</span>
+<span class="fn">print</span>(math.pow(<span class="nm">2</span>, <span class="nm">3</span>))       <span class="cm"># 8.0</span>
+
+<span class="cm"># Rounding functions</span>
+<span class="fn">print</span>(math.ceil(<span class="nm">4.2</span>))       <span class="cm"># 5 (round up)</span>
+<span class="fn">print</span>(math.floor(<span class="nm">4.8</span>))      <span class="cm"># 4 (round down)</span>
+
+<span class="cm"># Factorial</span>
+<span class="fn">print</span>(math.factorial(<span class="nm">5</span>))    <span class="cm"># 120 (5*4*3*2*1)</span>
+
+<span class="cm"># Trigonometric functions</span>
+<span class="fn">print</span>(math.sin(math.pi / <span class="nm">2</span>))  <span class="cm"># 1.0</span>
+<span class="fn">print</span>(math.cos(<span class="nm">0</span>))            <span class="cm"># 1.0</span>
+
+<span class="cm"># Logarithms</span>
+<span class="fn">print</span>(math.log(<span class="nm">100</span>, <span class="nm">10</span>))    <span class="cm"># 2.0 (log base 10)</span>
+<span class="fn">print</span>(math.log(math.e))     <span class="cm"># 1.0 (natural log)</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-random">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">🎲</span><h2 class="sec-title">random — Random Number Generation</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is random?</h3>
+          <p class="lib-desc">The random module implements pseudo-random number generators for various distributions. It's used for generating random numbers, making random choices, and shuffling data.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Create games, simulations, randomized testing, sampling data, and any scenario requiring unpredictability.</p>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — random Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> random
+
+<span class="cm"># Random integer in range</span>
+<span class="fn">print</span>(random.randint(<span class="nm">1</span>, <span class="nm">10</span>))   <span class="cm"># Random int from 1 to 10</span>
+
+<span class="cm"># Random float</span>
+<span class="fn">print</span>(random.random())        <span class="cm"># Random float 0.0 to 1.0</span>
+<span class="fn">print</span>(random.uniform(<span class="nm">1</span>, <span class="nm">10</span>))  <span class="cm"># Random float 1.0 to 10.0</span>
+
+<span class="cm"># Random choice from list</span>
+colors = [<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'yellow'</span>]
+<span class="fn">print</span>(random.choice(colors))
+
+<span class="cm"># Shuffle a list</span>
+cards = [<span class="st">'A'</span>, <span class="st">'K'</span>, <span class="st">'Q'</span>, <span class="st">'J'</span>]
+random.shuffle(cards)
+<span class="fn">print</span>(cards)                  <span class="cm"># Randomly reordered</span>
+
+<span class="cm"># Random sample (unique choices)</span>
+lottery = random.sample(range(<span class="nm">1</span>, <span class="nm">50</span>), <span class="nm">6</span>)
+<span class="fn">print</span>(lottery)                <span class="cm"># 6 unique numbers</span>
+
+<span class="cm"># Seeding for reproducibility</span>
+random.seed(<span class="nm">42</span>)
+<span class="fn">print</span>(random.random())        <span class="cm"># Same result every run</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-os-sys">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🖥️</span><h2 class="sec-title">os & sys — System Interaction</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What are os and sys?</h3>
+          <p class="lib-desc">The <code>os</code> module provides functions for interacting with the operating system — working with files, folders, and system paths. The <code>sys</code> module gives access to Python runtime information and command-line arguments.</p>
+          <p class="lib-why"><strong>Why use them:</strong> Automation scripts, backend systems, data processing pipelines, and any task requiring file system operations or system-level information.</p>
+        </div>
+
+        <div class="sub-title">os Module — Operating System Interaction</div>
+        <p class="prose">Common uses: working with files and folders, automation scripts, getting system paths.</p>
+
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — os Module Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> os
+
+<span class="cm"># Get current working directory</span>
+<span class="fn">print</span>(os.getcwd())
+
+<span class="cm"># List files in a folder</span>
+<span class="fn">print</span>(os.listdir())
+
+<span class="cm"># Create a new folder</span>
+os.mkdir(<span class="st">"new_folder"</span>)
+
+<span class="cm"># Check if file exists</span>
+<span class="fn">print</span>(os.path.exists(<span class="st">"data.txt"</span>))
+
+<span class="cm"># Additional useful operations</span>
+os.makedirs(<span class="st">"a/b/c"</span>)         <span class="cm"># Create nested directories</span>
+os.rename(<span class="st">"old.txt"</span>, <span class="st">"new.txt"</span>)  <span class="cm"># Rename file</span>
+os.remove(<span class="st">"file.txt"</span>)        <span class="cm"># Delete file</span>
+os.rmdir(<span class="st">"empty_folder"</span>)     <span class="cm"># Delete empty directory</span>
+<span class="fn">print</span>(os.path.join(<span class="st">"folder"</span>, <span class="st">"file.txt"</span>))  <span class="cm"># Build path</span></pre>
+        </div>
+
+        <div class="sub-title">sys Module — System-Level Operations</div>
+        <p class="prose">Common uses: accessing Python runtime info, command-line arguments, system configuration.</p>
+
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — sys Module Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> sys
+
+<span class="cm"># Check Python version</span>
+<span class="fn">print</span>(sys.version)
+
+<span class="cm"># Command-line arguments</span>
+<span class="cm"># Run: python script.py hello</span>
+<span class="fn">print</span>(sys.argv)  <span class="cm"># ['script.py', 'hello']</span>
+
+<span class="cm"># Exit the program with status code</span>
+sys.exit(<span class="nm">0</span>)  <span class="cm"># 0 = success, non-zero = error</span>
+
+<span class="cm"># Get Python path</span>
+<span class="fn">print</span>(sys.path)  <span class="cm"># List of directories Python searches for modules</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-json">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">📄</span><h2 class="sec-title">json — Data Exchange</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is JSON?</h3>
+          <p class="lib-desc">JSON (JavaScript Object Notation) is a lightweight data interchange format. Python's <code>json</code> module makes it easy to convert between Python objects and JSON format.</p>
+          <p class="lib-why"><strong>Why use it:</strong> APIs, web applications, configuration files, and data storage. JSON is the standard format for data exchange in modern applications.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — JSON Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> json
+
+<span class="cm"># Convert Python → JSON (string)</span>
+data = {<span class="st">"name"</span>: <span class="st">"Deepak"</span>, <span class="st">"age"</span>: <span class="nm">25</span>}
+json_data = json.dumps(data)
+<span class="fn">print</span>(json_data)  <span class="cm"># {"name": "Deepak", "age": 25}</span>
+
+<span class="cm"># Convert JSON → Python</span>
+json_string = <span class="st">'{"name":"Deepak","age":25}'</span>
+data = json.loads(json_string)
+<span class="fn">print</span>(data[<span class="st">"name"</span>])  <span class="cm"># Deepak</span>
+
+<span class="cm"># Save JSON to file</span>
+data = {<span class="st">"name"</span>: <span class="st">"Deepak"</span>, <span class="st">"age"</span>: <span class="nm">25</span>}
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.json"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+    json.dump(data, f)
+
+<span class="cm"># Read JSON from file</span>
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.json"</span>, <span class="st">"r"</span>) <span class="kw">as</span> f:
+    data = json.load(f)
+<span class="fn">print</span>(data)</pre>
+        </div>
+
+        <div class="callout callout-blue">
+          <span class="callout-icon">ℹ</span>
+          <span><strong>Key functions:</strong> <code>dumps()</code>/<code>loads()</code> work with strings, while <code>dump()</code>/<code>load()</code> work with files.</span>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-numpy">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">🔢</span><h2 class="sec-title">NumPy — Numerical Computing</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is NumPy?</h3>
+          <p class="lib-desc">NumPy (Numerical Python) is the foundation library for numerical computing in Python. It provides support for large, multi-dimensional arrays and matrices, along with a collection of mathematical functions.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Faster operations than native Python lists (up to 50x), memory efficient, essential for data science, machine learning, and scientific computing.</p>
+        </div>
+
+        <div class="sub-title">1️⃣ Install & Import</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Terminal + Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Install</span>
+pip install numpy
+
+<span class="cm"># Import (standard alias)</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np</pre>
+        </div>
+
+        <div class="sub-title">2️⃣ Create NumPy Array</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> numpy <span class="kw">as</span> np
+arr = np.array([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>])
+<span class="fn">print</span>(arr)  <span class="cm"># [1 2 3 4]</span></pre>
+        </div>
+
+        <div class="sub-title">3️⃣ NumPy vs Python List</div>
+        <div class="callout callout-blue">
+          <span class="callout-icon">💡</span>
+          <span><strong>Key Difference:</strong> Python lists concatenate, NumPy arrays perform element-wise operations.</span>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — List vs NumPy</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Python list — concatenates</span>
+a = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>]
+b = [<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>]
+<span class="fn">print</span>(a + b)  <span class="cm"># [1, 2, 3, 4, 5, 6]</span>
+
+<span class="cm"># NumPy array — element-wise addition</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+a = np.array([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>])
+b = np.array([<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>])
+<span class="fn">print</span>(a + b)  <span class="cm"># [5 7 9]</span>
+
+<span class="cm"># Vectorized operations (no loops needed!)</span>
+arr = np.array([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>])
+<span class="fn">print</span>(arr + <span class="nm">10</span>)   <span class="cm"># [11 12 13 14]</span>
+<span class="fn">print</span>(arr * <span class="nm">2</span>)    <span class="cm"># [2 4 6 8]</span></pre>
+        </div>
+
+        <div class="sub-title">4️⃣ Useful NumPy Functions</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">arr = np.array([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>])
+
+<span class="fn">print</span>(np.mean(arr))   <span class="cm"># 2.5 (average)</span>
+<span class="fn">print</span>(np.sum(arr))    <span class="cm"># 10 (total)</span>
+<span class="fn">print</span>(np.max(arr))    <span class="cm"># 4 (maximum)</span>
+<span class="fn">print</span>(np.min(arr))    <span class="cm"># 1 (minimum)</span>
+<span class="fn">print</span>(np.std(arr))    <span class="cm"># Standard deviation</span></pre>
+        </div>
+
+        <div class="sub-title">5️⃣ 2D Arrays (Matrices)</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Create 2D array</span>
+matrix = np.array([
+    [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>],
+    [<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>]
+])
+<span class="fn">print</span>(matrix)
+<span class="cm"># [[1 2 3]</span>
+<span class="cm">#  [4 5 6]]</span>
+
+<span class="cm"># Access element (row 0, column 1)</span>
+<span class="fn">print</span>(matrix[<span class="nm">0</span>, <span class="nm">1</span>])  <span class="cm"># 2</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-pandas">
+        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">📊</span><h2 class="sec-title">Pandas — Data Analysis</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is Pandas?</h3>
+          <p class="lib-desc">Pandas is a powerful data manipulation and analysis library. It provides DataFrame objects for working with structured data, similar to Excel spreadsheets or SQL tables.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Easy data cleaning, transformation, analysis. Essential for data science, machine learning pipelines, business analytics, and financial analysis.</p>
+        </div>
+
+        <div class="sub-title">1️⃣ Install & Import</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Terminal + Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Install</span>
+pip install pandas
+
+<span class="cm"># Import (standard alias)</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd</pre>
+        </div>
+
+        <div class="sub-title">2️⃣ What is a Series?</div>
+        <p class="prose">A <strong>Series</strong> is a one-dimensional labeled array (single column).</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+data = [<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>]
+s = pd.Series(data)
+<span class="fn">print</span>(s)
+
+<span class="cm"># Output:</span>
+<span class="cm"># 0    10</span>
+<span class="cm"># 1    20</span>
+<span class="cm"># 2    30</span>
+<span class="cm"># 3    40</span>
+<span class="cm"># dtype: int64</span></pre>
+        </div>
+
+        <div class="sub-title">3️⃣ What is a DataFrame?</div>
+        <p class="prose">A <strong>DataFrame</strong> is a table (like Excel) with rows and columns.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+data = {
+    <span class="st">"Name"</span>: [<span class="st">"Amit"</span>, <span class="st">"Deepak"</span>, <span class="st">"Ravi"</span>],
+    <span class="st">"Marks"</span>: [<span class="nm">78</span>, <span class="nm">85</span>, <span class="nm">90</span>]
+}
+df = pd.DataFrame(data)
+<span class="fn">print</span>(df)
+
+<span class="cm"># Output:</span>
+<span class="cm">#     Name  Marks</span>
+<span class="cm"># 0    Amit     78</span>
+<span class="cm"># 1  Deepak     85</span>
+<span class="cm"># 2    Ravi     90</span></pre>
+        </div>
+
+        <div class="sub-title">4️⃣ Essential DataFrame Operations</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>df.head(n)</code></td><td>First n rows</td><td><code>df.head(10)</code></td></tr>
+              <tr><td><code>df.info()</code></td><td>Column types, nulls</td><td><code>df.info()</code></td></tr>
+              <tr><td><code>df.describe()</code></td><td>Summary statistics</td><td><code>df.describe()</code></td></tr>
+              <tr><td><code>df['col']</code></td><td>Select column</td><td><code>df['age']</code></td></tr>
+              <tr><td><code>df.dropna()</code></td><td>Remove missing values</td><td><code>df.dropna()</code></td></tr>
+              <tr><td><code>df.fillna(val)</code></td><td>Fill missing values</td><td><code>df.fillna(0)</code></td></tr>
+              <tr><td><code>df.groupby()</code></td><td>Group and aggregate</td><td><code>df.groupby('city')['salary'].mean()</code></td></tr>
+              <tr><td><code>df.to_csv()</code></td><td>Save to CSV</td><td><code>df.to_csv('out.csv', index=False)</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-title">Real Example: Student Data Analysis</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+data = {
+    <span class="st">"Product"</span>: [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>],
+    <span class="st">"Sales"</span>: [<span class="nm">100</span>, <span class="nm">150</span>, <span class="nm">200</span>]
+}
+df = pd.DataFrame(data)
+
+<span class="fn">print</span>(<span class="st">"Total Sales:"</span>, df[<span class="st">"Sales"</span>].sum())
+<span class="cm"># Output: Total Sales: 450</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-matplotlib">
+        <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon">📈</span><h2 class="sec-title">Matplotlib — Data Visualization</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is Matplotlib?</h3>
+          <p class="lib-desc">Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. It's the foundation for many other visualization libraries like Seaborn and Plotly.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Create publication-quality plots, charts, and graphs. Essential for data exploration, presentations, and reports.</p>
+        </div>
+
+        <div class="sub-title">1️⃣ Common Chart Types</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>plt.plot(x, y)</code></td><td>Line chart</td><td><code>plt.plot(x, y, color='blue')</code></td></tr>
+              <tr><td><code>plt.scatter(x, y)</code></td><td>Scatter plot</td><td><code>plt.scatter(x, y, c='red')</code></td></tr>
+              <tr><td><code>plt.bar(x, height)</code></td><td>Bar chart</td><td><code>plt.bar(cats, vals)</code></td></tr>
+              <tr><td><code>plt.hist(x, bins)</code></td><td>Histogram</td><td><code>plt.hist(data, bins=30)</code></td></tr>
+              <tr><td><code>plt.pie(sizes)</code></td><td>Pie chart</td><td><code>plt.pie(sizes, labels=lbls)</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-title">Complete Example: Multiple Plots</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Matplotlib Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># Line Plot</span>
+x = np.linspace(<span class="nm">0</span>, <span class="nm">10</span>, <span class="nm">100</span>)
+y = np.sin(x)
+
+plt.figure(figsize=(<span class="nm">10</span>, <span class="nm">6</span>))
+plt.plot(x, y, label=<span class="st">'sin(x)'</span>, linewidth=<span class="nm">2</span>)
+plt.title(<span class="st">'Sine Wave'</span>)
+plt.xlabel(<span class="st">'X axis'</span>)
+plt.ylabel(<span class="st">'Y axis'</span>)
+plt.legend()
+plt.grid(<span class="kw">True</span>)
+plt.show()
+
+<span class="cm"># Bar Chart</span>
+categories = [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]
+values = [<span class="nm">23</span>, <span class="nm">45</span>, <span class="nm">56</span>, <span class="nm">78</span>]
+plt.bar(categories, values, color=<span class="st">'skyblue'</span>)
+plt.title(<span class="st">'Category Values'</span>)
+plt.show()</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-sklearn">
+        <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon">🤖</span><h2 class="sec-title">Scikit-Learn — Machine Learning</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is Scikit-Learn?</h3>
+          <p class="lib-desc">Scikit-learn is the most popular machine learning library for Python. It provides simple and efficient tools for data mining, data analysis, and predictive modeling.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Unified API for dozens of ML algorithms, preprocessing, model selection, and evaluation. Perfect for beginners and production use.</p>
+        </div>
+
+        <div class="sub-title">Essential ML Functions</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>train_test_split()</code></td><td>Split data into train/test</td><td><code>X_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2)</code></td></tr>
+              <tr><td><code>StandardScaler()</code></td><td>Standardize features</td><td><code>scaler = StandardScaler(); X_sc = scaler.fit_transform(X)</code></td></tr>
+              <tr><td><code>LinearRegression()</code></td><td>Linear regression model</td><td><code>LinearRegression().fit(X_tr, y_tr)</code></td></tr>
+              <tr><td><code>RandomForestClassifier()</code></td><td>Random forest model</td><td><code>RandomForestClassifier(n_estimators=100)</code></td></tr>
+              <tr><td><code>accuracy_score()</code></td><td>Classification accuracy</td><td><code>accuracy_score(y_te, y_pred)</code></td></tr>
+              <tr><td><code>cross_val_score()</code></td><td>Cross-validation</td><td><code>cross_val_score(clf, X, y, cv=5)</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sub-title">Complete Example: ML Pipeline</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — sklearn pipeline</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> RandomForestClassifier
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> accuracy_score
+
+<span class="cm"># 1. Split data</span>
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=<span class="nm">0.2</span>, random_state=<span class="nm">42</span>
+)
+
+<span class="cm"># 2. Train model</span>
+model = RandomForestClassifier(n_estimators=<span class="nm">100</span>)
+model.fit(X_train, y_train)
+
+<span class="cm"># 3. Predict & evaluate</span>
+y_pred = model.predict(X_test)
+<span class="fn">print</span>(<span class="st">f"Accuracy: {accuracy_score(y_test, y_pred):.3f}"</span>)</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-requests">
+        <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon">🌐</span><h2 class="sec-title">Requests — HTTP Library & API Calls</h2></div>
+        <div class="section-divider"></div>
+        <div class="lib-card">
+          <h3>What is Requests?</h3>
+          <p class="lib-desc">Requests is an elegant and simple HTTP library for Python, built for human beings. It allows you to send HTTP/1.1 requests easily.</p>
+          <p class="lib-why"><strong>Why use it:</strong> Interact with APIs, web scraping, downloading files, automation. Much simpler than urllib.</p>
+        </div>
+
+        <div class="sub-title">1️⃣ Basic API Request</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — GET Request</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> requests
+
+<span class="cm"># Basic GET request</span>
+response = requests.get(<span class="st">"https://api.github.com"</span>)
+<span class="fn">print</span>(response.status_code)  <span class="cm"># 200</span>
+
+<span class="cm"># Status codes:</span>
+<span class="cm"># 200 = Success</span>
+<span class="cm"># 404 = Not Found</span>
+<span class="cm"># 500 = Server Error</span>
+
+<span class="cm"># Get API data as JSON (becomes Python dict)</span>
+data = response.json()
+<span class="fn">print</span>(data)
+
+<span class="cm"># Access specific fields</span>
+<span class="fn">print</span>(data[<span class="st">"current_user_url"</span>])</pre>
+        </div>
+
+        <div class="sub-title">2️⃣ Example: Random Joke API</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Joke API Example</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> requests
+
+<span class="cm"># Fetch a random joke</span>
+url = <span class="st">"https://official-joke-api.appspot.com/random_joke"</span>
+response = requests.get(url)
+data = response.json()
+
+<span class="fn">print</span>(data[<span class="st">"setup"</span>])
+<span class="fn">print</span>(data[<span class="st">"punchline"</span>])
+
+<span class="cm"># Output example:</span>
+<span class="cm"># Why did the computer go to the doctor?</span>
+<span class="cm"># Because it had a virus!</span></pre>
+        </div>
+
+        <div class="sub-title">3️⃣ Sending Parameters to API</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — API with Parameters</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> requests
+
+<span class="cm"># Search GitHub repositories</span>
+params = {<span class="st">"q"</span>: <span class="st">"python"</span>}
+response = requests.get(
+    <span class="st">"https://api.github.com/search/repositories"</span>,
+    params=params
+)
+data = response.json()
+<span class="fn">print</span>(<span class="st">"Total repositories:"</span>, data[<span class="st">"total_count"</span>])</pre>
+        </div>
+
+        <div class="callout callout-py">
+          <span class="callout-icon">⚡</span>
+          <span><strong>Quick Rules:</strong> <code>API</code> → program communication, <code>requests.get()</code> → send GET request, <code>.json()</code> → convert response to dictionary, <code>status code 200</code> = success</span>
+        </div>
+      </section>
+
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← OOP</a>
+        <a class="nav-link" href="programs.html">Programs →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

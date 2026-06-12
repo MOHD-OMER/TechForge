@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Linear Search — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--green); --accent-dim: var(--green-dim); }
+  .cells-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 20px 0; justify-content: center; }
+  .cell {
+      width: 50px; height: 44px; background: var(--surface); border: 2px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); position: relative; font-weight: 600; color: var(--text);
+      transition: all 0.3s ease; flex-direction: column;
+  }
+  .cell-idx { position: absolute; top: -16px; font-size: 10px; color: var(--text2); }
+  .cc-active { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.1); }
+  .cc-checked { opacity: 0.3; filter: grayscale(1); }
+  .cc-found { border-color: var(--green); background: rgba(34, 197, 94, 0.1); transform: scale(1.2); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link active" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Searching Algorithms</div>
+        <h1 class="dh2-title"><span>Linear Search</span></h1>
+        <p class="dh2-sub">Scan each element one by one until the target is found or the array ends. Works on any unsorted array.</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">O(n)</span><span class="dss-label">Time</span></div><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Works</span><span class="dss-label">Unsorted</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Simple</span><span class="dss-label">Approach</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Sequential</span><span class="dss-label">Check</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // LINEAR SEARCH
+       </span>
+<div class="viz-controls">
+<input class="inp inp-wide" id="ls-t" placeholder="Target" value="37"/>
+<button class="btn go" onclick="lsRun()">
+         ▶ Search
+        </button>
+<button class="btn" onclick="lsReset()">
+         ↺ Reset
+        </button>
+</div>
+</div>
+<div class="viz-body">
+<div class="cells-row" id="ls-cells">
+</div>
+<div class="status" id="ls-status">
+        Enter target and press Search
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-linearsearch-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-linearsearch-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-linearsearch-2')">
+        Complexity
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-linearsearch-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-linearsearch-prac')">
+        Practice 🏆
+       </div>
+</div>
+<div class="info-pane active" id="tp-linearsearch-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Start Left
+          </div>
+<div class="step-desc">
+           Begin from index 0.
+          </div>
+<div class="step-code">
+           i = 0
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Compare
+          </div>
+<div class="step-desc">
+           Check arr[i] == target.
+          </div>
+<div class="step-code">
+           if arr[i] == target: return i
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Advance
+          </div>
+<div class="step-desc">
+           Move right if not matching.
+          </div>
+<div class="step-code">
+           i += 1
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Not Found
+          </div>
+<div class="step-desc">
+           Return -1 if end reached.
+          </div>
+<div class="step-code">
+           return -1
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-linearsearch-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">def</span> <span class="fn">linear_search</span>(arr, target):
+    <span class="kw">for</span> i, val <span class="kw">in</span> enumerate(arr):
+        <span class="kw">if</span> val == target:
+            <span class="kw">return</span> i
+    <span class="kw">return</span> -1</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-linearsearch-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--red)">
+          O(n)
+         </div>
+<div class="cc-name">
+          Worst Case
+         </div>
+<div class="cc-desc">
+          Target at end or absent
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">
+          O(1)
+         </div>
+<div class="cc-name">
+          Best Case
+         </div>
+<div class="cc-desc">
+          Target is first element
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--amber)">
+          O(n)
+         </div>
+<div class="cc-name">
+          Average
+         </div>
+<div class="cc-desc">
+          ~n/2 comparisons on average
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--cyan)">
+          Any
+         </div>
+<div class="cc-name">
+          Array type
+         </div>
+<div class="cc-desc">
+          Unsorted, sorted, any data type
+         </div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-linearsearch-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         When is Linear Search preferred over Binary Search?
+        </div>
+<div class="quiz-opts">
+<button aria-label="Large arrays" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Large arrays
+         </button>
+<button aria-label="Unsorted arrays" class="quiz-opt" onclick="quizAnswer(this,true)">
+          Unsorted arrays
+         </button>
+<button aria-label="Sorted arrays" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Sorted arrays
+         </button>
+<button aria-label="Indexed arrays" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Indexed arrays
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-linearsearch-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>
+          Progress
+         </span>
+<span id="prog-linearsearch">
+          0 / 3 solved
+         </span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-linearsearch" style="width:0%">
+</div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">
+         3 problems · 1 PBC · 2 Startup
+        </div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','linearsearch')">
+          ALL
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','linearsearch')">
+          PBC
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'startup','linearsearch')">
+          STARTUP
+         </button>
+</div>
+</div>
+<div class="pq-list" id="pql-linearsearch">
+<div class="pq-item" data-id="1001" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/maximum-subarray/')">
+<button aria-label="Mark problem 4 as done" class="pq-done-toggle" onclick="toggleDone(event,1001,'linearsearch')" title="Mark done">
+</button>
+<span class="pq-num">
+          #004
+         </span>
+<span class="pq-name">
+          Maximum Subarray
+         </span>
+<span class="pq-asked">
+          Meta, Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1002" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/equilibrium-index-of-an-array/')">
+<button aria-label="Mark problem 13 as done" class="pq-done-toggle" onclick="toggleDone(event,1002,'linearsearch')" title="Mark done">
+</button>
+<span class="pq-num">
+          #013
+         </span>
+<span class="pq-name">
+          Equilibrium Index
+         </span>
+<span class="pq-asked">
+          Zomato
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1003" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/find-the-duplicate-number/')">
+<button aria-label="Mark problem 18 as done" class="pq-done-toggle" onclick="toggleDone(event,1003,'linearsearch')" title="Mark done">
+</button>
+<span class="pq-num">
+          #018
+         </span>
+<span class="pq-name">
+          Find Duplicates in Array
+         </span>
+<span class="pq-asked">
+          Cogoport
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-linearsearch"></div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="heapsort.html">← Heap Sort</a>
+  <a class="nav-link next" href="binarysearch.html">Binary Search →</a>
+</div>
+</main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){refreshProg("linearsearch");});
+
+// Sidebar toggle functionality
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', isClosed ? false : true);
+  sidebarOverlay.classList.toggle('visible', isClosed ? false : true);
+  document.body.classList.toggle('tf-nav-open', !isClosed);
+}
+
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  const isOpen = topNav.classList.contains('mobile-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+  document.body.classList.toggle('tf-nav-open', isOpen);
+}
+
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', function() {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = this.value.toLowerCase().trim();
+      if (query) {
+        const links = document.querySelectorAll('.sb-link');
+        for (const link of links) {
+          const text = link.textContent.toLowerCase();
+          if (text.includes(query)) {
+            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            link.style.background = 'rgba(77,158,247,0.2)';
+            setTimeout(() => link.style.background = '', 1500);
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+// Progress bar
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (progressFill) progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+
+let lsArr =[4,2,7,15,3,37,9,21,14,5,42,8,19,11,33]; let lsOn=false;
+function lsReset(){
+  let w =document.getElementById('ls-cells');
+  w.innerHTML=lsArr.map(function(v,i){return '<div class="cell" id="lsc'+i+'"><span class="cell-idx">'+i+'</span>'+v+'</div>';}).join('');
+  setStatus('ls-status','Enter a target value and press Search');
+}
+async function lsRun(){
+  if(lsOn)return; lsOn=true;
+  lsReset();await sleep(80);
+  let target =parseInt(document.getElementById('ls-t').value)||37;
+  setStatus('ls-status','Searching for <b>'+target+'</b>...');
+  for(let i =0;i<lsArr.length;i++){
+    let el =document.getElementById('lsc'+i);if(!el)break;
+    el.className='cell cc-active';
+    setStatus('ls-status','Index '+i+': <b>'+lsArr[i]+'</b> == '+target+'? '+(lsArr[i]===target?'<span class="s-ok">YES!</span>':'No'));
+    await sleep(400);
+    if(lsArr[i]===target){el.className='cell cc-found';setStatus('ls-status','<span class="s-ok">&#10003; Found '+target+' at index '+i+'!</span>');return;}
+    else el.className='cell cc-checked';
+  }
+  setStatus('ls-status','<span class="s-err">&#10007; '+target+' not found in array</span>');
+}
+document.addEventListener('DOMContentLoaded',lsReset);
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

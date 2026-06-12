@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Binary Search — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim); }
+  .bss-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 20px 0; justify-content: center; }
+  .bss-cell {
+      width: 44px; height: 44px; background: var(--surface); border: 2px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); position: relative; font-weight: 600; color: var(--text);
+      transition: all 0.3s ease;
+  }
+  .bss-cell-idx { position: absolute; top: -16px; font-size: 10px; color: var(--text2); }
+  .cc-mid { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.1); box-shadow: 0 0 15px var(--accent-dim); }
+  .cc-range { border-color: var(--blue); }
+  .cc-checked { opacity: 0.3; filter: grayscale(1); }
+  .cc-found { border-color: var(--green); background: rgba(34, 197, 94, 0.1); transform: scale(1.2); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link active" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Searching Algorithms</div>
+        <h1 class="dh2-title"><span>Binary Search</span></h1>
+        <p class="dh2-sub">Halve the search space each step by comparing target with the middle element. Requires a sorted array. Efficiency: O(log n).</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(log n)</span><span class="dss-label">Time</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(1)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">Sorted</span><span class="dss-label">Required</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Divide</span><span class="dss-label">& Conquer</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">Interview Fav</span></div></div>
+<div class="py-section">
+  <div class="sec-header"><span class="sec-num">01</span><span class="sec-title">Step-by-Step Search</span></div>
+  <div class="section-divider"></div>
+  <div class="code-block" style="padding: 24px;">
+    <div style="display:flex; gap:12px; margin-bottom:24px; align-items:center;">
+      <input class="search-input" id="bs-t" value="37" style="width:70px; padding:8px 12px;" title="Target Value">
+      <button class="badge b-accent" onclick="bsrRun()" style="border:none; cursor:pointer;">▶ Find Target</button>
+      <button class="badge b-surface" onclick="bsrReset()" style="border:none; cursor:pointer;">↺ Reset</button>
+    </div>
+    <div class="bss-row" id="bsr-cells"></div>
+    <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:16px;">Array must be sorted. Press Find.</div>
+  </div>
+</div>
+
+<div class="info-section">
+  <div class="info-tabs">
+    <div class="info-tab active" onclick="switchTab(this,'tp-bs-0')">Logic</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bs-1')">Python</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bs-prac')">Practice 🏆</div>
+  </div>
+
+  <div class="info-pane active" id="tp-bs-0">
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-title">Initial Range</div><div class="step-desc">Set `lo = 0` and `hi = n - 1`.</div></div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-title">Middle Check</div><div class="step-desc">Calculate `mid = (lo + hi) // 2`. If `arr[mid] == target`, done!</div></div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-title">Divide</div><div class="step-desc">If target is larger, search right half (`lo = mid + 1`). Otherwise, search left half (`hi = mid - 1`).</div></div></div>
+    </div>
+  </div>
+
+  <div class="info-pane" id="tp-bs-1">
+    <div class="code-block">
+      <pre class="code-pre">def binary_search(arr, target):
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: lo = mid + 1
+        else: hi = mid - 1
+    return -1</pre>
+    </div>
+  </div>
+
+  <div class="info-pane" id="tp-bs-prac">
+      <div class="pq-progress">
+          <div class="pq-progress-label"><span>Search Mastery</span><span id="prog-binarysearch">0 / 3 solved</span></div>
+          <div class="pq-bar"><div class="pq-bar-fill" id="bar-binarysearch" style="width:0%"></div></div>
+      </div>
+      <div class="pq-list" id="pql-binarysearch">
+          <div class="pq-item" data-id="301" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/search-in-rotated-sorted-array/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,301,'binarysearch')"></button>
+              <span class="pq-num">#01</span><span class="pq-name">Search in Rotated Sorted</span><span class="pq-badge pq-pbc">Google</span>
+          </div>
+          <div class="pq-item" data-id="302" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,302,'binarysearch')"></button>
+              <span class="pq-num">#02</span><span class="pq-name">First and Last Position</span><span class="pq-badge pq-pbc">Meta</span>
+          </div>
+          <div class="pq-item" data-id="303" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/search-insert-position/')">
+              <button class="pq-done-toggle" onclick="toggleDone(event,303,'binarysearch')"></button>
+              <span class="pq-num">#03</span><span class="pq-name">Search Insert Position</span><span class="pq-badge pq-startup">Zomato</span>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="linearsearch.html">← Linear Search</a>
+  <a class="nav-link next" href="recursion.html">Recursion →</a>
+</div>
+</main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){bsrReset();refreshProg("binarysearch");});
+
+let bsrArr =[2,5,8,11,14,19,21,25,33,37,42,47,51,56,64];
+let bsrOff=true;
+
+window.bsrReset = function(){
+  bsrOff=true;
+  let w =document.getElementById('bsr-cells'); if(!w)return;
+  w.innerHTML=bsrArr.map((v,i)=>'<div class="bss-cell" id="bsc'+i+'"><span class="bss-cell-idx">'+i+'</span>'+v+'</div>').join('');
+  document.getElementById('bsr-status').innerText='Array is sorted. Enter target and press Find.';
+}
+
+window.bsrRun = async function(){
+  if(!bsrOff)return; bsrOff=false;
+  bsrReset(); await new Promise(r=>setTimeout(r, 100));
+  let target =parseInt(document.getElementById('bs-t').value)||37;
+  let lo =0, hi=bsrArr.length-1, steps=0;
+  document.getElementById('bsr-status').innerHTML = 'Searching for <b>'+target+'</b>...';
+
+  while(lo<=hi && !bsrOff){
+    steps++;
+    let mid =Math.floor((lo+hi)/2);
+    for(let i=0; i<bsrArr.length; i++){
+      let el =document.getElementById('bsc'+i); if(!el)continue;
+      if(i===mid) el.className='bss-cell cc-mid';
+      else if(i>=lo && i<=hi) el.className='bss-cell cc-range';
+      else el.className='bss-cell cc-checked';
+    }
+    document.getElementById('bsr-status').innerHTML = 'Step '+steps+': Checking mid index '+mid+' (value: '+bsrArr[mid]+')';
+    await new Promise(r=>setTimeout(r, 700));
+
+    if(bsrArr[mid]===target){
+      document.getElementById('bsc'+mid).className='bss-cell cc-found';
+      document.getElementById('bsr-status').innerHTML = '<span style="color:var(--green)">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
+      bsrOff=true; return;
+    }
+    else if(bsrArr[mid]<target){ lo=mid+1; }
+    else { hi=mid-1; }
+    await new Promise(r=>setTimeout(r, 400));
+  }
+  document.getElementById('bsr-status').innerHTML = '<span style="color:var(--red)">✖ '+target+' not found in array.</span>';
+  bsrOff=true;
+}
+
+// Sidebar toggle functionality
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', isClosed ? false : true);
+  sidebarOverlay.classList.toggle('visible', isClosed ? false : true);
+  document.body.classList.toggle('tf-nav-open', !isClosed);
+}
+
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  const isOpen = topNav.classList.contains('mobile-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+  document.body.classList.toggle('tf-nav-open', isOpen);
+}
+
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', function() {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = this.value.toLowerCase().trim();
+      if (query) {
+        const links = document.querySelectorAll('.sb-link');
+        for (const link of links) {
+          const text = link.textContent.toLowerCase();
+          if (text.includes(query)) {
+            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            link.style.background = 'rgba(77,158,247,0.2)';
+            setTimeout(() => link.style.background = '', 1500);
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+// Progress bar
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (progressFill) progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

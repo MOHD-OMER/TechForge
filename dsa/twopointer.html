@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Two Pointer — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+  .cc-left { border-color: var(--blue); background: rgba(79, 142, 247, 0.15); }
+  .cc-right { border-color: var(--pink); background: rgba(236, 72, 153, 0.15); }
+  .cc-range { opacity: 0.5; }
+  .cc-checked { opacity: 0.3; filter: grayscale(1); }
+  .cc-found { border-color: var(--green); background: rgba(34, 197, 94, 0.15); transform: scale(1.15); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link active" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Techniques</div>
+        <h1 class="dh2-title">Two <span>Pointer</span></h1>
+        <p class="dh2-sub">Use two indices moving toward each other or in the same direction to solve pair/subarray problems in O(n) instead of O(n²).</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(n)</span><span class="dss-label">Time</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(1)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Sorted</span><span class="dss-label">Arrays</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Pair</span><span class="dss-label">Problems</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">✓</span><span class="dss-label">Slide+Shrink</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // TWO SUM II — SORTED ARRAY
+       </span>
+<div class="viz-controls">
+<input class="inp inp-wide" id="tp-t" placeholder="Target sum" value="18"/>
+<button class="btn go" onclick="tpRun()">
+         ▶ Find Pair
+        </button>
+<button class="btn" onclick="tpReset()">
+         ↺ Reset
+        </button>
+</div>
+</div>
+<div class="viz-body">
+<div class="cells-row" id="tp-cells">
+</div>
+<div class="status" id="tp-status">
+        Find two numbers that sum to target
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-twopointer-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-twopointer-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-twopointer-2')">
+        Use Cases
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-twopointer-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-twopointer-prac')">
+        Practice 🏆
+       </div>
+</div>
+<div class="info-pane active" id="tp-twopointer-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Sort
+          </div>
+<div class="step-desc">
+           Array must be sorted (or use hash map for unsorted).
+          </div>
+<div class="step-code">
+           arr.sort()
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           lo=0, hi=n-1
+          </div>
+<div class="step-desc">
+           Start pointers at opposite ends.
+          </div>
+<div class="step-code">
+           lo, hi = 0, len(arr)-1
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Check Sum
+          </div>
+<div class="step-desc">
+           If sum too small → lo++. Too large → hi--.
+          </div>
+<div class="step-code">
+           if total < target: lo += 1
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Found!
+          </div>
+<div class="step-desc">
+           When sum equals target — return both indices.
+          </div>
+<div class="step-code">
+           return [lo, hi]
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-twopointer-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">def</span> <span class="fn">two_sum_sorted</span>(arr, target):
+    lo, hi = 0, len(arr) - 1
+    <span class="kw">while</span> lo &lt; hi:
+        total = arr[lo] + arr[hi]
+        <span class="kw">if</span>   total == target: <span class="kw">return</span> [lo, hi]
+        <span class="kw">elif</span> total &lt; target:  lo += 1
+        <span class="kw">else</span>:                hi -= 1
+    <span class="kw">return</span> []</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-twopointer-2">
+<div class="prose">
+<strong>
+         Opposite ends:
+        </strong>
+        Two Sum, 3-Sum, Container with most water, Trapping rain water.
+        <br/>
+<br/>
+<strong>
+         Same direction:
+        </strong>
+        Remove duplicates, sliding window, fast-slow pointer (cycle detection).
+       </div>
+<div class="use-chips">
+<span class="chip">
+         Two Sum
+        </span>
+<span class="chip">
+         3-Sum
+        </span>
+<span class="chip">
+         Trapping Rain Water
+        </span>
+<span class="chip">
+         Container With Most Water
+        </span>
+<span class="chip">
+         Valid Palindrome
+        </span>
+<span class="chip">
+         Remove Duplicates
+        </span>
+</div>
+</div>
+<div class="info-pane" id="tp-twopointer-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         Two Pointer reduces O(n²) to O(n) because:
+        </div>
+<div class="quiz-opts">
+<button aria-label="It uses extra memory" class="quiz-opt" onclick="quizAnswer(this,false)">
+          It uses extra memory
+         </button>
+<button aria-label="Each pointer moves at most n steps total — never backward" class="quiz-opt" onclick="quizAnswer(this,true)">
+          Each pointer moves at most n steps total — never backward
+         </button>
+<button aria-label="It sorts the input" class="quiz-opt" onclick="quizAnswer(this,false)">
+          It sorts the input
+         </button>
+<button aria-label="It uses binary search" class="quiz-opt" onclick="quizAnswer(this,false)">
+          It uses binary search
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-twopointer-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>
+          Progress
+         </span>
+<span id="prog-twopointer">
+          0 / 6 solved
+         </span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-twopointer" style="width:0%">
+</div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">
+         6 problems · 5 PBC · 1 Startup
+        </div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','twopointer')">
+          ALL
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','twopointer')">
+          PBC
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'startup','twopointer')">
+          STARTUP
+         </button>
+</div>
+</div>
+<div class="pq-list" id="pql-twopointer">
+<div class="pq-item" data-id="1501" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/')">
+<button aria-label="Mark problem 1 as done" class="pq-done-toggle" onclick="toggleDone(event,1501,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #001
+         </span>
+<span class="pq-name">
+          Two Sum II (Sorted)
+         </span>
+<span class="pq-asked">
+          Google
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1502" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/3sum/')">
+<button aria-label="Mark problem 7 as done" class="pq-done-toggle" onclick="toggleDone(event,1502,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #007
+         </span>
+<span class="pq-name">
+          3 Sum
+         </span>
+<span class="pq-asked">
+          Amazon, Adobe
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1503" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/trapping-rain-water/')">
+<button aria-label="Mark problem 8 as done" class="pq-done-toggle" onclick="toggleDone(event,1503,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #008
+         </span>
+<span class="pq-name">
+          Trapping Rain Water
+         </span>
+<span class="pq-asked">
+          Google
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1504" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/container-with-most-water/')">
+<button aria-label="Mark problem 10 as done" class="pq-done-toggle" onclick="toggleDone(event,1504,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #010
+         </span>
+<span class="pq-name">
+          Container With Most Water
+         </span>
+<span class="pq-asked">
+          Google, Meta
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1505" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-palindrome/')">
+<button aria-label="Mark problem 28 as done" class="pq-done-toggle" onclick="toggleDone(event,1505,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #028
+         </span>
+<span class="pq-name">
+          Valid Palindrome
+         </span>
+<span class="pq-asked">
+          Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="1506" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/')">
+<button aria-label="Mark problem 17 as done" class="pq-done-toggle" onclick="toggleDone(event,1506,'twopointer')" title="Mark done">
+</button>
+<span class="pq-num">
+          #017
+         </span>
+<span class="pq-name">
+          Merge Sorted Arrays
+         </span>
+<span class="pq-asked">
+          Cure.fit
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-twopointer"></div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="dp.html">← Dynamic Programming</a>
+  <a class="nav-link next" href="sliding.html">Sliding Window →</a>
+</div>
+</main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){refreshProg("twopointer");});
+
+// Sidebar toggle functionality
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', isClosed ? false : true);
+  sidebarOverlay.classList.toggle('visible', isClosed ? false : true);
+  document.body.classList.toggle('tf-nav-open', !isClosed);
+}
+
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  const isOpen = topNav.classList.contains('mobile-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+  document.body.classList.toggle('tf-nav-open', isOpen);
+}
+
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', function() {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = this.value.toLowerCase().trim();
+      if (query) {
+        const links = document.querySelectorAll('.sb-link');
+        for (const link of links) {
+          const text = link.textContent.toLowerCase();
+          if (text.includes(query)) {
+            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            link.style.background = 'rgba(77,158,247,0.2)';
+            setTimeout(() => link.style.background = '', 1500);
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+// Progress bar
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (progressFill) progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+
+let tpArr =[1,3,5,7,9,11,13,15,17,19]; let tpOn=false;
+function tpReset(){
+  let w =document.getElementById('tp-cells');
+  w.innerHTML=tpArr.map(function(v,i){return '<div class="cell" id="tpc'+i+'"><span class="cell-idx">'+i+'</span>'+v+'</div>';}).join('');
+  setStatus('tp-status','Sorted array. Enter target sum and press Find Pair.');
+}
+async function tpRun(){
+  if(tpOn)return; tpOn=true;
+  tpReset();await sleep(80);
+  let target =parseInt(document.getElementById('tp-t').value)||18;
+  let lo =0,hi=tpArr.length-1,steps=0;
+  setStatus('tp-status','Finding pair summing to <b>'+target+'</b>...');
+  while(lo<hi){
+    steps++;
+    for(let i =0;i<tpArr.length;i++){
+      let el =document.getElementById('tpc'+i);if(!el)continue;
+      if(i===lo)el.className='cell cc-left';
+      else if(i===hi)el.className='cell cc-right';
+      else if(i>lo&&i<hi)el.className='cell cc-range';
+      else el.className='cell cc-checked';
+    }
+    let sum =tpArr[lo]+tpArr[hi];
+    let msg ='Step '+steps+': <span style="color:var(--blue)">lo['+lo+']='+tpArr[lo]+'</span> + <span style="color:var(--pink)">hi['+hi+']='+tpArr[hi]+'</span> = <b>'+sum+'</b>';
+    if(sum===target)msg+=' == '+target;
+    else if(sum<target)msg+=' &lt; '+target+' &rarr; move lo right';
+    else msg+=' &gt; '+target+' &rarr; move hi left';
+    setStatus('tp-status',msg);
+    await sleep(750);
+    if(sum===target){
+      document.getElementById('tpc'+lo).className='cell cc-found';
+      document.getElementById('tpc'+hi).className='cell cc-found';
+      setStatus('tp-status','<span class="s-ok">&#10003; Found! '+tpArr[lo]+' + '+tpArr[hi]+' = '+target+' at ['+lo+', '+hi+'] in '+steps+' steps</span>');
+      return;
+    } else if(sum<target) lo++; else hi--;
+  }
+  setStatus('tp-status','<span class="s-err">No pair found that sums to '+target+'</span>');
+}
+document.addEventListener('DOMContentLoaded',tpReset);
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

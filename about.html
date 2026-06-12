@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="About TechForge — Built for developers, by developers. Free, open, interactive CS learning platform with no ads, no paywalls, no tracking."/>
+  <meta property="og:title" content="About TechForge — Built for Developers, by Developers"/>
+  <meta property="og:description" content="Free, open, and interactive CS learning platform — no ads, no paywalls, no tracking."/>
+  <meta property="og:type" content="website"/>
+  <title>About TechForge — Built for Developers, by Developers</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+
+/* ════════════════════════════════
+   ABOUT PAGE — v4 UPGRADE
+   ════════════════════════════════ */
+
+/* ── HERO ── */
+.about-hero {
+  position: relative; padding: 44px 0 40px; margin-bottom: 48px;
+  border-bottom: 1px solid var(--border); overflow: hidden;
+}
+.about-hero::before {
+  content: ''; position: absolute; top: 0; left: -40px; right: -40px; bottom: 0;
+  background:
+    radial-gradient(ellipse 55% 80% at 0% 50%, rgba(79,142,247,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 100% 50%, rgba(0,212,255,.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+.ah-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--cyan);
+  background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.15);
+  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 20px;
+}
+.ah-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: ahdot 2s ease infinite; }
+@keyframes ahdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+.ah-title {
+  font-family: var(--font-display); font-size: clamp(30px, 5.5vw, 48px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.05;
+  color: var(--text); margin-bottom: 16px;
+}
+.ah-title span {
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 50%, var(--purple) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ah-sub { font-size: 14.5px; color: var(--text2); line-height: 1.8; max-width: 520px; margin-bottom: 24px; }
+.ah-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.ah-badge {
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: var(--r-full);
+}
+.badge-green  { background:rgba(52,211,153,.1);  color:var(--green);  border:1px solid rgba(52,211,153,.22); }
+.badge-blue   { background:rgba(79,142,247,.1);  color:var(--blue);   border:1px solid rgba(79,142,247,.22); }
+.badge-amber  { background:rgba(251,191,36,.09); color:var(--amber);  border:1px solid rgba(251,191,36,.22); }
+.badge-cyan   { background:rgba(34,211,238,.07); color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
+.badge-purple { background:rgba(167,139,250,.09);color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+
+/* ── STAT ROW ── */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; margin-bottom: 48px;
+}
+.stat-box {
+  background: var(--card); padding: 26px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: background .2s; text-align: center; position: relative;
+}
+.stat-box:hover { background: rgba(0,212,255,.03); }
+.stat-box::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--sb-c, var(--cyan)), transparent);
+  opacity: 0; transition: opacity .2s;
+}
+.stat-box:hover::after { opacity: 1; }
+.stat-num {
+  font-family: var(--font-mono); font-size: 32px; font-weight: 900; line-height: 1;
+}
+.stat-label { font-size: 10px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.stat-desc  { font-size: 11px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
+
+/* ── SECTION HEADERS ── */
+.sec-block { margin-bottom: 48px; }
+.sec-label {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 6px;
+}
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
+.sec-h2 {
+  font-family: var(--font-display); font-size: clamp(18px,3.5vw,24px);
+  font-weight: 800; letter-spacing: -.5px; color: var(--text);
+  margin-bottom: 4px;
+}
+.sec-sub { font-size: 13px; color: var(--text3); margin-bottom: 24px; }
+
+/* ── STORY GRID ── */
+.story-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0;
+}
+.story-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 28px 26px;
+  position: relative; overflow: hidden; transition: border-color .2s;
+}
+.story-card:hover { border-color: var(--border2); }
+.story-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--sc-a,var(--blue)), transparent); opacity:.7;
+}
+.sc-origin { --sc-a: var(--cyan); }
+.sc-mission { --sc-a: var(--blue); }
+.story-icon  { font-size: 24px; margin-bottom: 14px; }
+.story-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+.story-body  { font-size: 13px; color: var(--text2); line-height: 1.85; }
+.story-body strong { color: var(--text); font-weight: 600; }
+
+/* ── TIMELINE ── */
+.timeline { display: flex; flex-direction: column; gap: 0; position: relative; margin-bottom: 0; }
+.timeline::before {
+  content:''; position:absolute; left:19px; top:24px; bottom:24px; width:1px;
+  background: linear-gradient(180deg, var(--cyan), var(--blue), var(--purple), transparent);
+  opacity:.25;
+}
+.tl-item {
+  display: flex; gap: 20px; padding: 0 0 28px; position: relative;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: var(--card); border: 1px solid var(--border);
+  display: grid; place-items: center; font-size: 15px;
+  position: relative; z-index: 1; transition: border-color .2s;
+}
+.tl-item:hover .tl-dot { border-color: var(--border2); }
+.tl-body { padding-top: 6px; flex: 1; }
+.tl-year {
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.5px; color: var(--cyan); text-transform: uppercase; margin-bottom: 4px;
+}
+.tl-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.tl-desc  { font-size: 12.5px; color: var(--text3); line-height: 1.65; }
+
+/* ── PHILOSOPHY ── */
+.pillars-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden;
+}
+.pillar { background: var(--card); padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; transition: background .2s; }
+.pillar:hover { background: rgba(0,212,255,.025); }
+.pillar-num {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  color: var(--cyan); letter-spacing: 2px;
+  display: flex; align-items: center; gap: 10px;
+}
+.pillar-num::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(0,212,255,.3),transparent); }
+.pillar-icon  { font-size: 22px; }
+.pillar-title { font-size: 14px; font-weight: 800; color: var(--text); }
+.pillar-desc  { font-size: 12.5px; color: var(--text2); line-height: 1.7; }
+
+/* ── COVERAGE ── */
+.coverage-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
+}
+.cov-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px 16px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all .2s; position: relative; overflow: hidden;
+}
+.cov-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.cov-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background: var(--cov-c, var(--cyan)); opacity:.6;
+}
+.cov-icon { font-size: 18px; flex-shrink: 0; }
+.cov-label { font-size: 13px; font-weight: 700; color: var(--text); }
+.cov-count { font-family: var(--font-mono); font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* ── TECH STACK ── */
+.stack-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(155px,1fr)); gap: 10px;
+}
+.stack-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px 16px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all .2s;
+}
+.stack-item:hover { border-color: var(--border2); transform: translateY(-2px); }
+.stack-icon { font-size: 20px; flex-shrink: 0; }
+.stack-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.stack-role { font-size: 10px; color: var(--text3); font-family: var(--font-mono); margin-top: 2px; }
+
+/* ── PRINCIPLES ── */
+.principle-row { display: flex; flex-direction: column; gap: 10px; }
+.principle-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 18px 20px; transition: border-color .2s;
+}
+.principle-item:hover { border-color: var(--border2); }
+.prin-check {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; flex-shrink: 0; font-size: 13px; font-weight: 700;
+  margin-top: 1px;
+}
+.pch-green  { background:rgba(52,211,153,.12); color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+.pch-blue   { background:rgba(79,142,247,.12); color:var(--blue);   border:1px solid rgba(79,142,247,.2); }
+.pch-amber  { background:rgba(251,191,36,.10); color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.pch-cyan   { background:rgba(34,211,238,.08); color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
+.prin-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.prin-desc  { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
+
+/* ── CTA ── */
+.about-cta {
+  background: linear-gradient(135deg,rgba(79,142,247,.07) 0%,rgba(0,212,255,.05) 60%,rgba(167,139,250,.06) 100%);
+  border: 1px solid rgba(79,142,247,.18); border-radius: var(--r-xl);
+  padding: 40px 36px; text-align: center; position: relative; overflow: hidden; margin-bottom: 8px;
+}
+.about-cta::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg,transparent 10%,var(--blue) 40%,var(--cyan) 60%,transparent 90%); opacity:.45;
+}
+.cta-eyebrow { font-family:var(--font-mono); font-size:9.5px; letter-spacing:2.5px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; }
+.cta-title { font-family:var(--font-display); font-size:clamp(20px,3.5vw,30px); font-weight:900; letter-spacing:-1px; color:var(--text); margin-bottom:10px; line-height:1.1; }
+.cta-title span { color:var(--cyan); }
+.cta-sub { font-size:13.5px; color:var(--text2); line-height:1.7; max-width:420px; margin:0 auto 28px; }
+.cta-buttons { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.btn-cta-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 26px; border-radius:var(--r-md);
+  font-family:var(--font-body); font-size:13.5px; font-weight:700;
+  text-decoration:none;
+  background:linear-gradient(135deg,var(--blue),var(--cyan)); color:#000;
+  box-shadow:0 4px 20px rgba(79,142,247,.35); transition:all .2s;
+}
+.btn-cta-primary:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(0,212,255,.45); }
+.btn-cta-secondary {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 26px; border-radius:var(--r-md);
+  font-family:var(--font-body); font-size:13.5px; font-weight:600;
+  text-decoration:none; background:var(--card); color:var(--text2);
+  border:1px solid var(--border2); transition:all .2s;
+}
+.btn-cta-secondary:hover { border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
+
+/* ── ANIM ── */
+.anim-in { opacity:0; transform:translateY(16px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .stats-row { grid-template-columns:repeat(3,1fr) !important; }
+}
+@media (max-width:760px) {
+  .story-grid { grid-template-columns:1fr; }
+  .pillars-grid { grid-template-columns:1fr; }
+  .stats-row { grid-template-columns:1fr 1fr !important; }
+}
+@media (max-width:480px) {
+  .stats-row { grid-template-columns:1fr 1fr; }
+  .about-cta { padding:28px 20px; }
+  .cta-buttons { flex-direction:column; }
+  .btn-cta-primary,.btn-cta-secondary { justify-content:center; min-height:44px; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="index.html">Home</a>
+    <a class="tb-link" href="dsa/index.html">DSA</a>
+    <a class="tb-link" href="backend/index.html">Backend</a>
+    <a class="tb-link" href="python/index.html">Python</a>
+    <a class="tb-link" href="sql/index.html">SQL</a>
+    <a class="tb-link" href="aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="git/index.html">Git</a>
+    <a class="tb-link current" href="about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">Navigate</div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Home</a>
+    <a class="sb-link" href="dsa/index.html"><span class="sb-num">📊</span>DSA</a>
+    <a class="sb-link" href="backend/index.html"><span class="sb-num">🔧</span>Backend</a>
+    <a class="sb-link" href="python/index.html"><span class="sb-num">🐍</span>Python</a>
+    <a class="sb-link" href="sql/index.html"><span class="sb-num">🗄️</span>SQL</a>
+    <a class="sb-link" href="aiml/aiml-explained.html"><span class="sb-num">🤖</span>AI/ML</a>
+    <a class="sb-link" href="interview/index.html"><span class="sb-num">🎯</span>Interview Q&amp;A</a>
+
+    <div class="sidebar-label" style="margin-top:16px;">On This Page</div>
+    <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
+    <a class="sb-link" href="#story"><span class="sb-num">01</span>Our Story</a>
+    <a class="sb-link" href="#timeline"><span class="sb-num">02</span>Timeline</a>
+    <a class="sb-link" href="#philosophy"><span class="sb-num">03</span>Philosophy</a>
+    <a class="sb-link" href="#coverage"><span class="sb-num">04</span>What's Covered</a>
+    <a class="sb-link" href="#stack"><span class="sb-num">05</span>Tech Stack</a>
+    <a class="sb-link" href="#principles"><span class="sb-num">06</span>Principles</a>
+    <a class="sb-link" href="#roadmap"><span class="sb-num">07</span>Roadmap</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+    <!-- ════ HERO ════ -->
+    <div class="about-hero">
+      <div class="ah-eyebrow"><span class="ah-dot"></span>About TechForge</div>
+      <h1 class="ah-title">Built for Developers,<br/><span>by Developers.</span></h1>
+      <p class="ah-sub">
+        TechForge is a free, open, interactive CS learning platform — no ads, no paywalls, no tracking, no account.
+        Six complete learning tracks, live canvas visualizations, and 200+ company-tagged interview problems.
+        Built to be the resource we wished existed.
+      </p>
+      <div class="ah-badges">
+        <span class="ah-badge badge-green">Free Forever</span>
+        <span class="ah-badge badge-blue">Open Source</span>
+        <span class="ah-badge badge-amber">Interactive Viz</span>
+        <span class="ah-badge badge-cyan">No Ads</span>
+        <span class="ah-badge badge-purple">No Sign-up</span>
+        <span class="ah-badge" style="background:rgba(249,115,22,.09);color:#f97316;border:1px solid rgba(249,115,22,.22);">6 Tracks</span>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
+    <div id="stats" class="stats-row anim-in" style="grid-template-columns:repeat(5,1fr)">
+      <div class="stat-box" style="--sb-c:var(--cyan)">
+        <span class="stat-num" style="color:var(--cyan)">6</span>
+        <span class="stat-label">Tracks</span>
+        <span class="stat-desc">DSA · Python · Backend<br/>SQL · AI/ML · Interview</span>
+      </div>
+      <div class="stat-box" style="--sb-c:var(--blue)">
+        <span class="stat-num" style="color:var(--blue)">40+</span>
+        <span class="stat-label">Topics</span>
+        <span class="stat-desc">Structured from<br/>basics to advanced</span>
+      </div>
+      <div class="stat-box" style="--sb-c:var(--green)">
+        <span class="stat-num" style="color:var(--green)">200+</span>
+        <span class="stat-label">Problems</span>
+        <span class="stat-desc">Company-tagged,<br/>difficulty-rated</span>
+      </div>
+      <div class="stat-box" style="--sb-c:var(--amber)">
+        <span class="stat-num" style="color:var(--amber)">30+</span>
+        <span class="stat-label">Animations</span>
+        <span class="stat-desc">Live Canvas 2D<br/>visualizations</span>
+      </div>
+      <div class="stat-box" style="--sb-c:var(--purple)">
+        <span class="stat-num" style="color:var(--purple)">$0</span>
+        <span class="stat-label">Cost</span>
+        <span class="stat-desc">Free forever.<br/>No exceptions.</span>
+      </div>
+    </div>
+
+    <!-- ════ OUR STORY ════ -->
+    <div id="story" class="sec-block anim-in">
+      <div class="sec-label">Our Story</div>
+      <h2 class="sec-h2">Where TechForge came from</h2>
+      <p class="sec-sub">The frustration that became a platform.</p>
+
+      <div class="story-grid">
+        <div class="story-card sc-origin">
+          <div class="story-icon">💡</div>
+          <div class="story-title">The problem we saw</div>
+          <div class="story-body">
+            Learning DSA felt like choosing between dry textbooks with no visuals,
+            and fragmented YouTube playlists that never connected theory to real interview practice.<br/><br/>
+            Paid platforms locked the best content behind subscriptions. Free resources
+            were scattered. Nothing tied the <strong>concept → visualization → code → practice problem</strong>
+            loop together in one clean place.
+          </div>
+        </div>
+        <div class="story-card sc-mission">
+          <div class="story-icon">🎯</div>
+          <div class="story-title">What we built instead</div>
+          <div class="story-body">
+            A single destination that takes a developer from <strong>zero to interview-ready</strong>
+            across the full CS stack — DSA, Python, Backend frameworks, SQL, and AI/ML.<br/><br/>
+            Not another course. Not another subscription. A permanent, free reference you can
+            bookmark, return to, and actually <strong>learn from</strong> — with live canvas visualizations
+            and 200+ problems you can track in your browser.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ TIMELINE ════ -->
+    <div id="timeline" class="sec-block anim-in">
+      <div class="sec-label">Timeline</div>
+      <h2 class="sec-h2">How we got here</h2>
+      <p class="sec-sub">From idea to full learning platform.</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">💡</div>
+          <div class="tl-body">
+            <div class="tl-year">v0 — The Idea</div>
+            <div class="tl-title">Started as personal DSA notes</div>
+            <div class="tl-desc">A collection of algorithm notes with hand-drawn diagrams, built while prepping for technical interviews. The frustration of finding no single good resource sparked the idea for something better.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🎬</div>
+          <div class="tl-body">
+            <div class="tl-year">v1 — Canvas Animations</div>
+            <div class="tl-title">First live visualizations shipped</div>
+            <div class="tl-desc">Built the Canvas 2D animation engine from scratch — no libraries, no dependencies. Bubble sort, binary search, and tree traversals came first. The moment algorithms moved on screen, everything clicked.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">📚</div>
+          <div class="tl-body">
+            <div class="tl-year">v2 — Full Curriculum</div>
+            <div class="tl-title">Python, Backend, SQL &amp; AI/ML added</div>
+            <div class="tl-desc">Expanded from pure DSA into a complete CS learning path. Django, Flask, FastAPI guides. Full SQL reference plus MongoDB. Machine learning, deep learning, NLP, CV, and reinforcement learning.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🎯</div>
+          <div class="tl-body">
+            <div class="tl-year">v3 — Interview Prep</div>
+            <div class="tl-title">200+ curated questions with company tags</div>
+            <div class="tl-desc">Added the Interview Q&amp;A section with 200+ problems tagged for FAANG (Google, Amazon, Meta) and Indian startups (Swiggy, Razorpay, Zepto). Local progress tracking via localStorage.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🚀</div>
+          <div class="tl-body">
+            <div class="tl-year">v4 — Now</div>
+            <div class="tl-title">Polished, deployed, and growing</div>
+            <div class="tl-desc">Complete redesign with the Forge design system — consistent tokens, better typography, and improved mobile experience. Deployed on Vercel with a focus on speed, accessibility, and zero tracking.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PHILOSOPHY ════ -->
+    <div id="philosophy" class="sec-block anim-in">
+      <div class="sec-label">Philosophy</div>
+      <h2 class="sec-h2">How we think about learning</h2>
+      <p class="sec-sub">Three principles that shape every page on TechForge.</p>
+
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-icon">👁️</div>
+          <div class="pillar-title">See it first</div>
+          <div class="pillar-desc">Understanding comes from seeing, not memorizing. Every algorithm on TechForge has a live canvas animation before the code — because watching a quicksort partition in real time beats reading pseudocode for an hour.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-icon">✂️</div>
+          <div class="pillar-title">No fluff, no padding</div>
+          <div class="pillar-desc">Every explanation is the shortest version that doesn't sacrifice depth. No filler intros, no five-paragraph warm-ups. You're here to learn fast — we respect that and write accordingly.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-icon">🔗</div>
+          <div class="pillar-title">Theory meets practice</div>
+          <div class="pillar-desc">Every topic ends with curated problems tied directly to the concept — tagged by company type (FAANG vs startup) so you know exactly what to prep for, not just what's theoretically relevant.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ COVERAGE ════ -->
+    <div id="coverage" class="sec-block anim-in">
+      <div class="sec-label">Coverage</div>
+      <h2 class="sec-h2">What's covered</h2>
+      <p class="sec-sub">Every major CS topic a developer needs for interviews and beyond.</p>
+
+      <div class="coverage-grid">
+        <div class="cov-card" style="--cov-c:var(--blue)">
+          <span class="cov-icon">📊</span>
+          <div><div class="cov-label">Data Structures</div><div class="cov-count">Arrays, Trees, Graphs, Heaps, Tries…</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--blue)">
+          <span class="cov-icon">⚙️</span>
+          <div><div class="cov-label">Algorithms</div><div class="cov-count">Sorting, DP, Backtracking, Searching…</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--green)">
+          <span class="cov-icon">🐍</span>
+          <div><div class="cov-label">Python</div><div class="cov-count">Basics → OOP, decorators, DSA patterns</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:#10b981">
+          <span class="cov-icon">🔧</span>
+          <div><div class="cov-label">Backend</div><div class="cov-count">Django, Flask, FastAPI — full guides</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--purple)">
+          <span class="cov-icon">🗄️</span>
+          <div><div class="cov-label">SQL &amp; NoSQL</div><div class="cov-count">Queries, joins, indexes, MongoDB</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--cyan)">
+          <span class="cov-icon">🤖</span>
+          <div><div class="cov-label">AI / ML</div><div class="cov-count">ML, DL, NLP, CV, Reinforcement Learning</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--amber)">
+          <span class="cov-icon">🎯</span>
+          <div><div class="cov-label">Interview Q&amp;A</div><div class="cov-count">200+ questions, 5 tracks, company tags</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:#f97316">
+          <span class="cov-icon">🌿</span>
+          <div><div class="cov-label">Git Reference</div><div class="cov-count">Commands, workflows, branching, rebase</div></div>
+        </div>
+        <div class="cov-card" style="--cov-c:var(--orange,#f97316)">
+          <span class="cov-icon">📐</span>
+          <div><div class="cov-label">Big-O Analysis</div><div class="cov-count">Time &amp; space for every algorithm</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ TECH STACK ════ -->
+    <div id="stack" class="sec-block anim-in">
+      <div class="sec-label">Tech Stack</div>
+      <h2 class="sec-h2">Built lean — no bloat</h2>
+      <p class="sec-sub">Zero npm, zero bundler, zero tracking scripts. Everything runs on native web APIs.</p>
+
+      <div class="stack-grid">
+        <div class="stack-item">
+          <span class="stack-icon">🌐</span>
+          <div><div class="stack-name">HTML5</div><div class="stack-role">Semantic markup</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">🎨</span>
+          <div><div class="stack-name">CSS3</div><div class="stack-role">Design system / tokens</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">⚡</span>
+          <div><div class="stack-name">Vanilla JS</div><div class="stack-role">Zero frameworks</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">🎬</span>
+          <div><div class="stack-name">Canvas 2D API</div><div class="stack-role">All animations</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">📌</span>
+          <div><div class="stack-name">localStorage</div><div class="stack-role">Progress tracking</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">▲</span>
+          <div><div class="stack-name">Vercel</div><div class="stack-role">Static deployment</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">🔤</span>
+          <div><div class="stack-name">Syne</div><div class="stack-role">Display / headings</div></div>
+        </div>
+        <div class="stack-item">
+          <span class="stack-icon">⌨️</span>
+          <div><div class="stack-name">JetBrains Mono</div><div class="stack-role">Code / labels</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PRINCIPLES ════ -->
+    <div id="principles" class="sec-block anim-in">
+      <div class="sec-label">Principles</div>
+      <h2 class="sec-h2">What we stand for</h2>
+      <p class="sec-sub">Non-negotiable commitments that will never change.</p>
+
+      <div class="principle-row">
+        <div class="principle-item">
+          <div class="prin-check pch-green">✓</div>
+          <div>
+            <div class="prin-title">Free forever — no exceptions</div>
+            <div class="prin-desc">TechForge will never introduce a paywall, premium tier, or paid certificate. Every topic, every animation, every problem — free. This is a commitment, not a marketing line.</div>
+          </div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-check pch-blue">◎</div>
+          <div>
+            <div class="prin-title">No ads, no sponsors, no affiliate links</div>
+            <div class="prin-desc">Your learning experience is not a product. There are zero ads, zero tracking pixels, and zero sponsored content on this platform — and there never will be.</div>
+          </div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-check pch-amber">🔒</div>
+          <div>
+            <div class="prin-title">No account, no data collection</div>
+            <div class="prin-desc">Progress tracking happens entirely in your browser's localStorage. We don't know who you are and we don't want to — your data stays yours, on your device, always.</div>
+          </div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-check pch-cyan">⚡</div>
+          <div>
+            <div class="prin-title">Performance is a feature, not a bonus</div>
+            <div class="prin-desc">Zero npm packages. Zero external JS bundles. Pages load in under a second. Animations run at 60fps on a 5-year-old phone. Speed is non-negotiable — slow education is bad education.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ROADMAP ════ -->
+    <div id="roadmap" class="sec-block anim-in">
+      <div class="sec-label">What's Next</div>
+      <h2 class="sec-h2">Roadmap</h2>
+      <p class="sec-sub">What we're building toward — in the open.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 20px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent);"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--green);margin-bottom:10px;">SHIPPED</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Live Canvas visualizations</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>200+ interview questions</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>localStorage progress tracking</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Django, Flask, FastAPI guides</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>AI/ML — 8 topic modules</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Git reference section</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Forge design system v4</div>
+          </div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 20px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--amber);margin-bottom:10px;">COMING NEXT</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>System Design section</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>Dark/light mode toggle</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>Global search across all topics</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>More DSA animations (30 → 50+)</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>Difficulty filter on interview pages</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>Mobile-first animation redesign</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text3);"><span style="color:var(--amber);font-size:11px;">◦</span>Competitive programming track</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ OPEN SOURCE ════ -->
+    <div class="sec-block anim-in">
+      <div style="
+        background: linear-gradient(135deg,rgba(52,211,153,.05) 0%,rgba(79,142,247,.04) 100%);
+        border: 1px solid rgba(52,211,153,.15);
+        border-radius: var(--r-xl);
+        padding: 32px 28px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        position: relative;
+        overflow: hidden;
+      ">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);opacity:.4;"></div>
+        <div style="font-size:36px;flex-shrink:0;">🌿</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:8px;">TechForge is open source</div>
+          <div style="font-size:13px;color:var(--text3);line-height:1.75;max-width:540px;">
+            Found a bug? Have a topic you want to add? Want to improve an explanation or add a new canvas animation?
+            Contributions are welcome. The entire codebase is plain HTML, CSS, and vanilla JS — no build tools needed to get started.
+          </div>
+        </div>
+        <div style="flex-shrink:0;display:flex;flex-direction:column;gap:8px;">
+          <a href="https://github.com/MOHD-OMER/TechForge" target="_blank" rel="noopener" style="
+            display:inline-flex;align-items:center;gap:8px;
+            padding:10px 20px;border-radius:var(--r-md);
+            font-family:var(--font-mono);font-size:11px;font-weight:700;
+            text-decoration:none;letter-spacing:.3px;
+            background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--green);
+            transition:all .2s;
+          ">⭐ Star on GitHub</a>
+          <a href="https://github.com/MOHD-OMER/TechForge/fork" target="_blank" rel="noopener" style="
+            display:inline-flex;align-items:center;gap:8px;
+            padding:10px 20px;border-radius:var(--r-md);
+            font-family:var(--font-mono);font-size:11px;font-weight:700;
+            text-decoration:none;letter-spacing:.3px;
+            background:var(--card);border:1px solid var(--border);color:var(--text3);
+            transition:all .2s;
+          ">🍴 Fork &amp; Contribute</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ CTA ════ -->
+    <div class="about-cta anim-in">
+      <div class="cta-eyebrow">Ready to dive in?</div>
+      <div class="cta-title">Stop reading about it —<br/><span>start learning.</span></div>
+      <p class="cta-sub">Pick any topic and go. No sign-up, no setup, no paywall, no friction. Just open a page and start building real understanding — the kind that gets you hired.</p>
+      <div class="cta-buttons">
+        <a class="btn-cta-primary" href="dsa/index.html">🚀 Start with DSA</a>
+        <a class="btn-cta-secondary" href="interview/index.html">🎯 Interview Prep</a>
+      </div>
+      <div style="margin-top:22px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No account</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No ads</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No paywall</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>Progress saved locally</span>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <a class="nav-link" href="index.html">← Home</a>
+      <a class="nav-link next" href="dsa/index.html">Start Learning →</a>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+
+<script src="assets/js/utils.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop = document.getElementById('backTop');
+
+  window.addEventListener('scroll', function () {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (height > 0 ? (winScroll / height) * 100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', winScroll > 400);
+  }, { passive: true });
+
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // Scroll-triggered animations
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.anim-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    obs.observe(el);
+  });
+});
+</script>
+</body>
+</html>

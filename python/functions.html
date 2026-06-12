@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Functions — Recursion, Exceptions, File Handling | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <div class="sidebar-label" style="margin-top:14px;">Functions & I/O</div>
+      <a class="sb-link active" href="#sec-functions"><span class="sb-num">01</span> Functions</a>
+      <a class="sb-link" href="#sec-recursion"><span class="sb-num">02</span> Recursion</a>
+      <a class="sb-link" href="#sec-exceptions"><span class="sb-num">03</span> Exceptions</a>
+      <a class="sb-link" href="#sec-files"><span class="sb-num">04</span> File Handling</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Functions & I/O</div>
+        <h1 class="pg-title">Functions, Recursion &amp; <span>Error Handling</span></h1>
+        <p class="pg-sub">Learn to write reusable code, handle errors gracefully, and work with files in Python.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-green">✓ Essential</span>
+          <span class="badge b-blue">4 Topics</span>
+          <span class="badge b-amber">🔥 Interview Key</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-functions">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">⚙️</span><h2 class="sec-title">Functions in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Functions</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Default parameters</span>
+<span class="kw">def</span> <span class="fn">greet</span>(name=<span class="st">"Guest"</span>):
+    <span class="fn">print</span>(<span class="st">"Hello"</span>, name)
+
+<span class="cm"># *args — variable positional arguments</span>
+<span class="kw">def</span> <span class="fn">add_all</span>(*args):
+    <span class="kw">return</span> <span class="fn">sum</span>(args)
+
+<span class="cm"># **kwargs — keyword variable arguments</span>
+<span class="kw">def</span> <span class="fn">student_info</span>(**kwargs):
+    <span class="kw">for</span> k, v <span class="kw">in</span> kwargs.items():
+        <span class="fn">print</span>(k, <span class="st">":"</span>, v)
+
+<span class="cm"># Lambda (one-line function)</span>
+square = <span class="kw">lambda</span> x: x**<span class="nm">2</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>print() vs return:</strong> <code>print()</code> displays output but can't be reused. <code>return</code> sends value back to the caller. Always prefer <code>return</code> in DSA functions.</span></div>
+      </section>
+      <section class="py-section" id="sec-recursion">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🌀</span><h2 class="sec-title">Recursion in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Recursion</strong> — a function calls itself to solve a smaller version of the same problem. Every recursive function needs a <strong>Base Case</strong> and a <strong>Recursive Case</strong>.</p>
+        <div class="callout callout-red"><span class="callout-icon">!</span><span><strong>Without a base case → infinite recursion → stack overflow error!</strong></span></div>
+        <div class="sub-title">How Recursion Works (Step-by-Step)</div>
+        <p class="prose">For <code>factorial(3)</code>:</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Call Stack Visualization</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <pre class="code-pre">factorial(3) = 3 * factorial(2)
+             = 3 * 2 * factorial(1)
+             = 3 * 2 * 1
+             = 6
+
+<span class="cm"># Stack grows then shrinks:</span>
+<span class="cm"># Push: factorial(3) → factorial(2) → factorial(1)</span>
+<span class="cm"># Pop: returns 1 → 2 → 6</span></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Recursion Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="kw">if</span> n == <span class="nm">1</span>: <span class="kw">return</span> <span class="nm">1</span>          <span class="cm"># Base case</span>
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="nm">1</span>)   <span class="cm"># Recursive case</span>
+
+<span class="kw">def</span> <span class="fn">fibonacci</span>(n):
+    <span class="kw">if</span> n == <span class="nm">0</span>: <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">if</span> n == <span class="nm">1</span>: <span class="kw">return</span> <span class="nm">1</span>
+    <span class="kw">return</span> <span class="fn">fibonacci</span>(n-<span class="nm">1</span>) + <span class="fn">fibonacci</span>(n-<span class="nm">2</span>)
+
+<span class="kw">def</span> <span class="fn">sum_digits</span>(n):
+    <span class="kw">if</span> n == <span class="nm">0</span>: <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">return</span> (n % <span class="nm">10</span>) + <span class="fn">sum_digits</span>(n // <span class="nm">10</span>)
+
+<span class="fn">print</span>(<span class="fn">sum_digits</span>(<span class="nm">1234</span>))  <span class="cm"># 10</span></pre>
+        </div>
+        <div class="sub-title">Recursion vs Iteration</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Aspect</th><th>Recursion</th><th>Iteration</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Approach</strong></td><td>Function calls itself</td><td>Loops (for, while)</td></tr>
+              <tr><td><strong>Memory</strong></td><td>Uses stack O(n)</td><td>More efficient O(1)</td></tr>
+              <tr><td><strong>Best For</strong></td><td>Trees, Graphs, Backtracking</td><td>Simple repetition</td></tr>
+              <tr><td><strong>Risk</strong></td><td>Stack overflow</td><td>Infinite loops</td></tr>
+              <tr><td><strong>Readability</strong></td><td>Cleaner for complex problems</td><td>Simpler for basic tasks</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sub-title">Common Recursion Interview Questions</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Interview Questions</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <pre class="code-pre"><span class="cm"># 1. What is recursion?</span>
+A function calling itself to solve smaller subproblems.
+
+<span class="cm"># 2. Key components?</span>
+Base Case (stops) + Recursive Case (calls itself)
+
+<span class="cm"># 3. What happens without base case?</span>
+Stack Overflow Error (memory exhausted)
+
+<span class="cm"># 4. Time complexity?</span>
+Depends on number of recursive calls.
+Factorial: O(n), Fibonacci (naive): O(2ⁿ)
+
+<span class="cm"># 5. What is tail recursion?</span>
+Recursive call is LAST operation. Easier to optimize.
+Python does NOT optimize tail recursion.
+
+<span class="cm"># 6. What is memoization?</span>
+Caching results to avoid recomputation.
+Reduces Fibonacci from O(2ⁿ) to O(n).
+
+<span class="cm"># 7. When to avoid recursion?</span>
+- High memory usage risk
+- Stack overflow possible
+- Simple loop works better</pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon">ℹ</span><span>Recursion is heavily used in: tree traversal, DFS, binary search, merge sort, quick sort, and backtracking.</span></div>
+        <div class="callout callout-green"><span class="callout-icon">💡</span><span><strong>Optimization Tip:</strong> Use Memoization to avoid repeated calculations. Essential for Fibonacci, climbing stairs, and other overlapping subproblem scenarios.</span></div>
+      </section>
+      <section class="py-section" id="sec-exceptions">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">🛡️</span><h2 class="sec-title">Exception Handling</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Structure: <code>try → except → else → finally</code>. The <code>finally</code> block always runs — perfect for cleanup.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Exception</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>ZeroDivisionError</code></td><td>Dividing by zero</td></tr>
+              <tr><td><code>ValueError</code></td><td>Invalid value (e.g. <code>int("abc")</code>)</td></tr>
+              <tr><td><code>TypeError</code></td><td>Wrong data type</td></tr>
+              <tr><td><code>IndexError</code></td><td>Invalid list index</td></tr>
+              <tr><td><code>KeyError</code></td><td>Invalid dictionary key</td></tr>
+              <tr><td><code>FileNotFoundError</code></td><td>File does not exist</td></tr>
+              <tr><td><code>NameError</code></td><td>Variable not defined</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-files">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">📁</span><h2 class="sec-title">File Handling in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — File Handling</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.txt"</span>, <span class="st">"w"</span>) <span class="kw">as</span> file:
+    file.write(<span class="st">"Hello World\n"</span>)
+
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.txt"</span>, <span class="st">"r"</span>) <span class="kw">as</span> file:
+    <span class="kw">for</span> line <span class="kw">in</span> file:
+        <span class="fn">print</span>(line.strip())
+
+<span class="cm"># File existence check</span>
+<span class="kw">import</span> os
+<span class="kw">if</span> os.path.exists(<span class="st">"data.txt"</span>):
+    os.remove(<span class="st">"data.txt"</span>)</pre>
+        </div>
+        <div class="callout callout-py"><span class="callout-icon">⚡</span><span>Always use the <strong><code>with</code> statement</strong> — it automatically closes the file even on errors, preventing memory leaks.</span></div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="control.html">← Control Flow</a>
+        <a class="nav-link" href="oop.html">OOP →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Complete SQL reference — databases, queries, joins, window functions, indexes, normalization and optimization. 40+ interview questions tagged for FAANG and startups."/>
+  <meta property="og:title" content="SQL & Database Guide — TechForge"/>
+  <meta property="og:description" content="SQL from basics to advanced — joins, window functions, indexes, normalization. 40+ interview Qs. Free."/>
+  <meta property="og:type" content="website"/>
+  <title>SQL & Database Guide — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+/* ═══════════════════════════════
+   SQL INDEX — v5 FORGE UPGRADE
+   ═══════════════════════════════ */
+
+/* HERO */
+.sql-hero {
+  position:relative; padding:52px 0 44px;
+  margin-bottom:44px; border-bottom:1px solid var(--border); overflow:hidden;
+}
+.sql-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 70% at -5% 55%, rgba(79,142,247,.07) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 50% at 105% 20%, rgba(34,211,238,.04) 0%, transparent 52%);
+}
+.sh-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--blue);
+  background:rgba(79,142,247,.08); border:1px solid rgba(79,142,247,.22);
+  padding:5px 14px; border-radius:var(--r-full); margin-bottom:18px;
+}
+.sh-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); box-shadow:0 0 6px var(--blue); animation:shdot 2s ease infinite; }
+@keyframes shdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+.sh-title {
+  font-family:var(--font-display); font-size:clamp(28px,5.5vw,46px);
+  font-weight:900; letter-spacing:-2px; line-height:1.02;
+  color:var(--text); margin-bottom:14px;
+}
+.sh-title span {
+  background:linear-gradient(135deg,var(--blue) 0%,var(--cyan) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.sh-sub { font-size:14px; color:var(--text2); line-height:1.8; max-width:500px; margin-bottom:24px; }
+.sh-cta { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.btn-sh-primary {
+  display:inline-flex; align-items:center; gap:8px; padding:11px 24px;
+  border-radius:var(--r-md); font-size:13px; font-weight:700; text-decoration:none;
+  background:linear-gradient(135deg,var(--blue),var(--cyan)); color:#000;
+  box-shadow:0 4px 20px rgba(79,142,247,.35); transition:all .2s;
+}
+.btn-sh-primary:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(79,142,247,.5); }
+.btn-sh-ghost {
+  display:inline-flex; align-items:center; gap:8px; padding:11px 24px;
+  border-radius:var(--r-md); font-size:13px; font-weight:600; text-decoration:none;
+  background:var(--card); color:var(--text2); border:1px solid var(--border2); transition:all .2s;
+}
+.btn-sh-ghost:hover { border-color:var(--blue); color:var(--blue); transform:translateY(-2px); }
+.sh-trust { display:flex; gap:16px; flex-wrap:wrap; }
+.sh-trust-item { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+
+/* STATS */
+.sql-stats {
+  display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
+  background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl);
+  overflow:hidden; margin-bottom:44px;
+}
+.ss-box {
+  background:var(--card); padding:18px 12px; display:flex; flex-direction:column;
+  align-items:center; gap:4px; text-align:center; position:relative; transition:background .2s;
+}
+.ss-box::after { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--ss-c,var(--blue)); opacity:0; transition:opacity .2s; }
+.ss-box:hover { background:rgba(79,142,247,.03); }
+.ss-box:hover::after { opacity:1; }
+.ss-val   { font-family:var(--font-mono); font-size:22px; font-weight:900; line-height:1; }
+.ss-label { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+.ss-sub   { font-size:10.5px; color:var(--text3); margin-top:1px; }
+
+/* SECTION */
+.sec-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; }
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--blue),transparent); }
+.sec-h2 { font-family:var(--font-display); font-size:clamp(17px,3vw,22px); font-weight:800; letter-spacing:-.5px; color:var(--text); margin-bottom:4px; }
+.sec-sub { font-size:12.5px; color:var(--text3); margin-bottom:20px; }
+.sec-block { margin-bottom:48px; }
+
+/* TOPIC BENTO */
+.sql-bento { display:grid; grid-template-columns:repeat(12,1fr); gap:12px; }
+.sq-card {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
+  padding:22px 20px 18px; text-decoration:none; display:flex; flex-direction:column;
+  position:relative; overflow:hidden; transition:all .25s; min-height:185px;
+}
+.sq-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--qc-a,var(--blue)),transparent); opacity:0; transition:opacity .2s; }
+.sq-card::after  { content:''; position:absolute; inset:0; background:radial-gradient(circle at 80% 10%,var(--qc-glow,rgba(79,142,247,.06)),transparent 55%); opacity:0; transition:opacity .3s; }
+.sq-card:hover { transform:translateY(-4px); border-color:var(--border2); box-shadow:0 14px 40px rgba(0,0,0,.35); }
+.sq-card:hover::before,.sq-card:hover::after { opacity:1; }
+.sq-card:focus-visible { outline:2px solid var(--qc-a,var(--blue)); outline-offset:2px; }
+
+.sq-basics  { grid-column:span 4; --qc-a:var(--blue);   --qc-glow:rgba(79,142,247,.07); }
+.sq-queries { grid-column:span 4; --qc-a:var(--cyan);   --qc-glow:rgba(34,211,238,.06); }
+.sq-joins   { grid-column:span 4; --qc-a:var(--green);  --qc-glow:rgba(52,211,153,.06); }
+.sq-adv     { grid-column:span 4; --qc-a:var(--purple); --qc-glow:rgba(167,139,250,.07); }
+.sq-idx     { grid-column:span 4; --qc-a:var(--amber);  --qc-glow:rgba(251,191,36,.06); }
+.sq-nosql   { grid-column:span 4; --qc-a:#f97316;       --qc-glow:rgba(249,115,22,.06); }
+
+.sq-icon  { font-size:22px; margin-bottom:10px; }
+.sq-num   { font-family:var(--font-mono); font-size:9px; font-weight:700; color:var(--qc-a,var(--blue)); letter-spacing:1.5px; margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+.sq-num::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(255,255,255,.07),transparent); }
+.sq-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:5px; letter-spacing:-.3px; }
+.sq-desc  { font-size:11.5px; color:var(--text3); line-height:1.65; flex:1; margin-bottom:12px; }
+.sq-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
+.sq-chip  { font-family:var(--font-mono); font-size:8.5px; font-weight:600; padding:2px 7px; border-radius:var(--r-full); background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--text3); }
+.sq-foot  { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+.sq-count { font-family:var(--font-mono); font-size:10px; color:var(--text3); display:flex; align-items:center; gap:6px; }
+.sq-dot   { width:5px; height:5px; border-radius:50%; background:var(--qc-a,var(--blue)); }
+.sq-arrow { font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--qc-a,var(--blue)); display:inline-flex; align-items:center; gap:5px; transition:gap .15s; }
+.sq-card:hover .sq-arrow { gap:9px; }
+
+/* LEARNING PATH */
+.path-strip {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
+  padding:20px 22px; margin-bottom:40px; position:relative; overflow:hidden;
+}
+.path-strip::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green)); opacity:.5; }
+.path-label { font-family:var(--font-mono); font-size:9.5px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.path-steps { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.path-step {
+  display:flex; align-items:center; gap:8px; padding:7px 13px;
+  border-radius:var(--r-md); background:var(--bg2); border:1px solid var(--border);
+  text-decoration:none; transition:all .2s; flex-shrink:0;
+}
+.path-step:hover { border-color:var(--blue); background:rgba(79,142,247,.06); }
+.ps-num  { font-family:var(--font-mono); font-size:9px; color:var(--blue); font-weight:700; }
+.ps-name { font-size:11.5px; font-weight:600; color:var(--text); }
+.ps-diff { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 6px; border-radius:var(--r-full); margin-left:2px; }
+.diff-starter { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.2); }
+.diff-mid     { background:rgba(251,191,36,.09); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+.diff-adv     { background:rgba(167,139,250,.1); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+.path-arrow   { font-size:12px; color:var(--text3); flex-shrink:0; }
+
+/* SQL CONTENT sections */
+.py-section { margin-bottom:0; padding:44px 0; border-bottom:1px solid var(--border); }
+.py-section:last-of-type { border-bottom:none; }
+.sec-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.sec-num    { font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--blue); background:rgba(79,142,247,.1); border:1px solid rgba(79,142,247,.2); padding:4px 10px; border-radius:var(--r-full); }
+.sec-icon   { font-size:22px; }
+.sec-title  { font-family:var(--font-display); font-size:clamp(16px,2.5vw,20px); font-weight:800; color:var(--text); letter-spacing:-.3px; }
+.section-divider { height:1px; background:var(--border); margin-bottom:20px; }
+.prose { font-size:14px; color:var(--text2); line-height:1.82; margin-bottom:16px; }
+.sub-title { font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin:18px 0 10px; }
+
+/* CODE BLOCKS */
+.code-block { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; margin-bottom:14px; position:relative; }
+.code-hdr { display:flex; align-items:center; justify-content:space-between; padding:9px 14px; border-bottom:1px solid var(--border); background:rgba(0,0,0,.2); }
+.code-lang { font-family:var(--font-mono); font-size:9.5px; font-weight:700; letter-spacing:1.5px; color:var(--blue); text-transform:uppercase; }
+.code-dots { display:flex; gap:5px; }
+.cd { width:9px; height:9px; border-radius:50%; }
+.copy-btn {
+  position:absolute; top:9px; right:12px;
+  font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1px;
+  padding:3px 10px; border-radius:var(--r-full); border:1px solid var(--border);
+  background:var(--card); color:var(--text3); cursor:pointer; transition:all .15s; z-index:2;
+}
+.copy-btn:hover { border-color:var(--blue); color:var(--blue); }
+.copy-btn.copied { color:var(--green); border-color:var(--green); }
+.code-pre { margin:0; padding:18px 20px; font-family:var(--font-mono); font-size:12px; line-height:1.78; color:var(--text2); overflow-x:auto; }
+.kw  { color:#c792ea; }
+.fn  { color:#82aaff; }
+.st  { color:#c3e88d; }
+.cm  { color:#546e7a; font-style:italic; }
+.num { color:#f78c6c; }
+
+/* CALLOUTS */
+.callout { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; border-radius:var(--r-lg); margin-bottom:14px; font-size:13px; line-height:1.65; }
+.callout-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.callout-blue   { background:rgba(79,142,247,.08);  border:1px solid rgba(79,142,247,.2); color:var(--text2); }
+.callout-amber  { background:rgba(251,191,36,.07);  border:1px solid rgba(251,191,36,.2); color:var(--text2); }
+.callout-green  { background:rgba(52,211,153,.07);  border:1px solid rgba(52,211,153,.18); color:var(--text2); }
+.callout-red    { background:rgba(248,113,113,.08); border:1px solid rgba(248,113,113,.2); color:var(--text2); }
+
+/* TABLES */
+.table-wrap { overflow-x:auto; margin-bottom:14px; }
+.py-table { width:100%; border-collapse:collapse; font-size:13px; }
+.py-table th { font-family:var(--font-mono); font-size:9.5px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); padding:10px 14px; background:rgba(0,0,0,.2); border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+.py-table td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:middle; }
+.py-table tr:last-child td { border-bottom:none; }
+.py-table tr:hover td { background:rgba(255,255,255,.02); }
+.py-table code { font-family:var(--font-mono); font-size:11.5px; color:var(--blue); background:rgba(79,142,247,.07); padding:1px 6px; border-radius:4px; border:1px solid rgba(79,142,247,.15); }
+.td-best  { color:var(--green)!important; font-family:var(--font-mono); font-size:11.5px; font-weight:700; }
+.td-mid   { color:var(--amber)!important; font-family:var(--font-mono); font-size:11.5px; font-weight:700; }
+.td-worst { color:#f87171!important;      font-family:var(--font-mono); font-size:11.5px; font-weight:700; }
+
+/* JOINS VISUAL */
+.joins-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+.join-card {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:16px 14px; text-align:center; position:relative; overflow:hidden; transition:border-color .2s;
+}
+.join-card:hover { border-color:var(--border2); }
+.join-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--jc,var(--blue)); opacity:.6; }
+.join-venn { display:flex; align-items:center; justify-content:center; height:36px; margin-bottom:10px; }
+.jv-circle { width:28px; height:28px; border-radius:50%; border:2px solid; opacity:.6; }
+.jv-l { border-color:var(--blue); }
+.jv-r { border-color:var(--cyan); margin-left:-10px; }
+.jv-lf { background:rgba(79,142,247,.5); border-color:var(--blue); }
+.jv-rf { background:rgba(34,211,238,.5); border-color:var(--cyan); }
+.jv-bf { background:rgba(52,211,153,.5); border-color:var(--green); }
+.join-name { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text); letter-spacing:.5px; margin-bottom:4px; }
+.join-desc { font-size:10.5px; color:var(--text3); line-height:1.5; }
+
+/* WINDOW FN CALLOUT */
+.wfn-strip {
+  background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(79,142,247,.04));
+  border:1px solid rgba(167,139,250,.18); border-radius:var(--r-xl);
+  padding:20px 22px; margin-bottom:14px; position:relative; overflow:hidden;
+}
+.wfn-strip::before { content:''; position:absolute; top:0;left:0;right:0;height:1px; background:linear-gradient(90deg,transparent,var(--purple),transparent); opacity:.4; }
+.wfn-label { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px; color:var(--purple); margin-bottom:10px; }
+.wfn-fns { display:flex; gap:8px; flex-wrap:wrap; }
+.wfn-fn { font-family:var(--font-mono); font-size:10.5px; font-weight:700; padding:4px 12px; border-radius:var(--r-full); background:rgba(167,139,250,.08); border:1px solid rgba(167,139,250,.2); color:var(--purple); }
+
+/* SQL LIST */
+.sql-list { list-style:none; margin-bottom:16px; }
+.sql-list li { padding:7px 0 7px 22px; position:relative; color:var(--text2); font-size:13.5px; border-bottom:1px solid var(--border); }
+.sql-list li:last-child { border-bottom:none; }
+.sql-list li::before { content:'▸'; position:absolute; left:4px; color:var(--blue); font-size:11px; top:10px; }
+.sql-list li strong { color:var(--text); }
+.sql-list li code { font-family:var(--font-mono); font-size:11px; color:var(--blue); background:rgba(79,142,247,.07); padding:1px 5px; border-radius:3px; border:1px solid rgba(79,142,247,.15); }
+
+/* COMPARE STRIP */
+.compare-strip { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.cs-item { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:16px 16px; }
+.cs-head { font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+.cs-sql  { color:var(--blue); }
+.cs-list { list-style:none; }
+.cs-list li { font-size:13px; color:var(--text2); padding:3px 0 3px 14px; position:relative; }
+.cs-list li::before { content:'•'; position:absolute; left:0; color:var(--text3); }
+
+/* NORMALIZATION CARDS */
+.norm-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:14px; }
+.norm-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px 16px; position:relative; overflow:hidden; }
+.norm-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--nc,var(--blue)); opacity:.6; }
+.norm-nf   { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px; color:var(--nc,var(--blue)); margin-bottom:8px; }
+.norm-rule { font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:5px; }
+.norm-desc { font-size:11.5px; color:var(--text3); line-height:1.6; }
+
+/* INTERVIEW CTA */
+.interview-cta {
+  background:linear-gradient(135deg,rgba(79,142,247,.07),rgba(34,211,238,.04));
+  border:1px solid rgba(79,142,247,.18); border-radius:var(--r-xl);
+  padding:24px 26px; display:flex; align-items:center; gap:20px;
+  position:relative; overflow:hidden; margin-bottom:48px;
+}
+.interview-cta::before { content:''; position:absolute; top:0;left:0;right:0;height:1px; background:linear-gradient(90deg,transparent 10%,var(--blue) 50%,transparent 90%); opacity:.35; }
+.icta-icon  { font-size:28px; flex-shrink:0; }
+.icta-body  { flex:1; }
+.icta-title { font-size:14px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.icta-desc  { font-size:12px; color:var(--text3); line-height:1.6; }
+.icta-btn {
+  display:inline-flex; align-items:center; gap:7px; padding:10px 20px;
+  border-radius:var(--r-md); font-size:12.5px; font-weight:700; text-decoration:none;
+  background:linear-gradient(135deg,var(--blue),var(--cyan)); color:#000;
+  box-shadow:0 3px 12px rgba(79,142,247,.35); transition:all .2s; flex-shrink:0;
+}
+.icta-btn:hover { transform:translateY(-1px); box-shadow:0 5px 18px rgba(79,142,247,.5); }
+
+/* ANIM */
+.anim-in { opacity:0; transform:translateY(14px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  .sql-stats { grid-template-columns:repeat(3,1fr); }
+  .sq-basics,.sq-queries,.sq-joins,.sq-adv,.sq-idx,.sq-nosql { grid-column:span 6; }
+  .joins-grid { grid-template-columns:repeat(2,1fr); }
+  .norm-grid  { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px) {
+  .sq-basics,.sq-queries,.sq-joins,.sq-adv,.sq-idx,.sq-nosql { grid-column:span 12; }
+  .sql-stats { grid-template-columns:repeat(2,1fr); }
+  .joins-grid,.norm-grid { grid-template-columns:1fr; }
+  .compare-strip { grid-template-columns:1fr; }
+  .sh-cta { flex-direction:column; }
+  .btn-sh-primary,.btn-sh-ghost { justify-content:center; min-height:44px; }
+  .interview-cta { flex-direction:column; text-align:center; }
+  .icta-btn { width:100%; justify-content:center; }
+  .path-arrow { display:none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link current" href="./">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
+    <div class="sidebar-label">Getting Started</div>
+    <a class="sb-link" href="#database-basics"><span class="sb-num">01</span>Database Basics</a>
+    <a class="sb-link" href="#data-types"><span class="sb-num">02</span>Data Types</a>
+    <a class="sb-link" href="#constraints"><span class="sb-num">03</span>Constraints</a>
+    <div class="sidebar-label" style="margin-top:16px;">Working with Tables</div>
+    <a class="sb-link" href="#create-table"><span class="sb-num">04</span>Create Table</a>
+    <a class="sb-link" href="#alter-table"><span class="sb-num">05</span>Alter Table</a>
+    <a class="sb-link" href="#insert-data"><span class="sb-num">06</span>Insert Data</a>
+    <a class="sb-link" href="#select-query"><span class="sb-num">07</span>SELECT Query</a>
+    <a class="sb-link" href="#update-delete"><span class="sb-num">08</span>UPDATE &amp; DELETE</a>
+    <div class="sidebar-label" style="margin-top:16px;">Advanced SQL</div>
+    <a class="sb-link" href="#sql-functions"><span class="sb-num">09</span>SQL Functions</a>
+    <a class="sb-link" href="#window-functions"><span class="sb-num">10</span>Window Functions</a>
+    <a class="sb-link" href="#transactions"><span class="sb-num">11</span>Transactions</a>
+    <a class="sb-link" href="#keys"><span class="sb-num">12</span>Primary &amp; Foreign Keys</a>
+    <a class="sb-link" href="#joins"><span class="sb-num">13</span>JOINs</a>
+    <a class="sb-link" href="#union"><span class="sb-num">14</span>UNION &amp; Subqueries</a>
+    <a class="sb-link" href="#indexes"><span class="sb-num">15</span>Indexes</a>
+    <a class="sb-link" href="#group-by"><span class="sb-num">16</span>GROUP BY &amp; HAVING</a>
+    <a class="sb-link" href="#normalization"><span class="sb-num">17</span>Normalization</a>
+  </aside>
+
+  <main class="main" id="mainContent">
+
+    <!-- HERO -->
+    <div class="sql-hero">
+      <div class="sh-eyebrow"><span class="sh-dot"></span>SQL &amp; Database — 17 Topics · MySQL</div>
+      <h1 class="sh-title">SQL from <span>Basics to Advanced.</span></h1>
+      <p class="sh-sub">
+        Complete SQL reference — database design, queries, joins, window functions, indexes, normalization,
+        and optimization. 40+ interview questions tagged for FAANG and startups. Free.
+      </p>
+      <div class="sh-cta">
+        <a class="btn-sh-primary" href="#database-basics">🗄️ Start Learning</a>
+        <a class="btn-sh-ghost" href="../interview/sql-interview.html">🎯 SQL Interview Prep →</a>
+      </div>
+      <div class="sh-trust">
+        <span class="sh-trust-item"><span style="color:var(--blue)">⬡</span>MySQL syntax</span>
+        <span class="sh-trust-item"><span style="color:var(--green)">⬡</span>Window functions covered</span>
+        <span class="sh-trust-item"><span style="color:var(--amber)">⬡</span>JOIN visuals included</span>
+        <span class="sh-trust-item"><span style="color:var(--cyan)">⬡</span>Normalization guide</span>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="sql-stats anim-in">
+      <div class="ss-box" style="--ss-c:var(--blue)"><span class="ss-val" style="color:var(--blue)">17</span><span class="ss-label">Topics</span><span class="ss-sub">Basics to advanced</span></div>
+      <div class="ss-box" style="--ss-c:var(--cyan)"><span class="ss-val" style="color:var(--cyan)">40+</span><span class="ss-label">Interview Qs</span><span class="ss-sub">FAANG &amp; Startup</span></div>
+      <div class="ss-box" style="--ss-c:var(--green)"><span class="ss-val" style="color:var(--green)">5</span><span class="ss-label">JOIN Types</span><span class="ss-sub">With visual guide</span></div>
+      <div class="ss-box" style="--ss-c:var(--purple)"><span class="ss-val" style="color:var(--purple)">3NF</span><span class="ss-label">Normalization</span><span class="ss-sub">1NF → 2NF → 3NF</span></div>
+      <div class="ss-box" style="--ss-c:var(--amber)"><span class="ss-val" style="color:var(--amber)">+MongoDB</span><span class="ss-label">NoSQL</span><span class="ss-sub">SQL vs NoSQL guide</span></div>
+    </div>
+
+    <!-- LEARNING PATH -->
+    <div class="path-strip anim-in">
+      <div class="path-label">Recommended Learning Path</div>
+      <div class="path-steps">
+        <a class="path-step" href="#database-basics"><span class="ps-num">01</span><span class="ps-name">DB Basics</span><span class="ps-diff diff-starter">Starter</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#select-query"><span class="ps-num">02</span><span class="ps-name">SELECT</span><span class="ps-diff diff-starter">Starter</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#joins"><span class="ps-num">03</span><span class="ps-name">JOINs</span><span class="ps-diff diff-mid">Mid</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#group-by"><span class="ps-num">04</span><span class="ps-name">GROUP BY</span><span class="ps-diff diff-mid">Mid</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#window-functions"><span class="ps-num">05</span><span class="ps-name">Window Fns</span><span class="ps-diff diff-adv">Advanced</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#indexes"><span class="ps-num">06</span><span class="ps-name">Indexes</span><span class="ps-diff diff-adv">Advanced</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="#normalization"><span class="ps-num">07</span><span class="ps-name">Normalization</span><span class="ps-diff diff-adv">Advanced</span></a>
+      </div>
+    </div>
+
+    <!-- TOPIC BENTO -->
+    <div class="sec-block anim-in">
+      <div class="sec-label">Curriculum</div>
+      <h2 class="sec-h2">What's covered</h2>
+      <p class="sec-sub">Six topic areas — from first query to query optimization.</p>
+      <div class="sql-bento">
+        <a class="sq-card sq-basics" href="#database-basics">
+          <div class="sq-icon">📦</div>
+          <div class="sq-num">Topics 01–03</div>
+          <div class="sq-title">DB Fundamentals</div>
+          <div class="sq-chips"><span class="sq-chip">Databases</span><span class="sq-chip">Data Types</span><span class="sq-chip">Constraints</span></div>
+          <div class="sq-desc">Database creation, MySQL data types, and constraints — NOT NULL, UNIQUE, PRIMARY KEY, CHECK, DEFAULT.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>3 topics</div><div class="sq-arrow">Jump →</div></div>
+        </a>
+        <a class="sq-card sq-queries" href="#select-query">
+          <div class="sq-icon">🔍</div>
+          <div class="sq-num">Topics 04–08</div>
+          <div class="sq-title">CRUD Queries</div>
+          <div class="sq-chips"><span class="sq-chip">CREATE</span><span class="sq-chip">SELECT</span><span class="sq-chip">INSERT</span><span class="sq-chip">UPDATE</span><span class="sq-chip">DELETE</span></div>
+          <div class="sq-desc">Table creation, data insertion, SELECT with WHERE/ORDER BY/LIMIT, UPDATE and DELETE with safety warnings.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>5 topics</div><div class="sq-arrow">Jump →</div></div>
+        </a>
+        <a class="sq-card sq-joins" href="#joins">
+          <div class="sq-icon">🔀</div>
+          <div class="sq-num">Topic 13</div>
+          <div class="sq-title">SQL JOINs</div>
+          <div class="sq-chips"><span class="sq-chip">INNER</span><span class="sq-chip">LEFT</span><span class="sq-chip">RIGHT</span><span class="sq-chip">FULL</span><span class="sq-chip">CROSS</span></div>
+          <div class="sq-desc">All 5 join types with Venn diagrams, real examples, and when to use each. The most-tested SQL interview topic.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>Most tested topic</div><div class="sq-arrow">Jump →</div></div>
+        </a>
+        <a class="sq-card sq-adv" href="#window-functions">
+          <div class="sq-icon">🪟</div>
+          <div class="sq-num">Topic 10</div>
+          <div class="sq-title">Window Functions</div>
+          <div class="sq-chips"><span class="sq-chip">ROW_NUMBER</span><span class="sq-chip">RANK</span><span class="sq-chip">LAG/LEAD</span><span class="sq-chip">OVER</span></div>
+          <div class="sq-desc">OVER, PARTITION BY, ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD — the advanced functions that separate good SQL from great SQL.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>FAANG favourite</div><div class="sq-arrow">Jump →</div></div>
+        </a>
+        <a class="sq-card sq-idx" href="#indexes">
+          <div class="sq-icon">📇</div>
+          <div class="sq-num">Topics 15–17</div>
+          <div class="sq-title">Indexes &amp; Optimization</div>
+          <div class="sq-chips"><span class="sq-chip">B-Tree</span><span class="sq-chip">EXPLAIN</span><span class="sq-chip">Normalization</span><span class="sq-chip">3NF</span></div>
+          <div class="sq-desc">How indexes speed up queries, when not to over-index, EXPLAIN plans, and 1NF → 2NF → 3NF normalization.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>3 topics</div><div class="sq-arrow">Jump →</div></div>
+        </a>
+        <a class="sq-card sq-nosql" href="../sql/mongodb.html">
+          <div class="sq-icon">🍃</div>
+          <div class="sq-num">Bonus</div>
+          <div class="sq-title">MongoDB &amp; NoSQL</div>
+          <div class="sq-chips"><span class="sq-chip">Documents</span><span class="sq-chip">Collections</span><span class="sq-chip">Aggregation</span></div>
+          <div class="sq-desc">SQL vs NoSQL comparison, MongoDB CRUD, aggregation pipeline, and when to pick which database type.</div>
+          <div class="sq-foot"><div class="sq-count"><span class="sq-dot"></span>Separate guide</div><div class="sq-arrow">Open →</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ════ CONTENT SECTIONS ════ -->
+
+    <section class="py-section" id="database-basics">
+      <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">📊</span><h2 class="sec-title">What is a Database?</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">A <strong>database</strong> is a structured collection of related data. In MySQL, a database holds one or more tables — think of it as a folder, where each table is a file inside it.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Analogy</th><th>Database</th><th>Table</th><th>Row</th></tr></thead>
+          <tbody>
+            <tr><td>📁 File System</td><td>Folder</td><td>File</td><td>Line in the file</td></tr>
+            <tr><td>📊 Excel</td><td>Workbook</td><td>Sheet</td><td>Excel row</td></tr>
+            <tr><td>🏢 Real world</td><td>Company records</td><td>Department list</td><td>One employee</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sub-title">Create &amp; Use Database</div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">CREATE DATABASE</span> techforge_db;
+<span class="kw">USE</span> techforge_db;
+<span class="kw">SHOW DATABASES</span>;   <span class="cm">-- List all databases</span>
+<span class="kw">DROP DATABASE</span> techforge_db;  <span class="cm">-- ⚠️ Permanent!</span></pre>
+      </div>
+      <div class="callout callout-amber"><span class="callout-icon">⚠️</span><div>After creating the database, use <code style="font-family:var(--font-mono);color:var(--amber)">USE database_name;</code> or set it as default schema in your SQL client before running table queries.</div></div>
+    </section>
+
+    <section class="py-section" id="data-types">
+      <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">📋</span><h2 class="sec-title">MySQL Data Types</h2></div>
+      <div class="section-divider"></div>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Data Type</th><th>Description</th><th>Example</th><th>Interview Note</th></tr></thead>
+          <tbody>
+            <tr><td><code>INT</code></td><td>Whole numbers</td><td><code>age INT</code></td><td>Use BIGINT for IDs at scale</td></tr>
+            <tr><td><code>VARCHAR(n)</code></td><td>Variable-length string (up to n chars)</td><td><code>name VARCHAR(100)</code></td><td>Prefer over CHAR for varying lengths</td></tr>
+            <tr><td><code>TEXT</code></td><td>Long text (65,535 chars)</td><td><code>bio TEXT</code></td><td>Cannot be indexed directly</td></tr>
+            <tr><td><code>DECIMAL(p,s)</code></td><td>Exact numeric (p digits, s decimal)</td><td><code>price DECIMAL(10,2)</code></td><td>Use for money — never FLOAT</td></tr>
+            <tr><td><code>DATE</code></td><td>Date only (YYYY-MM-DD)</td><td><code>dob DATE</code></td><td>DATETIME includes time component</td></tr>
+            <tr><td><code>TIMESTAMP</code></td><td>Date + time, auto-sets to now</td><td><code>created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP</code></td><td>Stored in UTC</td></tr>
+            <tr><td><code>BOOLEAN</code></td><td>TRUE / FALSE (stored as 1/0)</td><td><code>is_active BOOLEAN DEFAULT TRUE</code></td><td>Alias for TINYINT(1)</td></tr>
+            <tr><td><code>ENUM</code></td><td>One value from a defined set</td><td><code>gender ENUM('Male','Female','Other')</code></td><td>Validates at DB level</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-blue"><span class="callout-icon">💡</span><div><strong>Interview tip:</strong> FLOAT/DOUBLE store approximate values. Always use <code style="font-family:var(--font-mono);color:var(--blue)">DECIMAL</code> for financial data to avoid rounding errors.</div></div>
+    </section>
+
+    <section class="py-section" id="constraints">
+      <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">🔒</span><h2 class="sec-title">Constraints</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Constraints enforce rules on column data — they protect <strong>data integrity</strong> at the database level, not just the application level.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Constraint</th><th>Purpose</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><code>PRIMARY KEY</code></td><td>Uniquely identifies each row — NOT NULL + UNIQUE</td><td><code>id INT PRIMARY KEY</code></td></tr>
+            <tr><td><code>AUTO_INCREMENT</code></td><td>Auto-generates sequential integers</td><td><code>id INT AUTO_INCREMENT</code></td></tr>
+            <tr><td><code>NOT NULL</code></td><td>Column must always have a value</td><td><code>name VARCHAR(100) NOT NULL</code></td></tr>
+            <tr><td><code>UNIQUE</code></td><td>All values must be distinct (allows NULL)</td><td><code>email VARCHAR(100) UNIQUE</code></td></tr>
+            <tr><td><code>DEFAULT</code></td><td>Uses this value if none provided</td><td><code>is_active BOOLEAN DEFAULT TRUE</code></td></tr>
+            <tr><td><code>CHECK</code></td><td>Values must satisfy a condition</td><td><code>CHECK (salary > 0)</code></td></tr>
+            <tr><td><code>FOREIGN KEY</code></td><td>References a primary key in another table</td><td><code>FOREIGN KEY(user_id) REFERENCES users(id)</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-blue"><span class="callout-icon">💡</span><div><strong>PRIMARY KEY vs UNIQUE:</strong> PRIMARY KEY = NOT NULL + UNIQUE, one per table. UNIQUE allows NULL values and a table can have multiple UNIQUE constraints.</div></div>
+    </section>
+
+    <section class="py-section" id="create-table">
+      <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">📝</span><h2 class="sec-title">Create Table</h2></div>
+      <div class="section-divider"></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">CREATE TABLE</span> users (
+    id            <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    name          <span class="kw">VARCHAR</span>(<span class="num">100</span>) <span class="kw">NOT NULL</span>,
+    email         <span class="kw">VARCHAR</span>(<span class="num">100</span>) <span class="kw">UNIQUE NOT NULL</span>,
+    gender        <span class="kw">ENUM</span>(<span class="st">'Male'</span>, <span class="st">'Female'</span>, <span class="st">'Other'</span>),
+    salary        <span class="kw">DECIMAL</span>(<span class="num">10</span>,<span class="num">2</span>) <span class="kw">DEFAULT</span> <span class="num">0</span>,
+    date_of_birth <span class="kw">DATE</span>,
+    is_active     <span class="kw">BOOLEAN DEFAULT TRUE</span>,
+    created_at    <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="cm">-- Verify structure</span>
+<span class="kw">DESCRIBE</span> users;
+
+<span class="cm">-- Remove table entirely (irreversible)</span>
+<span class="kw">DROP TABLE IF EXISTS</span> users;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="alter-table">
+      <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🔧</span><h2 class="sec-title">Alter Table</h2></div>
+      <div class="section-divider"></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Add a column</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">ADD COLUMN</span> phone <span class="kw">VARCHAR</span>(<span class="num">15</span>);
+
+<span class="cm">-- Drop a column</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">DROP COLUMN</span> phone;
+
+<span class="cm">-- Modify column type</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">MODIFY COLUMN</span> name <span class="kw">VARCHAR</span>(<span class="num">150</span>) <span class="kw">NOT NULL</span>;
+
+<span class="cm">-- Rename column (MySQL 8.0+)</span>
+<span class="kw">ALTER TABLE</span> users <span class="kw">RENAME COLUMN</span> name <span class="kw">TO</span> full_name;
+
+<span class="cm">-- Rename table</span>
+<span class="kw">RENAME TABLE</span> users <span class="kw">TO</span> members;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="insert-data">
+      <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">➕</span><h2 class="sec-title">Insert Data</h2></div>
+      <div class="section-divider"></div>
+      <div class="callout callout-green"><span class="callout-icon">✓</span><div><strong>Best practice:</strong> Always specify column names explicitly. It makes inserts resilient to future schema changes and easier to read.</div></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Single row</span>
+<span class="kw">INSERT INTO</span> users (name, email, gender, salary, date_of_birth)
+<span class="kw">VALUES</span> (<span class="st">'Alice'</span>, <span class="st">'alice@example.com'</span>, <span class="st">'Female'</span>, <span class="num">85000</span>, <span class="st">'1995-04-12'</span>);
+
+<span class="cm">-- Multiple rows at once (more efficient)</span>
+<span class="kw">INSERT INTO</span> users (name, email, gender, salary, date_of_birth)
+<span class="kw">VALUES</span>
+    (<span class="st">'Bob'</span>,     <span class="st">'bob@example.com'</span>,     <span class="st">'Male'</span>,   <span class="num">72000</span>, <span class="st">'1990-11-23'</span>),
+    (<span class="st">'Charlie'</span>, <span class="st">'charlie@example.com'</span>, <span class="st">'Other'</span>,  <span class="num">91000</span>, <span class="st">'1988-02-17'</span>),
+    (<span class="st">'Divya'</span>,   <span class="st">'divya@example.com'</span>,   <span class="st">'Female'</span>, <span class="num">67000</span>, <span class="st">'2000-08-09'</span>);</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="select-query">
+      <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">🔍</span><h2 class="sec-title">SELECT Query</h2></div>
+      <div class="section-divider"></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Basic SELECT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> name, email, salary <span class="kw">FROM</span> users;
+
+<span class="cm">-- WHERE with operators</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> gender = <span class="st">'Female'</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> salary <span class="kw">BETWEEN</span> <span class="num">60000</span> <span class="kw">AND</span> <span class="num">90000</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> name <span class="kw">LIKE</span> <span class="st">'A%'</span>;   <span class="cm">-- starts with A</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email <span class="kw">IS NOT NULL</span>;
+
+<span class="cm">-- AND / OR / NOT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> salary > <span class="num">70000</span> <span class="kw">AND</span> gender = <span class="st">'Male'</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> department <span class="kw">IN</span> (<span class="st">'Eng'</span>, <span class="st">'Design'</span>);
+
+<span class="cm">-- ORDER and LIMIT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">ORDER BY</span> salary <span class="kw">DESC LIMIT</span> <span class="num">10</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">ORDER BY</span> name <span class="kw">ASC LIMIT</span> <span class="num">5</span> <span class="kw">OFFSET</span> <span class="num">10</span>; <span class="cm">-- pagination</span>
+
+<span class="cm">-- Aliases</span>
+<span class="kw">SELECT</span> name <span class="kw">AS</span> full_name, salary * <span class="num">12</span> <span class="kw">AS</span> annual_salary <span class="kw">FROM</span> users;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="update-delete">
+      <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">✏️</span><h2 class="sec-title">UPDATE &amp; DELETE</h2></div>
+      <div class="section-divider"></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- UPDATE specific rows</span>
+<span class="kw">UPDATE</span> users <span class="kw">SET</span> salary = <span class="num">95000</span> <span class="kw">WHERE</span> id = <span class="num">1</span>;
+<span class="kw">UPDATE</span> users <span class="kw">SET</span> salary = salary * <span class="num">1.10</span> <span class="kw">WHERE</span> gender = <span class="st">'Female'</span>; <span class="cm">-- 10% raise</span>
+
+<span class="cm">-- DELETE specific rows</span>
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> id = <span class="num">3</span>;
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> is_active = <span class="st">FALSE</span>;
+
+<span class="cm">-- TRUNCATE: delete all rows, keep table structure (faster than DELETE)</span>
+<span class="kw">TRUNCATE TABLE</span> users;</pre>
+      </div>
+      <div class="callout callout-red"><span class="callout-icon">⚠️</span><div><strong>Always use WHERE</strong> with UPDATE and DELETE unless you intentionally want to modify every row. Run a SELECT with the same WHERE first to verify which rows are affected.</div></div>
+    </section>
+
+    <section class="py-section" id="sql-functions">
+      <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon">🧮</span><h2 class="sec-title">SQL Functions</h2></div>
+      <div class="section-divider"></div>
+      <div class="sub-title">Aggregate Functions</div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">SELECT</span> <span class="fn">COUNT</span>(*)                    <span class="kw">AS</span> total_users    <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(<span class="kw">DISTINCT</span> department)  <span class="kw">AS</span> dept_count      <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">MIN</span>(salary), <span class="fn">MAX</span>(salary)    <span class="kw">AS</span> max_sal        <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">SUM</span>(salary)                  <span class="kw">AS</span> total_payroll  <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">ROUND</span>(<span class="fn">AVG</span>(salary), <span class="num">2</span>)        <span class="kw">AS</span> avg_salary     <span class="kw">FROM</span> users;</pre>
+      </div>
+      <div class="sub-title">String &amp; Date Functions</div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- String functions</span>
+<span class="kw">SELECT</span> <span class="fn">UPPER</span>(name), <span class="fn">LOWER</span>(email), <span class="fn">LENGTH</span>(name) <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">CONCAT</span>(first_name, <span class="st">' '</span>, last_name) <span class="kw">AS</span> full_name <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">SUBSTRING</span>(email, <span class="num">1</span>, <span class="fn">INSTR</span>(email, <span class="st">'@'</span>) - <span class="num">1</span>) <span class="kw">AS</span> username <span class="kw">FROM</span> users;
+
+<span class="cm">-- Date functions</span>
+<span class="kw">SELECT</span> <span class="fn">YEAR</span>(date_of_birth), <span class="fn">MONTH</span>(date_of_birth) <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">DATEDIFF</span>(<span class="fn">NOW</span>(), date_of_birth) / <span class="num">365</span> <span class="kw">AS</span> age <span class="kw">FROM</span> users;
+<span class="kw">SELECT</span> <span class="fn">DATE_FORMAT</span>(created_at, <span class="st">'%Y-%m'</span>) <span class="kw">AS</span> month <span class="kw">FROM</span> users;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="window-functions">
+      <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon">🪟</span><h2 class="sec-title">Window Functions</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Window functions perform calculations <strong>across rows related to the current row</strong> — without collapsing them into groups like GROUP BY does. They're one of the most-tested advanced SQL topics at FAANG companies.</p>
+      <div class="wfn-strip">
+        <div class="wfn-label">COMMON WINDOW FUNCTIONS</div>
+        <div class="wfn-fns">
+          <span class="wfn-fn">ROW_NUMBER()</span><span class="wfn-fn">RANK()</span><span class="wfn-fn">DENSE_RANK()</span>
+          <span class="wfn-fn">LAG()</span><span class="wfn-fn">LEAD()</span><span class="wfn-fn">NTILE()</span>
+          <span class="wfn-fn">SUM() OVER</span><span class="wfn-fn">AVG() OVER</span><span class="wfn-fn">FIRST_VALUE()</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- ROW_NUMBER: unique rank per partition</span>
+<span class="kw">SELECT</span> name, department, salary,
+    <span class="fn">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> department <span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> row_num
+<span class="kw">FROM</span> users;
+
+<span class="cm">-- RANK vs DENSE_RANK: ties behave differently</span>
+<span class="cm">-- RANK skips numbers after ties; DENSE_RANK does not</span>
+<span class="kw">SELECT</span> name, salary,
+    <span class="fn">RANK</span>()       <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rank_val,
+    <span class="fn">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> dense_rank_val
+<span class="kw">FROM</span> users;
+
+<span class="cm">-- LAG/LEAD: compare current row with previous/next</span>
+<span class="kw">SELECT</span> name, salary,
+    <span class="fn">LAG</span>(salary)  <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary) <span class="kw">AS</span> prev_salary,
+    <span class="fn">LEAD</span>(salary) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary) <span class="kw">AS</span> next_salary
+<span class="kw">FROM</span> users;
+
+<span class="cm">-- Running total</span>
+<span class="kw">SELECT</span> name, salary,
+    <span class="fn">SUM</span>(salary) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> id <span class="kw">ROWS UNBOUNDED PRECEDING</span>) <span class="kw">AS</span> running_total
+<span class="kw">FROM</span> users;</pre>
+      </div>
+      <div class="callout callout-blue"><span class="callout-icon">💡</span><div><strong>Key difference:</strong> <code style="font-family:var(--font-mono);color:var(--blue)">GROUP BY</code> collapses rows into one per group. Window functions <strong>keep all rows</strong> and add a calculated column alongside them.</div></div>
+    </section>
+
+    <section class="py-section" id="transactions">
+      <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon">🔄</span><h2 class="sec-title">Transactions &amp; ACID</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">A <strong>transaction</strong> is a sequence of SQL statements treated as a single unit — either all succeed or all fail (atomicity).</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>ACID Property</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Atomicity</strong></td><td>All operations succeed or all are rolled back</td></tr>
+            <tr><td><strong>Consistency</strong></td><td>DB moves from one valid state to another</td></tr>
+            <tr><td><strong>Isolation</strong></td><td>Concurrent transactions don't interfere</td></tr>
+            <tr><td><strong>Durability</strong></td><td>Committed data persists even after crashes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">START TRANSACTION</span>;
+
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance - <span class="num">500</span> <span class="kw">WHERE</span> id = <span class="num">1</span>;  <span class="cm">-- debit</span>
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance + <span class="num">500</span> <span class="kw">WHERE</span> id = <span class="num">2</span>;  <span class="cm">-- credit</span>
+
+<span class="cm">-- If both succeed:</span>
+<span class="kw">COMMIT</span>;
+
+<span class="cm">-- If something fails, undo everything:</span>
+<span class="kw">ROLLBACK</span>;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="keys">
+      <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon">🔑</span><h2 class="sec-title">Primary &amp; Foreign Keys</h2></div>
+      <div class="section-divider"></div>
+      <div class="compare-strip">
+        <div class="cs-item">
+          <div class="cs-head cs-sql">PRIMARY KEY</div>
+          <ul class="cs-list">
+            <li>Uniquely identifies each row</li>
+            <li>Cannot be NULL</li>
+            <li>Only one per table</li>
+            <li>Often combined with AUTO_INCREMENT</li>
+          </ul>
+        </div>
+        <div class="cs-item">
+          <div class="cs-head" style="color:var(--cyan)">FOREIGN KEY</div>
+          <ul class="cs-list">
+            <li>References a PK in another table</li>
+            <li>Enforces referential integrity</li>
+            <li>Can be NULL (optional relationship)</li>
+            <li>Multiple FKs allowed per table</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">CREATE TABLE</span> orders (
+    id         <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,
+    user_id    <span class="kw">INT NOT NULL</span>,
+    total      <span class="kw">DECIMAL</span>(<span class="num">10</span>,<span class="num">2</span>),
+    created_at <span class="kw">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>,
+    <span class="kw">FOREIGN KEY</span>(user_id) <span class="kw">REFERENCES</span> users(id) <span class="kw">ON DELETE CASCADE</span>
+);
+<span class="cm">-- ON DELETE CASCADE: deleting a user also deletes their orders</span>
+<span class="cm">-- ON DELETE SET NULL: sets user_id to NULL when user is deleted</span></pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="joins">
+      <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon">🔀</span><h2 class="sec-title">SQL JOINs</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">JOINs combine rows from two or more tables based on a related column. The most tested SQL concept in interviews.</p>
+
+      <div class="joins-grid">
+        <div class="join-card" style="--jc:var(--blue)">
+          <div class="join-venn"><div class="jv-circle jv-l"></div><div class="jv-circle jv-r" style="background:rgba(79,142,247,.5);border-color:var(--blue)"></div></div>
+          <div class="join-name">INNER JOIN</div>
+          <div class="join-desc">Only rows matching in <strong>both</strong> tables</div>
+        </div>
+        <div class="join-card" style="--jc:var(--cyan)">
+          <div class="join-venn"><div class="jv-circle jv-lf"></div><div class="jv-circle jv-r" style="margin-left:-10px;border-color:var(--cyan)"></div></div>
+          <div class="join-name">LEFT JOIN</div>
+          <div class="join-desc"><strong>All</strong> from left + matching from right (NULL if no match)</div>
+        </div>
+        <div class="join-card" style="--jc:var(--green)">
+          <div class="join-venn"><div class="jv-circle jv-l" style="border-color:var(--green)"></div><div class="jv-circle jv-rf" style="margin-left:-10px;background:rgba(52,211,153,.5);border-color:var(--green)"></div></div>
+          <div class="join-name">RIGHT JOIN</div>
+          <div class="join-desc"><strong>All</strong> from right + matching from left (NULL if no match)</div>
+        </div>
+        <div class="join-card" style="--jc:var(--purple)">
+          <div class="join-venn"><div class="jv-circle jv-bf" style="border-color:var(--purple)"></div><div class="jv-circle jv-bf" style="margin-left:-10px;border-color:var(--purple)"></div></div>
+          <div class="join-name">FULL JOIN</div>
+          <div class="join-desc"><strong>All</strong> rows from both tables (NULL where no match)</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- INNER JOIN: users who have placed orders</span>
+<span class="kw">SELECT</span> u.name, o.total
+<span class="kw">FROM</span> users u
+<span class="kw">INNER JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id;
+
+<span class="cm">-- LEFT JOIN: ALL users, with orders if they exist</span>
+<span class="kw">SELECT</span> u.name, o.total
+<span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id;
+
+<span class="cm">-- Find users with NO orders</span>
+<span class="kw">SELECT</span> u.name
+<span class="kw">FROM</span> users u
+<span class="kw">LEFT JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">WHERE</span> o.id <span class="kw">IS NULL</span>;
+
+<span class="cm">-- SELF JOIN: find users in the same department</span>
+<span class="kw">SELECT</span> a.name, b.name, a.department
+<span class="kw">FROM</span> users a
+<span class="kw">JOIN</span> users b <span class="kw">ON</span> a.department = b.department <span class="kw">AND</span> a.id != b.id;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="union">
+      <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon">➕</span><h2 class="sec-title">UNION &amp; Subqueries</h2></div>
+      <div class="section-divider"></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- UNION: combines results, removes duplicates</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> users
+<span class="kw">UNION</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> admin_users;
+
+<span class="cm">-- UNION ALL: keeps duplicates (faster)</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> users
+<span class="kw">UNION ALL</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> admin_users;
+
+<span class="cm">-- Subquery in WHERE</span>
+<span class="kw">SELECT</span> name, salary <span class="kw">FROM</span> users
+<span class="kw">WHERE</span> salary > (<span class="kw">SELECT</span> <span class="fn">AVG</span>(salary) <span class="kw">FROM</span> users);
+
+<span class="cm">-- Subquery in FROM (derived table)</span>
+<span class="kw">SELECT</span> dept, avg_sal
+<span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> department <span class="kw">AS</span> dept, <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_sal
+    <span class="kw">FROM</span> users <span class="kw">GROUP BY</span> department
+) dept_avg
+<span class="kw">WHERE</span> avg_sal > <span class="num">80000</span>;</pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="indexes">
+      <div class="sec-header"><span class="sec-num">15</span><span class="sec-icon">📇</span><h2 class="sec-title">Indexes &amp; Performance</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">An <strong>index</strong> is a data structure (typically a B-Tree) that speeds up data retrieval at the cost of extra storage and slower writes. Think of it like a book's index — you find the page number without reading the whole book.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Create index on frequently queried column</span>
+<span class="kw">CREATE INDEX</span> idx_email <span class="kw">ON</span> users(email);
+
+<span class="cm">-- Composite index: column order matters!</span>
+<span class="kw">CREATE INDEX</span> idx_dept_salary <span class="kw">ON</span> users(department, salary);
+
+<span class="cm">-- EXPLAIN: see if index is being used</span>
+<span class="kw">EXPLAIN</span> <span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="st">'alice@example.com'</span>;
+
+<span class="cm">-- Drop index</span>
+<span class="kw">DROP INDEX</span> idx_email <span class="kw">ON</span> users;</pre>
+      </div>
+      <div class="callout callout-amber"><span class="callout-icon">⚠️</span><div><strong>Don't over-index.</strong> Each index slows down INSERT/UPDATE/DELETE because the index must be updated too. Index columns that appear in WHERE, JOIN ON, and ORDER BY clauses.</div></div>
+    </section>
+
+    <section class="py-section" id="group-by">
+      <div class="sec-header"><span class="sec-num">16</span><span class="sec-icon">📊</span><h2 class="sec-title">GROUP BY &amp; HAVING</h2></div>
+      <div class="section-divider"></div>
+      <div class="callout callout-blue"><span class="callout-icon">💡</span><div><strong>WHERE vs HAVING:</strong> WHERE filters <em>rows before</em> grouping. HAVING filters <em>groups after</em> aggregation. You cannot use aggregate functions in WHERE.</div></div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Count employees per department</span>
+<span class="kw">SELECT</span> department, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> headcount
+<span class="kw">FROM</span> users
+<span class="kw">GROUP BY</span> department
+<span class="kw">ORDER BY</span> headcount <span class="kw">DESC</span>;
+
+<span class="cm">-- HAVING: only departments with avg salary > 75k</span>
+<span class="kw">SELECT</span> department, <span class="fn">ROUND</span>(<span class="fn">AVG</span>(salary),<span class="num">2</span>) <span class="kw">AS</span> avg_sal
+<span class="kw">FROM</span> users
+<span class="kw">GROUP BY</span> department
+<span class="kw">HAVING</span> <span class="fn">AVG</span>(salary) > <span class="num">75000</span>
+<span class="kw">ORDER BY</span> avg_sal <span class="kw">DESC</span>;
+
+<span class="cm">-- WHERE + GROUP BY + HAVING together</span>
+<span class="kw">SELECT</span> department, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> cnt
+<span class="kw">FROM</span> users
+<span class="kw">WHERE</span> is_active = <span class="st">TRUE</span>              <span class="cm">-- filter rows first</span>
+<span class="kw">GROUP BY</span> department                 <span class="cm">-- then group</span>
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(*) > <span class="num">5</span>               <span class="cm">-- then filter groups</span>
+<span class="kw">ORDER BY</span> cnt <span class="kw">DESC</span>;                  <span class="cm">-- then sort</span></pre>
+      </div>
+    </section>
+
+    <section class="py-section" id="normalization">
+      <div class="sec-header"><span class="sec-num">17</span><span class="sec-icon">🏗️</span><h2 class="sec-title">Normalization</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Normalization is the process of organizing a database to <strong>reduce redundancy</strong> and improve data integrity by dividing data into related tables.</p>
+      <div class="norm-grid">
+        <div class="norm-card" style="--nc:var(--green)">
+          <div class="norm-nf">1NF — FIRST NORMAL FORM</div>
+          <div class="norm-rule">Eliminate repeating groups</div>
+          <div class="norm-desc">Each column must hold atomic (indivisible) values. No arrays or comma-separated lists in a single cell. Each row must be unique.</div>
+        </div>
+        <div class="norm-card" style="--nc:var(--blue)">
+          <div class="norm-nf">2NF — SECOND NORMAL FORM</div>
+          <div class="norm-rule">Remove partial dependencies</div>
+          <div class="norm-desc">Must be in 1NF. Every non-key column must depend on the <strong>whole</strong> primary key — not just part of it. Relevant when PK is composite.</div>
+        </div>
+        <div class="norm-card" style="--nc:var(--purple)">
+          <div class="norm-nf">3NF — THIRD NORMAL FORM</div>
+          <div class="norm-rule">Remove transitive dependencies</div>
+          <div class="norm-desc">Must be in 2NF. Non-key columns must depend <strong>only</strong> on the primary key — not on other non-key columns. Move transitive data to its own table.</div>
+        </div>
+      </div>
+      <div class="callout callout-blue"><span class="callout-icon">💡</span><div><strong>Interview tip:</strong> Most production schemas target 3NF. Sometimes denormalization is intentional for read-performance — know when to justify it.</div></div>
+    </section>
+
+    <!-- INTERVIEW CTA -->
+    <div class="interview-cta anim-in">
+      <div class="icta-icon">🎯</div>
+      <div class="icta-body">
+        <div class="icta-title">Ready to test your SQL knowledge?</div>
+        <div class="icta-desc">40+ SQL interview questions — joins, window functions, subqueries, indexes — tagged for FAANG and startups, with progress tracking.</div>
+      </div>
+      <a class="icta-btn" href="../interview/sql-interview.html">SQL Interview Prep →</a>
+    </div>
+
+    <div class="page-nav">
+      <a class="nav-link" href="../python/index.html">← Python</a>
+      <a class="nav-link next" href="../aiml/aiml-explained.html">AI/ML →</a>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+<script src="../assets/js/utils.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop = document.getElementById('backTop');
+  var searchInput = document.getElementById('searchInput');
+  var sbLinks = document.querySelectorAll('.sb-link');
+
+  window.addEventListener('scroll', function () {
+    var ws = document.body.scrollTop || document.documentElement.scrollTop;
+    var h  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (h > 0 ? (ws/h)*100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', ws > 400);
+  }, { passive:true });
+
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({top:0,behavior:'smooth'}); });
+
+  // Sidebar active link on scroll
+  var sections = document.querySelectorAll('.py-section');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        sbLinks.forEach(function (l) { l.classList.remove('active'); });
+        var active = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-20% 0px -70% 0px' });
+  sections.forEach(function (s) { obs.observe(s); });
+
+  // Search filter
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      sbLinks.forEach(function (l) {
+        l.style.display = (q && !l.textContent.toLowerCase().includes(q)) ? 'none' : '';
+      });
+    });
+  }
+
+  // Scroll anim
+  var animObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); animObs.unobserve(e.target); }
+    });
+  }, { threshold:0.07 });
+  document.querySelectorAll('.anim-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i%4)*0.07 + 's';
+    animObs.observe(el);
+  });
+});
+
+function copyCode(btn) {
+  var pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(function () {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+</script>
+</body>
+</html>

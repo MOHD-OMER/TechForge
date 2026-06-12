@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Complete Python guide from basics to advanced OOP — decorators, generators, comprehensions, magic methods, and essential libraries. Free, with 50+ code examples."/>
+  <meta property="og:title" content="Python Guide — TechForge"/>
+  <meta property="og:description" content="Complete Python from basics to advanced OOP. 7 modules, 50+ examples, interview ready."/>
+  <meta property="og:type" content="website"/>
+  <title>Python Guide — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+
+/* ════════════════════════════════
+   PYTHON INDEX — v4 UPGRADE
+   ════════════════════════════════ */
+
+/* ── HERO ── */
+.py-hero {
+  position: relative; padding: 52px 0 42px;
+  margin-bottom: 44px; border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.py-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 65% at 0% 55%, rgba(52,211,153,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 100% 20%, rgba(79,142,247,.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.ph-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--green);
+  background: rgba(52,211,153,.08); border: 1px solid rgba(52,211,153,.2);
+  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 18px;
+}
+.ph-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: phdot 2s ease infinite; }
+@keyframes phdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+
+.ph-title {
+  font-family: var(--font-display); font-size: clamp(28px,5.5vw,46px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.02;
+  color: var(--text); margin-bottom: 14px;
+}
+.ph-title span {
+  background: linear-gradient(135deg, var(--green) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ph-sub { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 500px; margin-bottom: 24px; }
+.ph-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-ph-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg, var(--green), #059669); color: #000;
+  box-shadow: 0 4px 20px rgba(52,211,153,.3); transition: all .2s;
+}
+.btn-ph-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(52,211,153,.45); }
+.btn-ph-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  background: var(--card); color: var(--text2);
+  border: 1px solid var(--border2); transition: all .2s;
+}
+.btn-ph-ghost:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+/* ── STATS ── */
+.py-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; margin-bottom: 40px;
+}
+.pys-box {
+  background: var(--card); padding: 20px 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: background .2s; text-align: center; position: relative;
+}
+.pys-box::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--pys-c,var(--green)); opacity:0; transition:opacity .2s;
+}
+.pys-box:hover { background: rgba(52,211,153,.03); }
+.pys-box:hover::after { opacity: 1; }
+.pys-val   { font-family: var(--font-mono); font-size: 24px; font-weight: 900; line-height: 1; }
+.pys-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.pys-sub   { font-size: 10.5px; color: var(--text3); margin-top: 2px; }
+
+/* ── LEARNING PATH ── */
+.path-strip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 20px 22px;
+  margin-bottom: 40px; position: relative; overflow: hidden;
+}
+.path-strip::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--green), var(--cyan), var(--blue)); opacity:.5;
+}
+.path-label {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.path-step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 13px; border-radius: var(--r-md);
+  background: var(--bg2); border: 1px solid var(--border);
+  text-decoration: none; transition: all .2s; flex-shrink: 0;
+}
+.path-step:hover { border-color: var(--green); background: rgba(52,211,153,.06); }
+.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--green); font-weight: 700; }
+.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
+.ps-diff {
+  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+  padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px;
+}
+.diff-starter { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.2); }
+.diff-mid     { background:rgba(251,191,36,.09); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+.diff-adv     { background:rgba(248,113,113,.1); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
+.path-arrow   { font-size: 12px; color: var(--text3); flex-shrink: 0; }
+
+/* ── SECTION ── */
+.sec-label {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 6px;
+}
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--green),transparent); }
+.sec-h2 {
+  font-family: var(--font-display); font-size: clamp(17px,3vw,22px);
+  font-weight: 800; letter-spacing: -.5px; color: var(--text); margin-bottom: 4px;
+}
+.sec-sub { font-size: 12.5px; color: var(--text3); margin-bottom: 20px; }
+.sec-block { margin-bottom: 48px; }
+
+/* ── TOPIC CARDS — bento ── */
+.py-bento {
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  gap: 12px;
+}
+.py-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 22px 20px 18px;
+  text-decoration: none; display: flex; flex-direction: column;
+  position: relative; overflow: hidden; transition: all .25s;
+  min-height: 195px;
+}
+.py-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--pc-a,var(--green)), transparent); opacity:0; transition:opacity .2s;
+}
+.py-card::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(circle at 80% 10%, var(--pc-glow,rgba(52,211,153,.06)), transparent 55%);
+  opacity:0; transition:opacity .3s;
+}
+.py-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+.py-card:hover::before { opacity:1; }
+.py-card:hover::after  { opacity:1; }
+.py-card:focus-visible { outline: 2px solid var(--pc-a,var(--green)); outline-offset: 2px; }
+
+/* layout spans */
+.pc-basics    { grid-column: span 5; --pc-a:var(--blue);   --pc-glow:rgba(79,142,247,.07); }
+.pc-coll      { grid-column: span 4; --pc-a:var(--green);  --pc-glow:rgba(52,211,153,.06); }
+.pc-control   { grid-column: span 3; --pc-a:var(--amber);  --pc-glow:rgba(251,191,36,.06); }
+.pc-funcs     { grid-column: span 4; --pc-a:var(--purple); --pc-glow:rgba(167,139,250,.07);}
+.pc-oop       { grid-column: span 5; --pc-a:#f97316;       --pc-glow:rgba(249,115,22,.06); }
+.pc-libs      { grid-column: span 3; --pc-a:var(--cyan);   --pc-glow:rgba(34,211,238,.06); }
+.pc-programs  { grid-column: span 3; --pc-a:var(--green);  --pc-glow:rgba(52,211,153,.06); }
+
+.pc-icon { font-size: 22px; margin-bottom: 11px; }
+.pc-num {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  color: var(--pc-a,var(--green)); letter-spacing: 1.5px; margin-bottom: 7px;
+  display: flex; align-items: center; gap: 8px;
+}
+.pc-num::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(255,255,255,.07),transparent); }
+.pc-title { font-size: 14.5px; font-weight: 800; color: var(--text); margin-bottom: 6px; letter-spacing: -.3px; }
+.pc-desc  { font-size: 11.5px; color: var(--text3); line-height: 1.65; flex: 1; margin-bottom: 12px; }
+.pc-chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.pc-chip  {
+  font-family: var(--font-mono); font-size: 8.5px; font-weight: 600;
+  padding: 2px 7px; border-radius: var(--r-full);
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text3);
+}
+.pc-foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.pc-count { font-family: var(--font-mono); font-size: 10px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+.pc-dot   { width: 5px; height: 5px; border-radius: 50%; background: var(--pc-a,var(--green)); }
+.pc-arrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--pc-a,var(--green)); display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
+.py-card:hover .pc-arrow { gap: 9px; }
+
+/* ── WHY PYTHON ── */
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.why-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 20px 18px;
+  position: relative; overflow: hidden; transition: border-color .2s;
+}
+.why-card:hover { border-color: var(--border2); }
+.why-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+  background: var(--wc,var(--green)); opacity:.6;
+}
+.why-icon  { font-size: 18px; margin-bottom: 10px; }
+.why-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.why-desc  { font-size: 11.5px; color: var(--text3); line-height: 1.6; }
+
+/* ── CODE PREVIEW ── */
+.code-preview {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); overflow: hidden; margin-bottom: 0;
+}
+.cp-bar {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid var(--border); background: rgba(0,0,0,.25);
+}
+.cpb-dot { width: 9px; height: 9px; border-radius: 50%; }
+.cpb-dot:nth-child(1){background:#ff5f57}
+.cpb-dot:nth-child(2){background:#febc2e}
+.cpb-dot:nth-child(3){background:#28c840}
+.cp-file { font-family: var(--font-mono); font-size: 10px; color: var(--text3); margin-left: 4px; }
+.cp-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.cp-tab {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text3);
+  padding: 8px 16px; border-right: 1px solid var(--border); cursor: pointer;
+  transition: all .15s; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.cp-tab.active { color: var(--green); border-bottom-color: var(--green); background: rgba(52,211,153,.04); }
+.cp-tab:hover:not(.active) { color: var(--text2); background: rgba(255,255,255,.02); }
+.cp-body { padding: 0; }
+.cp-pane { display: none; }
+.cp-pane.active { display: block; }
+.cp-pane pre {
+  margin: 0; padding: 20px 22px; font-family: var(--font-mono); font-size: 12px;
+  line-height: 1.75; color: var(--text2); overflow-x: auto;
+}
+.kw  { color: #c792ea; } /* keywords */
+.fn  { color: #82aaff; } /* functions */
+.st  { color: #c3e88d; } /* strings */
+.cm  { color: #546e7a; font-style: italic; } /* comments */
+.nm  { color: #f78c6c; } /* numbers */
+.bi  { color: #89ddff; } /* builtins */
+.dc  { color: var(--amber); } /* decorator */
+.cl  { color: var(--green); } /* class names */
+.op  { color: var(--text3); } /* operators */
+
+/* ── INTERVIEW CALLOUT ── */
+.interview-cta {
+  background: linear-gradient(135deg, rgba(52,211,153,.06) 0%, rgba(34,211,238,.04) 100%);
+  border: 1px solid rgba(52,211,153,.18); border-radius: var(--r-xl);
+  padding: 24px 26px; display: flex; align-items: center; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.interview-cta::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg,transparent 10%,var(--green) 50%,transparent 90%); opacity:.35;
+}
+.icta-icon  { font-size: 28px; flex-shrink: 0; }
+.icta-body  { flex: 1; }
+.icta-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.icta-desc  { font-size: 12px; color: var(--text3); line-height: 1.6; }
+.icta-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px; border-radius: var(--r-md);
+  font-size: 12.5px; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg, var(--green), #059669); color: #000;
+  box-shadow: 0 3px 12px rgba(52,211,153,.3); transition: all .2s;
+  flex-shrink: 0;
+}
+.icta-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(52,211,153,.4); }
+
+/* ── ANIM ── */
+.anim-in { opacity:0; transform:translateY(14px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .pc-basics  { grid-column: span 6; }
+  .pc-coll    { grid-column: span 6; }
+  .pc-control { grid-column: span 6; }
+  .pc-funcs   { grid-column: span 6; }
+  .pc-oop     { grid-column: span 6; }
+  .pc-libs    { grid-column: span 6; }
+  .pc-programs{ grid-column: span 6; }
+  .why-grid   { grid-template-columns: 1fr 1fr; }
+  .py-stats   { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width:640px) {
+  .pc-basics,.pc-coll,.pc-control,.pc-funcs,.pc-oop,.pc-libs,.pc-programs { grid-column: span 12; }
+  .why-grid { grid-template-columns: 1fr; }
+  .ph-cta { flex-direction: column; }
+  .btn-ph-primary,.btn-ph-ghost { justify-content: center; min-height: 44px; }
+  .interview-cta { flex-direction: column; text-align: center; }
+  .icta-btn { width: 100%; justify-content: center; }
+  .path-arrow { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link current" href="./">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
+    <div class="sidebar-label">Python Modules</div>
+    <a class="sb-link" href="./"><span class="sb-num">00</span>Overview</a>
+    <a class="sb-link" href="basics.html"><span class="sb-num">01</span>Python Basics</a>
+    <a class="sb-link" href="collections.html"><span class="sb-num">02</span>Collections</a>
+    <a class="sb-link" href="control.html"><span class="sb-num">03</span>Control Flow</a>
+    <a class="sb-link" href="functions.html"><span class="sb-num">04</span>Functions &amp; I/O</a>
+    <a class="sb-link" href="oop.html"><span class="sb-num">05</span>OOP</a>
+    <a class="sb-link" href="libraries.html"><span class="sb-num">06</span>Libraries</a>
+    <a class="sb-link" href="programs.html"><span class="sb-num">07</span>Practice Programs</a>
+
+    <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+    <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
+    <a class="sb-link" href="#path"><span class="sb-num">01</span>Learning Path</a>
+    <a class="sb-link" href="#modules"><span class="sb-num">02</span>All Modules</a>
+    <a class="sb-link" href="#why"><span class="sb-num">03</span>Why Python?</a>
+    <a class="sb-link" href="#gotchas"><span class="sb-num">04</span>Python Gotchas</a>
+    <a class="sb-link" href="#preview"><span class="sb-num">05</span>Code Preview</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">06</span>Interview Prep</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+    <!-- ════ HERO ════ -->
+    <div class="py-hero">
+      <div class="ph-eyebrow"><span class="ph-dot"></span>Python 3 — 7 Modules · 50+ Examples</div>
+      <h1 class="ph-title">Python from <span>Zero to Interview.</span></h1>
+      <p class="ph-sub">
+        Complete Python 3 reference — variables, data structures, control flow, OOP with all four pillars,
+        decorators, generators, essential libraries, and 10+ hands-on programs.
+        The one guide you need to go from beginner to interview-ready.
+      </p>
+      <div class="ph-cta">
+        <a class="btn-ph-primary" href="basics.html">🐍 Start with Basics</a>
+        <a class="btn-ph-ghost" href="../interview/python-interview.html">🎯 Python Interview →</a>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">⬡</span>Python 3.10+</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--blue)">⬡</span>50+ runnable examples</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--amber)">⬡</span>Interview-focused</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--cyan)">⬡</span>OOP fully covered</span>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
+    <div id="stats" class="py-stats anim-in">
+      <div class="pys-box" style="--pys-c:var(--green)">
+        <span class="pys-val" style="color:var(--green)">7</span>
+        <span class="pys-label">Modules</span>
+        <span class="pys-sub">Basics → Practice</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--blue)">
+        <span class="pys-val" style="color:var(--blue)">50+</span>
+        <span class="pys-label">Examples</span>
+        <span class="pys-sub">Runnable code snippets</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--amber)">
+        <span class="pys-val" style="color:var(--amber)">4</span>
+        <span class="pys-label">OOP Pillars</span>
+        <span class="pys-sub">All fully covered</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--purple)">
+        <span class="pys-val" style="color:var(--purple)">35+</span>
+        <span class="pys-label">Interview Qs</span>
+        <span class="pys-sub">In the Python track</span>
+      </div>
+    </div>
+
+    <!-- ════ LEARNING PATH ════ -->
+    <div id="path" class="path-strip anim-in">
+      <div class="path-label">Recommended Learning Path</div>
+      <div class="path-steps">
+        <a class="path-step" href="basics.html">
+          <span class="ps-num">01</span><span class="ps-name">Basics</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="collections.html">
+          <span class="ps-num">02</span><span class="ps-name">Collections</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="control.html">
+          <span class="ps-num">03</span><span class="ps-name">Control Flow</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="functions.html">
+          <span class="ps-num">04</span><span class="ps-name">Functions</span><span class="ps-diff diff-mid">Mid</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="oop.html">
+          <span class="ps-num">05</span><span class="ps-name">OOP</span><span class="ps-diff diff-mid">Mid</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="libraries.html">
+          <span class="ps-num">06</span><span class="ps-name">Libraries</span><span class="ps-diff diff-mid">Mid</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="programs.html">
+          <span class="ps-num">07</span><span class="ps-name">Practice</span><span class="ps-diff diff-adv">Advanced</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ════ ALL MODULES ════ -->
+    <div id="modules" class="sec-block anim-in">
+      <div class="sec-label">Curriculum</div>
+      <h2 class="sec-h2">All 7 Python modules</h2>
+      <p class="sec-sub">Follow the path top-to-bottom or jump to the module you need.</p>
+
+      <div class="py-bento">
+
+        <a class="py-card pc-basics" href="basics.html">
+          <div class="pc-icon">📦</div>
+          <div class="pc-num">Module 01</div>
+          <div class="pc-title">Python Basics</div>
+          <div class="pc-chips">
+            <span class="pc-chip">Variables</span><span class="pc-chip">Data Types</span>
+            <span class="pc-chip">Type Conversion</span><span class="pc-chip">None</span>
+          </div>
+          <div class="pc-desc">Where every Python journey starts. Variables, primitive types (int, float, str, bool), type conversion, and how Python stores data in memory.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Starter level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-coll" href="collections.html">
+          <div class="pc-icon">📋</div>
+          <div class="pc-num">Module 02</div>
+          <div class="pc-title">Collections</div>
+          <div class="pc-chips">
+            <span class="pc-chip">Lists</span><span class="pc-chip">Tuples</span>
+            <span class="pc-chip">Sets</span><span class="pc-chip">Dicts</span><span class="pc-chip">Comprehensions</span>
+          </div>
+          <div class="pc-desc">Python's built-in data structures — essential for DSA and data manipulation. Includes all comprehension forms and when to use each type.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Starter level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-control" href="control.html">
+          <div class="pc-icon">🔀</div>
+          <div class="pc-num">Module 03</div>
+          <div class="pc-title">Control Flow</div>
+          <div class="pc-chips">
+            <span class="pc-chip">if/else</span><span class="pc-chip">for</span>
+            <span class="pc-chip">while</span><span class="pc-chip">break/continue</span>
+          </div>
+          <div class="pc-desc">Decision-making and iteration — conditionals, loops, and all Python operators for building program logic.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Starter level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-funcs" href="functions.html">
+          <div class="pc-icon">⚙️</div>
+          <div class="pc-num">Module 04</div>
+          <div class="pc-title">Functions &amp; I/O</div>
+          <div class="pc-chips">
+            <span class="pc-chip">Decorators</span><span class="pc-chip">Generators</span>
+            <span class="pc-chip">Recursion</span><span class="pc-chip">Exceptions</span><span class="pc-chip">File I/O</span>
+          </div>
+          <div class="pc-desc">Write reusable, elegant code. Covers decorators, generators, lambda, *args/**kwargs, exception handling, and file I/O — all heavily tested in interviews.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Mid level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-oop" href="oop.html">
+          <div class="pc-icon">🏛️</div>
+          <div class="pc-num">Module 05</div>
+          <div class="pc-title">Object-Oriented Programming</div>
+          <div class="pc-chips">
+            <span class="pc-chip">Classes</span><span class="pc-chip">Inheritance</span>
+            <span class="pc-chip">Polymorphism</span><span class="pc-chip">Abstraction</span>
+            <span class="pc-chip">Magic Methods</span><span class="pc-chip">SOLID</span>
+          </div>
+          <div class="pc-desc">Complete OOP — all four pillars, dunder/magic methods, class vs instance methods, multiple inheritance, MRO, and Python-specific design patterns for professional code.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Mid level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-libs" href="libraries.html">
+          <div class="pc-icon">📦</div>
+          <div class="pc-num">Module 06</div>
+          <div class="pc-title">Essential Libraries</div>
+          <div class="pc-chips">
+            <span class="pc-chip">NumPy</span><span class="pc-chip">Pandas</span>
+            <span class="pc-chip">Matplotlib</span><span class="pc-chip">Requests</span>
+          </div>
+          <div class="pc-desc">Real-world Python libraries for data science, visualization, and web APIs. The toolkit every Python developer needs.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Mid level</div>
+            <div class="pc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="py-card pc-programs" href="programs.html">
+          <div class="pc-icon">💻</div>
+          <div class="pc-num">Module 07</div>
+          <div class="pc-title">Practice Programs</div>
+          <div class="pc-chips">
+            <span class="pc-chip">Algorithms</span><span class="pc-chip">OOP Projects</span>
+            <span class="pc-chip">Interview Qs</span>
+          </div>
+          <div class="pc-desc">10+ hands-on programs from basic to advanced — sorting, recursion, OOP projects, and coding interview exercises in Python.</div>
+          <div class="pc-foot">
+            <div class="pc-count"><span class="pc-dot"></span>Advanced</div>
+            <div class="pc-arrow">Practice →</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ════ WHY PYTHON ════ -->
+    <div id="why" class="sec-block anim-in">
+      <div class="sec-label">Why Python?</div>
+      <h2 class="sec-h2">The language worth mastering first</h2>
+      <p class="sec-sub">For interviews, AI/ML, backend, and scripting — Python is the pragmatic choice.</p>
+
+      <div class="why-grid">
+        <div class="why-card" style="--wc:var(--green)">
+          <div class="why-icon">🎯</div>
+          <div class="why-title">Interview Standard</div>
+          <div class="why-desc">Most technical interviews accept Python. Its concise syntax lets you focus on the algorithm, not the boilerplate — a real advantage under time pressure.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--blue)">
+          <div class="why-icon">🤖</div>
+          <div class="why-title">AI/ML Dominance</div>
+          <div class="why-desc">PyTorch, TensorFlow, scikit-learn, Pandas — the entire AI/ML stack runs on Python. If you want to work in AI, Python is non-negotiable.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--cyan)">
+          <div class="why-icon">🔧</div>
+          <div class="why-title">Backend Ready</div>
+          <div class="why-desc">Django, Flask, and FastAPI make Python a strong choice for backend web development — from REST APIs to full production services used by Instagram, Spotify, and Dropbox.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--amber)">
+          <div class="why-icon">📖</div>
+          <div class="why-title">Readable by Default</div>
+          <div class="why-desc">Python's syntax enforces clarity. Code looks like English, which makes it easier to write correct logic fast — and easier for reviewers to spot issues.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--purple)">
+          <div class="why-icon">⚡</div>
+          <div class="why-title">Fast to Ship</div>
+          <div class="why-desc">From idea to working prototype in minutes. Python's REPL, rich stdlib, and massive ecosystem (PyPI has 500k+ packages) make development uniquely fast.</div>
+        </div>
+        <div class="why-card" style="--wc:#f97316">
+          <div class="why-icon">🌍</div>
+          <div class="why-title">Everywhere</div>
+          <div class="why-desc">Scripting, automation, data analysis, web, ML, game dev, security research — Python reaches into almost every domain of software development.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PYTHON GOTCHAS ════ -->
+    <div id="gotchas" class="sec-block anim-in">
+      <div class="sec-label">Watch Out</div>
+      <h2 class="sec-h2">Python gotchas that trip up interviews</h2>
+      <p class="sec-sub">Common surprises — know these cold before your next interview.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--amber);letter-spacing:1.5px;margin-bottom:8px;">MUTABLE DEFAULT ARGUMENT</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--text2);"><span style="color:#c792ea">def</span> <span style="color:#82aaff">append_to</span>(item, lst<span style="color:var(--text3)">=</span>[]):  <span style="color:#546e7a;font-style:italic"># ⚠️ BAD</span>
+    lst.append(item)
+    <span style="color:#c792ea">return</span> lst
+
+<span style="color:#546e7a;font-style:italic"># Fix: use None as default</span>
+<span style="color:#c792ea">def</span> <span style="color:#82aaff">append_to</span>(item, lst<span style="color:var(--text3)">=</span><span style="color:#89ddff">None</span>):  <span style="color:#546e7a;font-style:italic"># ✓</span>
+    <span style="color:#c792ea">if</span> lst <span style="color:#c792ea">is</span> <span style="color:#89ddff">None</span>: lst <span style="color:var(--text3)">=</span> []
+    lst.append(item)
+    <span style="color:#c792ea">return</span> lst</pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text3);line-height:1.6;">Default arguments are evaluated <strong style="color:var(--text2)">once</strong> at function definition, not each call. Mutable defaults persist across calls.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--blue);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--blue);letter-spacing:1.5px;margin-bottom:8px;">IS VS ==</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--text2);">a <span style="color:var(--text3)">=</span> [<span style="color:#f78c6c">1</span>, <span style="color:#f78c6c">2</span>, <span style="color:#f78c6c">3</span>]
+b <span style="color:var(--text3)">=</span> [<span style="color:#f78c6c">1</span>, <span style="color:#f78c6c">2</span>, <span style="color:#f78c6c">3</span>]
+
+a <span style="color:var(--text3)">==</span> b  <span style="color:#546e7a;font-style:italic"># True  — same value</span>
+a <span style="color:#c792ea">is</span> b  <span style="color:#546e7a;font-style:italic"># False — different objects</span>
+
+<span style="color:#546e7a;font-style:italic"># Small ints (-5 to 256) are cached</span>
+x <span style="color:var(--text3)">=</span> <span style="color:#f78c6c">256</span>; y <span style="color:var(--text3)">=</span> <span style="color:#f78c6c">256</span>
+x <span style="color:#c792ea">is</span> y  <span style="color:#546e7a;font-style:italic"># True  — same object!</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text3);line-height:1.6;"><code style="font-family:var(--font-mono);color:var(--blue)">is</code> checks identity (same object in memory). <code style="font-family:var(--font-mono);color:var(--blue)">&equals;&equals;</code> checks equality (same value). Always use <code style="font-family:var(--font-mono)">==</code> for value comparison.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--purple);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--purple);letter-spacing:1.5px;margin-bottom:8px;">LATE BINDING CLOSURES</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--text2);">fns <span style="color:var(--text3)">=</span> [<span style="color:#c792ea">lambda</span>: i <span style="color:#c792ea">for</span> i <span style="color:#c792ea">in</span> <span style="color:#89ddff">range</span>(<span style="color:#f78c6c">3</span>)]
+[f() <span style="color:#c792ea">for</span> f <span style="color:#c792ea">in</span> fns]  <span style="color:#546e7a;font-style:italic"># [2, 2, 2] ⚠️</span>
+
+<span style="color:#546e7a;font-style:italic"># Fix: capture i at definition time</span>
+fns <span style="color:var(--text3)">=</span> [<span style="color:#c792ea">lambda</span> i<span style="color:var(--text3)">=</span>i: i <span style="color:#c792ea">for</span> i <span style="color:#c792ea">in</span> <span style="color:#89ddff">range</span>(<span style="color:#f78c6c">3</span>)]
+[f() <span style="color:#c792ea">for</span> f <span style="color:#c792ea">in</span> fns]  <span style="color:#546e7a;font-style:italic"># [0, 1, 2] ✓</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text3);line-height:1.6;">Closures look up variables at <strong style="color:var(--text2)">call time</strong>, not definition time. By the time the lambdas run, <code style="font-family:var(--font-mono)">i</code> is already 2.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;margin-bottom:8px;">LIST COPY VS REFERENCE</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:var(--text2);">a <span style="color:var(--text3)">=</span> [<span style="color:#f78c6c">1</span>, <span style="color:#f78c6c">2</span>, <span style="color:#f78c6c">3</span>]
+b <span style="color:var(--text3)">=</span> a          <span style="color:#546e7a;font-style:italic"># ⚠️ same object</span>
+b.append(<span style="color:#f78c6c">4</span>)
+<span style="color:#89ddff">print</span>(a)       <span style="color:#546e7a;font-style:italic"># [1, 2, 3, 4]</span>
+
+<span style="color:#546e7a;font-style:italic"># Shallow copy options:</span>
+b <span style="color:var(--text3)">=</span> a.copy()   <span style="color:#546e7a;font-style:italic"># ✓</span>
+b <span style="color:var(--text3)">=</span> a[:]       <span style="color:#546e7a;font-style:italic"># ✓</span>
+b <span style="color:var(--text3)">=</span> <span style="color:#89ddff">list</span>(a)    <span style="color:#546e7a;font-style:italic"># ✓</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text3);line-height:1.6;">Assignment copies the <strong style="color:var(--text2)">reference</strong>, not the object. For nested lists, use <code style="font-family:var(--font-mono)">copy.deepcopy()</code> to fully isolate.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════ CODE PREVIEW ════ -->
+    <div id="preview" class="sec-block anim-in">
+      <div class="sec-label">Code Preview</div>
+      <h2 class="sec-h2">Taste the content</h2>
+      <p class="sec-sub">Three patterns from across the curriculum — click to switch.</p>
+
+      <div class="code-preview">
+        <div class="cp-bar">
+          <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
+          <span class="cp-file">python_examples.py</span>
+        </div>
+        <div class="cp-tabs">
+          <div class="cp-tab active" onclick="switchTab(this,'tab-decorator')">Decorator</div>
+          <div class="cp-tab" onclick="switchTab(this,'tab-generator')">Generator</div>
+          <div class="cp-tab" onclick="switchTab(this,'tab-oop')">OOP Magic</div>
+        </div>
+        <div class="cp-body">
+          <div class="cp-pane active" id="tab-decorator">
+            <pre><span class="cm"># A timing decorator — measures function runtime</span>
+<span class="kw">import</span> time
+<span class="kw">import</span> functools
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="dc">@functools.wraps(func)</span>
+    <span class="kw">def</span> <span class="fn">wrapper</span>(<span class="op">*</span>args, <span class="op">**</span>kwargs):
+        start <span class="op">=</span> time.<span class="fn">perf_counter</span>()
+        result <span class="op">=</span> <span class="fn">func</span>(<span class="op">*</span>args, <span class="op">**</span>kwargs)
+        elapsed <span class="op">=</span> time.<span class="fn">perf_counter</span>() <span class="op">-</span> start
+        <span class="bi">print</span>(<span class="st">f"</span><span class="bi">{func.__name__}</span><span class="st"> ran in </span><span class="bi">{elapsed:.4f}</span><span class="st">s"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="dc">@timer</span>
+<span class="kw">def</span> <span class="fn">bubble_sort</span>(arr):
+    n <span class="op">=</span> <span class="bi">len</span>(arr)
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(n):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">0</span>, n <span class="op">-</span> i <span class="op">-</span> <span class="nm">1</span>):
+            <span class="kw">if</span> arr[j] <span class="op">></span> arr[j <span class="op">+</span> <span class="nm">1</span>]:
+                arr[j], arr[j <span class="op">+</span> <span class="nm">1</span>] <span class="op">=</span> arr[j <span class="op">+</span> <span class="nm">1</span>], arr[j]
+    <span class="kw">return</span> arr
+
+<span class="fn">bubble_sort</span>([<span class="nm">64</span>, <span class="nm">34</span>, <span class="nm">25</span>, <span class="nm">12</span>, <span class="nm">22</span>])
+<span class="cm"># bubble_sort ran in 0.0001s</span></pre>
+          </div>
+          <div class="cp-pane" id="tab-generator">
+            <pre><span class="cm"># Generator — infinite Fibonacci sequence</span>
+<span class="kw">def</span> <span class="fn">fibonacci</span>():
+    a, b <span class="op">=</span> <span class="nm">0</span>, <span class="nm">1</span>
+    <span class="kw">while True</span>:
+        <span class="kw">yield</span> a
+        a, b <span class="op">=</span> b, a <span class="op">+</span> b
+
+<span class="cm"># Only generates values on demand — O(1) memory</span>
+gen <span class="op">=</span> <span class="fn">fibonacci</span>()
+first_ten <span class="op">=</span> [<span class="bi">next</span>(gen) <span class="kw">for</span> _ <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>)]
+<span class="bi">print</span>(first_ten)
+<span class="cm"># [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</span>
+
+<span class="cm"># Generator expression — even more concise</span>
+squares <span class="op">=</span> (x<span class="op">**</span><span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>) <span class="kw">if</span> x <span class="op">%</span> <span class="nm">2</span> <span class="op">==</span> <span class="nm">0</span>)
+<span class="bi">print</span>(<span class="bi">list</span>(squares))
+<span class="cm"># [0, 4, 16, 36, 64]</span></pre>
+          </div>
+          <div class="cp-pane" id="tab-oop">
+            <pre><span class="cm"># Magic methods — make your class feel native</span>
+<span class="kw">class</span> <span class="cl">Vector</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="bi">self</span>, x, y):
+        <span class="bi">self</span>.x, <span class="bi">self</span>.y <span class="op">=</span> x, y
+
+    <span class="kw">def</span> <span class="fn">__repr__</span>(<span class="bi">self</span>):
+        <span class="kw">return</span> <span class="st">f"Vector(</span><span class="bi">{self.x}</span><span class="st">, </span><span class="bi">{self.y}</span><span class="st">)"</span>
+
+    <span class="kw">def</span> <span class="fn">__add__</span>(<span class="bi">self</span>, other):        <span class="cm"># v1 + v2</span>
+        <span class="kw">return</span> <span class="cl">Vector</span>(<span class="bi">self</span>.x <span class="op">+</span> other.x, <span class="bi">self</span>.y <span class="op">+</span> other.y)
+
+    <span class="kw">def</span> <span class="fn">__mul__</span>(<span class="bi">self</span>, scalar):      <span class="cm"># v * 3</span>
+        <span class="kw">return</span> <span class="cl">Vector</span>(<span class="bi">self</span>.x <span class="op">*</span> scalar, <span class="bi">self</span>.y <span class="op">*</span> scalar)
+
+    <span class="kw">def</span> <span class="fn">__len__</span>(<span class="bi">self</span>):               <span class="cm"># len(v)</span>
+        <span class="kw">return</span> <span class="bi">int</span>((<span class="bi">self</span>.x<span class="op">**</span><span class="nm">2</span> <span class="op">+</span> <span class="bi">self</span>.y<span class="op">**</span><span class="nm">2</span>) <span class="op">**</span> <span class="nm">0.5</span>)
+
+v1 <span class="op">=</span> <span class="cl">Vector</span>(<span class="nm">2</span>, <span class="nm">3</span>)
+v2 <span class="op">=</span> <span class="cl">Vector</span>(<span class="nm">1</span>, <span class="nm">4</span>)
+<span class="bi">print</span>(v1 <span class="op">+</span> v2)   <span class="cm"># Vector(3, 7)</span>
+<span class="bi">print</span>(v1 <span class="op">*</span> <span class="nm">3</span>)    <span class="cm"># Vector(6, 9)</span>
+<span class="bi">print</span>(<span class="bi">len</span>(v1))   <span class="cm"># 3</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ INTERVIEW CALLOUT ════ -->
+    <div class="interview-cta anim-in" style="margin-bottom:48px;">
+      <div class="icta-icon">🎯</div>
+      <div class="icta-body">
+        <div class="icta-title">Ready to test your knowledge?</div>
+        <div class="icta-desc">35+ Python interview questions covering decorators, GIL, generators, memory management, OOP, and coding problems — tagged for FAANG and startups.</div>
+      </div>
+      <a class="icta-btn" href="../interview/python-interview.html">Python Interview Prep →</a>
+    </div>
+
+    <div class="page-nav">
+      <a class="nav-link" href="../index.html">← Home</a>
+      <a class="nav-link next" href="basics.html">Python Basics →</a>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+
+<script src="../assets/js/utils.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop      = document.getElementById('backTop');
+  var searchInput  = document.getElementById('searchInput');
+  var navLinks     = document.querySelectorAll('.sb-link');
+
+  window.addEventListener('scroll', function () {
+    var ws = document.body.scrollTop || document.documentElement.scrollTop;
+    var h  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (h > 0 ? (ws / h) * 100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', ws > 400);
+  }, { passive: true });
+
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      var term = e.target.value.toLowerCase().trim();
+      navLinks.forEach(function (l) {
+        l.classList.toggle('no-match', term !== '' && !l.textContent.toLowerCase().includes(term));
+      });
+    });
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { searchInput.value = ''; navLinks.forEach(function (l) { l.classList.remove('no-match'); }); }
+    });
+  }
+
+  // Scroll animations
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.anim-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    obs.observe(el);
+  });
+});
+
+function switchTab(btn, paneId) {
+  document.querySelectorAll('.cp-tab').forEach(function (t) { t.classList.remove('active'); });
+  document.querySelectorAll('.cp-pane').forEach(function (p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  var pane = document.getElementById(paneId);
+  if (pane) pane.classList.add('active');
+}
+</script>
+</body>
+</html>

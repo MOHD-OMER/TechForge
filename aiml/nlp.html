@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>NLP & LLMs — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--green); --accent-dim: var(--green-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link active" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+</aside>
+
+  <main class="main" id="mainContent">
+  
+      <div class="aim-hero anim-in">
+        <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — NLP & LLMs</div>
+        <h1 class="aim-title">💬 <span>NLP & LLMs</span></h1>
+        <p class="aim-sub">Transformers, BERT, GPT, tokenization, embeddings, RAG pipelines, speech recognition, and fine-tuning strategies — how machines understand human language.</p>
+        <div class="aim-badges"><span class="aim-badge">Intermediate</span><span class="aim-badge">Transformers</span><span class="aim-badge">HuggingFace</span></div>
+      </div>
+      <div class="aim-stats anim-in"><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">10+</span><span class="bks-label">Topics</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">Transformers</span><span class="bks-label">BERT / GPT</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">RAG</span><span class="bks-label">Pipelines</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">Speech</span><span class="bks-label">Recognition</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">40m</span><span class="bks-label">Read Time</span></div></div>
+
+<div class="info-section">
+      <div class="info-tabs">
+        <div class="info-tab active" onclick="switchTab(this,'nlp-basics')">Fundamentals</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-embeddings')">Embeddings</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-transformer')">Transformer</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-models')">Key Models</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-tasks')">NLP Tasks</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-finetune')">Fine-Tuning</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-code')">Code</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-interview')">Interview Q&amp;A</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-cheatsheet')">⚡ Cheat Sheet</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-speech')">Speech Recognition</div>
+        <div class="info-tab" onclick="switchTab(this,'nlp-quiz')">Quiz</div>
+      </div>
+
+      <!-- ══ TAB 1: FUNDAMENTALS ══ -->
+      <div class="info-pane active" id="nlp-basics">
+        <div class="stat-bar">
+          <div class="stat-item"><span class="stat-num" style="color:var(--green)">100+</span><span class="stat-lbl">NLP Tasks</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--cyan)">2017</span><span class="stat-lbl">Transformer paper</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--purple)">1T+</span><span class="stat-lbl">Training tokens (GPT-4)</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--amber)">96%</span><span class="stat-lbl">GLUE benchmark (GPT-4)</span></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">What is NLP?</div>
+              <div class="step-desc">Natural Language Processing is the branch of AI that handles human language — text and speech. NLP converts messy, ambiguous language into structured representations that machines can process. The pipeline: raw text → tokenise → embed → model → output (label, translation, generated text, etc.).</div>
+              <div class="step-code">Text → Tokens → Embeddings → Model → Output (label / generated text)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Tokenisation — How Models See Text</div>
+              <div class="step-desc">Models can't process characters directly — they process integer token IDs. <strong>Word tokenisation</strong>: split on spaces — simple but fails on rare words. <strong>Subword (BPE / WordPiece)</strong>: the modern standard. Rare words split into known sub-pieces — "unhappiness" → ["un", "happiness"]. BERT uses WordPiece; GPT uses BPE. ~1 token ≈ 0.75 words in English.</div>
+              <div class="step-code">"unhappiness" → ["un", "happiness"] · "2024" → ["20", "24"] · ~100k token vocabulary</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Text Preprocessing — Classical NLP</div>
+              <div class="step-desc">Before deep learning, NLP required heavy preprocessing: <strong>Lowercasing</strong>, <strong>punctuation removal</strong>, <strong>stopword removal</strong> (the, is, a), <strong>stemming</strong> (running → run), <strong>lemmatisation</strong> (better → good). Still useful for TF-IDF and classical ML. Modern Transformers handle raw text directly — minimal preprocessing needed.</div>
+              <div class="step-code">"I am Loving AI!!!" → lower → strip → lemmatise → ["love", "ai"] (classical)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Bag of Words &amp; TF-IDF</div>
+              <div class="step-desc"><strong>Bag of Words (BoW):</strong> represent text as word counts — ignores order. Produces sparse high-dimensional vectors. <strong>TF-IDF:</strong> weights each word by how often it appears in the document (TF) vs how rare it is across all documents (IDF). "The" gets low weight; "photosynthesis" gets high weight. Still effective baseline for classification.</div>
+              <div class="step-code">TF-IDF(t,d) = TF(t,d) × log(N / df(t)) · high score = important rare term</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">n-gram Language Models</div>
+              <div class="step-desc">Predict the next word given the previous n-1 words. Bigram: P("sat" | "cat") — uses only 1 previous word. Trigram uses 2. Simple but no long-range understanding. Suffers from data sparsity for rare n-grams. Foundation for understanding modern language models — same idea, vastly more powerful with neural networks.</div>
+              <div class="step-code">P("the cat sat") = P(the) · P(cat|the) · P(sat|the,cat) (trigram chain rule)</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout callout-blue" style="margin-top:20px;">
+          <span class="callout-icon">🛠️</span>
+          <div><strong>Key tools:</strong> NLTK (classic NLP, tokenisation, stemming) · spaCy (fast, production NER, dependency parsing) · Hugging Face Transformers (modern models, tokenisers, fine-tuning) · Sentence-Transformers (embeddings).</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 2: EMBEDDINGS ══ -->
+      <div class="info-pane" id="nlp-embeddings">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Why Embeddings?</div>
+              <div class="step-desc">Models can't process text directly — only numbers. Embeddings convert words, sentences, or documents into dense vectors where <strong>semantic similarity = geometric proximity</strong>. "dog" and "cat" are close in embedding space; "dog" and "democracy" are far apart. This numeric representation is what enables all downstream NLP tasks.</div>
+              <div class="step-code">cosine_sim(embed("king") - embed("man") + embed("woman"), embed("queen")) ≈ 1.0</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">One-Hot Encoding (baseline)</div>
+              <div class="step-desc">Each word is represented as a sparse vector of size |vocabulary|, with a 1 at the word's index and 0 everywhere else. No semantic information — "cat" is as far from "dog" as from "democracy". Vocabulary of 50,000 words = 50,000-dimensional vector per word. Impractical and semantically empty.</div>
+              <div class="step-code">"cat" → [0,0,1,0,0,...,0] · |vocab| = 50k dims · no semantics</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Word2Vec — Static Embeddings (2013)</div>
+              <div class="step-desc">Trains a shallow neural net to predict a word from its context (CBOW) or context from a word (Skip-gram). Result: 300-dim dense vectors with rich semantic structure. Famous analogy: king − man + woman ≈ queen. Limitation: <strong>one vector per word</strong> regardless of context — "bank" always the same vector whether financial or riverbank.</div>
+              <div class="step-code">CBOW: predict word from context · Skip-gram: predict context from word · 300 dims</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Contextual Embeddings — BERT &amp; GPT</div>
+              <div class="step-desc">Transformer models produce <strong>different vectors for the same word depending on context</strong>. "bank" in "river bank" gets a completely different 768-dim vector than "bank" in "savings bank." This contextual sensitivity is the fundamental reason Transformers crushed all previous NLP benchmarks in 2018. The embedding is computed dynamically from the full context window.</div>
+              <div class="step-code">BERT("bank" in "river bank") ≠ BERT("bank" in "savings bank") · context-sensitive</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Sentence &amp; Document Embeddings</div>
+              <div class="step-desc"><strong>SBERT (Sentence-BERT):</strong> fine-tunes BERT with a siamese network on sentence pairs to produce semantically meaningful sentence-level vectors. <strong>OpenAI text-embedding-3-small:</strong> 1536-dim general-purpose embeddings, best for RAG. Used for: semantic search, clustering, duplicate detection, recommendation. Cosine similarity between sentence vectors = semantic similarity.</div>
+              <div class="step-code">sim = cos(embed("I love dogs"), embed("Dogs are great")) ≈ 0.92 · high = similar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Embedding Model Comparison</div>
+        <table class="comp-table">
+          <thead><tr><th>Model</th><th>Type</th><th>Dims</th><th>Context-aware</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>One-Hot</td><td>Sparse</td><td>|vocab|</td><td style="color:var(--red)">No</td><td>Baseline only</td></tr>
+            <tr><td>Word2Vec / GloVe</td><td>Static</td><td>300</td><td style="color:var(--red)">No</td><td>Fast similarity, older systems</td></tr>
+            <tr><td>BERT [CLS]</td><td>Contextual</td><td>768</td><td style="color:var(--green)">Yes</td><td>Classification, NER, QA</td></tr>
+            <tr><td>SBERT</td><td>Sentence</td><td>768</td><td style="color:var(--green)">Yes</td><td>Semantic search, RAG, similarity</td></tr>
+            <tr><td>text-embedding-3-small</td><td>Sentence</td><td>1536</td><td style="color:var(--green)">Yes</td><td>RAG, production, best general</td></tr>
+            <tr><td>BGE-large / E5</td><td>Sentence</td><td>1024</td><td style="color:var(--green)">Yes</td><td>Open-source RAG alternative</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══ TAB 3: TRANSFORMER ══ -->
+      <div class="info-pane" id="nlp-transformer">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">"Attention Is All You Need" — 2017</div>
+              <div class="step-desc">Google Brain's 2017 paper replaced recurrent networks entirely with a self-attention mechanism. Key properties: <strong>parallelisable</strong> (no sequential bottleneck), <strong>global receptive field</strong> (every token attends to every other), <strong>scales</strong> efficiently with compute. Every modern LLM descends from this single paper.</div>
+              <div class="step-code">RNN: sequential, O(n) steps · Transformer: parallel, O(1) steps · all tokens at once</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Self-Attention — Q, K, V</div>
+              <div class="step-desc">Each token produces three vectors via learned matrices: <strong>Q (Query):</strong> what am I looking for? <strong>K (Key):</strong> what do I offer? <strong>V (Value):</strong> what information do I contain? Attention score = Q·Kᵀ / √d_k → softmax → weighted sum of Vs. The √d_k prevents dot products from getting too large (which would push softmax into near-zero gradient regions).</div>
+              <div class="step-code">Attention(Q,K,V) = softmax(QKᵀ / √d_k) · V · Q=XWq, K=XWk, V=XWv (learned)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Multi-Head Attention</div>
+              <div class="step-desc">Run attention H times in parallel with different weight matrices. Each head specialises in a different relationship type — one may track syntactic dependencies, another coreference, another semantic roles. Concatenate all head outputs, project to original dimension. GPT-3 uses 96 heads across 96 layers.</div>
+              <div class="step-code">MultiHead(Q,K,V) = Concat(head₁,...,headₕ)·Wₒ · each head independently attends</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Positional Encoding</div>
+              <div class="step-desc">Self-attention is permutation-invariant — "cat sat mat" and "mat cat sat" produce the same attention scores without position signals. Fix: add a position encoding to each token embedding before the first layer. Original paper: sinusoidal. Modern: learned positional embeddings (BERT) or RoPE / ALiBi for length generalisation (Llama, Mistral).</div>
+              <div class="step-code">token_input = token_embedding + position_encoding · RoPE rotates Q&K vectors by position</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Transformer Block</div>
+              <div class="step-desc">One Transformer block = Multi-Head Attention → Add&amp;Norm → Feed-Forward Network → Add&amp;Norm. <strong>Residual connections</strong> (Add) prevent gradient vanishing and allow very deep stacks. <strong>LayerNorm</strong> stabilises training. <strong>FFN</strong> is typically 4× wider than model dim — where most parameters live.</div>
+              <div class="step-code">x = x + MHA(LN(x)) · x = x + FFN(LN(x)) · stack 12–96 blocks for BERT/GPT</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Encoder vs Decoder Transformers</div>
+              <div class="step-desc"><strong>Encoder-only (BERT):</strong> all tokens attend to all others (bidirectional). Best for understanding tasks: classification, NER, QA. Pretrained with masked language modelling. <strong>Decoder-only (GPT, Claude, Llama):</strong> causal masking — each token only attends to previous tokens. Best for generation. Pretrained with next-token prediction. <strong>Encoder-Decoder (T5, BART):</strong> best for seq2seq tasks: translation, summarisation.</div>
+              <div class="step-code">BERT: bidirectional → understand · GPT: causal → generate · T5: both → translate/summarise</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 4: KEY MODELS ══ -->
+      <div class="info-pane" id="nlp-models">
+        <div class="sub-heading">Model Landscape</div>
+        <table class="comp-table">
+          <thead><tr><th>Model</th><th>Type</th><th>Params</th><th>Context</th><th>Pretraining</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td>BERT</td><td>Encoder</td><td>110M–340M</td><td>512 tokens</td><td>MLM + NSP</td><td>Classification, NER, QA</td></tr>
+            <tr><td>RoBERTa</td><td>Encoder</td><td>125M–355M</td><td>512 tokens</td><td>MLM (no NSP)</td><td>Stronger BERT alternative</td></tr>
+            <tr><td>GPT-2</td><td>Decoder</td><td>117M–1.5B</td><td>1024 tokens</td><td>CLM</td><td>Text generation, fine-tuning base</td></tr>
+            <tr><td>GPT-4o</td><td>Decoder</td><td>~1.8T (est)</td><td>128k tokens</td><td>CLM + RLHF</td><td>Frontier reasoning, multimodal</td></tr>
+            <tr><td>Claude 3.5 Sonnet</td><td>Decoder</td><td>Unknown</td><td>200k tokens</td><td>CLM + RLHF</td><td>Coding, reasoning, long docs</td></tr>
+            <tr><td>T5</td><td>Enc-Dec</td><td>60M–11B</td><td>512 tokens</td><td>Span masking</td><td>Translation, summarisation, QA</td></tr>
+            <tr><td>Llama 3 70B</td><td>Decoder</td><td>70B</td><td>128k tokens</td><td>CLM</td><td>Best open-source LLM</td></tr>
+            <tr><td>Mistral 7B</td><td>Decoder</td><td>7B</td><td>32k tokens</td><td>CLM</td><td>Efficient, fast, open</td></tr>
+            <tr><td>Gemini 1.5 Pro</td><td>Decoder</td><td>Unknown</td><td>1M tokens</td><td>CLM + RLHF</td><td>Ultra-long context tasks</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-heading">How to Choose</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">Classify</div><div class="cc-name">Text Classification / NER</div><div class="cc-desc">BERT or RoBERTa fine-tuned. Add a linear head. 500+ labelled examples. Training in minutes on a GPU.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">Generate</div><div class="cc-name">Text / Code Generation</div><div class="cc-desc">GPT-4o or Claude for best quality. Llama 3 70B for open-source. GPT-2 for lightweight fine-tuning.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">Translate</div><div class="cc-name">Translation / Summarisation</div><div class="cc-desc">T5 or BART fine-tuned. Or zero-shot with GPT-4 for high quality without training data.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">Search</div><div class="cc-name">Semantic Search / RAG</div><div class="cc-desc">SBERT or text-embedding-3-small for embeddings. BGE-large for open-source. Then vector DB + reranker.</div></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 5: NLP TASKS ══ -->
+      <div class="info-pane" id="nlp-tasks">
+        <div class="task-grid">
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">😊</span><span class="task-name">Sentiment Analysis</span></div>
+            <div class="task-desc">Classify text as positive / negative / neutral. Product reviews, social media monitoring, brand tracking.</div>
+            <div class="task-metric">Model: BERT fine-tuned · Metric: Accuracy, F1</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🏷️</span><span class="task-name">Named Entity Recognition</span></div>
+            <div class="task-desc">Tag tokens: PERSON, ORG, LOC, DATE, MONEY. "Apple [ORG] in Cupertino [LOC]." Sequence labelling task.</div>
+            <div class="task-metric">Model: BERT + CRF · Metric: F1 per entity type</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🌐</span><span class="task-name">Machine Translation</span></div>
+            <div class="task-desc">English → French, Japanese, etc. Seq2seq Transformer. Google Translate, DeepL, NLLB-200 (200 languages).</div>
+            <div class="task-metric">Model: T5 / NLLB · Metric: BLEU score</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">📄</span><span class="task-name">Summarisation</span></div>
+            <div class="task-desc">Extractive (pick key sentences) or abstractive (generate new text). News summarisation, legal docs, meetings.</div>
+            <div class="task-metric">Model: BART / T5 / Claude · Metric: ROUGE-L</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">❓</span><span class="task-name">Question Answering</span></div>
+            <div class="task-desc">Extractive QA: find answer span in a passage. Generative QA: generate free-form answer. SQuAD benchmark.</div>
+            <div class="task-metric">Model: BERT / GPT-4 · Metric: F1, Exact Match</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">📧</span><span class="task-name">Text Classification</span></div>
+            <div class="task-desc">Spam detection, intent classification, topic labelling, content moderation. Multi-label or multi-class.</div>
+            <div class="task-metric">Model: BERT + linear head · Metric: F1, AUC</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">🔗</span><span class="task-name">Relation Extraction</span></div>
+            <div class="task-desc">Identify relationships between entities in text. "Elon Musk [founded] SpaceX." Knowledge graph construction.</div>
+            <div class="task-metric">Model: BERT + classification head · Metric: F1</div>
+          </div>
+          <div class="task-card">
+            <div class="task-header"><span class="task-icon">💬</span><span class="task-name">Dialogue &amp; Chatbots</span></div>
+            <div class="task-desc">Maintain conversation context, understand intent, generate helpful replies. Customer support, virtual assistants.</div>
+            <div class="task-metric">Model: GPT-4o / Claude / Llama · Metric: Human eval</div>
+          </div>
+        </div>
+        <div class="callout callout-green" style="margin-top:16px;">
+          <span class="callout-icon">📊</span>
+          <div><strong>Evaluation metrics by task:</strong> Classification → Accuracy, F1, AUC. NER → per-entity F1. Translation → BLEU. Summarisation → ROUGE. QA → Exact Match + F1. Generation → Human evaluation + GPT-4-as-judge for automated evaluation at scale.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 6: FINE-TUNING ══ -->
+      <div class="info-pane" id="nlp-finetune">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">The Fine-Tuning Spectrum</div>
+              <div class="step-desc">From cheapest to most expensive, you have four options for adapting a pretrained model: (1) Zero/few-shot prompting — no training, free. (2) Adapter layers / prompt tuning — train tiny additions. (3) LoRA / QLoRA — train 0.1–1% of params. (4) Full fine-tuning — train all params. Always try in this order.</div>
+              <div class="step-code">Prompt → LoRA → Full FT · each 10–100× more expensive than previous</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">BERT Fine-Tuning for Classification</div>
+              <div class="step-desc">Add a linear classification head on top of BERT's [CLS] token embedding. Fine-tune all layers on labelled data for 3–5 epochs with lr=2e-5. With just 500–2000 labelled examples and 30 minutes on a GPU, this beats all traditional ML approaches for most text classification tasks.</div>
+              <div class="step-code">BERT([CLS] token) → Linear(768, num_classes) → CrossEntropy · lr=2e-5, epochs=3</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">LoRA Fine-Tuning for LLMs</div>
+              <div class="step-desc">Freeze the base model. Add rank-decomposition matrices to query and value projection matrices of each attention layer. Only A and B are trained — typically r=8 or r=16, reducing trainable parameters to &lt;1% of the total. QLoRA: quantise the base model to 4-bit first, enabling fine-tuning a 70B model on a single 80GB A100.</div>
+              <div class="step-code">pip install trl peft · LoraConfig(r=16, target_modules=["q_proj","v_proj"]) · SFTTrainer</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Instruction Fine-Tuning</div>
+              <div class="step-desc">Format training data as instruction → response pairs. Transforms a base language model into a helpful assistant. Standard formats: Alpaca (instruction, input, output), ChatML (system/user/assistant roles). Quality over quantity: 1000 carefully curated examples beat 100k noisy ones. GPT-4 can generate diverse training pairs from seed examples.</div>
+              <div class="step-code">{"role":"user","content":"Summarize this text..."}, {"role":"assistant","content":"Summary: ..."}</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">DPO — Direct Preference Optimisation</div>
+              <div class="step-desc">Simpler alternative to RLHF. Directly optimise on preference pairs (chosen vs rejected) without a separate reward model. More stable training, fewer hyperparameters. Standard format: {prompt, chosen_response, rejected_response}. Used to align Llama 3, Mistral, and most open models. Implemented in Hugging Face TRL library.</div>
+              <div class="step-code">L_DPO = -log σ(β(log π_θ(chosen|x) - log π_θ(rejected|x) - same for ref model))</div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-box tip-green">
+          <strong>Fine-tuning decision guide:</strong> Classification with &gt;500 labels → BERT fine-tune. Need custom LLM behaviour → LoRA on Llama 3 or Mistral. Need SOTA quality → GPT-4 API fine-tuning. Need private/local → QLoRA on 7–13B model. Never fine-tune for knowledge — use RAG instead.
+        </div>
+      </div>
+
+      <!-- ══ TAB 7: CODE ══ -->
+      <div class="info-pane" id="nlp-code">
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">python — BERT sentiment classifier (Hugging Face Trainer)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> transformers <span class="kw">import</span> AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+<span class="kw">from</span> datasets <span class="kw">import</span> load_dataset
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> accuracy_score, f1_score
+
+dataset   = load_dataset(<span class="st">"imdb"</span>)
+tokenizer = AutoTokenizer.from_pretrained(<span class="st">"bert-base-uncased"</span>)
+model     = AutoModelForSequenceClassification.from_pretrained(<span class="st">"bert-base-uncased"</span>, num_labels=<span class="num">2</span>)
+
+<span class="kw">def</span> <span class="fn">tokenize</span>(batch):
+    <span class="kw">return</span> tokenizer(batch[<span class="st">"text"</span>], padding=<span class="st">"max_length"</span>, truncation=<span class="kw">True</span>, max_length=<span class="num">512</span>)
+
+dataset = dataset.map(tokenize, batched=<span class="kw">True</span>)
+dataset.set_format(<span class="st">"torch"</span>, columns=[<span class="st">"input_ids"</span>, <span class="st">"attention_mask"</span>, <span class="st">"label"</span>])
+
+<span class="kw">def</span> <span class="fn">compute_metrics</span>(p):
+    preds = np.argmax(p.predictions, axis=<span class="num">1</span>)
+    <span class="kw">return</span> {<span class="st">"accuracy"</span>: accuracy_score(p.label_ids, preds),
+            <span class="st">"f1"</span>: f1_score(p.label_ids, preds, average=<span class="st">"weighted"</span>)}
+
+trainer = Trainer(
+    model=model,
+    args=TrainingArguments(
+        output_dir=<span class="st">"./bert-imdb"</span>, num_train_epochs=<span class="num">3</span>,
+        per_device_train_batch_size=<span class="num">16</span>, learning_rate=<span class="num">2e-5</span>,
+        warmup_steps=<span class="num">200</span>, weight_decay=<span class="num">0.01</span>, evaluation_strategy=<span class="st">"epoch"</span>,
+    ),
+    train_dataset=dataset[<span class="st">"train"</span>].select(range(<span class="num">5000</span>)),
+    eval_dataset=dataset[<span class="st">"test"</span>].select(range(<span class="num">1000</span>)),
+    compute_metrics=compute_metrics,
+)
+trainer.train()
+trainer.evaluate()</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — Semantic search with sentence-transformers</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> sentence_transformers <span class="kw">import</span> SentenceTransformer, util
+<span class="kw">import</span> torch
+
+model = SentenceTransformer(<span class="st">"all-MiniLM-L6-v2"</span>)  <span class="cm"># fast + good quality</span>
+
+<span class="cm"># Your document corpus</span>
+corpus = [
+    <span class="st">"Machine learning finds patterns in data."</span>,
+    <span class="st">"Deep learning uses neural networks with many layers."</span>,
+    <span class="st">"Python is a popular programming language."</span>,
+    <span class="st">"Transformers use self-attention mechanisms."</span>,
+]
+
+<span class="cm"># Encode all documents</span>
+corpus_emb = model.encode(corpus, convert_to_tensor=<span class="kw">True</span>)
+
+<span class="cm"># Search</span>
+query = <span class="st">"How do attention mechanisms work?"</span>
+query_emb = model.encode(query, convert_to_tensor=<span class="kw">True</span>)
+scores = util.cos_sim(query_emb, corpus_emb)[<span class="num">0</span>]
+top_k = torch.topk(scores, k=<span class="num">2</span>)
+<span class="kw">for</span> score, idx <span class="kw">in</span> zip(top_k.values, top_k.indices):
+    <span class="fn">print</span>(<span class="st">f"{score:.3f} | {corpus[idx]}"</span>)</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — LoRA fine-tuning with TRL (QLoRA pattern)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> peft <span class="kw">import</span> LoraConfig, get_peft_model
+<span class="kw">from</span> transformers <span class="kw">import</span> AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+<span class="kw">from</span> trl <span class="kw">import</span> SFTTrainer, SFTConfig
+<span class="kw">import</span> torch
+
+<span class="cm"># 4-bit quantisation (QLoRA)</span>
+bnb = BitsAndBytesConfig(load_in_4bit=<span class="kw">True</span>, bnb_4bit_compute_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained(<span class="st">"mistralai/Mistral-7B-v0.1"</span>, quantization_config=bnb)
+
+<span class="cm"># LoRA config: only train attention projections</span>
+lora = LoraConfig(r=<span class="num">16</span>, lora_alpha=<span class="num">32</span>, target_modules=[<span class="st">"q_proj"</span>,<span class="st">"v_proj"</span>], lora_dropout=<span class="num">0.05</span>)
+model = get_peft_model(model, lora)
+model.print_trainable_parameters()  <span class="cm"># ~0.2% of total params</span>
+
+trainer = SFTTrainer(
+    model=model, train_dataset=dataset,
+    args=SFTConfig(output_dir=<span class="st">"./mistral-lora"</span>, num_train_epochs=<span class="num">3</span>,
+                   per_device_train_batch_size=<span class="num">4</span>, learning_rate=<span class="num">2e-4</span>),
+)
+trainer.train()</pre>
+        </div>
+      </div>
+
+      <!-- ══ TAB 8: INTERVIEW Q&A ══ -->
+      <div class="info-pane" id="nlp-interview">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">💡</span>
+          <div>The most frequently asked NLP and LLM questions at Google, Meta, OpenAI, Cohere, and NLP-focused ML roles.</div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">Q1</div>
+            <div class="step-body">
+              <div class="step-title">What is the difference between BERT and GPT?</div>
+              <div class="step-desc"><strong>BERT (Encoder-only):</strong> bidirectional attention — each token sees all other tokens simultaneously. Pretrained with Masked Language Modelling (predict [MASK] tokens). Best for understanding tasks: classification, NER, QA, similarity. <strong>GPT (Decoder-only):</strong> causal/autoregressive — each token only sees previous tokens. Pretrained with next-token prediction. Best for generation tasks: chatbots, completion, summarisation. BERT = read the whole book to understand; GPT = write the next chapter.</div>
+              <div class="step-code">BERT: [word₁,...,wordₙ] all attend to each other · GPT: wordₙ only sees word₁...wordₙ₋₁</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q2</div>
+            <div class="step-body">
+              <div class="step-title">How does self-attention work?</div>
+              <div class="step-desc">Each token t creates three vectors: Q, K, V (Query, Key, Value) via learned linear projections. Attention score between tokens i and j = QᵢKⱼᵀ / √d_k. The √d_k prevents vanishing gradients in softmax for large d. Apply softmax to get attention weights — how much token i "attends to" token j. Output for token i = weighted sum of all V vectors. This is computed for all token pairs simultaneously (O(n²) in sequence length).</div>
+              <div class="step-code">score(i,j) = QᵢKⱼᵀ/√d_k · weight(i,j) = softmax(score) · out_i = Σⱼ weight(i,j)·Vⱼ</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q3</div>
+            <div class="step-body">
+              <div class="step-title">What is the difference between static and contextual embeddings?</div>
+              <div class="step-desc"><strong>Static (Word2Vec, GloVe):</strong> one fixed vector per word, regardless of context. "bank" always the same 300-dim vector. Can't distinguish river bank from financial bank. <strong>Contextual (BERT, GPT):</strong> each token gets a different vector depending on its surrounding context. Computed dynamically by the full model. "bank" in "river bank" → very different vector than "bank" in "savings bank." Contextual embeddings are why Transformers dominate NLP.</div>
+              <div class="step-code">Word2Vec("bank") → fixed vector · BERT("river bank") ≠ BERT("savings bank")</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q4</div>
+            <div class="step-body">
+              <div class="step-title">How do you handle class imbalance in NLP classification?</div>
+              <div class="step-desc">Same approaches as general ML, plus NLP-specific: (1) Weighted loss — class_weight='balanced' or manual weights in CrossEntropyLoss. (2) Data augmentation — back-translation (translate to another language and back), synonym replacement with WordNet, EDA (Easy Data Augmentation). (3) Oversampling: SMOTE on embeddings (not raw text). (4) Metric: use F1/AUC not accuracy. (5) Few-shot fine-tuning: with imbalanced data, BERT fine-tuning with weighted loss usually outperforms all augmentation techniques.</div>
+              <div class="step-code">loss = CrossEntropyLoss(weight=class_weights) · metric: macro-F1, not accuracy</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q5</div>
+            <div class="step-body">
+              <div class="step-title">Explain tokenisation and why it matters for LLMs.</div>
+              <div class="step-desc">Tokenisation splits text into subword units from a fixed vocabulary (~50k–100k tokens). Affects: cost (billed per token), context window usage (tokens ≠ words), and model behaviour on rare words/languages. BPE (GPT) learns merges from frequency. WordPiece (BERT) maximises language model likelihood. SentencePiece handles multilingual. Critical insight: "ChatGPT" = 1 token; "令和" (Japanese) may be 3 tokens — expensive for non-English text.</div>
+              <div class="step-code">~1 token ≈ 0.75 English words · non-Latin scripts use more tokens per word</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q6</div>
+            <div class="step-body">
+              <div class="step-title">What metrics do you use for NLP tasks?</div>
+              <div class="step-desc"><strong>Classification:</strong> Accuracy (balanced), F1 (imbalanced), AUC-ROC. <strong>NER:</strong> entity-level F1 (exact match of span + label). <strong>Translation:</strong> BLEU score (n-gram precision with brevity penalty). <strong>Summarisation:</strong> ROUGE-L (longest common subsequence recall). <strong>QA:</strong> Exact Match + F1 (token-level). <strong>Generation:</strong> BLEU, BERTScore (embedding similarity), human evaluation, GPT-4-as-judge. Never use accuracy alone for imbalanced NLP tasks.</div>
+              <div class="step-code">Classify→F1 · NER→entity-F1 · Translate→BLEU · Summarise→ROUGE · Gen→BERTScore</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q7</div>
+            <div class="step-body">
+              <div class="step-title">RAG vs fine-tuning for an enterprise Q&A chatbot — which do you use?</div>
+              <div class="step-desc">For a Q&A chatbot over company documents: <strong>Use RAG</strong>. Documents change frequently (RAG updates without retraining). The system needs to cite sources (RAG retrieves and shows the actual chunks). Company data is sensitive (RAG keeps it in your vector DB, never in model weights). Fine-tune only if: you need a specific response style, the base model doesn't understand your domain vocabulary, or you need to reduce context length (smaller retrieved context after fine-tuning).</div>
+              <div class="step-code">Enterprise Q&A → RAG (updateable, citable, private) → add fine-tuning only for style</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 9: CHEAT SHEET ══ -->
+      <div class="info-pane" id="nlp-cheatsheet">
+        <div class="callout callout-green" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">⚡</span>
+          <div>Everything you need for NLP interviews and projects — model selection, task→metric mapping, tokenisation facts, and key formulas.</div>
+        </div>
+
+        <div class="sub-heading">Task → Model → Metric</div>
+        <div class="cheat-table">
+          <div class="cheat-row cheat-4 cheat-head"><div>Task</div><div>Best Model</div><div>Open Alt.</div><div>Metric</div></div>
+          <div class="cheat-row cheat-4"><div>Sentiment / Classification</div><div style="color:var(--green)">BERT fine-tuned</div><div style="color:var(--cyan)">RoBERTa</div><div>F1 (macro)</div></div>
+          <div class="cheat-row cheat-4"><div>Named Entity Recognition</div><div style="color:var(--green)">BERT + CRF</div><div style="color:var(--cyan)">spaCy</div><div>Entity F1</div></div>
+          <div class="cheat-row cheat-4"><div>Translation</div><div style="color:var(--green)">T5 / NLLB-200</div><div style="color:var(--cyan)">opus-mt</div><div>BLEU</div></div>
+          <div class="cheat-row cheat-4"><div>Summarisation</div><div style="color:var(--green)">BART / Claude</div><div style="color:var(--cyan)">T5</div><div>ROUGE-L</div></div>
+          <div class="cheat-row cheat-4"><div>Question Answering</div><div style="color:var(--green)">BERT on SQuAD</div><div style="color:var(--cyan)">GPT-4 (zero-shot)</div><div>Exact Match + F1</div></div>
+          <div class="cheat-row cheat-4"><div>Semantic Search / RAG</div><div style="color:var(--green)">text-embedding-3</div><div style="color:var(--cyan)">SBERT / BGE</div><div>NDCG, MRR</div></div>
+          <div class="cheat-row cheat-4"><div>Text Generation</div><div style="color:var(--green)">GPT-4o / Claude</div><div style="color:var(--cyan)">Llama 3 70B</div><div>BERTScore, Human</div></div>
+        </div>
+
+        <div class="sub-heading">Embedding Quick Reference</div>
+        <div class="cheat-table">
+          <div class="cheat-row cheat-3 cheat-head"><div>Model</div><div>Dims / Type</div><div>Best For</div></div>
+          <div class="cheat-row cheat-3"><div style="color:var(--green)">Word2Vec / GloVe</div><div>300 · static</div><div>Legacy, fast similarity</div></div>
+          <div class="cheat-row cheat-3"><div style="color:var(--green)">BERT [CLS]</div><div>768 · contextual</div><div>Classification, NER</div></div>
+          <div class="cheat-row cheat-3"><div style="color:var(--green)">SBERT (all-MiniLM)</div><div>384 · sentence</div><div>Semantic search, fast</div></div>
+          <div class="cheat-row cheat-3"><div style="color:var(--green)">text-embedding-3-small</div><div>1536 · sentence</div><div>RAG, production</div></div>
+          <div class="cheat-row cheat-3"><div style="color:var(--green)">BGE-large-en</div><div>1024 · sentence</div><div>Open-source RAG</div></div>
+        </div>
+
+        <div class="sub-heading">Key Formulas</div>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="formula-name">Self-Attention</div>
+            <div class="formula-eq">softmax(QKᵀ / √d_k) · V</div>
+            <div class="formula-note">Q,K,V = learned projections · √d_k prevents saturation</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">TF-IDF</div>
+            <div class="formula-eq">TF(t,d) × log(N / df(t))</div>
+            <div class="formula-note">TF = term freq in doc · df = docs containing term</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Cosine Similarity</div>
+            <div class="formula-eq">cos(A,B) = A·B / (|A|·|B|)</div>
+            <div class="formula-note">1.0 = identical · 0 = orthogonal · used in RAG retrieval</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">BLEU Score</div>
+            <div class="formula-eq">BP × exp(Σ wₙ log pₙ)</div>
+            <div class="formula-note">n-gram precision with brevity penalty · 0–100 scale</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">ROUGE-L</div>
+            <div class="formula-eq">LCS / reference_length</div>
+            <div class="formula-note">Longest common subsequence recall · for summarisation</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">CLM Loss (GPT)</div>
+            <div class="formula-eq">L = −(1/T) Σ log P(xₜ|x&lt;ₜ)</div>
+            <div class="formula-note">Next-token prediction · lower = better language model</div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Tokenisation Quick Facts</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">~0.75</div><div class="cc-name">Words per token</div><div class="cc-desc">1 token ≈ 0.75 English words. "Hello world" = 2 tokens. Non-Latin scripts use more tokens per word.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">BPE</div><div class="cc-name">GPT Tokeniser</div><div class="cc-desc">Byte Pair Encoding. Learns most frequent character merges from training corpus. Used by GPT-2, GPT-3, GPT-4, Llama.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">WP</div><div class="cc-name">BERT Tokeniser</div><div class="cc-desc">WordPiece. Similar to BPE but selects merges by maximising LM likelihood. "##" prefix for continuation tokens.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">100k</div><div class="cc-name">Typical vocab size</div><div class="cc-desc">GPT-4: 100,277 tokens. BERT: 30,522. Larger vocab = fewer tokens per sentence = cheaper inference.</div></div>
+        </div>
+
+        <div class="callout callout-amber" style="margin-top:20px;">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>3 rules for NLP in production:</strong> (1) Never tune hyperparameters on the test set — use a validation set. (2) Always check for data leakage (future information in features). (3) Benchmark your fine-tuned model against a strong zero-shot baseline (GPT-4) before spending GPU time — it's often competitive or better.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB: SPEECH RECOGNITION ══ -->
+      <div class="info-pane" id="nlp-speech">
+        <div class="step"><div class="step-num">01</div><div class="step-body">
+          <div class="step-title">What is Speech Recognition?</div>
+          <div class="step-desc">Speech Recognition (also called Automatic Speech Recognition — ASR) is the field of AI that converts <strong>spoken language into machine-readable text</strong>. It sits at the intersection of NLP, signal processing, and deep learning. Modern ASR systems like OpenAI Whisper use Transformer encoders trained on thousands of hours of multilingual audio.</div>
+          <div class="step-code">Audio waveform → Feature extraction (MFCCs) → Acoustic model → Language model → Text</div>
+        </div></div>
+
+        <div class="step"><div class="step-num">02</div><div class="step-body">
+          <div class="step-title">Core ASR Tasks</div>
+          <div class="step-desc">
+            <strong>Speech-to-Text (STT):</strong> Converting audio signal to a text transcript — the core task.<br/>
+            <strong>Voice Activity Detection (VAD):</strong> Identifying segments where someone is actively speaking vs silence/noise.<br/>
+            <strong>Speaker Identification / Diarization:</strong> Recognizing <em>who</em> is speaking and segmenting by speaker.<br/>
+            <strong>Language / Accent Adaptation:</strong> Adapting the model to specific dialects, accents, or domain vocabulary.<br/>
+            <strong>Command Recognition:</strong> Detecting specific trigger words or structured commands ("Hey Siri", "Play music").
+          </div>
+        </div></div>
+
+        <div class="step"><div class="step-num">03</div><div class="step-body">
+          <div class="step-title">Audio Preprocessing Pipeline</div>
+          <div class="step-desc">Raw audio must be preprocessed before feeding to a model:</div>
+          <div class="step-code">1. Capture audio → 2. Noise reduction → 3. Sampling &amp; framing → 4. Feature extraction (MFCCs / Log-Mel Spectrograms) → 5. Model input</div>
+          <div class="step-desc" style="margin-top:10px;">
+            <strong>MFCCs (Mel-Frequency Cepstral Coefficients)</strong> — the most common audio feature. Maps raw audio to a compact representation that mimics how human hearing perceives frequency.<br/>
+            <strong>Log-Mel Spectrograms</strong> — used by Whisper and most modern Transformer ASR models. Visual 2D representation of audio frequency over time.
+          </div>
+        </div></div>
+
+        <div class="step"><div class="step-num">04</div><div class="step-body">
+          <div class="step-title">Popular Tools &amp; Libraries</div>
+          <div class="step-desc">
+            <strong>OpenAI Whisper</strong> — state-of-the-art open-source model, 99-language support, runs locally.<br/>
+            <strong>Google Speech-to-Text API</strong> — production-grade, cloud-based, streaming support.<br/>
+            <strong>Mozilla DeepSpeech</strong> — open-source, runs on-device, privacy-friendly.<br/>
+            <strong>SpeechRecognition (Python lib)</strong> — high-level wrapper around Google, Sphinx, and other backends.<br/>
+            <strong>Kaldi</strong> — research-grade ASR toolkit, highly configurable.<br/>
+            <strong>CMU Sphinx</strong> — offline-first, used in embedded systems.
+          </div>
+        </div></div>
+
+        <div class="step"><div class="step-num">05</div><div class="step-body">
+          <div class="step-title">Python Example — SpeechRecognition Library</div>
+          <div class="step-code">
+import speech_recognition as sr
+
+r = sr.Recognizer()
+with sr.Microphone() as source:
+    r.adjust_for_ambient_noise(source)   # calibrate noise level
+    print("Speak now...")
+    audio = r.listen(source)
+
+try:
+    text = r.recognize_google(audio)
+    print("You said:", text)
+except sr.UnknownValueError:
+    print("Could not understand audio")
+except sr.RequestError as e:
+    print("API error:", e)
+          </div>
+        </div></div>
+
+        <div class="step"><div class="step-num">06</div><div class="step-body">
+          <div class="step-title">OpenAI Whisper — Modern ASR</div>
+          <div class="step-code">
+import whisper
+
+model = whisper.load_model("base")    # tiny / base / small / medium / large
+result = model.transcribe("audio.mp3")
+print(result["text"])
+
+# Multilingual + timestamps
+result = model.transcribe("audio.mp3", language="hi", word_timestamps=True)
+          </div>
+          <div class="step-desc" style="margin-top:8px;">Whisper is trained on 680,000 hours of multilingual web audio. It handles accents, background noise, and code-switching robustly — the current recommended baseline for any ASR project.</div>
+        </div></div>
+
+        <div class="step"><div class="step-num">07</div><div class="step-body">
+          <div class="step-title">Real-World Applications</div>
+          <div class="step-desc">
+            <strong>Voice Assistants:</strong> Alexa, Siri, Google Assistant — always-on, low-latency ASR pipelines.<br/>
+            <strong>Live Transcription:</strong> Real-time meeting transcription (Otter.ai, Google Meet captions).<br/>
+            <strong>Call Center Automation:</strong> Transcribe support calls, extract intent, route tickets.<br/>
+            <strong>Accessibility:</strong> Voice-to-text for users with motor disabilities.<br/>
+            <strong>Voice Biometrics:</strong> Speaker authentication ("your voice is your password").<br/>
+            <strong>Language Learning Apps:</strong> Pronunciation scoring and feedback.
+          </div>
+        </div></div>
+
+        <div class="step"><div class="step-num">08</div><div class="step-body">
+          <div class="step-title">Key Challenges in ASR</div>
+          <div class="step-desc">
+            <strong>Background noise:</strong> Overlapping sounds degrade transcription quality significantly.<br/>
+            <strong>Accents &amp; dialects:</strong> Models trained on one accent underperform on others — requires domain adaptation.<br/>
+            <strong>Overlapping speech:</strong> Multiple simultaneous speakers is still an open research problem.<br/>
+            <strong>Real-time latency:</strong> Streaming ASR needs sub-300ms latency for natural conversation.<br/>
+            <strong>Domain vocabulary:</strong> Medical, legal, or technical jargon requires specialized fine-tuning.
+          </div>
+        </div></div>
+
+        <div class="callout callout-cyan" style="margin-top:16px;">
+          <strong>Interview tip:</strong> If asked about NLP + speech, mention that modern end-to-end ASR (Whisper, wav2vec 2.0) uses Transformer encoders on spectrograms — bridging speech and NLP into a unified architecture, removing the need for separate acoustic + language model pipelines.
+        </div>
+      </div><!-- /nlp-speech -->
+
+      <!-- ══ TAB 10: QUIZ ══ -->
+      <div class="info-pane" id="nlp-quiz">
+        <div id="nlpQuizContainer"></div>
+      </div>
+
+    </div><!-- /info-section -->
+
+    <div class="page-nav">
+      <a class="nav-link" href="genai.html">← Generative AI</a>
+      <a class="nav-link next" href="cv.html">Computer Vision →</a>
+    </div>
+
+  </main>
+</div><!-- /layout -->
+
+<a class="back-top" id="backTop" href="#">↑</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() { const c=sidebar.classList.contains('closed'); sidebar.classList.toggle('closed',!c); sidebarOverlay.classList.toggle('visible',c); document.body.classList.toggle('tf-nav-open',c); }
+function toggleNav() { topNav.classList.toggle('mobile-open'); navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open')); }
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => { sidebar.classList.add('closed'); sidebarOverlay.classList.remove('visible'); document.body.classList.remove('tf-nav-open'); });
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) return;
+    document.querySelectorAll('.sb-link').forEach(link => {
+      if (link.textContent.toLowerCase().includes(q)) {
+        link.scrollIntoView({behavior:'smooth',block:'center'});
+        link.style.background='rgba(67,255,181,0.16)';
+        setTimeout(() => link.style.background='', 1600);
+      }
+    });
+  });
+}
+
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+/* ── QUIZ ── */
+const NLP_QUIZ = [
+  { q: "What is the key difference between BERT and GPT?", opts:["BERT is larger", "BERT is encoder-only (bidirectional); GPT is decoder-only (causal)", "GPT uses WordPiece tokenisation", "BERT generates text; GPT classifies it"], correct:1, exp:"BERT uses bidirectional attention — all tokens see all others. Trained with masked language modelling. Best for understanding. GPT is causal — each token only sees previous tokens. Trained with next-token prediction. Best for generation." },
+  { q: "Why do we divide by √d_k in the attention formula?", opts:["To normalise outputs to sum to 1","To prevent dot products from becoming too large and saturating softmax","To reduce memory usage","To match the embedding dimension"], correct:1, exp:"With large d_k, dot products QᵢKⱼ grow large, pushing softmax into regions with near-zero gradients. Dividing by √d_k keeps scores in a healthy range where softmax has useful gradients during training." },
+  { q: "Static embeddings (Word2Vec) differ from contextual embeddings (BERT) in that:", opts:["Static embeddings are larger","Static embeddings use the same vector for a word regardless of context","Contextual embeddings can only be used for classification","Static embeddings require more compute"], correct:1, exp:"Word2Vec assigns one fixed vector per word — 'bank' always the same. BERT computes embeddings dynamically based on the full context — 'river bank' and 'savings bank' get completely different vectors. Contextual embeddings are why Transformers dominate NLP." },
+  { q: "Which metric is most appropriate for evaluating a machine translation model?", opts:["Accuracy","F1 Score","BLEU Score","ROC-AUC"], correct:2, exp:"BLEU (Bilingual Evaluation Understudy) measures n-gram precision between generated and reference translations, with a brevity penalty for short outputs. It is the standard metric for machine translation. ROUGE is used for summarisation; F1 for classification/NER." },
+  { q: "When fine-tuning BERT for text classification, what is typically added on top?", opts:["A full encoder stack","A causal language modelling head","A linear classification layer on the [CLS] token embedding","A GAN discriminator"], correct:2, exp:"BERT's [CLS] token embedding (768-dim) aggregates the whole sentence's representation. Adding a single linear layer (768 → num_classes) + fine-tuning with CrossEntropyLoss for 3 epochs gives excellent results for classification tasks with as few as 500 examples." },
+  { q: "What is the advantage of LoRA over full fine-tuning?", opts:["LoRA achieves higher accuracy on all tasks","LoRA trains only ~0.1–1% of parameters by adding low-rank matrices, dramatically reducing compute and memory","LoRA doesn't require any labelled data","LoRA is faster at inference time"], correct:1, exp:"LoRA freezes the original model weights and adds small trainable rank-decomposition matrices (A and B) to attention layers. Only A and B are trained — often &lt;1% of total parameters. Near-identical quality to full fine-tuning at a fraction of the cost." }
+];
+
+let nQ=0, nScore=0, nAnswered=false;
+function renderNLPQuiz() {
+  const c=document.getElementById('nlpQuizContainer'); if(!c) return;
+  if(nQ>=NLP_QUIZ.length){
+    c.innerHTML=`<div class="quiz-wrap"><div class="quiz-q" style="font-size:20px;text-align:center;">Quiz Complete! 🎉<br><span style="font-family:var(--font-mono);color:var(--green);font-size:32px;">${nScore}/${NLP_QUIZ.length}</span></div><div class="quiz-feedback" style="text-align:center;margin-top:8px;">${nScore===NLP_QUIZ.length?'🏆 Perfect score! NLP mastered.':nScore>=4?'✅ Solid. Review the ones you missed.':'📚 Revisit the tabs and try again.'}</div><div style="text-align:center;margin-top:20px;"><button class="quiz-opt" style="max-width:200px;text-align:center;" onclick="nQ=0;nScore=0;renderNLPQuiz()">↺ Retry</button></div></div>`;
+    return;
+  }
+  const q=NLP_QUIZ[nQ]; nAnswered=false;
+  c.innerHTML=`<div class="quiz-wrap"><div class="quiz-score">Question ${nQ+1} of ${NLP_QUIZ.length} · Score: ${nScore}</div><div class="quiz-q">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="nAnswer(this,${i===q.correct},${i})">${o}</button>`).join('')}</div><div class="quiz-feedback" id="nFeedback"></div></div>`;
+}
+function nAnswer(btn,isCorrect,idx){
+  if(nAnswered)return; nAnswered=true;
+  const q=NLP_QUIZ[nQ];
+  btn.parentElement.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isCorrect)b.classList.add('wrong');});
+  if(isCorrect)nScore++;
+  const fb=document.getElementById('nFeedback');
+  if(fb)fb.innerHTML=`${isCorrect?'✅ Correct!':'❌ Incorrect.'} — ${q.exp}`;
+  setTimeout(()=>{nQ++;renderNLPQuiz();},3000);
+}
+window.addEventListener('load', renderNLPQuiz);
+
+/* Scroll animations */
+const _aio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_aio.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_aio.observe(el);});
+</script>
+</body>
+</html>

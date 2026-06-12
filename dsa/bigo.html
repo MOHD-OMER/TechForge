@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Big-O Notation — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .pg-head { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); animation: fadeUp .35s ease both; }
+    .pg-crumb { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+    .pg-crumb-pill { display: inline-block; padding: 3px 10px; background: rgba(77,158,247,.1); border: 1px solid rgba(77,158,247,.2); border-radius: 999px; font-size: 9px; }
+    .pg-title { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+    .pg-sub { font-size: 15px; color: var(--text2); max-width: 640px; line-height: 1.7; margin-bottom: 24px; }
+    .pg-sub strong { color: var(--cyan); font-family: var(--mono); }
+    .pg-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 100px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; }
+    .b-type { background: rgba(77,158,247,.12); color: var(--blue); border: 1px solid rgba(77,158,247,.25); }
+    .b-time { background: rgba(34,211,238,.1); color: var(--cyan); border: 1px solid rgba(34,211,238,.2); }
+    .b-space { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+    .chart-hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 32px; animation: fadeUp .35s ease both; }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .chart-header-left { display: flex; align-items: center; gap: 10px; }
+    .chart-dots { display: flex; gap: 6px; }
+    .chart-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .cd-r { background: #ff5f57; } .cd-y { background: #ffbd2e; } .cd-g { background: #28c940; }
+    .chart-title { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 1px; }
+    .chart-legend { display: flex; gap: 12px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--text2); cursor: pointer; transition: opacity .2s; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .chart-canvas-wrap { position: relative; }
+    #bigo-cv { width: 100%; height: 260px; display: block; border-radius: 8px; }
+    .chart-tooltip { position: absolute; top: 10px; left: 60px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 12px; font-family: var(--mono); font-size: 10px; pointer-events: none; z-index: 10; min-width: 120px; }
+    .tt-header { font-weight: 700; color: var(--text); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+    .tt-row { display: flex; justify-content: space-between; margin-top: 4px; }
+    .tt-label { opacity: .8; }
+    .bar-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 32px; animation: fadeUp .35s ease both; }
+    .bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .bar-header-left { display: flex; align-items: center; gap: 8px; }
+    .section-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 1px; }
+    .n-slider-wrap { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--text3); }
+    #n-slider { width: 120px; accent-color: var(--cyan); }
+    .bar-body { display: flex; flex-direction: column; gap: 8px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; }
+    .bar-name { font-family: var(--mono); font-size: 10.5px; font-weight: 600; width: 70px; flex-shrink: 0; }
+    .bar-track { flex: 1; height: 22px; background: var(--bg2); border-radius: 4px; overflow: hidden; position: relative; }
+    .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 6px; transition: width .2s; }
+    .bar-val { font-family: var(--mono); font-size: 9.5px; font-weight: 700; }
+    .bar-val-out { font-family: var(--mono); font-size: 9.5px; width: 60px; text-align: right; color: var(--text3); }
+    .info-section { animation: fadeUp .35s ease both; }
+    .info-tabs { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; margin-bottom: 16px; }
+    .info-tab { flex: 1; padding: 8px 12px; text-align: center; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text2); cursor: pointer; border-radius: 6px; transition: all .15s; }
+    .info-tab:hover { background: var(--surface2); }
+    .info-tab.active { background: var(--accent-dim); color: var(--accent); }
+    .info-pane { display: none; }
+    .info-pane.active { display: block; animation: fadeIn .2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; position: relative; overflow: hidden; }
+    .cc-icon { font-size: 16px; display: block; margin-bottom: 6px; }
+    .cc-val { font-family: var(--mono); font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .cc-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .cc-desc { font-size: 11.5px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+    .cc-chip { display: inline-block; font-family: var(--mono); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 999px; letter-spacing: .5px; }
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: flex; gap: 14px; }
+    .step-num { font-family: var(--mono); font-size: 11px; font-weight: 800; color: var(--blue); background: rgba(77,158,247,.1); border: 1px solid rgba(77,158,247,.2); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; flex-shrink: 0; }
+    .step-body { flex: 1; }
+    .step-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
+    .step-code { font-family: var(--mono); font-size: 11px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--accent); }
+    .callout { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--radius); font-size: 13.5px; border-left: 3px solid; }
+    .callout-cyan { background: rgba(34,211,238,.08); border-color: var(--cyan); color: #9ec8f9; }
+    .tbl-scroll { overflow-x: auto; }
+    .cmp-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .cmp-tbl th { font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--text3); text-align: left; padding: 10px 12px; background: var(--surface); border-bottom: 1px solid var(--border); font-family: var(--mono); letter-spacing: .5px; }
+    .cmp-tbl td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+    .cmp-tbl tr:last-child td { border-bottom: none; }
+    .cmp-tbl .g { color: var(--green); font-weight: 600; }
+    .cmp-tbl .y { color: var(--amber); font-weight: 600; }
+    .cmp-tbl .r { color: var(--red); font-weight: 600; }
+    .quiz-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    .quiz-q { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+    .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt { padding: 11px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text2); font-size: 12.5px; cursor: pointer; text-align: left; transition: all .15s; }
+    .quiz-opt:hover { border-color: var(--blue); color: var(--text); }
+    .quiz-opt.correct { background: rgba(52,211,153,.1); border-color: var(--green); color: var(--green); }
+    .quiz-opt.wrong { background: rgba(248,113,113,.1); border-color: var(--red); color: var(--red); }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 20px; }
+    .nav-link { display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text2); text-decoration: none; font-size: 13.5px; font-weight: 500; transition: all .17s; }
+    .nav-link:hover { border-color: var(--accent); color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .anim-in { opacity: 0; }
+    .anim-in.visible { opacity: 1; }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link current" href="./">DSA</a>
+      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar" aria-expanded="false">☰</button>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">⋮</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+      </div>
+      <nav id="sidebarNav">
+        <div class="sidebar-label">Foundations</div>
+        <a class="sb-link active" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+        <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+        <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+        <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+        <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+        <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+        <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+        <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+        <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+        <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+        <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+        <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+        <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+        <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+        <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+        <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+        <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+        <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+        <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+        <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+        <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+        <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+        <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+        <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+        <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+        <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+        <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+        <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+        <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+        <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+        <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+        <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+        <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+        <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+        <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+      </nav>
+    </aside>
+    <main class="main" id="mainContent">
+      <div class="page">
+        
+        <div class="dsa-hero anim-in">
+          <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Complexity Analysis</div>
+          <h1 class="dh2-title">Big-O <span>Notation</span></h1>
+          <p class="dh2-sub">How runtime and memory scale as input size <strong style="color:var(--cyan);font-family:var(--mono)">n</strong> grows toward infinity. The universal language every engineer needs to speak fluently.</p>
+        </div>
+        <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);">
+          <div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Constant</span></div>
+          <div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(n)</span><span class="dss-label">Linear</span></div>
+          <div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(log n)</span><span class="dss-label">Logarithmic</span></div>
+          <div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">O(n²)</span><span class="dss-label">Quadratic</span></div>
+          <div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">6</span><span class="dss-label">Classes</span></div>
+        </div>
+
+        <div class="chart-hero anim-in">
+          <div class="chart-header">
+            <div class="chart-header-left">
+              <div class="chart-dots">
+                <div class="chart-dot cd-r"></div>
+                <div class="chart-dot cd-y"></div>
+                <div class="chart-dot cd-g"></div>
+              </div>
+              <span class="chart-title">// GROWTH RATE COMPARISON — LOG Y-SCALE</span>
+            </div>
+            <div class="chart-legend" id="chart-legend"></div>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="bigo-cv" height="260"></canvas>
+            <div class="chart-tooltip" id="chart-tt"></div>
+          </div>
+        </div>
+
+        <div class="bar-section anim-in">
+          <div class="bar-header">
+            <div class="bar-header-left">
+              <span class="section-label">// OPERATIONS AT n =</span>
+              <span id="n-val" style="font-family:var(--mono);font-size:13px;color:var(--cyan);font-weight:800">10</span>
+            </div>
+            <div class="n-slider-wrap">
+              <span>1</span>
+              <input id="n-slider" max="20" min="1" oninput="updateBars(this.value)" type="range" value="10"/>
+              <span>20</span>
+            </div>
+          </div>
+          <div class="bar-body" id="bar-body"></div>
+        </div>
+
+        <div class="info-section anim-in">
+          <div class="info-tabs">
+            <div class="info-tab active" onclick="switchTab(this,'tp-0')">Complexities</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-1')">Rules</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-2')">Cheat Sheet</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-3')">Quiz</div>
+          </div>
+
+          <div class="info-pane active" id="tp-0">
+            <div class="concept-grid">
+              <div class="concept-card" style="--c:var(--green)">
+                <span class="cc-icon">🟢</span>
+                <div class="cc-val" style="color:var(--green)">O(1)</div>
+                <div class="cc-name">Constant</div>
+                <div class="cc-desc">Array index, hash lookup, arithmetic. Same speed regardless of input size.</div>
+                <span class="cc-chip" style="background:rgba(0,245,168,.06);color:var(--green);border:1px solid rgba(0,245,168,.2)">IDEAL</span>
+              </div>
+              <div class="concept-card">
+                <span class="cc-icon">🔵</span>
+                <div class="cc-val" style="color:var(--cyan)">O(log n)</div>
+                <div class="cc-name">Logarithmic</div>
+                <div class="cc-desc">Binary search, balanced BST ops. Double n = only +1 step.</div>
+                <span class="cc-chip" style="background:rgba(0,229,255,.08);color:var(--cyan);border:1px solid rgba(0,229,255,.2)">EXCELLENT</span>
+              </div>
+              <div class="concept-card">
+                <span class="cc-icon">🔷</span>
+                <div class="cc-val" style="color:var(--blue)">O(n)</div>
+                <div class="cc-name">Linear</div>
+                <div class="cc-desc">Single loop, array scan. One operation per element.</div>
+                <span class="cc-chip" style="background:rgba(91,156,246,.1);color:var(--blue);border:1px solid rgba(91,156,246,.25)">GOOD</span>
+              </div>
+              <div class="concept-card">
+                <span class="cc-icon">🟣</span>
+                <div class="cc-val" style="color:var(--purple)">O(n log n)</div>
+                <div class="cc-name">Linearithmic</div>
+                <div class="cc-desc">Merge, Heap, Quick sort. Split-and-merge strategies.</div>
+                <span class="cc-chip" style="background:rgba(180,157,252,.08);color:var(--purple);border:1px solid rgba(180,157,252,.25)">FAIR</span>
+              </div>
+              <div class="concept-card">
+                <span class="cc-icon">🟡</span>
+                <div class="cc-val" style="color:var(--amber)">O(n²)</div>
+                <div class="cc-name">Quadratic</div>
+                <div class="cc-desc">Nested loops. Bubble, Selection sort. Hurts beyond ~10k.</div>
+                <span class="cc-chip" style="background:rgba(255,197,61,.08);color:var(--amber);border:1px solid rgba(255,197,61,.2)">SLOW</span>
+              </div>
+              <div class="concept-card">
+                <span class="cc-icon">🔴</span>
+                <div class="cc-val" style="color:var(--red)">O(2ⁿ)</div>
+                <div class="cc-name">Exponential</div>
+                <div class="cc-desc">Brute force subset generation. Avoid entirely for n > 30.</div>
+                <span class="cc-chip" style="background:rgba(255,80,112,.06);color:var(--red);border:1px solid rgba(255,80,112,.2)">AVOID</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-pane" id="tp-1">
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-body">
+                  <div class="step-title">Drop Constants</div>
+                  <div class="step-desc">Constants don't matter at extreme scale. Two passes through n is still linear growth — the 2× factor becomes noise.</div>
+                  <div class="step-code">O(2n) → O(n)  |  O(100n) → O(n)</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-body">
+                  <div class="step-title">Drop Non-Dominant Terms</div>
+                  <div class="step-desc">When n is huge, n² dwarfs n. Keep only the term that grows the fastest.</div>
+                  <div class="step-code">O(n² + n) → O(n²)  |  O(n³ + n²) → O(n³)</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-body">
+                  <div class="step-title">Different Inputs = Different Variables</div>
+                  <div class="step-desc">If a function takes two arrays of size a and b, don't blindly write O(n²). The loops aren't nested over the same array.</div>
+                  <div class="step-code">for a: for b: → O(a·b), not O(n²)</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-body">
+                  <div class="step-title">Sequential vs Nested: Add vs Multiply</div>
+                  <div class="step-desc">Two sequential loops add their complexities. Two nested loops multiply them.</div>
+                  <div class="step-code">Sequential → O(a + b)    Nested → O(a × b)</div>
+                </div>
+              </div>
+            </div>
+            <div class="callout callout-cyan">
+              <strong>Interview tip:</strong> Always state both <strong>time AND space</strong> complexity. Mention best / worst / average when they diverge — e.g. QuickSort averages O(n log n) but degrades to O(n²) with bad pivots.
+            </div>
+          </div>
+
+          <div class="info-pane" id="tp-2">
+            <div class="tbl-scroll">
+              <table class="cmp-tbl">
+                <tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th></tr>
+                <tr><td>Bubble Sort</td><td><span class="g">O(n)</span></td><td><span class="r">O(n²)</span></td><td><span class="r">O(n²)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>Insertion Sort</td><td><span class="g">O(n)</span></td><td><span class="r">O(n²)</span></td><td><span class="r">O(n²)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>Selection Sort</td><td><span class="r">O(n²)</span></td><td><span class="r">O(n²)</span></td><td><span class="r">O(n²)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>Merge Sort</td><td><span class="g">O(n log n)</span></td><td><span class="g">O(n log n)</span></td><td><span class="g">O(n log n)</span></td><td><span class="y">O(n)</span></td></tr>
+                <tr><td>Quick Sort</td><td><span class="g">O(n log n)</span></td><td><span class="g">O(n log n)</span></td><td><span class="r">O(n²)</span></td><td><span class="g">O(log n)</span></td></tr>
+                <tr><td>Heap Sort</td><td><span class="g">O(n log n)</span></td><td><span class="g">O(n log n)</span></td><td><span class="g">O(n log n)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>Binary Search</td><td><span class="g">O(1)</span></td><td><span class="g">O(log n)</span></td><td><span class="g">O(log n)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>Hash Table</td><td><span class="g">O(1)</span></td><td><span class="g">O(1)</span></td><td><span class="r">O(n)</span></td><td><span class="y">O(n)</span></td></tr>
+                <tr><td>BST Search</td><td><span class="g">O(log n)</span></td><td><span class="g">O(log n)</span></td><td><span class="r">O(n)</span></td><td><span class="g">O(1)</span></td></tr>
+                <tr><td>BFS / DFS</td><td><span class="g">O(V+E)</span></td><td><span class="g">O(V+E)</span></td><td><span class="g">O(V+E)</span></td><td><span class="y">O(V)</span></td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="info-pane" id="tp-3">
+            <div id="quiz-container"></div>
+          </div>
+        </div>
+
+        <div class="page-nav">
+
+          <span></span>
+
+          <a class="nav-link next" href="arrays.html">Arrays & Strings →</a>
+
+        </div>
+      </div>
+    </main>
+  </div>
+  <button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    let CURVES = [
+      {fn: n=>1, label:'O(1)', col:'#00f5a8', shortLabel:'O(1)'},
+      {fn: n=>Math.log2(n+1), label:'O(log n)', col:'#00e5ff', shortLabel:'O(log n)'},
+      {fn: n=>n, label:'O(n)', col:'#5b9cf6', shortLabel:'O(n)'},
+      {fn: n=>n*Math.log2(n+1), label:'O(n log n)', col:'#b49dfc', shortLabel:'O(n·log n)'},
+      {fn: n=>n*n, label:'O(n²)', col:'#ffc53d', shortLabel:'O(n²)'},
+      {fn: n=>Math.min(Math.pow(2,n),1e12), label:'O(2ⁿ)', col:'#ff5070', shortLabel:'O(2ⁿ)'}
+    ];
+    let N_MAX = 20;
+    let hoveredX = null;
+
+    function drawChart() {
+      let cv = document.getElementById('bigo-cv');
+      if (!cv) return;
+      cv.width = cv.offsetWidth || 860;
+      cv.height = 260;
+      let ctx = cv.getContext('2d');
+      let W = cv.width, H = cv.height;
+      let pl=54, pr=28, pt=20, pb=34;
+      let iW=W-pl-pr, iH=H-pt-pb;
+      ctx.clearRect(0,0,W,H);
+      let bgGrad = ctx.createLinearGradient(0,0,0,H);
+      bgGrad.addColorStop(0,'#0b1220');
+      bgGrad.addColorStop(1,'#080d18');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0,0,W,H);
+      for (let g=0; g<=4; g++) {
+        let gy = pt + (iH*g)/4;
+        ctx.strokeStyle = g===4 ? '#1e2f4a' : '#172035';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(pl,gy); ctx.lineTo(W-pr,gy); ctx.stroke();
+      }
+      for (let g=0; g<=4; g++) {
+        let gx = pl + (iW*g)/4;
+        ctx.strokeStyle = '#172035';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(gx,pt); ctx.lineTo(gx,pt+iH); ctx.stroke();
+      }
+      let maxLog = 0;
+      CURVES.forEach(c => {
+        for (let i=1; i<=N_MAX; i++) maxLog = Math.max(maxLog, Math.log2(c.fn(i)+1));
+      });
+      let hiddenMap = {};
+      document.querySelectorAll('.legend-item').forEach(li => {
+        hiddenMap[li.dataset.idx] = li.dataset.hidden === '1';
+      });
+      CURVES.forEach((c, idx) => {
+        if (hiddenMap[idx]) return;
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        ctx.strokeStyle = c.col;
+        ctx.lineWidth = 8;
+        ctx.shadowColor = c.col;
+        ctx.shadowBlur = 16;
+        ctx.lineJoin='round'; ctx.lineCap='round';
+        ctx.beginPath();
+        for (let i=1; i<=N_MAX; i++) {
+          let x = pl + ((i-1)/(N_MAX-1))*iW;
+          let y = pt + iH - (Math.log2(c.fn(i)+1)/maxLog)*iH;
+          i===1 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        ctx.restore();
+        ctx.save();
+        ctx.strokeStyle = c.col;
+        ctx.lineWidth = 2.5;
+        ctx.lineJoin='round'; ctx.lineCap='round';
+        ctx.shadowColor = c.col;
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        for (let i=1; i<=N_MAX; i++) {
+          let x = pl + ((i-1)/(N_MAX-1))*iW;
+          let y = pt + iH - (Math.log2(c.fn(i)+1)/maxLog)*iH;
+          i===1 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        ctx.restore();
+        let yN = pt + iH - (Math.log2(c.fn(N_MAX)+1)/maxLog)*iH;
+        if (yN >= pt-4 && yN <= pt+iH+4) {
+          ctx.font = 'bold 10px "JetBrains Mono"';
+          ctx.fillStyle = c.col;
+          ctx.textAlign = 'left';
+          let tw = ctx.measureText(c.label).width;
+          ctx.fillText(c.label, W-pr-tw, Math.max(pt+6, Math.min(yN+4, pt+iH)));
+        }
+      });
+      if (hoveredX !== null) {
+        let hx = pl + ((hoveredX-1)/(N_MAX-1))*iW;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4,4]);
+        ctx.beginPath(); ctx.moveTo(hx, pt); ctx.lineTo(hx, pt+iH); ctx.stroke();
+        CURVES.forEach((c, idx) => {
+          if (hiddenMap[idx]) return;
+          let y = pt + iH - (Math.log2(c.fn(hoveredX)+1)/maxLog)*iH;
+          ctx.beginPath();
+          ctx.arc(hx, y, 4.5, 0, Math.PI*2);
+          ctx.fillStyle = c.col;
+          ctx.shadowColor = c.col;
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.strokeStyle='rgba(255,255,255,.5)';
+          ctx.lineWidth=1;
+          ctx.setLineDash([]);
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+      ctx.strokeStyle = '#263d60'; ctx.lineWidth = 1.5; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(pl, pt); ctx.lineTo(pl, pt+iH+1); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(pl-1, pt+iH); ctx.lineTo(W-pr, pt+iH); ctx.stroke();
+      ctx.textAlign='center'; ctx.fillStyle='#3f587a';
+      ctx.font = '9.5px "JetBrains Mono"';
+      [1,5,10,15,20].forEach(v => {
+        if (v>N_MAX) return;
+        let xx = pl + ((v-1)/(N_MAX-1))*iW;
+        ctx.fillText(v, xx, H-10);
+        ctx.strokeStyle='#263d60'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(xx,pt+iH); ctx.lineTo(xx,pt+iH+4); ctx.stroke();
+      });
+      ctx.textAlign='right'; ctx.font='10px "JetBrains Mono"'; ctx.fillStyle='#3f587a';
+      ctx.fillText('n →', W-pr-2, H-11);
+      ctx.save(); ctx.translate(12, pt+iH/2); ctx.rotate(-Math.PI/2);
+      ctx.textAlign='center'; ctx.font='9px "JetBrains Mono"'; ctx.fillStyle='#3f587a';
+      ctx.fillText('ops (log scale) ↑', 0, 0);
+      ctx.restore();
+    }
+
+    function getHoverN(e) {
+      let cv = document.getElementById('bigo-cv');
+      let rect = cv.getBoundingClientRect();
+      let W = cv.offsetWidth, pl=54, pr=28, iW=W-pl-pr;
+      let mx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      let frac = (mx - pl) / iW;
+      return Math.max(1, Math.min(N_MAX, Math.round(frac*(N_MAX-1)+1)));
+    }
+
+    function showTooltip(n, e) {
+      hoveredX = n;
+      drawChart();
+      let rect = cv.getBoundingClientRect();
+      let W = cv.offsetWidth, pl=54, pr=28, iW=W-pl-pr;
+      let hx = pl + ((n-1)/(N_MAX-1))*iW;
+      let pct = hx/W;
+      let html = '<div class="tt-header">n = ' + n + '</div>';
+      let hiddenMap = {};
+      document.querySelectorAll('.legend-item').forEach(li => { hiddenMap[li.dataset.idx] = li.dataset.hidden==='1'; });
+      CURVES.forEach((c,i) => {
+        if (hiddenMap[i]) return;
+        let val = c.fn(n);
+        let disp = val > 1e9 ? '∞ (huge)' : val > 1e6 ? val.toExponential(1) : Math.round(val).toLocaleString();
+        html += '<div class="tt-row"><span class="tt-label" style="color:'+c.col+'">'+c.label+'</span><span class="tt-val" style="color:'+c.col+'">'+disp+'</span></div>';
+      });
+      let tooltip = document.getElementById('chart-tt');
+      tooltip.innerHTML = html;
+      tooltip.style.display = 'block';
+      tooltip.style.opacity = '1';
+      let ttW = 130;
+      let canvasRect = cv.parentElement.getBoundingClientRect();
+      let rawLeft = hx + (pct > 0.65 ? -ttW-14 : 14);
+      tooltip.style.left = rawLeft + 'px';
+      tooltip.style.top = '20px';
+    }
+
+    function hideTooltip() {
+      hoveredX = null;
+      drawChart();
+      let tooltip = document.getElementById('chart-tt');
+      tooltip.style.opacity = '0';
+      setTimeout(() => { if (tooltip.style.opacity==='0') tooltip.style.display='none'; }, 150);
+    }
+
+    let cv = document.getElementById('bigo-cv');
+    if (cv) {
+      cv.addEventListener('mousemove', e => showTooltip(getHoverN(e), e));
+      cv.addEventListener('mouseleave', hideTooltip);
+      cv.addEventListener('touchmove', e => { e.preventDefault(); showTooltip(getHoverN(e), e); }, {passive:false});
+      cv.addEventListener('touchend', hideTooltip);
+    }
+
+    let BAR_CURVES = [
+      {fn: n=>1, label:'O(1)', col:'#00f5a8'},
+      {fn: n=>Math.log2(n+1), label:'O(log n)', col:'#00e5ff'},
+      {fn: n=>n, label:'O(n)', col:'#5b9cf6'},
+      {fn: n=>n*Math.log2(n+1), label:'O(n log n)', col:'#b49dfc'},
+      {fn: n=>n*n, label:'O(n²)', col:'#ffc53d'},
+      {fn: n=>Math.min(Math.pow(2,n),1e15), label:'O(2ⁿ)', col:'#ff5070'},
+    ];
+
+    function updateBars(n) {
+      n = parseInt(n);
+      document.getElementById('n-val').textContent = n;
+      let body = document.getElementById('bar-body');
+      let vals = BAR_CURVES.map(c => c.fn(n));
+      let maxVal = Math.max(...vals.filter(v=>isFinite(v)&&v<1e14));
+      body.innerHTML = BAR_CURVES.map(c => {
+        let val = c.fn(n);
+        let isHuge = val >= 1e14;
+        let pct = isHuge ? 100 : Math.min(100, (Math.log2(val+1)/Math.log2(maxVal+1))*100);
+        let disp = isHuge ? '∞' : val > 1e9 ? val.toExponential(2) : val > 1e6 ? (val/1e6).toFixed(1)+'M' : val > 999 ? (val/1e3).toFixed(1)+'K' : Math.round(val).toLocaleString();
+        let textInside = pct > 20;
+        return '<div class="bar-row"><span class="bar-name" style="color:'+c.col+'">'+c.label+'</span><div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:linear-gradient(90deg,'+c.col+'33,'+c.col+'88);border-right:2px solid '+c.col+';box-shadow:0 0 10px '+c.col+'44">'+(textInside ? '<span class="bar-val" style="color:'+c.col+'">'+disp+'</span>' : '')+'</div></div>'+(!textInside ? '<span class="bar-val-out" style="color:'+c.col+'">'+disp+'</span>' : '<span class="bar-val-out"></span>')+'</div>';
+      }).join('');
+    }
+
+    let QUIZZES = [
+      { q: 'What is O(n + n²) simplified?', opts: ['O(n³)', 'O(n²)', 'O(n)', 'O(2n)'], ans: 1, exp: 'Drop non-dominant terms. n² grows faster than n, so n is dropped → O(n²).' },
+      { q: 'Two nested loops each iterating 0..n give what complexity?', opts: ['O(n)', 'O(log n)', 'O(n²)', 'O(2n)'], ans: 2, exp: 'Nested loops multiply: O(n × n) = O(n²).' },
+      { q: 'Binary search on a sorted array of 1 million elements needs at most how many comparisons?', opts: ['1,000,000', '500,000', '~20', '~1,000'], ans: 2, exp: 'O(log n): log₂(1,000,000) ≈ 20 steps. That\'s the power of logarithmic complexity!' }
+    ];
+
+    let quizIdx = 0;
+    function renderQuiz() {
+      let q = QUIZZES[quizIdx];
+      document.getElementById('quiz-container').innerHTML = '<div class="quiz-wrap"><div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-bottom:10px;letter-spacing:1px">QUESTION ' + (quizIdx+1) + ' / ' + QUIZZES.length + '</div><div class="quiz-q">' + q.q + '</div><div class="quiz-opts">' + q.opts.map((o,i) => '<button class="quiz-opt" onclick="quizAnswer(this,' + (i===q.ans) + ',\'' + q.exp.replace(/'/g, "\\'") + '\',' + i + ')">' + o + '</button>').join('') + '</div><div class="quiz-feedback"></div></div>';
+    }
+
+    function quizAnswer(el, correct, exp, ansIdx) {
+      let opts = el.closest('.quiz-opts').querySelectorAll('.quiz-opt');
+      opts.forEach(o => o.style.pointerEvents='none');
+      el.classList.add(correct?'correct':'wrong');
+      let fb = el.closest('.quiz-wrap').querySelector('.quiz-feedback');
+      if (fb) {
+        fb.style.display='block';
+        fb.innerHTML = correct ? '<span style="color:var(--green)">✓ Correct!</span> <span style="color:var(--text2)">'+exp+'</span>' : '<span style="color:var(--red)">✗ Not quite.</span> <span style="color:var(--text2)">'+exp+'</span>';
+        fb.style.background = correct?'rgba(0,245,168,.06)':'rgba(255,80,112,.05)';
+        fb.style.border = correct?'1px solid rgba(0,245,168,.2)':'1px solid rgba(255,80,112,.2)';
+        fb.style.borderRadius = 'var(--radius)';
+        fb.style.padding = '10px 14px';
+        fb.style.fontSize = '12px';
+        fb.style.marginTop = '12px';
+      }
+      if (quizIdx < QUIZZES.length-1) {
+        let btn = document.createElement('button');
+        btn.textContent = 'Next Question →';
+        btn.style.cssText='margin-top:14px;padding:9px 18px;background:rgba(91,156,246,.1);border:1px solid rgba(91,156,246,.3);color:var(--blue);border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;transition:all .2s;display:block';
+        btn.onmouseenter=function(){this.style.background='rgba(91,156,246,.2)';};
+        btn.onmouseleave=function(){this.style.background='rgba(91,156,246,.1)';};
+        btn.onclick=function(){ quizIdx++; renderQuiz(); };
+        el.closest('.quiz-wrap').appendChild(btn);
+      } else {
+        let btn = document.createElement('button');
+        btn.textContent = 'Restart Quiz ↺';
+        btn.style.cssText='margin-top:14px;padding:9px 18px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);border-radius:var(--radius);cursor:pointer;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;transition:all .2s;display:block';
+        btn.onclick=function(){ quizIdx=0; renderQuiz(); };
+        el.closest('.quiz-wrap').appendChild(btn);
+      }
+    }
+
+    function switchTab(el, paneId) {
+      el.closest('.info-section').querySelectorAll('.info-tab').forEach(t=>t.classList.remove('active'));
+      el.closest('.info-section').querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));
+      el.classList.add('active');
+      let pane=document.getElementById(paneId);
+      if(pane) pane.classList.add('active');
+    }
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      let observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+      }, {threshold:0.1});
+      document.querySelectorAll('.anim-in').forEach(el=>observer.observe(el));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let legendEl = document.getElementById('chart-legend');
+      CURVES.forEach((c,i) => {
+        let li = document.createElement('div');
+        li.className = 'legend-item';
+        li.innerHTML = '<div class="legend-dot" style="background:'+c.col+'"></div>'+c.label;
+        li.dataset.idx = i;
+        li.style.opacity = '1';
+        li.addEventListener('click', () => {
+          let hidden = li.dataset.hidden === '1';
+          li.dataset.hidden = hidden ? '0' : '1';
+          li.style.opacity = hidden ? '1' : '0.35';
+          drawChart();
+        });
+        legendEl.appendChild(li);
+      });
+      drawChart();
+      updateBars(10);
+      renderQuiz();
+      let rt;
+      window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(drawChart,120); });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var progressFill = document.getElementById('progressFill');
+      var backTop = document.getElementById('backTop');
+      var searchInput = document.getElementById('searchInput');
+      var navLinks = document.querySelectorAll('.sb-link');
+      window.addEventListener('scroll', function () {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        if (progressFill) {
+          progressFill.style.width = (height > 0 ? (winScroll / height) * 100 : 0) + '%';
+        }
+        if (backTop) {
+          backTop.classList.toggle('visible', winScroll > 400);
+        }
+      }, { passive: true });
+      if (backTop) {
+        backTop.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+      if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+          var term = e.target.value.toLowerCase().trim();
+          navLinks.forEach(function (link) {
+            link.style.display = (term !== '' && !link.textContent.toLowerCase().includes(term)) ? 'none' : 'flex';
+          });
+        });
+        searchInput.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            searchInput.value = '';
+            navLinks.forEach(function (link) { link.style.display = 'flex'; });
+          }
+        });
+      }
+    });
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

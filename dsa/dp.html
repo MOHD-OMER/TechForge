@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Dynamic Programming — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+  .dp-tbl { border-collapse: collapse; font-family: var(--mono); font-size: 12px; }
+  .dp-tbl th, .dp-tbl td { border: 1px solid var(--border); padding: 8px 12px; text-align: center; min-width: 32px; }
+  .dp-tbl th { background: var(--surface); color: var(--text); }
+  .dp-cur { background: rgba(79, 142, 247, 0.2); border-color: var(--blue) !important; }
+  .dp-match { background: rgba(34, 197, 94, 0.15); border-color: var(--green) !important; }
+  .dp-hl { background: rgba(79, 142, 247, 0.05); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link active" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Techniques</div>
+        <h1 class="dh2-title">Dynamic <span>Programming</span></h1>
+        <p class="dh2-sub">Break problems into overlapping subproblems, solve each once, store results. Converts exponential → polynomial time.</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">Optimal</span><span class="dss-label">Substructure</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Overlapping</span><span class="dss-label">Subproblems</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Memoiz.</span><span class="dss-label">Top-Down</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Tabul.</span><span class="dss-label">Bottom-Up</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">✓</span><span class="dss-label">FAANG Core</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // LONGEST COMMON SUBSEQUENCE TABLE FILL
+       </span>
+<div class="viz-controls">
+<input class="inp inp-wide" id="dp-s1" placeholder="String 1" value="ABCBDAB"/>
+<input class="inp inp-wide" id="dp-s2" placeholder="String 2" value="BDCAB"/>
+<button class="btn go" onclick="dpRun()">
+         ▶ Run LCS
+        </button>
+<button class="btn" onclick="dpReset()">
+         ↺ Reset
+        </button>
+</div>
+</div>
+<div class="viz-body" style="padding:14px">
+<div id="dp-tbl" style="overflow-x:auto">
+</div>
+<div class="status" id="dp-status">
+        Press Run to fill the DP table step-by-step
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-dp-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-dp-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-dp-2')">
+        Key Patterns
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-dp-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-dp-prac')">
+        Practice 🏆
+       </div>
+</div>
+<div class="info-pane active" id="tp-dp-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Identify Subproblems
+          </div>
+<div class="step-desc">
+           What smaller version of the problem feeds into larger?
+          </div>
+<div class="step-code">
+           dp[i][j] depends on dp[i-1][j-1] etc.
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Recurrence Relation
+          </div>
+<div class="step-desc">
+           Write the formula that builds each answer from sub-answers.
+          </div>
+<div class="step-code">
+           dp[i][j] = dp[i-1][j-1]+1 if match
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Base Cases
+          </div>
+<div class="step-desc">
+           Initialize dp table boundaries (usually 0s).
+          </div>
+<div class="step-code">
+           dp[0][*] = dp[*][0] = 0
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Fill Order
+          </div>
+<div class="step-desc">
+           Ensure subproblems are solved before you need them.
+          </div>
+<div class="step-code">
+           fill row by row
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-dp-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="cm"># LCS — Longest Common Subsequence</span>
+<span class="kw">def</span> <span class="fn">lcs</span>(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    <span class="kw">for</span> i <span class="kw">in</span> range(1, m+1):
+        <span class="kw">for</span> j <span class="kw">in</span> range(1, n+1):
+            <span class="kw">if</span> s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            <span class="kw">else</span>:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    <span class="kw">return</span> dp[m][n]</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-dp-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">
+          1D DP
+         </div>
+<div class="cc-name">
+          Linear
+         </div>
+<div class="cc-desc">
+          Fibonacci, Climbing Stairs, House Robber
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">
+          2D DP
+         </div>
+<div class="cc-name">
+          Grid/String
+         </div>
+<div class="cc-desc">
+          LCS, Edit Distance, Knapsack
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--purple)">
+          Interval DP
+         </div>
+<div class="cc-name">
+          Range
+         </div>
+<div class="cc-desc">
+          Matrix Chain Multiplication, Burst Balloons
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--amber)">
+          Bitmask DP
+         </div>
+<div class="cc-name">
+          Subset
+         </div>
+<div class="cc-desc">
+          Travelling Salesman, subset problems
+         </div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-dp-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         What distinguishes DP from plain recursion?
+        </div>
+<div class="quiz-opts">
+<button aria-label="DP uses loops only" class="quiz-opt" onclick="quizAnswer(this,false)">
+          DP uses loops only
+         </button>
+<button aria-label="DP stores subproblem results to avoid recomputation" class="quiz-opt" onclick="quizAnswer(this,true)">
+          DP stores subproblem results to avoid recomputation
+         </button>
+<button aria-label="DP is always O(n)" class="quiz-opt" onclick="quizAnswer(this,false)">
+          DP is always O(n)
+         </button>
+<button aria-label="DP requires sorted input" class="quiz-opt" onclick="quizAnswer(this,false)">
+          DP requires sorted input
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-dp-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>
+          Progress
+         </span>
+<span id="prog-dp">
+          0 / 14 solved
+         </span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-dp" style="width:0%">
+</div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">
+         14 problems · 8 PBC · 6 Startup
+        </div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','dp')">
+          ALL
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','dp')">
+          PBC
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'startup','dp')">
+          STARTUP
+         </button>
+</div>
+</div>
+<div class="pq-list" id="pql-dp">
+<div class="pq-item" data-id="701" data-type="pbc" onclick="openQ(event,'https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/')">
+<button aria-label="Mark problem 119 as done" class="pq-done-toggle" onclick="toggleDone(event,701,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #119
+         </span>
+<span class="pq-name">
+          0/1 Knapsack Problem
+         </span>
+<span class="pq-asked">
+          Amazon, Google
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="702" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-increasing-subsequence/')">
+<button aria-label="Mark problem 120 as done" class="pq-done-toggle" onclick="toggleDone(event,702,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #120
+         </span>
+<span class="pq-name">
+          Longest Increasing Subsequence
+         </span>
+<span class="pq-asked">
+          Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="703" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-common-subsequence/')">
+<button aria-label="Mark problem 121 as done" class="pq-done-toggle" onclick="toggleDone(event,703,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #121
+         </span>
+<span class="pq-name">
+          Longest Common Subsequence
+         </span>
+<span class="pq-asked">
+          Google, Microsoft
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="704" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/word-break/')">
+<button aria-label="Mark problem 122 as done" class="pq-done-toggle" onclick="toggleDone(event,704,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #122
+         </span>
+<span class="pq-name">
+          Word Break
+         </span>
+<span class="pq-asked">
+          Meta, Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="705" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/coin-change/')">
+<button aria-label="Mark problem 123 as done" class="pq-done-toggle" onclick="toggleDone(event,705,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #123
+         </span>
+<span class="pq-name">
+          Coin Change
+         </span>
+<span class="pq-asked">
+          Google
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="706" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/decode-ways/')">
+<button aria-label="Mark problem 124 as done" class="pq-done-toggle" onclick="toggleDone(event,706,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #124
+         </span>
+<span class="pq-name">
+          Decode Ways
+         </span>
+<span class="pq-asked">
+          Google, Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="707" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/unique-paths-ii/')">
+<button aria-label="Mark problem 125 as done" class="pq-done-toggle" onclick="toggleDone(event,707,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #125
+         </span>
+<span class="pq-name">
+          Unique Paths with Obstacles
+         </span>
+<span class="pq-asked">
+          Microsoft
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="708" data-type="pbc" onclick="openQ(event,'https://www.geeksforgeeks.org/cutting-a-rod-dp-13/')">
+<button aria-label="Mark problem 126 as done" class="pq-done-toggle" onclick="toggleDone(event,708,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #126
+         </span>
+<span class="pq-name">
+          Rod Cutting
+         </span>
+<span class="pq-asked">
+          Google
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="709" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/jump-game/')">
+<button aria-label="Mark problem 129 as done" class="pq-done-toggle" onclick="toggleDone(event,709,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #129
+         </span>
+<span class="pq-name">
+          Jump Game
+         </span>
+<span class="pq-asked">
+          Zepto
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="710" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/climbing-stairs/')">
+<button aria-label="Mark problem 131 as done" class="pq-done-toggle" onclick="toggleDone(event,710,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #131
+         </span>
+<span class="pq-name">
+          Climbing Stairs
+         </span>
+<span class="pq-asked">
+          Swiggy
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="711" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/house-robber/')">
+<button aria-label="Mark problem 132 as done" class="pq-done-toggle" onclick="toggleDone(event,711,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #132
+         </span>
+<span class="pq-name">
+          House Robber
+         </span>
+<span class="pq-asked">
+          Niyo
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="712" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/min-cost-climbing-stairs/')">
+<button aria-label="Mark problem 133 as done" class="pq-done-toggle" onclick="toggleDone(event,712,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #133
+         </span>
+<span class="pq-name">
+          Minimum Cost Climbing Stairs
+         </span>
+<span class="pq-asked">
+          Meesho
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="713" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/minimum-path-sum/')">
+<button aria-label="Mark problem 134 as done" class="pq-done-toggle" onclick="toggleDone(event,713,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #134
+         </span>
+<span class="pq-name">
+          Minimum Path Sum
+         </span>
+<span class="pq-asked">
+          Ola
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="714" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/jump-game-ii/')">
+<button aria-label="Mark problem 145 as done" class="pq-done-toggle" onclick="toggleDone(event,714,'dp')" title="Mark done">
+</button>
+<span class="pq-num">
+          #145
+         </span>
+<span class="pq-name">
+          Jump Game II
+         </span>
+<span class="pq-asked">
+          Zepto
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-dp">
+</div>
+</div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="recursion.html">← Recursion</a>
+  <a class="nav-link next" href="twopointer.html">Two Pointer →</a>
+</div>
+  </main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+   document.addEventListener("DOMContentLoaded",function(){refreshProg("dp");});
+
+function dpReset(){document.getElementById('dp-tbl').innerHTML='';setStatus('dp-status','Press Run LCS to fill the table');}
+let dpOn=false;
+async function dpRun(){
+  if(dpOn)return; dpOn=true;
+  let s1 =(document.getElementById('dp-s1').value||'ABCBDAB').toUpperCase().slice(0,8);
+  let s2 =(document.getElementById('dp-s2').value||'BDCAB').toUpperCase().slice(0,7);
+  let m =s1.length,n=s2.length;
+  let dp =[];for(let i =0;i<=m;i++){dp.push([]);for(let j = 0;j<=n;j++)dp[i].push(0);}
+  function buildTable(hi,hj){
+    let html ='<table class="dp-tbl"><tr><th></th><th></th>';
+    for(let j = 0;j<n;j++)html+='<th>'+s2[j]+'</th>';
+    html+='</tr>';
+    for(let i =0;i<=m;i++){
+      html+='<tr><th>'+(i===0?'':s1[i-1])+'</th>';
+      for(let j = 0;j<=n;j++){
+        let cls ='';
+        if(i===hi&&j===hj)cls=' dp-cur';
+        else if(i>0&&j>0&&s1[i-1]===s2[j-1]&&i<=hi)cls=' dp-match';
+        else if(i<=hi||(i===hi+1&&j<=hj))cls=' dp-hl';
+        html+='<td class="'+cls.trim()+'">'+dp[i][j]+'</td>';
+      }
+      html+='</tr>';
+    }
+    html+='</table>';
+    document.getElementById('dp-tbl').innerHTML=html;
+  }
+  buildTable(-1,-1);setStatus('dp-status','Starting LCS for "'+s1+'" and "'+s2+'"...');
+  await sleep(400);
+  for(let i =1;i<=m;i++){
+    for(let j = 1;j<=n;j++){
+      if(s1[i-1]===s2[j-1])dp[i][j]=dp[i-1][j-1]+1;
+      else dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+      buildTable(i,j);
+      let msg =s1[i-1]===s2[j-1]?'<span class="s-ok">Match! '+s1[i-1]+' = '+s2[j-1]+' → dp['+i+']['+j+']='+dp[i][j]+'</span>':'No match: max(dp['+(i-1)+']['+j+']='+dp[i-1][j]+', dp['+i+']['+(j-1)+']='+dp[i][j-1]+') = '+dp[i][j];
+      setStatus('dp-status',msg);
+      await sleep(160);
+    }
+  }
+  setStatus('dp-status','<span class="s-ok">&#10003; LCS length = <b>'+dp[m][n]+'</b></span>');
+}
+document.addEventListener('DOMContentLoaded',dpReset);
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

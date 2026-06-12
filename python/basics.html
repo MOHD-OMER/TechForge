@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Basics — Variables & Data Types | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-py { background: rgba(247, 204, 69, .08); color: var(--accent); }
+    .cs-red { background: rgba(248, 113, 113, .08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">Python Basics</div>
+      <a class="sb-link active" href="#sec-vars"><span class="sb-num">01</span> Variables</a>
+      <a class="sb-link" href="#sec-dtypes"><span class="sb-num">02</span> Data Types</a>
+      <div class="sidebar-label" style="margin-top: 20px;">Other Python Topics</div>
+      <a class="sb-link" href="collections.html"><span class="sb-num">→</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">→</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Basics</div>
+        <h1 class="pg-title">Variables &amp; <span>Data Types</span></h1>
+        <p class="pg-sub">Foundation concepts of Python programming — learn how to store and work with data effectively.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-green">✓ Beginner Friendly</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-vars">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">📦</span><h2 class="sec-title">Variables in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>variable</strong> is a name used to store data in memory. Python is <strong>dynamically typed</strong> and <strong>case-sensitive</strong>: <code>age</code>, <code>Age</code>, and <code>AGE</code> are three different variables.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Variables</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Creating variables — just assign a value</span>
+x = <span class="nm">10</span>
+name = <span class="st">"Alice"</span>
+is_student = <span class="kw">True</span>
+
+<span class="cm"># Case sensitivity demo</span>
+age = <span class="nm">20</span>
+Age = <span class="nm">30</span>
+<span class="fn">print</span>(age)   <span class="cm"># 20</span>
+<span class="fn">print</span>(Age)   <span class="cm"># 30</span>
+
+<span class="cm"># Updating a variable</span>
+count = <span class="nm">1</span>
+count = <span class="nm">2</span>   <span class="cm"># value updated</span></pre>
+        </div>
+        <div class="sub-title">Naming Rules</div>
+        <div class="compare-strip">
+          <div class="cs-item">
+            <div class="cs-head cs-py">✓ Valid Names</div>
+            <ul class="cs-list">
+              <li><code>total_marks</code></li>
+              <li><code>student_name</code></li>
+              <li><code>_count</code></li>
+              <li><code>value2</code></li>
+            </ul>
+          </div>
+          <div class="cs-item">
+            <div class="cs-head cs-red">✗ Invalid Names</div>
+            <ul class="cs-list">
+              <li><code>2marks</code> — starts with number</li>
+              <li><code>total-marks</code> — contains hyphen</li>
+              <li><code>for</code> — Python keyword</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="py-section" id="sec-dtypes">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🔬</span><h2 class="sec-title">Data Types in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead>
+              <tr><th>Type</th><th>Keyword</th><th>Example</th><th>Used For</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Integer</td><td><code>int</code></td><td><code>age = 25</code></td><td>Counting, indexing, loops</td></tr>
+              <tr><td>Float</td><td><code>float</code></td><td><code>pi = 3.14</code></td><td>Measurements, prices</td></tr>
+              <tr><td>String</td><td><code>str</code></td><td><code>name = "Alice"</code></td><td>Text, names, messages</td></tr>
+              <tr><td>Boolean</td><td><code>bool</code></td><td><code>flag = True</code></td><td>Conditions, loops</td></tr>
+              <tr><td>None</td><td><code>NoneType</code></td><td><code>result = None</code></td><td>No value / empty state</td></tr>
+              <tr><td>Complex</td><td><code>complex</code></td><td><code>z = 3 + 4j</code></td><td>Scientific calculations</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon">⚠</span><span><strong>Type Conversion Rules:</strong> Allowed: <code>int→float</code>, <code>int→complex</code>, <code>float→complex</code>, <code>int→str</code>. NOT allowed: <code>complex→int</code> or <code>complex→float</code> directly (use <code>int(z.real)</code> instead).</span></div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link disabled" href="#">← Previous</a>
+        <a class="nav-link" href="collections.html">Collections →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

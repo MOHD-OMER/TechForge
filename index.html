@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+<meta name="description" content="TechForge — Free, interactive CS learning. Master DSA, Python, Backend, SQL & AI/ML with live canvas animations and 200+ interview problems."/>
+<meta name="keywords" content="DSA, Python, Backend, SQL, AI/ML, interview prep, free coding tutorials, canvas animations"/>
+<meta name="author" content="TechForge"/>
+<meta property="og:title" content="TechForge — Master CS Fundamentals"/>
+<meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 200+ interview questions."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://tech-forge-dev.vercel.app"/>
+<meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+<meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://tech-forge-dev.vercel.app"/>
+<title>TechForge — Master CS Fundamentals</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+<link href="assets/css/forge_base.css?v=3" rel="stylesheet"/>
+<style>
+
+/* ══════════════════════════════════════
+   TECHFORGE HOME — v4
+   ══════════════════════════════════════ */
+
+.landing-bg {
+  position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  background: var(--bg);
+}
+.landing-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(0,212,255,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 5% 90%, rgba(79,142,247,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 30% at 95% 85%, rgba(167,139,250,.05) 0%, transparent 55%);
+}
+.landing-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: .055;
+  mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, black 0%, transparent 70%);
+}
+.orb {
+  position: fixed; border-radius: 50%; pointer-events: none; filter: blur(80px);
+  animation: drift 16s ease-in-out infinite; will-change: transform; transform: translateZ(0);
+}
+.orb-1 { width: 500px; height: 500px; top: -150px; left: -120px; background: rgba(0,212,255,.045); animation-delay: 0s; }
+.orb-2 { width: 380px; height: 380px; bottom: -80px; right: -100px; background: rgba(167,139,250,.055); animation-delay: -6s; }
+.orb-3 { width: 260px; height: 260px; top: 40%; left: 55%; background: rgba(79,142,247,.04); animation-delay: -11s; }
+@media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
+@keyframes drift {
+  0%,100% { transform: translate3d(0,0,0) scale(1); }
+  33%      { transform: translate3d(20px,-24px,0) scale(1.04); }
+  66%      { transform: translate3d(-16px,18px,0) scale(.97); }
+}
+
+.landing-wrap {
+  position: relative; z-index: 1;
+  padding-top: calc(var(--topbar-h) + var(--safe-top));
+  min-height: 100dvh;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* ── HERO split layout ── */
+.hero-section {
+  max-width: 1200px; margin: 0 auto;
+  padding: clamp(48px, 8vw, 80px) 24px clamp(32px, 6vw, 56px);
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 48px; align-items: center;
+}
+.hero-left { display: flex; flex-direction: column; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--cyan);
+  background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.16);
+  padding: 7px 18px; border-radius: var(--r-full);
+  margin-bottom: 28px; width: fit-content;
+  animation: fadeUp .5s ease both;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+  animation: dotpulse 2.4s ease infinite;
+}
+@keyframes dotpulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.65); } }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 900; letter-spacing: -2.5px; line-height: 1.0;
+  margin-bottom: 22px;
+  animation: fadeUp .5s .07s ease both;
+}
+.hero-title .line-1 { color: var(--text); display: block; }
+.hero-title .line-2 {
+  display: block;
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 50%, var(--purple) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  min-height: 1.1em;
+}
+.hero-title .cursor {
+  display: inline-block; width: 3px; height: .82em;
+  background: var(--cyan); vertical-align: middle; margin-left: 3px;
+  animation: blink 1.1s step-end infinite;
+}
+@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+.hero-sub {
+  font-size: clamp(14px, 1.8vw, 16px); color: var(--text2);
+  max-width: 520px; line-height: 1.78; margin-bottom: 32px;
+  animation: fadeUp .5s .14s ease both;
+}
+.hero-cta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  animation: fadeUp .5s .2s ease both;
+  margin-bottom: 40px;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 26px; border-radius: var(--r-md);
+  font-family: var(--font-body); font-size: 14px; font-weight: 700;
+  text-decoration: none; border: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+  color: #000; box-shadow: 0 4px 24px rgba(79,142,247,.4);
+  transition: all .2s;
+}
+.btn-primary:hover { box-shadow: 0 6px 36px rgba(0,212,255,.5); transform: translateY(-2px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 26px; border-radius: var(--r-md);
+  font-family: var(--font-body); font-size: 14px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  background: var(--card); color: var(--text2);
+  border: 1px solid var(--border2); transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+
+.stat-row {
+  display: flex; gap: 0; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: var(--r-lg);
+  overflow: hidden; background: var(--card);
+  animation: fadeUp .5s .27s ease both;
+  width: fit-content;
+}
+.stat-item {
+  padding: 16px 22px; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  border-right: 1px solid var(--border); transition: background .2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(0,212,255,.04); }
+.stat-val {
+  font-family: var(--font-mono); font-size: 20px; font-weight: 900;
+  background: linear-gradient(135deg, var(--text) 30%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+}
+.stat-key { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+
+/* canvas panel */
+.hero-right {
+  display: flex; flex-direction: column; gap: 12px;
+  animation: fadeUp .5s .18s ease both;
+}
+.canvas-panel {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; position: relative;
+}
+.canvas-panel-bar {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid var(--border); background: rgba(0,0,0,.3);
+}
+.cpb-dot { width: 10px; height: 10px; border-radius: 50%; }
+.cpb-dot:nth-child(1) { background: #ff5f57; }
+.cpb-dot:nth-child(2) { background: #febc2e; }
+.cpb-dot:nth-child(3) { background: #28c840; }
+.cpb-title { font-family: var(--font-mono); font-size: 10px; color: var(--text3); letter-spacing: 1px; margin-left: 4px; }
+#heroCanvas { display: block; width: 100%; height: 280px; }
+
+.canvas-mini-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.cmp {
+  font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+  padding: 5px 12px; border-radius: var(--r-full); letter-spacing: .5px; cursor: pointer;
+  border: 1px solid var(--border2); color: var(--text3); background: var(--card);
+  transition: all .15s;
+}
+.cmp:hover, .cmp.active { background: rgba(0,212,255,.08); border-color: rgba(0,212,255,.3); color: var(--cyan); }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  width: 100%; overflow: hidden; padding: 11px 0;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,.2); position: relative;
+}
+.ticker-wrap::before, .ticker-wrap::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+}
+.ticker-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.ticker-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+.ticker-track {
+  display: flex; white-space: nowrap;
+  animation: ticker 40s linear infinite; width: max-content;
+}
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0 24px; font-family: var(--font-mono); font-size: 11px; color: var(--text3);
+  border-right: 1px solid var(--border);
+}
+.ticker-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── SECTION SCAFFOLD ── */
+.section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section-divider { max-width: 1200px; margin: 0 auto; padding: 0 24px; border-top: 1px solid var(--border); }
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 32px; padding-top: clamp(48px, 6vw, 64px);
+}
+.section-eyebrow {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  color: var(--text3); text-transform: uppercase;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-eyebrow::before { content:''; width:28px; height:1px; background: linear-gradient(90deg,var(--cyan),transparent); }
+.section-count { font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
+
+/* ── TOPIC CARDS bento ── */
+.topics-section { padding-bottom: clamp(48px,7vw,72px); }
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+}
+.topic-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 24px 22px 20px;
+  text-decoration: none; display: flex; flex-direction: column;
+  position: relative; overflow: hidden; transition: all .25s;
+  min-height: 220px;
+}
+.topic-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 75% 15%, var(--tc-glow,rgba(0,212,255,.06)), transparent 60%);
+  opacity: 0; transition: opacity .35s;
+}
+.topic-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
+.topic-card:hover::after { opacity: 1; }
+.topic-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--tc-a,var(--cyan)), transparent 70%);
+  opacity: 0; transition: opacity .2s;
+}
+.topic-card:hover::before { opacity: 1; }
+.topic-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+.tc-dsa { grid-column: span 5; --tc-a: var(--blue);  --tc-glow: rgba(79,142,247,.08); }
+.tc-py  { grid-column: span 4; --tc-a: var(--green); --tc-glow: rgba(52,211,153,.07); }
+.tc-bk  { grid-column: span 3; --tc-a: #10b981;      --tc-glow: rgba(16,185,129,.07); }
+.tc-sql { grid-column: span 3; --tc-a: #818cf8;      --tc-glow: rgba(129,140,248,.07);}
+.tc-ai  { grid-column: span 5; --tc-a: var(--cyan);  --tc-glow: rgba(0,212,255,.07);  }
+.tc-int { grid-column: span 4; --tc-a: var(--amber); --tc-glow: rgba(251,191,36,.07); }
+
+.tc-icon-box {
+  width: 40px; height: 40px; border-radius: var(--r-md);
+  display: grid; place-items: center; font-size: 18px;
+  margin-bottom: 14px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.05);
+}
+.tc-dsa .tc-icon-box { background: rgba(79,142,247,.1); }
+.tc-py  .tc-icon-box { background: rgba(52,211,153,.08); }
+.tc-bk  .tc-icon-box { background: rgba(16,185,129,.08); }
+.tc-sql .tc-icon-box { background: rgba(129,140,248,.08); }
+.tc-ai  .tc-icon-box { background: rgba(0,212,255,.07); }
+.tc-int .tc-icon-box { background: rgba(251,191,36,.08); }
+
+.tc-label {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 3px 9px; border-radius: var(--r-full);
+  display: inline-block; margin-bottom: 10px; width: fit-content;
+}
+.tc-dsa .tc-label { background:rgba(79,142,247,.1);   color:var(--blue);  border:1px solid rgba(79,142,247,.22); }
+.tc-py  .tc-label { background:rgba(52,211,153,.08);  color:var(--green); border:1px solid rgba(52,211,153,.2);  }
+.tc-bk  .tc-label { background:rgba(16,185,129,.08);  color:#10b981;      border:1px solid rgba(16,185,129,.2);  }
+.tc-sql .tc-label { background:rgba(129,140,248,.08); color:#818cf8;      border:1px solid rgba(129,140,248,.2); }
+.tc-ai  .tc-label { background:rgba(0,212,255,.07);   color:var(--cyan);  border:1px solid rgba(0,212,255,.18);  }
+.tc-int .tc-label { background:rgba(251,191,36,.08);  color:var(--amber); border:1px solid rgba(251,191,36,.2);  }
+
+.tc-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 7px; letter-spacing: -.3px; }
+.tc-desc  { font-size: 12px; color: var(--text3); line-height: 1.65; flex: 1; margin-bottom: 14px; }
+.tc-sublist { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.tc-chip {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  padding: 2px 8px; border-radius: var(--r-full);
+  background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text3);
+}
+.tc-meta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.tc-count { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
+.tc-dot   { width: 5px; height: 5px; border-radius: 50%; background: var(--tc-a,var(--cyan)); }
+.tc-arrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
+.tc-dsa .tc-arrow { color: var(--blue);  }
+.tc-py  .tc-arrow { color: var(--green); }
+.tc-bk  .tc-arrow { color: #10b981;     }
+.tc-sql .tc-arrow { color: #818cf8;     }
+.tc-ai  .tc-arrow { color: var(--cyan); }
+.tc-int .tc-arrow { color: var(--amber);}
+.topic-card:hover .tc-arrow { gap: 9px; }
+
+/* ── HOW IT WORKS ── */
+.hiw-section { padding-bottom: clamp(48px,7vw,72px); }
+.hiw-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden;
+}
+.hiw-step { background: var(--card); padding: 32px 24px; transition: background .2s; }
+.hiw-step:hover { background: rgba(0,212,255,.03); }
+.hiw-num {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  color: var(--cyan); letter-spacing: 2px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hiw-num::after { content:''; flex:1; height:1px; background: linear-gradient(90deg,rgba(0,212,255,.3),transparent); }
+.hiw-icon { font-size: 28px; margin-bottom: 12px; }
+.hiw-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.hiw-desc { font-size: 12px; color: var(--text3); line-height: 1.65; }
+
+/* ── FEATURE PILLARS ── */
+.pillars-section { padding-bottom: clamp(48px,7vw,72px); }
+.pillars-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.pillar {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl);
+  padding: 28px 24px; position: relative; overflow: hidden; transition: border-color .2s;
+}
+.pillar:hover { border-color: var(--border2); }
+.pillar-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.pillar-icon { font-size: 24px; }
+.pillar-pill {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: var(--r-full);
+}
+.pp-green { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.2); }
+.pp-blue  { background:rgba(79,142,247,.1);  color:var(--blue);  border:1px solid rgba(79,142,247,.2); }
+.pp-amber { background:rgba(251,191,36,.09); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+.pillar-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.pillar-desc  { font-size: 12.5px; color: var(--text3); line-height: 1.6; }
+.pillar-line  { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.p-line-green { background: linear-gradient(90deg,var(--green),transparent); }
+.p-line-blue  { background: linear-gradient(90deg,var(--blue),transparent); }
+.p-line-amber { background: linear-gradient(90deg,var(--amber),transparent); }
+
+/* ── CTA ── */
+.cta-banner { padding-bottom: clamp(48px,7vw,72px); }
+.cta-inner {
+  background: linear-gradient(135deg,rgba(79,142,247,.08) 0%,rgba(0,212,255,.05) 50%,rgba(167,139,250,.07) 100%);
+  border: 1px solid rgba(79,142,247,.18); border-radius: var(--r-xl);
+  padding: clamp(40px,6vw,64px) clamp(28px,5vw,56px);
+  text-align: center; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cta-inner::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg,transparent 5%,var(--blue) 35%,var(--cyan) 65%,transparent 95%);
+  opacity:.5;
+}
+.cta-mono { font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--cyan); text-transform:uppercase; margin-bottom:16px; }
+.cta-title {
+  font-family:var(--font-display); font-size:clamp(24px,4.5vw,40px);
+  font-weight:900; letter-spacing:-1.5px; color:var(--text); margin-bottom:14px; line-height:1.1;
+}
+.cta-title span { background:linear-gradient(135deg,var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.cta-sub { font-size:14px; color:var(--text3); margin-bottom:32px; max-width:480px; line-height:1.7; }
+.cta-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.cta-trust {
+  display:flex; gap:24px; flex-wrap:wrap; justify-content:center;
+  margin-top:28px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06);
+}
+.cta-trust-item { display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+.cta-trust-check { color:var(--green); font-size:12px; }
+
+/* ── FOOTER ── */
+.landing-footer {
+  max-width: 1200px; margin: 0 auto;
+  padding: 36px 24px max(44px,calc(28px + var(--safe-bottom)));
+  border-top: 1px solid var(--border);
+}
+.footer-top { display:grid; grid-template-columns:1fr auto; gap:48px; margin-bottom:28px; }
+.footer-brand { max-width:240px; }
+.footer-logo {
+  font-family:var(--font-display); font-size:15px; font-weight:800;
+  color:var(--text); letter-spacing:.04em;
+  display:flex; align-items:center; gap:8px; margin-bottom:10px;
+}
+.footer-logo-icon { width:28px; height:28px; background:var(--blue); border-radius:7px; display:grid; place-items:center; color:#000; font-size:14px; }
+.footer-logo span { color:var(--blue); }
+.footer-tagline { font-size:11.5px; color:var(--text3); line-height:1.6; margin-bottom:16px; }
+.footer-nav-cols { display:flex; gap:40px; }
+.footer-col-head { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; color:var(--text3); text-transform:uppercase; margin-bottom:12px; font-weight:700; }
+.footer-links { display:flex; flex-direction:column; gap:8px; }
+.footer-lnk { font-size:12px; color:var(--text3); text-decoration:none; transition:color .15s; display:flex; align-items:center; gap:7px; }
+.footer-lnk:hover { color:var(--cyan); }
+.footer-lnk-dot { width:3px; height:3px; border-radius:50%; background:var(--text3); transition:background .15s; flex-shrink:0; }
+.footer-lnk:hover .footer-lnk-dot { background:var(--cyan); }
+.footer-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:24px; border-top:1px solid var(--border); }
+.footer-copy { font-size:10.5px; color:var(--text3); font-family:var(--font-mono); }
+.footer-badges { display:flex; gap:8px; flex-wrap:wrap; }
+.footer-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1px; padding:3px 10px; border-radius:var(--r-full); border:1px solid var(--border); color:var(--text3); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+.anim-in { opacity:0; transform:translateY(18px); transition:opacity .55s ease,transform .55s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:1024px) {
+  .hero-section { grid-template-columns:1fr; }
+  .hero-right { max-width:480px; }
+  .hero-left { align-items:center; text-align:center; }
+  .hero-sub { text-align:center; }
+  .stat-row { margin:0 auto; }
+  .hero-cta { justify-content:center; }
+  .tc-dsa { grid-column:span 7; }
+  .tc-py  { grid-column:span 5; }
+  .tc-bk  { grid-column:span 4; }
+  .tc-sql { grid-column:span 4; }
+  .tc-ai  { grid-column:span 4; }
+  .tc-int { grid-column:span 6; }
+  .hiw-grid { grid-template-columns:repeat(2,1fr); }
+  .footer-top { grid-template-columns:1fr; }
+  .footer-nav-cols { flex-wrap:wrap; gap:28px; }
+}
+@media (max-width:768px) {
+  .tc-dsa,.tc-py,.tc-bk,.tc-sql,.tc-ai,.tc-int { grid-column:span 12; }
+  .pillars-grid { grid-template-columns:1fr; }
+}
+@media (max-width:560px) {
+  .hero-title { letter-spacing:-1.5px; }
+  .btn-primary,.btn-secondary { width:100%; justify-content:center; min-height:44px; }
+  .hero-cta,.cta-btns { flex-direction:column; align-items:stretch; gap:10px; }
+  .stat-row { width:100%; }
+  .stat-item { flex:1; padding:14px 12px; }
+  .hiw-grid { grid-template-columns:1fr; }
+  .cta-trust { gap:12px; flex-direction:column; align-items:center; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" onfocus="this.style.cssText='position:fixed;left:16px;top:16px;width:auto;height:auto;z-index:9999;background:var(--cyan);color:#000;padding:12px 20px;border-radius:8px;font-weight:700;'">Skip to content</a>
+
+<div class="landing-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link current" href="index.html">Home</a>
+    <a class="tb-link" href="dsa/index.html">DSA</a>
+    <a class="tb-link" href="backend/index.html">Backend</a>
+    <a class="tb-link" href="python/index.html">Python</a>
+    <a class="tb-link" href="sql/index.html">SQL</a>
+    <a class="tb-link" href="aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="git/index.html">Git</a>
+    <a class="tb-link" href="about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="landing-wrap" id="main-content">
+
+  <!-- ════ HERO ════ -->
+  <section class="hero-section">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        Free Forever · No Ads · No Account · No Login
+      </div>
+      <h1 class="hero-title">
+        <span class="line-1">Master CS —</span>
+        <span class="line-2"><span id="typeTarget">Level Up.</span><span class="cursor"></span></span>
+      </h1>
+      <p class="hero-sub">
+        The interactive CS platform built for engineers who want to <strong style="color:var(--text)">understand, not just memorize</strong>.
+        Live canvas visualizations, clean code, and 200+ interview problems — all free, forever.
+      </p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="dsa/index.html">🚀 Start with DSA</a>
+        <a class="btn-secondary" href="interview/index.html">🎯 Interview Prep →</a>
+      </div>
+      <div class="stat-row">
+        <div class="stat-item"><span class="stat-val">6</span><span class="stat-key">Tracks</span></div>
+        <div class="stat-item"><span class="stat-val">40+</span><span class="stat-key">Topics</span></div>
+        <div class="stat-item"><span class="stat-val">200+</span><span class="stat-key">Questions</span></div>
+        <div class="stat-item"><span class="stat-val">0</span><span class="stat-key">Cost</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="canvas-panel">
+        <div class="canvas-panel-bar">
+          <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
+          <span class="cpb-title" id="canvasLabel">bubble-sort.py — live visualization</span>
+        </div>
+        <canvas id="heroCanvas"></canvas>
+      </div>
+      <div class="canvas-mini-pills">
+        <button class="cmp active" data-mode="sort"  onclick="switchViz(this,'sort')">Bubble Sort</button>
+        <button class="cmp"        data-mode="bfs"   onclick="switchViz(this,'bfs')">BFS Traversal</button>
+        <button class="cmp"        data-mode="stack" onclick="switchViz(this,'stack')">Stack</button>
+        <button class="cmp"        data-mode="hash"  onclick="switchViz(this,'hash')">Hash Table</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TICKER ════ -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════ SOCIAL PROOF STRIP ════ -->
+  <div style="max-width:1200px;margin:0 auto;padding:32px 24px 0;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;padding:18px 28px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);">
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);">Used by engineers preparing for</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Google</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Amazon</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Microsoft</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Flipkart</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Razorpay</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Swiggy</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.5;">+ more</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider" style="margin-top:32px;"></div>
+
+  <!-- ════ TOPIC CARDS ════ -->
+  <section class="topics-section anim-in">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">Explore Topics</div>
+        <div class="section-count">6 learning tracks</div>
+      </div>
+      <div class="bento-grid">
+
+        <a class="topic-card tc-dsa" href="dsa/index.html">
+          <div class="tc-icon-box">📊</div>
+          <div class="tc-label">Core Curriculum</div>
+          <div class="tc-title">Data Structures &amp; Algorithms</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Arrays</span><span class="tc-chip">Trees</span>
+            <span class="tc-chip">Graphs</span><span class="tc-chip">DP</span>
+            <span class="tc-chip">Sorting</span><span class="tc-chip">Big-O</span>
+          </div>
+          <div class="tc-desc">Live canvas animations for every data structure. Master the concepts interviewers actually test — from arrays to dynamic programming — with visual intuition baked in.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>30+ topics · Live viz</div>
+            <div class="tc-arrow">Explore →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-py" href="python/index.html">
+          <div class="tc-icon-box">🐍</div>
+          <div class="tc-label">Language Guide</div>
+          <div class="tc-title">Python Foundations</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">OOP</span><span class="tc-chip">Decorators</span>
+            <span class="tc-chip">Generators</span><span class="tc-chip">Libraries</span>
+          </div>
+          <div class="tc-desc">Complete Python reference — magic methods, decorators, comprehensions, async, and DSA patterns in Python. From beginner to interview-ready.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>7 modules</div>
+            <div class="tc-arrow">Learn →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-bk" href="backend/index.html">
+          <div class="tc-icon-box">🔧</div>
+          <div class="tc-label">Backend Dev</div>
+          <div class="tc-title">Backend Frameworks</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Django</span><span class="tc-chip">Flask</span><span class="tc-chip">FastAPI</span>
+          </div>
+          <div class="tc-desc">Production-ready guides — routing, ORM, auth, middleware, and deployment for all three major Python web frameworks.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>3 frameworks</div>
+            <div class="tc-arrow">Build →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-sql" href="sql/index.html">
+          <div class="tc-icon-box">🗄️</div>
+          <div class="tc-label">Database Skills</div>
+          <div class="tc-title">SQL &amp; NoSQL</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Joins</span><span class="tc-chip">Indexes</span><span class="tc-chip">Window Fns</span><span class="tc-chip">MongoDB</span>
+          </div>
+          <div class="tc-desc">Full SQL reference plus MongoDB — queries, joins, subqueries, window functions, normalization, and advanced patterns.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>12 sections</div>
+            <div class="tc-arrow">Query →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-ai" href="aiml/aiml-explained.html">
+          <div class="tc-icon-box">🤖</div>
+          <div class="tc-label">Deep Dive</div>
+          <div class="tc-title">AI / ML Explained</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">ML</span><span class="tc-chip">Deep Learning</span>
+            <span class="tc-chip">NLP</span><span class="tc-chip">Transformers</span><span class="tc-chip">RL</span>
+          </div>
+          <div class="tc-desc">Machine learning, deep learning, NLP, computer vision, and RL — clear analogies, real math, no fluff. For engineers who want to truly understand modern AI.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>8 modules</div>
+            <div class="tc-arrow">Dive in →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-int" href="interview/index.html">
+          <div class="tc-icon-box">🎯</div>
+          <div class="tc-label">Interview Prep</div>
+          <div class="tc-title">Interview Q&amp;A Hub</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">FAANG</span><span class="tc-chip">Startup</span>
+            <span class="tc-chip">DSA</span><span class="tc-chip">SQL</span><span class="tc-chip">OOP</span>
+          </div>
+          <div class="tc-desc">200+ curated questions across DSA, Python, OOP, SQL, and AI/ML — tagged for FAANG and startups. Progress tracked in your browser. Free, no login.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>200+ questions · 5 tracks</div>
+            <div class="tc-arrow">Prepare →</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════ HOW IT WORKS ════ -->
+  <section class="hiw-section anim-in">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">How TechForge Works</div>
+      </div>
+      <div class="hiw-grid">
+        <div class="hiw-step">
+          <div class="hiw-num">01</div>
+          <div class="hiw-icon">🗺️</div>
+          <div class="hiw-title">Choose Your Path</div>
+          <div class="hiw-desc">Pick from 6 tracks — DSA, Python, Backend, SQL, AI/ML, or Interview Prep. Each is self-contained, so you start exactly where you need to.</div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">02</div>
+          <div class="hiw-icon">🎬</div>
+          <div class="hiw-title">Watch It Animate</div>
+          <div class="hiw-desc">Every algorithm and data structure comes with a live Canvas 2D visualization — see exactly how it works, step by step, in real time.</div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">03</div>
+          <div class="hiw-icon">💻</div>
+          <div class="hiw-title">Study the Code</div>
+          <div class="hiw-desc">Clean, optimized Python implementations with Big-O analysis, edge cases, and detailed inline comments. No magic, no hand-waving.</div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">04</div>
+          <div class="hiw-icon">✅</div>
+          <div class="hiw-title">Practice &amp; Track</div>
+          <div class="hiw-desc">Solve 200+ curated problems tagged for FAANG and startups. Check them off — progress saves to your browser. No account ever needed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ════ PILLARS ════ -->
+  <section class="pillars-section anim-in">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">Why TechForge</div>
+      </div>
+      <div class="pillars-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="pillar">
+          <div class="pillar-line p-line-green"></div>
+          <div class="pillar-top">
+            <div class="pillar-icon">⚡</div>
+            <span class="pillar-pill pp-green">Vanilla JS</span>
+          </div>
+          <div class="pillar-title">Zero Dependencies</div>
+          <div class="pillar-desc">All visualizations use the native Canvas 2D API — no heavy libraries, no bloat. Fast, smooth animations on any device, even on mobile data.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-line p-line-blue"></div>
+          <div class="pillar-top">
+            <div class="pillar-icon">🏷️</div>
+            <span class="pillar-pill pp-blue">FAANG + Startups</span>
+          </div>
+          <div class="pillar-title">Company-Tagged Problems</div>
+          <div class="pillar-desc">Every practice problem is tagged <strong style="color:var(--blue)">PBC</strong> (Google, Amazon, Meta) or <strong style="color:var(--green)">Startup</strong> (Swiggy, Razorpay, CRED) so you focus on what matters for your target company.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-line p-line-amber"></div>
+          <div class="pillar-top">
+            <div class="pillar-icon">📌</div>
+            <span class="pillar-pill pp-amber">Privacy First</span>
+          </div>
+          <div class="pillar-title">Local Progress Tracking</div>
+          <div class="pillar-desc">Mark problems as done and they stay checked. Progress lives in your browser's localStorage — no account, no login, no data ever leaves your device.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CTA ════ -->
+  <div class="cta-banner anim-in">
+    <div class="section-wrap">
+      <div class="cta-inner">
+        <div class="cta-mono">Ready to start?</div>
+        <div class="cta-title">Your next offer starts<br/><span>here. Today. Free.</span></div>
+        <p class="cta-sub">Pick a topic and start building the mental models that turn good engineers into great ones. No paywall, no account, no catch — just learning.</p>
+        <div class="cta-btns">
+          <a class="btn-primary"   href="dsa/index.html">🚀 Start with DSA</a>
+          <a class="btn-secondary" href="interview/index.html">🎯 Interview Prep</a>
+        </div>
+        <div class="cta-trust">
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No ads, ever</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No account needed</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No paywalls or upsells</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> Progress saved locally</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="landing-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">⬡</div>
+          <span>TECH</span><span style="color:var(--text3);font-weight:400">·</span>FORGE
+        </div>
+        <div class="footer-tagline">Free, interactive CS learning — built for developers, by developers. No ads. No paywalls. No tracking. Ever.</div>
+      </div>
+      <div class="footer-nav-cols">
+        <div>
+          <div class="footer-col-head">Learn</div>
+          <div class="footer-links">
+            <a class="footer-lnk" href="dsa/index.html"><span class="footer-lnk-dot"></span>DSA</a>
+            <a class="footer-lnk" href="python/index.html"><span class="footer-lnk-dot"></span>Python</a>
+            <a class="footer-lnk" href="backend/index.html"><span class="footer-lnk-dot"></span>Backend</a>
+            <a class="footer-lnk" href="sql/index.html"><span class="footer-lnk-dot"></span>SQL</a>
+            <a class="footer-lnk" href="aiml/aiml-explained.html"><span class="footer-lnk-dot"></span>AI/ML</a>
+            <a class="footer-lnk" href="git/index.html"><span class="footer-lnk-dot"></span>Git</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-head">Practice</div>
+          <div class="footer-links">
+            <a class="footer-lnk" href="interview/index.html"><span class="footer-lnk-dot"></span>All Questions</a>
+            <a class="footer-lnk" href="interview/dsa-interview.html"><span class="footer-lnk-dot"></span>DSA Interview</a>
+            <a class="footer-lnk" href="interview/python-interview.html"><span class="footer-lnk-dot"></span>Python Interview</a>
+            <a class="footer-lnk" href="interview/sql-interview.html"><span class="footer-lnk-dot"></span>SQL Interview</a>
+            <a class="footer-lnk" href="interview/aiml-interview.html"><span class="footer-lnk-dot"></span>AI/ML Interview</a>
+            <a class="footer-lnk" href="interview/oop-interview.html"><span class="footer-lnk-dot"></span>OOP Interview</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-head">Frameworks</div>
+          <div class="footer-links">
+            <a class="footer-lnk" href="backend/django.html"><span class="footer-lnk-dot"></span>Django</a>
+            <a class="footer-lnk" href="backend/flask.html"><span class="footer-lnk-dot"></span>Flask</a>
+            <a class="footer-lnk" href="backend/fastapi.html"><span class="footer-lnk-dot"></span>FastAPI</a>
+            <a class="footer-lnk" href="sql/mongodb.html"><span class="footer-lnk-dot"></span>MongoDB</a>
+            <a class="footer-lnk" href="about.html"><span class="footer-lnk-dot"></span>About</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025–2026 TechForge — Built for learners, by learners.</div>
+      <div class="footer-badges">
+        <span class="footer-badge">FREE FOREVER</span>
+        <span class="footer-badge">NO ADS</span>
+        <span class="footer-badge">NO LOGIN</span>
+        <span class="footer-badge">OPEN SOURCE</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="assets/js/utils.js?v=3"></script>
+<script>
+/* ═══════════════════════════════════════
+   HOMEPAGE v4 — Scripts
+   ═══════════════════════════════════════ */
+
+// Scroll animations
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.07, rootMargin: '0px 0px -24px 0px' });
+document.querySelectorAll('.anim-in').forEach((el, i) => {
+  el.style.transitionDelay = (i % 5) * 0.08 + 's';
+  obs.observe(el);
+});
+
+// Typewriter
+(function () {
+  const words = ['Level Up.', 'Think Sharp.', 'Get Hired.', 'Build Better.', 'Go Deep.'];
+  const el = document.getElementById('typeTarget');
+  if (!el) return;
+  let wi = 0, ci = words[0].length, deleting = false, paused = false;
+  el.textContent = words[0];
+  function tick() {
+    const word = words[wi];
+    if (paused) { paused = false; setTimeout(tick, 1500); return; }
+    if (!deleting) {
+      ci++;
+      el.textContent = word.slice(0, ci);
+      if (ci >= word.length) { deleting = true; paused = true; setTimeout(tick, 120); return; }
+      setTimeout(tick, 85 + Math.random() * 50);
+    } else {
+      ci--;
+      el.textContent = word.slice(0, ci);
+      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 320); return; }
+      setTimeout(tick, 42);
+    }
+  }
+  setTimeout(tick, 2200);
+})();
+
+// Ticker
+(function () {
+  const items = [
+    { label:'Arrays', color:'#4d9ef7' }, { label:'Linked Lists', color:'#4d9ef7' },
+    { label:'Binary Trees', color:'#4d9ef7' }, { label:'Graphs', color:'#4d9ef7' },
+    { label:'Dynamic Programming', color:'#4d9ef7' }, { label:'Sorting Algorithms', color:'#4d9ef7' },
+    { label:'Hash Tables', color:'#4d9ef7' }, { label:'Python OOP', color:'#34d399' },
+    { label:'Decorators', color:'#34d399' }, { label:'Comprehensions', color:'#34d399' },
+    { label:'Django ORM', color:'#10b981' }, { label:'FastAPI', color:'#10b981' },
+    { label:'Flask Blueprints', color:'#10b981' }, { label:'SQL Joins', color:'#818cf8' },
+    { label:'Indexes & Optimization', color:'#818cf8' }, { label:'MongoDB Aggregations', color:'#818cf8' },
+    { label:'Neural Networks', color:'#22d3ee' }, { label:'NLP Transformers', color:'#22d3ee' },
+    { label:'Reinforcement Learning', color:'#22d3ee' }, { label:'FAANG Interview Prep', color:'#fbbf24' },
+    { label:'System Design', color:'#fbbf24' }, { label:'Git Workflows', color:'#a78bfa' },
+  ];
+  const track = document.getElementById('tickerTrack');
+  const doubled = [...items, ...items];
+  track.innerHTML = doubled.map(it =>
+    `<span class="ticker-item"><span class="ticker-dot" style="background:${it.color}"></span>${it.label}</span>`
+  ).join('');
+})();
+
+// Canvas visualizations
+(function () {
+  const canvas = document.getElementById('heroCanvas');
+  const label  = document.getElementById('canvasLabel');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let mode = 'sort', raf = null, state = {};
+
+  const CYAN='#22d3ee', BLUE='#4d9ef7', GREEN='#34d399', AMBER='#fbbf24', RED='#f87171';
+  const SURF='#111827', BORDER='#1f2d42';
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width  = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+  }
+  resize();
+  function W() { return canvas.getBoundingClientRect().width; }
+  function H() { return canvas.getBoundingClientRect().height; }
+
+  /* ── BUBBLE SORT ── */
+  function initSort() {
+    state = { arr:[68,42,87,23,95,55,31,76,14,60], j:0, sorted:[], tick:0, swapping:false, swapT:0 };
+    label.textContent = 'bubble-sort.py — live visualization';
+  }
+  function stepSort() {
+    const s=state; s.tick++;
+    if (s.tick % 18 !== 0) return;
+    const limit = s.arr.length - 1 - s.sorted.length;
+    if (s.j < limit) {
+      if (s.arr[s.j] > s.arr[s.j+1]) {
+        [s.arr[s.j],s.arr[s.j+1]]=[s.arr[s.j+1],s.arr[s.j]];
+        s.swapping=true; s.swapT=s.tick;
+      }
+      s.j++;
+    } else {
+      s.sorted.unshift(s.arr.length - 1 - s.sorted.length);
+      s.j=0;
+      if (s.sorted.length >= s.arr.length-1) {
+        s.sorted = s.arr.map((_,i)=>i);
+        setTimeout(()=>{ s.arr=[68,42,87,23,95,55,31,76,14,60]; s.sorted=[]; s.j=0; }, 1200);
+      }
+    }
+    s.swapping=(s.tick-s.swapT<4);
+  }
+  function drawSort() {
+    const w=W(),h=H(); ctx.clearRect(0,0,w,h);
+    const s=state, n=s.arr.length, pad=24;
+    const barW=Math.floor((w-pad*2-(n-1)*6)/n);
+    const maxH=h-60, maxV=Math.max(...s.arr);
+    s.arr.forEach((v,i)=>{
+      const bh=Math.round((v/maxV)*maxH), x=pad+i*(barW+6), y=h-32-bh;
+      const isSorted=s.sorted.includes(i), isCur=(i===s.j||i===s.j+1)&&!isSorted, isSwap=isCur&&s.swapping;
+      ctx.beginPath(); ctx.roundRect(x,y,barW,bh,[4,4,0,0]);
+      ctx.fillStyle = isSorted?GREEN+'99':isSwap?AMBER:isCur?CYAN:BLUE+'44'; ctx.fill();
+      ctx.beginPath(); ctx.roundRect(x,y,barW,bh,[4,4,0,0]);
+      ctx.strokeStyle = isSorted?GREEN+'44':isCur?CYAN+'aa':BORDER; ctx.lineWidth=1; ctx.stroke();
+      ctx.fillStyle = isSorted?GREEN:isCur?'#fff':'#3a5270';
+      ctx.font=`bold 9px 'JetBrains Mono',monospace`; ctx.textAlign='center';
+      ctx.fillText(v,x+barW/2,y-5);
+    });
+    ctx.fillStyle='#3a5270'; ctx.font=`10px 'JetBrains Mono',monospace`; ctx.textAlign='left';
+    ctx.fillText(`Pass ${s.sorted.length+1}  ·  j = ${s.j}`,pad,h-10);
+  }
+
+  /* ── BFS ── */
+  function initBFS() {
+    state={
+      nodes:[{id:0,x:.5,y:.14},{id:1,x:.25,y:.4},{id:2,x:.75,y:.4},
+             {id:3,x:.12,y:.7},{id:4,x:.4,y:.7},{id:5,x:.6,y:.7},{id:6,x:.88,y:.7}],
+      edges:[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]],
+      visited:[],queue:[0],order:[],tick:0,done:false
+    };
+    label.textContent='bfs-traversal.py — live visualization';
+  }
+  function stepBFS() {
+    const s=state; s.tick++;
+    if (s.tick%40!==0) return;
+    if (s.done){ setTimeout(()=>initBFS(),1500); return; }
+    if (!s.queue.length){ s.done=true; return; }
+    const cur=s.queue.shift();
+    if (s.visited.includes(cur)) return;
+    s.visited.push(cur); s.order.push(cur);
+    s.edges.filter(([a,b])=>a===cur||b===cur)
+      .map(([a,b])=>a===cur?b:a)
+      .filter(n=>!s.visited.includes(n))
+      .forEach(n=>s.queue.push(n));
+  }
+  function drawBFS() {
+    const w=W(),h=H(); ctx.clearRect(0,0,w,h);
+    const s=state, r=18;
+    s.edges.forEach(([a,b])=>{
+      const na=s.nodes[a],nb=s.nodes[b];
+      const both=s.visited.includes(a)&&s.visited.includes(b);
+      ctx.beginPath(); ctx.moveTo(na.x*w,na.y*h); ctx.lineTo(nb.x*w,nb.y*h);
+      ctx.strokeStyle=both?CYAN+'55':BORDER; ctx.lineWidth=both?2:1; ctx.stroke();
+    });
+    s.nodes.forEach(n=>{
+      const x=n.x*w,y=n.y*h;
+      const vis=s.visited.includes(n.id), cur=s.visited[s.visited.length-1]===n.id, inQ=s.queue.includes(n.id);
+      ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+      ctx.fillStyle=cur?CYAN:vis?BLUE+'44':inQ?AMBER+'1a':SURF; ctx.fill();
+      ctx.strokeStyle=cur?CYAN:vis?BLUE:inQ?AMBER:BORDER; ctx.lineWidth=cur?2.5:1.5; ctx.stroke();
+      ctx.fillStyle=cur?'#000':vis?CYAN:inQ?AMBER:'#3a5270';
+      ctx.font=`bold 11px 'JetBrains Mono',monospace`; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(n.id,x,y);
+    });
+    ctx.fillStyle='#3a5270'; ctx.font=`10px 'JetBrains Mono',monospace`;
+    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    ctx.fillText('Order: ['+s.order.join(', ')+']',12,h-10);
+    if(s.queue.length) ctx.fillText('Queue: ['+s.queue.join(', ')+']',12,h-26);
+  }
+
+  /* ── STACK ── */
+  function initStack() {
+    const ops=[{op:'push',val:42},{op:'push',val:17},{op:'push',val:88},{op:'push',val:5},
+               {op:'pop'},{op:'push',val:63},{op:'pop'},{op:'pop'},{op:'push',val:29},{op:'pop'},{op:'pop'},{op:'pop'}];
+    state={stack:[],ops,opIdx:0,tick:0,lastOp:null,lastVal:null,msgT:0};
+    label.textContent='stack.py — push / pop visualization';
+  }
+  function stepStack() {
+    const s=state; s.tick++;
+    if(s.tick%55!==0) return;
+    if(s.opIdx>=s.ops.length){ initStack(); return; }
+    const {op,val}=s.ops[s.opIdx++];
+    s.lastOp=op; s.msgT=s.tick;
+    if(op==='push'){ s.stack.push(val); s.lastVal=val; }
+    else if(s.stack.length>0){ s.lastVal=s.stack.pop(); }
+  }
+  function drawStack() {
+    const w=W(),h=H(); ctx.clearRect(0,0,w,h);
+    const s=state, bh=38,bw=130,x=(w-bw)/2,baseY=h-48;
+    const maxShow=Math.floor((h-80)/(bh+4));
+    s.stack.slice(-maxShow).forEach((val,i)=>{
+      const iy=baseY-(i+1)*(bh+4), isTop=i===Math.min(s.stack.length,maxShow)-1;
+      ctx.beginPath(); ctx.roundRect(x,iy,bw,bh,6);
+      ctx.fillStyle=isTop?BLUE+'2a':SURF; ctx.fill();
+      ctx.strokeStyle=isTop?BLUE:BORDER; ctx.lineWidth=isTop?2:1; ctx.stroke();
+      ctx.fillStyle=isTop?CYAN:'#4a6078';
+      ctx.font=`bold 15px 'JetBrains Mono',monospace`; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(val,x+bw/2,iy+bh/2);
+      if(isTop){
+        ctx.fillStyle=CYAN+'88'; ctx.font=`9px 'JetBrains Mono',monospace`;
+        ctx.textAlign='left'; ctx.fillText('← TOP',x+bw+8,iy+bh/2+1);
+      }
+    });
+    ctx.beginPath(); ctx.moveTo(x-10,baseY); ctx.lineTo(x+bw+10,baseY);
+    ctx.strokeStyle=BORDER; ctx.lineWidth=2; ctx.stroke();
+    if(s.lastOp){
+      const fade=Math.max(0,1-(s.tick-s.msgT)/30);
+      ctx.globalAlpha=fade;
+      ctx.fillStyle=s.lastOp==='push'?GREEN:AMBER;
+      ctx.font=`bold 11px 'JetBrains Mono',monospace`; ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+      ctx.fillText(s.lastOp==='push'?`push(${s.lastVal})`:`pop() → ${s.lastVal}`,w/2,22);
+      ctx.globalAlpha=1;
+    }
+    ctx.fillStyle='#3a5270'; ctx.font=`10px 'JetBrains Mono',monospace`;
+    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    ctx.fillText(`size = ${s.stack.length}`,12,h-12);
+  }
+
+  /* ── HASH TABLE ── */
+  function initHash() {
+    state={
+      buckets:Array.from({length:7},()=>[]),
+      insertions:[{key:'name',val:'"Alice"'},{key:'age',val:'28'},{key:'city',val:'"NYC"'},
+                  {key:'lang',val:'"Python"'},{key:'lvl',val:'3'}],
+      idx:0,tick:0,lastKey:null,lastHash:null,msgT:0
+    };
+    label.textContent='hash-table.py — insert visualization';
+  }
+  function hashFn(key,size){ let h=0; for(const c of key) h=(h*31+c.charCodeAt(0))%size; return h; }
+  function stepHash() {
+    const s=state; s.tick++;
+    if(s.tick%65!==0) return;
+    if(s.idx>=s.insertions.length){ setTimeout(()=>initHash(),1600); return; }
+    const {key,val}=s.insertions[s.idx++];
+    const h=hashFn(key,s.buckets.length);
+    s.buckets[h].push({key,val}); s.lastKey=key; s.lastHash=h; s.msgT=s.tick;
+  }
+  function drawHash() {
+    const w=W(),h=H(); ctx.clearRect(0,0,w,h);
+    const s=state, rows=s.buckets.length;
+    const rh=Math.floor((h-40)/rows), idxW=30, pad=14;
+    s.buckets.forEach((items,i)=>{
+      const y=20+i*rh, isAct=s.lastHash===i;
+      ctx.beginPath(); ctx.roundRect(pad,y+3,idxW,rh-8,4);
+      ctx.fillStyle=isAct?CYAN+'1a':SURF; ctx.fill();
+      ctx.strokeStyle=isAct?CYAN:BORDER; ctx.lineWidth=isAct?1.5:1; ctx.stroke();
+      ctx.fillStyle=isAct?CYAN:'#3a5270';
+      ctx.font=`bold 10px 'JetBrains Mono',monospace`; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(i,pad+idxW/2,y+rh/2);
+      items.forEach((item,j)=>{
+        const ix=pad+idxW+6+j*110, isNew=isAct&&j===items.length-1;
+        ctx.beginPath(); ctx.roundRect(ix,y+3,104,rh-8,4);
+        ctx.fillStyle=isNew?BLUE+'22':SURF; ctx.fill();
+        ctx.strokeStyle=isNew?BLUE:BORDER; ctx.lineWidth=isNew?1.5:1; ctx.stroke();
+        ctx.fillStyle=isNew?CYAN:'#4a6078';
+        ctx.font=`9px 'JetBrains Mono',monospace`; ctx.textAlign='left'; ctx.textBaseline='middle';
+        ctx.fillText(`${item.key}: ${item.val}`,ix+6,y+rh/2);
+      });
+    });
+    if(s.lastKey){
+      const fade=Math.max(0,1-(s.tick-s.msgT)/35);
+      ctx.globalAlpha=fade;
+      ctx.fillStyle=GREEN; ctx.font=`bold 10px 'JetBrains Mono',monospace`;
+      ctx.textAlign='right'; ctx.textBaseline='alphabetic';
+      ctx.fillText(`hash("${s.lastKey}") → ${s.lastHash}`,w-pad,h-8);
+      ctx.globalAlpha=1;
+    }
+  }
+
+  const modes = {
+    sort:  {init:initSort,  step:stepSort,  draw:drawSort },
+    bfs:   {init:initBFS,   step:stepBFS,   draw:drawBFS  },
+    stack: {init:initStack, step:stepStack, draw:drawStack},
+    hash:  {init:initHash,  step:stepHash,  draw:drawHash },
+  };
+  function loop(){ modes[mode].step(); modes[mode].draw(); raf=requestAnimationFrame(loop); }
+  function start(m){ if(raf) cancelAnimationFrame(raf); mode=m; modes[m].init(); loop(); }
+  start('sort');
+
+  const modeList=['sort','bfs','stack','hash']; let autoIdx=0;
+  setInterval(()=>{
+    autoIdx=(autoIdx+1)%modeList.length;
+    const m=modeList[autoIdx];
+    document.querySelectorAll('.cmp').forEach(b=>b.classList.remove('active'));
+    document.querySelector(`.cmp[data-mode="${m}"]`)?.classList.add('active');
+    start(m);
+  }, 12000);
+
+  window.switchViz=function(btn,m){
+    document.querySelectorAll('.cmp').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); autoIdx=modeList.indexOf(m); start(m);
+  };
+  window.addEventListener('resize',()=>{ resize(); });
+})();
+
+document.addEventListener('visibilitychange',()=>{
+  document.querySelectorAll('.orb').forEach(o=>{
+    o.style.animationPlayState=document.hidden?'paused':'running';
+  });
+});
+</script>
+</body>
+</html>

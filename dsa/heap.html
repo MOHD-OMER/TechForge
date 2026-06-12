@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Heap (Priority Queue) — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link active" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Non-Linear DS</div>
+        <h1 class="dh2-title">Heap <span>(Priority Queue)</span></h1>
+        <p class="dh2-sub">Complete binary tree where parent ≥ children. O(log n) insert/extract — the foundation of priority queues and Dijkstra's algorithm.</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Peek Min/Max</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(log n)</span><span class="dss-label">Insert</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">O(log n)</span><span class="dss-label">Extract</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Min</span><span class="dss-label">& Max Heap</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">PQ / Dijkstra</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // HEAP (PRIORITY QUEUE)
+       </span>
+<div class="viz-controls" id="heap-ctrl">
+</div>
+</div>
+<div class="viz-body" style="padding:14px">
+<canvas height="240" id="heap-cv" style="width:100%;background:rgba(0,0,0,.25);border-radius:8px">
+</canvas>
+<div class="status" id="heap-status">
+        Interactive visualization
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-heap-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-heap-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-heap-2')">
+        Complexity
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-heap-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-heap-prac')">
+        Practice 🏆
+       </div>
+</div>
+<div class="info-pane active" id="tp-heap-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Array Representation
+          </div>
+<div class="step-desc">
+           Node i: left=2i+1, right=2i+2, parent=(i-1)//2.
+          </div>
+<div class="step-code">
+           left=2*i+1, right=2*i+2
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Insert
+          </div>
+<div class="step-desc">
+           Add to end, bubble up — O(log n).
+          </div>
+<div class="step-code">
+           heapq.heappush(heap, val)
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Extract Min
+          </div>
+<div class="step-desc">
+           Swap root with last, remove, heapify down — O(log n).
+          </div>
+<div class="step-code">
+           heapq.heappop(heap)
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Build Heap
+          </div>
+<div class="step-desc">
+           Heapify all nodes bottom-up — O(n) total.
+          </div>
+<div class="step-code">
+           heapq.heapify(arr)
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-heap-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">import</span> heapq
+
+<span class="cm"># Min-heap (Python default)</span>
+heap = []
+heapq.heappush(heap, 5)
+heapq.heappush(heap, 1)
+heapq.heappush(heap, 3)
+min_v = heapq.heappop(heap)  <span class="cm"># → 1</span>
+
+<span class="cm"># Max-heap: negate values</span>
+heapq.heappush(heap, -val)
+max_v = -heapq.heappop(heap)
+
+<span class="cm"># Build heap in O(n)</span>
+heapq.heapify(arr)</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-heap-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">
+          O(1)
+         </div>
+<div class="cc-name">
+          Peek Min
+         </div>
+<div class="cc-desc">
+          Root is always minimum
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">
+          O(log n)
+         </div>
+<div class="cc-name">
+          Insert
+         </div>
+<div class="cc-desc">
+          Bubble up from leaf
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">
+          O(log n)
+         </div>
+<div class="cc-name">
+          Extract
+         </div>
+<div class="cc-desc">
+          Heapify down from root
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--cyan)">
+          O(n)
+         </div>
+<div class="cc-name">
+          Build Heap
+         </div>
+<div class="cc-desc">
+          Bottom-up is linear
+         </div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-heap-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         Python's heapq.heappop() returns:
+        </div>
+<div class="quiz-opts">
+<button aria-label="The maximum" class="quiz-opt" onclick="quizAnswer(this,false)">
+          The maximum
+         </button>
+<button aria-label="The minimum" class="quiz-opt" onclick="quizAnswer(this,true)">
+          The minimum
+         </button>
+<button aria-label="A random element" class="quiz-opt" onclick="quizAnswer(this,false)">
+          A random element
+         </button>
+<button aria-label="The last inserted" class="quiz-opt" onclick="quizAnswer(this,false)">
+          The last inserted
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-heap-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>
+          Progress
+         </span>
+<span id="prog-heap">
+          0 / 5 solved
+         </span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-heap" style="width:0%">
+</div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">
+         5 problems · 4 PBC · 1 Startup
+        </div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','heap')">
+          ALL
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','heap')">
+          PBC
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'startup','heap')">
+          STARTUP
+         </button>
+</div>
+</div>
+<div class="pq-list" id="pql-heap">
+<div class="pq-item" data-id="851" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/top-k-frequent-elements/')">
+<button aria-label="Mark problem 91 as done" class="pq-done-toggle" onclick="toggleDone(event,851,'heap')" title="Mark done">
+</button>
+<span class="pq-num">
+          #091
+         </span>
+<span class="pq-name">
+          Top K Frequent Elements
+         </span>
+<span class="pq-asked">
+          Google, Amazon
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="852" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/find-median-from-data-stream/')">
+<button aria-label="Mark problem 92 as done" class="pq-done-toggle" onclick="toggleDone(event,852,'heap')" title="Mark done">
+</button>
+<span class="pq-num">
+          #092
+         </span>
+<span class="pq-name">
+          Find Median from Data Stream
+         </span>
+<span class="pq-asked">
+          Amazon, Meta
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="853" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/kth-largest-element-in-an-array/')">
+<button aria-label="Mark problem 93 as done" class="pq-done-toggle" onclick="toggleDone(event,853,'heap')" title="Mark done">
+</button>
+<span class="pq-num">
+          #093
+         </span>
+<span class="pq-name">
+          Kth Largest Element
+         </span>
+<span class="pq-asked">
+          Adobe, Microsoft
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="854" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/merge-k-sorted-lists/')">
+<button aria-label="Mark problem 94 as done" class="pq-done-toggle" onclick="toggleDone(event,854,'heap')" title="Mark done">
+</button>
+<span class="pq-num">
+          #094
+         </span>
+<span class="pq-name">
+          Merge K Sorted Lists
+         </span>
+<span class="pq-asked">
+          Google, Meta
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="855" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/sort-characters-by-frequency/')">
+<button aria-label="Mark problem 95 as done" class="pq-done-toggle" onclick="toggleDone(event,855,'heap')" title="Mark done">
+</button>
+<span class="pq-num">
+          #095
+         </span>
+<span class="pq-name">
+          Sort Characters by Frequency
+         </span>
+<span class="pq-asked">
+          Cure.fit
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-heap">
+</div>
+</div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="avl.html">← AVL Tree</a>
+  <a class="nav-link next" href="trie.html">Trie →</a>
+</div>
+  </main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+   document.addEventListener("DOMContentLoaded",function(){refreshProg("heap");});
+
+document.addEventListener('DOMContentLoaded',function(){
+  let ctrl =document.getElementById('heap-ctrl');
+  if(ctrl)ctrl.innerHTML='<input class="inp" id="hp-v" value="4" style="width:55px"><button class="btn go" onclick="hpPsh()">Insert</button><button class="btn soft-red" onclick="hpPop()">Extract Min</button><button class="btn" onclick="hpRst()">Reset</button>';
+  let hp =[1,3,5,7,9,11,13];
+  function hpRst(){hp=[1,3,5,7,9,11,13];hpDrw(-1,-1);setStatus('heap-status','Min-heap. Insert or Extract Min.');}
+  let hpRunning=false;
+async function hpPsh(){
+  if(hpRunning)return; hpRunning=true;
+    let v =parseInt(document.getElementById('hp-v').value)||4;
+    hp.push(v);let i =hp.length-1,t;
+    while(i>0){let p =Math.floor((i-1)/2);if(hp[p]>hp[i]){t=hp[p];hp[p]=hp[i];hp[i]=t;hpDrw(i,p);setStatus('heap-status','Bubbling up <b>'+hp[i]+'</b>');await sleep(420);i=p;}else break;}
+    hpDrw(-1,-1);setStatus('heap-status','<span class="s-ok">Inserted <b>'+v+'</b></span>');
+
+  hpRunning=false;}
+  async function hpPop(){
+    if(!hp.length)return;let mn =hp[0];hp[0]=hp.pop();
+    let i =0,n=hp.length,t;
+    while(true){let l =2*i+1,r=2*i+2,sm=i;if(l<n&&hp[l]<hp[sm])sm=l;if(r<n&&hp[r]<hp[sm])sm=r;if(sm===i)break;t=hp[i];hp[i]=hp[sm];hp[sm]=t;hpDrw(i,sm);setStatus('heap-status','Heapify down...');await sleep(420);i=sm;}
+    hpDrw(-1,-1);setStatus('heap-status','<span class="s-ok">Extracted min = <b>'+mn+'</b></span>');
+  }
+  function hpDrw(h1,h2){
+    let cv =document.getElementById('heap-cv');if(!cv||!hp.length)return;
+    cv.width=cv.offsetWidth||700;let ctx =cv.getContext('2d'),W=cv.width,H=240,n=hp.length;
+    ctx.fillStyle='rgba(7,11,18,.95)';ctx.fillRect(0,0,W,H);
+    let maxLv =Math.floor(Math.log2(n)),r=Math.min(20,W/Math.pow(2,maxLv+1)-3);
+    function lv(i){return Math.floor(Math.log2(i+1));}
+    function cx(i){let l =lv(i),cnt=Math.pow(2,l),st=Math.pow(2,l)-1,pos=i-st;return W/(cnt+1)*(pos+1);}
+    function cy(i){return lv(i)*54+38;}
+    for(let i =1;i<n;i++){let p =Math.floor((i-1)/2);ctx.strokeStyle='#1e3555';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(cx(p),cy(p));ctx.lineTo(cx(i),cy(i));ctx.stroke();}
+    for(let i =0;i<n;i++){
+      let x =cx(i),y=cy(i),hl=i===h1||i===h2,isRoot=i===0;
+      ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+      ctx.fillStyle=hl?'rgba(255,184,0,.2)':isRoot?'rgba(0,229,160,.12)':'rgba(13,20,33,.9)';
+      ctx.fill();ctx.strokeStyle=hl?'#ffb800':isRoot?'#00e5a0':'#2e4468';ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle=hl?'#ffb800':isRoot?'#00e5a0':'#a8bdda';ctx.font='bold 11px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(hp[i],x,y);
+    }
+  }
+  hpRst();
+  // Expose to global scope
+  window.hpRst = hpRst;
+  window.hpPsh = hpPsh;
+  window.hpPop = hpPop;
+  // expose
+  window.hpPsh = hpPsh;
+});
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

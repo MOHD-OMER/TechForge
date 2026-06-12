@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>AVL Tree — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+
+  .dsa-hero, .dsa-stats2 { opacity: 1 !important; transform: none !important; }
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link active" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Non-Linear DS</div>
+        <h1 class="dh2-title"><span>AVL Tree</span></h1>
+        <p class="dh2-sub"></p>
+      </div>
+      <div class="dsa-stats2" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(log n)</span><span class="dss-label">All Ops</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">≤1</span><span class="dss-label">Balance Factor</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Left</span><span class="dss-label">Rotation</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Right</span><span class="dss-label">Rotation</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">✓</span><span class="dss-label">Self-Balancing</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // AVL TREE
+       </span>
+<div class="viz-controls" id="avl-ctrl">
+</div>
+</div>
+<div class="viz-body" style="padding:14px">
+<canvas height="260" id="avl-cv" style="width:100%;background:rgba(0,0,0,.25);border-radius:8px">
+</canvas>
+<div class="status" id="avl-status">
+        Interactive visualization
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-avl-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-avl-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-avl-2')">
+        Complexity
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-avl-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-avl-prac')">
+        Practice 🏆
+       </div>
+</div>
+<div class="info-pane active" id="tp-avl-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Balance Factor
+          </div>
+<div class="step-desc">
+           BF = height(left) - height(right). Valid: -1, 0, +1.
+          </div>
+<div class="step-code">
+           bf = h(left) - h(right)
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Left Rotation
+          </div>
+<div class="step-desc">
+           Right-heavy subtree: rotate left.
+          </div>
+<div class="step-code">
+           Right-Right case
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Right Rotation
+          </div>
+<div class="step-desc">
+           Left-heavy subtree: rotate right.
+          </div>
+<div class="step-code">
+           Left-Left case
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           LR / RL Rotations
+          </div>
+<div class="step-desc">
+           Double rotations for Left-Right and Right-Left cases.
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-avl-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">def</span> <span class="fn">get_height</span>(node):
+    <span class="kw">if not</span> node: <span class="kw">return</span> 0
+    <span class="kw">return</span> 1 + max(<span class="fn">get_height</span>(node.left), <span class="fn">get_height</span>(node.right))
+
+<span class="kw">def</span> <span class="fn">balance_factor</span>(node):
+    <span class="kw">return</span> <span class="fn">get_height</span>(node.left) - <span class="fn">get_height</span>(node.right)
+
+<span class="kw">def</span> <span class="fn">rotate_right</span>(y):
+    x = y.left; T2 = x.right
+    x.right = y; y.left = T2
+    <span class="kw">return</span> x</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-avl-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">
+          O(log n)
+         </div>
+<div class="cc-name">
+          Always
+         </div>
+<div class="cc-desc">
+          Balanced by construction — no skew possible
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--cyan)">
+          O(1)
+         </div>
+<div class="cc-name">
+          Rotation
+         </div>
+<div class="cc-desc">
+          Single or double rotation to rebalance
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--amber)">
+          +1 ptr
+         </div>
+<div class="cc-name">
+          Overhead
+         </div>
+<div class="cc-desc">
+          Height stored per node
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">
+          Strict
+         </div>
+<div class="cc-name">
+          Balance
+         </div>
+<div class="cc-desc">
+          Tighter than Red-Black tree
+         </div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-avl-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         An AVL tree's balance factor at any node must be:
+        </div>
+<div class="quiz-opts">
+<button aria-label="0 or 1" class="quiz-opt" onclick="quizAnswer(this,false)">
+          0 or 1
+         </button>
+<button aria-label="-1, 0, or +1" class="quiz-opt" onclick="quizAnswer(this,true)">
+          -1, 0, or +1
+         </button>
+<button aria-label="Any integer" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Any integer
+         </button>
+<button aria-label="At most 2" class="quiz-opt" onclick="quizAnswer(this,false)">
+          At most 2
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-avl-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>
+          Progress
+         </span>
+<span id="prog-avl">
+          0 / 3 solved
+         </span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-avl" style="width:0%">
+</div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">
+         3 problems · 2 PBC · 1 Startup
+        </div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','avl')">
+          ALL
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','avl')">
+          PBC
+         </button>
+<button class="pf-btn" onclick="filterQ(this,'startup','avl')">
+          STARTUP
+         </button>
+</div>
+</div>
+<div class="pq-list" id="pql-avl">
+<div class="pq-item" data-id="151" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/validate-binary-search-tree/')">
+<button aria-label="Mark problem 72 as done" class="pq-done-toggle" onclick="toggleDone(event,151,'avl')" title="Mark done">
+</button>
+<span class="pq-num">
+          #072
+         </span>
+<span class="pq-name">
+          Validate Binary Search Tree
+         </span>
+<span class="pq-asked">
+          Google, Meta
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="152" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/')">
+<button aria-label="Mark problem 73 as done" class="pq-done-toggle" onclick="toggleDone(event,152,'avl')" title="Mark done">
+</button>
+<span class="pq-num">
+          #073
+         </span>
+<span class="pq-name">
+          Lowest Common Ancestor
+         </span>
+<span class="pq-asked">
+          Apple
+         </span>
+<span class="pq-badge pq-pbc">
+          PBC
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+<div class="pq-item" data-id="153" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/')">
+<button aria-label="Mark problem 86 as done" class="pq-done-toggle" onclick="toggleDone(event,153,'avl')" title="Mark done">
+</button>
+<span class="pq-num">
+          #086
+         </span>
+<span class="pq-name">
+          Zigzag Level Order Traversal
+         </span>
+<span class="pq-asked">
+          Zepto
+         </span>
+<span class="pq-badge pq-startup">
+          STARTUP
+         </span>
+<span class="pq-arrow">
+          →
+         </span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-avl">
+</div>
+</div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="bst.html">← Binary Search Tree</a>
+  <a class="nav-link next" href="heap.html">Heap →</a>
+</div>
+  </main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+   document.addEventListener("DOMContentLoaded",function(){refreshProg("avl");});
+
+document.addEventListener('DOMContentLoaded',function(){
+  let ctrl =document.getElementById('avl-ctrl');
+  if(ctrl)ctrl.innerHTML='<input class="inp" id="avl-v" value="30" style="width:60px"><button class="btn go" onclick="avlIns()">Insert</button><button class="btn" onclick="avlRst()">Reset</button>';
+  let root =null;
+  function H(n){return n?n.h:0;}
+  function upd(n){if(n)n.h=1+Math.max(H(n.l),H(n.r));}
+  function bf(n){return n?H(n.l)-H(n.r):0;}
+  function rr(y){let x =y.l,T=x.r;x.r=y;y.l=T;upd(y);upd(x);return x;}
+  function rl(x){let y =x.r,T=y.l;y.l=x;x.r=T;upd(x);upd(y);return y;}
+  function Nd(v){return{v:v,l:null,r:null,h:1};}
+  function ins(nd,v){
+    if(!nd)return Nd(v);
+    if(v<nd.v)nd.l=ins(nd.l,v);else if(v>nd.v)nd.r=ins(nd.r,v);else return nd;
+    upd(nd);let b =bf(nd);
+    if(b>1&&v<nd.l.v)return rr(nd);
+    if(b<-1&&v>nd.r.v)return rl(nd);
+    if(b>1&&v>nd.l.v){nd.l=rl(nd.l);return rr(nd);}
+    if(b<-1&&v<nd.r.v){nd.r=rr(nd.r);return rl(nd);}
+    return nd;
+  }
+  let initVals =[30,20,40,10,25,35,50];
+  function avlRst(){root=null;initVals.forEach(function(v){root=ins(root,v);});drw();setStatus('avl-status','AVL tree ready — balanced.');}
+  function avlIns(){let v =parseInt(document.getElementById('avl-v').value)||30;root=ins(root,v);drw();setStatus('avl-status','<span class="s-ok">Inserted '+v+' — tree auto-rebalanced</span>');}
+  function drw(){
+    let cv =document.getElementById('avl-cv');if(!cv||!root)return;
+    cv.width=cv.offsetWidth||700;
+    let ctx =cv.getContext('2d'),W=cv.width,H=260;
+    ctx.fillStyle='rgba(7,11,18,.95)';ctx.fillRect(0,0,W,H);
+    let pos ={};
+    function lay(nd,dep,lo,hi){if(!nd)return;let x =(lo+hi)/2,y=dep*56+40;pos[nd.v]={x:x,y:y,b:bf(nd)};lay(nd.l,dep+1,lo,(lo+hi)/2);lay(nd.r,dep+1,(lo+hi)/2,hi);}
+    lay(root,0,20,W-20);
+    function drawE(nd){if(!nd)return;['l','r'].forEach(function(s){if(nd[s]){let p =pos[nd.v],c=pos[nd[s].v];ctx.strokeStyle='#1e3555';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(c.x,c.y);ctx.stroke();}});drawE(nd.l);drawE(nd.r);}
+    drawE(root);
+    function drawN(nd){if(!nd)return;let p =pos[nd.v],bfv=p.b,col=bfv===0?'#00e5a0':'#4f8ef7';
+    ctx.beginPath();ctx.arc(p.x,p.y,19,0,Math.PI*2);ctx.fillStyle='rgba(13,20,33,.9)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#dde8f8';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(nd.v,p.x,p.y);
+    ctx.fillStyle=bfv===0?'#00e5a0':'#ffb800';ctx.font='9px monospace';ctx.fillText('bf:'+bfv,p.x,p.y+30);
+    drawN(nd.l);drawN(nd.r);}
+    drawN(root);
+  }
+  avlRst();
+  // expose to global
+  window.avlRst = avlRst;
+  // expose to global
+  window.avlIns = avlIns;
+});
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

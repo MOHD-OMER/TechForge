@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>SQL Interview Q&amp;A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <style>
+  :root {
+    --accent: var(--amber);
+    --surface: var(--card);
+    --surface2: rgba(251,191,36,0.05);
+    --display: var(--font-display);
+    --mono: var(--font-mono);
+    --orange: #f97316;
+    --bg2: rgba(0,0,0,.25);
+  }
+  .int-page-hero{position:relative;padding:40px 0 32px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .int-page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(251,191,36,.06) 0%,transparent 58%);}
+  .iph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .iph-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);box-shadow:0 0 5px var(--amber);animation:iphdot 2s ease infinite;}
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .iph-title span{background:linear-gradient(135deg,var(--amber),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .iph-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:560px;margin-bottom:18px;}
+  .iph-badges{display:flex;gap:7px;flex-wrap:wrap;}
+  .iph-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid;}
+  .int-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:28px;}
+  .is-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .is-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--is-c,var(--amber));opacity:0;transition:opacity .2s;}
+  .is-box:hover{background:rgba(255,255,255,.02);}.is-box:hover::after{opacity:1;}
+  .is-val{font-family:var(--font-mono);font-size:20px;font-weight:900;line-height:1;}
+  .is-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+  .ftab{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:var(--r-full);font-family:var(--font-mono);font-size:10px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none;}
+  .ftab:hover{border-color:var(--border2);color:var(--text2);}
+  .ftab.active{background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.3);color:var(--amber);}
+  .ftab-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+  .filter-sep{width:1px;height:20px;background:var(--border);}
+  .qna-list{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .qna-item{border-bottom:1px solid var(--border);transition:background .2s;}
+  .qna-item:last-child{border-bottom:none;}
+  .qna-item.open{background:rgba(251,191,36,.04);}
+  .qna-q{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;}
+  .qna-q:hover{background:rgba(255,255,255,.02);}
+  .qna-cb{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;}
+  .qna-cb.checked{background:var(--green);border-color:var(--green);}
+  .qna-cb.checked::after{content:'✓';font-size:10px;font-weight:700;color:#000;}
+  .qna-num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text3);min-width:24px;flex-shrink:0;}
+  .qna-text{font-weight:500;color:var(--text);flex:1;line-height:1.5;font-size:14px;}
+  .qna-tag{font-family:var(--font-mono);font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:var(--r-full);flex-shrink:0;}
+  .tag-dsa{background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.2);}
+  .tag-py{background:rgba(77,142,247,.08);color:var(--blue);border:1px solid rgba(77,142,247,.2);}
+  .tag-oop{background:rgba(52,211,153,.08);color:var(--green);border:1px solid rgba(52,211,153,.2);}
+  .tag-aiml{background:rgba(167,139,250,.08);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+  .tag-sql{background:rgba(251,191,36,.08);color:var(--amber);border:1px solid rgba(251,191,36,.2);}
+  .qna-chevron{font-size:12px;color:var(--text3);flex-shrink:0;transition:transform .2s;}
+  .qna-item.open .qna-chevron{transform:rotate(180deg);}
+  .qna-a{padding:0 20px 20px 56px;display:none;color:var(--text2);line-height:1.75;font-size:13.5px;}
+  .qna-item.open .qna-a{display:block;}
+  .qna-a ul,.qna-a ol{padding-left:20px;margin:8px 0;}
+  .qna-a li{margin-bottom:4px;}
+  .qna-a strong{color:var(--text);}
+  .qna-a code{font-family:var(--font-mono);font-size:11.5px;background:rgba(251,191,36,.07);color:var(--amber);padding:1px 5px;border-radius:3px;}
+  .ans-code{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:12px 0;}
+  .ans-code-hdr{display:flex;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);}
+  .ans-code-lang{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .ans-code pre{margin:0;padding:14px 16px;font-family:var(--font-mono);font-size:11.5px;line-height:1.72;color:var(--text2);overflow-x:auto;}
+  .kw{color:#c792ea;}.fn{color:#82aaff;}.cm{color:#546e7a;font-style:italic;}.nm{color:#f78c6c;}
+  .callout{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-lg);margin:10px 0;font-size:13px;line-height:1.65;}
+  .callout-cyan{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.18);color:var(--text2);}
+  .callout-amber{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);color:var(--text2);}
+  .callout-green{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:var(--text2);}
+  .callout-blue{background:rgba(77,142,247,.07);border:1px solid rgba(77,142,247,.18);color:var(--text2);}
+  .callout-purple{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.18);color:var(--text2);}
+  .section-label{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin:36px 0 14px;}
+  .section-label::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--amber),transparent);}
+  .progress-banner{background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(251,191,36,.04));border:1px solid rgba(52,211,153,.15);border-radius:var(--r-xl);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+  .pb-icon{font-size:22px;flex-shrink:0;}
+  .pb-text{flex:1;font-size:12.5px;color:var(--text3);line-height:1.6;}
+  .pb-text strong{color:var(--text);}
+  .pb-count{font-family:var(--font-mono);font-size:28px;font-weight:900;color:var(--green);flex-shrink:0;text-align:center;}
+  .pb-lbl{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .no-results{display:none;text-align:center;padding:40px;color:var(--text3);font-family:var(--font-mono);font-size:13px;}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:900px){.int-stats{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:640px){.int-stats{grid-template-columns:repeat(2,1fr);}.qna-a{padding-left:20px;}}
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link current" href="index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="search" placeholder="Search questions…" autocomplete="off" aria-label="Search questions">
+      </div>
+
+      <div class="sidebar-label">Interview Topics</div>
+      <a class="sb-link" href="dsa-interview.html"> DSA</a>
+      <a class="sb-link" href="python-interview.html"> Python</a>
+      <a class="sb-link" href="oop-interview.html"> OOP</a>
+      <a class="sb-link" href="aiml-interview.html"> AI/ML</a>
+      <a class="sb-link active" href="sql-interview.html"> SQL</a>
+    </aside>
+
+    <main class="main" id="mainContent">
+      
+    <div class="int-page-hero anim-in">
+      <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — SQL Track</div>
+      <h1 class="iph-title">SQL <span>Interview Questions</span></h1>
+      <p class="iph-sub">40+ SQL questions — joins, window functions, subqueries, indexes, normalization, and query optimization. Tested at virtually every backend and data role.</p>
+      <div class="iph-badges"><span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07);">Queries</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Joins</span><span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Window Fns</span><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Indexes</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07);">Normalization</span></div>
+    </div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">40+</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">10</span><span class="is-label">Queries</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">8</span><span class="is-label">Joins</span></div><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">6</span><span class="is-label">Window Fns</span></div><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">5</span><span class="is-label">Indexes</span></div><div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">5</span><span class="is-label">Normal.</span></div></div>
+    <div class="progress-banner anim-in">
+      <div class="pb-icon">📌</div>
+      <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
+      <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 40 Done</div></div>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text3);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
+    </div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">40+</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('queries',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Queries</button><button class="ftab" onclick="filterQna('joins',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Joins</button><button class="ftab" onclick="filterQna('window',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Window Fns</button><button class="ftab" onclick="filterQna('indexes',this)"><span class="ftab-dot" style="color:var(--green)"></span>Indexes</button><button class="ftab" onclick="filterQna('normalization',this)"><span class="ftab-dot" style="color:var(--amber)"></span>Normalization</button></div>
+    <div class="qna-list anim-in" id="list-main">
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">01</span>
+            <span class="qna-text">What is the difference between DELETE, TRUNCATE, and DROP?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Command</th><th>Type</th><th>Rollback</th><th>Speed</th></tr></thead>
+              <tbody>
+                <tr><td><code>DELETE</code></td><td>DML</td><td>Yes</td><td>Slower (logs each row)</td></tr>
+                <tr><td><code>TRUNCATE</code></td><td>DDL</td><td>Limited</td><td>Faster (deallocates pages)</td></tr>
+                <tr><td><code>DROP</code></td><td>DDL</td><td>No</td><td>Fastest (removes table)</td></tr>
+              </tbody>
+            </table>
+            <div class="callout callout-amber"><strong>Note:</strong> TRUNCATE resets auto-increment counters; DELETE does not.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">02</span>
+            <span class="qna-text">Explain the difference between WHERE and HAVING clauses.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>WHERE:</strong> Filters rows <em>before</em> grouping. Cannot use aggregate functions.<br>
+            <strong>HAVING:</strong> Filters groups <em>after</em> GROUP BY. Can use aggregate functions.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- WHERE filters before grouping</span>
+<span class="kw">SELECT</span> dept, <span class="fu">COUNT</span>(*) <span class="kw">AS</span> emp_count
+<span class="kw">FROM</span> employees
+<span class="kw">WHERE</span> salary > <span class="nm">50000</span>
+<span class="kw">GROUP BY</span> dept
+<span class="kw">HAVING</span> <span class="fu">COUNT</span>(*) > <span class="nm">5</span>;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">03</span>
+            <span class="qna-text">What are the different types of SQL constraints?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <ul>
+              <li><strong>PRIMARY KEY:</strong> Uniquely identifies each row. Cannot be NULL.</li>
+              <li><strong>FOREIGN KEY:</strong> Enforces referential integrity between tables.</li>
+              <li><strong>UNIQUE:</strong> Ensures all values in a column are different.</li>
+              <li><strong>NOT NULL:</strong> Column cannot have NULL values.</li>
+              <li><strong>CHECK:</strong> Validates that values meet a condition.</li>
+              <li><strong>DEFAULT:</strong> Sets a default value if none is provided.</li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">CREATE TABLE</span> users (
+    id      <span class="kw">INT PRIMARY KEY</span>,
+    email   <span class="kw">VARCHAR</span>(<span class="nm">255</span>) <span class="kw">UNIQUE NOT NULL</span>,
+    age     <span class="kw">INT CHECK</span> (age >= <span class="nm">18</span>),
+    status  <span class="kw">VARCHAR</span>(<span class="nm">20</span>) <span class="kw">DEFAULT</span> <span class="st">'active'</span>,
+    dept_id <span class="kw">INT REFERENCES</span> departments(id)
+);</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">04</span>
+            <span class="qna-text">What is normalization? Explain 1NF, 2NF, and 3NF.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>Normalization</strong> organizes data to reduce redundancy and improve integrity.<br><br>
+            <strong>1NF (First Normal Form):</strong> Each column contains atomic values; no repeating groups.<br>
+            <strong>2NF:</strong> 1NF + no partial dependency (all columns depend on the entire primary key).<br>
+            <strong>3NF:</strong> 2NF + no transitive dependency (non-key columns depend only on the primary key).
+            <div class="callout callout-cyan"><strong>Mnemonic:</strong> "The key, the whole key, and nothing but the key."</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">05</span>
+            <span class="qna-text">What is the difference between UNION and UNION ALL?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Feature</th><th>UNION</th><th>UNION ALL</th></tr></thead>
+              <tbody>
+                <tr><td>Duplicates</td><td>Removes</td><td>Keeps all</td></tr>
+                <tr><td>Performance</td><td>Slower (sorts to remove dups)</td><td>Faster</td></tr>
+                <tr><td>Use case</td><td>When you need unique results</td><td>When duplicates are OK</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">06</span>
+            <span class="qna-text">What is a transaction? Explain ACID properties.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>transaction</strong> is a sequence of operations performed as a single logical unit of work.<br><br>
+            <strong>ACID Properties:</strong>
+            <ul>
+              <li><strong>Atomicity:</strong> All or nothing — either all operations succeed or all fail.</li>
+              <li><strong>Consistency:</strong> Database remains in a valid state before and after.</li>
+              <li><strong>Isolation:</strong> Concurrent transactions don't interfere with each other.</li>
+              <li><strong>Durability:</strong> Once committed, changes persist even after system failure.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">21</span>
+            <span class="qna-text">What are DDL, DML, DCL, and TCL? Give examples of each.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            SQL commands are grouped into four categories based on their purpose:
+            <table>
+              <thead><tr><th>Category</th><th>Full Form</th><th>Commands</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><strong>DDL</strong></td><td>Data Definition Language</td><td><code>CREATE, ALTER, DROP, TRUNCATE</code></td><td>Define/modify database structure</td></tr>
+                <tr><td><strong>DML</strong></td><td>Data Manipulation Language</td><td><code>INSERT, UPDATE, DELETE, SELECT</code></td><td>Manipulate data in tables</td></tr>
+                <tr><td><strong>DCL</strong></td><td>Data Control Language</td><td><code>GRANT, REVOKE</code></td><td>Control access permissions</td></tr>
+                <tr><td><strong>TCL</strong></td><td>Transaction Control Language</td><td><code>COMMIT, ROLLBACK, SAVEPOINT</code></td><td>Manage transactions</td></tr>
+              </tbody>
+            </table>
+            <div class="callout callout-cyan"><strong>Key point:</strong> DDL commands are auto-committed and cannot be rolled back. DML changes can be rolled back within a transaction.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">22</span>
+            <span class="qna-text">What is the difference between CHAR and VARCHAR? When should you use each?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Feature</th><th>CHAR</th><th>VARCHAR</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Storage</strong></td><td>Fixed-length (pads with spaces)</td><td>Variable-length (no padding)</td></tr>
+                <tr><td><strong>Performance</strong></td><td>Faster for fixed-size data</td><td>More space-efficient</td></tr>
+                <tr><td><strong>Max size</strong></td><td>255 bytes</td><td>65,535 bytes</td></tr>
+                <tr><td><strong>Use case</strong></td><td>Country codes, phone numbers, status flags</td><td>Names, emails, descriptions</td></tr>
+              </tbody>
+            </table>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">CREATE TABLE</span> users (
+    country_code <span class="kw">CHAR</span>(<span class="nm">2</span>),       <span class="cm">-- Always 2 chars: 'IN', 'US'</span>
+    email        <span class="kw">VARCHAR</span>(<span class="nm">255</span>)    <span class="cm">-- Varies in length</span>
+);</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">23</span>
+            <span class="qna-text">What is a NULL value? How do you handle NULLs in SQL?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>NULL</strong> represents missing, unknown, or inapplicable data — it is <em>not</em> zero or an empty string.<br><br>
+            <strong>Key behaviours:</strong>
+            <ul>
+              <li>Any comparison with NULL returns UNKNOWN (use <code>IS NULL</code> / <code>IS NOT NULL</code>)</li>
+              <li>Arithmetic with NULL produces NULL</li>
+              <li>Aggregate functions (COUNT, SUM) ignore NULLs except <code>COUNT(*)</code></li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Wrong: this never matches</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> phone = <span class="kw">NULL</span>;
+
+<span class="cm">-- Correct</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> phone <span class="kw">IS NULL</span>;
+
+<span class="cm">-- COALESCE: return first non-null value</span>
+<span class="kw">SELECT</span> <span class="fu">COALESCE</span>(phone, <span class="st">'N/A'</span>) <span class="kw">FROM</span> users;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="basics">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">24</span>
+            <span class="qna-text">What is the CASE statement in SQL? Give an example.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            The <strong>CASE</strong> statement implements conditional logic directly in SQL — similar to if/else in programming.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Simple CASE</span>
+<span class="kw">SELECT</span> name,
+    <span class="kw">CASE</span> status
+        <span class="kw">WHEN</span> <span class="st">'A'</span> <span class="kw">THEN</span> <span class="st">'Active'</span>
+        <span class="kw">WHEN</span> <span class="st">'I'</span> <span class="kw">THEN</span> <span class="st">'Inactive'</span>
+        <span class="kw">ELSE</span> <span class="st">'Unknown'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> status_label
+<span class="kw">FROM</span> users;
+
+<span class="cm">-- Searched CASE (with conditions)</span>
+<span class="kw">SELECT</span> name, salary,
+    <span class="kw">CASE</span>
+        <span class="kw">WHEN</span> salary &lt; <span class="nm">50000</span>  <span class="kw">THEN</span> <span class="st">'Junior'</span>
+        <span class="kw">WHEN</span> salary &lt; <span class="nm">100000</span> <span class="kw">THEN</span> <span class="st">'Mid'</span>
+        <span class="kw">ELSE</span> <span class="st">'Senior'</span>
+    <span class="kw">END</span> <span class="kw">AS</span> level
+<span class="kw">FROM</span> employees;</pre>
+            </div>
+            <div class="callout callout-blue"><strong>Use cases:</strong> Salary banding, conditional aggregation, data transformation, pivoting rows to columns.</div>
+          </div>
+        </div>
+
+      </div><!-- /list-basics -->
+
+      <!-- ── JOINS ── -->
+      <div class="section-label">🔗 Joins</div>
+      <div class="qna-list" id="list-joins">
+
+        <div class="qna-item" data-subtopic="joins">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">07</span>
+            <span class="qna-text">Explain the different types of SQL JOINs.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <ul>
+              <li><strong>INNER JOIN:</strong> Returns only matching rows from both tables.</li>
+              <li><strong>LEFT (OUTER) JOIN:</strong> All rows from left table + matching from right. NULLs for non-matches.</li>
+              <li><strong>RIGHT (OUTER) JOIN:</strong> All rows from right table + matching from left.</li>
+              <li><strong>FULL (OUTER) JOIN:</strong> All rows from both tables. NULLs where no match.</li>
+              <li><strong>CROSS JOIN:</strong> Cartesian product — every row paired with every row.</li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- LEFT JOIN example</span>
+<span class="kw">SELECT</span> e.name, d.dept_name
+<span class="kw">FROM</span> employees e
+<span class="kw">LEFT JOIN</span> departments d <span class="kw">ON</span> e.dept_id = d.id;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="joins">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">08</span>
+            <span class="qna-text">What is the difference between JOIN and UNION?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Aspect</th><th>JOIN</th><th>UNION</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Purpose</strong></td><td>Combine columns from tables</td><td>Combine rows from queries</td></tr>
+                <tr><td><strong>Result</strong></td><td>Wider (more columns)</td><td>Longer (more rows)</td></tr>
+                <tr><td><strong>Requirement</strong></td><td>JOIN condition</td><td>Same column structure</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="joins">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">09</span>
+            <span class="qna-text">What is a self-join? Give an example.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>self-join</strong> joins a table to itself — useful for hierarchical data.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Find employees and their managers</span>
+<span class="kw">SELECT</span> e.name <span class="kw">AS</span> employee, m.name <span class="kw">AS</span> manager
+<span class="kw">FROM</span> employees e
+<span class="kw">LEFT JOIN</span> employees m <span class="kw">ON</span> e.manager_id = m.id;</pre>
+            </div>
+            <strong>Use cases:</strong> Org charts, category hierarchies, finding duplicates.
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="joins">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">10</span>
+            <span class="qna-text">How do you find duplicate records in a table?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Find duplicates by email</span>
+<span class="kw">SELECT</span> email, <span class="fu">COUNT</span>(*) <span class="kw">AS</span> cnt
+<span class="kw">FROM</span> users
+<span class="kw">GROUP BY</span> email
+<span class="kw">HAVING</span> <span class="fu">COUNT</span>(*) > <span class="nm">1</span>;
+
+<span class="cm">-- Delete duplicates, keep first</span>
+<span class="kw">DELETE FROM</span> users
+<span class="kw">WHERE</span> id <span class="kw">NOT IN</span> (
+    <span class="kw">SELECT</span> <span class="fu">MIN</span>(id)
+    <span class="kw">FROM</span> users
+    <span class="kw">GROUP BY</span> email
+);</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="joins">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">11</span>
+            <span class="qna-text">What is a CROSS JOIN and when would you use it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>CROSS JOIN</strong> produces the Cartesian product — every row from table A paired with every row from table B.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Generate all size-color combinations</span>
+<span class="kw">SELECT</span> s.size, c.color
+<span class="kw">FROM</span> sizes s
+<span class="kw">CROSS JOIN</span> colors c;</pre>
+            </div>
+            <strong>Use cases:</strong> Generating test data, combinations, permutations.<br>
+            <strong>Caution:</strong> Can produce very large results (rows = A × B).
+          </div>
+        </div>
+
+      </div><!-- /list-joins -->
+
+      <!-- ── ADVANCED ── -->
+      <div class="section-label">⚡ Advanced</div>
+      <div class="qna-list" id="list-advanced">
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">12</span>
+            <span class="qna-text">What are window functions? Explain ROW_NUMBER, RANK, and DENSE_RANK.</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>Window functions</strong> perform calculations across rows related to the current row without collapsing them.<br><br>
+            <strong>Ranking functions:</strong>
+            <ul>
+              <li><code>ROW_NUMBER()</code> — Unique sequential number (1, 2, 3, 4)</li>
+              <li><code>RANK()</code> — Skips after ties (1, 2, 2, 4)</li>
+              <li><code>DENSE_RANK()</code> — No gaps after ties (1, 2, 2, 3)</li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">SELECT</span> name, salary,
+    <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> row_num,
+    <span class="fu">RANK</span>()       <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rank_num,
+    <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> dense_rank
+<span class="kw">FROM</span> employees;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">13</span>
+            <span class="qna-text">What is a CTE (Common Table Expression)? When should you use it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>CTE</strong> is a temporary result set defined within a query using the WITH clause.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">WITH</span> high_earners <span class="kw">AS</span> (
+    <span class="kw">SELECT</span> id, name, salary
+    <span class="kw">FROM</span> employees
+    <span class="kw">WHERE</span> salary > <span class="nm">100000</span>
+)
+<span class="kw">SELECT</span> <span class="fu">AVG</span>(salary) <span class="kw">FROM</span> high_earners;</pre>
+            </div>
+            <strong>Benefits:</strong>
+            <ul>
+              <li>More readable than nested subqueries</li>
+              <li>Can be referenced multiple times</li>
+              <li>Supports recursion (hierarchical queries)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">14</span>
+            <span class="qna-text">How do you find the Nth highest salary?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Method 1: Using DENSE_RANK (recommended)</span>
+<span class="kw">SELECT</span> salary <span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> salary, <span class="fu">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rnk
+    <span class="kw">FROM</span> employees
+) t <span class="kw">WHERE</span> rnk = <span class="nm">3</span>;
+
+<span class="cm">-- Method 2: Using LIMIT/OFFSET (MySQL, PostgreSQL)</span>
+<span class="kw">SELECT DISTINCT</span> salary
+<span class="kw">FROM</span> employees
+<span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="nm">1</span> <span class="kw">OFFSET</span> <span class="nm">2</span>;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">15</span>
+            <span class="qna-text">What is the difference between a view and a materialized view?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Aspect</th><th>View</th><th>Materialized View</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Storage</strong></td><td>Virtual (no storage)</td><td>Physical (stored on disk)</td></tr>
+                <tr><td><strong>Performance</strong></td><td>Runs query each time</td><td>Fast (pre-computed)</td></tr>
+                <tr><td><strong>Data freshness</strong></td><td>Always current</td><td>Needs refresh</td></tr>
+                <tr><td><strong>Use case</strong></td><td>Simple abstraction</td><td>Complex aggregations</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">16</span>
+            <span class="qna-text">What are indexes? When should you create them?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            An <strong>index</strong> is a data structure that speeds up data retrieval at the cost of slower writes.<br><br>
+            <strong>Create indexes on:</strong>
+            <ul>
+              <li>Primary key (automatic) and foreign keys</li>
+              <li>Columns used in WHERE clauses</li>
+              <li>Columns used in JOIN conditions</li>
+              <li>Columns used in ORDER BY</li>
+            </ul>
+            <strong>Avoid indexing:</strong>
+            <ul>
+              <li>Small tables</li>
+              <li>Columns with many NULLs</li>
+              <li>Frequently updated columns</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">25</span>
+            <span class="qna-text">What is a subquery? Difference between correlated and non-correlated subquery?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>subquery</strong> is a query nested inside another query.<br><br>
+            <strong>Non-correlated subquery</strong> — executes independently, once:
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Runs once, result used by outer query</span>
+<span class="kw">SELECT</span> name <span class="kw">FROM</span> employees
+<span class="kw">WHERE</span> salary > (<span class="kw">SELECT</span> <span class="fu">AVG</span>(salary) <span class="kw">FROM</span> employees);</pre>
+            </div>
+            <strong>Correlated subquery</strong> — references the outer query, re-executes for each row:
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Runs for every row in 'e'</span>
+<span class="kw">SELECT</span> e.name <span class="kw">FROM</span> employees e
+<span class="kw">WHERE</span> e.salary = (
+    <span class="kw">SELECT</span> <span class="fu">MAX</span>(salary) <span class="kw">FROM</span> employees
+    <span class="kw">WHERE</span> dept_id = e.dept_id  <span class="cm">-- references outer 'e'</span>
+);</pre>
+            </div>
+            <div class="callout callout-amber"><strong>Performance:</strong> Correlated subqueries can be slow on large datasets. Prefer JOINs or CTEs where possible.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">26</span>
+            <span class="qna-text">What are stored procedures and triggers? How do they differ?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Feature</th><th>Stored Procedure</th><th>Trigger</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Execution</strong></td><td>Called explicitly</td><td>Fires automatically on event</td></tr>
+                <tr><td><strong>Trigger event</strong></td><td>N/A</td><td>INSERT, UPDATE, DELETE</td></tr>
+                <tr><td><strong>Use case</strong></td><td>Business logic, reusable SQL</td><td>Auditing, validation, cascades</td></tr>
+                <tr><td><strong>Parameters</strong></td><td>Accepts IN/OUT params</td><td>No parameters</td></tr>
+              </tbody>
+            </table>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Stored Procedure</span>
+<span class="kw">CREATE PROCEDURE</span> GetEmployeesByDept(IN dept <span class="kw">INT</span>)
+<span class="kw">BEGIN</span>
+    <span class="kw">SELECT</span> * <span class="kw">FROM</span> employees <span class="kw">WHERE</span> dept_id = dept;
+<span class="kw">END</span>;
+
+<span class="cm">-- Trigger: log every salary update</span>
+<span class="kw">CREATE TRIGGER</span> log_salary_change
+<span class="kw">AFTER UPDATE ON</span> employees
+<span class="kw">FOR EACH ROW</span>
+    <span class="kw">INSERT INTO</span> audit_log VALUES (OLD.salary, NEW.salary, <span class="fu">NOW</span>());</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">27</span>
+            <span class="qna-text">What is a recursive CTE? When would you use it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>recursive CTE</strong> references itself to process hierarchical or tree-structured data (e.g., org charts, file systems).<br><br>
+            It has two parts: an <em>anchor member</em> (base case) and a <em>recursive member</em> that builds on the previous result.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">WITH RECURSIVE</span> org_tree <span class="kw">AS</span> (
+    <span class="cm">-- Anchor: start from the top manager</span>
+    <span class="kw">SELECT</span> id, name, manager_id, <span class="nm">0</span> <span class="kw">AS</span> level
+    <span class="kw">FROM</span> employees <span class="kw">WHERE</span> manager_id <span class="kw">IS NULL</span>
+
+    <span class="kw">UNION ALL</span>
+
+    <span class="cm">-- Recursive: get each employee's reports</span>
+    <span class="kw">SELECT</span> e.id, e.name, e.manager_id, o.level + <span class="nm">1</span>
+    <span class="kw">FROM</span> employees e
+    <span class="kw">INNER JOIN</span> org_tree o <span class="kw">ON</span> e.manager_id = o.id
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> org_tree <span class="kw">ORDER BY</span> level;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">28</span>
+            <span class="qna-text">What is a cursor in SQL? When should you use or avoid it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>cursor</strong> allows row-by-row processing of a query result — useful when set-based operations aren't sufficient.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="kw">DECLARE</span> emp_cursor <span class="kw">CURSOR FOR</span>
+    <span class="kw">SELECT</span> id, name <span class="kw">FROM</span> employees;
+
+<span class="kw">OPEN</span> emp_cursor;
+<span class="kw">FETCH NEXT FROM</span> emp_cursor <span class="kw">INTO</span> @id, @name;
+
+<span class="kw">WHILE</span> @@FETCH_STATUS = <span class="nm">0</span>
+<span class="kw">BEGIN</span>
+    <span class="cm">-- process each row</span>
+    <span class="kw">FETCH NEXT FROM</span> emp_cursor <span class="kw">INTO</span> @id, @name;
+<span class="kw">END</span>;
+
+<span class="kw">CLOSE</span> emp_cursor;
+<span class="kw">DEALLOCATE</span> emp_cursor;</pre>
+            </div>
+            <div class="callout callout-amber"><strong>Avoid cursors when possible</strong> — they are slow and resource-intensive. Prefer set-based operations, window functions, or CTEs.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">29</span>
+            <span class="qna-text">What is pivoting and unpivoting in SQL?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>Pivoting</strong> rotates rows into columns. <strong>Unpivoting</strong> does the reverse — converts columns into rows.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- PIVOT: show monthly sales as columns</span>
+<span class="kw">SELECT</span> product,
+    <span class="fu">SUM</span>(<span class="kw">CASE WHEN</span> month = <span class="st">'Jan'</span> <span class="kw">THEN</span> sales <span class="kw">END</span>) <span class="kw">AS</span> Jan,
+    <span class="fu">SUM</span>(<span class="kw">CASE WHEN</span> month = <span class="st">'Feb'</span> <span class="kw">THEN</span> sales <span class="kw">END</span>) <span class="kw">AS</span> Feb,
+    <span class="fu">SUM</span>(<span class="kw">CASE WHEN</span> month = <span class="st">'Mar'</span> <span class="kw">THEN</span> sales <span class="kw">END</span>) <span class="kw">AS</span> Mar
+<span class="kw">FROM</span> sales_data
+<span class="kw">GROUP BY</span> product;
+
+<span class="cm">-- UNPIVOT: convert columns back to rows (SQL Server)</span>
+<span class="kw">SELECT</span> product, month, sales
+<span class="kw">FROM</span> sales_pivot
+<span class="kw">UNPIVOT</span> (sales <span class="kw">FOR</span> month <span class="kw">IN</span> (Jan, Feb, Mar)) u;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">30</span>
+            <span class="qna-text">What are transaction isolation levels? What is a dirty read?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            Isolation levels control how concurrent transactions interact with each other's data.
+            <table>
+              <thead><tr><th>Level</th><th>Dirty Read</th><th>Non-Repeatable Read</th><th>Phantom Read</th></tr></thead>
+              <tbody>
+                <tr><td><code>READ UNCOMMITTED</code></td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+                <tr><td><code>READ COMMITTED</code></td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+                <tr><td><code>REPEATABLE READ</code></td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td></tr>
+                <tr><td><code>SERIALIZABLE</code></td><td>❌ No</td><td>❌ No</td><td>❌ No</td></tr>
+              </tbody>
+            </table>
+            <strong>Dirty read</strong> — reading data that another transaction has modified but not yet committed.<br>
+            <div class="callout callout-cyan"><strong>Default:</strong> Most databases default to <code>READ COMMITTED</code>. MySQL (InnoDB) defaults to <code>REPEATABLE READ</code>.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">31</span>
+            <span class="qna-text">What is the difference between a composite key, surrogate key, and candidate key?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <ul>
+              <li><strong>Candidate key</strong> — any column (or combination) that could serve as a primary key.</li>
+              <li><strong>Composite key</strong> — a primary key formed by combining two or more columns (e.g., <code>order_id + product_id</code>).</li>
+              <li><strong>Surrogate key</strong> — an artificial, system-generated unique identifier (typically auto-increment INT or UUID) with no business meaning.</li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Composite key</span>
+<span class="kw">CREATE TABLE</span> order_items (
+    order_id   <span class="kw">INT</span>,
+    product_id <span class="kw">INT</span>,
+    <span class="kw">PRIMARY KEY</span> (order_id, product_id)
+);
+
+<span class="cm">-- Surrogate key</span>
+<span class="kw">CREATE TABLE</span> users (
+    id    <span class="kw">INT AUTO_INCREMENT PRIMARY KEY</span>,  <span class="cm">-- surrogate</span>
+    email <span class="kw">VARCHAR</span>(<span class="nm">255</span>) <span class="kw">UNIQUE</span>               <span class="cm">-- natural candidate</span>
+);</pre>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /list-advanced -->
+
+      <!-- ── OPTIMIZATION ── -->
+      <div class="section-label">🚀 Optimization</div>
+      <div class="qna-list" id="list-optimization">
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">17</span>
+            <span class="qna-text">How do you optimize a slow SQL query?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>Optimization techniques:</strong>
+            <ol>
+              <li>Use <code>EXPLAIN</code> to analyze the query plan</li>
+              <li>Add appropriate indexes</li>
+              <li>Avoid <code>SELECT *</code> — only fetch needed columns</li>
+              <li>Use WHERE to filter early</li>
+              <li>Avoid functions on indexed columns in WHERE</li>
+              <li>Use EXISTS instead of IN for subqueries</li>
+              <li>Partition large tables</li>
+              <li>Update table statistics</li>
+            </ol>
+            <div class="callout callout-cyan"><strong>Pro tip:</strong> Always test with realistic data volumes.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">18</span>
+            <span class="qna-text">What is a query execution plan?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            An <strong>execution plan</strong> shows how the database engine will execute a query.<br><br>
+            <strong>Key elements:</strong>
+            <ul>
+              <li>Table access method (scan vs index seek)</li>
+              <li>Join algorithms (nested loop, hash join, merge join)</li>
+              <li>Sort operations</li>
+              <li>Estimated cost and row counts</li>
+            </ul>
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- PostgreSQL</span>
+<span class="kw">EXPLAIN ANALYZE</span> <span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="st">'user@example.com'</span>;
+
+<span class="cm">-- MySQL</span>
+<span class="kw">EXPLAIN</span> <span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="st">'user@example.com'</span>;</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">19</span>
+            <span class="qna-text">What is the N+1 query problem and how do you fix it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>N+1 problem:</strong> Fetching N records, then executing 1 additional query per record.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+              <pre><span class="cm"># Bad: N+1 queries</span>
+<span class="kw">for</span> user <span class="kw">in</span> users:
+    orders = db.query(<span class="st">"SELECT * FROM orders WHERE user_id = ?"</span>, user.id)
+
+<span class="cm"># Good: 2 queries with eager loading</span>
+users  = db.query(<span class="st">"SELECT * FROM users"</span>)
+orders = db.query(<span class="st">"SELECT * FROM orders WHERE user_id IN (...)"</span>)</pre>
+            </div>
+            <strong>Solutions:</strong>
+            <ul>
+              <li>Eager loading (JOIN or IN clause)</li>
+              <li>Batch loading</li>
+              <li>Use ORM features like <code>select_related</code> (Django)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">20</span>
+            <span class="qna-text">What is database sharding? When should you use it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>Sharding</strong> is horizontal partitioning — splitting a large table across multiple databases/servers.<br><br>
+            <strong>Sharding strategies:</strong>
+            <ul>
+              <li>Key-based (hash of key)</li>
+              <li>Range-based (by date, ID range)</li>
+              <li>Directory-based (lookup service)</li>
+            </ul>
+            <strong>Use when:</strong>
+            <ul>
+              <li>Single database can't handle write load</li>
+              <li>Data volume exceeds single server capacity</li>
+              <li>Need geographic distribution</li>
+            </ul>
+            <div class="callout callout-amber"><strong>Trade-offs:</strong> Increased complexity, cross-shard joins are expensive, rebalancing is hard.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">32</span>
+            <span class="qna-text">What is the difference between clustered and non-clustered indexes?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Feature</th><th>Clustered Index</th><th>Non-Clustered Index</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Storage</strong></td><td>Data rows are physically sorted by this index</td><td>Separate structure, points to data rows</td></tr>
+                <tr><td><strong>Count per table</strong></td><td>Only one</td><td>Multiple allowed</td></tr>
+                <tr><td><strong>Speed</strong></td><td>Faster for range queries</td><td>Extra lookup step needed</td></tr>
+                <tr><td><strong>Default</strong></td><td>Primary key creates it automatically</td><td>Created manually on other columns</td></tr>
+              </tbody>
+            </table>
+            <div class="callout callout-cyan"><strong>Analogy:</strong> A clustered index is like a phone book sorted by surname — the data itself is ordered. A non-clustered index is like a book's index — it points you to the right page.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="optimization">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">33</span>
+            <span class="qna-text">What is table partitioning? How does it differ from sharding?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Aspect</th><th>Partitioning</th><th>Sharding</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Scope</strong></td><td>Within a single database/server</td><td>Across multiple servers</td></tr>
+                <tr><td><strong>Transparency</strong></td><td>Transparent to the application</td><td>Application must be aware</td></tr>
+                <tr><td><strong>Complexity</strong></td><td>Low–Medium</td><td>High</td></tr>
+                <tr><td><strong>Use case</strong></td><td>Large tables, time-series data</td><td>Write-heavy, massive scale</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /list-optimization -->
+
+      <!-- ── SECURITY ── -->
+      <div class="section-label">🔐 Security</div>
+      <div class="qna-list" id="list-security">
+
+        <div class="qna-item" data-subtopic="security">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">34</span>
+            <span class="qna-text">What is SQL injection? How do you prevent it?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <strong>SQL injection</strong> is an attack where malicious SQL is inserted into a query, allowing unauthorized data access or manipulation.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">python</span></div>
+              <pre><span class="cm"># VULNERABLE: string concatenation</span>
+query = <span class="st">"SELECT * FROM users WHERE name = '"</span> + user_input + <span class="st">"'"</span>
+
+<span class="cm"># SAFE: parameterized query</span>
+cursor.execute(<span class="st">"SELECT * FROM users WHERE name = %s"</span>, (user_input,))</pre>
+            </div>
+            <strong>Prevention methods:</strong>
+            <ul>
+              <li>Use parameterized queries / prepared statements</li>
+              <li>Use an ORM (SQLAlchemy, Django ORM)</li>
+              <li>Validate and sanitize all user input</li>
+              <li>Apply least-privilege database accounts</li>
+              <li>Use stored procedures</li>
+            </ul>
+            <div class="callout callout-blue"><strong>Classic payload:</strong> <code>' OR '1'='1</code> — always evaluates to true, bypassing authentication.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="security">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">35</span>
+            <span class="qna-text">What is the principle of least privilege in databases?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            Users and applications should be granted only the minimum database permissions required to perform their tasks — nothing more.
+            <div class="ans-code">
+              <div class="ans-code-hdr"><span class="ans-code-lang">sql</span></div>
+              <pre><span class="cm">-- Grant only SELECT on specific table</span>
+<span class="kw">GRANT</span> <span class="kw">SELECT</span> <span class="kw">ON</span> sales.orders <span class="kw">TO</span> reporting_user;
+
+<span class="cm">-- Revoke dangerous permissions</span>
+<span class="kw">REVOKE</span> <span class="kw">DROP</span> <span class="kw">ON</span> *.* <span class="kw">FROM</span> app_user;</pre>
+            </div>
+            <div class="callout callout-amber"><strong>Best practice:</strong> Create separate DB users for app reads, app writes, admin, and reporting.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="security">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">36</span>
+            <span class="qna-text">What is database encryption? When is it applied?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            Database encryption protects data from unauthorized access at rest or in transit.<br><br>
+            <strong>Types:</strong>
+            <ul>
+              <li><strong>Encryption at rest</strong> — protects stored files/tablespaces (e.g., AES-256, TDE in SQL Server/MySQL).</li>
+              <li><strong>Encryption in transit</strong> — protects data moving over the network (TLS/SSL connections).</li>
+              <li><strong>Column-level encryption</strong> — encrypt specific sensitive columns (PII, credit card numbers).</li>
+            </ul>
+            <div class="callout callout-blue"><strong>Compliance:</strong> GDPR, HIPAA, and PCI-DSS all require encryption of sensitive data.</div>
+          </div>
+        </div>
+
+      </div><!-- /list-security -->
+
+      <!-- ── ARCHITECTURE ── -->
+      <div class="section-label">🏗️ Architecture</div>
+      <div class="qna-list" id="list-architecture">
+
+        <div class="qna-item" data-subtopic="architecture">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">37</span>
+            <span class="qna-text">What is the difference between OLTP and OLAP databases?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            <table>
+              <thead><tr><th>Aspect</th><th>OLTP</th><th>OLAP</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Purpose</strong></td><td>Day-to-day operations</td><td>Business intelligence, reporting</td></tr>
+                <tr><td><strong>Query type</strong></td><td>Simple, fast CRUD</td><td>Complex aggregations over large data</td></tr>
+                <tr><td><strong>Data volume</strong></td><td>Gigabytes</td><td>Terabytes to Petabytes</td></tr>
+                <tr><td><strong>Examples</strong></td><td>Banking, e-commerce, ERP</td><td>Data warehouses, dashboards</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="architecture">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">38</span>
+            <span class="qna-text">What is data warehousing? What is the ETL process?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>data warehouse</strong> is a central repository that consolidates integrated data from multiple sources, optimized for analysis and reporting.<br><br>
+            <strong>ETL</strong> (Extract, Transform, Load) is the pipeline that feeds a data warehouse:
+            <ul>
+              <li><strong>Extract</strong> — pull raw data from source systems (databases, APIs, files)</li>
+              <li><strong>Transform</strong> — clean, deduplicate, format, join and aggregate the data</li>
+              <li><strong>Load</strong> — insert transformed data into the warehouse</li>
+            </ul>
+            <div class="callout callout-blue"><strong>Modern trend:</strong> ELT (Extract, Load, Transform) — load raw data first, then transform inside the warehouse using its compute power (e.g., Snowflake, BigQuery).</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="architecture">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">39</span>
+            <span class="qna-text">What is CDC (Change Data Capture)? What is a transaction log?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            A <strong>transaction log</strong> is a file that records every modification made to the database in sequential order — the backbone of durability and recovery.<br><br>
+            <strong>CDC (Change Data Capture)</strong> reads the transaction log to detect and capture data changes in near-real-time — without modifying the source database.<br><br>
+            <strong>CDC use cases:</strong>
+            <ul>
+              <li>Syncing data to data warehouses or search indexes</li>
+              <li>Event-driven microservices (database as event source)</li>
+              <li>Audit trails and compliance logging</li>
+              <li>Replicating data to read replicas</li>
+            </ul>
+            <div class="callout callout-cyan"><strong>Tools:</strong> Debezium, AWS DMS, Kafka Connect, SQL Server CDC.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="architecture">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">40</span>
+            <span class="qna-text">What are replication, mirroring, and clustering in databases?</span>
+            <span class="qna-tag tag-sql">SQL</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">
+            All three are high-availability and scalability strategies, but they serve different purposes:
+            <table>
+              <thead><tr><th>Strategy</th><th>What it does</th><th>Primary goal</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Replication</strong></td><td>Copies data from one DB to one or more replicas (can be async)</td><td>Read scalability, disaster recovery</td></tr>
+                <tr><td><strong>Mirroring</strong></td><td>Maintains an exact duplicate database in sync (synchronous)</td><td>High availability, automatic failover</td></tr>
+                <tr><td><strong>Clustering</strong></td><td>Multiple servers share the same storage, appear as one DB</td><td>Load balancing, failover, zero downtime</td></tr>
+              </tbody>
+            </table>
+            <div class="callout callout-blue"><strong>Real world:</strong> Most production systems combine these — e.g., a clustered primary with replicas for read-heavy workloads.</div>
+          </div>
+        </div>
+
+      </div><!-- /list-architecture -->
+
+      <div class="no-results" id="no-results">
+        <div class="nr-icon">🔍</div>
+        <div class="nr-text">No questions match your search.</div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="page-nav">
+    <a class="nav-link" href="aiml-interview.html">← AI/ML</a>
+    <a class="nav-link" href="index.html">Back to All →</a>
+  </div>
+
+  <button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+
+  <script src="../assets/js/utils.js?v=3"></script>
+<script>
+const TRACK='sql',TOTAL=40;
+function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
+function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
+function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}
+function renderProgress(){let done=0;document.querySelectorAll('.qna-cb').forEach(cb=>{if(isChecked(cb.dataset.n)){cb.classList.add('checked');done++;}else cb.classList.remove('checked');});const el=document.getElementById('doneCount');if(el)el.textContent=done;}
+function resetProgress(){if(!confirm('Reset all SQL Track progress?'))return;document.querySelectorAll('.qna-cb').forEach(cb=>setChecked(cb.dataset.n,false));renderProgress();}
+function toggleQ(qEl){const item=qEl.closest('.qna-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.qna-item.open').forEach(el=>el.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+function filterQna(sub,btn){document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const show=sub==='all'||item.dataset.subtopic===sub||item.dataset.cat===sub;item.style.display=show?'':'none';if(show)v++;});document.getElementById('no-results').style.display=v===0?'block':'none';const inp=document.getElementById('qna-search');if(inp)inp.value='';}
+function searchQna(val){const q=val.trim().toLowerCase();let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const t=item.querySelector('.qna-text'),a=item.querySelector('.qna-a');const m=!q||(t?.textContent.toLowerCase().includes(q)||a?.textContent.toLowerCase().includes(q));item.style.display=m?'':'none';if(m)v++;if(q)item.classList.remove('open');});document.getElementById('no-results').style.display=v===0?'block':'none';}
+const pf=document.getElementById('progressFill'),bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>{const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;if(pf)pf.style.width=(h>0?(s/h)*100:0)+'%';if(bt)bt.classList.toggle('visible',s>400);},{passive:true});
+if(bt)bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('qna-search')?.focus();}});
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{const n=item.dataset.n||String(i+1).padStart(2,'0');item.dataset.n=n;const qEl=item.querySelector('.qna-q');if(qEl&&!qEl.querySelector('.qna-cb')){const cb=document.createElement('div');cb.className='qna-cb';cb.dataset.n=n;cb.addEventListener('click',e=>{e.stopPropagation();const c=!cb.classList.contains('checked');setChecked(n,c);renderProgress();});qEl.insertBefore(cb,qEl.firstChild);}});
+const ao=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ao.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';ao.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>
+</html>

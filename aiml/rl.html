@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Reinforcement Learning — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link active" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+</aside>
+
+  <main class="main" id="mainContent">
+  
+      <div class="aim-hero anim-in">
+        <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — Reinforcement Learning</div>
+        <h1 class="aim-title">🎮 <span>Reinforcement Learning</span></h1>
+        <p class="aim-sub">Agents that learn by doing — Markov Decision Processes, Q-learning, policy gradients, and RLHF. How AlphaGo mastered Go and how LLMs are aligned with human values.</p>
+        <div class="aim-badges"><span class="aim-badge">Advanced</span><span class="aim-badge">MDPs</span><span class="aim-badge">RLHF</span></div>
+      </div>
+      <div class="aim-stats anim-in"><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">8</span><span class="bks-label">Topics</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">MDPs</span><span class="bks-label">Q-Learning</span></div><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">Policy</span><span class="bks-label">Gradient</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">RLHF</span><span class="bks-label">LLM Align.</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">35m</span><span class="bks-label">Read Time</span></div></div>
+
+<div class="info-section">
+      <div class="info-tabs">
+        <div class="info-tab active" onclick="switchTab(this,'rl-what')">Core Concepts</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-mdp')">MDP Framework</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-algorithms')">Algorithms</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-drl')">Deep RL</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-policy')">Policy Gradient</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-rlhf')">RLHF</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-apps')">Applications</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-code')">Code</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-interview')">Interview Q&amp;A</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-cheatsheet')">⚡ Cheat Sheet</div>
+        <div class="info-tab" onclick="switchTab(this,'rl-quiz')">Quiz</div>
+      </div>
+
+      <!-- ══ TAB 1: CORE CONCEPTS ══ -->
+      <div class="info-pane active" id="rl-what">
+        <div class="stat-bar">
+          <div class="stat-item"><span class="stat-num" style="color:var(--amber)">4,900</span><span class="stat-lbl">ELO — AlphaGo vs human</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--pink)">40%</span><span class="stat-lbl">Cooling energy saved (DeepMind DC)</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--cyan)">PPO</span><span class="stat-lbl">Algorithm powering RLHF</span></div>
+          <div class="stat-item"><span class="stat-num" style="color:var(--green)">2016</span><span class="stat-lbl">AlphaGo beats Lee Sedol</span></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">What is Reinforcement Learning?</div>
+              <div class="step-desc">RL is a learning paradigm where an <strong>agent</strong> learns to make decisions by interacting with an <strong>environment</strong>. Unlike supervised learning (learn from labelled examples), RL learns by <strong>trial and error</strong> — taking actions, receiving reward signals, and improving over time. No teacher says "do this"; only reward/punishment from the environment guides learning. Like learning to ride a bike: fall → penalty, balance → reward, practice → mastery.</div>
+              <div class="step-code">Supervised ML: learn from labels · RL: learn from interaction + reward signals</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">The Agent–Environment Loop</div>
+              <div class="step-desc">At each timestep: (1) Agent observes state sₜ. (2) Agent selects action aₜ using its policy π. (3) Environment transitions to new state sₜ₊₁ and emits reward rₜ. (4) Agent updates its policy to get more reward. This loop repeats until the episode ends or the agent masters the task. Every RL problem reduces to this interaction loop.</div>
+              <div class="step-code">Agent → Action aₜ → Environment → (State sₜ₊₁, Reward rₜ) → Agent (repeat)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Policy π — The Agent's Brain</div>
+              <div class="step-desc">The policy maps states to actions — it's what the agent is trying to learn. <strong>Deterministic policy:</strong> a = π(s) — always the same action in a given state. <strong>Stochastic policy:</strong> a ~ π(a|s) — probability distribution over actions. Stochastic policies are often better — they maintain exploration and are more robust. The entire goal of RL is to find the optimal policy π* that maximises expected return.</div>
+              <div class="step-code">Deterministic: a = π(s) · Stochastic: P(a|s) · Optimal: π* = argmax_π E[G]</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Reward &amp; Discounted Return</div>
+              <div class="step-desc"><strong>Reward rₜ:</strong> immediate scalar feedback from the environment at step t. <strong>Return Gₜ:</strong> sum of all future rewards from step t onwards. <strong>Discount factor γ∈[0,1]:</strong> weights near-future rewards more than distant ones. γ=1: care equally about all future rewards. γ=0: care only about immediate reward. γ=0.99 is typical in practice — values rewards near equally but discounts exponentially far-future ones.</div>
+              <div class="step-code">Gₜ = rₜ + γrₜ₊₁ + γ²rₜ₊₂ + ... = Σₖ₌₀^∞ γᵏrₜ₊ₖ · γ=0.99 typical</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Exploration vs Exploitation</div>
+              <div class="step-desc">The fundamental RL dilemma. <strong>Exploitation:</strong> use your best known action — maximise immediate reward based on current knowledge. <strong>Exploration:</strong> try something new — you might discover better actions. Too much exploitation: stuck in suboptimal behaviour. Too much exploration: waste time on known bad actions. <strong>ε-greedy:</strong> explore randomly with prob ε, exploit otherwise. ε decays from 1.0 → 0.01 as training progresses.</div>
+              <div class="step-code">ε-greedy: if rand() &lt; ε → explore (random) · else → exploit (argmax Q) · ε: 1.0 → 0.01</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">RL vs Supervised vs Unsupervised</div>
+              <div class="step-desc"><strong>Supervised ML:</strong> given (X, y) pairs — learn the mapping. <strong>Unsupervised ML:</strong> given X only — find structure. <strong>RL:</strong> no dataset given — agent generates its own experience through interaction. Reward signal is delayed (may not know which action caused success), sparse (reward only at game end), and non-stationary (as policy improves, the data distribution changes). These properties make RL fundamentally harder than supervised learning.</div>
+              <div class="step-code">RL challenges: delayed reward · sparse signal · non-stationary distribution · no i.i.d. data</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rl-loop">
+          <div class="rl-node"><div class="rl-node-title">Agent</div><div class="rl-node-sub">Policy π</div></div>
+          <div class="rl-arrow"><div>→</div><div class="rl-arrow-label">action aₜ</div></div>
+          <div class="rl-node"><div class="rl-node-title">Environment</div><div class="rl-node-sub">State transitions</div></div>
+          <div class="rl-arrow"><div>→</div><div class="rl-arrow-label">sₜ₊₁, rₜ</div></div>
+          <div class="rl-node"><div class="rl-node-title">Agent</div><div class="rl-node-sub">Update policy</div></div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 2: MDP ══ -->
+      <div class="info-pane" id="rl-mdp">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Markov Decision Process (MDP)</div>
+              <div class="step-desc">The formal mathematical framework for RL. An MDP is defined by the tuple (S, A, P, R, γ): <strong>S</strong> — state space (all possible states). <strong>A</strong> — action space (all possible actions). <strong>P(s'|s,a)</strong> — transition probability: probability of reaching state s' from state s with action a. <strong>R(s,a)</strong> — reward function. <strong>γ</strong> — discount factor. If you know P and R completely, you have a "model" and can use dynamic programming. In most real problems, P is unknown — model-free RL.</div>
+              <div class="step-code">MDP = (S, A, P, R, γ) · P known → model-based · P unknown → model-free RL</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">The Markov Property</div>
+              <div class="step-desc">The future depends only on the current state, not the full history. P(sₜ₊₁|sₜ,aₜ) = P(sₜ₊₁|s₀,...,sₜ,a₀,...,aₜ). "The present captures everything relevant about the past." This simplification is what makes MDPs tractable. In practice, many environments aren't truly Markov — use frame stacking (Atari) or recurrent networks (LSTMs) to include history when needed.</div>
+              <div class="step-code">P(s'|s,a) — next state depends only on current state, not history · "memory-less"</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Value Functions — V(s) and Q(s,a)</div>
+              <div class="step-desc"><strong>State value V^π(s):</strong> expected discounted return starting from state s, following policy π. Tells you "how good is it to be in state s?" <strong>Action value Q^π(s,a):</strong> expected return from state s, taking action a, then following π. More useful — directly tells you which action to take. <strong>Advantage A(s,a) = Q(s,a) − V(s):</strong> how much better is action a than average — used in actor-critic methods.</div>
+              <div class="step-code">V^π(s) = E[Gₜ|sₜ=s] · Q^π(s,a) = E[Gₜ|sₜ=s,aₜ=a] · A(s,a) = Q(s,a)-V(s)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Bellman Equations</div>
+              <div class="step-desc">Recursive decomposition: the value of a state equals the immediate reward plus the discounted value of the next state. This bootstrapping relationship is the foundation for all value-based RL algorithms. <strong>Bellman optimality:</strong> optimal policy always takes the action that maximises Q*. If we know Q*, we're done — just act greedily.</div>
+              <div class="step-code">Q*(s,a) = R(s,a) + γ · Σ_{s'} P(s'|s,a) · max_{a'} Q*(s',a') · Bellman optimality</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Partial Observability (POMDP)</div>
+              <div class="step-desc">In a Partially Observable MDP, the agent doesn't see the full state — only a noisy observation. Real-world examples: a robot can't see what's behind it; an Atari game shows only the current frame (is a ball moving left or right?). Solutions: frame stacking (use last 4 frames), recurrent policies (LSTM maintains memory), belief states (probability distribution over states).</div>
+              <div class="step-code">POMDP: observe oₜ ≠ sₜ · fix: stack frames · LSTM · belief state b(s) = P(s|observations)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 3: ALGORITHMS ══ -->
+      <div class="info-pane" id="rl-algorithms">
+        <div class="sub-heading">Algorithm Taxonomy</div>
+        <div class="algo-grid">
+          <div class="algo-card ac-amber">
+            <div class="algo-name">Dynamic Programming</div>
+            <div class="algo-type at-vb">Value-Based</div>
+            <div class="algo-desc">Requires complete model (P, R known). Policy iteration or value iteration to find V* or Q*. Only works for small, fully known environments.</div>
+            <div class="algo-formula">V*(s) = max_a [R + γΣP(s'|s,a)V*(s')]</div>
+          </div>
+          <div class="algo-card ac-cyan">
+            <div class="algo-name">Q-Learning</div>
+            <div class="algo-type at-off">Off-Policy TD</div>
+            <div class="algo-desc">Model-free. Learns Q* directly from experience. Off-policy: learns from any behaviour. Foundation for DQN. Tabular: only for small discrete spaces.</div>
+            <div class="algo-formula">Q(s,a) ← Q(s,a) + α[r + γ·max_a' Q(s',a') - Q(s,a)]</div>
+          </div>
+          <div class="algo-card ac-purple">
+            <div class="algo-name">SARSA</div>
+            <div class="algo-type at-on">On-Policy TD</div>
+            <div class="algo-desc">Like Q-learning but updates using the actual next action taken (on-policy). More conservative. Better for risky environments where exploration could be costly.</div>
+            <div class="algo-formula">Q(s,a) ← Q(s,a) + α[r + γ·Q(s',a') - Q(s,a)]</div>
+          </div>
+          <div class="algo-card ac-green">
+            <div class="algo-name">Monte Carlo</div>
+            <div class="algo-type at-on">On-Policy</div>
+            <div class="algo-desc">Learn from complete episode returns. No bootstrapping. High variance but unbiased. Works for episodic tasks. Can't learn online mid-episode.</div>
+            <div class="algo-formula">V(s) ← average(returns from visits to s)</div>
+          </div>
+          <div class="algo-card ac-amber">
+            <div class="algo-name">DQN</div>
+            <div class="algo-type at-vb">Deep Value</div>
+            <div class="algo-desc">Q-learning + neural network. Experience replay + target network for stability. Solved Atari from pixels. The bridge from tabular to deep RL.</div>
+            <div class="algo-formula">Q(s,a;θ) ← r + γ·max_a' Q(s',a';θ⁻)</div>
+          </div>
+          <div class="algo-card ac-pink">
+            <div class="algo-name">PPO</div>
+            <div class="algo-type at-pg">Policy Gradient</div>
+            <div class="algo-desc">Proximal Policy Optimisation. Clips policy updates for stability. Simple, robust, widely used. Powers RLHF for LLMs, robotics, game AI. OpenAI's default.</div>
+            <div class="algo-formula">L^CLIP = E[min(rA, clip(r,1-ε,1+ε)A)]</div>
+          </div>
+          <div class="algo-card ac-cyan">
+            <div class="algo-name">SAC</div>
+            <div class="algo-type at-off">Off-Policy PG</div>
+            <div class="algo-desc">Soft Actor-Critic. Maximum entropy RL: maximise reward + randomness (exploration). Off-policy: sample efficient. State-of-art for continuous control (robotics).</div>
+            <div class="algo-formula">J(π) = E[Σ rₜ + α·H(π(·|sₜ))]</div>
+          </div>
+          <div class="algo-card ac-purple">
+            <div class="algo-name">TD3</div>
+            <div class="algo-type at-off">Off-Policy PG</div>
+            <div class="algo-desc">Twin Delayed DDPG. Uses two critics (reduces overestimation), delayed policy updates, target policy smoothing. Excellent for continuous control tasks.</div>
+            <div class="algo-formula">min(Q₁, Q₂) target · delayed actor update</div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Model-Free vs Model-Based</div>
+        <table class="comp-table">
+          <thead><tr><th>Property</th><th>Model-Free</th><th>Model-Based</th></tr></thead>
+          <tbody>
+            <tr><td>Knows P(s'|s,a)?</td><td style="color:var(--red)">No — learns from interaction</td><td style="color:var(--green)">Yes — or learns a model</td></tr>
+            <tr><td>Sample efficiency</td><td style="color:var(--red)">Low — needs many episodes</td><td style="color:var(--green)">High — plans from model</td></tr>
+            <tr><td>Complexity</td><td style="color:var(--green)">Simple</td><td style="color:var(--amber)">Higher — model learning adds error</td></tr>
+            <tr><td>Algorithms</td><td>Q-learning, PPO, SAC, DQN</td><td>Dyna-Q, MCTS, World Models, Dreamer</td></tr>
+            <tr><td>Best for</td><td>Games, LLM alignment, unknown dynamics</td><td>Planning, sim-to-real, robot manipulation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══ TAB 4: DEEP RL ══ -->
+      <div class="info-pane" id="rl-drl">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">DQN — Deep Q-Network (DeepMind, 2013)</div>
+              <div class="step-desc">Replace the Q-table with a neural network: input = game screen pixels (84×84×4 grayscale frames stacked), output = Q(s,a) for all actions. Two critical tricks: <strong>Experience replay:</strong> store (s,a,r,s') in a buffer, sample random minibatches — breaks temporal correlation. <strong>Target network:</strong> separate frozen network θ⁻ for TD targets, updated every N steps — prevents oscillation. Achieved human-level performance on 49 Atari games from raw pixels.</div>
+              <div class="step-code">Q(s,a;θ) ← r + γ·max_{a'} Q(s',a';θ⁻) · replay buffer · target network updated every 10k steps</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Double DQN &amp; Dueling DQN</div>
+              <div class="step-desc"><strong>Double DQN:</strong> DQN overestimates Q-values because it uses the same network to select and evaluate actions. Fix: use online network to select action, target network to evaluate. Reduces overestimation bias significantly. <strong>Dueling DQN:</strong> decompose Q(s,a) = V(s) + A(s,a) — value of being in state (shared) plus advantage of each action. Better generalisation: learns V(s) even for states where some actions are irrelevant.</div>
+              <div class="step-code">Double: select a* = argmax_a Q(s',a;θ) · evaluate Q(s',a*;θ⁻) · Dueling: Q=V+A-mean(A)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Actor-Critic Architecture</div>
+              <div class="step-desc">Combines value-based and policy gradient approaches. <strong>Actor π(a|s;θ):</strong> the policy network — outputs action probabilities. <strong>Critic V(s;φ) or Q(s,a;φ):</strong> the value network — estimates return. Actor updates its policy using the critic's advantage estimate: how much better is this action than average? Critic updates via standard TD. Lower variance than pure policy gradient (which must wait for episode end).</div>
+              <div class="step-code">Actor: θ ← θ + α·∇log π(a|s;θ)·A(s,a) · Critic: φ ← φ + β·TD error · run simultaneously</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">A3C / A2C — Parallel Actors</div>
+              <div class="step-desc"><strong>A3C (Asynchronous):</strong> multiple workers run independently in parallel, asynchronously updating a global network. Naturally decorrelates experience. Fast but noisy gradients. <strong>A2C (Synchronous):</strong> workers collect experience simultaneously, then all update together. More stable, comparable performance, simpler to implement. A2C is now generally preferred. Both use entropy bonus to encourage exploration.</div>
+              <div class="step-code">A2C: N workers → synchronous rollouts → global update · faster than serial + decorrelated</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">AlphaGo / AlphaZero — The MCTS + Deep RL Combination</div>
+              <div class="step-desc">DeepMind combined Monte Carlo Tree Search with deep RL. <strong>Policy network:</strong> suggests promising moves (trained by RL). <strong>Value network:</strong> estimates win probability (trained by RL). MCTS uses both to guide simulated playouts. <strong>AlphaZero:</strong> starts from zero knowledge, trains purely through self-play — no human games, no handcrafted features. Mastered Chess, Shogi, and Go simultaneously to superhuman level in hours.</div>
+              <div class="step-code">MCTS × policy_net(board) × value_net(board) → best move · self-play → superhuman in days</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 5: POLICY GRADIENT ══ -->
+      <div class="info-pane" id="rl-policy">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">Why Policy Gradient?</div>
+              <div class="step-desc">Value-based methods (Q-learning) select actions greedily from Q-values — but this requires discrete action spaces and can't handle continuous actions (robot joint angles, steering). Policy gradient methods directly optimise the policy network using gradient ascent on expected return. Work naturally with <strong>continuous action spaces</strong>, <strong>stochastic policies</strong>, and <strong>partial observability</strong>. The backbone of modern deep RL and RLHF.</div>
+              <div class="step-code">Q-learning → discrete actions only · Policy gradient → continuous + stochastic actions</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Policy Gradient Theorem</div>
+              <div class="step-desc">The gradient of expected return with respect to policy parameters. The "log trick" (∇log π = ∇π/π) converts the gradient of a probability into something computable from sampled trajectories. Intuition: increase the log-probability of actions that led to high return; decrease it for low-return actions. The Q-value (or advantage) weights how much to push each action.</div>
+              <div class="step-code">∇_θ J(θ) = E_π[∇_θ log π(a|s;θ) · Q^π(s,a)] · increase prob of good actions</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">REINFORCE — Monte Carlo Policy Gradient</div>
+              <div class="step-desc">Simplest policy gradient: run a full episode, use discounted return Gₜ as the Q estimate, update parameters. Simple but extremely high variance — return from a single trajectory is noisy. <strong>Baseline trick:</strong> subtract V(s) from return to get advantage A(s,a) = Gₜ − V(sₜ). Same gradient direction in expectation but dramatically lower variance. The baseline doesn't bias the gradient.</div>
+              <div class="step-code">θ ← θ + α·∇_θ log π(aₜ|sₜ;θ)·(Gₜ - V(sₜ)) · baseline V(s) reduces variance</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">PPO — Proximal Policy Optimisation</div>
+              <div class="step-desc">OpenAI's workhorse algorithm. The key insight: large policy updates can be catastrophically destabilising — the new policy might be so different that the value estimates become meaningless. Fix: clip the probability ratio r = π_new(a|s) / π_old(a|s) to stay within [1−ε, 1+ε]. This prevents any single update from changing the policy too drastically. Simple, robust, widely applicable. Powers robotics, game AI, and RLHF for LLMs.</div>
+              <div class="step-code">L^CLIP(θ) = E[min(r(θ)·A, clip(r(θ), 1-ε, 1+ε)·A)] · ε=0.1 or 0.2 typical</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">SAC — Soft Actor-Critic</div>
+              <div class="step-desc">Maximum entropy RL: augment the reward with the policy's entropy H(π(·|s)). This encourages the policy to be as random as possible while still maximising reward. Benefits: automatic exploration without ε-greedy, robustness (multiple near-optimal actions reinforced), better generalisation. Off-policy: uses a replay buffer — extremely sample efficient. State-of-art for continuous control tasks.</div>
+              <div class="step-code">J(π) = E[Σ rₜ + α·H(π(·|sₜ))] · α = temperature (entropy weight) · off-policy = efficient</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 6: RLHF ══ -->
+      <div class="info-pane" id="rl-rlhf">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">00</div>
+            <div class="step-body">
+              <div class="step-title">What is RLHF?</div>
+              <div class="step-desc">Reinforcement Learning from Human Feedback aligns large language models with human values and preferences. The key challenge: how do you define a reward function for "helpfulness" or "harmlessness"? You can't write it as a formula. RLHF replaces a hand-crafted reward with human preference judgements, learned into a reward model. Used to produce ChatGPT, Claude, Gemini, and every major conversational AI.</div>
+              <div class="step-code">Problem: can't write reward(helpful) as formula · Solution: learn reward from human preferences</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <div class="step-title">Step 1 — Supervised Fine-Tuning (SFT)</div>
+              <div class="step-desc">Start from a pretrained LLM. Fine-tune on high-quality (prompt, ideal response) pairs written by human contractors. Teaches the base model to behave as an assistant — follow instructions, maintain helpful tone, format answers correctly. Typically 10k–100k curated examples. Without SFT, the base model generates incoherent text; with SFT, it's a capable but potentially unsafe assistant.</div>
+              <div class="step-code">Base LLM → SFT on {prompt, ideal_response} pairs → instruction-following model</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">Step 2 — Reward Model Training</div>
+              <div class="step-desc">Human raters compare pairs of model responses: "Response A or B — which is better?" Collect hundreds of thousands of such preference pairs. Train a separate reward model (same architecture as SFT model, regression head) to predict which response humans would prefer. This reward model becomes the automated "human judge" during RL training — much cheaper than using real humans every step.</div>
+              <div class="step-code">RM(prompt, response_A, response_B) → P(A preferred) · trained on human preference pairs</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">Step 3 — PPO Optimisation</div>
+              <div class="step-desc">Use PPO to fine-tune the SFT model to maximise reward model scores. Critical stabilisation: add a KL divergence penalty between the RL-optimised policy and the SFT model — prevents the model from "gaming" the reward model by producing gibberish that gets high scores. The KL penalty keeps the model close to the SFT baseline while improving along the reward dimension.</div>
+              <div class="step-code">reward = RM(response) - β·KL(π_RL || π_SFT) · β prevents reward hacking + mode collapse</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">DPO — Direct Preference Optimisation (2023)</div>
+              <div class="step-desc">A simpler alternative that skips the reward model and PPO entirely. Directly optimises on preference pairs (chosen > rejected) using a supervised loss. The key insight: the optimal policy under RLHF with KL constraint has a closed-form solution — you can derive a loss that optimises it directly without ever running RL. Same performance as RLHF, more stable training, no reward model needed. Now widely preferred in open-source community (used by Llama 3, Mistral, Zephyr).</div>
+              <div class="step-code">L_DPO = -log σ(β[log π(y_w|x) - log π(y_l|x) - same for ref model]) · no RM, no PPO</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout callout-amber" style="margin-top:20px;">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>Reward hacking:</strong> RL systems will find unexpected ways to maximise the reward function that violate the intent. An RL boat racing agent found it could score higher by driving in circles collecting power-ups than finishing the race. The KL penalty in RLHF prevents LLMs from exploiting the reward model with incoherent high-scoring outputs.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 7: APPLICATIONS ══ -->
+      <div class="info-pane" id="rl-apps">
+        <div class="algo-grid">
+          <div class="algo-card ac-amber">
+            <div class="algo-name">🎮 Game Playing</div>
+            <div class="algo-desc">AlphaGo/Zero (Go), OpenAI Five (Dota 2 — 5v5 at pro level), AlphaStar (StarCraft II Grandmaster), DQN (49 Atari games from pixels).</div>
+            <div class="algo-formula">DQN · AlphaZero · PPO · MCTS+RL</div>
+          </div>
+          <div class="algo-card ac-cyan">
+            <div class="algo-name">🤖 Robotics</div>
+            <div class="algo-desc">Locomotion (bipedal walking, backflips), dexterous manipulation, robotic surgery. Google DeepMind RT-2: language-conditioned robot actions.</div>
+            <div class="algo-formula">SAC · TD3 · PPO · sim-to-real transfer</div>
+          </div>
+          <div class="algo-card ac-purple">
+            <div class="algo-name">💬 LLM Alignment</div>
+            <div class="algo-desc">RLHF makes ChatGPT, Claude, Gemini helpful, harmless, honest. DPO increasingly preferred. Constitutional AI (Anthropic) uses RL with AI feedback.</div>
+            <div class="algo-formula">PPO + KL penalty · DPO · CAI</div>
+          </div>
+          <div class="algo-card ac-green">
+            <div class="algo-name">⚡ Resource Management</div>
+            <div class="algo-desc">DeepMind's RL agent reduced Google datacenter cooling energy by 40%. RL for CPU/GPU scheduling, network routing, cloud resource allocation.</div>
+            <div class="algo-formula">PPO · Q-learning · custom envs</div>
+          </div>
+          <div class="algo-card ac-amber">
+            <div class="algo-name">📈 Finance &amp; Trading</div>
+            <div class="algo-desc">Algorithmic trading, portfolio optimisation, order execution to minimise market impact. J.P. Morgan, Goldman Sachs use RL for execution strategies.</div>
+            <div class="algo-formula">DQN · SAC · multi-agent RL</div>
+          </div>
+          <div class="algo-card ac-pink">
+            <div class="algo-name">🚗 Autonomous Driving</div>
+            <div class="algo-desc">RL for high-level decision making in complex traffic scenarios. Waymo uses RL in simulation. Tesla uses imitation learning + RL for FSD.</div>
+            <div class="algo-formula">PPO + MCTS · sim-to-real · safety constraints</div>
+          </div>
+          <div class="algo-card ac-cyan">
+            <div class="algo-name">💊 Drug Discovery</div>
+            <div class="algo-desc">RL for molecular design — generate molecules with desired properties (high binding affinity, low toxicity). Treats molecule generation as a sequential decision process.</div>
+            <div class="algo-formula">Policy gradient · REINFORCE · molecular graphs</div>
+          </div>
+          <div class="algo-card ac-purple">
+            <div class="algo-name">⚛️ Nuclear Fusion</div>
+            <div class="algo-desc">DeepMind (2022): RL agent controls plasma shape in a tokamak reactor. Maintained complex plasma configurations that previously required extensive manual tuning.</div>
+            <div class="algo-formula">Custom RL · continuous control · safety</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 8: CODE ══ -->
+      <div class="info-pane" id="rl-code">
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">python — Q-Learning on CartPole with ε-greedy exploration</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> gymnasium <span class="kw">as</span> gym
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+env = gym.make(<span class="st">'CartPole-v1'</span>)
+Q   = np.zeros((<span class="num">10</span>**<span class="num">4</span>, env.action_space.n))
+
+alpha, gamma, epsilon = <span class="num">0.1</span>, <span class="num">0.99</span>, <span class="num">1.0</span>
+
+<span class="kw">def</span> <span class="fn">discretize</span>(obs):
+    <span class="kw">return</span> hash(tuple(np.round(obs, <span class="num">1</span>))) % <span class="num">10</span>**<span class="num">4</span>
+
+<span class="kw">for</span> ep <span class="kw">in</span> range(<span class="num">1000</span>):
+    obs, _ = env.reset()
+    s = discretize(obs)
+    total_reward = <span class="num">0</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="cm"># ε-greedy: explore or exploit</span>
+        a = env.action_space.sample() <span class="kw">if</span> np.random.rand() &lt; epsilon <span class="kw">else</span> np.argmax(Q[s])
+        next_obs, r, done, _, _ = env.step(a)
+        s2 = discretize(next_obs)
+
+        <span class="cm"># Q-learning update (Bellman equation)</span>
+        Q[s, a] += alpha * (r + gamma * np.max(Q[s2]) - Q[s, a])
+        s = s2
+        total_reward += r
+        <span class="kw">if</span> done: <span class="kw">break</span>
+
+    epsilon = max(<span class="num">0.01</span>, epsilon * <span class="num">0.995</span>)  <span class="cm"># decay exploration</span>
+    <span class="kw">if</span> ep % <span class="num">100</span> == <span class="num">0</span>:
+        <span class="fn">print</span>(<span class="st">f"Ep {ep} | reward={total_reward:.0f} | ε={epsilon:.3f}"</span>)</pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — PPO via Stable-Baselines3 (production pattern)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">from</span> stable_baselines3 <span class="kw">import</span> PPO, SAC
+<span class="kw">from</span> stable_baselines3.common.env_util <span class="kw">import</span> make_vec_env
+<span class="kw">from</span> stable_baselines3.common.callbacks <span class="kw">import</span> EvalCallback
+
+<span class="cm"># Vectorised envs for parallel experience collection</span>
+train_env = make_vec_env(<span class="st">'LunarLander-v2'</span>, n_envs=<span class="num">8</span>)
+eval_env  = make_vec_env(<span class="st">'LunarLander-v2'</span>, n_envs=<span class="num">4</span>)
+
+<span class="cm"># PPO for discrete action spaces (games, logistics)</span>
+ppo = PPO(
+    <span class="st">'MlpPolicy'</span>, train_env,
+    n_steps=<span class="num">2048</span>, batch_size=<span class="num">64</span>, n_epochs=<span class="num">10</span>,
+    gamma=<span class="num">0.99</span>, gae_lambda=<span class="num">0.95</span>, clip_range=<span class="num">0.2</span>,
+    ent_coef=<span class="num">0.01</span>,   <span class="cm"># entropy bonus for exploration</span>
+    learning_rate=<span class="num">3e-4</span>, verbose=<span class="num">1</span>
+)
+
+<span class="cm"># Auto-evaluate + save best model</span>
+cb = EvalCallback(eval_env, best_model_save_path=<span class="st">'./best'</span>, eval_freq=<span class="num">5000</span>)
+ppo.learn(total_timesteps=<span class="num">500_000</span>, callback=cb)
+
+<span class="cm"># SAC for continuous action spaces (robotics)</span>
+<span class="cm"># sac = SAC('MlpPolicy', 'Pendulum-v1', verbose=1)</span>
+<span class="cm"># sac.learn(total_timesteps=100_000)</span></pre>
+        </div>
+
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr"><span class="code-lang">python — DQN replay buffer + target network (core components)</span><div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div></div>
+          <pre class="code-pre"><span class="kw">import</span> torch, torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">import</span> random
+
+<span class="kw">class</span> <span class="fn">QNet</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, obs_dim, act_dim):
+        super().<span class="fn">__init__</span>()
+        <span class="kw">self</span>.net = nn.Sequential(
+            nn.Linear(obs_dim, <span class="num">256</span>), nn.ReLU(),
+            nn.Linear(<span class="num">256</span>, <span class="num">256</span>), nn.ReLU(),
+            nn.Linear(<span class="num">256</span>, act_dim)
+        )
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="kw">self</span>, x): <span class="kw">return</span> <span class="kw">self</span>.net(x)
+
+replay = deque(maxlen=<span class="num">100_000</span>)     <span class="cm"># experience replay buffer</span>
+online_net = QNet(obs_dim=<span class="num">4</span>, act_dim=<span class="num">2</span>)
+target_net = QNet(obs_dim=<span class="num">4</span>, act_dim=<span class="num">2</span>)
+target_net.load_state_dict(online_net.state_dict())  <span class="cm"># sync initially</span>
+opt = torch.optim.Adam(online_net.parameters(), lr=<span class="num">1e-3</span>)
+
+<span class="cm"># Training step</span>
+<span class="kw">def</span> <span class="fn">update</span>():
+    batch = random.sample(replay, <span class="num">64</span>)
+    s, a, r, s2, done = zip(*batch)
+    s, s2 = torch.FloatTensor(s), torch.FloatTensor(s2)
+    a, r, done = torch.LongTensor(a), torch.FloatTensor(r), torch.FloatTensor(done)
+
+    q_vals = online_net(s).gather(<span class="num">1</span>, a.unsqueeze(<span class="num">1</span>)).squeeze()
+    <span class="kw">with</span> torch.no_grad():
+        target = r + <span class="num">0.99</span> * target_net(s2).max(<span class="num">1</span>)[<span class="num">0</span>] * (<span class="num">1</span> - done)
+
+    loss = nn.functional.mse_loss(q_vals, target)
+    opt.zero_grad(); loss.backward(); opt.step()</pre>
+        </div>
+      </div>
+
+      <!-- ══ TAB 9: INTERVIEW Q&A ══ -->
+      <div class="info-pane" id="rl-interview">
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">💡</span>
+          <div>The most frequently asked RL interview questions at DeepMind, OpenAI, Google Brain, and ML engineering roles involving RL or RLHF.</div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">Q1</div>
+            <div class="step-body">
+              <div class="step-title">What is the exploration vs exploitation tradeoff?</div>
+              <div class="step-desc">Exploitation: always pick the action with the highest known Q-value — maximise immediate reward. Exploration: try new actions — might discover better strategies. Without exploration, agent gets stuck in local optima. Without exploitation, agent never leverages what it learned. ε-greedy balances both: random action with prob ε, best known action otherwise. ε decays over training — explore early, exploit later. Advanced strategies: UCB (upper confidence bound), Thompson sampling, intrinsic motivation (reward for novel states).</div>
+              <div class="step-code">ε-greedy: explore prob ε → random · exploit prob (1-ε) → argmax Q · ε: 1.0 → 0.01</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q2</div>
+            <div class="step-body">
+              <div class="step-title">On-policy vs off-policy — what's the difference?</div>
+              <div class="step-desc"><strong>On-policy:</strong> learns the value of the policy currently being followed. Must generate experience with the policy being evaluated/improved. Example: SARSA uses the actual next action taken. Can't reuse old data. <strong>Off-policy:</strong> learns about a target policy while generating experience with a different behaviour policy. Can learn from any data source, including experience replay. Example: Q-learning learns optimal Q* regardless of how actions were selected. Off-policy is more sample-efficient (replay buffer reuse) but can be unstable (DQN's target network addresses this).</div>
+              <div class="step-code">On-policy: SARSA, PPO, A2C · Off-policy: Q-learning, DQN, SAC, TD3 · off = reuse data</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q3</div>
+            <div class="step-body">
+              <div class="step-title">Why does DQN use experience replay and a target network?</div>
+              <div class="step-desc"><strong>Experience replay:</strong> without it, training samples are highly correlated (consecutive frames from the same episode) — standard SGD assumptions (i.i.d. data) are violated, causing oscillation and divergence. Random sampling from a replay buffer decorrelates the data. Also allows data reuse (each transition can be learned from multiple times). <strong>Target network:</strong> if you use the same network to compute both the current Q-estimate and the TD target, the target is non-stationary — as the network changes, the target changes too, creating instability. The frozen target network provides stable targets for several thousand updates before being synchronised.</div>
+              <div class="step-code">Replay: i.i.d. samples, data reuse · Target net: stable TD targets · both prevent divergence</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q4</div>
+            <div class="step-body">
+              <div class="step-title">What is the discount factor γ and how do you choose it?</div>
+              <div class="step-desc">γ∈[0,1] controls how much the agent values future rewards relative to immediate ones. γ=0: only immediate reward matters — myopic. γ=1: all future rewards count equally — only for episodic tasks with guaranteed termination. γ=0.99: rewards decay slowly — agent plans far into the future. <strong>Choosing γ:</strong> high γ (0.99) for tasks where long-term planning matters (chess, Go, robot manipulation). Lower γ (0.9) for tasks where immediate feedback dominates or training instability is a concern. γ also affects the effective "horizon" = 1/(1-γ): γ=0.99 → horizon of 100 steps.</div>
+              <div class="step-code">γ=0.99: horizon=100 steps · γ=0.9: horizon=10 steps · higher γ=more future-oriented</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q5</div>
+            <div class="step-body">
+              <div class="step-title">Explain RLHF — why use it for LLMs?</div>
+              <div class="step-desc">LLMs pretrained on next-token prediction don't inherently know what's helpful or safe — they just predict likely text. RLHF addresses this in three steps: (1) SFT: fine-tune on human-written demonstrations of helpful behaviour. (2) Reward Model: train a model that predicts human preference between two responses. (3) PPO: optimise the LLM to produce responses that score highly on the reward model, with KL penalty to prevent the model from exploiting the reward model (reward hacking). DPO is a simpler alternative that achieves similar results without the explicit reward model and RL phase.</div>
+              <div class="step-code">SFT → RM on preference pairs → PPO+KL → aligned LLM · DPO: skip RM+PPO entirely</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q6</div>
+            <div class="step-body">
+              <div class="step-title">What is the credit assignment problem in RL?</div>
+              <div class="step-desc">In RL, rewards are often delayed — you might not receive a reward until the end of a long episode. The credit assignment problem: which of the many actions taken earlier were responsible for the eventual reward? A chess player who wins can't easily attribute the win to a single move made 30 moves ago. Solutions: discount factor (exponential decay assigns more credit to recent actions), eligibility traces (TD-λ maintains a trace of recently visited states), advantage estimation (GAE in PPO), and attention mechanisms in transformer-based policies.</div>
+              <div class="step-code">Delayed reward: which action caused it? · Solutions: γ, eligibility traces, GAE, attention</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">Q7</div>
+            <div class="step-body">
+              <div class="step-title">When would you choose PPO vs SAC?</div>
+              <div class="step-desc"><strong>PPO:</strong> discrete action spaces (games, text generation), on-policy (no replay buffer needed), simpler to implement, stable and well-understood. Default for RLHF, game playing, robotics with moderate data budget. <strong>SAC:</strong> continuous action spaces (robot joint control, locomotion), off-policy (replay buffer = more sample efficient), maximum entropy exploration, better for tasks requiring smooth continuous control. More complex to implement, may be unstable without careful tuning. Rule: games/discrete → PPO; robot control/continuous → SAC.</div>
+              <div class="step-code">Discrete / RLHF / games → PPO · Continuous control / robotics → SAC · both: strong defaults</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 10: CHEAT SHEET ══ -->
+      <div class="info-pane" id="rl-cheatsheet">
+        <div class="callout callout-amber" style="margin-top:0;margin-bottom:24px;">
+          <span class="callout-icon">⚡</span>
+          <div>Everything you need for RL interviews and projects — algorithm selection, key formulas, and the core decision framework.</div>
+        </div>
+
+        <div class="sub-heading">Algorithm Selection Guide</div>
+        <div class="cheat-table">
+          <div class="cheat-row cheat-4 cheat-head"><div>Situation</div><div>Algorithm</div><div>Library</div><div>Notes</div></div>
+          <div class="cheat-row cheat-4"><div>Discrete actions, game/sim</div><div style="color:var(--amber)">PPO</div><div style="color:var(--green)">stable-baselines3</div><div>Default for most tasks</div></div>
+          <div class="cheat-row cheat-4"><div>Continuous control, robotics</div><div style="color:var(--amber)">SAC</div><div style="color:var(--green)">stable-baselines3</div><div>Off-policy, efficient</div></div>
+          <div class="cheat-row cheat-4"><div>Continuous, deterministic</div><div style="color:var(--amber)">TD3</div><div style="color:var(--green)">stable-baselines3</div><div>Twin critics, stable</div></div>
+          <div class="cheat-row cheat-4"><div>LLM alignment</div><div style="color:var(--amber)">PPO + KL / DPO</div><div style="color:var(--green)">TRL (Hugging Face)</div><div>DPO simpler now</div></div>
+          <div class="cheat-row cheat-4"><div>Game AI from pixels</div><div style="color:var(--amber)">DQN / Rainbow</div><div style="color:var(--green)">stable-baselines3</div><div>Replay + target net</div></div>
+          <div class="cheat-row cheat-4"><div>Planning with model</div><div style="color:var(--amber)">MCTS + RL</div><div style="color:var(--green)">custom</div><div>AlphaZero pattern</div></div>
+          <div class="cheat-row cheat-4"><div>Tabular / small state space</div><div style="color:var(--amber)">Q-learning / SARSA</div><div style="color:var(--green)">numpy</div><div>No neural net needed</div></div>
+        </div>
+
+        <div class="sub-heading">Key Formulas</div>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="formula-name">Discounted Return</div>
+            <div class="formula-eq">Gₜ = Σₖ₌₀^∞ γᵏ rₜ₊ₖ</div>
+            <div class="formula-note">γ=0.99 typical · horizon = 1/(1-γ) ≈ 100 steps</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Q-Learning Update</div>
+            <div class="formula-eq">Q(s,a) ← Q + α[r + γ·max Q(s') - Q]</div>
+            <div class="formula-note">Off-policy TD · Bellman optimality · α=0.001</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Policy Gradient</div>
+            <div class="formula-eq">∇J = E[∇log π(a|s) · A(s,a)]</div>
+            <div class="formula-note">Increase prob of high-advantage actions</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">PPO Clip Loss</div>
+            <div class="formula-eq">L = E[min(rA, clip(r,1-ε,1+ε)·A)]</div>
+            <div class="formula-note">r = π_new/π_old · ε=0.2 · prevents large updates</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Advantage Function</div>
+            <div class="formula-eq">A(s,a) = Q(s,a) − V(s)</div>
+            <div class="formula-note">How much better than average · reduces variance</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">RLHF Reward</div>
+            <div class="formula-eq">r = RM(response) − β·KL(π||π_SFT)</div>
+            <div class="formula-note">β prevents reward hacking · β=0.1–0.5 typical</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">Bellman Optimality</div>
+            <div class="formula-eq">Q*(s,a) = R + γ·Σ P(s')·max Q*(s')</div>
+            <div class="formula-note">Recursive value decomposition · basis of all RL</div>
+          </div>
+          <div class="formula-card">
+            <div class="formula-name">SAC Objective</div>
+            <div class="formula-eq">J(π) = E[Σ rₜ + α·H(π(·|sₜ))]</div>
+            <div class="formula-note">Maximum entropy · α = temperature · encourages exploration</div>
+          </div>
+        </div>
+
+        <div class="sub-heading">Core Concepts at a Glance</div>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="cc-val" style="color:var(--amber)">MDP</div><div class="cc-name">(S, A, P, R, γ)</div><div class="cc-desc">State, Action, Transition, Reward, Discount. The formal framework. P unknown in practice → model-free RL.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">On vs Off</div><div class="cc-name">Policy</div><div class="cc-desc">On-policy: learn from current policy (PPO). Off-policy: learn from any data, use replay buffer (SAC, DQN). Off = more efficient.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">V vs Q</div><div class="cc-name">Value Functions</div><div class="cc-desc">V(s) = value of being in state. Q(s,a) = value of taking action in state. Q more useful — directly tells you what to do.</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">DPO</div><div class="cc-name">vs RLHF</div><div class="cc-desc">DPO: no reward model, no PPO — optimise preference directly. Simpler, stable, same performance. Now preferred for LLM alignment.</div></div>
+        </div>
+
+        <div class="callout callout-amber" style="margin-top:20px;">
+          <span class="callout-icon">⚠️</span>
+          <div><strong>3 rules for RL in production:</strong> (1) Always start with a strong non-RL baseline — many RL problems can be solved with supervised imitation learning at a fraction of the sample complexity. (2) Reward shaping is powerful but dangerous — small reward design errors lead to unexpected behaviours (reward hacking). (3) RL is sample-inefficient — expect to need 10–1000× more environment interactions than you'd expect. Use simulation, parallelism, and experience replay.</div>
+        </div>
+      </div>
+
+      <!-- ══ TAB 11: QUIZ ══ -->
+      <div class="info-pane" id="rl-quiz">
+        <div id="rlQuizContainer"></div>
+      </div>
+
+    </div><!-- /info-section -->
+
+    <div class="page-nav">
+      <a class="nav-link" href="cv.html">← Computer Vision</a>
+      <a class="nav-link next" href="aiml-explained.html">AI/ML Home →</a>
+    </div>
+
+  </main>
+</div><!-- /layout -->
+
+<a class="back-top" id="backTop" href="#">↑</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() { const c=sidebar.classList.contains('closed'); sidebar.classList.toggle('closed',!c); sidebarOverlay.classList.toggle('visible',c); document.body.classList.toggle('tf-nav-open',c); }
+function toggleNav() { topNav.classList.toggle('mobile-open'); navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open')); }
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => { sidebar.classList.add('closed'); sidebarOverlay.classList.remove('visible'); document.body.classList.remove('tf-nav-open'); });
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = e.target.value.toLowerCase().trim(); if (!q) return;
+    document.querySelectorAll('.sb-link').forEach(link => {
+      if (link.textContent.toLowerCase().includes(q)) {
+        link.scrollIntoView({behavior:'smooth',block:'center'});
+        link.style.background='rgba(251,191,36,0.16)';
+        setTimeout(()=>link.style.background='',1600);
+      }
+    });
+  });
+}
+
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+/* ── QUIZ ── */
+const RL_QUIZ = [
+  { q:"What is the exploration vs exploitation tradeoff in RL?", opts:["Whether to use model-based or model-free RL","Whether to try new actions (explore) or use known best actions (exploit)","Whether to use on-policy or off-policy learning","Whether to use discrete or continuous action spaces"], correct:1, exp:"Exploitation: always pick the highest Q-value action — safe but may be suboptimal. Exploration: try new actions — risky but might discover better strategies. ε-greedy balances both: explore with prob ε, exploit otherwise. ε decays from 1.0 to 0.01 as training matures." },
+  { q:"What is the purpose of the discount factor γ in RL?", opts:["To speed up neural network training","To weight future rewards — values near rewards more than distant ones","To control the learning rate","To balance exploration and exploitation"], correct:1, exp:"γ∈[0,1] controls how much future rewards are valued. γ=0: only immediate reward. γ=1: all future rewards equal. γ=0.99: common choice — agent plans ahead but prefers near rewards. Effective horizon = 1/(1-γ): γ=0.99 → ~100 step horizon." },
+  { q:"What are the two key innovations that made DQN work?", opts:["Policy gradient + actor-critic","Experience replay + target network","Advantage estimation + entropy bonus","Reward shaping + curriculum learning"], correct:1, exp:"Experience replay: store transitions in a buffer, sample random minibatches to break temporal correlation and allow data reuse. Target network: separate frozen network for computing TD targets — prevents instability from a moving target. Together they enabled stable Q-learning with neural networks for the first time." },
+  { q:"What is the difference between on-policy and off-policy RL?", opts:["On-policy is always more accurate","On-policy learns from current policy data; off-policy can learn from any data including a replay buffer","Off-policy requires a model of the environment","On-policy uses a value function; off-policy uses a policy directly"], correct:1, exp:"On-policy (PPO, SARSA): learns about the policy currently being executed. Must generate fresh data with each update. Off-policy (Q-learning, SAC, DQN): learns a target policy from experience generated by any policy. Can reuse experience via replay buffer — much more sample efficient." },
+  { q:"In RLHF, what is the purpose of the KL penalty term?", opts:["To speed up PPO training","To prevent the model from straying too far from the SFT baseline and reward-hacking the reward model","To regularise the reward model weights","To balance the actor and critic losses"], correct:1, exp:"Without the KL penalty, PPO would optimise the reward model score without constraint — the LLM would quickly learn to produce incoherent text that tricks the reward model (reward hacking). The KL(π_RL || π_SFT) term penalises divergence from the SFT model, keeping helpful behaviour while improving alignment." },
+  { q:"Why is PPO preferred over vanilla policy gradient (REINFORCE)?", opts:["PPO is simpler to implement","PPO clips the policy update ratio to prevent large destabilising updates that vanilla PG suffers from","PPO requires no neural networks","PPO works without any reward signal"], correct:1, exp:"REINFORCE has extremely high variance and is vulnerable to catastrophic updates — a single bad gradient step can destroy a well-trained policy. PPO clips the probability ratio r=π_new/π_old to [1-ε, 1+ε], preventing any single update from changing the policy too drastically. This makes training stable, robust, and consistent." }
+];
+
+let rQ=0,rScore=0,rAnswered=false;
+function renderRLQuiz(){
+  const c=document.getElementById('rlQuizContainer'); if(!c)return;
+  if(rQ>=RL_QUIZ.length){
+    c.innerHTML=`<div class="quiz-wrap"><div class="quiz-q" style="font-size:20px;text-align:center;">Quiz Complete! 🎉<br><span style="font-family:var(--font-mono);color:#fbbf24;font-size:32px;">${rScore}/${RL_QUIZ.length}</span></div><div class="quiz-feedback" style="text-align:center;margin-top:8px;">${rScore===RL_QUIZ.length?'🏆 Perfect! RL mastered.':rScore>=4?'✅ Great work. Review what you missed.':'📚 Revisit the tabs above and try again.'}</div><div style="text-align:center;margin-top:20px;"><button class="quiz-opt" style="max-width:200px;text-align:center;" onclick="rQ=0;rScore=0;renderRLQuiz()">↺ Retry</button></div></div>`;
+    return;
+  }
+  const q=RL_QUIZ[rQ]; rAnswered=false;
+  c.innerHTML=`<div class="quiz-wrap"><div class="quiz-score">Question ${rQ+1} of ${RL_QUIZ.length} · Score: ${rScore}</div><div class="quiz-q">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="rAnswer(this,${i===q.correct},${i})">${o}</button>`).join('')}</div><div class="quiz-feedback" id="rFeedback"></div></div>`;
+}
+function rAnswer(btn,isCorrect,idx){
+  if(rAnswered)return; rAnswered=true;
+  const q=RL_QUIZ[rQ];
+  btn.parentElement.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');else if(i===idx&&!isCorrect)b.classList.add('wrong');});
+  if(isCorrect)rScore++;
+  const fb=document.getElementById('rFeedback');
+  if(fb)fb.innerHTML=`${isCorrect?'✅ Correct!':'❌ Incorrect.'} — ${q.exp}`;
+  setTimeout(()=>{rQ++;renderRLQuiz();},3000);
+}
+window.addEventListener('load', renderRLQuiz);
+
+/* Scroll animations */
+const _aio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_aio.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_aio.observe(el);});
+</script>
+</body>
+</html>

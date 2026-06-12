@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python OOP — Complete Object-Oriented Programming | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+    .pillar-enc { background: rgba(247, 204, 69, .06); border-color: rgba(247, 204, 69, .2); }
+    .pillar-enc .pillar-tag { color: var(--py); background: rgba(247, 204, 69, .12); }
+    .pillar-inh { background: rgba(77, 158, 247, .06); border-color: rgba(77, 158, 247, .2); }
+    .pillar-inh .pillar-tag { color: var(--blue); background: rgba(77, 158, 247, .12); }
+    .pillar-pol { background: rgba(52, 211, 153, .06); border-color: rgba(52, 211, 153, .2); }
+    .pillar-pol .pillar-tag { color: var(--green); background: rgba(52, 211, 153, .12); }
+    .pillar-abs { background: rgba(167, 139, 250, .06); border-color: rgba(167, 139, 250, .2); }
+    .pillar-abs .pillar-tag { color: var(--purple); background: rgba(167, 139, 250, .12); }
+    .memory-trick { background: linear-gradient(135deg, rgba(247, 204, 69, .08), rgba(34, 211, 238, .04)); border: 1px solid rgba(247, 204, 69, .2); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; }
+    .memory-trick h3 { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--py); margin-bottom: 12px; }
+    .b-py { background: rgba(247, 204, 69, .12); color: var(--py); border: 1px solid rgba(247, 204, 69, .25); }
+    .b-purple { background: rgba(167, 139, 250, .1); color: var(--purple); border: 1px solid rgba(167, 139, 250, .2); }
+    .b-amber { background: rgba(251, 191, 36, .1); color: var(--amber); border: 1px solid rgba(251, 191, 36, .2); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar" aria-expanded="false">☰</button>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <div class="sidebar-label" style="margin-top:14px;">OOP — Complete</div>
+      <a class="sb-link active" href="#sec-oop-intro"><span class="sb-num">01</span> OOP Intro</a>
+      <a class="sb-link" href="#sec-class-object"><span class="sb-num">02</span> Classes & Objects</a>
+      <a class="sb-link" href="#sec-methods"><span class="sb-num">03</span> Method Types</a>
+      <a class="sb-link" href="#sec-encapsulation"><span class="sb-num">04</span> Encapsulation</a>
+      <a class="sb-link" href="#sec-inheritance"><span class="sb-num">05</span> Inheritance</a>
+      <a class="sb-link" href="#sec-polymorphism"><span class="sb-num">06</span> Polymorphism</a>
+      <a class="sb-link" href="#sec-abstraction"><span class="sb-num">07</span> Abstraction</a>
+      <a class="sb-link" href="#sec-magic"><span class="sb-num">08</span> Magic Methods</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python OOP Complete</div>
+        <h1 class="pg-title">Object-Oriented <span>Programming</span></h1>
+        <p class="pg-sub">Master all four pillars of OOP — Encapsulation, Inheritance, Polymorphism, and Abstraction with practical examples.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-purple">🏛️ 4 Pillars</span>
+          <span class="badge b-blue">8 Topics</span>
+          <span class="badge b-amber">🔥 Interview Key</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-oop-intro">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">🏛️</span><h2 class="sec-title">Introduction to OOP</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>OOP</strong> is a programming style that organizes code using <strong>objects</strong> and <strong>classes</strong>. It models real-world things using programming structures — used in software development, game development, web frameworks, and system design.</p>
+        <div class="sub-title">The Four Pillars of OOP</div>
+        <div class="pillar-grid">
+          <div class="pillar-card pillar-enc">
+            <div class="pillar-tag">Encapsulation</div>
+            <h3>Protect Data</h3>
+            <p>Bundling data and methods together, restricting direct access to internal state.</p>
+            <div class="pillar-example">🏧 ATM hides bank database — interact only through buttons</div>
+          </div>
+          <div class="pillar-card pillar-inh">
+            <div class="pillar-tag">Inheritance</div>
+            <h3>Reuse Code</h3>
+            <p>A child class acquires properties and methods from a parent class.</p>
+            <div class="pillar-example">🧬 Child inherits traits from parent — eye color, height</div>
+          </div>
+          <div class="pillar-card pillar-pol">
+            <div class="pillar-tag">Polymorphism</div>
+            <h3>Many Behaviors</h3>
+            <p>One interface, many forms. Same method name behaves differently depending on the object.</p>
+            <div class="pillar-example">🚗 "Drive" means different things for a car vs a bike</div>
+          </div>
+          <div class="pillar-card pillar-abs">
+            <div class="pillar-tag">Abstraction</div>
+            <h3>Hide Complexity</h3>
+            <p>Shows only essential features while hiding implementation details.</p>
+            <div class="pillar-example">🚗 You press the accelerator — engine details are hidden</div>
+          </div>
+        </div>
+      </section>
+      <section class="py-section" id="sec-class-object">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🧱</span><h2 class="sec-title">Classes & Objects</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>class</strong> is a blueprint. An <strong>object</strong> is a real-world entity created from that blueprint.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Complete Class Example</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="nm">Student</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name, age, marks):
+        self.name  = name
+        self.age   = age
+        self.marks = marks
+
+    <span class="kw">def</span> <span class="fn">display</span>(self):
+        <span class="fn">print</span>(<span class="st">f"Name: {self.name}, Age: {self.age}"</span>)
+
+    <span class="kw">def</span> <span class="fn">is_passed</span>(self):
+        <span class="kw">return</span> self.marks >= <span class="nm">40</span>
+
+s1 = <span class="nm">Student</span>(<span class="st">"Alice"</span>, <span class="nm">20</span>, <span class="nm">85</span>)
+s2 = <span class="nm">Student</span>(<span class="st">"Bob"</span>, <span class="nm">22</span>, <span class="nm">35</span>)
+
+s1.display()                     <span class="cm"># Name: Alice, Age: 20</span>
+<span class="fn">print</span>(<span class="st">"Passed:"</span>, s1.is_passed()) <span class="cm"># Passed: True</span>
+<span class="fn">print</span>(<span class="st">"Passed:"</span>, s2.is_passed()) <span class="cm"># Passed: False</span></pre>
+        </div>
+        <div class="kv-grid">
+          <div class="kv-card"><div class="kv-label">Class</div><div class="kv-val"><strong>Blueprint</strong> — defines structure and behavior.</div></div>
+          <div class="kv-card"><div class="kv-label">Object (Instance)</div><div class="kv-val"><strong>Concrete entity</strong> built from the class.</div></div>
+          <div class="kv-card"><div class="kv-label">Attribute</div><div class="kv-val"><strong>Data stored</strong> in an object using <code>self.attr = value</code>.</div></div>
+          <div class="kv-card"><div class="kv-label">Method</div><div class="kv-val"><strong>Function inside a class</strong>. First param is always <code>self</code>.</div></div>
+        </div>
+      </section>
+      <section class="py-section" id="sec-methods">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">⚗️</span><h2 class="sec-title">Instance, Class & Static Methods</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Python classes support <strong>three types of methods</strong>. Quick memory trick: <strong>I C S</strong> — Instance / Class / Static.</p>
+        <div class="method-badges">
+          <div class="mbadge"><div class="mbadge-title">Instance Method</div><div class="mbadge-sub">def method(self):</div><div class="mbadge-tag">Works with object data. Most common.</div></div>
+          <div class="mbadge"><div class="mbadge-title">Class Method</div><div class="mbadge-sub">@classmethod + cls</div><div class="mbadge-tag">Works with class-level data.</div></div>
+          <div class="mbadge"><div class="mbadge-title">Static Method</div><div class="mbadge-sub">@staticmethod</div><div class="mbadge-tag">Utility — no self or cls.</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — All Three Method Types</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="nm">Student</span>:
+    school_name = <span class="st">"ABC School"</span>   <span class="cm"># Class variable</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name, marks):
+        self.name  = name
+        self.marks = marks
+
+    <span class="kw">def</span> <span class="fn">display</span>(self):           <span class="cm"># Instance method</span>
+        <span class="fn">print</span>(self.name, self.marks)
+
+    @<span class="fn">classmethod</span>
+    <span class="kw">def</span> <span class="fn">get_school</span>(cls):         <span class="cm"># Class method</span>
+        <span class="kw">return</span> cls.school_name
+
+    @<span class="fn">staticmethod</span>
+    <span class="kw">def</span> <span class="fn">grade</span>(marks):           <span class="cm"># Static method (utility)</span>
+        <span class="kw">return</span> <span class="st">"A"</span> <span class="kw">if</span> marks >= <span class="nm">90</span> <span class="kw">else</span> <span class="st">"B"</span></pre>
+        </div>
+        <div class="memory-trick">
+          <h3>🧠 Quick Memory Trick — I C S</h3>
+          <div class="memory-row">
+            <div class="memory-item"><div class="memory-letter">I</div><div class="memory-info"><div class="mi-name">Instance</div><div class="mi-desc">self → object</div></div></div>
+            <div class="memory-item"><div class="memory-letter">C</div><div class="memory-info"><div class="mi-name">Class</div><div class="mi-desc">cls → class</div></div></div>
+            <div class="memory-item"><div class="memory-letter">S</div><div class="memory-info"><div class="mi-name">Static</div><div class="mi-desc">no reference</div></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="py-section" id="sec-encapsulation">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">🔐</span><h2 class="sec-title">Encapsulation</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Encapsulation means <strong>bundling data and methods together</strong> and restricting direct access.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Access Type</th><th>Convention</th><th>Example</th><th>Accessible From</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Public</strong></td><td>No prefix</td><td><code>self.name</code></td><td>Anywhere</td></tr>
+              <tr><td><strong>Protected</strong></td><td>Single underscore</td><td><code>self._name</code></td><td>Internal use (convention)</td></tr>
+              <tr><td><strong>Private</strong></td><td>Double underscore</td><td><code>self.__name</code></td><td>Class only (name mangling)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Encapsulation (Bank Account)</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="nm">BankAccount</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, balance):
+        self.__balance = balance   <span class="cm"># Private variable</span>
+
+    <span class="kw">def</span> <span class="fn">deposit</span>(self, amount):
+        <span class="kw">if</span> amount > <span class="nm">0</span>:
+            self.__balance += amount
+
+    <span class="kw">def</span> <span class="fn">withdraw</span>(self, amount):
+        <span class="kw">if</span> amount <= self.__balance:
+            self.__balance -= amount
+
+    <span class="kw">def</span> <span class="fn">get_balance</span>(self):     <span class="cm"># Getter method</span>
+        <span class="kw">return</span> self.__balance</pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-inheritance">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🧬</span><h2 class="sec-title">Inheritance</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Inheritance allows a child class to <strong>reuse properties and methods</strong> from a parent class. Use <code>super()</code> to call parent methods.</p>
+        <div class="sub-title">Types of Inheritance</div>
+        <div class="inherit-grid">
+          <div class="inherit-card"><h4>Single</h4><p>One parent → One child</p><div class="inherit-diagram">A → B</div></div>
+          <div class="inherit-card"><h4>Multiple</h4><p>Child inherits from multiple parents</p><div class="inherit-diagram">A, B → C</div></div>
+          <div class="inherit-card"><h4>Multilevel</h4><p>An inheritance chain</p><div class="inherit-diagram">A → B → C</div></div>
+          <div class="inherit-card"><h4>Hierarchical</h4><p>Multiple children from one parent</p><div class="inherit-diagram">A → B, A → C</div></div>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Method Overriding + super()</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="nm">Animal</span>:
+    <span class="kw">def</span> <span class="fn">speak</span>(self):
+        <span class="fn">print</span>(<span class="st">"Animal makes a sound"</span>)
+
+<span class="kw">class</span> <span class="nm">Dog</span>(<span class="nm">Animal</span>):
+    <span class="kw">def</span> <span class="fn">speak</span>(self):          <span class="cm"># Override parent method</span>
+        <span class="fn">super</span>().<span class="fn">speak</span>()      <span class="cm"># Call parent first</span>
+        <span class="fn">print</span>(<span class="st">"Dog barks"</span>)</pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-polymorphism">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">🌈</span><h2 class="sec-title">Polymorphism</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Polymorphism</strong> = one interface, many behaviors. Achieved through method overriding, operator overloading, and duck typing.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Polymorphism Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Method overriding polymorphism</span>
+<span class="kw">class</span> <span class="nm">Dog</span>(<span class="nm">Animal</span>):
+    <span class="kw">def</span> <span class="fn">speak</span>(self): <span class="fn">print</span>(<span class="st">"Dog barks"</span>)
+
+<span class="kw">class</span> <span class="nm">Cat</span>(<span class="nm">Animal</span>):
+    <span class="kw">def</span> <span class="fn">speak</span>(self): <span class="fn">print</span>(<span class="st">"Cat meows"</span>)
+
+<span class="kw">for</span> a <span class="kw">in</span> [<span class="nm">Dog</span>(), <span class="nm">Cat</span>()]:
+    a.<span class="fn">speak</span>()      <span class="cm"># Same call, different behavior</span>
+
+<span class="cm"># Operator overloading</span>
+<span class="fn">print</span>(<span class="nm">5</span> + <span class="nm">3</span>)           <span class="cm"># 8 (addition)</span>
+<span class="fn">print</span>(<span class="st">"Hi "</span> + <span class="st">"There"</span>) <span class="cm"># string concat</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-abstraction">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">🎭</span><h2 class="sec-title">Abstraction</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Abstraction means <strong>hiding complex implementation details</strong> using the <code>abc</code> module with <strong>Abstract Classes</strong>.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Abstract Classes (ABC)</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">from</span> abc <span class="kw">import</span> ABC, abstractmethod
+
+<span class="kw">class</span> <span class="nm">Shape</span>(<span class="nm">ABC</span>):              <span class="cm"># Abstract class</span>
+    @abstractmethod
+    <span class="kw">def</span> <span class="fn">area</span>(self): <span class="kw">pass</span>       <span class="cm"># Must be implemented</span>
+
+<span class="kw">class</span> <span class="nm">Rectangle</span>(<span class="nm">Shape</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, w, h):
+        self.w = w; self.h = h
+
+    <span class="kw">def</span> <span class="fn">area</span>(self):
+        <span class="kw">return</span> self.w * self.h
+
+r = <span class="nm">Rectangle</span>(<span class="nm">4</span>, <span class="nm">5</span>)
+<span class="fn">print</span>(r.<span class="fn">area</span>())                 <span class="cm"># 20</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-magic">
+        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">✨</span><h2 class="sec-title">Magic Methods (Dunder)</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Magic methods start and end with double underscores. They let objects behave like built-in types.</p>
+        <div class="magic-grid">
+          <div class="magic-card"><div class="method-name">__init__</div><div class="method-desc">Constructor</div></div>
+          <div class="magic-card"><div class="method-name">__str__</div><div class="method-desc">User string representation</div></div>
+          <div class="magic-card"><div class="method-name">__repr__</div><div class="method-desc">Developer representation</div></div>
+          <div class="magic-card"><div class="method-name">__len__</div><div class="method-desc">Length of object</div></div>
+          <div class="magic-card"><div class="method-name">__add__</div><div class="method-desc">Addition operator</div></div>
+          <div class="magic-card"><div class="method-name">__eq__</div><div class="method-desc">Equality comparison</div></div>
+          <div class="magic-card"><div class="method-name">__getitem__</div><div class="method-desc">Index access</div></div>
+          <div class="magic-card"><div class="method-name">__call__</div><div class="method-desc">Callable object</div></div>
+          <div class="magic-card"><div class="method-name">__iter__</div><div class="method-desc">Iterator protocol</div></div>
+          <div class="magic-card"><div class="method-name">__next__</div><div class="method-desc">Next value</div></div>
+          <div class="magic-card"><div class="method-name">__del__</div><div class="method-desc">Destructor</div></div>
+          <div class="magic-card"><div class="method-name">__enter__/__exit__</div><div class="method-desc">Context manager</div></div>
+        </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="functions.html">← Functions</a>
+        <a class="nav-link" href="libraries.html">Libraries →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

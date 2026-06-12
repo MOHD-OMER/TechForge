@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>BFS (Breadth-First Search) — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link active" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+<div class="dsa-hero anim-in">
+  <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Graph Algorithms</div>
+  <h1 class="dh2-title">BFS <span>Breadth-First Search</span></h1>
+  <p class="dh2-sub">Layer-by-layer exploration of graphs. Perfect for finding the shortest path in unweighted graphs.</p>
+</div>
+<div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);">
+  <div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(V+E)</span><span class="dss-label">Time</span></div>
+  <div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(V)</span><span class="dss-label">Space</span></div>
+  <div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">Shortest</span><span class="dss-label">Path (unwt.)</span></div>
+  <div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">Queue</span><span class="dss-label">BFS Uses</span></div>
+  <div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Level</span><span class="dss-label">Order</span></div>
+</div>
+
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">// BFS VISUALIZATION</span>
+<div class="viz-controls" id="bfs-ctrl"></div>
+</div>
+<div class="viz-body" style="padding:14px">
+<canvas height="300" id="bfs-cv" style="width:100%;background:rgba(0,0,0,.25);border-radius:8px"></canvas>
+<div class="status" id="bfs-status">Initialize to see BFS in action.</div>
+</div>
+</div>
+
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-bfs-0')">How It Works</div>
+<div class="info-tab" onclick="switchTab(this,'tp-bfs-1')">Python Code</div>
+<div class="info-tab" onclick="switchTab(this,'tp-bfs-2')">Complexity</div>
+<div class="info-tab" onclick="switchTab(this,'tp-bfs-3')">Quiz</div>
+<div class="info-tab" onclick="switchTab(this,'tp-bfs-prac')">Practice 🏆</div>
+</div>
+
+<div class="info-pane active" id="tp-bfs-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">01</div>
+<div class="step-body">
+<div class="step-title">Start Node</div>
+<div class="step-desc">Enqueue the starting node and mark it as visited.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">02</div>
+<div class="step-body">
+<div class="step-title">Process Queue</div>
+<div class="step-desc">Dequeue a node and explore all its immediate unvisited neighbors.</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">03</div>
+<div class="step-body">
+<div class="step-title">Enqueue Layer</div>
+<div class="step-desc">Add neighbors to the queue and mark them visited. Repeat until queue is empty.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="info-pane" id="tp-bfs-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">python</span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56"></span>
+<span class="cd" style="background:#ffbd2e"></span>
+<span class="cd" style="background:#27c93f"></span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">from</span> collections <span class="kw">import</span> deque
+
+<span class="kw">def</span> <span class="fn">bfs</span>(graph, start):
+    visited = {start}
+    queue = <span class="fn">deque</span>([start])
+
+    <span class="kw">while</span> queue:
+        node = queue.<span class="fn">popleft</span>()
+        <span class="fn">print</span>(node, end=<span class="st">" "</span>)
+
+        <span class="kw">for</span> neighbor <span class="kw">in</span> graph[node]:
+            <span class="kw">if</span> neighbor <span class="kw">not in</span> visited:
+                visited.<span class="fn">add</span>(neighbor)
+                queue.<span class="fn">append</span>(neighbor)</pre>
+</div>
+</div>
+
+<div class="info-pane" id="tp-bfs-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">O(V+E)</div>
+<div class="cc-name">Time</div>
+<div class="cc-desc">Each vertex and edge visited once</div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">O(V)</div>
+<div class="cc-name">Space</div>
+<div class="cc-desc">Queue can hold all vertices</div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--amber)">FIFO</div>
+<div class="cc-name">Queue</div>
+<div class="cc-desc">First-in-first-out exploration</div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--cyan)">Shortest</div>
+<div class="cc-name">Path</div>
+<div class="cc-desc">Unweighted graphs only</div>
+</div>
+</div>
+</div>
+
+<div class="info-pane" id="tp-bfs-3">
+<div class="quiz-wrap">
+<div class="quiz-q">BFS uses which data structure?</div>
+<div class="quiz-opts">
+<button aria-label="Stack" class="quiz-opt" onclick="quizAnswer(this,false)">Stack</button>
+<button aria-label="Queue" class="quiz-opt" onclick="quizAnswer(this,true)">Queue</button>
+<button aria-label="Heap" class="quiz-opt" onclick="quizAnswer(this,false)">Heap</button>
+<button aria-label="Hash Table" class="quiz-opt" onclick="quizAnswer(this,false)">Hash Table</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+</div>
+
+<div class="info-pane" id="tp-bfs-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>Progress</span>
+<span id="prog-bfs">0 / 4 solved</span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-bfs" style="width:0%"></div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">4 problems · 3 PBC · 1 Startup</div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','bfs')">ALL</button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','bfs')">PBC</button>
+<button class="pf-btn" onclick="filterQ(this,'startup','bfs')">STARTUP</button>
+</div>
+</div>
+<div class="pq-list" id="pql-bfs">
+<div class="pq-item" data-id="901" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/binary-tree-level-order-traversal/')">
+<button aria-label="Mark problem 101 as done" class="pq-done-toggle" onclick="toggleDone(event,901,'bfs')" title="Mark done"></button>
+<span class="pq-num">#101</span>
+<span class="pq-name">Binary Tree Level Order</span>
+<span class="pq-asked">Google, Amazon</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div>
+<div class="pq-item" data-id="902" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/number-of-islands/')">
+<button aria-label="Mark problem 200 as done" class="pq-done-toggle" onclick="toggleDone(event,902,'bfs')" title="Mark done"></button>
+<span class="pq-num">#200</span>
+<span class="pq-name">Number of Islands</span>
+<span class="pq-asked">Meta, Amazon</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div>
+<div class="pq-item" data-id="903" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/rotting-oranges/')">
+<button aria-label="Mark problem 994 as done" class="pq-done-toggle" onclick="toggleDone(event,903,'bfs')" title="Mark done"></button>
+<span class="pq-num">#994</span>
+<span class="pq-name">Rotting Oranges</span>
+<span class="pq-asked">Microsoft</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div>
+<div class="pq-item" data-id="904" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/word-ladder/')">
+<button aria-label="Mark problem 127 as done" class="pq-done-toggle" onclick="toggleDone(event,904,'bfs')" title="Mark done"></button>
+<span class="pq-num">#127</span>
+<span class="pq-name">Word Ladder</span>
+<span class="pq-asked">Zepto</span>
+<span class="pq-badge pq-startup">STARTUP</span>
+<span class="pq-arrow">→</span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-bfs"></div>
+</div>
+</div>
+
+<div class="page-nav">
+
+  <a class="nav-link" href="graph.html">← Graphs</a>
+
+  <a class="nav-link next" href="dfs.html">DFS Traversal →</a>
+
+</div>
+  </main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){refreshProg("bfs");});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const ctrl = document.getElementById('bfs-ctrl');
+    if (ctrl) {
+        ctrl.innerHTML = '<input class="inp" id="bfs-src" value="0" style="width:55px"><button class="btn go" onclick="bfsRun()">▶ Run</button><button class="btn" onclick="bfsRst()">Reset</button>';
+    }
+
+    const cv = document.getElementById('bfs-cv');
+    let W, H, nodes, dragging = null, dragOff = {x: 0, y: 0}, bfsRunning = false;
+    const adj = {0:[1,2],1:[0,3,4],2:[0,5,6],3:[1,7],4:[1,7],5:[2],6:[2],7:[3,4]};
+    const edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,7]];
+
+    function init() {
+        W = cv.offsetWidth || 700; H = 300; cv.width = W; cv.height = H;
+        nodes = [{id:0,x:W/2,y:44},{id:1,x:W*0.3,y:120},{id:2,x:W*0.7,y:120},{id:3,x:W*0.17,y:210},{id:4,x:W*0.42,y:210},{id:5,x:W*0.58,y:210},{id:6,x:W*0.83,y:210},{id:7,x:W*0.3,y:275}];
+        draw({}, [], '');
+    }
+
+    function draw(col, q, lvl) {
+        const ctx = cv.getContext('2d');
+        ctx.fillStyle = '#0d1117'; ctx.fillRect(0,0,W,H);
+        edges.forEach(e => {
+            const a = nodes[e[0]], b = nodes[e[1]];
+            ctx.strokeStyle = '#1f2d42'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        });
+        nodes.forEach(n => {
+            const c = col[n.id], inQ = q.indexOf(n.id) >= 0;
+            ctx.beginPath(); ctx.arc(n.x, n.y, 20, 0, Math.PI*2);
+            ctx.fillStyle = c === 'vis' ? 'rgba(52,211,153,0.18)' : inQ ? 'rgba(77,158,247,0.18)' : '#141b26';
+            ctx.fill(); ctx.strokeStyle = c === 'vis' ? '#34d399' : inQ ? '#4d9ef7' : '#263449';
+            ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.fillStyle = c || inQ ? '#fff' : '#8da0bb'; ctx.font = 'bold 13px "JetBrains Mono"';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(n.id, n.x, n.y);
+        });
+    }
+
+    window.bfsRst = function() { draw({}, [], ''); setStatus('bfs-status','Initialize to see BFS in action.'); }
+
+    window.bfsRun = async function() {
+        if (bfsRunning) return; bfsRunning = true;
+        const src = parseInt(document.getElementById('bfs-src').value) || 0;
+        let vis = {}, q = [src], col = {}, dist = {}; vis[src] = true; dist[src] = 0; col[src] = 'vis';
+        setStatus('bfs-status','Exploring from node <b>'+src+'</b>...');
+        draw(col, q, ''); await sleep(400);
+        while (q.length) {
+            let u = q.shift();
+            setStatus('bfs-status','Visiting node <b>'+u+'</b> (dist='+dist[u]+')');
+            await sleep(500);
+            (adj[u] || []).forEach(v => {
+                if (!vis[v]) { vis[v] = true; dist[v] = dist[u] + 1; col[v] = 'vis'; q.push(v); draw(col, q, ''); }
+            });
+            await sleep(300);
+        }
+        setStatus('bfs-status','<span class="s-ok">✓ BFS Complete!</span>'); bfsRunning = false;
+    };
+
+    init();
+
+    // Sidebar toggle functionality
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const navToggle = document.getElementById('navToggle');
+    const topNav = document.getElementById('topNav');
+
+    function toggleSidebar() {
+        const isClosed = sidebar.classList.contains('closed');
+        sidebar.classList.toggle('closed', isClosed ? false : true);
+        sidebarOverlay.classList.toggle('visible', isClosed ? false : true);
+        document.body.classList.toggle('tf-nav-open', !isClosed);
+    }
+
+    function toggleNav() {
+        topNav.classList.toggle('mobile-open');
+        const isOpen = topNav.classList.contains('mobile-open');
+        navToggle.setAttribute('aria-expanded', isOpen);
+        document.body.classList.toggle('tf-nav-open', isOpen);
+    }
+
+    if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+    if (sidebarOverlay) sidebarOverlay.addEventListener('click', function() {
+        sidebar.classList.add('closed');
+        sidebarOverlay.classList.remove('visible');
+        document.body.classList.remove('tf-nav-open');
+    });
+    if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.toLowerCase().trim();
+                if (query) {
+                    const links = document.querySelectorAll('.sb-link');
+                    for (const link of links) {
+                        const text = link.textContent.toLowerCase();
+                        if (text.includes(query)) {
+                            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            link.style.background = 'rgba(77,158,247,0.2)';
+                            setTimeout(() => link.style.background = '', 1500);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Progress bar
+    const progressFill = document.getElementById('progressFill');
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        if (progressFill) progressFill.style.width = progress + '%';
+    }
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+});
+
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="47 DSA interview questions — arrays, trees, graphs, DP, sorting — tagged for FAANG and startups. Track your progress locally."/>
+  <meta property="og:title" content="DSA Interview Q&A — TechForge"/>
+  <title>DSA Interview Q&A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+  :root {
+    --accent: var(--cyan);
+    /* map old vars to Forge vars */
+    --surface:  var(--card);
+    --surface2: rgba(34,211,238,.05);
+    --display:  var(--font-display);
+    --mono:     var(--font-mono);
+    --orange:   #f97316;
+    --bg2:      rgba(0,0,0,.25);
+  }
+
+  /* ── HERO ── */
+  .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
+  .int-page-hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,211,238,.06) 0%,transparent 58%),radial-gradient(ellipse 40% 50% at 105% 20%,rgba(77,142,247,.04) 0%,transparent 52%); }
+  .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); background:rgba(34,211,238,.07); border:1px solid rgba(34,211,238,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
+  .iph-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); box-shadow:0 0 5px var(--cyan); animation:iphdot 2s ease infinite; }
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title { font-family:var(--font-display); font-size:clamp(24px,4vw,36px); font-weight:900; letter-spacing:-1.5px; color:var(--text); margin-bottom:10px; }
+  .iph-title span { background:linear-gradient(135deg,var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .iph-sub { font-size:13.5px; color:var(--text2); line-height:1.75; max-width:560px; margin-bottom:18px; }
+  .iph-badges { display:flex; gap:7px; flex-wrap:wrap; }
+  .iph-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; padding:3px 10px; border-radius:var(--r-full); border:1px solid; }
+
+  /* ── FORGE STATS STRIP ── */
+  .int-stats { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:28px; }
+  .is-box { background:var(--card); padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; position:relative; transition:background .2s; }
+  .is-box::after { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--is-c,var(--cyan)); opacity:0; transition:opacity .2s; }
+  .is-box:hover { background:rgba(255,255,255,.02); }.is-box:hover::after { opacity:1; }
+  .is-val   { font-family:var(--font-mono); font-size:20px; font-weight:900; line-height:1; }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text3); }
+
+  /* ── FILTER TABS ── */
+  .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text3); cursor:pointer; transition:all .15s; user-select:none; }
+  .ftab:hover { border-color:var(--border2); color:var(--text2); }
+  .ftab.active { background:rgba(34,211,238,.09); border-color:rgba(34,211,238,.3); color:var(--cyan); }
+  .ftab-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+  .filter-sep { width:1px; height:20px; background:var(--border); }
+
+  /* ── Q&A ITEMS ── */
+  .qna-list { border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:32px; }
+  .qna-item { border-bottom:1px solid var(--border); transition:background .2s; }
+  .qna-item:last-child { border-bottom:none; }
+  .qna-item.open { background:rgba(34,211,238,.04); }
+  .qna-q { padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:14px; }
+  .qna-q:hover { background:rgba(255,255,255,.02); }
+  .qna-cb { width:18px; height:18px; border:1.5px solid var(--border2); border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0; cursor:pointer; transition:all .2s; }
+  .qna-cb:hover { border-color:var(--green); }
+  .qna-cb.checked { background:var(--green); border-color:var(--green); }
+  .qna-cb.checked::after { content:'✓'; font-size:10px; font-weight:700; color:#000; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text3); min-width:24px; flex-shrink:0; }
+  .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
+  .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
+  .tag-dsa    { background:rgba(34,211,238,.08);  color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
+  .tag-python { background:rgba(77,142,247,.08);  color:var(--blue);   border:1px solid rgba(77,142,247,.2); }
+  .tag-oop    { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+  .tag-aiml   { background:rgba(167,139,250,.08); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+  .tag-sql    { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+  .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
+  .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
+  .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:#f87171;     border:1px solid rgba(248,113,113,.2); }
+  .qna-chevron { font-size:12px; color:var(--text3); flex-shrink:0; transition:transform .2s; }
+  .qna-item.open .qna-chevron { transform:rotate(180deg); }
+  .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
+  .qna-item.open .qna-a { display:block; }
+  .qna-a ul,.qna-a ol { padding-left:20px; margin:8px 0; }
+  .qna-a li { margin-bottom:4px; }
+  .qna-a strong { color:var(--text); }
+  .qna-a code { font-family:var(--font-mono); font-size:11.5px; background:rgba(34,211,238,.07); color:var(--cyan); padding:1px 5px; border-radius:3px; }
+
+  /* ── CODE BLOCKS ── */
+  .ans-code { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; margin:12px 0; }
+  .ans-code-hdr { display:flex; align-items:center; padding:7px 14px; border-bottom:1px solid var(--border); background:rgba(0,0,0,.2); }
+  .ans-code-lang { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+  .ans-code pre { margin:0; padding:14px 16px; font-family:var(--font-mono); font-size:11.5px; line-height:1.72; color:var(--text2); overflow-x:auto; }
+  .kw { color:#c792ea; } .fn { color:#82aaff; } .cm { color:#546e7a; font-style:italic; } .nm { color:#f78c6c; }
+
+  /* ── CALLOUTS ── */
+  .callout { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:var(--r-lg); margin:10px 0; font-size:13px; line-height:1.65; }
+  .callout-cyan   { background:rgba(34,211,238,.07);  border:1px solid rgba(34,211,238,.18); color:var(--text2); }
+  .callout-amber  { background:rgba(251,191,36,.07);  border:1px solid rgba(251,191,36,.18); color:var(--text2); }
+  .callout-green  { background:rgba(52,211,153,.07);  border:1px solid rgba(52,211,153,.18); color:var(--text2); }
+  .callout-blue   { background:rgba(77,142,247,.07);  border:1px solid rgba(77,142,247,.18); color:var(--text2); }
+
+  /* ── SECTION LABEL ── */
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
+
+  /* ── PROGRESS BANNER ── */
+  .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(34,211,238,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .pb-icon { font-size:22px; flex-shrink:0; }
+  .pb-text { flex:1; font-size:12.5px; color:var(--text3); line-height:1.6; }
+  .pb-text strong { color:var(--text); }
+  .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:900; color:var(--green); flex-shrink:0; text-align:center; }
+  .pb-lbl   { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+
+  /* ── NO RESULTS ── */
+  .no-results { display:none; text-align:center; padding:40px; color:var(--text3); font-family:var(--font-mono); font-size:13px; }
+
+  /* ── ROADMAP ── */
+  .roadmap-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl); padding:24px; margin-bottom:32px; overflow-x:auto; }
+  .roadmap-wrap pre { margin:0; font-family:var(--font-mono); font-size:12px; line-height:1.8; color:var(--text2); }
+
+  /* ── ANIM ── */
+  .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
+  .anim-in.visible { opacity:1; transform:none; }
+
+  @media(max-width:900px){ .int-stats{grid-template-columns:repeat(4,1fr);} }
+  @media(max-width:640px){ .int-stats{grid-template-columns:repeat(3,1fr);} .qna-a{padding-left:20px;} }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link current" href="index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle"
+            aria-label="Toggle section sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle"
+            aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- READING PROGRESS -->
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="qna-search" type="text" placeholder="Search topics…" autocomplete="off">
+    </div>
+    <div class="sidebar-label">Interview Categories</div>
+    <a class="sb-link" href="index.html"><span class="sb-num">🏠</span>All Categories</a>
+    <a class="sb-link active" href="dsa-interview.html"><span class="sb-num">📊</span>DSA</a>
+    <a class="sb-link" href="python-interview.html"><span class="sb-num">🐍</span>Python</a>
+    <a class="sb-link" href="oop-interview.html"><span class="sb-num">🧱</span>OOP</a>
+    <a class="sb-link" href="aiml-interview.html"><span class="sb-num">🤖</span>AI/ML</a>
+    <a class="sb-link" href="sql-interview.html"><span class="sb-num">💾</span>SQL</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+
+    <!-- HERO -->
+    <div class="int-page-hero anim-in">
+      <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — DSA Track</div>
+      <h1 class="iph-title">DSA <span>Interview Questions</span></h1>
+      <p class="iph-sub">47 curated DSA questions covering arrays, linked lists, trees, graphs, sorting, and dynamic programming — tagged for FAANG and startups. Check off as you go.</p>
+      <div class="iph-badges">
+        <span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07);">Arrays</span>
+        <span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Linked Lists</span>
+        <span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Strings</span>
+        <span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Trees</span>
+        <span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07);">Graphs</span>
+        <span class="iph-badge" style="color:#f97316;border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.07);">DP</span>
+      </div>
+    </div>
+
+    <!-- FORGE STATS -->
+    <div class="int-stats anim-in">
+      <div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">47</span><span class="is-label">Total Qs</span></div>
+      <div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">8</span><span class="is-label">Arrays</span></div>
+      <div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">6</span><span class="is-label">Linked Lists</span></div>
+      <div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">Strings</span></div>
+      <div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">8</span><span class="is-label">Trees</span></div>
+      <div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">7</span><span class="is-label">Graphs</span></div>
+      <div class="is-box" style="--is-c:#f97316"><span class="is-val" style="color:#f97316">6</span><span class="is-label">DP</span></div>
+    </div>
+
+    <!-- PROGRESS BANNER -->
+    <div class="progress-banner anim-in">
+      <div class="pb-icon">📌</div>
+      <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions as you complete them — saves to your browser. No account needed.</div>
+      <div style="text-align:center;flex-shrink:0;">
+        <div class="pb-count" id="doneCount">0</div>
+        <div class="pb-lbl">/ 47 Done</div>
+      </div>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text3);cursor:pointer;flex-shrink:0;transition:all .2s;" onmouseover="this.style.borderColor='var(--red,#f87171)'" onmouseout="this.style.borderColor='var(--border)'">↺ Reset</button>
+    </div>
+
+    <!-- FILTER TABS -->
+    <div class="filter-row anim-in">
+      <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">47</span></button>
+      <div class="filter-sep"></div>
+      <button class="ftab" onclick="filterQna('arrays',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Arrays</button>
+      <button class="ftab" onclick="filterQna('linked-lists',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Linked Lists</button>
+      <button class="ftab" onclick="filterQna('strings',this)"><span class="ftab-dot" style="color:var(--green)"></span>Strings</button>
+      <button class="ftab" onclick="filterQna('binary-trees',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Trees</button>
+      <button class="ftab" onclick="filterQna('graph',this)"><span class="ftab-dot" style="color:var(--amber)"></span>Graphs</button>
+      <button class="ftab" onclick="filterQna('dynamic-programming',this)"><span class="ftab-dot" style="color:#f97316"></span>DP</button>
+    </div>
+
+    <!-- Q&A LIST -->
+    <div class="qna-list anim-in" id="list-dsa">
+
+<!-- DSA PROBLEM-SOLVING PATTERNS -->
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">21</span>
+<span class="qna-text">
+         What are the essential DSA problem-solving patterns?
+        </span>
+<span class="qna-tag tag-dsa">DSA</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Key Patterns Checklist:</strong>
+<ul>
+<li><strong>Two Pointers:</strong> Sorted arrays, pair finding, palindrome checking</li>
+<li><strong>Sliding Window:</strong> Subarray/substring problems, consecutive elements</li>
+<li><strong>Fast & Slow Pointers:</strong> Cycle detection, middle of linked list</li>
+<li><strong>Merge Intervals:</strong> Overlapping intervals, scheduling problems</li>
+<li><strong>Cyclic Sort:</strong> Arrays with numbers in given range, find duplicates</li>
+<li><strong>In-place Reversal:</strong> Linked list reversal, rotate operations</li>
+<li><strong>BFS:</strong> Level-order traversal, shortest path (unweighted graphs)</li>
+<li><strong>DFS:</strong> Path finding, connected components, backtracking</li>
+<li><strong>Topological Sort:</strong> Dependency resolution, task scheduling</li>
+<li><strong>Backtracking:</strong> Combinations, permutations, subsets, N-Queens</li>
+<li><strong>Dynamic Programming:</strong> Optimization problems, counting problems</li>
+<li><strong>Divide & Conquer:</strong> Merge sort, quick sort, binary search variations</li>
+<li><strong>Bit Manipulation:</strong> XOR tricks, set operations, power of 2 checks</li>
+<li><strong>Monotonic Stack:</strong> Next greater element, largest rectangle in histogram</li>
+<li><strong>Heap/Priority Queue:</strong> Top-K elements, median finding, scheduling</li>
+</ul>
+<div class="callout callout-cyan">
+<strong>Tip:</strong> Recognizing the pattern is 80% of solving the problem. Practice identifying which pattern fits which problem type.
+</div>
+</div>
+</div>
+
+<!-- RECURSION INTERVIEW QUESTIONS -->
+<div class="qna-item" data-cat="dsa" data-subtopic="dynamic-programming">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">22</span>
+<span class="qna-text">
+         Explain Recursion with examples. What are base case and recursive case?
+        </span>
+<span class="qna-tag tag-dsa">DSA</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Recursion</strong> is when a function calls itself to solve a smaller version of the same problem.
+<br/><br/>
+<strong>Two Essential Components:</strong>
+<ul>
+<li><strong>Base Case:</strong> The stopping condition — prevents infinite recursion</li>
+<li><strong>Recursive Case:</strong> The function calls itself with a smaller input</li>
+</ul>
+
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python — Factorial Example</span></div>
+<pre><span class="cm"># Factorial: n! = n × (n-1) × ... × 1</span>
+<span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="cm"># Base case</span>
+    <span class="kw">if</span> n == <span class="nm">0</span> <span class="kw">or</span> n == <span class="nm">1</span>:
+        <span class="kw">return</span> <span class="nm">1</span>
+    <span class="cm"># Recursive case</span>
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="nm">1</span>)
+
+<span class="fn">factorial</span>(<span class="nm">5</span>)  <span class="cm"># 5 × 4 × 3 × 2 × 1 = 120</span></pre>
+</div>
+
+<strong>How it works (call stack):</strong>
+<pre style="background:var(--bg2);padding:10px;border-radius:6px;font-family:var(--mono);font-size:11px;margin-top:8px;">
+factorial(5)
+  → 5 × factorial(4)
+       → 4 × factorial(3)
+            → 3 × factorial(2)
+                 → 2 × factorial(1)
+                      → 1 (base case!)
+                 → 2 × 1 = 2
+            → 3 × 2 = 6
+       → 4 × 6 = 24
+  → 5 × 24 = 120
+</pre>
+
+<div class="callout callout-amber">
+<strong>⚠️ Stack Overflow:</strong> Without a base case, recursion continues infinitely until the call stack overflows.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="dsa" data-subtopic="dynamic-programming">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">23</span>
+<span class="qna-text">
+         What is Memoization? How does it optimize recursion?
+        </span>
+<span class="qna-tag tag-dsa">DSA</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Memoization</strong> is caching results of expensive function calls to avoid recomputation.
+<br/><br/>
+<strong>Example: Fibonacci without vs with memoization</strong>
+
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python — Naive vs Memoized</span></div>
+<pre><span class="cm"># ❌ Naive: O(2^n) - recalculates same values</span>
+<span class="kw">def</span> <span class="fn">fib</span>(n):
+    <span class="kw">if</span> n &lt;= <span class="nm">1</span>: <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">fib</span>(n-<span class="nm">1</span>) + <span class="fn">fib</span>(n-<span class="nm">2</span>)
+
+<span class="cm"># ✅ Memoized: O(n) - caches results</span>
+<span class="kw">def</span> <span class="fn">fib_memo</span>(n, memo={}):
+    <span class="kw">if</span> n <span class="kw">in</span> memo: <span class="kw">return</span> memo[n]
+    <span class="kw">if</span> n &lt;= <span class="nm">1</span>: <span class="kw">return</span> n
+    memo[n] = <span class="fn">fib_memo</span>(n-<span class="nm">1</span>, memo) + <span class="fn">fib_memo</span>(n-<span class="nm">2</span>, memo)
+    <span class="kw">return</span> memo[n]</pre>
+</div>
+
+<strong>Why it matters:</strong>
+<ul>
+<li><strong>Without memo:</strong> fib(40) takes ~1 second (1+ billion calls)</li>
+<li><strong>With memo:</strong> fib(40) takes ~0.0001 seconds (40 calls)</li>
+</ul>
+
+<div class="callout callout-green">
+<strong>Python's @lru_cache:</strong> Use <code>@functools.lru_cache(maxsize=None)</code> for automatic memoization.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="dsa" data-subtopic="dynamic-programming">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">24</span>
+<span class="qna-text">
+         What is Tail Recursion? Is it optimized in Python?
+        </span>
+<span class="qna-tag tag-dsa">DSA</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Tail Recursion</strong> occurs when the recursive call is the <em>last</em> operation in the function — no computation happens after it returns.
+
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python — Tail Recursive Factorial</span></div>
+<pre><span class="cm"># Tail recursive version</span>
+<span class="kw">def</span> <span class="fn">factorial_tail</span>(n, acc=<span class="nm">1</span>):
+    <span class="kw">if</span> n == <span class="nm">0</span>: <span class="kw">return</span> acc
+    <span class="kw">return</span> <span class="fn">factorial_tail</span>(n - <span class="nm">1</span>, acc * n)
+    <span class="cm"># ↑ Nothing happens after this call</span></pre>
+</div>
+
+<strong>Compiler Optimization:</strong> Some languages (Scheme, Scala) optimize tail recursion by reusing the same stack frame — preventing stack overflow.
+
+<div class="callout callout-amber">
+<strong>⚠️ Python does NOT optimize tail recursion.</strong> Guido van Rossum intentionally left it out. Use iteration instead for deep recursions in Python.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">25</span>
+<span class="qna-text">
+         Common Recursion Interview Problems
+        </span>
+<span class="qna-tag tag-dsa">DSA</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>Classic Problems:</strong>
+<ul>
+<li><strong>Fibonacci Number</strong> — Base case + two recursive calls</li>
+<li><strong>Climbing Stairs</strong> — How many ways to reach step n? (1 or 2 steps at a time)</li>
+<li><strong>Reverse a String</strong> — Recursively reverse substring</li>
+<li><strong>Power Function</strong> — Calculate x^n recursively (optimize with x^(n/2))</li>
+<li><strong>Merge Sort</strong> — Divide array, sort halves, merge</li>
+<li><strong>Quick Sort</strong> — Partition around pivot, sort partitions</li>
+<li><strong>Binary Tree Traversals</strong> — In-order, pre-order, post-order</li>
+<li><strong>Lowest Common Ancestor</strong> — Find LCA in BST</li>
+<li><strong>Permutations/Subsets</strong> — Backtracking with recursion</li>
+<li><strong>Combination Sum</strong> — Find all combinations that sum to target</li>
+</ul>
+
+<div class="ans-code">
+<div class="ans-code-hdr"><span class="ans-code-lang">python — Climbing Stairs</span></div>
+<pre><span class="cm"># You can climb 1 or 2 steps at a time</span>
+<span class="kw">def</span> <span class="fn">climbStairs</span>(n):
+    <span class="kw">if</span> n &lt;= <span class="nm">2</span>: <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">climbStairs</span>(n-<span class="nm">1</span>) + <span class="fn">climbStairs</span>(n-<span class="nm">2</span>)
+
+<span class="cm"># With memoization</span>
+<span class="kw">def</span> <span class="fn">climbStairs_memo</span>(n, memo={}):
+    <span class="kw">if</span> n <span class="kw">in</span> memo: <span class="kw">return</span> memo[n]
+    <span class="kw">if</span> n &lt;= <span class="nm">2</span>: <span class="kw">return</span> n
+    memo[n] = <span class="fn">climbStairs_memo</span>(n-<span class="nm">1</span>) + <span class="fn">climbStairs_memo</span>(n-<span class="nm">2</span>)
+    <span class="kw">return</span> memo[n]</pre>
+</div>
+</div>
+</div>
+
+<!-- PROGRAMMING MISCONCEPTIONS -->
+<div class="qna-item" data-cat="dsa">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">26</span>
+<span class="qna-text">
+         What are common misconceptions about programming?
+        </span>
+<span class="qna-tag tag-dsa">General</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">
+<strong>7 Common Misconceptions:</strong>
+<ol>
+<li><strong>"You need to be good at math"</strong> — Logic matters more than calculus. Most programming uses basic arithmetic.</li>
+<li><strong>"Memorizing syntax is key"</strong> — Understanding concepts > memorization. Docs exist for a reason.</li>
+<li><strong>"More code = better"</strong> — Concise, readable code is superior. Brevity with clarity wins.</li>
+<li><strong>"You need the 'perfect' IDE/language"</strong> — Tools don't make the programmer. Fundamentals transfer across languages.</li>
+<li><strong>"Debugging is failure"</strong> — Debugging IS programming. Even seniors debug for hours.</li>
+<li><strong>"You must code 8 hours/day"</strong> — Quality > quantity. Burnout kills progress. Consistent small efforts compound.</li>
+<li><strong>"AI will replace programmers"</strong> — AI augments, not replaces. Understanding fundamentals lets you verify AI output.</li>
+</ol>
+<div class="callout callout-blue">
+<strong>Truth:</strong> Programming is problem-solving with code. Syntax is just the vocabulary; logic is the language.
+</div>
+</div>
+</div>
+
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         01
+        </span>
+<span class="qna-text">
+         What is the difference between Array and Linked List?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Arrays
+        </strong>
+        store elements in contiguous memory, giving
+        <em>
+         O(1)
+        </em>
+        random access by index but
+        <em>
+         O(n)
+        </em>
+        insert/delete (due to shifting).
+        <strong>
+         Linked Lists
+        </strong>
+        use nodes with pointers, giving
+        <em>
+         O(1)
+        </em>
+        insert/delete at head but
+        <em>
+         O(n)
+        </em>
+        access.
+        <ul>
+<li>
+<strong>
+           Memory:
+          </strong>
+          Array = fixed contiguous block; LL = scattered nodes with pointer overhead
+         </li>
+<li>
+<strong>
+           Access:
+          </strong>
+          Array O(1) vs LL O(n)
+         </li>
+<li>
+<strong>
+           Insert/Delete at head:
+          </strong>
+          Array O(n) vs LL O(1)
+         </li>
+<li>
+<strong>
+           Cache friendliness:
+          </strong>
+          Arrays are cache-friendly; LLs cause cache misses
+         </li>
+</ul>
+<div class="callout callout-cyan">
+<strong>
+          When to use LL:
+         </strong>
+         Frequent insertions/deletions in the middle, or when size is unknown in advance.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         02
+        </span>
+<span class="qna-text">
+         Explain Big-O notation and give examples of O(1), O(n), O(n²), O(log n).
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Big-O describes the
+        <strong>
+         worst-case growth rate
+        </strong>
+        of an algorithm as input size
+        <em>
+         n
+        </em>
+        grows, ignoring constants.
+        <ul>
+<li>
+<strong>
+           O(1)
+          </strong>
+          — Constant: array index access, hash table lookup
+         </li>
+<li>
+<strong>
+           O(log n)
+          </strong>
+          — Logarithmic: binary search, BST operations
+         </li>
+<li>
+<strong>
+           O(n)
+          </strong>
+          — Linear: linear search, single loop
+         </li>
+<li>
+<strong>
+           O(n log n)
+          </strong>
+          — Merge sort, heap sort, Tim sort
+         </li>
+<li>
+<strong>
+           O(n²)
+          </strong>
+          — Quadratic: bubble/selection/insertion sort (worst case), nested loops
+         </li>
+<li>
+<strong>
+           O(2ⁿ)
+          </strong>
+          — Exponential: recursive Fibonacci, subset generation
+         </li>
+</ul>
+<div class="callout callout-amber">
+<strong>
+          Tip:
+         </strong>
+         Drop constants and lower-order terms — O(2n + 5) simplifies to O(n).
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         03
+        </span>
+<span class="qna-text">
+         What is a Stack and a Queue? Give real-world examples.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Stack
+        </strong>
+        — LIFO (Last In First Out). Operations: push, pop, peek — all O(1).
+        <br/>
+<em>
+         Real world:
+        </em>
+        Browser back button, undo/redo, function call stack, balanced parentheses checker.
+        <br/>
+<br/>
+<strong>
+         Queue
+        </strong>
+        — FIFO (First In First Out). Operations: enqueue, dequeue — all O(1).
+        <br/>
+<em>
+         Real world:
+        </em>
+        Print spooler, CPU scheduling, BFS traversal, customer service queues.
+        <div class="callout callout-green">
+<strong>
+          Deque
+         </strong>
+         (double-ended queue) supports insert/delete at both ends — used for sliding window maximum problems.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="binary-trees">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         04
+        </span>
+<span class="qna-text">
+         Explain Binary Search Tree (BST) and its time complexities.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A BST is a binary tree where for every node:
+        <em>
+         left subtree &lt; node &lt; right subtree
+        </em>
+        .
+        <ul>
+<li>
+<strong>
+           Search:
+          </strong>
+          O(log n) average, O(n) worst (skewed tree)
+         </li>
+<li>
+<strong>
+           Insert:
+          </strong>
+          O(log n) average, O(n) worst
+         </li>
+<li>
+<strong>
+           Delete:
+          </strong>
+          O(log n) average
+         </li>
+<li>
+<strong>
+           In-order traversal:
+          </strong>
+          produces sorted output
+         </li>
+</ul>
+<div class="callout callout-amber">
+<strong>
+          Worst case O(n)
+         </strong>
+         happens when elements are inserted in sorted order (creates a chain). AVL and Red-Black trees fix this with self-balancing.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="dynamic-programming">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         05
+        </span>
+<span class="qna-text">
+         What is Dynamic Programming? How is it different from recursion?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Dynamic Programming (DP)
+        </strong>
+        solves problems by breaking them into overlapping subproblems and
+        <em>
+         storing results to avoid recomputation
+        </em>
+        (memoization or tabulation).
+        <ul>
+<li>
+<strong>
+           Recursion:
+          </strong>
+          recomputes subproblems — exponential time in many cases
+         </li>
+<li>
+<strong>
+           DP (top-down memoization):
+          </strong>
+          recursion + caching = O(n) for Fibonacci
+         </li>
+<li>
+<strong>
+           DP (bottom-up tabulation):
+          </strong>
+          iterative, fills a table from base cases up
+         </li>
+</ul>
+<strong>
+         Two conditions for DP:
+        </strong>
+        Optimal substructure + Overlapping subproblems.
+        <div class="callout callout-cyan">
+<strong>
+          Examples:
+         </strong>
+         0/1 Knapsack, LCS, LIS, Coin Change, Edit Distance, Matrix Chain Multiplication.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="graph">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         06
+        </span>
+<span class="qna-text">
+         Explain BFS vs DFS. When would you use each?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         BFS (Breadth-First Search):
+        </strong>
+        Uses a queue. Explores level by level.
+        <br/>
+<em>
+         Use when:
+        </em>
+        Shortest path in unweighted graph, level-order traversal, nearest neighbour problems.
+        <br/>
+<br/>
+<strong>
+         DFS (Depth-First Search):
+        </strong>
+        Uses a stack (or recursion). Explores as deep as possible first.
+        <br/>
+<em>
+         Use when:
+        </em>
+        Cycle detection, topological sort, connected components, maze solving, tree traversals.
+        <ul>
+<li>
+          Both:
+          <strong>
+           O(V + E)
+          </strong>
+          time, O(V) space
+         </li>
+<li>
+          BFS guarantees shortest path (unweighted); DFS does not
+         </li>
+</ul>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         07
+        </span>
+<span class="qna-text">
+         What is a Hash Table and how does it handle collisions?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A
+        <strong>
+         Hash Table
+        </strong>
+        stores key-value pairs using a hash function to map keys to array indices. Average
+        <em>
+         O(1)
+        </em>
+        for insert, delete, lookup.
+        <br/>
+<br/>
+<strong>
+         Collision handling techniques:
+        </strong>
+        <ul>
+<li>
+<strong>
+           Chaining:
+          </strong>
+          each bucket holds a linked list of entries
+         </li>
+<li>
+<strong>
+           Open Addressing:
+          </strong>
+          probe for next empty slot (linear probing, quadratic probing, double hashing)
+         </li>
+</ul>
+<div class="callout callout-amber">
+<strong>
+          Load factor
+         </strong>
+         = n/k (items/buckets). When it exceeds ~0.7, the table is resized (rehashing). Python's
+         <code>
+          dict
+         </code>
+         uses open addressing.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         08
+        </span>
+<span class="qna-text">
+         Compare Merge Sort and Quick Sort.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>
+           Merge Sort:
+          </strong>
+          O(n log n) always, stable, O(n) extra space (not in-place). Good for linked lists and external sorting.
+         </li>
+<li>
+<strong>
+           Quick Sort:
+          </strong>
+          O(n log n) average, O(n²) worst, O(log n) space (in-place). Faster in practice due to cache efficiency.
+         </li>
+</ul>
+<div class="callout callout-green">
+<strong>
+          Python uses Timsort
+         </strong>
+         (hybrid merge + insertion sort) — O(n log n) worst case, stable, adaptive.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         09
+        </span>
+<span class="qna-text">
+         What is a Heap and where is it used?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A
+        <strong>
+         Heap
+        </strong>
+        is a complete binary tree satisfying the heap property:
+        <br/>
+<em>
+         Max-heap:
+        </em>
+        parent ≥ children.
+        <em>
+         Min-heap:
+        </em>
+        parent ≤ children.
+        <br/>
+<br/>
+<strong>
+         Operations:
+        </strong>
+        Insert O(log n), Extract-min/max O(log n), Peek O(1).
+        <br/>
+<br/>
+<strong>
+         Uses:
+        </strong>
+        Priority queues, Dijkstra's algorithm, Heap Sort, Top-K problems, scheduling.
+        <div class="callout callout-cyan">
+         Python's
+         <code>
+          heapq
+         </code>
+         module implements a min-heap. For max-heap, negate values.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         10
+        </span>
+<span class="qna-text">
+         What is the Two Pointer technique? Give an example.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        The
+        <strong>
+         Two Pointer
+        </strong>
+        technique uses two indices moving through an array to solve problems in O(n) instead of O(n²).
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="cm"># Two Sum in sorted array</span>
+<span class="kw">def</span> <span class="fn">two_sum</span>(arr, target):
+    left, right = <span class="nm">0</span>, len(arr) - <span class="nm">1</span>
+    <span class="kw">while</span> left &lt; right:
+        s = arr[left] + arr[right]
+        <span class="kw">if</span> s == target: <span class="kw">return</span> [left, right]
+        <span class="kw">elif</span> s &lt; target: left += <span class="nm">1</span>
+        <span class="kw">else</span>: right -= <span class="nm">1</span></pre>
+</div>
+<em>
+         Other uses:
+        </em>
+        Remove duplicates, 3Sum, container with most water, palindrome check.
+       </div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="arrays">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         11
+        </span>
+<span class="qna-text">
+         What is the Sliding Window technique? When is it used?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        The
+        <strong>
+         Sliding Window
+        </strong>
+        technique converts nested loops into a single pass by maintaining a "window" over the array.
+        <br/>
+<br/>
+<strong>
+         Fixed-size window:
+        </strong>
+        Max sum of k consecutive elements.
+        <br/>
+<strong>
+         Variable-size window:
+        </strong>
+        Smallest subarray with sum ≥ target.
+        <div class="callout callout-cyan">
+<strong>
+         Pattern:
+        </strong>
+        Expand window (right++), shrink when condition met (left++), track answer.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="linked-lists">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         12
+        </span>
+<span class="qna-text">
+         How do you detect a cycle in a Linked List?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Use
+        <strong>
+         Floyd's Cycle Detection
+        </strong>
+        (Tortoise and Hare algorithm):
+        <ul>
+<li>
+          Slow pointer moves 1 step, fast pointer moves 2 steps
+         </li>
+<li>
+          If there's a cycle, they will meet
+         </li>
+<li>
+          Time: O(n), Space: O(1)
+         </li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">has_cycle</span>(head):
+    slow = fast = head
+    <span class="kw">while</span> fast <span class="kw">and</span> fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        <span class="kw">if</span> slow == fast: <span class="kw">return</span> True
+    <span class="kw">return</span> False</pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="linked-lists">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         13
+        </span>
+<span class="qna-text">
+         Reverse a Linked List (iterative and recursive).
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Iterative:
+        </strong>
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">reverse_list</span>(head):
+    prev, curr = <span class="nm">None</span>, head
+    <span class="kw">while</span> curr:
+        next_temp = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_temp
+    <span class="kw">return</span> prev</pre>
+</div>
+<strong>
+         Recursive:
+        </strong>
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">reverse_list</span>(head):
+    <span class="kw">if</span> <span class="kw">not</span> head <span class="kw">or</span> <span class="kw">not</span> head.next: <span class="kw">return</span> head
+    new_head = <span class="fn">reverse_list</span>(head.next)
+    head.next.next = head
+    head.next = <span class="nm">None</span>
+    <span class="kw">return</span> new_head</pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="strings">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         14
+        </span>
+<span class="qna-text">
+         How do you check if a string is a palindrome?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Two pointer approach:
+        </strong>
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">is_palindrome</span>(s):
+    left, right = <span class="nm">0</span>, len(s)-<span class="nm">1</span>
+    <span class="kw">while</span> left &lt; right:
+        <span class="kw">if</span> s[left] != s[right]: <span class="kw">return</span> False
+        left += <span class="nm">1</span>; right -= <span class="nm">1</span>
+    <span class="kw">return</span> True</pre>
+</div>
+<strong>
+         Python one-liner:
+        </strong>
+        <code>return s == s[::-1]</code>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="strings">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         15
+        </span>
+<span class="qna-text">
+         Find the first non-repeating character in a string.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Use a hash map to count frequencies, then iterate to find first with count = 1.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="kw">def</span> <span class="fn">first_unique</span>(s):
+    counts = Counter(s)
+    <span class="kw">for</span> i, ch <span class="kw">in</span> <span class="fn">enumerate</span>(s):
+        <span class="kw">if</span> counts[ch] == <span class="nm">1</span>: <span class="kw">return</span> i
+    <span class="kw">return</span> -<span class="nm">1</span></pre>
+</div>
+<em>
+         Time: O(n), Space: O(1) (max 26 lowercase letters)
+        </em>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="binary-trees">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         16
+        </span>
+<span class="qna-text">
+         What are the different tree traversals? Explain each.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<ul>
+<li>
+<strong>
+           In-order (Left, Root, Right):
+          </strong>
+          BST gives sorted output
+         </li>
+<li>
+<strong>
+           Pre-order (Root, Left, Right):
+          </strong>
+          Used for tree copying, serialization
+         </li>
+<li>
+<strong>
+           Post-order (Left, Right, Root):
+          </strong>
+          Used for tree deletion, expression trees
+         </li>
+<li>
+<strong>
+           Level-order (BFS):
+          </strong>
+          Level by level using a queue
+         </li>
+</ul>
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="cm"># In-order traversal</span>
+<span class="kw">def</span> <span class="fn">inorder</span>(root):
+    <span class="kw">if</span> root:
+        <span class="fn">inorder</span>(root.left)
+        <span class="fn">print</span>(root.val)
+        <span class="fn">inorder</span>(root.right)</pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="binary-trees">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         17
+        </span>
+<span class="qna-text">
+         Find the height/depth of a Binary Tree.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Height = number of edges on longest path from root to leaf.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">max_depth</span>(root):
+    <span class="kw">if</span> <span class="kw">not</span> root: <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">return</span> <span class="nm">1</span> + max(<span class="fn">max_depth</span>(root.left), <span class="fn">max_depth</span>(root.right))</pre>
+</div>
+<em>
+         Time: O(n), Space: O(h) for recursion stack
+        </em>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="graph">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         18
+        </span>
+<span class="qna-text">
+         Explain Dijkstra's shortest path algorithm.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Dijkstra finds the shortest path from a source to all other nodes in a weighted graph (non-negative edges).
+        <ul>
+<li>
+          Use a min-heap (priority queue)
+         </li>
+<li>
+          Always process the node with smallest tentative distance
+         </li>
+<li>
+          Relax edges: if dist[u] + weight &lt; dist[v], update dist[v]
+         </li>
+</ul>
+<em>
+         Time: O((V+E) log V) with heap
+        </em>
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="graph">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         19
+        </span>
+<span class="qna-text">
+         What is Topological Sort? When is it used?
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Topological sort orders vertices in a DAG such that for every edge (u→v), u comes before v.
+        <br/>
+<br/>
+<strong>
+         Uses:
+        </strong>
+        Task scheduling, dependency resolution, build systems.
+        <br/>
+<br/>
+<strong>
+         Kahn's algorithm:
+        </strong>
+        Use in-degree counting + queue.
+        <br/>
+<strong>
+         DFS approach:
+        </strong>
+        Post-order traversal + reverse.
+</div>
+</div>
+<div class="qna-item" data-cat="dsa" data-subtopic="dynamic-programming">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         20
+        </span>
+<span class="qna-text">
+         Explain the Coin Change problem and its DP solution.
+        </span>
+<span class="qna-tag tag-dsa">
+         DSA
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Given coins of different denominations and a total amount, find the minimum number of coins needed.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">coin_change</span>(coins, amount):
+    dp = [float('inf')] * (amount + <span class="nm">1</span>)
+    dp[<span class="nm">0</span>] = <span class="nm">0</span>
+    <span class="kw">for</span> coin <span class="kw">in</span> coins:
+        <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(coin, amount + <span class="nm">1</span>):
+            dp[x] = min(dp[x], dp[x - coin] + <span class="nm">1</span>)
+    <span class="kw">return</span> dp[amount] <span class="kw">if</span> dp[amount] != float('inf') <span class="kw">else</span> -<span class="nm">1</span></pre>
+</div>
+<em>
+         Time: O(amount × coins), Space: O(amount)
+        </em>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════ DSA ROADMAP ═══════════════ -->
+<div class="section-label">🚀 DSA Master Roadmap</div>
+<div class="callout callout-cyan"><strong>Complete Learning Path:</strong> Follow this structured roadmap to master DSA systematically.</div>
+<div class="roadmap-wrap">
+<pre style="font-family:var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--text2);">
+<strong style="color: var(--cyan);">DSA MASTER TREE</strong>
+│
+├── 1. Foundations
+│   ├── What is Data Structure
+│   ├── What is Algorithm
+│   ├── Time Complexity
+│   │   ├── Big-O
+│   │   ├── Big-Ω
+│   │   └── Big-Θ
+│   ├── Space Complexity
+│   └── Recurrence Relations
+│
+├── 2. Mathematical Basics
+│   ├── Logarithms
+│   ├── Modular Arithmetic
+│   ├── Prime Numbers
+│   ├── GCD / LCM
+│   └── Sieve of Eratosthenes
+│
+├── 3. Arrays
+│   ├── Traversal
+│   ├── Searching
+│   │   ├── Linear Search
+│   │   └── Binary Search
+│   ├── Prefix Sum
+│   ├── Sliding Window
+│   ├── Two Pointers
+│   ├── Kadane's Algorithm
+│   └── Matrix / 2D Arrays
+│
+├── 4. Strings
+│   ├── String Manipulation
+│   ├── Pattern Matching
+│   │   ├── Naive
+│   │   ├── KMP
+│   │   ├── Rabin-Karp
+│   │   └── Z Algorithm
+│   ├── Palindrome Problems
+│   ├── String Hashing
+│   └── Trie
+│
+├── 5. Linked Lists
+│   ├── Singly Linked List
+│   ├── Doubly Linked List
+│   ├── Circular Linked List
+│   ├── Reverse Linked List
+│   ├── Cycle Detection (Floyd)
+│   └── Merge Lists
+│
+├── 6. Stack
+│   ├── Stack Implementation
+│   ├── Balanced Parentheses
+│   ├── Next Greater Element
+│   ├── Monotonic Stack
+│   └── Min Stack
+│
+├── 7. Queue
+│   ├── Queue Implementation
+│   ├── Circular Queue
+│   ├── Deque
+│   ├── Priority Queue
+│   └── Monotonic Queue
+│
+├── 8. Hashing
+│   ├── Hash Tables
+│   ├── Collision Handling
+│   │   ├── Chaining
+│   │   └── Open Addressing
+│   ├── Load Factor
+│   └── Rehashing
+│
+├── 9. Trees
+│   ├── Binary Tree
+│   │   ├── Traversals
+│   │   │   ├── Inorder
+│   │   │   ├── Preorder
+│   │   │   └── Postorder
+│   │   ├── Height / Depth
+│   │   └── Diameter
+│   ├── Binary Search Tree
+│   ├── AVL Tree
+│   ├── Red-Black Tree
+│   ├── Segment Tree
+│   ├── Fenwick Tree
+│   └── Heap
+│       ├── Min Heap
+│       └── Max Heap
+│
+├── 10. Graphs
+│   ├── Graph Representation
+│   │   ├── Adjacency Matrix
+│   │   └── Adjacency List
+│   ├── BFS
+│   ├── DFS
+│   ├── Topological Sort
+│   ├── Cycle Detection
+│   ├── Shortest Path
+│   │   ├── Dijkstra
+│   │   ├── Bellman-Ford
+│   │   └── Floyd-Warshall
+│   ├── Minimum Spanning Tree
+│   │   ├── Kruskal
+│   │   └── Prim
+│   └── Disjoint Set (Union-Find)
+│
+├── 11. Recursion & Backtracking
+│   ├── Recursion Basics
+│   ├── Subsets
+│   ├── Permutations
+│   ├── N-Queens
+│   └── Sudoku Solver
+│
+├── 12. Greedy Algorithms
+│   ├── Activity Selection
+│   ├── Huffman Coding
+│   ├── Fractional Knapsack
+│   └── Job Scheduling
+│
+├── 13. Dynamic Programming
+│   ├── Memoization
+│   ├── Tabulation
+│   ├── 1D DP
+│   ├── 2D DP
+│   ├── Knapsack Variants
+│   ├── Longest Common Subsequence
+│   ├── Longest Increasing Subsequence
+│   └── Matrix Chain Multiplication
+│
+├── 14. Bit Manipulation
+│   ├── Bitwise Operators
+│   ├── Set / Clear Bits
+│   ├── Count Set Bits
+│   └── XOR Tricks
+│
+├── 15. Advanced DSA
+│   ├── Sparse Table
+│   ├── Heavy-Light Decomposition
+│   ├── Treap
+│   ├── Splay Tree
+│   └── Skip List
+│
+└── 16. Interview Patterns
+    ├── Two Pointer Pattern
+    ├── Sliding Window Pattern
+    ├── Binary Search Pattern
+    ├── BFS / DFS Pattern
+    ├── Greedy Choice Pattern
+    └── DP Pattern Recognition
+</pre>
+</div>
+</div><!-- /roadmap-wrap -->
+
+<div class="no-results" id="no-results">
+  <div style="font-size:32px;margin-bottom:8px;">🔍</div>
+  No questions match your filter.
+</div>
+
+</div><!-- /qna-list -->
+
+    <!-- PAGE NAV -->
+    <div class="page-nav">
+      <a class="nav-link" href="index.html">← All Categories</a>
+      <a class="nav-link next" href="python-interview.html">Python →</a>
+    </div>
+
+  </main>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+const TRACK = 'dsa';
+const TOTAL = 47;
+
+/* ── PROGRESS ── */
+function getKey(n){ return 'tf_q_'+TRACK+'_'+n; }
+function isChecked(n){ try{ return localStorage.getItem(getKey(n))==='1'; }catch(e){ return false; } }
+function setChecked(n,v){ try{ if(v)localStorage.setItem(getKey(n),'1'); else localStorage.removeItem(getKey(n)); }catch(e){} }
+
+function renderProgress(){
+  let done=0;
+  document.querySelectorAll('.qna-cb').forEach(cb=>{
+    const n=cb.dataset.n;
+    if(isChecked(n)){ cb.classList.add('checked'); done++; }
+    else cb.classList.remove('checked');
+  });
+  const el=document.getElementById('doneCount');
+  if(el) el.textContent=done;
+}
+
+function resetProgress(){
+  if(!confirm('Reset all DSA progress? Cannot be undone.')) return;
+  document.querySelectorAll('.qna-cb').forEach(cb=>{ setChecked(cb.dataset.n,false); });
+  renderProgress();
+}
+
+/* ── TOGGLE Q ── */
+function toggleQ(qEl){
+  const item=qEl.closest('.qna-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.qna-item.open').forEach(el=>el.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+/* ── FILTER ── */
+function filterQna(sub,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const show = sub==='all' || item.dataset.subtopic===sub;
+    item.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('no-results').style.display = visible===0 ? 'block' : 'none';
+  const inp=document.getElementById('qna-search');
+  if(inp) inp.value='';
+}
+
+/* ── SEARCH ── */
+function searchQna(val){
+  const q=val.trim().toLowerCase();
+  let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const text=item.querySelector('.qna-text');
+    const ans=item.querySelector('.qna-a');
+    const match=!q||(text?.textContent.toLowerCase().includes(q)||ans?.textContent.toLowerCase().includes(q));
+    item.style.display=match?'':'none';
+    if(match) visible++;
+    if(q) item.classList.remove('open');
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+
+/* ── PROGRESS BAR + BACK-TOP ── */
+const progressFill=document.getElementById('progressFill');
+const backTop=document.getElementById('backTop');
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;
+  if(progressFill) progressFill.style.width=(h>0?(s/h)*100:0)+'%';
+  if(backTop) backTop.classList.toggle('visible',s>400);
+},{passive:true});
+if(backTop) backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ── KEYBOARD SHORTCUT ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){
+    e.preventDefault();
+    document.getElementById('qna-search')?.focus();
+  }
+});
+
+/* ── SEARCH INPUT WIRE ── */
+document.getElementById('qna-search')?.addEventListener('input',function(){ searchQna(this.value); });
+
+/* ── ADD CHECKBOXES TO ALL Q ITEMS ── */
+document.querySelectorAll('.qna-item').forEach((item,i)=>{
+  const n = item.dataset.n || String(i+1).padStart(2,'0');
+  item.dataset.n = n;
+  const qEl = item.querySelector('.qna-q');
+  if(qEl && !qEl.querySelector('.qna-cb')){
+    const cb=document.createElement('div');
+    cb.className='qna-cb'; cb.dataset.n=n;
+    cb.addEventListener('click',e=>{
+      e.stopPropagation();
+      const checked=!cb.classList.contains('checked');
+      setChecked(n,checked);
+      renderProgress();
+    });
+    qEl.insertBefore(cb, qEl.firstChild);
+  }
+});
+
+/* ── ANIMATIONS ── */
+const animObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');animObs.unobserve(e.target);}});
+},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';animObs.observe(el);});
+
+renderProgress();
+</script>
+</body>
+</html>

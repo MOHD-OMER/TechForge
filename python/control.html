@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Control Flow — Conditionals & Loops | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <div class="sidebar-label" style="margin-top:14px;">Control & Logic</div>
+      <a class="sb-link active" href="#sec-control"><span class="sb-num">01</span> Control Flow</a>
+      <a class="sb-link" href="#sec-loops"><span class="sb-num">02</span> Loops</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Control Flow</div>
+        <h1 class="pg-title">Conditionals &amp; <span>Loops</span></h1>
+        <p class="pg-sub">Master decision-making and iteration in Python — the foundation of all programming logic.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-green">✓ Core Concepts</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-control">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">🔀</span><h2 class="sec-title">Control Flow & Operators</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Category</th><th>Operators</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Arithmetic</td><td><code>+  -  *  /  //  %  **</code></td><td><code>10 % 3 = 1</code>, <code>2**3 = 8</code></td></tr>
+              <tr><td>Comparison</td><td><code>==  !=  &gt;  &lt;  &gt;=  &lt;=</code></td><td>Always return <code>True</code>/<code>False</code></td></tr>
+              <tr><td>Logical</td><td><code>and  or  not</code></td><td><code>age &gt; 18 and age &lt; 60</code></td></tr>
+              <tr><td>Assignment</td><td><code>+=  -=  *=  //=</code></td><td><code>x += 5</code> → <code>x = x + 5</code></td></tr>
+              <tr><td>Membership</td><td><code>in  not in</code></td><td><code>2 in [1,2,3]</code> → <code>True</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-loops">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🔁</span><h2 class="sec-title">Loops in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Loops</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">10</span>, <span class="nm">2</span>):  <span class="cm"># 1 3 5 7 9</span>
+    <span class="fn">print</span>(i)
+
+<span class="cm"># break — exit loop; continue — skip iteration</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">5</span>):
+    <span class="kw">if</span> i == <span class="nm">2</span>: <span class="kw">continue</span>
+    <span class="fn">print</span>(i)   <span class="cm"># 0 1 3 4</span>
+
+<span class="cm"># DSA Example: find maximum</span>
+nums = [<span class="nm">3</span>, <span class="nm">7</span>, <span class="nm">2</span>, <span class="nm">9</span>, <span class="nm">5</span>]
+max_val = nums[<span class="nm">0</span>]
+<span class="kw">for</span> x <span class="kw">in</span> nums:
+    <span class="kw">if</span> x > max_val: max_val = x
+<span class="fn">print</span>(max_val)   <span class="cm"># 9</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>while loops</strong> are used when you don't know the number of iterations in advance. <strong>for loops</strong> iterate over sequences.</span></div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="collections.html">← Collections</a>
+        <a class="nav-link" href="functions.html">Functions →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Arrays & Strings — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    /* FIX 1: Removed duplicate :root rule — was declared twice identically */
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .pg-head { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .pg-crumb { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: .1em; margin-bottom: 14px; }
+    .pg-title { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: 1.1; color: var(--text); margin-bottom: 16px; }
+    .pg-title span { color: var(--accent); }
+    .pg-sub { font-size: 15px; color: var(--text2); max-width: 640px; line-height: 1.7; margin-bottom: 24px; }
+    .pg-sub strong { color: var(--text); }
+    .pg-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 100px; font-family: var(--mono); font-size: 11.5px; font-weight: 600; }
+    .b-green { background: rgba(52,211,153,.1); color: var(--green); border: 1px solid rgba(52,211,153,.2); }
+    .b-blue { background: rgba(77,158,247,.1); color: var(--blue); border: 1px solid rgba(77,158,247,.2); }
+    .b-accent { background: rgba(247,204,69,.1); color: var(--accent); border: 1px solid rgba(247,204,69,.2); }
+    .cells-row { display: flex; gap: 6px; flex-wrap: wrap; min-height: 64px; align-items: flex-end; padding: 8px 0 4px; }
+    .cell { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 14px; font-weight: 600; position: relative; color: var(--text); transition: all .25s ease; }
+    .cell-idx { position: absolute; top: -18px; font-size: 10px; color: var(--text3); font-family: var(--mono); }
+    .cell.cc-highlight { border-color: var(--blue); background: var(--blue-dim); color: var(--blue); transform: translateY(-4px); }
+    .cell.cc-found { border-color: var(--green); background: var(--green-dim); color: var(--green); transform: scale(1.12); }
+    .cell.cc-shifting { border-color: var(--amber); background: var(--amber-dim); color: var(--amber); }
+    .cell.cc-deleted { border-color: var(--red); background: var(--red-dim); color: var(--red); transform: translateY(-4px); opacity: .5; }
+    .tip-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; font-size: 13.5px; color: var(--text2); line-height: 1.7; }
+    .tip-box.tip-green { border-left-color: var(--green); }
+    .tip-box.tip-amber { border-left-color: var(--amber); }
+    .tip-box.tip-red { border-left-color: var(--red); }
+    .tip-box strong { color: var(--text); }
+    .mem-diagram { display: flex; gap: 0; margin: 20px 0 8px; overflow-x: auto; }
+    .mem-cell { min-width: 72px; text-align: center; }
+    .mem-addr { font-family: var(--mono); font-size: 10px; color: var(--text3); padding: 4px 2px; border-right: 1px solid var(--border); }
+    .mem-cell:last-child .mem-addr { border-right: none; }
+    .mem-val { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); padding: 10px 4px; background: var(--surface); border: 1.5px solid var(--border); border-right: none; }
+    .mem-cell:last-child .mem-val { border-right: 1.5px solid var(--border); }
+    .mem-idx { font-size: 11px; color: var(--text3); padding: 4px 2px; font-family: var(--mono); }
+    .viz-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 24px; }
+    .viz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .viz-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 1px; }
+    .viz-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    .inp { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-family: var(--mono); font-size: 12px; }
+    .inp-wide { width: 100px; }
+    .btn { background: var(--blue); color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-family: var(--mono); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s; }
+    .btn:hover { filter: brightness(1.1); }
+    .btn.soft-red { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn.soft-green { background: var(--green); color: #fff; border-color: var(--green); }
+    .viz-body { border-top: 1px solid var(--border); padding-top: 16px; }
+    .status { font-size: 12px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; }
+    .info-tabs { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; margin-bottom: 16px; }
+    .info-tab { flex: 1; padding: 8px 12px; text-align: center; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--text2); cursor: pointer; border-radius: 6px; transition: all .15s; }
+    .info-tab:hover { background: var(--surface2); }
+    .info-tab.active { background: var(--accent-dim); color: var(--accent); }
+    .info-pane { display: none; }
+    .info-pane.active { display: block; animation: fadeIn .2s ease; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step { display: flex; gap: 14px; }
+    .step-num { font-family: var(--mono); font-size: 11px; font-weight: 800; color: var(--blue); background: rgba(77,158,247,.1); border: 1px solid rgba(77,158,247,.2); width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; flex-shrink: 0; }
+    .step-body { flex: 1; }
+    .step-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .step-desc { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
+    .step-code { font-family: var(--mono); font-size: 11px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--accent); }
+    .code-block { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 18px; }
+    .code-hdr { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--border); }
+    .code-lang { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; }
+    .code-dots { display: flex; gap: 6px; }
+    .cd { width: 12px; height: 12px; border-radius: 50%; }
+    .code-pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.8; padding: 18px 20px; overflow-x: auto; color: var(--text); }
+    .cm { color: #4a6078; font-style: italic; }
+    .kw { color: var(--code-kw); font-weight: 600; }
+    .fn { color: var(--code-fn); }
+    .str { color: var(--code-str); }
+    .quiz-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+    .quiz-q { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+    .quiz-q code { font-family: var(--mono); background: var(--bg2); padding: 2px 6px; border-radius: 4px; color: var(--accent); }
+    .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt { padding: 11px 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; color: var(--text2); font-size: 12.5px; cursor: pointer; text-align: left; transition: all .15s; }
+    .quiz-opt:hover { border-color: var(--blue); color: var(--text); }
+    .quiz-opt.correct { background: rgba(52,211,153,.1); border-color: var(--green); color: var(--green); }
+    .quiz-opt.wrong { background: rgba(248,113,113,.1); border-color: var(--red); color: var(--red); }
+    .quiz-feedback { margin-top: 12px; padding: 10px 14px; border-radius: var(--radius); font-size: 12px; display: none; }
+    .pattern-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 14px; }
+    .pb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .pb-num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-dim); width: 28px; height: 28px; display: grid; place-items: center; border-radius: 6px; flex-shrink: 0; }
+    .pb-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); }
+    .pb-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
+    .pb-desc { font-size: 13.5px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
+    .pb-example { font-family: var(--mono); font-size: 12px; color: var(--text3); background: var(--bg2); border-radius: 6px; padding: 10px 14px; line-height: 1.8; }
+    .cplx-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .cplx-table th { background: var(--surface); color: var(--text2); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+    .cplx-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    .cplx-table tr:last-child td { border-bottom: none; }
+    .cplx-table tr:hover td { background: var(--surface); }
+    .cplx-pill { display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
+    .cp-green { background: var(--green-dim); color: var(--green); }
+    .cp-cyan { background: var(--accent-dim); color: var(--accent); }
+    .cp-amber { background: var(--amber-dim); color: var(--amber); }
+    .cp-red { background: var(--red-dim); color: var(--red); }
+    .cp-purple { background: var(--purple-dim); color: var(--purple); }
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .cc-val { font-family: var(--mono); font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .cc-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .cc-desc { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
+    .usecase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .usecase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: all .2s; }
+    .usecase-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .uc-icon { font-size: 22px; margin-bottom: 10px; }
+    .uc-title { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .uc-desc { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
+    .uc-tag { display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .05em; padding: 3px 8px; border-radius: 4px; background: var(--accent-dim); color: var(--accent); }
+    .pq-progress { margin-bottom: 14px; }
+    .pq-progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+    .pq-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .pq-bar-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s; }
+    .practice-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .practice-count { font-size: 12px; color: var(--text2); }
+    .practice-filters { display: flex; gap: 6px; }
+    .pf-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-family: var(--mono); font-size: 9.5px; font-weight: 600; color: var(--text2); cursor: pointer; transition: all .15s; }
+    .pf-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .pf-btn.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+    .pq-list { display: flex; flex-direction: column; }
+    .pq-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all .15s; }
+    .pq-item:hover { background: var(--surface); padding-left: 8px; border-radius: 6px; }
+    .pq-item:last-child { border-bottom: none; }
+    .pq-item.completed { opacity: .45; }
+    .pq-num { font-family: var(--mono); font-size: 11px; color: var(--text3); min-width: 36px; }
+    .pq-name { flex: 1; font-size: 13.5px; color: var(--text); }
+    .pq-diff { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-left: 6px; }
+    .pq-easy { background: rgba(52,211,153,.1); color: var(--green); border: 1px solid rgba(52,211,153,.2); }
+    .pq-medium { background: rgba(251,191,36,.08); color: var(--amber); border: 1px solid rgba(251,191,36,.2); }
+    .pq-hard { background: rgba(248,113,113,.08); color: var(--red); border: 1px solid rgba(248,113,113,.2); }
+    .pq-asked { font-size: 11px; color: var(--text3); min-width: 120px; text-align: right; }
+    .pq-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
+    .pq-pbc { background: rgba(77,158,247,.1); color: var(--blue); border: 1px solid rgba(77,158,247,.2); }
+    .pq-startup { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+    .pq-arrow { color: var(--text3); font-size: 14px; margin-left: 4px; }
+    .pq-done-toggle { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border2); background: transparent; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: transparent; transition: all .15s; }
+    .pq-done-toggle:hover { border-color: var(--green); }
+    .pq-done-toggle.done { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .pq-empty { display: none; text-align: center; padding: 32px; color: var(--text3); font-size: 13px; }
+    .page-nav { display: flex; justify-content: space-between; gap: 16px; padding-top: 40px; border-top: 1px solid var(--border); margin-top: 20px; }
+    .nav-link { display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text2); text-decoration: none; font-size: 13.5px; font-weight: 500; transition: all .17s; }
+    .nav-link:hover { border-color: var(--accent); color: var(--accent); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+
+  /* Hero always visible — above fold, no animation needed */
+  .dsa-hero, .dsa-stats2 { opacity: 1 !important; transform: none !important; }
+</style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link current" href="./">DSA</a>
+      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+      </div>
+      <nav id="sidebarNav">
+        <div class="sidebar-label">Foundations</div>
+        <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+        <a class="sb-link active" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+        <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+        <a class="sb-link" href="#memory"><span class="sb-num">§1</span>Memory Model</a>
+        <a class="sb-link" href="#operations"><span class="sb-num">§2</span>Operations</a>
+        <a class="sb-link" href="#strings"><span class="sb-num">§3</span>Strings in Python</a>
+        <a class="sb-link" href="#patterns"><span class="sb-num">§4</span>Key Patterns</a>
+        <a class="sb-link" href="#complexity"><span class="sb-num">§5</span>Complexity Table</a>
+        <a class="sb-link" href="#usecases"><span class="sb-num">§6</span>Real-World Uses</a>
+        <a class="sb-link" href="#practice"><span class="sb-num">§7</span>Practice Problems</a>
+        <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+        <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+        <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+        <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+        <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+        <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+        <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+        <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+        <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+        <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+        <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+        <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+        <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+        <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+        <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+        <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+        <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+        <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+        <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+        <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+        <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+        <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+        <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+        <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+        <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+        <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+        <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+        <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+        <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+        <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+        <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+        <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+        <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+      </nav>
+    </aside>
+    <main class="main" id="mainContent">
+
+      <!-- PAGE HEADER -->
+      
+      <div class="dsa-hero">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Linear DS · Foundations</div>
+        <h1 class="dh2-title">Arrays &amp; <span>Strings</span></h1>
+        <p class="dh2-sub">The most fundamental data structure in computing. Arrays store elements in <strong>contiguous memory</strong>,
+          giving you instant O(1) index access — the bedrock of every algorithm you will ever write.</p>
+      </div>
+      <div class="dsa-stats2" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Access</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(n)</span><span class="dss-label">Search</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">O(n)</span><span class="dss-label">Insert</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Contiguous</span><span class="dss-label">Memory</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">Foundation</span></div></div>
+
+      <!-- §1 — MEMORY MODEL -->
+      <div class="py-section" id="memory">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-title">How Arrays Live in Memory</span></div>
+        <div class="section-divider"></div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.8;margin-bottom:16px;">
+          An array is a block of <strong style="color:var(--text)">contiguous memory cells</strong>, each the same size.
+          When you write <code style="font-family:var(--mono);color:var(--accent)">arr[i]</code>, the CPU computes
+          <code style="font-family:var(--mono)">base_address + i × element_size</code> — a single arithmetic step.
+          That is why access is <strong style="color:var(--green)">O(1)</strong> regardless of array length.
+        </p>
+        <div class="mem-diagram">
+          <div class="mem-cell"><div class="mem-addr">0x100</div><div class="mem-val">10</div><div class="mem-idx">[0]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x104</div><div class="mem-val">20</div><div class="mem-idx">[1]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x108</div><div class="mem-val">30</div><div class="mem-idx">[2]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x10C</div><div class="mem-val">40</div><div class="mem-idx">[3]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x110</div><div class="mem-val">50</div><div class="mem-idx">[4]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x114</div><div class="mem-val">60</div><div class="mem-idx">[5]</div></div>
+          <div class="mem-cell"><div class="mem-addr">0x118</div><div class="mem-val">70</div><div class="mem-idx">[6]</div></div>
+        </div>
+        <p style="font-size:11.5px;color:var(--text3);margin-top:4px;">Each cell is 4 bytes apart (32-bit int). Address of arr[i] = 0x100 + i×4.</p>
+        <div class="tip-box tip-green">
+          <strong>Why this matters for interviews:</strong> Interviewers love to ask "why is array access O(1) but search O(n)?"
+          The answer — you can calculate any address directly, but finding a value requires checking each element one by one.
+        </div>
+        <div class="tip-box tip-amber">
+          <strong>Python lists vs C arrays:</strong> Python's <code style="font-family:var(--mono)">list</code> is a
+          <em>dynamic array of pointers</em>. Access is still O(1) (pointer lookup), but elements can be different types
+          and sizes because the list stores pointers, not the values directly.
+        </div>
+      </div>
+
+      <!-- §2 — INTERACTIVE VISUALIZER -->
+      <div class="py-section" id="operations">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-title">Interactive Operations</span></div>
+        <div class="section-divider"></div>
+        <div class="viz-block">
+          <div class="viz-top">
+            <span class="viz-label">// ARRAY OPERATIONS</span>
+            <div class="viz-controls">
+              <input class="inp inp-wide" id="ar-v" placeholder="Value" value="42" title="Value"/>
+              <input class="inp" id="ar-i" placeholder="Idx" value="2" title="Index"/>
+              <button class="btn go" onclick="arInsert()">Insert</button>
+              <button class="btn soft-red" onclick="arDelete()">Delete</button>
+              <button class="btn soft-green" onclick="arSearch()">Search</button>
+              <button class="btn" onclick="arReset()">Reset</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <div style="padding-bottom:24px;">
+              <div class="cells-row" id="ar-cells"></div>
+            </div>
+            <div class="status" id="ar-status">Enter a value and index, then choose an operation.</div>
+          </div>
+        </div>
+        <div class="info-section">
+          <div class="info-tabs">
+            <div class="info-tab active" onclick="switchTab(this,'tp-arr-ops')">Operations</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-arr-code')">Python Code</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-arr-quiz')">Quiz</div>
+          </div>
+          <div class="info-pane active" id="tp-arr-ops">
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-body">
+                  <div class="step-title">Access by Index</div>
+                  <div class="step-desc"><strong>O(1)</strong> — The CPU computes the address directly: <code style="font-family:var(--mono)">base + i × size</code>. No looping, no scanning. Instant, always.</div>
+                  <div class="step-code">x = arr[i]  # constant time regardless of array size</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-body">
+                  <div class="step-title">Linear Search</div>
+                  <div class="step-desc"><strong>O(n)</strong> worst case — scan left to right until found (or not). Best case O(1) if target is the first element.</div>
+                  <div class="step-code">for x in arr: if x == target: return</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-body">
+                  <div class="step-title">Append (end)</div>
+                  <div class="step-desc"><strong>O(1) amortized</strong> — Python pre-allocates extra capacity. Occasional O(n) resizes are rare enough that the long-run average is O(1).</div>
+                  <div class="step-code">arr.append(x)  # O(1) amortized</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-body">
+                  <div class="step-title">Insert at Index i</div>
+                  <div class="step-desc"><strong>O(n)</strong> — all elements from index i onward must shift one position right. Inserting at index 0 is the worst case — shifts every element.</div>
+                  <div class="step-code">arr.insert(i, x)  # shifts (n - i) elements right</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">05</div>
+                <div class="step-body">
+                  <div class="step-title">Delete at Index i</div>
+                  <div class="step-desc"><strong>O(n)</strong> — all elements after index i shift left to fill the gap. Deleting index 0 is worst case; deleting the last element is O(1).</div>
+                  <div class="step-code">arr.pop(i)  # shifts (n - i - 1) elements left</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">06</div>
+                <div class="step-body">
+                  <div class="step-title">Slice</div>
+                  <div class="step-desc"><strong>O(k)</strong> — creates a new list of k elements. A common pitfall: <code style="font-family:var(--mono)">arr[:]</code> copies the entire array in O(n) time and space.</div>
+                  <div class="step-code">sub = arr[l:r]  # O(r - l) time + space</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info-pane" id="tp-arr-code">
+            <div class="code-block">
+              <div class="code-hdr">
+                <span class="code-lang">python</span>
+                <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+              </div>
+              <pre class="code-pre"><span class="cm"># ── Creating arrays ──────────────────────────</span>
+arr = [10, 20, 30, 40, 50]
+arr = list(range(1, 6))         <span class="cm"># [1, 2, 3, 4, 5]</span>
+arr = [0] * 5                   <span class="cm"># [0, 0, 0, 0, 0] — fixed-size init</span>
+matrix = [[0]*3 for _ in range(3)]  <span class="cm"># 3×3 2D array</span>
+
+<span class="cm"># ── Access &amp; slicing ─────────────────────────</span>
+x    = arr[2]       <span class="cm"># O(1) → 30</span>
+last = arr[-1]      <span class="cm"># O(1) → 50  (negative indexing)</span>
+sub  = arr[1:4]     <span class="cm"># O(k) → [20, 30, 40]  creates a copy!</span>
+rev  = arr[::-1]    <span class="cm"># O(n) → [50, 40, 30, 20, 10]</span>
+
+<span class="cm"># ── Mutations ────────────────────────────────</span>
+arr.append(60)      <span class="cm"># O(1) amortized</span>
+arr.insert(0, 5)    <span class="cm"># O(n) — prepend, shifts all!</span>
+arr.pop()           <span class="cm"># O(1) — remove last</span>
+arr.pop(2)          <span class="cm"># O(n) — remove at index</span>
+arr.remove(30)      <span class="cm"># O(n) — remove first occurrence of value</span>
+
+<span class="cm"># ── Searching &amp; sorting ──────────────────────</span>
+idx = arr.index(40) <span class="cm"># O(n) linear scan</span>
+arr.sort()          <span class="cm"># O(n log n) Timsort, in-place</span>
+arr.sort(key=lambda x: -x)  <span class="cm"># descending</span>
+
+<span class="cm"># ── Useful built-ins ─────────────────────────</span>
+n       = len(arr)  <span class="cm"># O(1) — cached</span>
+present = 30 in arr <span class="cm"># O(n) — use set for O(1)</span>
+s_arr   = set(arr)  <span class="cm"># O(n) build, then O(1) lookup</span>
+
+<span class="cm"># ── Comprehensions ───────────────────────────</span>
+squares = [x**2 for x in arr]              <span class="cm"># O(n)</span>
+evens   = [x for x in arr if x % 2 == 0]  <span class="cm"># O(n)</span>
+flat    = [x for row in matrix for x in row]  <span class="cm"># flatten</span></pre>
+            </div>
+          </div>
+          <div class="info-pane" id="tp-arr-quiz">
+            <div class="quiz-wrap">
+              <div class="quiz-q">Q1 — Why is <code>arr.insert(0, x)</code> slower than <code>arr.append(x)</code>?</div>
+              <div class="quiz-opts">
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">append() uses a faster algorithm internally</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,true)">insert(0, x) must shift all n existing elements right to make room</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">Python optimises append() at the compiler level</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">There is no real difference — both are O(1)</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+            <div class="quiz-wrap">
+              <div class="quiz-q">Q2 — What is the time complexity of <code>arr[i:j]</code>?</div>
+              <div class="quiz-opts">
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">O(1) — it just returns a pointer to the original</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n) — always copies the whole array</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,true)">O(j − i) — copies only the elements in that range</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">O(log n) — uses binary search under the hood</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+            <div class="quiz-wrap">
+              <div class="quiz-q">Q3 — You need to check if a value exists in a list 10,000 times. Best approach?</div>
+              <div class="quiz-opts">
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">Sort the list then use binary search each time — O(n log n + k log n)</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,true)">Convert to a set once O(n), then O(1) membership checks for all 10k lookups</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">Use a for-loop each time — O(n) per check is fast enough</button>
+                <button class="quiz-opt" onclick="quizAnswer(this,false)">Use arr.index() — it is implemented in C so it is faster</button>
+              </div>
+              <div class="quiz-feedback"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- §3 — STRINGS -->
+      <div class="py-section" id="strings">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-title">Strings in Python</span></div>
+        <div class="section-divider"></div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.8;margin-bottom:16px;">
+          In Python, strings are <strong style="color:var(--text)">immutable sequences of characters</strong>.
+          Every "modification" creates a new string object. This is one of the most common sources of hidden O(n²) bugs in interview submissions.
+        </p>
+        <div class="tip-box tip-red">
+          <strong>Critical interview trap — string concatenation in a loop:</strong>
+          <code style="font-family:var(--mono);display:block;margin:10px 0 4px;color:var(--red)">result = ""<br>for char in s:<br>&nbsp;&nbsp;&nbsp;&nbsp;result += char  # Creates a brand new string every iteration → O(n²)!</code>
+          <strong>Fix:</strong> collect into a list, then <code style="font-family:var(--mono)">"".join(chars)</code> at the end — O(n) total.
+        </div>
+        <div class="code-block" style="margin-top:16px;">
+          <div class="code-hdr">
+            <span class="code-lang">python</span>
+            <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+          </div>
+          <pre class="code-pre"><span class="cm"># Strings are immutable</span>
+s = "hello"
+s[0] = "H"       <span class="cm"># ✗ TypeError — cannot modify in place</span>
+
+<span class="cm"># ── Common operations ────────────────────────</span>
+s.lower()        <span class="cm"># "hello" — O(n)</span>
+s.upper()        <span class="cm"># "HELLO" — O(n)</span>
+s.strip()        <span class="cm"># trim whitespace — O(n)</span>
+s.split(", ")    <span class="cm"># split into list — O(n)</span>
+", ".join(lst)   <span class="cm"># list → string — O(total chars)</span>
+s.replace("l","x")  <span class="cm"># O(n) — new string</span>
+s[::-1]          <span class="cm"># reverse — O(n)</span>
+len(s)           <span class="cm"># O(1) — cached by Python</span>
+
+<span class="cm"># ── Efficient string building ────────────────</span>
+<span class="kw">def</span> <span class="fn">build_string</span>(s):
+    chars = []
+    <span class="kw">for</span> ch <span class="kw">in</span> s:
+        chars.append(ch.upper())  <span class="cm"># O(1) per append</span>
+    <span class="kw">return</span> <span class="str">""</span>.join(chars)       <span class="cm"># single O(n) join — correct!</span>
+
+<span class="cm"># ── Two-pointer palindrome check ─────────────</span>
+<span class="kw">def</span> <span class="fn">is_palindrome</span>(s):
+    l, r = 0, len(s) - 1
+    <span class="kw">while</span> l &lt; r:
+        <span class="kw">if</span> s[l] != s[r]: <span class="kw">return</span> <span class="kw">False</span>
+        l += 1; r -= 1
+    <span class="kw">return</span> <span class="kw">True</span>  <span class="cm"># O(n) time, O(1) space</span></pre>
+        </div>
+      </div>
+
+      <!-- §4 — PATTERNS -->
+      <div class="py-section" id="patterns">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-title">Essential Interview Patterns</span></div>
+        <div class="section-divider"></div>
+        <p style="color:var(--text2);font-size:14px;line-height:1.8;margin-bottom:20px;">
+          Most array and string interview problems reduce to one of these four patterns.
+          Recognise the pattern → apply the template → optimise.
+        </p>
+        <div class="pattern-block">
+          <div class="pb-header">
+            <div class="pb-num">01</div>
+            <div class="pb-title">Two Pointers</div>
+            <span class="pb-badge" style="background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2);">O(n) · O(1)</span>
+          </div>
+          <div class="pb-desc">
+            Use two indices — <code style="font-family:var(--mono)">l</code> and <code style="font-family:var(--mono)">r</code> — that move toward each other or in the same direction.
+            Eliminates nested loops. Best on <strong>sorted arrays</strong> or when looking for a pair satisfying some condition.
+          </div>
+          <div class="pb-example">
+<span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">two_sum_sorted</span>(arr, target):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;l, r = 0, len(arr) - 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">while</span> l &lt; r:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s = arr[l] + arr[r]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">if</span> s == target: <span style="color:#f7cc45;font-weight:600">return</span> [l, r]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">elif</span> s &lt; target: l += 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">else</span>: r -= 1<br>
+<span style="color:#4a6078;font-style:italic"># Use for: Two Sum II, 3Sum, Container With Most Water, Valid Palindrome</span>
+          </div>
+        </div>
+        <div class="pattern-block">
+          <div class="pb-header">
+            <div class="pb-num">02</div>
+            <div class="pb-title">Sliding Window</div>
+            <span class="pb-badge" style="background:rgba(77,158,247,.1);color:var(--blue);border:1px solid rgba(77,158,247,.2);">O(n) · O(1–k)</span>
+          </div>
+          <div class="pb-desc">
+            Maintain a window [l, r] that expands right and contracts left. Instead of recalculating the window each step,
+            add the new element entering and remove the element leaving. Use for subarray or substring problems with a constraint.
+          </div>
+          <div class="pb-example">
+<span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_sum_subarray</span>(arr, k):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;window = sum(arr[:k]); best = window<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> i <span style="color:#f7cc45;font-weight:600">in</span> range(k, len(arr)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window += arr[i] - arr[i-k]  <span style="color:#4a6078;font-style:italic"># slide: add new, drop old</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, window)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
+<span style="color:#4a6078;font-style:italic"># Use for: Longest Substring, Min Window Substring, Max Sum Subarray</span>
+          </div>
+        </div>
+        <div class="pattern-block">
+          <div class="pb-header">
+            <div class="pb-num">03</div>
+            <div class="pb-title">Prefix Sums</div>
+            <span class="pb-badge" style="background:rgba(251,191,36,.08);color:var(--amber);border:1px solid rgba(251,191,36,.2);">O(n) build · O(1) query</span>
+          </div>
+          <div class="pb-desc">
+            Pre-compute cumulative sums so any subarray sum query <code style="font-family:var(--mono)">sum(arr[l:r])</code>
+            answers in O(1). The key identity: <code style="font-family:var(--mono)">sum[l:r] = prefix[r] - prefix[l]</code>.
+          </div>
+          <div class="pb-example">
+prefix = [0] * (len(arr) + 1)<br>
+<span style="color:#f7cc45;font-weight:600">for</span> i, x <span style="color:#f7cc45;font-weight:600">in</span> enumerate(arr):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prefix[i+1] = prefix[i] + x<br><br>
+<span style="color:#4a6078;font-style:italic"># sum(arr[l:r]) = prefix[r] - prefix[l]  → O(1) per query</span><br>
+<span style="color:#4a6078;font-style:italic"># Use for: Product of Array Except Self, Range Sum Query, Subarray Sum = K</span>
+          </div>
+        </div>
+        <div class="pattern-block">
+          <div class="pb-header">
+            <div class="pb-num">04</div>
+            <div class="pb-title">Kadane's Algorithm</div>
+            <span class="pb-badge" style="background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2);">O(n) · O(1)</span>
+          </div>
+          <div class="pb-desc">
+            At each position: extend the current subarray, or start fresh? Key insight — if the running sum goes negative,
+            it can only hurt future subarrays. Reset to 0 and start over.
+          </div>
+          <div class="pb-example">
+<span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_subarray</span>(arr):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;curr = best = arr[0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> x <span style="color:#f7cc45;font-weight:600">in</span> arr[1:]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curr = max(x, curr + x)  <span style="color:#4a6078;font-style:italic"># extend or restart?</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, curr)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
+<span style="color:#4a6078;font-style:italic"># Use for: Maximum Subarray, Maximum Product Subarray, Best Time to Buy/Sell</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- §5 — COMPLEXITY TABLE -->
+      <div class="py-section" id="complexity">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-title">Complexity Reference</span></div>
+        <div class="section-divider"></div>
+        <div class="code-block" style="padding:0;overflow:hidden;">
+          <table class="cplx-table">
+            <thead>
+              <tr><th>Operation</th><th>Time</th><th>Space</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code style="font-family:var(--mono)">arr[i]</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Direct address calculation</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.append(x)</code></td><td><span class="cplx-pill cp-cyan">O(1)*</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Amortized — occasional O(n) resize</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.pop()</code> — last</td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">No shifting needed</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.insert(i, x)</code></td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Shifts n–i elements right</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.pop(i)</code> — at i</td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Shifts n–i–1 elements left</td></tr>
+              <tr><td><code style="font-family:var(--mono)">x in arr</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Linear scan; convert to set for O(1)</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr[l:r]</code> slice</td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td style="color:var(--text2);font-size:12px;">k = r–l; creates a new list</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.sort()</code></td><td><span class="cplx-pill cp-purple">O(n log n)</span></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td style="color:var(--text2);font-size:12px;">Timsort; stable, in-place</td></tr>
+              <tr><td><code style="font-family:var(--mono)">len(arr)</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Cached by the list object</td></tr>
+              <tr><td><code style="font-family:var(--mono)">min / max</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Full linear scan required</td></tr>
+              <tr><td><code style="font-family:var(--mono)">a + b</code> concat</td><td><span class="cplx-pill cp-red">O(n+m)</span></td><td><span class="cplx-pill cp-amber">O(n+m)</span></td><td style="color:var(--text2);font-size:12px;">Creates a brand new list</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.extend(b)</code></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">k = len(b); faster than + for merging</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="concept-grid" style="margin-top:18px;">
+          <div class="concept-card"><div class="cc-val" style="color:var(--green)">O(1)</div><div class="cc-name">Index Access</div><div class="cc-desc">Arrays' superpower — direct address math</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--cyan)">O(1)*</div><div class="cc-name">Append</div><div class="cc-desc">Amortized — rare resizes balance out</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--red)">O(n)</div><div class="cc-name">Insert / Delete</div><div class="cc-desc">Shifting is the price of contiguity</div></div>
+          <div class="concept-card"><div class="cc-val" style="color:var(--purple)">O(n log n)</div><div class="cc-name">Sort</div><div class="cc-desc">Timsort — best-in-class for real-world data</div></div>
+        </div>
+      </div>
+
+      <!-- §6 — REAL-WORLD USE CASES -->
+      <div class="py-section" id="usecases">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-title">Real-World Applications</span></div>
+        <div class="section-divider"></div>
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <div class="uc-icon">🖼️</div>
+            <div class="uc-title">Image Processing</div>
+            <div class="uc-desc">Images are 2D (or 3D) arrays of pixel values. Filters, crops, and transforms all operate using sliding window patterns on these arrays.</div>
+            <span class="uc-tag">2D ARRAY</span>
+          </div>
+          <div class="usecase-card">
+            <div class="uc-icon">📈</div>
+            <div class="uc-title">Stock Price Analysis</div>
+            <div class="uc-desc">Time-series data lives in arrays. Sliding window finds max profit windows; prefix sums compute moving averages in O(1) per query.</div>
+            <span class="uc-tag">SLIDING WINDOW</span>
+          </div>
+          <div class="usecase-card">
+            <div class="uc-icon">🔎</div>
+            <div class="uc-title">Search Engines</div>
+            <div class="uc-desc">Inverted indices map terms to arrays of document IDs. Intersecting two sorted arrays with two-pointers finds docs matching multiple terms.</div>
+            <span class="uc-tag">TWO POINTERS</span>
+          </div>
+          <div class="usecase-card">
+            <div class="uc-icon">🧬</div>
+            <div class="uc-title">DNA Sequencing</div>
+            <div class="uc-desc">DNA is a string of characters (A, T, G, C). Finding repeated patterns, longest common subsequences, and mutations all use string algorithms.</div>
+            <span class="uc-tag">STRING PATTERNS</span>
+          </div>
+          <div class="usecase-card">
+            <div class="uc-icon">🎮</div>
+            <div class="uc-title">Game State Boards</div>
+            <div class="uc-desc">Chess, Go, and Sudoku boards are 2D arrays. Efficient state-checking uses direct index access — O(1) per cell read or write.</div>
+            <span class="uc-tag">2D GRID</span>
+          </div>
+          <div class="usecase-card">
+            <div class="uc-icon">📊</div>
+            <div class="uc-title">Database Aggregation</div>
+            <div class="uc-desc">SQL aggregations (SUM, AVG) over column ranges use prefix sum techniques for O(1) window queries rather than re-scanning the whole table.</div>
+            <span class="uc-tag">PREFIX SUMS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- §7 — PRACTICE PROBLEMS -->
+      <div class="py-section" id="practice">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-title">Practice Problems</span></div>
+        <div class="section-divider"></div>
+        <div class="pq-progress">
+          <div class="pq-progress-label">
+            <span>Your Progress</span>
+            <span id="prog-arrays">0 / 26 solved</span>
+          </div>
+          <div class="pq-bar"><div class="pq-bar-fill" id="bar-arrays" style="width:0%"></div></div>
+        </div>
+        <div class="practice-header">
+          <!-- FIX 10: Corrected count from "17 PBC · 9 Startup" to "18 PBC · 8 Startup" -->
+          <div class="practice-count">26 problems · 18 PBC · 8 Startup</div>
+          <div class="practice-filters">
+            <button class="pf-btn active" onclick="filterQ(this,'all','arrays')">ALL</button>
+            <button class="pf-btn" onclick="filterQ(this,'pbc','arrays')">PBC</button>
+            <button class="pf-btn" onclick="filterQ(this,'startup','arrays')">STARTUP</button>
+          </div>
+        </div>
+        <div class="pq-list" id="pql-arrays">
+          <div class="pq-item" data-id="101" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/two-sum/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,101,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#001</span>
+            <span class="pq-name">Two Sum<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-asked">Google · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="102" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,102,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#002</span>
+            <span class="pq-name">Best Time to Buy and Sell Stock<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-asked">Apple · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="103" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/maximum-subarray/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,103,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#003</span>
+            <span class="pq-name">Maximum Subarray (Kadane's)<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Meta · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="104" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/product-of-array-except-self/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,104,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#004</span>
+            <span class="pq-name">Product of Array Except Self<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Adobe · Meta</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="105" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/maximum-product-subarray/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,105,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#005</span>
+            <span class="pq-name">Maximum Product Subarray<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Amazon · Google</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="106" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/search-in-rotated-sorted-array/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,106,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#006</span>
+            <span class="pq-name">Search in Rotated Sorted Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Google · Microsoft</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="107" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/3sum/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,107,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#007</span>
+            <span class="pq-name">3Sum<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Amazon · Adobe</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="108" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/trapping-rain-water/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,108,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#008</span>
+            <span class="pq-name">Trapping Rain Water<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-asked">Google · Anthropic</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="109" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/merge-intervals/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,109,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#009</span>
+            <span class="pq-name">Merge Intervals<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Amazon · Google</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="110" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/container-with-most-water/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,110,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#010</span>
+            <span class="pq-name">Container With Most Water<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Google · Meta</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="111" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,111,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#011</span>
+            <span class="pq-name">Find Minimum in Rotated Sorted Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Microsoft · Google</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="112" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/subarray-sum-equals-k/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,112,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#012</span>
+            <span class="pq-name">Subarray Sum Equals K<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Meta · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="113" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/rotate-array/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,113,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#013</span>
+            <span class="pq-name">Rotate Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Stripe · Airbnb</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="114" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/sort-colors/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,114,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#014</span>
+            <span class="pq-name">Sort Colors (Dutch National Flag)<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Snapchat · Pinterest</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="115" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/kth-largest-element-in-an-array/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,115,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#015</span>
+            <span class="pq-name">Kth Largest Element in Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Freshworks · LinkedIn</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="116" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/find-the-duplicate-number/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,116,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#016</span>
+            <span class="pq-name">Find the Duplicate Number<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Razorpay · Cogoport</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="117" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/maximum-sum-circular-subarray/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,117,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#017</span>
+            <span class="pq-name">Maximum Sum Circular Subarray<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Meesho · Flipkart</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="118" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-substring-without-repeating-characters/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,118,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#018</span>
+            <span class="pq-name">Longest Substring Without Repeating Chars<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Netflix · Microsoft</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="119" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/group-anagrams/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,119,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#019</span>
+            <span class="pq-name">Group Anagrams<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Amazon · Google</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="120" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-palindromic-substring/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,120,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#020</span>
+            <span class="pq-name">Longest Palindromic Substring<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-asked">Microsoft · Google</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="121" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/minimum-window-substring/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,121,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#021</span>
+            <span class="pq-name">Minimum Window Substring<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-asked">Meta · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="122" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-anagram/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,122,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#022</span>
+            <span class="pq-name">Valid Anagram<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-asked">Adobe · Amazon</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="123" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-palindrome/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,123,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#023</span>
+            <span class="pq-name">Valid Palindrome<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-asked">Amazon · Apple</span>
+            <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="124" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/equilibrium-index-of-an-array/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,124,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#024</span>
+            <span class="pq-name">Equilibrium Index<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-asked">Zomato · Ola</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="125" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/counting-inversions/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,125,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#025</span>
+            <span class="pq-name">Count Inversions in Array<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-asked">Razorpay · PhonePe</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+          <div class="pq-item" data-id="126" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/')">
+            <button class="pq-done-toggle" onclick="toggleDone(event,126,'arrays')" title="Mark done"></button>
+            <span class="pq-num">#026</span>
+            <span class="pq-name">Merge Sorted Arrays Without Extra Space<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-asked">Cure.fit · Groww</span>
+            <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
+          </div>
+        </div>
+        <div class="pq-empty" id="pqe-arrays"></div>
+      </div>
+
+      <div class="page-nav">
+
+        <a class="nav-link" href="bigo.html">← Big-O Notation</a>
+
+        <a class="nav-link next" href="sll.html">Singly Linked List →</a>
+
+      </div>
+    </main>
+  </div>
+  <button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    // FIX: Declare arD before DOMContentLoaded so arDraw(-1) inside the
+    // callback has the array initialized. With var, the assignment runs
+    // after the listener fires, leaving arD=undefined → arD.map() TypeError.
+    var arD = [10, 20, 30, 40, 50, 60, 70];
+    var arRunning = false;
+    var doneState = { arrays: [] };
+
+    // Progress bar and back-to-top
+    document.addEventListener('DOMContentLoaded', function () {
+      var progressFill = document.getElementById('progressFill');
+      var backTop = document.getElementById('backTop');
+      var searchInput = document.getElementById('searchInput');
+      var navLinks = document.querySelectorAll('.sb-link');
+
+      window.addEventListener('scroll', function () {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        if (progressFill) {
+          progressFill.style.width = (height > 0 ? (winScroll / height) * 100 : 0) + '%';
+        }
+        if (backTop) {
+          backTop.classList.toggle('visible', winScroll > 400);
+        }
+      }, { passive: true });
+
+      if (backTop) {
+        backTop.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function (e) {
+          var term = e.target.value.toLowerCase().trim();
+          navLinks.forEach(function (link) {
+            link.style.display = (term !== '' && !link.textContent.toLowerCase().includes(term)) ? 'none' : 'flex';
+          });
+        });
+        searchInput.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            searchInput.value = '';
+            navLinks.forEach(function (link) { link.style.display = 'flex'; });
+          }
+        });
+      }
+
+      // FIX 3: Load saved localStorage state BEFORE calling refreshProg,
+      // so progress bar renders correctly on the first paint instead of
+      // always flashing 0/26 and then jumping to the real count.
+      try {
+        var saved = localStorage.getItem('dsa_done_arrays');
+        if (saved) {
+          doneState.arrays = JSON.parse(saved);
+          doneState.arrays.forEach(function (id) {
+            var btn = document.querySelector('.pq-done-toggle[onclick*="' + id + ',"]') ||
+                      document.querySelector('.pq-done-toggle[onclick*=",' + id + ',"]');
+            // FIX 5: querySelector by data-id attribute is safer than onclick text matching
+            var item = document.querySelector('.pq-item[data-id="' + id + '"]');
+            if (item) {
+              var toggle = item.querySelector('.pq-done-toggle');
+              if (toggle) { toggle.classList.add('done'); toggle.innerHTML = '✓'; }
+            }
+          });
+        }
+      } catch (err) {}
+
+      refreshProg('arrays');
+      arDraw(-1);
+    });
+
+    // Array visualizer
+    function arDraw(hlIdx, type) {
+      var wrap = document.getElementById('ar-cells');
+      if (!wrap) return;
+      wrap.innerHTML = arD.map(function(v, i) {
+        var cls = 'cell';
+        if (i === hlIdx) {
+          if (type === 'found') cls += ' cc-found';
+          else if (type === 'del') cls += ' cc-deleted';
+          else if (type === 'shift') cls += ' cc-shifting';
+          else cls += ' cc-highlight';
+        }
+        return '<div class="' + cls + '"><span class="cell-idx">' + i + '</span>' + v + '</div>';
+      }).join('');
+    }
+
+    function setStatus(id, html) {
+      var el = document.getElementById(id);
+      if (el) el.innerHTML = html;
+    }
+
+    // FIX 9: Wrapped all async visualizer functions in try/finally so
+    // arRunning is always reset even if an exception occurs mid-animation.
+    async function arInsert() {
+      if (arRunning) return;
+      arRunning = true;
+      try {
+        var v = parseInt(document.getElementById('ar-v').value) || 42;
+        var idx = Math.min(Math.max(parseInt(document.getElementById('ar-i').value) || 0, 0), arD.length);
+        arD.splice(idx, 0, null);
+        arDraw(idx, 'shift');
+        setStatus('ar-status', 'Shifting ' + (arD.length - 1 - idx) + ' elements right to make room…');
+        await sleep(500);
+        arD[idx] = v;
+        arDraw(idx, 'highlight');
+        setStatus('ar-status', '✓ Inserted <b>' + v + '</b> at index ' + idx + ' — shifted ' + (arD.length - 1 - idx) + ' elements. <b>O(n)</b>.');
+      } finally {
+        arRunning = false;
+      }
+    }
+
+    async function arDelete() {
+      if (arRunning || arD.length === 0) return;
+      arRunning = true;
+      try {
+        var idx = Math.min(Math.max(parseInt(document.getElementById('ar-i').value) || 0, 0), arD.length - 1);
+        var v = arD[idx];
+        arDraw(idx, 'del');
+        setStatus('ar-status', 'Removing <b>' + v + '</b> from index ' + idx + '…');
+        await sleep(500);
+        arD.splice(idx, 1);
+        arDraw(-1);
+        setStatus('ar-status', '✓ Deleted <b>' + v + '</b> — shifted ' + (arD.length - idx) + ' elements left. <b>O(n)</b>.');
+      } finally {
+        arRunning = false;
+      }
+    }
+
+    async function arSearch() {
+      if (arRunning) return;
+      arRunning = true;
+      try {
+        var v = parseInt(document.getElementById('ar-v').value) || 42;
+        for (var i = 0; i < arD.length; i++) {
+          arDraw(i, 'highlight');
+          setStatus('ar-status', 'Checking index ' + i + ' → ' + arD[i] + (arD[i] === v ? ' ✓ Found!' : ' …'));
+          await sleep(220);
+          if (arD[i] === v) {
+            arDraw(i, 'found');
+            setStatus('ar-status', '✓ Found <b>' + v + '</b> at index ' + i + ' after ' + (i + 1) + ' comparisons. <b>O(n)</b> worst case.');
+            return;
+          }
+        }
+        arDraw(-1);
+        setStatus('ar-status', '✗ Value <b>' + v + '</b> not found after checking all ' + arD.length + ' elements. <b>O(n)</b>.');
+      } finally {
+        arRunning = false;
+      }
+    }
+
+    function arReset() {
+      arD = [10, 20, 30, 40, 50, 60, 70];
+      arDraw(-1);
+      setStatus('ar-status', 'Array reset. Enter a value and index, then choose an operation.');
+    }
+
+    // Tab switching
+    function switchTab(el, paneId) {
+      el.closest('.info-section').querySelectorAll('.info-tab').forEach(function(t) { t.classList.remove('active'); });
+      el.closest('.info-section').querySelectorAll('.info-pane').forEach(function(p) { p.classList.remove('active'); });
+      el.classList.add('active');
+      var pane = document.getElementById(paneId);
+      if (pane) pane.classList.add('active');
+    }
+
+    // Quiz
+    function quizAnswer(el, correct) {
+      var opts = el.closest('.quiz-opts').querySelectorAll('.quiz-opt');
+      opts.forEach(function(o) { o.style.pointerEvents = 'none'; });
+      el.classList.add(correct ? 'correct' : 'wrong');
+      var fb = el.closest('.quiz-wrap').querySelector('.quiz-feedback');
+      if (fb) {
+        fb.style.display = 'block';
+        if (correct) {
+          fb.innerHTML = '<span style="color:var(--green)">✓ Correct!</span>';
+          fb.style.background = 'rgba(0,245,168,.06)';
+          fb.style.border = '1px solid rgba(0,245,168,.2)';
+        } else {
+          fb.innerHTML = '<span style="color:var(--red)">✗ Not quite.</span>';
+          fb.style.background = 'rgba(255,80,112,.05)';
+          fb.style.border = '1px solid rgba(255,80,112,.2)';
+        }
+        fb.style.borderRadius = 'var(--radius)';
+        fb.style.padding = '10px 14px';
+        fb.style.fontSize = '12px';
+        fb.style.marginTop = '12px';
+      }
+    }
+
+    // Practice problems
+
+    function refreshProg(topic) {
+      var done = doneState[topic] || [];
+      var total = document.querySelectorAll('#pql-' + topic + ' .pq-item').length;
+      var count = done.length;
+      var pct = total > 0 ? (count / total * 100) : 0;
+      document.getElementById('prog-' + topic).textContent = count + ' / ' + total + ' solved';
+      document.getElementById('bar-' + topic).style.width = pct + '%';
+    }
+
+    function toggleDone(e, id, topic) {
+      e.stopPropagation();
+      var done = doneState[topic] || [];
+      var idx = done.indexOf(id);
+      // FIX 5: Use e.currentTarget instead of e.target so clicking the
+      // inner ✓ text node doesn't break classList access.
+      var btn = e.currentTarget;
+      if (idx === -1) {
+        done.push(id);
+        btn.classList.add('done');
+        btn.innerHTML = '✓';
+      } else {
+        done.splice(idx, 1);
+        btn.classList.remove('done');
+        btn.innerHTML = '';
+      }
+      doneState[topic] = done;
+      refreshProg(topic);
+      try { localStorage.setItem('dsa_done_' + topic, JSON.stringify(done)); } catch (err) {}
+    }
+
+    // FIX 8: Added 'noopener,noreferrer' to window.open to prevent the
+    // opened LeetCode/GFG page from accessing window.opener.
+    function openQ(e, url) {
+      if (e.target.classList.contains('pq-done-toggle')) return;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    // FIX 6: Scoped active-class removal to the clicked filter's own
+    // .practice-filters container, preventing conflicts if multiple
+    // practice sections ever exist on the same page.
+    function filterQ(el, type, topic) {
+      el.closest('.practice-filters').querySelectorAll('.pf-btn').forEach(function(b) { b.classList.remove('active'); });
+      el.classList.add('active');
+      var items = document.querySelectorAll('#pql-' + topic + ' .pq-item');
+      var empty = document.getElementById('pqe-' + topic);
+      var visible = 0;
+      items.forEach(function(it) {
+        var show = (type === 'all') || (it.dataset.type === type);
+        it.style.display = show ? 'flex' : 'none';
+        if (show) visible++;
+      });
+      if (empty) {
+        empty.style.display = visible === 0 ? 'block' : 'none';
+        if (visible === 0) empty.textContent = 'No problems match this filter.';
+      }
+    }
+
+    const _dsao = new IntersectionObserver(function(e) {
+      e.forEach(function(x) {
+        if (x.isIntersecting) { x.target.classList.add('visible'); _dsao.unobserve(x.target); }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.anim-in').forEach(function(el, i) {
+      el.style.transitionDelay = (i % 4) * 0.08 + 's';
+      _dsao.observe(el);
+    });
+  </script>
+</body>
+</html>

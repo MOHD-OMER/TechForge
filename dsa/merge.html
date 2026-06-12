@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Merge Sort — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/dsa.css?v=3">
+  <style>
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+  .bars-wrap {
+      height: 200px; display: flex; align-items: flex-end; gap: 4px;
+      padding: 24px; background: rgba(0,0,0,0.2); border-radius: 12px; margin-top: 16px;
+  }
+  .bar {
+      flex: 1; min-width: 6px; position: relative; border-radius: 3px 3px 1px 1px;
+      transition: background 0.1s ease, height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bar-lbl {
+      position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+      font-size: 9px; color: var(--text2); font-family: var(--mono);
+  }
+  .bc-def  { background: var(--border); }
+  .bc-mrg  { background: var(--blue); }
+  .bc-srt  { background: var(--green); }
+  .speed-grp { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text2); }
+  #merge-spd { width: 100px; height: 3px; cursor: pointer; }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:900;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link active" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+      <div class="dsa-hero anim-in">
+        <div class="dh2-ey"><span class="dh2-dot"></span>DSA — Sorting Algorithms</div>
+        <h1 class="dh2-title"><span>Merge Sort</span></h1>
+        <p class="dh2-sub">Divide array in half recursively, sort each half, then merge. Classic divide-and-conquer with guaranteed O(n log n).</p>
+      </div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(n log n)</span><span class="dss-label">All Cases</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(n)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Divide</span><span class="dss-label">& Conquer</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">Stable</span><span class="dss-label">Sort</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">✓</span><span class="dss-label">Linked Lists</span></div></div>
+<div class="viz-block">
+<div class="viz-top">
+<span class="viz-label">
+        // MERGE SORT — LIVE ANIMATION
+       </span>
+<div class="viz-controls">
+<button class="btn go" id="merge-go" onclick="mergeRun()">
+         ▶ Sort
+        </button>
+<button class="btn" onclick="mergeReset()">
+         ↺ Reset
+        </button>
+<div class="speed-grp">
+         Speed
+         <input id="merge-spd" max="920" min="60" type="range" value="420"/>
+</div>
+</div>
+</div>
+<div class="viz-body">
+<div class="bars-wrap" id="merge-bars">
+</div>
+<div class="status" id="merge-status">
+        Press ▶ Sort to begin
+       </div>
+</div>
+</div>
+<div class="info-section">
+<div class="info-tabs">
+<div class="info-tab active" onclick="switchTab(this,'tp-merge-0')">
+        How It Works
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-merge-1')">
+        Python Code
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-merge-2')">
+        Complexity
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-merge-3')">
+        Quiz
+       </div>
+<div class="info-tab" onclick="switchTab(this,'tp-merge-prac')">Practice 🏆</div>
+</div>
+<div class="info-pane active" id="tp-merge-0">
+<div class="steps">
+<div class="step">
+<div class="step-num">
+          01
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Divide
+          </div>
+<div class="step-desc">
+           Split array at midpoint into two halves.
+          </div>
+<div class="step-code">
+           mid = len(arr) // 2
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          02
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Conquer
+          </div>
+<div class="step-desc">
+           Recursively sort left and right halves.
+          </div>
+<div class="step-code">
+           merge_sort(left), merge_sort(right)
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          03
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Merge
+          </div>
+<div class="step-desc">
+           Merge two sorted halves by comparing front elements.
+          </div>
+<div class="step-code">
+           while i &lt; len(L) and j &lt; len(R)
+          </div>
+</div>
+</div>
+<div class="step">
+<div class="step-num">
+          04
+         </div>
+<div class="step-body">
+<div class="step-title">
+           Stable
+          </div>
+<div class="step-desc">
+           Left subarray wins ties — relative order preserved.
+          </div>
+<div class="step-code">
+           if L[i] &lt;= R[j]: use L[i]
+          </div>
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-merge-1">
+<div class="code-block">
+<div class="code-hdr">
+<span class="code-lang">
+          python
+         </span>
+<div class="code-dots">
+<span class="cd" style="background:#ff5f56">
+</span>
+<span class="cd" style="background:#ffbd2e">
+</span>
+<span class="cd" style="background:#27c93f">
+</span>
+</div>
+</div>
+<pre class="code-pre"><span class="kw">def</span> <span class="fn">merge_sort</span>(arr):
+    <span class="kw">if</span> len(arr) &lt;= 1: <span class="kw">return</span> arr
+    mid = len(arr) // 2
+    L = <span class="fn">merge_sort</span>(arr[:mid])
+    R = <span class="fn">merge_sort</span>(arr[mid:])
+    <span class="kw">return</span> <span class="fn">merge</span>(L, R)
+
+<span class="kw">def</span> <span class="fn">merge</span>(L, R):
+    res, i, j = [], 0, 0
+    <span class="kw">while</span> i &lt; len(L) <span class="kw">and</span> j &lt; len(R):
+        <span class="kw">if</span> L[i] &lt;= R[j]: res.append(L[i]); i+=1
+        <span class="kw">else</span>:            res.append(R[j]); j+=1
+    <span class="kw">return</span> res + L[i:] + R[j:]</pre>
+</div>
+</div>
+<div class="info-pane" id="tp-merge-2">
+<div class="concept-grid">
+<div class="concept-card">
+<div class="cc-val" style="color:var(--green)">
+          O(n log n)
+         </div>
+<div class="cc-name">
+          Always
+         </div>
+<div class="cc-desc">
+          Guaranteed — log n levels × n per level
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--amber)">
+          O(n)
+         </div>
+<div class="cc-name">
+          Extra Space
+         </div>
+<div class="cc-desc">
+          Temporary arrays during merge phase
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--blue)">
+          Stable
+         </div>
+<div class="cc-name">
+          Equal elements
+         </div>
+<div class="cc-desc">
+          Left wins ties — order preserved
+         </div>
+</div>
+<div class="concept-card">
+<div class="cc-val" style="color:var(--purple)">
+          Best For
+         </div>
+<div class="cc-name">
+          Linked Lists
+         </div>
+<div class="cc-desc">
+          No random access needed for merging
+         </div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-merge-3">
+<div class="quiz-wrap">
+<div class="quiz-q">
+         Why does Merge Sort use O(n) extra space?
+        </div>
+<div class="quiz-opts">
+<button aria-label="Recursion call stack" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Recursion call stack
+         </button>
+<button aria-label="Temporary arrays for merging halves" class="quiz-opt" onclick="quizAnswer(this,true)">
+          Temporary arrays for merging halves
+         </button>
+<button aria-label="Storing comparisons" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Storing comparisons
+         </button>
+<button aria-label="Index bookkeeping" class="quiz-opt" onclick="quizAnswer(this,false)">
+          Index bookkeeping
+         </button>
+</div>
+<div class="quiz-feedback">
+</div>
+</div>
+</div>
+</div>
+<div class="info-pane" id="tp-merge-prac">
+<div class="pq-progress">
+<div class="pq-progress-label">
+<span>Progress</span>
+<span id="prog-merge">0 / 6 solved</span>
+</div>
+<div class="pq-bar">
+<div class="pq-bar-fill" id="bar-merge" style="width:0%"></div>
+</div>
+</div>
+<div class="practice-header">
+<div class="practice-count">6 problems · 4 PBC · 2 Startup</div>
+<div class="practice-filters">
+<button class="pf-btn active" onclick="filterQ(this,'all','merge')">ALL</button>
+<button class="pf-btn" onclick="filterQ(this,'pbc','merge')">PBC</button>
+<button class="pf-btn" onclick="filterQ(this,'startup','merge')">STARTUP</button>
+</div>
+</div>
+<div class="pq-list" id="pql-merge">
+<div class="pq-item" data-id="1751" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/sort-list/')">
+<button aria-label="Mark problem 1751 as done" class="pq-done-toggle" onclick="toggleDone(event,1751,'merge')" title="Mark done"></button>
+<span class="pq-num">#1751</span>
+<span class="pq-name">Sort List</span>
+<span class="pq-asked">Google, Amazon</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div><div class="pq-item" data-id="1752" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/merge-sorted-array/')">
+<button aria-label="Mark problem 1752 as done" class="pq-done-toggle" onclick="toggleDone(event,1752,'merge')" title="Mark done"></button>
+<span class="pq-num">#1752</span>
+<span class="pq-name">Merge Sorted Array</span>
+<span class="pq-asked">Meta, Microsoft</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div><div class="pq-item" data-id="1753" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/merge-k-sorted-lists/')">
+<button aria-label="Mark problem 1753 as done" class="pq-done-toggle" onclick="toggleDone(event,1753,'merge')" title="Mark done"></button>
+<span class="pq-num">#1753</span>
+<span class="pq-name">Merge K Sorted Lists</span>
+<span class="pq-asked">Google, Amazon</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div><div class="pq-item" data-id="1754" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/count-of-smaller-numbers-after-self/')">
+<button aria-label="Mark problem 1754 as done" class="pq-done-toggle" onclick="toggleDone(event,1754,'merge')" title="Mark done"></button>
+<span class="pq-num">#1754</span>
+<span class="pq-name">Count of Smaller Numbers After Self</span>
+<span class="pq-asked">Google</span>
+<span class="pq-badge pq-pbc">PBC</span>
+<span class="pq-arrow">→</span>
+</div><div class="pq-item" data-id="1755" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/counting-inversions/')">
+<button aria-label="Mark problem 1755 as done" class="pq-done-toggle" onclick="toggleDone(event,1755,'merge')" title="Mark done"></button>
+<span class="pq-num">#1755</span>
+<span class="pq-name">Count Inversions in Array</span>
+<span class="pq-asked">Flipkart</span>
+<span class="pq-badge pq-startup">STARTUP</span>
+<span class="pq-arrow">→</span>
+</div><div class="pq-item" data-id="1756" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/reverse-pairs/')">
+<button aria-label="Mark problem 1756 as done" class="pq-done-toggle" onclick="toggleDone(event,1756,'merge')" title="Mark done"></button>
+<span class="pq-num">#1756</span>
+<span class="pq-name">Reverse Pairs</span>
+<span class="pq-asked">Zepto</span>
+<span class="pq-badge pq-startup">STARTUP</span>
+<span class="pq-arrow">→</span>
+</div>
+</div>
+<div class="pq-empty" id="pqe-merge"></div>
+</div>
+<div class="page-nav">
+  <a class="nav-link" href="insertion.html">← Insertion Sort</a>
+  <a class="nav-link next" href="quick.html">Quick Sort →</a>
+</div>
+</main>
+</div>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){refreshProg("merge");});
+
+// Sidebar toggle functionality
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', isClosed ? false : true);
+  sidebarOverlay.classList.toggle('visible', isClosed ? false : true);
+  document.body.classList.toggle('tf-nav-open', !isClosed);
+}
+
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  const isOpen = topNav.classList.contains('mobile-open');
+  navToggle.setAttribute('aria-expanded', isOpen);
+  document.body.classList.toggle('tf-nav-open', isOpen);
+}
+
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', function() {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = this.value.toLowerCase().trim();
+      if (query) {
+        const links = document.querySelectorAll('.sb-link');
+        for (const link of links) {
+          const text = link.textContent.toLowerCase();
+          if (text.includes(query)) {
+            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            link.style.background = 'rgba(77,158,247,0.2)';
+            setTimeout(() => link.style.background = '', 1500);
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+// Progress bar
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (progressFill) progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+</script>
+<script>
+   let msArr =[38,27,43,3,9,82,10,64,55,17]; let msOn =false;
+function msReset(){
+  msOn=false;
+  let w =document.getElementById('merge-bars'),mx=Math.max.apply(null,msArr);
+  w.innerHTML=msArr.map(function(v){return '<div class="bar bc-def" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';}).join('');
+  setStatus('merge-status','Press &#9654; Sort to begin');document.getElementById('merge-go').disabled=false;
+}
+async function mergeRun(){
+  if(msOn)return;msOn=true;document.getElementById('merge-go').disabled=true;
+  let arr =msArr.slice(),n=arr.length,mx=Math.max.apply(null,arr);
+  let spd =function(){return Math.max(80,900-parseInt(document.getElementById('merge-spd').value));};
+  function render(hl){
+    let w =document.getElementById('merge-bars');if(!w)return;
+    w.innerHTML=arr.map(function(v,i){
+      let c =(hl&&hl.indexOf(i)>=0)?'bc-mrg':'bc-def';
+      return '<div class="bar '+c+'" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';
+    }).join('');
+  }
+  async function mSort(l,r){
+    if(!msOn||r<=l)return;
+    let m =Math.floor((l+r)/2);
+    await mSort(l,m);await mSort(m+1,r);
+    let L =arr.slice(l,m+1),R=arr.slice(m+1,r+1),i=0,j=0,k=l;
+    let hl =[];for(let x =l;x<=r;x++)hl.push(x);
+    while(i<L.length&&j<R.length&&msOn){
+      if(L[i]<=R[j])arr[k++]=L[i++]; else arr[k++]=R[j++];
+      render(hl);setStatus('merge-status','Merging ['+l+'..'+r+'] &rarr; placing <b>'+arr[k-1]+'</b>');
+      await sleep(spd());
+    }
+    while(i<L.length&&msOn){arr[k++]=L[i++];render(hl);await sleep(spd()/3);}
+    while(j<R.length&&msOn){arr[k++]=R[j++];render(hl);await sleep(spd()/3);}
+  }
+  await mSort(0,n-1);
+  if(msOn){
+    let w =document.getElementById('merge-bars');
+    if(w)w.innerHTML=arr.map(function(v){return '<div class="bar bc-srt" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';}).join('');
+    setStatus('merge-status','<span class="s-ok">&#10003; Merge Sort complete!</span>');
+  }
+  msOn=false;document.getElementById('merge-go').disabled=false;
+}
+document.addEventListener('DOMContentLoaded',msReset);
+  </script>
+<script>
+function mergeReset(){ msReset(); }
+
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>

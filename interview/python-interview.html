@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Interview Q&A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <style>
+  :root {
+    --accent: var(--blue);
+    --surface: var(--card);
+    --surface2: rgba(77,142,247,0.05);
+    --display: var(--font-display);
+    --mono: var(--font-mono);
+    --orange: #f97316;
+    --bg2: rgba(0,0,0,.25);
+  }
+  .int-page-hero{position:relative;padding:40px 0 32px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .int-page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .iph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);background:rgba(77,142,247,.07);border:1px solid rgba(77,142,247,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .iph-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 5px var(--blue);animation:iphdot 2s ease infinite;}
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .iph-title span{background:linear-gradient(135deg,var(--blue),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .iph-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:560px;margin-bottom:18px;}
+  .iph-badges{display:flex;gap:7px;flex-wrap:wrap;}
+  .iph-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid;}
+  .int-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:28px;}
+  .is-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .is-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--is-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .is-box:hover{background:rgba(255,255,255,.02);}.is-box:hover::after{opacity:1;}
+  .is-val{font-family:var(--font-mono);font-size:20px;font-weight:900;line-height:1;}
+  .is-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+  .ftab{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:var(--r-full);font-family:var(--font-mono);font-size:10px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text3);cursor:pointer;transition:all .15s;user-select:none;}
+  .ftab:hover{border-color:var(--border2);color:var(--text2);}
+  .ftab.active{background:rgba(77,142,247,.09);border-color:rgba(77,142,247,.3);color:var(--blue);}
+  .ftab-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+  .filter-sep{width:1px;height:20px;background:var(--border);}
+  .qna-list{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .qna-item{border-bottom:1px solid var(--border);transition:background .2s;}
+  .qna-item:last-child{border-bottom:none;}
+  .qna-item.open{background:rgba(77,142,247,.04);}
+  .qna-q{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;}
+  .qna-q:hover{background:rgba(255,255,255,.02);}
+  .qna-cb{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;}
+  .qna-cb.checked{background:var(--green);border-color:var(--green);}
+  .qna-cb.checked::after{content:'✓';font-size:10px;font-weight:700;color:#000;}
+  .qna-num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text3);min-width:24px;flex-shrink:0;}
+  .qna-text{font-weight:500;color:var(--text);flex:1;line-height:1.5;font-size:14px;}
+  .qna-tag{font-family:var(--font-mono);font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:var(--r-full);flex-shrink:0;}
+  .tag-dsa{background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.2);}
+  .tag-py{background:rgba(77,142,247,.08);color:var(--blue);border:1px solid rgba(77,142,247,.2);}
+  .tag-oop{background:rgba(52,211,153,.08);color:var(--green);border:1px solid rgba(52,211,153,.2);}
+  .tag-aiml{background:rgba(167,139,250,.08);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+  .tag-sql{background:rgba(251,191,36,.08);color:var(--amber);border:1px solid rgba(251,191,36,.2);}
+  .qna-chevron{font-size:12px;color:var(--text3);flex-shrink:0;transition:transform .2s;}
+  .qna-item.open .qna-chevron{transform:rotate(180deg);}
+  .qna-a{padding:0 20px 20px 56px;display:none;color:var(--text2);line-height:1.75;font-size:13.5px;}
+  .qna-item.open .qna-a{display:block;}
+  .qna-a ul,.qna-a ol{padding-left:20px;margin:8px 0;}
+  .qna-a li{margin-bottom:4px;}
+  .qna-a strong{color:var(--text);}
+  .qna-a code{font-family:var(--font-mono);font-size:11.5px;background:rgba(77,142,247,.07);color:var(--blue);padding:1px 5px;border-radius:3px;}
+  .ans-code{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:12px 0;}
+  .ans-code-hdr{display:flex;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);}
+  .ans-code-lang{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .ans-code pre{margin:0;padding:14px 16px;font-family:var(--font-mono);font-size:11.5px;line-height:1.72;color:var(--text2);overflow-x:auto;}
+  .kw{color:#c792ea;}.fn{color:#82aaff;}.cm{color:#546e7a;font-style:italic;}.nm{color:#f78c6c;}
+  .callout{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-lg);margin:10px 0;font-size:13px;line-height:1.65;}
+  .callout-cyan{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.18);color:var(--text2);}
+  .callout-amber{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);color:var(--text2);}
+  .callout-green{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:var(--text2);}
+  .callout-blue{background:rgba(77,142,247,.07);border:1px solid rgba(77,142,247,.18);color:var(--text2);}
+  .callout-purple{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.18);color:var(--text2);}
+  .section-label{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text3);text-transform:uppercase;margin:36px 0 14px;}
+  .section-label::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--blue),transparent);}
+  .progress-banner{background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(77,142,247,.04));border:1px solid rgba(52,211,153,.15);border-radius:var(--r-xl);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+  .pb-icon{font-size:22px;flex-shrink:0;}
+  .pb-text{flex:1;font-size:12.5px;color:var(--text3);line-height:1.6;}
+  .pb-text strong{color:var(--text);}
+  .pb-count{font-family:var(--font-mono);font-size:28px;font-weight:900;color:var(--green);flex-shrink:0;text-align:center;}
+  .pb-lbl{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);}
+  .no-results{display:none;text-align:center;padding:40px;color:var(--text3);font-family:var(--font-mono);font-size:13px;}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:900px){.int-stats{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:640px){.int-stats{grid-template-columns:repeat(2,1fr);}.qna-a{padding-left:20px;}}
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link" href="../python/index.html">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link current" href="index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">Interview Topics</div>
+      <a class="sb-link" href="dsa-interview.html"> DSA</a>
+      <a class="sb-link active" href="python-interview.html"> Python</a>
+      <a class="sb-link" href="oop-interview.html"> OOP</a>
+      <a class="sb-link" href="aiml-interview.html"> AI/ML</a>
+      <a class="sb-link" href="sql-interview.html"> SQL</a>
+    </aside>
+    <main class="main" id="mainContent">
+  
+    <div class="int-page-hero anim-in">
+      <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — Python Track</div>
+      <h1 class="iph-title">Python <span>Interview Questions</span></h1>
+      <p class="iph-sub">15 curated Python questions — mutability, decorators, generators, the GIL, OOP, and async. Tagged for FAANG and startups. Check off as you go.</p>
+      <div class="iph-badges"><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Basics</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07);">Advanced</span><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">OOP</span><span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Libraries</span></div>
+    </div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">15</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">5</span><span class="is-label">Basics</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">3</span><span class="is-label">OOP</span></div><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">2</span><span class="is-label">Libraries</span></div></div>
+    <div class="progress-banner anim-in">
+      <div class="pb-icon">📌</div>
+      <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
+      <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text3);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
+    </div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('basics',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Basics</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button><button class="ftab" onclick="filterQna('oop',this)"><span class="ftab-dot" style="color:var(--green)"></span>OOP</button><button class="ftab" onclick="filterQna('libraries',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Libraries</button></div>
+    <div class="qna-list anim-in" id="list-main">
+<div class="qna-item" data-cat="py" data-subtopic="basics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         01
+        </span>
+<span class="qna-text">
+         What are Python's mutable and immutable data types?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Immutable:
+        </strong>
+        int, float, str, tuple, frozenset, bool — cannot be changed after creation. Changing creates a new object.
+        <br/>
+<strong>
+         Mutable:
+        </strong>
+        list, dict, set — can be modified in place.
+        <br/>
+<br/>
+<div class="callout callout-amber">
+<strong>
+          Why it matters:
+         </strong>
+         Immutable objects are hashable (usable as dict keys). Mutable default function arguments are a common bug — use
+         <code>
+          None
+         </code>
+         as default instead.
+        </div>
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="cm"># Bug: mutable default argument</span>
+<span class="kw">def</span> <span class="fn">bad</span>(lst=[]): lst.append(<span class="nm">1</span>); <span class="kw">return</span> lst
+<span class="cm"># Fix:</span>
+<span class="kw">def</span> <span class="fn">good</span>(lst=<span class="nm">None</span>):
+    <span class="kw">if</span> lst <span class="kw">is</span> <span class="nm">None</span>: lst = []
+    lst.append(<span class="nm">1</span>); <span class="kw">return</span> lst</pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         02
+        </span>
+<span class="qna-text">
+         Explain Python decorators with an example.
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        A
+        <strong>
+         decorator
+        </strong>
+        is a function that wraps another function to add behaviour without modifying its code — uses the
+        <em>
+         higher-order function
+        </em>
+        concept.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">import</span> time
+
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs):
+        t = time.time()
+        result = func(*args, **kwargs)
+        <span class="fn">print</span>(<span class="st">f"Took {time.time()-t:.3f}s"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="nm">@timer</span>
+<span class="kw">def</span> <span class="fn">slow_fn</span>(): time.sleep(<span class="nm">0.5</span>)</pre>
+</div>
+<em>
+         Common uses:
+        </em>
+        logging, authentication, caching (
+        <code>
+         @functools.lru_cache
+        </code>
+        ), rate limiting.
+       </div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         03
+        </span>
+<span class="qna-text">
+         What are generators in Python? How are they different from lists?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Generators
+        </strong>
+        are functions that yield values one at a time using
+        <code>
+         yield
+        </code>
+        , producing values lazily (on demand) instead of storing the whole sequence in memory.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">fibonacci</span>():
+    a, b = <span class="nm">0</span>, <span class="nm">1</span>
+    <span class="kw">while True</span>:
+        <span class="kw">yield</span> a
+        a, b = b, a + b
+
+gen = <span class="fn">fibonacci</span>()
+<span class="fn">print</span>([<span class="fn">next</span>(gen) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">8</span>)])  <span class="cm"># [0,1,1,2,3,5,8,13]</span></pre>
+</div>
+<div class="callout callout-green">
+<strong>
+          Memory:
+         </strong>
+         Generator uses O(1) space regardless of sequence length. A list would use O(n). Perfect for large datasets, file reading, streaming.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         04
+        </span>
+<span class="qna-text">
+         What is the GIL in Python and how does it affect multithreading?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        The
+        <strong>
+         GIL (Global Interpreter Lock)
+        </strong>
+        is a mutex in CPython that allows only one thread to execute Python bytecode at a time, even on multi-core CPUs.
+        <ul>
+<li>
+<strong>
+           Problem:
+          </strong>
+          CPU-bound multithreaded code doesn't benefit from multiple cores
+         </li>
+<li>
+<strong>
+           Not a problem for I/O-bound tasks
+          </strong>
+          — GIL is released during I/O operations (network, file, sleep)
+         </li>
+<li>
+<strong>
+           Solution for CPU-bound:
+          </strong>
+          Use
+          <code>
+           multiprocessing
+          </code>
+          (separate processes, each with own GIL) or C extensions
+         </li>
+</ul>
+<div class="callout callout-amber">
+<strong>
+          Python 3.13+:
+         </strong>
+         Experimental "free-threaded" mode can disable the GIL.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="basics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         05
+        </span>
+<span class="qna-text">
+         Explain list comprehension vs map/filter vs for loop — when to use what?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre>nums = [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>,<span class="nm">5</span>]
+
+<span class="cm"># List comprehension — Pythonic, readable, fast</span>
+evens = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x%<span class="nm">2</span>==<span class="nm">0</span>]
+
+<span class="cm"># map/filter — functional, lazy, returns iterators</span>
+evens = <span class="fn">list</span>(<span class="fn">filter</span>(<span class="kw">lambda</span> x: x%<span class="nm">2</span>==<span class="nm">0</span>, nums))
+
+<span class="cm"># for loop — most readable for complex logic</span>
+evens = []
+<span class="kw">for</span> x <span class="kw">in</span> nums:
+    <span class="kw">if</span> x%<span class="nm">2</span>==<span class="nm">0</span>: evens.append(x)</pre>
+</div>
+<em>
+         Guideline:
+        </em>
+        Prefer list comprehensions for simple transforms. Use
+        <code>
+         for
+        </code>
+        loops for complex logic. Use
+        <code>
+         map
+        </code>
+        /
+        <code>
+         filter
+        </code>
+        when chaining with itertools or for lazy evaluation.
+       </div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="basics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         06
+        </span>
+<span class="qna-text">
+         What are *args and **kwargs in Python?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<code>
+         *args
+        </code>
+        collects extra positional arguments as a
+        <strong>
+         tuple
+        </strong>
+        .
+        <code>
+         **kwargs
+        </code>
+        collects extra keyword arguments as a
+        <strong>
+         dict
+        </strong>
+        .
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">def</span> <span class="fn">greet</span>(name, *args, **kwargs):
+    <span class="fn">print</span>(<span class="st">f"Hello {name}"</span>)
+    <span class="fn">print</span>(<span class="st">f"Extra args: {args}"</span>)
+    <span class="fn">print</span>(<span class="st">f"Extra kwargs: {kwargs}"</span>)
+
+<span class="fn">greet</span>(<span class="st">"Alice"</span>, <span class="nm">25</span>, <span class="st">"NYC"</span>, city=<span class="st">"Boston"</span>, active=<span class="nm">True</span>)</pre>
+</div>
+<em>
+         Use case:
+        </em>
+        Writing flexible APIs, decorators, wrapper functions.
+       </div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         07
+        </span>
+<span class="qna-text">
+         What is the difference between deep copy and shallow copy?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Shallow copy
+        </strong>
+        creates a new object but inserts references to the original nested objects.
+        <br/>
+<strong>
+         Deep copy
+        </strong>
+        creates a new object and recursively copies all nested objects.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">import</span> copy
+
+lst = [[<span class="nm">1</span>, <span class="nm">2</span>], [<span class="nm">3</span>, <span class="nm">4</span>]]
+
+shallow = copy.copy(lst)
+deep = copy.deepcopy(lst)
+
+lst[<span class="nm">0</span>][<span class="nm">0</span>] = <span class="nm">999</span>
+<span class="fn">print</span>(shallow)  <span class="cm"># [[999, 2], [3, 4]] - affected!</span>
+<span class="fn">print</span>(deep)     <span class="cm"># [[1, 2], [3, 4]] - independent</span></pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="basics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         08
+        </span>
+<span class="qna-text">
+         Explain the difference between == and is in Python.
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<code>
+         ==
+        </code>
+        checks
+        <strong>
+         value equality
+        </strong>
+        (do they have the same content?).
+        <br/>
+<code>
+         is
+        </code>
+        checks
+        <strong>
+         reference equality
+        </strong>
+        (are they the same object in memory?).
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre>a = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>]
+b = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>]
+c = a
+
+<span class="fn">print</span>(a == b)  <span class="cm"># True (same values)</span>
+<span class="fn">print</span>(a is b)  <span class="cm"># False (different objects)</span>
+<span class="fn">print</span>(a is c)  <span class="cm"># True (same reference)</span></pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="libraries">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         09
+        </span>
+<span class="qna-text">
+         What is the difference between list and tuple? When would you use each?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<table style="width:100%; border-collapse: collapse; margin: 12px 0;">
+<thead>
+<tr style="border-bottom: 1px solid var(--border);">
+<th style="text-align: left; padding: 8px;">Aspect</th>
+<th style="text-align: left; padding: 8px;">List</th>
+<th style="text-align: left; padding: 8px;">Tuple</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Mutability</strong></td>
+<td style="padding: 8px;">Mutable</td>
+<td style="padding: 8px;">Immutable</td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Syntax</strong></td>
+<td style="padding: 8px;"><code>[1, 2, 3]</code></td>
+<td style="padding: 8px;"><code>(1, 2, 3)</code></td>
+</tr>
+<tr style="border-bottom: 1px solid var(--border2);">
+<td style="padding: 8px;"><strong>Performance</strong></td>
+<td style="padding: 8px;">Slower</td>
+<td style="padding: 8px;">Faster</td>
+</tr>
+<tr>
+<td style="padding: 8px;"><strong>Use case</strong></td>
+<td style="padding: 8px;">Dynamic data</td>
+<td style="padding: 8px;">Fixed records, dict keys</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         10
+        </span>
+<span class="qna-text">
+         What are context managers and the 'with' statement?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Context managers handle resource setup and teardown automatically using
+        <code>
+         __enter__
+        </code>
+        and
+        <code>
+         __exit__
+        </code>
+        methods.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="cm"># Using with statement</span>
+<span class="kw">with</span> open(<span class="st">"file.txt"</span>) as f:
+    data = f.read()
+<span class="cm"># File automatically closed</span>
+
+<span class="cm"># Custom context manager</span>
+<span class="kw">from</span> contextlib <span class="kw">import</span> contextmanager
+
+<span class="nm">@contextmanager</span>
+<span class="kw">def</span> <span class="fn">timer</span>():
+    <span class="kw">import</span> time
+    start = time.time()
+    <span class="kw">try</span>:
+        <span class="kw">yield</span>
+    <span class="kw">finally</span>:
+        <span class="fn">print</span>(<span class="st">f"Took {time.time()-start:.3f}s"</span>)</pre>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="oop">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         11
+        </span>
+<span class="qna-text">
+         What is the difference between @classmethod, @staticmethod, and instance method?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">class</span> <span class="fn">MyClass</span>:
+    count = <span class="nm">0</span>
+
+    <span class="kw">def</span> <span class="fn">instance_method</span>(self):  <span class="cm"># access self & class</span>
+        <span class="kw">return</span> self
+
+    <span class="nm">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">class_method</span>(cls):  <span class="cm"># access class, not instance</span>
+        <span class="kw">return</span> cls.count
+
+    <span class="nm">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">static_method</span>(x):  <span class="cm"># no self or cls</span>
+        <span class="kw">return</span> x * <span class="nm">2</span></pre>
+</div>
+<em>
+         Use classmethod:
+        </em>
+        Factory methods, alternative constructors.
+        <em>
+         Use staticmethod:
+        </em>
+        Utility functions logically belonging to the class.
+       </div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="oop">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         12
+        </span>
+<span class="qna-text">
+         What are dunder (magic) methods in Python?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Dunder methods
+        </strong>
+        (double underscore) let you define how objects behave with built-in operators and functions.
+        <ul>
+<li>
+<code>
+           __init__
+          </code>
+          — constructor
+         </li>
+<li>
+<code>
+           __str__
+          </code>
+          ,
+          <code>
+           __repr__
+          </code>
+          — string representation
+         </li>
+<li>
+<code>
+           __len__
+          </code>
+          —
+          <code>
+           len(obj)
+          </code>
+</li>
+<li>
+<code>
+           __eq__
+          </code>
+          ,
+          <code>
+           __lt__
+          </code>
+          ,
+          <code>
+           __gt__
+          </code>
+          — comparison operators
+         </li>
+<li>
+<code>
+           __add__
+          </code>
+          ,
+          <code>
+           __mul__
+          </code>
+          — arithmetic operators
+         </li>
+<li>
+<code>
+           __getitem__
+          </code>
+          ,
+          <code>
+           __setitem__
+          </code>
+          — indexing
+          <code>
+           obj[key]
+          </code>
+</li>
+<li>
+<code>
+           __iter__
+          </code>
+          ,
+          <code>
+           __next__
+          </code>
+          — make object iterable
+         </li>
+<li>
+<code>
+           __enter__
+          </code>
+          ,
+          <code>
+           __exit__
+          </code>
+          — context manager protocol
+         </li>
+</ul>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="oop">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         13
+        </span>
+<span class="qna-text">
+         Explain inheritance and the MRO (Method Resolution Order) in Python.
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+        Python uses
+        <strong>
+         C3 linearization
+        </strong>
+        to determine MRO in multiple inheritance.
+        <div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">class</span> <span class="fn">A</span>: <span class="kw">pass</span>
+<span class="kw">class</span> <span class="fn">B</span>(A): <span class="kw">pass</span>
+<span class="kw">class</span> <span class="fn">C</span>(A): <span class="kw">pass</span>
+<span class="kw">class</span> <span class="fn">D</span>(B, C): <span class="kw">pass</span>
+
+<span class="fn">print</span>(D.__mro__)
+<span class="cm"># D → B → C → A → object</span></pre>
+</div>
+<em>
+         Use
+        </em>
+        <code>
+         help(Class)
+        </em>
+        or
+        <code>
+         Class.__mro__
+        </code>
+        to inspect the order.
+       </div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="basics">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         14
+        </span>
+<span class="qna-text">
+         What is the difference between range() and xrange()?
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>
+         Python 2:
+        </strong>
+        <ul>
+<li>
+<code>
+           range()
+          </code>
+          returns a list
+         </li>
+<li>
+<code>
+           xrange()
+          </code>
+          returns a generator (lazy evaluation)
+         </li>
+</ul>
+<strong>
+         Python 3:
+        </strong>
+        <ul>
+<li>
+<code>
+           range()
+          </code>
+          behaves like xrange() (returns a range object, lazy)
+         </li>
+<li>
+<code>
+           xrange()
+          </code>
+          doesn't exist
+         </li>
+</ul>
+<div class="callout callout-cyan">
+<strong>
+          Tip:
+         </strong>
+         In Python 3, range() is memory-efficient regardless of size.
+        </div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="libraries">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">
+         15
+        </span>
+<span class="qna-text">
+         How do you handle exceptions in Python? Explain try, except, else, finally.
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre><span class="kw">try</span>:
+    result = <span class="nm">10</span> / <span class="nm">0</span>
+<span class="kw">except</span> ZeroDivisionError:
+    <span class="fn">print</span>(<span class="st">"Cannot divide by zero"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">f"Result: {result}"</span>)  <span class="cm"># runs if no exception</span>
+<span class="kw">finally</span>:
+    <span class="fn">print</span>(<span class="st">"Cleanup complete"</span>)  <span class="cm"># always runs</span></pre>
+</div>
+<ul>
+<li>
+<strong>
+           try:
+          </strong>
+          Code that might raise an exception
+         </li>
+<li>
+<strong>
+           except:
+          </strong>
+          Handle specific exceptions
+         </li>
+<li>
+<strong>
+           else:
+          </strong>
+          Runs if no exception occurred
+         </li>
+<li>
+<strong>
+           finally:
+          </strong>
+          Always executes (cleanup code)
+         </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="qna-item" data-cat="py" data-subtopic="libraries">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">16</span>
+<span class="qna-text">
+         Find the maximum profit by buying and selling stock at different times.
+        </span>
+<span class="qna-tag tag-py">
+         Python
+        </span>
+<span class="qna-chevron">
+         ▾
+        </span>
+</div>
+<div class="qna-a">
+<strong>Problem:</strong> Given stock prices with timestamps, find the maximum profit by buying at one price and selling at a later higher price.
+
+<div class="ans-code">
+<div class="ans-code-hdr">
+<span class="ans-code-lang">
+           python
+          </span>
+</div>
+<pre>prices = [
+    ("2026-03-29 09:30:00", 150.25),
+    ("2026-03-29 09:31:00", 152.10),
+    ("2026-03-29 09:32:00", 151.80),
+    ("2026-03-29 09:33:00", 154.50)
+]
+
+max_profit = 0
+min_price = prices[0][1]
+
+for time, price in prices[1:]:
+    profit = price - min_price
+    max_profit = max(max_profit, profit)
+    min_price = min(min_price, price)
+
+print(f"{max_profit:.2f}")  # 4.25</pre>
+</div>
+
+<strong>Explanation:</strong>
+<ul>
+<li>Track running minimum price seen so far</li>
+<li>Calculate profit if selling at current price</li>
+<li>Update max_profit and min_price as we iterate</li>
+</ul>
+
+<strong>Complexity:</strong>
+<ul>
+<li>Time: O(n) — single pass through the array</li>
+<li>Space: O(1) — only two variables tracked</li>
+</ul>
+
+<div class="callout callout-cyan">
+<strong>Pattern:</strong> This is the classic "Best Time to Buy and Sell Stock" interview problem. The key insight is that you must buy before you sell, so we track the minimum price seen so far and calculate potential profit at each step.
+</div>
+</div>
+</div>
+<!-- /list-py -->
+
+<div class="no-results" id="no-results"><div style="font-size:32px;margin-bottom:8px;">🔍</div>No questions match.</div>
+</div><!-- /qna-list-py -->
+    </main>
+  </div>
+
+  <a class="back-top" id="backTop" href="#">↑</a>
+
+  <div class="page-nav">
+    <a class="nav-link" href="dsa-interview.html">← DSA</a>
+    <a class="nav-link next" href="oop-interview.html">OOP →</a>
+  </div>
+
+  <script src="../assets/js/utils.js?v=3"></script>
+<script>
+const TRACK='py',TOTAL=15;
+function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
+function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
+function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}
+function renderProgress(){let done=0;document.querySelectorAll('.qna-cb').forEach(cb=>{if(isChecked(cb.dataset.n)){cb.classList.add('checked');done++;}else cb.classList.remove('checked');});const el=document.getElementById('doneCount');if(el)el.textContent=done;}
+function resetProgress(){if(!confirm('Reset all Python Track progress?'))return;document.querySelectorAll('.qna-cb').forEach(cb=>setChecked(cb.dataset.n,false));renderProgress();}
+function toggleQ(qEl){const item=qEl.closest('.qna-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.qna-item.open').forEach(el=>el.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+function filterQna(sub,btn){document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const show=sub==='all'||item.dataset.subtopic===sub||item.dataset.cat===sub;item.style.display=show?'':'none';if(show)v++;});document.getElementById('no-results').style.display=v===0?'block':'none';const inp=document.getElementById('qna-search');if(inp)inp.value='';}
+function searchQna(val){const q=val.trim().toLowerCase();let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const t=item.querySelector('.qna-text'),a=item.querySelector('.qna-a');const m=!q||(t?.textContent.toLowerCase().includes(q)||a?.textContent.toLowerCase().includes(q));item.style.display=m?'':'none';if(m)v++;if(q)item.classList.remove('open');});document.getElementById('no-results').style.display=v===0?'block':'none';}
+const pf=document.getElementById('progressFill'),bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>{const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;if(pf)pf.style.width=(h>0?(s/h)*100:0)+'%';if(bt)bt.classList.toggle('visible',s>400);},{passive:true});
+if(bt)bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('qna-search')?.focus();}});
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{const n=item.dataset.n||String(i+1).padStart(2,'0');item.dataset.n=n;const qEl=item.querySelector('.qna-q');if(qEl&&!qEl.querySelector('.qna-cb')){const cb=document.createElement('div');cb.className='qna-cb';cb.dataset.n=n;cb.addEventListener('click',e=>{e.stopPropagation();const c=!cb.classList.contains('checked');setChecked(n,c);renderProgress();});qEl.insertBefore(cb,qEl.firstChild);}});
+const ao=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ao.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';ao.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>
+</html>

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Master Data Structures & Algorithms with live canvas animations, optimized Python code, Big-O analysis, and 100+ curated interview problems."/>
+  <meta property="og:title" content="DSA Forge — Interactive Data Structures & Algorithms"/>
+  <meta property="og:description" content="30+ topics with live animations, optimized code, and curated practice problems."/>
+  <meta property="og:type" content="website"/>
+  <title>DSA Forge — Interactive Data Structures & Algorithms</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+
+/* ════════════════════════════════
+   DSA INDEX — v4 UPGRADE
+   ════════════════════════════════ */
+
+/* ── HERO ── */
+.dsa-hero {
+  position: relative; padding: 52px 0 44px;
+  margin-bottom: 48px; border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.dsa-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 0% 50%, rgba(77,158,247,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 100% 30%, rgba(34,211,238,.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.dh-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--blue);
+  background: rgba(77,158,247,.08); border: 1px solid rgba(77,158,247,.18);
+  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 18px;
+}
+.dh-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 6px var(--blue); animation: dhdot 2s ease infinite; }
+@keyframes dhdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+
+.dh-title {
+  font-family: var(--font-display); font-size: clamp(28px, 5.5vw, 46px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.02;
+  color: var(--text); margin-bottom: 14px;
+}
+.dh-title span {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.dh-sub { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 500px; margin-bottom: 24px; }
+.dh-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-dh-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #000;
+  box-shadow: 0 4px 20px rgba(77,158,247,.35); transition: all .2s;
+}
+.btn-dh-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(34,211,238,.4); }
+.btn-dh-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--r-md);
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  background: var(--card); color: var(--text2);
+  border: 1px solid var(--border2); transition: all .2s;
+}
+.btn-dh-ghost:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+
+/* ── STATS ── */
+.dsa-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; margin-bottom: 40px;
+}
+.ds-box {
+  background: var(--card); padding: 20px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: background .2s; text-align: center;
+}
+.ds-box:hover { background: rgba(77,158,247,.04); }
+.ds-val   { font-family: var(--font-mono); font-size: 24px; font-weight: 900; line-height: 1; }
+.ds-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.ds-sub   { font-size: 10.5px; color: var(--text3); margin-top: 3px; }
+
+/* ── LEARNING PATH ── */
+.path-strip {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 20px 22px;
+  margin-bottom: 40px; position: relative; overflow: hidden;
+}
+.path-strip::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple)); opacity: .5;
+}
+.path-label {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.path-step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 13px; border-radius: var(--r-md);
+  background: var(--bg2); border: 1px solid var(--border);
+  text-decoration: none; transition: all .2s; flex-shrink: 0;
+}
+.path-step:hover { border-color: var(--blue); background: rgba(77,158,247,.06); }
+.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--blue); font-weight: 700; }
+.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
+.ps-diff {
+  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
+  padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px;
+}
+.diff-starter { background:rgba(52,211,153,.1);   color:var(--green); border:1px solid rgba(52,211,153,.2); }
+.diff-mid     { background:rgba(251,191,36,.09);  color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+.diff-adv     { background:rgba(248,113,113,.1);  color:var(--red);   border:1px solid rgba(248,113,113,.2); }
+.path-arrow   { font-size: 12px; color: var(--text3); flex-shrink: 0; }
+
+/* ── SECTION LABELS ── */
+.sec-label {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 6px;
+}
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--blue),transparent); }
+.sec-h2 {
+  font-family: var(--font-display); font-size: clamp(17px,3vw,22px);
+  font-weight: 800; letter-spacing: -.5px; color: var(--text); margin-bottom: 4px;
+}
+.sec-sub { font-size: 12.5px; color: var(--text3); margin-bottom: 20px; }
+.sec-block { margin-bottom: 48px; }
+
+/* ── BIG-O CHEAT STRIP ── */
+.bigo-strip {
+  display: grid; grid-template-columns: repeat(7,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r-xl);
+  overflow: hidden; margin-bottom: 0;
+}
+.bo-cell {
+  background: var(--card); padding: 14px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  text-align: center; transition: background .2s;
+}
+.bo-cell:hover { background: rgba(77,158,247,.04); }
+.bo-notation { font-family: var(--font-mono); font-size: 12px; font-weight: 700; line-height: 1; }
+.bo-name     { font-size: 9.5px; color: var(--text3); font-family: var(--font-mono); }
+.bo-bar {
+  width: 100%; height: 5px; border-radius: 3px; margin-top: 4px;
+  background: linear-gradient(90deg, var(--bo-c,var(--green)), transparent);
+}
+.bo-label-row {
+  display: flex; justify-content: space-between; padding: 6px 12px;
+  background: var(--bg2); border-top: 1px solid var(--border);
+}
+.bo-slow { font-family:var(--font-mono); font-size:9px; color:var(--red);   }
+.bo-fast { font-family:var(--font-mono); font-size:9px; color:var(--green); }
+
+/* ── DSA EXPLAINER ── */
+.exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.exp-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 18px 16px;
+  display: flex; align-items: flex-start; gap: 13px; transition: border-color .2s;
+}
+.exp-card:hover { border-color: var(--border2); }
+.exp-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.exp-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.exp-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.65; }
+
+/* ── REAL WORLD ── */
+.rw-strip {
+  display: grid; grid-template-columns: repeat(auto-fill,minmax(170px,1fr)); gap: 10px;
+}
+.rw-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px;
+  display: flex; flex-direction: column; gap: 7px; transition: all .2s;
+  position: relative; overflow: hidden;
+}
+.rw-item:hover { border-color: var(--border2); transform: translateY(-2px); }
+.rw-item::before {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--rw-c,var(--blue)), transparent); opacity:.5;
+}
+.rw-icon  { font-size: 18px; }
+.rw-algo  { font-family:var(--font-mono); font-size:9px; color:var(--rw-c,var(--blue)); font-weight:700; letter-spacing:.5px; }
+.rw-title { font-size: 12.5px; font-weight: 700; color: var(--text); }
+.rw-desc  { font-size: 11px; color: var(--text3); line-height: 1.55; }
+
+/* ── CATEGORY SECTIONS ── */
+.cat-section { margin-bottom: 36px; }
+.cat-header  { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.cat-icon-box {
+  width: 34px; height: 34px; border-radius: 9px;
+  display: grid; place-items: center; font-size: 16px; flex-shrink: 0;
+}
+.cat-title    { font-size: 14px; font-weight: 800; color: var(--text); line-height: 1; }
+.cat-subtitle { font-size: 10.5px; color: var(--text3); font-family: var(--font-mono); margin-top: 2px; }
+.cat-count    { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--text3); background: var(--card); border: 1px solid var(--border); padding: 3px 10px; border-radius: var(--r-full); }
+
+/* category colour tokens */
+.cat-linear    { --ci:rgba(77,158,247,.1);   --cb:rgba(77,158,247,.2);   --cc:var(--blue);   }
+.cat-nonlinear { --ci:rgba(167,139,250,.1);  --cb:rgba(167,139,250,.2);  --cc:var(--purple); }
+.cat-sorting   { --ci:rgba(52,211,153,.09);  --cb:rgba(52,211,153,.18);  --cc:var(--green);  }
+.cat-searching { --ci:rgba(34,211,238,.08);  --cb:rgba(34,211,238,.16);  --cc:var(--cyan);   }
+.cat-graph     { --ci:rgba(251,191,36,.09);  --cb:rgba(251,191,36,.18);  --cc:var(--amber);  }
+.cat-technique { --ci:rgba(248,113,113,.09); --cb:rgba(248,113,113,.18); --cc:var(--red);    }
+
+.cat-section .cat-icon-box { background: var(--ci,rgba(77,158,247,.1)); border: 1px solid var(--cb,rgba(77,158,247,.2)); }
+
+/* ── TOPIC CARDS ── */
+.topic-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 9px;
+}
+.t-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 16px 14px 13px;
+  text-decoration: none; display: flex; flex-direction: column; gap: 5px;
+  position: relative; overflow: hidden; transition: all .2s;
+}
+.t-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--cc,var(--blue)); opacity:0; transition: opacity .2s;
+}
+.t-card:hover { border-color: var(--cc,var(--blue)); background: rgba(0,0,0,.1); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.t-card:hover::before { opacity: 1; }
+.t-card:focus-visible { outline: 2px solid var(--cc,var(--blue)); outline-offset: 2px; }
+
+.t-card-icon   { font-size: 19px; margin-bottom: 1px; }
+.t-card-name   { font-size: 12.5px; font-weight: 700; color: var(--text); line-height: 1.25; }
+.t-card-desc   { font-size: 10.5px; color: var(--text3); line-height: 1.5; flex: 1; }
+.t-card-meta   { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+.t-card-cat    { font-family: var(--font-mono); font-size: 9px; color: var(--text3); }
+.t-card-diff   { font-family: var(--font-mono); font-size: 8px; font-weight: 700; padding: 2px 7px; border-radius: var(--r-full); }
+
+/* ── COMPLEXITY TABLE ── */
+.complexity-table {
+  width: 100%; border-collapse: collapse;
+  border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden;
+  font-family: var(--font-mono); font-size: 11px;
+}
+.complexity-table thead th {
+  background: var(--bg2); padding: 10px 14px; text-align: left;
+  font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text3); border-bottom: 1px solid var(--border); font-weight: 700;
+}
+.complexity-table tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+.complexity-table tbody tr:last-child { border-bottom: none; }
+.complexity-table tbody tr:hover { background: rgba(77,158,247,.03); }
+.complexity-table td { padding: 9px 14px; color: var(--text2); }
+.complexity-table td:first-child { font-weight: 700; color: var(--text); }
+.td-best  { color: var(--green)  !important; font-weight:700; }
+.td-avg   { color: var(--amber)  !important; font-weight:700; }
+.td-worst { color: var(--red)    !important; font-weight:700; }
+.td-space { color: var(--purple) !important; font-weight:700; }
+
+/* ── ANIM ── */
+.anim-in { opacity:0; transform:translateY(14px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .dsa-stats { grid-template-columns: repeat(3,1fr) !important; }
+}
+@media (max-width:640px) {
+  .dsa-stats { grid-template-columns: 1fr 1fr !important; }
+  .exp-grid  { grid-template-columns: 1fr; }
+  .path-arrow { display: none; }
+  .dh-cta { flex-direction: column; }
+  .btn-dh-primary,.btn-dh-ghost { justify-content: center; min-height:44px; }
+  .bigo-strip { grid-template-columns: repeat(4,1fr); }
+  .complexity-table { font-size: 10px; }
+  .complexity-table td { padding: 7px 10px; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
+      <div class="sidebar-label" style="margin-top:16px;">Linear Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
+      <div class="sidebar-label" style="margin-top:16px;">Non-Linear Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:16px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's</a>
+      <div class="sidebar-label" style="margin-top:16px;">Sorting</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:16px;">Searching</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:16px;">Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+
+    <!-- ════ HERO ════ -->
+    <div class="dsa-hero">
+      <div class="dh-eyebrow"><span class="dh-dot"></span>DSA Curriculum — 29 Topics · 6 Categories</div>
+      <h1 class="dh-title">Master <span>Data Structures</span><br/>&amp; Algorithms.</h1>
+      <p class="dh-sub">
+        Live canvas animations, optimized Python code, Big-O for every topic, and 47+ curated
+        interview problems tagged for FAANG and startups. The most visual DSA reference — free.
+      </p>
+      <div class="dh-cta">
+        <a class="btn-dh-primary" href="bigo.html">🚀 Start from Basics</a>
+        <a class="btn-dh-ghost" href="../interview/dsa-interview.html">🎯 DSA Interview Prep →</a>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--blue)">⬡</span>Live Canvas animations</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">⬡</span>Python implementations</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--amber)">⬡</span>Big-O every topic</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--cyan)">⬡</span>FAANG + Startup tagged</span>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
+    <div class="dsa-stats anim-in" style="grid-template-columns:repeat(5,1fr)">
+      <div class="ds-box"><span class="ds-val" style="color:var(--blue)">29</span><span class="ds-label">Topics</span><span class="ds-sub">Structures + Algorithms</span></div>
+      <div class="ds-box"><span class="ds-val" style="color:var(--purple)">6</span><span class="ds-label">Categories</span><span class="ds-sub">Linear to Advanced</span></div>
+      <div class="ds-box"><span class="ds-val" style="color:var(--green)">47+</span><span class="ds-label">Problems</span><span class="ds-sub">FAANG &amp; Startup tagged</span></div>
+      <div class="ds-box"><span class="ds-val" style="color:var(--cyan)">Live</span><span class="ds-label">Animations</span><span class="ds-sub">Canvas 2D, 60fps</span></div>
+      <div class="ds-box"><span class="ds-val" style="color:var(--amber)">O(?)</span><span class="ds-label">Complexity</span><span class="ds-sub">Every topic analyzed</span></div>
+    </div>
+
+    <!-- ════ LEARNING PATH ════ -->
+    <div class="path-strip anim-in">
+      <div class="path-label">Recommended Learning Path</div>
+      <div class="path-steps">
+        <a class="path-step" href="bigo.html">
+          <span class="ps-num">01</span><span class="ps-name">Big-O</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="arrays.html">
+          <span class="ps-num">02</span><span class="ps-name">Arrays</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="sll.html">
+          <span class="ps-num">03</span><span class="ps-name">Linked Lists</span><span class="ps-diff diff-mid">Mid</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="stack.html">
+          <span class="ps-num">04</span><span class="ps-name">Stack / Queue</span><span class="ps-diff diff-starter">Starter</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="bst.html">
+          <span class="ps-num">05</span><span class="ps-name">Trees</span><span class="ps-diff diff-mid">Mid</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="graph.html">
+          <span class="ps-num">06</span><span class="ps-name">Graphs</span><span class="ps-diff diff-adv">Advanced</span>
+        </a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="dp.html">
+          <span class="ps-num">07</span><span class="ps-name">DP</span><span class="ps-diff diff-adv">Advanced</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ════ WHAT IS DSA ════ -->
+    <div id="what-is-dsa" class="sec-block anim-in">
+      <div class="sec-label">Foundations</div>
+      <h2 class="sec-h2">What exactly is DSA?</h2>
+      <p class="sec-sub">The two concepts every strong engineer understands cold.</p>
+
+      <div class="exp-grid">
+        <div class="exp-card">
+          <span class="exp-icon">💾</span>
+          <div><div class="exp-title">Data Structure</div><div class="exp-desc">A container that stores and organizes data — like a list of numbers, a stack of plates, or a tree of folders. The right structure makes operations fast; the wrong one makes them sluggish.</div></div>
+        </div>
+        <div class="exp-card">
+          <span class="exp-icon">📐</span>
+          <div><div class="exp-title">Algorithm</div><div class="exp-desc">A step-by-step procedure to solve a problem. Like a recipe — precise, repeatable, and measurable in time and memory cost. The same problem can have wildly different algorithms.</div></div>
+        </div>
+        <div class="exp-card">
+          <span class="exp-icon">⏱️</span>
+          <div><div class="exp-title">Time Complexity</div><div class="exp-desc">How runtime grows as input grows. The gap between O(n) and O(n²) is the gap between "scales fine" and "unusable in production." Big-O is the language engineers use to discuss this.</div></div>
+        </div>
+        <div class="exp-card">
+          <span class="exp-icon">🧠</span>
+          <div><div class="exp-title">Space Complexity</div><div class="exp-desc">How much memory an algorithm consumes. Critical in constrained environments — mobile apps, embedded systems, or any service handling millions of requests per second.</div></div>
+        </div>
+      </div>
+
+      <div class="callout callout-blue" style="margin-top:16px;">
+        Strong DSA skills mean better code, faster debugging, and the ability to reason about performance before problems appear in production — not just on whiteboards.
+      </div>
+    </div>
+
+    <!-- ════ BIG-O CHEAT STRIP ════ -->
+    <div id="bigo-strip" class="sec-block anim-in">
+      <div class="sec-label">Quick Reference</div>
+      <h2 class="sec-h2">Big-O Complexity at a Glance</h2>
+      <p class="sec-sub">From fastest to slowest — how algorithms scale with input size n.</p>
+
+      <div style="border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden;">
+        <div class="bigo-strip">
+          <div class="bo-cell"><span class="bo-notation" style="color:#34d399">O(1)</span><span class="bo-name">Constant</span><div class="bo-bar" style="--bo-c:#34d399; width:10%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#4ade80">O(log n)</span><span class="bo-name">Logarithmic</span><div class="bo-bar" style="--bo-c:#4ade80; width:25%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#a3e635">O(n)</span><span class="bo-name">Linear</span><div class="bo-bar" style="--bo-c:#a3e635; width:42%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#facc15">O(n log n)</span><span class="bo-name">Linearithmic</span><div class="bo-bar" style="--bo-c:#facc15; width:58%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#fb923c">O(n²)</span><span class="bo-name">Quadratic</span><div class="bo-bar" style="--bo-c:#fb923c; width:74%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#f87171">O(2ⁿ)</span><span class="bo-name">Exponential</span><div class="bo-bar" style="--bo-c:#f87171; width:88%"></div></div>
+          <div class="bo-cell"><span class="bo-notation" style="color:#ef4444">O(n!)</span><span class="bo-name">Factorial</span><div class="bo-bar" style="--bo-c:#ef4444; width:100%"></div></div>
+        </div>
+        <div class="bo-label-row">
+          <span class="bo-fast">◀ Faster</span>
+          <span class="bo-slow">Slower ▶</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ SORTING COMPLEXITY TABLE ════ -->
+    <div id="complexity-ref" class="sec-block anim-in">
+      <div class="sec-label">Reference Table</div>
+      <h2 class="sec-h2">Sorting Algorithm Complexities</h2>
+      <p class="sec-sub">Best, average, worst case — and space usage side by side.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="complexity-table">
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Best Case</th>
+              <th>Average Case</th>
+              <th>Worst Case</th>
+              <th>Space</th>
+              <th>Stable?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="bubble.html" style="color:var(--text);text-decoration:none;font-weight:700;">Bubble Sort</a></td><td class="td-best">O(n)</td><td class="td-avg">O(n²)</td><td class="td-worst">O(n²)</td><td class="td-space">O(1)</td><td style="color:var(--green)">✓ Yes</td></tr>
+            <tr><td><a href="selection.html" style="color:var(--text);text-decoration:none;font-weight:700;">Selection Sort</a></td><td class="td-avg">O(n²)</td><td class="td-avg">O(n²)</td><td class="td-worst">O(n²)</td><td class="td-space">O(1)</td><td style="color:var(--red)">✗ No</td></tr>
+            <tr><td><a href="insertion.html" style="color:var(--text);text-decoration:none;font-weight:700;">Insertion Sort</a></td><td class="td-best">O(n)</td><td class="td-avg">O(n²)</td><td class="td-worst">O(n²)</td><td class="td-space">O(1)</td><td style="color:var(--green)">✓ Yes</td></tr>
+            <tr><td><a href="merge.html" style="color:var(--text);text-decoration:none;font-weight:700;">Merge Sort</a></td><td class="td-best">O(n log n)</td><td class="td-best">O(n log n)</td><td class="td-best">O(n log n)</td><td style="color:var(--amber);font-weight:700;">O(n)</td><td style="color:var(--green)">✓ Yes</td></tr>
+            <tr><td><a href="quick.html" style="color:var(--text);text-decoration:none;font-weight:700;">Quick Sort</a></td><td class="td-best">O(n log n)</td><td class="td-best">O(n log n)</td><td class="td-worst">O(n²)</td><td class="td-space">O(log n)</td><td style="color:var(--red)">✗ No</td></tr>
+            <tr><td><a href="heapsort.html" style="color:var(--text);text-decoration:none;font-weight:700;">Heap Sort</a></td><td class="td-best">O(n log n)</td><td class="td-best">O(n log n)</td><td class="td-best">O(n log n)</td><td class="td-space">O(1)</td><td style="color:var(--red)">✗ No</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════ DS COMPLEXITY TABLE ════ -->
+    <div class="sec-block anim-in">
+      <div class="sec-label">Reference Table</div>
+      <h2 class="sec-h2">Data Structure Operation Complexities</h2>
+      <p class="sec-sub">Average and worst case for core operations — at a glance.</p>
+      <div style="overflow-x:auto;">
+        <table class="complexity-table">
+          <thead>
+            <tr><th>Data Structure</th><th>Access</th><th>Search</th><th>Insert</th><th>Delete</th><th>Space</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="arrays.html" style="color:var(--text);text-decoration:none;font-weight:700;">Array</a></td><td class="td-best">O(1)</td><td class="td-avg">O(n)</td><td class="td-worst">O(n)</td><td class="td-worst">O(n)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="sll.html" style="color:var(--text);text-decoration:none;font-weight:700;">Linked List</a></td><td class="td-avg">O(n)</td><td class="td-avg">O(n)</td><td class="td-best">O(1)</td><td class="td-best">O(1)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="stack.html" style="color:var(--text);text-decoration:none;font-weight:700;">Stack</a></td><td class="td-avg">O(n)</td><td class="td-avg">O(n)</td><td class="td-best">O(1)</td><td class="td-best">O(1)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="queue.html" style="color:var(--text);text-decoration:none;font-weight:700;">Queue</a></td><td class="td-avg">O(n)</td><td class="td-avg">O(n)</td><td class="td-best">O(1)</td><td class="td-best">O(1)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="hashtable.html" style="color:var(--text);text-decoration:none;font-weight:700;">Hash Table</a></td><td style="color:var(--text3)">N/A</td><td class="td-best">O(1)*</td><td class="td-best">O(1)*</td><td class="td-best">O(1)*</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="bst.html" style="color:var(--text);text-decoration:none;font-weight:700;">BST (balanced)</a></td><td class="td-avg">O(log n)</td><td class="td-avg">O(log n)</td><td class="td-avg">O(log n)</td><td class="td-avg">O(log n)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="heap.html" style="color:var(--text);text-decoration:none;font-weight:700;">Heap</a></td><td class="td-best">O(1)**</td><td class="td-avg">O(n)</td><td class="td-avg">O(log n)</td><td class="td-avg">O(log n)</td><td class="td-space">O(n)</td></tr>
+            <tr><td><a href="graph.html" style="color:var(--text);text-decoration:none;font-weight:700;">Graph (adj list)</a></td><td style="color:var(--text3)">N/A</td><td class="td-avg">O(V+E)</td><td class="td-best">O(1)</td><td class="td-avg">O(V+E)</td><td class="td-space">O(V+E)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;font-family:var(--font-mono);font-size:10px;color:var(--text3);">* Average case. Worst case O(n) with collisions. &nbsp;** Peek at min/max only.</div>
+    </div>
+
+    <!-- ════ FAANG VS STARTUP GUIDE ════ -->
+    <div id="tracks" class="sec-block anim-in">
+      <div class="sec-label">Interview Strategy</div>
+      <h2 class="sec-h2">What to focus on — FAANG vs Startup</h2>
+      <p class="sec-sub">Not all DSA is weighted equally. Know your target before you prep.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="background:var(--card);border:1px solid rgba(79,142,247,.2);border-radius:var(--r-xl);padding:24px 22px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),transparent);"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px;">🏢 FAANG / PBC TRACK</div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--text);margin-bottom:10px;">Go deep on hard problems</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--blue);flex-shrink:0;">▸</span>Hard Graph problems — DFS, BFS, topological sort</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--blue);flex-shrink:0;">▸</span>Dynamic Programming patterns — knapsack, LCS, LIS</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--blue);flex-shrink:0;">▸</span>Trees — LCA, serialization, path problems</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--blue);flex-shrink:0;">▸</span>Heaps — sliding window max, top-K problems</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--blue);flex-shrink:0;">▸</span>Bit manipulation — common tricks under pressure</div>
+          </div>
+        </div>
+        <div style="background:var(--card);border:1px solid rgba(52,211,153,.18);border-radius:var(--r-xl);padding:24px 22px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),transparent);"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--green);margin-bottom:12px;">🚀 STARTUP TRACK</div>
+          <div style="font-size:13.5px;font-weight:800;color:var(--text);margin-bottom:10px;">Nail the fundamentals fast</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--green);flex-shrink:0;">▸</span>Arrays &amp; Strings — sliding window, two pointer</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--green);flex-shrink:0;">▸</span>Hash Tables — grouping, counting, O(1) lookup</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--green);flex-shrink:0;">▸</span>Sorting — know when to use which algorithm</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--green);flex-shrink:0;">▸</span>Binary Search — on arrays and on the answer</div>
+            <div style="font-size:12px;color:var(--text2);display:flex;gap:8px;"><span style="color:var(--green);flex-shrink:0;">▸</span>Recursion + basic DP — Fibonacci, coin change</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ INTERVIEW CTA ════ -->
+    <div class="sec-block anim-in">
+      <div style="background:linear-gradient(135deg,rgba(77,158,247,.06) 0%,rgba(34,211,238,.04) 100%);border:1px solid rgba(77,158,247,.16);border-radius:var(--r-xl);padding:28px 28px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:.4;"></div>
+        <div style="font-size:32px;flex-shrink:0;">🎯</div>
+        <div style="flex:1;">
+          <div style="font-size:14.5px;font-weight:800;color:var(--text);margin-bottom:6px;">Ready to practice?</div>
+          <div style="font-size:12.5px;color:var(--text3);line-height:1.65;">47+ DSA interview questions — tagged for FAANG and startups, difficulty-rated, progress tracked in your browser.</div>
+        </div>
+        <a href="../interview/dsa-interview.html" style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:var(--r-md);font-family:var(--font-mono);font-size:11px;font-weight:700;text-decoration:none;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#000;box-shadow:0 4px 18px rgba(77,158,247,.35);transition:all .2s;white-space:nowrap;">Practice DSA →</a>
+      </div>
+    </div>
+    <div id="why-dsa" class="sec-block anim-in">
+      <div class="sec-label">Real World</div>
+      <h2 class="sec-h2">DSA powers everything you use</h2>
+      <p class="sec-sub">Every system you interact with daily relies on the same concepts covered here.</p>
+
+      <div class="rw-strip">
+        <div class="rw-item" style="--rw-c:var(--blue)">
+          <div class="rw-icon">🔍</div>
+          <div class="rw-algo">Graphs + Hashing</div>
+          <div class="rw-title">Search Engines</div>
+          <div class="rw-desc">PageRank + hash tables index billions of pages for millisecond results.</div>
+        </div>
+        <div class="rw-item" style="--rw-c:var(--cyan)">
+          <div class="rw-icon">🗺️</div>
+          <div class="rw-algo">Dijkstra's</div>
+          <div class="rw-title">GPS Navigation</div>
+          <div class="rw-desc">Finds shortest paths between millions of road nodes in real time.</div>
+        </div>
+        <div class="rw-item" style="--rw-c:var(--green)">
+          <div class="rw-icon">📦</div>
+          <div class="rw-algo">Trees + Hashing</div>
+          <div class="rw-title">E-commerce</div>
+          <div class="rw-desc">Power product search, inventory systems, and recommendation engines.</div>
+        </div>
+        <div class="rw-item" style="--rw-c:var(--purple)">
+          <div class="rw-icon">🔐</div>
+          <div class="rw-algo">Number Theory</div>
+          <div class="rw-title">Cryptography</div>
+          <div class="rw-desc">RSA and elliptic curve algorithms protect every online transaction.</div>
+        </div>
+        <div class="rw-item" style="--rw-c:var(--amber)">
+          <div class="rw-icon">📱</div>
+          <div class="rw-algo">Graph Traversal</div>
+          <div class="rw-title">Social Networks</div>
+          <div class="rw-desc">BFS/DFS powers friend suggestions and connection analysis at scale.</div>
+        </div>
+        <div class="rw-item" style="--rw-c:#818cf8">
+          <div class="rw-icon">💾</div>
+          <div class="rw-algo">B+ Trees</div>
+          <div class="rw-title">Databases</div>
+          <div class="rw-desc">The index structure behind MySQL, PostgreSQL, and MongoDB queries.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ALL TOPICS ════ -->
+    <div id="dsa-topics" class="sec-block anim-in">
+      <div class="sec-label">Full Curriculum</div>
+      <h2 class="sec-h2">All 29 DSA Topics</h2>
+      <p class="sec-sub">Start from the top and work down, or jump to what you need.</p>
+
+      <!-- LINEAR -->
+      <div class="cat-section cat-linear">
+        <div class="cat-header">
+          <div class="cat-icon-box">🔗</div>
+          <div>
+            <div class="cat-title">Linear Data Structures</div>
+            <div class="cat-subtitle">Sequential storage — the essential building blocks</div>
+          </div>
+          <span class="cat-count">7 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-linear" href="bigo.html">
+            <div class="t-card-icon">📊</div>
+            <div class="t-card-name">Big-O Notation</div>
+            <div class="t-card-desc">Measure algorithm efficiency with time and space complexity.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Complexity</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-linear" href="arrays.html">
+            <div class="t-card-icon">▦</div>
+            <div class="t-card-name">Arrays &amp; Strings</div>
+            <div class="t-card-desc">Contiguous memory, indexing, and essential string operations.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-linear" href="sll.html">
+            <div class="t-card-icon">⟶</div>
+            <div class="t-card-name">Singly Linked List</div>
+            <div class="t-card-desc">Nodes with one-directional pointers. Insertion and deletion demystified.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-linear" href="dll.html">
+            <div class="t-card-icon">⟺</div>
+            <div class="t-card-name">Doubly Linked List</div>
+            <div class="t-card-desc">Bi-directional traversal — prev and next pointers together.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-linear" href="cll.html">
+            <div class="t-card-icon">↺</div>
+            <div class="t-card-name">Circular Linked List</div>
+            <div class="t-card-desc">The tail connects back to the head — endless loops, tamed.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-linear" href="stack.html">
+            <div class="t-card-icon">⬆</div>
+            <div class="t-card-name">Stack</div>
+            <div class="t-card-desc">LIFO structure. Push, pop, peek — the backbone of undo and recursion.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-linear" href="queue.html">
+            <div class="t-card-icon">⟹</div>
+            <div class="t-card-name">Queue &amp; Deque</div>
+            <div class="t-card-desc">FIFO processing and the double-ended variant. Critical for BFS.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Linear DS</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- NON-LINEAR -->
+      <div class="cat-section cat-nonlinear">
+        <div class="cat-header">
+          <div class="cat-icon-box">🌳</div>
+          <div>
+            <div class="cat-title">Non-Linear Data Structures</div>
+            <div class="cat-subtitle">Hierarchical &amp; networked — where real complexity lives</div>
+          </div>
+          <span class="cat-count">6 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-nonlinear" href="bst.html">
+            <div class="t-card-icon">⌥</div>
+            <div class="t-card-name">Binary Search Tree</div>
+            <div class="t-card-desc">Ordered tree for O(log n) search, insert, and delete.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Tree</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-nonlinear" href="avl.html">
+            <div class="t-card-icon">⚖</div>
+            <div class="t-card-name">AVL Tree</div>
+            <div class="t-card-desc">Self-balancing BST — rotations keep height O(log n) guaranteed.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Tree</span><span class="t-card-diff diff-adv">Advanced</span></div>
+          </a>
+          <a class="t-card cat-nonlinear" href="heap.html">
+            <div class="t-card-icon">△</div>
+            <div class="t-card-name">Heap</div>
+            <div class="t-card-desc">Min/Max heap — the engine behind priority queues and heap sort.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Tree</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-nonlinear" href="trie.html">
+            <div class="t-card-icon">✦</div>
+            <div class="t-card-name">Trie</div>
+            <div class="t-card-desc">Prefix tree for O(L) string lookups. Powers autocomplete.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Tree</span><span class="t-card-diff diff-adv">Advanced</span></div>
+          </a>
+          <a class="t-card cat-nonlinear" href="graph.html">
+            <div class="t-card-icon">◎</div>
+            <div class="t-card-name">Graphs</div>
+            <div class="t-card-desc">Vertices + edges — directed, undirected, weighted, cyclic.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Graph</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-nonlinear" href="hashtable.html">
+            <div class="t-card-icon">#</div>
+            <div class="t-card-name">Hash Table</div>
+            <div class="t-card-desc">O(1) average lookup via hash functions and collision handling.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Hashing</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- SORTING -->
+      <div class="cat-section cat-sorting">
+        <div class="cat-header">
+          <div class="cat-icon-box">🔃</div>
+          <div>
+            <div class="cat-title">Sorting Algorithms</div>
+            <div class="cat-subtitle">Ordering data — from brute force to elegant divide &amp; conquer</div>
+          </div>
+          <span class="cat-count">6 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-sorting" href="bubble.html">
+            <div class="t-card-icon">〜</div>
+            <div class="t-card-name">Bubble Sort</div>
+            <div class="t-card-desc">Adjacent swaps — simple, O(n²), the classic starting point.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n²)</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-sorting" href="selection.html">
+            <div class="t-card-icon">◈</div>
+            <div class="t-card-name">Selection Sort</div>
+            <div class="t-card-desc">Find the minimum, place it — always O(n²) regardless of input.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n²)</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-sorting" href="insertion.html">
+            <div class="t-card-icon">⊕</div>
+            <div class="t-card-name">Insertion Sort</div>
+            <div class="t-card-desc">Build sorted array one item at a time. O(n) on nearly-sorted data.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n²)</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-sorting" href="merge.html">
+            <div class="t-card-icon">⋈</div>
+            <div class="t-card-name">Merge Sort</div>
+            <div class="t-card-desc">Divide, sort, merge — guaranteed O(n log n), stable sort.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n log n)</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-sorting" href="quick.html">
+            <div class="t-card-icon">⚡</div>
+            <div class="t-card-name">Quick Sort</div>
+            <div class="t-card-desc">Pivot-based partition — fast in practice, O(n²) worst case.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n log n)</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-sorting" href="heapsort.html">
+            <div class="t-card-icon">⬡</div>
+            <div class="t-card-name">Heap Sort</div>
+            <div class="t-card-desc">Selection sort upgraded with a max-heap. O(n log n), in-place.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n log n)</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- SEARCHING -->
+      <div class="cat-section cat-searching">
+        <div class="cat-header">
+          <div class="cat-icon-box">🔍</div>
+          <div>
+            <div class="cat-title">Searching Algorithms</div>
+            <div class="cat-subtitle">Finding what you need — fast</div>
+          </div>
+          <span class="cat-count">2 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-searching" href="linearsearch.html">
+            <div class="t-card-icon">➡</div>
+            <div class="t-card-name">Linear Search</div>
+            <div class="t-card-desc">Check every element — O(n), works on unsorted data.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(n)</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+          <a class="t-card cat-searching" href="binarysearch.html">
+            <div class="t-card-icon">⌖</div>
+            <div class="t-card-name">Binary Search</div>
+            <div class="t-card-desc">Halve the search space each step — O(log n) on sorted arrays.</div>
+            <div class="t-card-meta"><span class="t-card-cat">O(log n)</span><span class="t-card-diff diff-starter">Starter</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- GRAPH ALGORITHMS -->
+      <div class="cat-section cat-graph">
+        <div class="cat-header">
+          <div class="cat-icon-box">🗺️</div>
+          <div>
+            <div class="cat-title">Graph Algorithms</div>
+            <div class="cat-subtitle">Traversal, pathfinding &amp; shortest paths</div>
+          </div>
+          <span class="cat-count">3 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-graph" href="bfs.html">
+            <div class="t-card-icon">🌊</div>
+            <div class="t-card-name">BFS</div>
+            <div class="t-card-desc">Level-by-level traversal using a queue. Shortest path in unweighted graphs.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Traversal</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-graph" href="dfs.html">
+            <div class="t-card-icon">🔭</div>
+            <div class="t-card-name">DFS</div>
+            <div class="t-card-desc">Depth-first exploration using a stack or recursion. Cycle detection.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Traversal</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-graph" href="dijkstra.html">
+            <div class="t-card-icon">🗺️</div>
+            <div class="t-card-name">Dijkstra's Algorithm</div>
+            <div class="t-card-desc">Greedy shortest path for weighted graphs. The GPS engine.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Shortest Path</span><span class="t-card-diff diff-adv">Advanced</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- TECHNIQUES -->
+      <div class="cat-section cat-technique">
+        <div class="cat-header">
+          <div class="cat-icon-box">🧠</div>
+          <div>
+            <div class="cat-title">Problem-Solving Techniques</div>
+            <div class="cat-subtitle">Patterns that unlock 80% of interview problems</div>
+          </div>
+          <span class="cat-count">5 topics</span>
+        </div>
+        <div class="topic-grid">
+          <a class="t-card cat-technique" href="recursion.html">
+            <div class="t-card-icon">↩</div>
+            <div class="t-card-name">Recursion</div>
+            <div class="t-card-desc">Break problems into smaller self-similar subproblems. Base cases, call stack.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Technique</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-technique" href="dp.html">
+            <div class="t-card-icon">🧩</div>
+            <div class="t-card-name">Dynamic Programming</div>
+            <div class="t-card-desc">Memoize overlapping subproblems. Turn exponential into polynomial.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Technique</span><span class="t-card-diff diff-adv">Advanced</span></div>
+          </a>
+          <a class="t-card cat-technique" href="twopointer.html">
+            <div class="t-card-icon">↔</div>
+            <div class="t-card-name">Two Pointer</div>
+            <div class="t-card-desc">Two indices that move toward each other. Classic: pair sum, palindrome.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Pattern</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-technique" href="sliding.html">
+            <div class="t-card-icon">▬</div>
+            <div class="t-card-name">Sliding Window</div>
+            <div class="t-card-desc">Maintain a moving subarray. Turns O(n²) brute force into O(n).</div>
+            <div class="t-card-meta"><span class="t-card-cat">Pattern</span><span class="t-card-diff diff-mid">Mid</span></div>
+          </a>
+          <a class="t-card cat-technique" href="bits.html">
+            <div class="t-card-icon">⊕</div>
+            <div class="t-card-name">Bit Manipulation</div>
+            <div class="t-card-desc">AND, OR, XOR, shifts — often the clevest O(1) solution in an interview.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Technique</span><span class="t-card-diff diff-adv">Advanced</span></div>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /all topics -->
+    <div class="page-nav">
+      <a class="nav-link" href="../index.html">← Home</a>
+      <a class="nav-link next" href="bigo.html">Big-O Notation →</a>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+
+<script src="../assets/js/utils.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop      = document.getElementById('backTop');
+  var searchInput  = document.getElementById('searchInput');
+  var navLinks     = document.querySelectorAll('.sb-link');
+
+  window.addEventListener('scroll', function () {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height    = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (height > 0 ? (winScroll / height) * 100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', winScroll > 400);
+  }, { passive: true });
+
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      var term = e.target.value.toLowerCase().trim();
+      navLinks.forEach(function (link) {
+        link.classList.toggle('no-match', term !== '' && !link.textContent.toLowerCase().includes(term));
+      });
+      // Also filter topic cards in main content
+      document.querySelectorAll('.t-card').forEach(function (card) {
+        var text = card.textContent.toLowerCase();
+        card.style.display = (term === '' || text.includes(term)) ? '' : 'none';
+      });
+      // Show/hide empty category sections
+      document.querySelectorAll('.cat-section').forEach(function (section) {
+        var visible = Array.from(section.querySelectorAll('.t-card')).some(function(c){ return c.style.display !== 'none'; });
+        section.style.display = visible ? '' : 'none';
+      });
+    });
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        navLinks.forEach(function (l) { l.classList.remove('no-match'); });
+        document.querySelectorAll('.t-card').forEach(function(c){ c.style.display=''; });
+        document.querySelectorAll('.cat-section').forEach(function(s){ s.style.display=''; });
+      }
+    });
+  }
+
+  // Scroll animations
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.anim-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    obs.observe(el);
+  });
+});
+</script>
+</body>
+</html>

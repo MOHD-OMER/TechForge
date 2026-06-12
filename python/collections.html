@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Collections — Lists, Tuples, Sets, Dictionaries | TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet">
+  <style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+  </style>
+</head>
+<body>
+  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+      <button type="button" class="nav-toggle" id="navToggle">⋮</button>
+      <button type="button" class="sidebar-toggle" id="sidebarToggle">☰</button>
+    </div>
+  </header>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link active" href="#sec-lists"><span class="sb-num">01</span> Lists</a>
+      <a class="sb-link" href="#sec-tuples"><span class="sb-num">02</span> Tuples</a>
+      <a class="sb-link" href="#sec-sets"><span class="sb-num">03</span> Sets</a>
+      <a class="sb-link" href="#sec-dicts"><span class="sb-num">04</span> Dictionaries</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">→</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Collections</div>
+        <h1 class="pg-title">Lists, Tuples, Sets &amp; <span>Dictionaries</span></h1>
+        <p class="pg-sub">Master Python's collection data structures — essential for DSA, data manipulation, and real-world applications.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3</span>
+          <span class="badge b-green">✓ DSA Foundation</span>
+          <span class="badge b-blue">4 Topics</span>
+          <span class="badge b-amber">⚡ O(1) Lookups</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-lists">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">📋</span><h2 class="sec-title">Lists in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>list</strong> is an ordered, mutable collection. Lists power searching, sorting, stacks, queues, matrices, and graph representations in DSA.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Lists</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">fruits = [<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cherry"</span>]
+<span class="fn">print</span>(fruits[<span class="nm">0</span>])    <span class="cm"># apple</span>
+<span class="fn">print</span>(fruits[-<span class="nm">1</span>])   <span class="cm"># cherry  (negative indexing)</span>
+
+<span class="cm"># Slicing: list[start:end:step]</span>
+numbers = [<span class="nm">0</span>, <span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>]
+<span class="fn">print</span>(numbers[<span class="nm">2</span>:<span class="nm">5</span>])    <span class="cm"># [2, 3, 4]</span>
+<span class="fn">print</span>(numbers[::<span class="nm">2</span>])    <span class="cm"># [0, 2, 4, 6, 8]</span>
+<span class="fn">print</span>(numbers[::-<span class="nm">1</span>])   <span class="cm"># reversed</span>
+
+<span class="cm"># List comprehension</span>
+squares = [x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">5</span>)]   <span class="cm"># [0, 1, 4, 9, 16]</span>
+evens   = [x <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">10</span>) <span class="kw">if</span> x % <span class="nm">2</span> == <span class="nm">0</span>]
+
+<span class="cm"># 2D List (matrix)</span>
+matrix = [[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>], [<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>], [<span class="nm">7</span>,<span class="nm">8</span>,<span class="nm">9</span>]]
+<span class="fn">print</span>(matrix[<span class="nm">1</span>][<span class="nm">2</span>])    <span class="cm"># 6</span></pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon">ℹ</span><span><strong>copy() matters!</strong> <code>list2 = list1</code> makes both point to the same object. Use <code>list1.copy()</code> for an independent copy.</span></div>
+      </section>
+      <section class="py-section" id="sec-tuples">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🔒</span><h2 class="sec-title">Tuples in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>tuple</strong> is an ordered, <strong>immutable</strong> collection. Once created, values cannot be modified — making tuples safe, faster than lists, and ideal for fixed data.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Feature</th><th>List</th><th>Tuple</th></tr></thead>
+            <tbody>
+              <tr><td>Mutable</td><td><span class="tick">✓ Yes</span></td><td><span class="cross">✗ No</span></td></tr>
+              <tr><td>Syntax</td><td><code>[ ]</code></td><td><code>( )</code></td></tr>
+              <tr><td>Performance</td><td>Slower</td><td>Faster</td></tr>
+              <tr><td>Methods</td><td>Many</td><td>Only <code>count()</code>, <code>index()</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Single-element tuple needs a trailing comma: <code>(5,)</code> — without it, <code>(5)</code> is just an integer!</span></div>
+      </section>
+      <section class="py-section" id="sec-sets">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">🔵</span><h2 class="sec-title">Sets in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>set</strong> is an unordered collection of <strong>unique elements</strong>. Blazing-fast membership testing (O(1) avg) and mathematical operations.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Sets</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">a = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>}
+b = {<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>}
+<span class="fn">print</span>(a | b)   <span class="cm"># Union:        {1,2,3,4,5}</span>
+<span class="fn">print</span>(a & b)   <span class="cm"># Intersection: {3}</span>
+<span class="fn">print</span>(a - b)   <span class="cm"># Difference:   {1,2}</span>
+<span class="fn">print</span>(a ^ b)   <span class="cm"># Sym. Diff:    {1,2,4,5}</span>
+
+<span class="cm"># IMPORTANT: empty set must use set()</span>
+s = {}         <span class="cm"># ✗ Creates an empty DICT</span>
+s = <span class="fn">set</span>()      <span class="cm"># ✓ Creates an empty SET</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-dicts">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">🗂️</span><h2 class="sec-title">Dictionaries in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>dictionary</strong> stores data as <strong>key→value pairs</strong>. The backbone of hash tables — offering O(1) average lookup for frequency counting, memoization, and adjacency lists.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Dictionaries</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">student = {<span class="st">"name"</span>: <span class="st">"Alice"</span>, <span class="st">"age"</span>: <span class="nm">20</span>, <span class="st">"marks"</span>: <span class="nm">85</span>}
+
+student.get(<span class="st">"salary"</span>)    <span class="cm"># None (safe access)</span>
+student[<span class="st">"grade"</span>] = <span class="st">"A"</span>  <span class="cm"># add key</span>
+student.pop(<span class="st">"age"</span>)        <span class="cm"># remove key</span>
+
+<span class="kw">for</span> key, value <span class="kw">in</span> student.items():
+    <span class="fn">print</span>(key, <span class="st">":"</span>, value)
+
+<span class="cm"># Dict comprehension</span>
+squares = {x: x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">5</span>)}</pre>
+        </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="basics.html">← Basics</a>
+        <a class="nav-link" href="control.html">Control Flow →</a>
+      </div>
+    </main>
+  </div>
+  <a class="back-top" id="backTop" href="#">↑</a>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const pbar = document.getElementById('pbar');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

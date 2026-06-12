@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Complete AI & ML guide — Artificial Intelligence, Machine Learning, Deep Learning, NLP, Computer Vision, Reinforcement Learning, and Generative AI. Free reference with examples and interview prep."/>
+  <meta property="og:title" content="AI / ML — TechForge"/>
+  <title>AI / ML — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+  <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <link rel="stylesheet" href="../assets/css/aiml-overview.css?v=3">
+  <style>
+:root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+
+/* ── HERO ── */
+.aim-hero {
+  position: relative; padding: 52px 0 42px;
+  margin-bottom: 44px; border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.aim-hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 65% at 0% 55%, rgba(167,139,250,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 100% 20%, rgba(79,142,247,.04) 0%, transparent 50%);
+}
+.aim-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--purple);
+  background: rgba(167,139,250,.08); border: 1px solid rgba(167,139,250,.2);
+  padding: 5px 14px; border-radius: 100px; margin-bottom: 18px;
+}
+.aim-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--purple); box-shadow: 0 0 6px var(--purple); animation: aimDot 2s ease infinite; }
+@keyframes aimDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+.aim-title {
+  font-family: var(--display); font-size: clamp(28px, 5.5vw, 46px);
+  font-weight: 900; letter-spacing: -2px; line-height: 1.02;
+  color: var(--text); margin-bottom: 14px;
+}
+.aim-title span {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.aim-sub { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 520px; margin-bottom: 24px; }
+.aim-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-aim-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg, var(--purple), #7c3aed); color: #fff;
+  box-shadow: 0 4px 20px rgba(167,139,250,.3); transition: all .2s;
+}
+.btn-aim-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(167,139,250,.45); }
+.btn-aim-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 600; text-decoration: none;
+  background: var(--surface); color: var(--text2);
+  border: 1px solid var(--border2); transition: all .2s;
+}
+.btn-aim-ghost:hover { border-color: var(--purple); color: var(--purple); transform: translateY(-2px); }
+
+/* ── STATS BAR ── */
+.aim-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  overflow: hidden; margin-bottom: 40px;
+}
+.aim-stat {
+  background: var(--surface); padding: 20px 14px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; text-align: center; position: relative;
+  transition: background .2s;
+}
+.aim-stat::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--stat-c, var(--purple)); opacity:0; transition:opacity .2s;
+}
+.aim-stat:hover { background: rgba(167,139,250,.04); }
+.aim-stat:hover::after { opacity:1; }
+.aim-stat-val { font-family: var(--mono); font-size: 24px; font-weight: 900; line-height: 1; }
+.aim-stat-label { font-size: 9.5px; font-family: var(--mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.aim-stat-sub { font-size: 10.5px; color: var(--text3); margin-top: 2px; }
+
+/* ── LEARNING PATH ── */
+.aim-path {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px 22px;
+  margin-bottom: 40px; overflow: hidden;
+}
+.aim-path-label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+.aim-path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.aim-step {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 14px; border-radius: var(--radius);
+  border: 1px solid var(--border); background: var(--surface2);
+  text-decoration: none; transition: all .2s; min-width: 80px; text-align: center;
+}
+.aim-step:hover { border-color: var(--purple); transform: translateY(-2px); }
+.aim-step-num { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+.aim-step-name { font-size: 11px; font-weight: 600; color: var(--text); }
+.aim-step-badge {
+  font-size: 9px; font-family: var(--mono); padding: 2px 6px;
+  border-radius: 4px; font-weight: 600;
+}
+.badge-intro { background: rgba(52,211,153,.1); color: var(--green); }
+.badge-mid   { background: rgba(77,158,247,.1); color: var(--blue); }
+.badge-adv   { background: rgba(167,139,250,.1); color: var(--purple); }
+.aim-arrow { color: var(--text3); font-size: 12px; flex-shrink: 0; }
+
+/* ── MODULE CARDS ── */
+.aim-section { margin-bottom: 40px; }
+.aim-sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+.aim-sec-h2 { font-family: var(--display); font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.aim-sec-sub { font-size: 13px; color: var(--text2); margin-bottom: 22px; }
+
+.aim-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.aim-card {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 22px;
+  text-decoration: none; transition: all .2s; position: relative; overflow: hidden;
+}
+.aim-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: var(--card-c, var(--purple)); opacity:.6; transition: opacity .2s;
+}
+.aim-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+.aim-card:hover::before { opacity: 1; }
+.aim-card-icon { font-size: 26px; margin-bottom: 12px; }
+.aim-card-num { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-bottom: 4px; letter-spacing: 1px; }
+.aim-card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.aim-card-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.aim-chip { font-size: 10px; font-family: var(--mono); padding: 2px 7px; border-radius: 4px; background: var(--surface2); border: 1px solid var(--border); color: var(--text3); }
+.aim-card-desc { font-size: 12px; color: var(--text2); line-height: 1.65; flex: 1; margin-bottom: 14px; }
+.aim-card-foot { display: flex; justify-content: space-between; align-items: center; }
+.aim-card-tag { font-size: 10px; font-family: var(--mono); color: var(--text3); }
+.aim-card-arrow { font-size: 12px; color: var(--text3); transition: color .2s, transform .2s; }
+.aim-card:hover .aim-card-arrow { color: var(--purple); transform: translateX(3px); }
+
+@media (max-width: 640px) {
+  .aim-stats { grid-template-columns: repeat(2,1fr); }
+  .aim-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">&#x2b21;</div><span>TECH</span>&#xb7;FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">&#x2630;</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">&#x22ee;</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link active" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+      <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+      <a class="sb-link" href="#stats">At a Glance</a>
+      <a class="sb-link" href="#path">Learning Path</a>
+      <a class="sb-link" href="#modules">All Modules</a>
+      <a class="sb-link" href="#visualizations">Live Visualizations</a>
+    </nav>
+  </aside>
+  <main class="main" id="mainContent">
+
+    <!-- ════ HERO ════ -->
+    <div class="aim-hero">
+      <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — 8 Modules · Beginner to Advanced</div>
+      <h1 class="aim-title">Learn <span>Artificial Intelligence</span><br/>& Machine Learning.</h1>
+      <p class="aim-sub">
+        From the fundamentals of AI to cutting-edge Generative AI — this track covers 
+        everything you need: ML algorithms, deep learning, NLP, computer vision, 
+        reinforcement learning, and a complete DS & AI cheat sheet.
+      </p>
+      <div class="aim-cta">
+        <a class="btn-aim-primary" href="ml.html">🤖 Start with Machine Learning</a>
+        <a class="btn-aim-ghost" href="../interview/aiml-interview.html">🎯 AI/ML Interview →</a>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--purple)">⬡</span>8 topics covered</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--blue)">⬡</span>Beginner to advanced</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">⬡</span>Interview-focused</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--amber)">⬡</span>Includes cheat sheet</span>
+      </div>
+    </div>
+
+    <!-- ════ STATS ════ -->
+    <div id="stats" class="aim-stats">
+      <div class="aim-stat" style="--stat-c:var(--purple)">
+        <span class="aim-stat-val" style="color:var(--purple)">8</span>
+        <span class="aim-stat-label">Modules</span>
+        <span class="aim-stat-sub">AI → Cheat Sheet</span>
+      </div>
+      <div class="aim-stat" style="--stat-c:var(--blue)">
+        <span class="aim-stat-val" style="color:var(--blue)">25+</span>
+        <span class="aim-stat-label">Interview Qs</span>
+        <span class="aim-stat-sub">In the AI/ML track</span>
+      </div>
+      <div class="aim-stat" style="--stat-c:var(--green)">
+        <span class="aim-stat-val" style="color:var(--green)">6</span>
+        <span class="aim-stat-label">Core Fields</span>
+        <span class="aim-stat-sub">ML · DL · NLP · CV · RL · GenAI</span>
+      </div>
+      <div class="aim-stat" style="--stat-c:var(--amber)">
+        <span class="aim-stat-val" style="color:var(--amber)">1</span>
+        <span class="aim-stat-label">Cheat Sheet</span>
+        <span class="aim-stat-sub">DS & AI reference</span>
+      </div>
+    </div>
+
+    <!-- ════ LEARNING PATH ════ -->
+    <div id="path" class="aim-path">
+      <div class="aim-path-label">Recommended Learning Path</div>
+      <div class="aim-path-steps">
+        <a class="aim-step" href="ml.html">
+          <span class="aim-step-num">00</span>
+          <span class="aim-step-name">AI Overview</span>
+          <span class="aim-step-badge badge-intro">Intro</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="ml.html">
+          <span class="aim-step-num">01</span>
+          <span class="aim-step-name">ML</span>
+          <span class="aim-step-badge badge-intro">Intro</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="dl.html">
+          <span class="aim-step-num">02</span>
+          <span class="aim-step-name">Deep Learning</span>
+          <span class="aim-step-badge badge-mid">Mid</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="nlp.html">
+          <span class="aim-step-num">03</span>
+          <span class="aim-step-name">NLP & LLMs</span>
+          <span class="aim-step-badge badge-mid">Mid</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="cv.html">
+          <span class="aim-step-num">04</span>
+          <span class="aim-step-name">Computer Vision</span>
+          <span class="aim-step-badge badge-mid">Mid</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="rl.html">
+          <span class="aim-step-num">05</span>
+          <span class="aim-step-name">RL</span>
+          <span class="aim-step-badge badge-adv">Advanced</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="genai.html">
+          <span class="aim-step-num">06</span>
+          <span class="aim-step-name">Generative AI</span>
+          <span class="aim-step-badge badge-adv">Advanced</span>
+        </a>
+        <span class="aim-arrow">→</span>
+        <a class="aim-step" href="ds-cheatsheet.html">
+          <span class="aim-step-num">07</span>
+          <span class="aim-step-name">Cheat Sheet</span>
+          <span class="aim-step-badge badge-adv">Reference</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ════ ALL MODULES ════ -->
+    <div id="modules" class="aim-section">
+      <div class="aim-sec-label">Curriculum</div>
+      <h2 class="aim-sec-h2">All 8 AI / ML modules</h2>
+      <p class="aim-sec-sub">Follow the path top-to-bottom or jump to any topic directly.</p>
+
+      <div class="aim-grid">
+
+        <a class="aim-card" href="ml.html" style="--card-c:var(--blue)">
+          <div class="aim-card-icon">📊</div>
+          <div class="aim-card-num">Module 01</div>
+          <div class="aim-card-title">Machine Learning</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Supervised</span>
+            <span class="aim-chip">Unsupervised</span>
+            <span class="aim-chip">Algorithms</span>
+            <span class="aim-chip">Model Evaluation</span>
+          </div>
+          <div class="aim-card-desc">Core ML algorithms — linear regression, decision trees, SVMs, clustering, and how to train, evaluate, and tune models effectively.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Intro level</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="dl.html" style="--card-c:var(--cyan)">
+          <div class="aim-card-icon">🧠</div>
+          <div class="aim-card-num">Module 02</div>
+          <div class="aim-card-title">Deep Learning</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Neural Networks</span>
+            <span class="aim-chip">CNNs</span>
+            <span class="aim-chip">RNNs</span>
+            <span class="aim-chip">Backpropagation</span>
+          </div>
+          <div class="aim-card-desc">Neural networks from perceptrons to deep architectures — feedforward, convolutional, and recurrent networks with activation functions and optimizers.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Mid level</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="nlp.html" style="--card-c:var(--green)">
+          <div class="aim-card-icon">💬</div>
+          <div class="aim-card-num">Module 03</div>
+          <div class="aim-card-title">NLP & LLMs</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Tokenization</span>
+            <span class="aim-chip">Transformers</span>
+            <span class="aim-chip">BERT</span>
+            <span class="aim-chip">LLMs</span>
+          </div>
+          <div class="aim-card-desc">Natural language processing — from text preprocessing to transformers, attention mechanisms, BERT, GPT, and how modern LLMs work.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Mid level</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="cv.html" style="--card-c:var(--amber)">
+          <div class="aim-card-icon">👁️</div>
+          <div class="aim-card-num">Module 04</div>
+          <div class="aim-card-title">Computer Vision</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Image Processing</span>
+            <span class="aim-chip">Object Detection</span>
+            <span class="aim-chip">YOLO</span>
+            <span class="aim-chip">Segmentation</span>
+          </div>
+          <div class="aim-card-desc">Teaching machines to see — image classification, object detection with YOLO, image segmentation, and real-world CV pipelines.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Mid level</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="rl.html" style="--card-c:var(--red)">
+          <div class="aim-card-icon">🎮</div>
+          <div class="aim-card-num">Module 05</div>
+          <div class="aim-card-title">Reinforcement Learning</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Agents & Rewards</span>
+            <span class="aim-chip">Q-Learning</span>
+            <span class="aim-chip">Policy Gradient</span>
+          </div>
+          <div class="aim-card-desc">Learning through interaction — agents, environments, rewards, Q-learning, and policy-based methods that power game AI and robotics.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Advanced</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="genai.html" style="--card-c:var(--orange)">
+          <div class="aim-card-icon">✨</div>
+          <div class="aim-card-num">Module 06</div>
+          <div class="aim-card-title">Generative AI</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">GANs</span>
+            <span class="aim-chip">Diffusion Models</span>
+            <span class="aim-chip">Prompt Eng.</span>
+            <span class="aim-chip">RAG</span>
+          </div>
+          <div class="aim-card-desc">The frontier — GANs, VAEs, diffusion models, prompt engineering, RAG pipelines, and how tools like ChatGPT and Stable Diffusion are built.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Advanced</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+        <a class="aim-card" href="ds-cheatsheet.html" style="--card-c:var(--text3)">
+          <div class="aim-card-icon">📋</div>
+          <div class="aim-card-num">Module 07</div>
+          <div class="aim-card-title">DS & AI Cheat Sheet</div>
+          <div class="aim-card-chips">
+            <span class="aim-chip">Quick Reference</span>
+            <span class="aim-chip">Formulas</span>
+            <span class="aim-chip">Interview Ready</span>
+          </div>
+          <div class="aim-card-desc">One-page reference for data science and AI — key formulas, algorithm comparisons, complexity cheat sheet, and interview quick-prep.</div>
+          <div class="aim-card-foot">
+            <span class="aim-card-tag">Reference</span>
+            <span class="aim-card-arrow">→</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+<!-- LIVE VISUALIZATIONS -->
+    <div class="viz-section fade-up" id="visualizations">
+      <div class="viz-section-header">
+        <div>
+          <div class="viz-section-title">⚡ Live Algorithm Visualizations</div>
+          <div class="viz-section-sub">Step through algorithms interactively — no installs, runs entirely in your browser</div>
+        </div>
+        <span class="viz-count-badge">6 Algorithms</span>
+      </div>
+
+      <div class="viz-tabs" id="vizTabs">
+        <button class="vtab active" onclick="switchViz('kmeans',this)">K-Means</button>
+        <button class="vtab" onclick="switchViz('linreg',this)">Linear Regression</button>
+        <button class="vtab" onclick="switchViz('nn',this)">Neural Net</button>
+        <button class="vtab" onclick="switchViz('dt',this)">Decision Tree</button>
+        <button class="vtab" onclick="switchViz('pca',this)">PCA</button>
+        <button class="vtab" onclick="switchViz('gd',this)">Gradient Descent</button>
+      </div>
+
+      <!-- 1. K-MEANS -->
+      <div class="viz-panel active" id="vp-kmeans">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#ff6b9d;"></span>
+              <span class="viz-name">K-Means Clustering</span>
+              <span class="viz-tag">Unsupervised</span>
+            </div>
+            <div class="viz-controls">
+              <button class="viz-btn" onclick="resetKmeans()">↺ New Data</button>
+              <button class="viz-btn" onclick="stepKmeans()">⏭ Step</button>
+              <button class="viz-btn primary" onclick="runKmeans()">▶ Run</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="kmeansCanvas" height="320"></canvas>
+            <div class="viz-info"><strong>K-Means</strong> iteratively assigns points to the nearest centroid (★), then recomputes centroids as cluster means. Converges when assignments stop changing. Sensitive to initial placement — hit <strong>New Data</strong> for different starting positions. Uses <code>k = 3</code> clusters.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. LINEAR REGRESSION -->
+      <div class="viz-panel" id="vp-linreg">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#00d4ff;"></span>
+              <span class="viz-name">Linear Regression</span>
+              <span class="viz-tag">Supervised</span>
+            </div>
+            <div class="viz-controls">
+              <button class="viz-btn" onclick="resetLinreg()">↺ New Data</button>
+              <button class="viz-btn primary" onclick="fitLinreg()">▶ Fit Line</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="linregCanvas" height="300"></canvas>
+            <div class="viz-info"><strong>Ordinary Least Squares</strong> finds the line <code>y = mx + b</code> minimising the sum of squared residuals (shown as red vertical lines). The best-fit line minimises <code>Σ(yᵢ − ŷᵢ)²</code>. <strong>Click the canvas</strong> to add new points, then re-fit.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. NEURAL NETWORK -->
+      <div class="viz-panel" id="vp-nn">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#a78bfa;"></span>
+              <span class="viz-name">Neural Network Forward Pass</span>
+              <span class="viz-tag">Deep Learning</span>
+            </div>
+            <div class="viz-controls">
+              <button class="viz-btn" onclick="resetNN()">↺ Reset</button>
+              <button class="viz-btn primary" onclick="animateNN()">▶ Animate</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="nnCanvas" height="340"></canvas>
+            <div class="viz-info"><strong>Forward Pass</strong> — activations flow left → right. Each node computes a weighted sum then applies a non-linearity (<code>ReLU</code> in hidden layers, <code>Sigmoid</code> on output). Edge thickness encodes weight magnitude. Bright nodes = high activation. Architecture: <code>[3 → 5 → 4 → 2]</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. DECISION TREE -->
+      <div class="viz-panel" id="vp-dt">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#43ffb5;"></span>
+              <span class="viz-name">Decision Tree</span>
+              <span class="viz-tag">Supervised</span>
+            </div>
+            <div class="viz-controls">
+              <button class="viz-btn primary" onclick="drawDT()">▶ Build Tree</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="dtCanvas" height="340"></canvas>
+            <div class="viz-info"><strong>Decision Trees</strong> recursively split data by the feature giving the best <code>Gini impurity</code> or <code>Information Gain</code>. Each node is a yes/no question; leaves are predictions. <span style="color:#43ffb5;font-weight:600;">Green</span> = Accept, <span style="color:#fbbf24;font-weight:600;">Yellow</span> = Review, <span style="color:#f87171;font-weight:600;">Red</span> = Reject.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. PCA -->
+      <div class="viz-panel" id="vp-pca">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#fbbf24;"></span>
+              <span class="viz-name">PCA — Principal Component Analysis</span>
+              <span class="viz-tag">Dimensionality Reduction</span>
+            </div>
+            <div class="viz-controls">
+              <button class="viz-btn" onclick="resetPCA()">↺ New Data</button>
+              <button class="viz-btn primary" onclick="runPCA()">▶ Compute PCs</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="pcaCanvas" height="300"></canvas>
+            <div class="viz-info"><strong>PCA</strong> finds orthogonal directions of maximum variance. <span style="color:#a78bfa;font-weight:600;">PC1</span> captures the most variance; <span style="color:#ff6b9d;font-weight:600;">PC2</span> is orthogonal to it. Points can be projected onto fewer dimensions — compressing data while retaining structure. Hit <strong>New Data</strong> for a fresh dataset.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. GRADIENT DESCENT -->
+      <div class="viz-panel" id="vp-gd">
+        <div class="viz-card">
+          <div class="viz-header">
+            <div class="viz-title-wrap">
+              <span class="viz-dot" style="background:#f87171;"></span>
+              <span class="viz-name">Gradient Descent</span>
+              <span class="viz-tag">Optimization</span>
+            </div>
+            <div class="viz-controls">
+              <div class="lr-row">
+                LR <input type="range" id="lr-slider" min="1" max="20" value="8" style="width:80px;">
+                <span id="lr-val" style="color:var(--txt);min-width:34px;">0.04</span>
+              </div>
+              <button class="viz-btn" onclick="resetGD()">↺ Reset</button>
+              <button class="viz-btn primary" onclick="runGD()">▶ Descend</button>
+            </div>
+          </div>
+          <div class="viz-body">
+            <canvas class="viz-canvas" id="gdCanvas" height="280"></canvas>
+            <div class="viz-info"><strong>Gradient Descent</strong> updates parameters by moving in the direction of steepest descent: <code>θ ← θ − α · ∇L</code>. Each dot is one step. Adjust <strong>LR</strong> — too high causes overshooting; too low causes painfully slow convergence. The pink dot is the current position on the loss surface.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /viz-section -->
+
+  </main>
+
+</div>
+
+<a class="back-top" id="backTop" href="#">&#x2191;</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script src="../assets/js/aiml-viz.js?v=3"></script>
+<script>
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() {
+  const isClosed = sidebar.classList.contains('closed');
+  sidebar.classList.toggle('closed', !isClosed);
+  sidebarOverlay.classList.toggle('visible', isClosed);
+  document.body.classList.toggle('tf-nav-open', isClosed);
+}
+function toggleNav() {
+  topNav.classList.toggle('mobile-open');
+  navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open'));
+}
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.add('closed');
+  sidebarOverlay.classList.remove('visible');
+  document.body.classList.remove('tf-nav-open');
+});
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) return;
+    document.querySelectorAll('.sb-link').forEach(link => {
+      if (link.textContent.toLowerCase().includes(q)) {
+        link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        link.style.background = 'rgba(0,212,255,0.14)';
+        setTimeout(() => link.style.background = '', 1600);
+      }
+    });
+  });
+}
+function switchTab(el, paneId) {
+  document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.info-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+const glossSearchML = document.getElementById('glossSearchML');
+if (glossSearchML) {
+  glossSearchML.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('#mlGlossGrid .concept-card').forEach(card => {
+      const text = (card.dataset.term || '') + card.textContent.toLowerCase();
+      card.classList.toggle('gloss-hidden', q && !text.includes(q));
+    });
+  });
+}
+</script>
+</body>
+</html>

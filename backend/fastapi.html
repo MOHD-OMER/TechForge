@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="FastAPI tutorial — async Python API framework with automatic Swagger docs, Pydantic validation, dependency injection, JWT auth, and SQLAlchemy."/>
+  <title>FastAPI Framework — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+
+  <style>
+  /* FastAPI uses a cyan/teal accent to stand apart from Flask/Django green */
+  :root {
+    --accent: var(--purple);
+    --surface: var(--card);
+    --surface2: rgba(167,139,250,0.05);
+    --display: var(--font-display);
+    --mono: var(--font-mono);
+    --bg2: rgba(0,0,0,.25);
+}
+
+  /* ── PAGE SHELL ───────────────────────────────── */
+  .page { max-width: 900px; margin: 0 auto; padding: 48px 20px 100px; }
+
+  /* ── PAGE HEADER ──────────────────────────────── */
+  .pg-head { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+  .pg-crumb {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+  }
+  .pg-crumb a { color: var(--text2); text-decoration: none; }
+  .pg-crumb a:hover { color: var(--accent); }
+  .pg-title {
+    font-family: var(--display); font-size: clamp(32px,5vw,44px);
+    font-weight: 800; color: var(--text); margin-bottom: 14px;
+    letter-spacing: -0.025em; line-height: 1.1;
+  }
+  .pg-sub { font-size: 15px; color: var(--text2); max-width: 640px; line-height: 1.75; margin-bottom: 20px; }
+  .pg-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+  }
+  .b-cyan   { background: rgba(34,211,238,.1);  color: var(--accent); border: 1px solid rgba(34,211,238,.2); }
+  .b-blue   { background: rgba(77,158,247,.1);  color: var(--blue);   border: 1px solid rgba(77,158,247,.2); }
+  .b-purple { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+  .b-amber  { background: rgba(247,204,69,.1);  color: #fcd34d;       border: 1px solid rgba(247,204,69,.2); }
+
+  /* ── TAB SYSTEM ───────────────────────────────── */
+  .tab-nav {
+    display: flex; gap: 0; flex-wrap: nowrap;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 10px 16px; background: transparent;
+    border: none; border-bottom: 2px solid transparent;
+    color: var(--text2); font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all .15s; white-space: nowrap;
+    font-family: var(--body); margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--accent-dim); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-dim); }
+  .tab-counter {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 17px; height: 17px; border-radius: 50%;
+    background: rgba(34,211,238,.12); color: var(--accent);
+    font-size: 9px; font-weight: 700; margin-left: 6px; font-family: var(--mono);
+  }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  .pane-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: none; border-radius: 0 0 14px 14px; padding: 28px;
+  }
+  .pane-title {
+    font-family: var(--display); font-size: 18px; font-weight: 800;
+    color: var(--text); margin-bottom: 6px; letter-spacing: -0.02em;
+  }
+  .pane-sub { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 24px; max-width: 680px; }
+
+  /* ── STEPS ────────────────────────────────────── */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .step-num-col {
+    width: 48px; flex-shrink: 0;
+    background: var(--accent-dim); border-right: 1px solid var(--border);
+    display: flex; align-items: flex-start; justify-content: center; padding-top: 18px;
+  }
+  .step-num { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent); }
+  .step-body { flex: 1; padding: 16px 18px; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .step-desc  { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
+  .step-desc:last-child { margin-bottom: 0; }
+
+  /* ── CODE BLOCK ───────────────────────────────── */
+  .code-block {
+    position: relative; margin-top: 10px;
+    background: #0d1117; border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; overflow: hidden;
+  }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 14px;
+    background: rgba(255,255,255,.03); border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .code-lang {
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .08em;
+  }
+  .copy-btn {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 6px; color: rgba(255,255,255,.4);
+    font-family: var(--mono); font-size: 10px; font-weight: 600;
+    padding: 3px 10px; cursor: pointer; transition: all .15s;
+  }
+  .copy-btn:hover { background: rgba(34,211,238,.12); color: var(--accent); border-color: rgba(34,211,238,.3); }
+  .copy-btn.copied { color: var(--accent); }
+  .code-body {
+    padding: 14px 16px; font-family: var(--mono); font-size: 12.5px;
+    line-height: 1.7; overflow-x: auto; white-space: pre; color: #e6edf3;
+  }
+  /* Syntax */
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .st { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .nm { color: #79c0ff; }
+  .dc { color: #ffa657; }
+  .tp { color: #22d3ee; } /* type hints — cyan, matches accent */
+  .op { color: #ff7b72; }
+
+  /* ── CALLOUTS ─────────────────────────────────── */
+  .callout {
+    display: flex; gap: 12px; padding: 13px 16px; border-radius: 10px;
+    font-size: 13px; line-height: 1.65; margin: 16px 0; border-left: 3px solid;
+  }
+  .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .c-cyan  { background: rgba(34,211,238,.07); border-color: var(--accent); color: #67e8f9; }
+  .c-amber { background: rgba(247,204,69,.07);  border-color: #fcd34d;      color: #fcd34d; }
+  .c-green { background: rgba(34,197,94,.07);   border-color: var(--green); color: #6ee7b7; }
+  .c-red   { background: rgba(248,113,113,.07); border-color: #f87171;      color: #f87171; }
+  .c-blue  { background: rgba(77,158,247,.07);  border-color: var(--blue);  color: #9ec8f9; }
+
+  /* ── STAT CARDS ───────────────────────────────── */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+    gap: 10px; margin-top: 24px;
+  }
+  .stat-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; transition: border-color .2s;
+  }
+  .stat-card:hover { border-color: var(--accent-border); }
+  .sc-val   { font-family: var(--display); font-size: 20px; font-weight: 800; margin-bottom: 3px; }
+  .sc-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .sc-desc  { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+  /* ── PYDANTIC SCHEMA VISUAL ───────────────────── */
+  .schema-flow {
+    display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0; align-items: center; margin: 20px 0;
+    padding: 20px; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow-x: auto;
+  }
+  .sf-box {
+    padding: 14px 12px; text-align: center;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; min-width: 100px;
+  }
+  .sf-box.active { border-color: var(--accent-border); background: var(--accent-dim); }
+  .sf-icon { font-size: 20px; margin-bottom: 6px; }
+  .sf-label { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .sf-sub   { font-size: 10.5px; color: var(--text2); }
+  .sf-arrow { font-size: 18px; color: var(--accent); padding: 0 8px; text-align: center; }
+  @media (max-width: 600px) {
+    .schema-flow { grid-template-columns: 1fr; }
+    .sf-arrow { transform: rotate(90deg); margin: 4px auto; }
+  }
+
+  /* ── ROUTER STRUCTURE ─────────────────────────── */
+  .file-tree {
+    background: #0d1117; border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; padding: 16px 20px;
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.8;
+    color: #e6edf3; margin: 12px 0;
+  }
+  .ft-dir  { color: #79c0ff; }
+  .ft-py   { color: #ffa657; }
+  .ft-cfg  { color: #d2a8ff; }
+  .ft-dim  { color: #8b949e; }
+
+  /* ── FEATURE CARDS (What is FastAPI) ──────────── */
+  .feature-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap: 10px; margin-top: 20px;
+  }
+  .feature-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; transition: border-color .2s;
+  }
+  .feature-card:hover { border-color: var(--accent-border); }
+  .fc-icon  { font-size: 20px; margin-bottom: 8px; }
+  .fc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .fc-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.55; }
+
+  /* ── QUIZ ─────────────────────────────────────── */
+  .quiz-item { margin-bottom: 24px; }
+  .quiz-item:last-child { margin-bottom: 0; }
+  .quiz-q {
+    font-size: 13.5px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px; line-height: 1.5;
+  }
+  .quiz-q-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 6px;
+    background: rgba(34,211,238,.1); color: var(--accent);
+    font-size: 11px; font-weight: 700; margin-right: 8px; font-family: var(--mono);
+  }
+  .quiz-opts { display: flex; flex-direction: column; gap: 7px; }
+  .quiz-opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text2); font-size: 13px; cursor: pointer;
+    text-align: left; transition: all .15s; width: 100%;
+  }
+  .quiz-opt:hover:not([disabled]) { border-color: var(--accent); color: var(--text); }
+  .quiz-opt.correct { border-color: var(--accent); background: var(--accent-dim); color: #67e8f9; }
+  .quiz-opt.wrong   { border-color: #f87171; background: rgba(248,113,113,.07); color: #f87171; }
+  .quiz-opt[disabled] { cursor: default; }
+  .opt-letter {
+    width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+    background: rgba(255,255,255,.06); border: 1px solid var(--border);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--text2);
+  }
+  .quiz-feedback {
+    margin-top: 8px; font-size: 12.5px; font-weight: 600;
+    padding: 8px 12px; border-radius: 7px; display: none;
+  }
+  .fb-correct { background: rgba(34,211,238,.1); color: #67e8f9; display: block; }
+  .fb-wrong   { background: rgba(248,113,113,.1); color: #f87171; display: block; }
+  .quiz-score {
+    display: none; margin-top: 20px; padding: 16px 18px;
+    background: rgba(34,211,238,.07); border: 1px solid rgba(34,211,238,.2);
+    border-radius: 10px; text-align: center;
+  }
+  .quiz-score.show { display: block; }
+  .score-val { font-family: var(--display); font-size: 28px; font-weight: 800; color: var(--accent); }
+  .score-lbl { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  .quiz-reset {
+    margin-top: 12px; padding: 8px 20px;
+    background: rgba(34,211,238,.1); border: 1px solid rgba(34,211,238,.2);
+    border-radius: 8px; color: var(--accent); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .15s;
+  }
+  .quiz-reset:hover { background: rgba(34,211,238,.18); }
+
+  /* ── CHEATSHEET TABLE ─────────────────────────── */
+  .cmd-table { width: 100%; border-collapse: collapse; }
+  .cmd-table th {
+    padding: 10px 14px; background: rgba(34,211,238,.05);
+    font-size: 11px; font-weight: 700; color: var(--text2);
+    text-align: left; border-bottom: 1px solid var(--border);
+    font-family: var(--mono); text-transform: uppercase; letter-spacing: .07em;
+  }
+  .cmd-table td {
+    padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: 13px; vertical-align: top;
+  }
+  .cmd-table tr:last-child td { border-bottom: none; }
+  .cmd-table tr:hover td { background: rgba(34,211,238,.03); }
+  .cmd-code {
+    font-family: var(--mono); font-size: 12px; color: var(--accent);
+    background: rgba(34,211,238,.08); padding: 2px 8px; border-radius: 5px;
+    border: 1px solid rgba(34,211,238,.15);
+  }
+  .cmd-desc { color: var(--text2); font-size: 12.5px; }
+
+  /* ── PAGE NAV ─────────────────────────────────── */
+  .page-nav {
+    display: flex; justify-content: space-between; gap: 16px;
+    padding-top: 40px; border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  .nav-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 20px; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text2); text-decoration: none; font-size: 13.5px;
+    font-weight: 500; transition: all .17s;
+  }
+  .nav-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  code {
+    font-family: var(--mono); font-size: 12.5px;
+    background: rgba(34,211,238,.08); color: var(--accent);
+    padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(34,211,238,.15);
+  }
+  
+  /* ── FORGE HERO ── */
+  .bk-hero{position:relative;padding:44px 0 36px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .bk-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(167,139,250,.07) 0%,transparent 58%);}
+  .bkh-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .bkh-dot{width:5px;height:5px;border-radius:50%;background:var(--purple);box-shadow:0 0 5px var(--purple);animation:bkhdot 2s ease infinite;}
+  @keyframes bkhdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .bkh-title{font-family:var(--font-display);font-size:clamp(24px,4vw,38px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .bkh-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .bkh-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:580px;margin-bottom:16px;}
+  .bkh-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;}
+  .bkh-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid rgba(167,139,250,.25);background:rgba(167,139,250,.07);color:var(--purple);}
+  .bk-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .bks-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .bks-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--bks-c,var(--purple));opacity:0;transition:opacity .2s;}
+  .bks-box:hover{background:rgba(167,139,250,.03);}.bks-box:hover::after{opacity:1;}
+  .bks-val{font-family:var(--font-mono);font-size:20px;font-weight:900;line-height:1;}
+  .bks-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.bk-stats{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="./">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">FastAPI Topics</div>
+    <a class="sb-link" href="#tab-what">What is FastAPI?</a>
+    <a class="sb-link" href="#tab-setup">Quick Start</a>
+    <a class="sb-link" href="#tab-routing">Routing &amp; Params</a>
+    <a class="sb-link" href="#tab-pydantic">Pydantic &amp; Schemas</a>
+    <a class="sb-link" href="#tab-async">Async &amp; Await</a>
+    <a class="sb-link" href="#tab-deps">Dependency Injection</a>
+    <a class="sb-link" href="#tab-auth">JWT Authentication</a>
+    <a class="sb-link" href="#tab-db">Database (SQLAlchemy)</a>
+    <a class="sb-link" href="#tab-docs">Auto Docs</a>
+    <a class="sb-link" href="#tab-cheatsheet">Cheatsheet</a>
+    <a class="sb-link" href="#tab-quiz">Quiz</a>
+
+    <div class="sidebar-label" style="margin-top:20px;">Framework Guides</div>
+    <a class="sb-link" href="./">← Overview</a>
+    <a class="sb-link" href="django.html">🎯 Django</a>
+    <a class="sb-link" href="flask.html">🧪 Flask</a>
+  </aside>
+
+  <main class="main">
+    
+      <!-- FORGE HERO -->
+      <div class="bk-hero anim-in">
+        <div class="bkh-eyebrow"><span class="bkh-dot"></span>Backend — FastAPI</div>
+        <h1 class="bkh-title">⚡ <span>FastAPI Framework</span></h1>
+        <p class="bkh-sub">Modern async Python APIs with automatic validation, serialization, and Swagger docs from type hints. One of the fastest Python frameworks — built for APIs and ML model serving.</p>
+        <div class="bkh-badges"><span class="bkh-badge">Async / ASGI</span><span class="bkh-badge">Python 3.10+</span><span class="bkh-badge">Auto Swagger</span></div>
+      </div>
+      <div class="bk-stats anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">ASGI</span><span class="bks-label">Server</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">Pydantic</span><span class="bks-label">Validation</span></div><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">OpenAPI</span><span class="bks-label">Auto Docs</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">Async</span><span class="bks-label">Native</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">⚡</span><span class="bks-label">High Perf</span></div></div>
+
+      <!-- TABS -->
+      <div class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="tab-what">What is FastAPI?</button>
+        <button class="tab-btn" data-tab="tab-setup">Quick Start</button>
+        <button class="tab-btn" data-tab="tab-routing">Routing &amp; Params</button>
+        <button class="tab-btn" data-tab="tab-pydantic">Pydantic &amp; Schemas</button>
+        <button class="tab-btn" data-tab="tab-async">Async &amp; Await</button>
+        <button class="tab-btn" data-tab="tab-deps">Dependency Injection</button>
+        <button class="tab-btn" data-tab="tab-auth">JWT Auth</button>
+        <button class="tab-btn" data-tab="tab-db">Database</button>
+        <button class="tab-btn" data-tab="tab-docs">Auto Docs</button>
+        <button class="tab-btn" data-tab="tab-cheatsheet">Cheatsheet</button>
+        <button class="tab-btn" data-tab="tab-quiz">Quiz <span class="tab-counter">5</span></button>
+      </div>
+
+      <!-- ══════ WHAT IS FASTAPI ══════ -->
+      <div class="tab-pane active pane-wrap" id="tab-what">
+        <div class="pane-title">High-Performance APIs with Zero Boilerplate</div>
+        <div class="pane-sub">
+          FastAPI is built on Starlette (ASGI) and Pydantic (validation). Write standard Python with type hints —
+          FastAPI handles validation, serialization, error messages, and generates interactive API docs automatically.
+        </div>
+
+        <div class="schema-flow">
+          <div class="sf-box active">
+            <div class="sf-icon">📥</div>
+            <div class="sf-label">Request</div>
+            <div class="sf-sub">JSON / Form / Query</div>
+          </div>
+          <div class="sf-arrow">→</div>
+          <div class="sf-box active">
+            <div class="sf-icon">🔍</div>
+            <div class="sf-label">Pydantic</div>
+            <div class="sf-sub">Validate &amp; Parse</div>
+          </div>
+          <div class="sf-arrow">→</div>
+          <div class="sf-box active">
+            <div class="sf-icon">⚙️</div>
+            <div class="sf-label">Your Function</div>
+            <div class="sf-sub">Clean Python objects</div>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="fc-icon">⚡</div>
+            <div class="fc-title">Blazing Performance</div>
+            <div class="fc-desc">On par with Node.js and Go. Native async/await via Starlette ASGI — handles thousands of concurrent requests.</div>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">📖</div>
+            <div class="fc-title">Automatic Docs</div>
+            <div class="fc-desc">Swagger UI at <code>/docs</code> and ReDoc at <code>/redoc</code> — generated from your code, zero extra work.</div>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">🔒</div>
+            <div class="fc-title">Type Safety</div>
+            <div class="fc-desc">Python type hints power validation, serialization, and IDE autocomplete. Catch bugs at definition time.</div>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">🧩</div>
+            <div class="fc-title">Dependency Injection</div>
+            <div class="fc-desc">A clean DI system for sharing DB sessions, auth checks, and common logic across routes without repetition.</div>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">🔌</div>
+            <div class="fc-title">Standards-Based</div>
+            <div class="fc-desc">Fully OpenAPI 3.0 and JSON Schema compliant. Auto-generate client SDKs in any language from your API.</div>
+          </div>
+          <div class="feature-card">
+            <div class="fc-icon">🤖</div>
+            <div class="fc-title">ML Model Serving</div>
+            <div class="fc-desc">The go-to choice for wrapping ML models as APIs. Used by Netflix, Uber, Microsoft, and countless AI teams.</div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card"><div class="sc-val" style="color:var(--accent)">2018</div><div class="sc-label">Year Released</div><div class="sc-desc">Created by Sebastián Ramírez (tiangolo)</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:var(--blue)">ASGI</div><div class="sc-label">Server Type</div><div class="sc-desc">Async — vs WSGI (Flask/Django sync)</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:var(--purple)">3rd</div><div class="sc-label">Most Starred</div><div class="sc-desc">Python web framework on GitHub</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:#fcd34d">~3×</div><div class="sc-label">Faster than Flask</div><div class="sc-desc">Benchmarks on async I/O workloads</div></div>
+        </div>
+      </div>
+
+      <!-- ══════ QUICK START ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-setup">
+        <div class="pane-title">Quick Start — Up and Running in Minutes</div>
+        <div class="pane-sub">Install FastAPI, Uvicorn (ASGI server), and write your first typed endpoint. The docs auto-appear the moment the server starts.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Install FastAPI &amp; Uvicorn</div>
+              <div class="step-desc">Uvicorn is the ASGI server that runs FastAPI. The <code>[standard]</code> extra adds websocket and performance libraries.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body">pip install fastapi uvicorn[standard]
+
+<span class="cm"># For database support:</span>
+pip install sqlalchemy databases asyncpg
+
+<span class="cm"># For JWT auth:</span>
+pip install python-jose[cryptography] passlib[bcrypt]</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Your First FastAPI App</div>
+              <div class="step-desc">Notice how type hints do the work — <code>item_id: int</code> validates and converts automatically. No extra code needed.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">main.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel
+
+app = FastAPI(title=<span class="st">"My API"</span>, version=<span class="st">"1.0.0"</span>)
+
+<span class="kw">class</span> <span class="fn">Item</span>(BaseModel):
+    name:  <span class="tp">str</span>
+    price: <span class="tp">float</span>
+    stock: <span class="tp">int</span> = <span class="nm">0</span>
+
+<span class="dc">@app.get(<span class="st">"/"</span>)</span>
+<span class="kw">def</span> <span class="fn">root</span>():
+    <span class="kw">return</span> {<span class="st">"message"</span>: <span class="st">"Hello World"</span>}
+
+<span class="dc">@app.get(<span class="st">"/items/{item_id}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_item</span>(item_id: <span class="tp">int</span>):          <span class="cm"># int validated automatically</span>
+    <span class="kw">return</span> {<span class="st">"id"</span>: item_id}
+
+<span class="dc">@app.post(<span class="st">"/items"</span>, status_code=<span class="nm">201</span>)</span>
+<span class="kw">def</span> <span class="fn">create_item</span>(item: <span class="tp">Item</span>):        <span class="cm"># body auto-parsed & validated</span>
+    <span class="kw">return</span> item</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Run the Server</div>
+              <div class="step-desc">The <code>--reload</code> flag restarts on every file save. Visit <code>/docs</code> for instant interactive API documentation.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Development — auto-reload on save</span>
+uvicorn main:app --reload
+
+<span class="cm"># Production — multiple workers</span>
+uvicorn main:app --host <span class="nm">0.0.0.0</span> --port <span class="nm">8000</span> --workers <span class="nm">4</span>
+
+<span class="cm"># Then open:</span>
+<span class="cm"># http://localhost:8000/docs    ← Swagger UI</span>
+<span class="cm"># http://localhost:8000/redoc   ← ReDoc</span>
+<span class="cm"># http://localhost:8000/openapi.json ← Raw schema</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">04</span></div>
+            <div class="step-body">
+              <div class="step-title">Recommended Project Structure</div>
+              <div class="step-desc">For production apps, split into routers, schemas, models, and database modules.</div>
+              <div class="file-tree"><span class="ft-dir">myapi/</span>
+├── <span class="ft-py">main.py</span>             <span class="ft-dim"># app instance + routers</span>
+├── <span class="ft-cfg">.env</span>               <span class="ft-dim"># secrets (DB URL, JWT secret)</span>
+├── <span class="ft-py">database.py</span>         <span class="ft-dim"># engine, session, Base</span>
+├── <span class="ft-py">models.py</span>           <span class="ft-dim"># SQLAlchemy ORM models</span>
+├── <span class="ft-py">schemas.py</span>          <span class="ft-dim"># Pydantic request/response schemas</span>
+├── <span class="ft-py">dependencies.py</span>     <span class="ft-dim"># get_db, get_current_user</span>
+└── <span class="ft-dir">routers/</span>
+    ├── <span class="ft-py">users.py</span>        <span class="ft-dim"># /users endpoints</span>
+    ├── <span class="ft-py">items.py</span>        <span class="ft-dim"># /items endpoints</span>
+    └── <span class="ft-py">auth.py</span>         <span class="ft-dim"># /auth/login, /auth/refresh</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ ROUTING & PARAMS ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-routing">
+        <div class="pane-title">Routing, Path &amp; Query Parameters</div>
+        <div class="pane-sub">FastAPI's routing is decorator-based like Flask, but type hints do all the validation and conversion work. No manual parsing needed.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Path Parameters with Validation</div>
+              <div class="step-desc">Declare path params in the route string and function signature. FastAPI validates and converts the type automatically — wrong type = 422 Unprocessable Entity.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI, Path
+<span class="kw">from</span> enum <span class="kw">import</span> Enum
+
+<span class="kw">class</span> <span class="fn">ModelName</span>(str, Enum):
+    alexnet = <span class="st">"alexnet"</span>
+    resnet  = <span class="st">"resnet"</span>
+    vgg     = <span class="st">"vgg"</span>
+
+<span class="cm"># Simple path param with type validation</span>
+<span class="dc">@app.get(<span class="st">"/users/{user_id}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_user</span>(user_id: <span class="tp">int</span>):
+    <span class="kw">return</span> {<span class="st">"id"</span>: user_id}
+
+<span class="cm"># Enum param — only allows defined values</span>
+<span class="dc">@app.get(<span class="st">"/models/{model_name}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_model</span>(model_name: <span class="tp">ModelName</span>):
+    <span class="kw">return</span> {<span class="st">"model"</span>: model_name, <span class="st">"value"</span>: model_name.value}
+
+<span class="cm"># Path() adds constraints and docs metadata</span>
+<span class="dc">@app.get(<span class="st">"/items/{item_id}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_item</span>(item_id: <span class="tp">int</span> = Path(gt=<span class="nm">0</span>, description=<span class="st">"Item ID must be positive"</span>)):
+    <span class="kw">return</span> {<span class="st">"id"</span>: item_id}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Query Parameters &amp; Optional Fields</div>
+              <div class="step-desc">Any function parameter not in the path string becomes a query parameter. Use <code>Optional</code> or a default of <code>None</code> to make it optional.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> typing <span class="kw">import</span> Optional
+<span class="kw">from</span> fastapi <span class="kw">import</span> Query
+
+<span class="cm"># Required query param: GET /items?category=books</span>
+<span class="dc">@app.get(<span class="st">"/search"</span>)</span>
+<span class="kw">def</span> <span class="fn">search</span>(q: <span class="tp">str</span>):
+    <span class="kw">return</span> {<span class="st">"query"</span>: q}
+
+<span class="cm"># Optional with defaults: GET /items?skip=0&limit=20&active=true</span>
+<span class="dc">@app.get(<span class="st">"/items"</span>)</span>
+<span class="kw">def</span> <span class="fn">list_items</span>(
+    skip:   <span class="tp">int</span>           = <span class="nm">0</span>,
+    limit:  <span class="tp">int</span>           = <span class="nm">20</span>,
+    active: <span class="tp">Optional</span>[<span class="tp">bool</span>] = <span class="nm">None</span>,
+    q:      <span class="tp">Optional</span>[<span class="tp">str</span>]  = Query(<span class="nm">None</span>, min_length=<span class="nm">3</span>, max_length=<span class="nm">50</span>)
+):
+    <span class="kw">return</span> {<span class="st">"skip"</span>: skip, <span class="st">"limit"</span>: limit, <span class="st">"active"</span>: active, <span class="st">"q"</span>: q}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">APIRouter — Organizing Routes</div>
+              <div class="step-desc">Split routes across files using <code>APIRouter</code>, then include them in the main app. Equivalent to Flask Blueprints.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">routers/users.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter
+
+router = APIRouter(prefix=<span class="st">"/users"</span>, tags=[<span class="st">"users"</span>])
+
+<span class="dc">@router.get(<span class="st">"/"</span>)</span>
+<span class="kw">def</span> <span class="fn">list_users</span>():  <span class="cm"># → GET /users/</span>
+    <span class="kw">return</span> []
+
+<span class="dc">@router.get(<span class="st">"/{user_id}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_user</span>(user_id: <span class="tp">int</span>):  <span class="cm"># → GET /users/{user_id}</span>
+    <span class="kw">return</span> {<span class="st">"id"</span>: user_id}
+
+<span class="cm"># In main.py:</span>
+<span class="cm"># from routers import users</span>
+<span class="cm"># app.include_router(users.router)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ PYDANTIC & SCHEMAS ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-pydantic">
+        <div class="pane-title">Pydantic — Validation &amp; Serialization</div>
+        <div class="pane-sub">Pydantic models define the shape of your request bodies and responses. They validate incoming data, throw clear error messages for bad input, and handle serialization to/from JSON automatically.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Request &amp; Response Schemas</div>
+              <div class="step-desc">Define separate schemas for creating vs. reading objects. Use <code>response_model</code> to strip fields you don't want to expose (like passwords).</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">schemas.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel, EmailStr, Field
+<span class="kw">from</span> typing <span class="kw">import</span> Optional
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+<span class="cm"># Schema for creating a user (incoming request)</span>
+<span class="kw">class</span> <span class="fn">UserCreate</span>(BaseModel):
+    username: <span class="tp">str</span>   = Field(min_length=<span class="nm">3</span>, max_length=<span class="nm">50</span>)
+    email:    <span class="tp">EmailStr</span>                      <span class="cm"># validates email format</span>
+    password: <span class="tp">str</span>   = Field(min_length=<span class="nm">8</span>)
+
+<span class="cm"># Schema for reading a user (response — no password!)</span>
+<span class="kw">class</span> <span class="fn">UserRead</span>(BaseModel):
+    id:       <span class="tp">int</span>
+    username: <span class="tp">str</span>
+    email:    <span class="tp">str</span>
+    created:  <span class="tp">datetime</span>
+
+    <span class="kw">class</span> <span class="fn">Config</span>:
+        from_attributes = <span class="nm">True</span>  <span class="cm"># allow ORM model → schema conversion</span>
+
+<span class="cm"># Use response_model to filter the output automatically</span>
+<span class="dc">@app.post(<span class="st">"/users"</span>, response_model=<span class="tp">UserRead</span>, status_code=<span class="nm">201</span>)</span>
+<span class="kw">def</span> <span class="fn">create_user</span>(user: <span class="tp">UserCreate</span>, db: Session = Depends(get_db)):
+    <span class="cm"># password never appears in the response — UserRead excludes it</span>
+    ...</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Field Validation &amp; Constraints</div>
+              <div class="step-desc">Use <code>Field()</code> for constraints and metadata. Validators run custom logic. FastAPI surfaces all validation errors as a 422 response with clear messages.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel, Field, field_validator
+
+<span class="kw">class</span> <span class="fn">Product</span>(BaseModel):
+    name:     <span class="tp">str</span>   = Field(min_length=<span class="nm">1</span>, max_length=<span class="nm">200</span>, description=<span class="st">"Product name"</span>)
+    price:    <span class="tp">float</span> = Field(gt=<span class="nm">0</span>, description=<span class="st">"Must be positive"</span>)
+    discount: <span class="tp">float</span> = Field(default=<span class="nm">0.0</span>, ge=<span class="nm">0</span>, le=<span class="nm">1</span>)  <span class="cm"># 0% to 100%</span>
+    tags:     <span class="tp">list</span>[<span class="tp">str</span>] = []
+
+    <span class="dc">@field_validator(<span class="st">'name'</span>)</span>
+    <span class="dc">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">name_must_not_be_blank</span>(cls, v: <span class="tp">str</span>) -> <span class="tp">str</span>:
+        <span class="kw">if not</span> v.strip():
+            <span class="kw">raise</span> ValueError(<span class="st">'name cannot be blank'</span>)
+        <span class="kw">return</span> v.strip()</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Nested Models &amp; Lists</div>
+              <div class="step-desc">Pydantic models compose naturally. FastAPI handles nested validation and generates accurate JSON Schema for the docs.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">class</span> <span class="fn">Address</span>(BaseModel):
+    street: <span class="tp">str</span>
+    city:   <span class="tp">str</span>
+    zip:    <span class="tp">str</span>
+
+<span class="kw">class</span> <span class="fn">UserProfile</span>(BaseModel):
+    name:    <span class="tp">str</span>
+    address: <span class="tp">Address</span>          <span class="cm"># nested model</span>
+    friends: <span class="tp">list</span>[<span class="tp">str</span>] = []  <span class="cm"># list of strings</span>
+
+<span class="cm"># FastAPI accepts + validates this JSON automatically:</span>
+<span class="cm"># {</span>
+<span class="cm">#   "name": "Omer",</span>
+<span class="cm">#   "address": { "street": "MG Road", "city": "Hyderabad", "zip": "500001" },</span>
+<span class="cm">#   "friends": ["Alice", "Bob"]</span>
+<span class="cm"># }</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ ASYNC & AWAIT ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-async">
+        <div class="pane-title">Async &amp; Await — Native Concurrency</div>
+        <div class="pane-sub">FastAPI is built on ASGI and handles async natively. Async routes let the server handle other requests while waiting for I/O — database queries, HTTP calls, file reads — instead of blocking the whole process.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">async def vs def Routes</div>
+              <div class="step-desc">Use <code>async def</code> when your route does I/O (DB query, HTTP request, file read). Use regular <code>def</code> for CPU-bound work — FastAPI runs these in a thread pool automatically.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">import</span> httpx
+
+<span class="cm"># Async route — awaits I/O without blocking the server</span>
+<span class="dc">@app.get(<span class="st">"/weather/{city}"</span>)</span>
+<span class="kw">async def</span> <span class="fn">get_weather</span>(city: <span class="tp">str</span>):
+    <span class="kw">async with</span> httpx.AsyncClient() <span class="kw">as</span> client:
+        res = <span class="kw">await</span> client.get(<span class="st">f"https://api.weather.com/{city}"</span>)
+        <span class="kw">return</span> res.json()
+
+<span class="cm"># Regular def — runs in threadpool, won't block async loop</span>
+<span class="dc">@app.get(<span class="st">"/compute"</span>)</span>
+<span class="kw">def</span> <span class="fn">heavy_compute</span>():
+    result = some_cpu_intensive_function()
+    <span class="kw">return</span> {<span class="st">"result"</span>: result}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Background Tasks</div>
+              <div class="step-desc">Run work after returning the response — sending emails, writing logs, processing uploads — without making the client wait.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> BackgroundTasks
+
+<span class="kw">def</span> <span class="fn">send_welcome_email</span>(email: <span class="tp">str</span>):
+    <span class="cm"># Runs after the response is sent — client doesn't wait</span>
+    send_email(to=email, subject=<span class="st">"Welcome!"</span>, body=<span class="st">"Thanks for signing up."</span>)
+
+<span class="dc">@app.post(<span class="st">"/register"</span>)</span>
+<span class="kw">async def</span> <span class="fn">register</span>(user: <span class="tp">UserCreate</span>, background_tasks: <span class="tp">BackgroundTasks</span>):
+    db_user = create_user_in_db(user)
+    background_tasks.add_task(send_welcome_email, user.email)
+    <span class="kw">return</span> {<span class="st">"message"</span>: <span class="st">"Registered! Welcome email sent."</span>}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Startup &amp; Shutdown Events</div>
+              <div class="step-desc">Run code when the application starts or shuts down — connect to databases, load ML models, clean up resources.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> contextlib <span class="kw">import</span> asynccontextmanager
+
+<span class="dc">@asynccontextmanager</span>
+<span class="kw">async def</span> <span class="fn">lifespan</span>(app: <span class="tp">FastAPI</span>):
+    <span class="cm"># Startup — runs once when server starts</span>
+    print(<span class="st">"Loading ML model..."</span>)
+    app.state.model = load_ml_model()
+    <span class="kw">yield</span>
+    <span class="cm"># Shutdown — runs when server stops</span>
+    print(<span class="st">"Cleaning up..."</span>)
+    app.state.model = <span class="nm">None</span>
+
+app = FastAPI(lifespan=lifespan)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-blue">
+          <span class="callout-icon">💡</span>
+          <span>FastAPI is the <strong>go-to choice for serving ML models</strong> because async I/O keeps the server responsive while model inference runs. Libraries like Hugging Face and LangChain have native FastAPI integration examples.</span>
+        </div>
+      </div>
+
+      <!-- ══════ DEPENDENCY INJECTION ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-deps">
+        <div class="pane-title">Dependency Injection</div>
+        <div class="pane-sub">FastAPI's DI system is one of its best features. Declare a function as a dependency with <code>Depends()</code> — FastAPI calls it, resolves its own dependencies, and injects the result into your route. Clean, testable, composable.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Basic Dependencies</div>
+              <div class="step-desc">Share common query parameters, pagination logic, or any computed value across multiple routes.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> Depends
+
+<span class="cm"># Reusable pagination dependency</span>
+<span class="kw">def</span> <span class="fn">paginate</span>(page: <span class="tp">int</span> = <span class="nm">1</span>, size: <span class="tp">int</span> = <span class="nm">20</span>) -> <span class="tp">dict</span>:
+    <span class="kw">return</span> {<span class="st">"skip"</span>: (page - <span class="nm">1</span>) * size, <span class="st">"limit"</span>: size}
+
+<span class="cm"># Inject into any route — no code duplication</span>
+<span class="dc">@app.get(<span class="st">"/users"</span>)</span>
+<span class="kw">def</span> <span class="fn">list_users</span>(p: <span class="tp">dict</span> = Depends(paginate)):
+    <span class="kw">return</span> db.query(User).offset(p[<span class="st">"skip"</span>]).limit(p[<span class="st">"limit"</span>]).all()
+
+<span class="dc">@app.get(<span class="st">"/items"</span>)</span>
+<span class="kw">def</span> <span class="fn">list_items</span>(p: <span class="tp">dict</span> = Depends(paginate)):
+    <span class="kw">return</span> db.query(Item).offset(p[<span class="st">"skip"</span>]).limit(p[<span class="st">"limit"</span>]).all()</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Database Session Dependency</div>
+              <div class="step-desc">The most common dependency pattern — open a DB session per request, yield it, then close it whether or not an exception occurred.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">dependencies.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> database <span class="kw">import</span> SessionLocal
+<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> Session
+
+<span class="kw">def</span> <span class="fn">get_db</span>() -> Session:
+    db = SessionLocal()
+    <span class="kw">try</span>:
+        <span class="kw">yield</span> db          <span class="cm"># inject into the route</span>
+    <span class="kw">finally</span>:
+        db.close()        <span class="cm"># always close, even on errors</span>
+
+<span class="cm"># Every route gets its own session — no leaks</span>
+<span class="dc">@app.get(<span class="st">"/users/{uid}"</span>)</span>
+<span class="kw">def</span> <span class="fn">get_user</span>(uid: <span class="tp">int</span>, db: Session = Depends(get_db)):
+    <span class="kw">return</span> db.query(User).filter(User.id == uid).first()</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Router-Level Dependencies</div>
+              <div class="step-desc">Apply a dependency to all routes in a router — e.g., require authentication for every endpoint under <code>/admin</code>.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter, Depends
+<span class="kw">from</span> dependencies <span class="kw">import</span> require_admin
+
+<span class="cm"># Every route in this router requires admin auth</span>
+admin_router = APIRouter(
+    prefix=<span class="st">"/admin"</span>,
+    tags=[<span class="st">"admin"</span>],
+    dependencies=[Depends(require_admin)]
+)
+
+<span class="dc">@admin_router.get(<span class="st">"/users"</span>)</span>
+<span class="kw">def</span> <span class="fn">list_all_users</span>(db: Session = Depends(get_db)):
+    <span class="kw">return</span> db.query(User).all()  <span class="cm"># require_admin runs automatically</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ JWT AUTH ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-auth">
+        <div class="pane-title">JWT Authentication</div>
+        <div class="pane-sub">FastAPI has no built-in auth, but its DI system makes JWT implementation clean and reusable. Protect any route by adding a single <code>Depends(get_current_user)</code>.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Password Hashing &amp; Token Generation</div>
+              <div class="step-desc">Use <code>passlib</code> for password hashing and <code>python-jose</code> for JWT creation and verification.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">auth.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> datetime <span class="kw">import</span> datetime, timedelta
+<span class="kw">from</span> jose <span class="kw">import</span> jwt, JWTError
+<span class="kw">from</span> passlib.context <span class="kw">import</span> CryptContext
+
+SECRET_KEY = <span class="st">"your-secret-key-from-env"</span>
+ALGORITHM  = <span class="st">"HS256"</span>
+TOKEN_EXP  = <span class="nm">30</span>  <span class="cm"># minutes</span>
+
+pwd_context = CryptContext(schemes=[<span class="st">"bcrypt"</span>])
+
+<span class="kw">def</span> <span class="fn">hash_password</span>(password: <span class="tp">str</span>) -> <span class="tp">str</span>:
+    <span class="kw">return</span> pwd_context.hash(password)
+
+<span class="kw">def</span> <span class="fn">verify_password</span>(plain: <span class="tp">str</span>, hashed: <span class="tp">str</span>) -> <span class="tp">bool</span>:
+    <span class="kw">return</span> pwd_context.verify(plain, hashed)
+
+<span class="kw">def</span> <span class="fn">create_access_token</span>(data: <span class="tp">dict</span>) -> <span class="tp">str</span>:
+    payload = data.copy()
+    payload[<span class="st">"exp"</span>] = datetime.utcnow() + timedelta(minutes=TOKEN_EXP)
+    <span class="kw">return</span> jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Login Endpoint &amp; Token Response</div>
+              <div class="step-desc">OAuth2PasswordRequestForm is a built-in FastAPI form that accepts <code>username</code> and <code>password</code> — standard OAuth2 format.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">routers/auth.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter, Depends, HTTPException, status
+<span class="kw">from</span> fastapi.security <span class="kw">import</span> OAuth2PasswordRequestForm
+
+auth_router = APIRouter(tags=[<span class="st">"auth"</span>])
+
+<span class="dc">@auth_router.post(<span class="st">"/login"</span>)</span>
+<span class="kw">def</span> <span class="fn">login</span>(
+    form: OAuth2PasswordRequestForm = Depends(),
+    db:   Session                   = Depends(get_db)
+):
+    user = db.query(User).filter(User.email == form.username).first()
+    <span class="kw">if not</span> user <span class="kw">or not</span> verify_password(form.password, user.password):
+        <span class="kw">raise</span> HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=<span class="st">"Invalid credentials"</span>
+        )
+    token = create_access_token({<span class="st">"sub"</span>: str(user.id)})
+    <span class="kw">return</span> {<span class="st">"access_token"</span>: token, <span class="st">"token_type"</span>: <span class="st">"bearer"</span>}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Protected Routes with get_current_user</div>
+              <div class="step-desc">A single dependency that reads and validates the JWT from the Authorization header. Inject it into any route to protect it.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">dependencies.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi.security <span class="kw">import</span> OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="st">"login"</span>)
+
+<span class="kw">def</span> <span class="fn">get_current_user</span>(
+    token: <span class="tp">str</span>     = Depends(oauth2_scheme),
+    db:    Session = Depends(get_db)
+) -> User:
+    <span class="kw">try</span>:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = int(payload.get(<span class="st">"sub"</span>))
+    <span class="kw">except</span> (JWTError, ValueError):
+        <span class="kw">raise</span> HTTPException(status_code=<span class="nm">401</span>, detail=<span class="st">"Invalid token"</span>)
+    user = db.query(User).get(user_id)
+    <span class="kw">if not</span> user:
+        <span class="kw">raise</span> HTTPException(status_code=<span class="nm">401</span>, detail=<span class="st">"User not found"</span>)
+    <span class="kw">return</span> user
+
+<span class="cm"># Protect any route with one line:</span>
+<span class="dc">@app.get(<span class="st">"/me"</span>, response_model=<span class="tp">UserRead</span>)</span>
+<span class="kw">def</span> <span class="fn">get_me</span>(current_user: <span class="tp">User</span> = Depends(get_current_user)):
+    <span class="kw">return</span> current_user</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ DATABASE ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-db">
+        <div class="pane-title">Database with SQLAlchemy</div>
+        <div class="pane-sub">FastAPI works with any database. SQLAlchemy is the standard choice. Define models in <code>models.py</code>, Pydantic schemas in <code>schemas.py</code>, and keep them separate — a key FastAPI pattern.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Database Setup</div>
+              <div class="step-desc">Create the engine, session factory, and declarative base. All models inherit from <code>Base</code>.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">database.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> sqlalchemy <span class="kw">import</span> create_engine
+<span class="kw">from</span> sqlalchemy.ext.declarative <span class="kw">import</span> declarative_base
+<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> sessionmaker
+<span class="kw">import</span> os
+
+DATABASE_URL = os.environ.get(<span class="st">"DATABASE_URL"</span>, <span class="st">"sqlite:///./dev.db"</span>)
+
+engine       = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=<span class="nm">False</span>, autoflush=<span class="nm">False</span>, bind=engine)
+Base         = declarative_base()
+
+<span class="cm"># Create all tables (use Alembic for production migrations)</span>
+<span class="cm"># Base.metadata.create_all(bind=engine)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">SQLAlchemy Models vs Pydantic Schemas</div>
+              <div class="step-desc">Keep these separate. SQLAlchemy models talk to the DB. Pydantic schemas validate API input/output. Use <code>from_attributes = True</code> to convert between them.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">models.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> sqlalchemy <span class="kw">import</span> Column, Integer, String, DateTime, ForeignKey
+<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> relationship
+<span class="kw">from</span> database <span class="kw">import</span> Base
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+<span class="kw">class</span> <span class="fn">User</span>(Base):
+    __tablename__ = <span class="st">"users"</span>
+    id       = Column(Integer, primary_key=<span class="nm">True</span>, index=<span class="nm">True</span>)
+    email    = Column(String, unique=<span class="nm">True</span>, nullable=<span class="nm">False</span>)
+    password = Column(String, nullable=<span class="nm">False</span>)
+    created  = Column(DateTime, default=datetime.utcnow)
+    posts    = relationship(<span class="st">"Post"</span>, back_populates=<span class="st">"author"</span>)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">CRUD in Routes</div>
+              <div class="step-desc">Combine the DB session dependency with Pydantic schemas for clean, type-safe database routes.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">routers/users.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter, Depends, HTTPException
+<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> Session
+
+router = APIRouter(prefix=<span class="st">"/users"</span>, tags=[<span class="st">"users"</span>])
+
+<span class="dc">@router.get(<span class="st">"/"</span>, response_model=list[<span class="tp">UserRead</span>])</span>
+<span class="kw">def</span> <span class="fn">list_users</span>(skip: <span class="tp">int</span> = <span class="nm">0</span>, limit: <span class="tp">int</span> = <span class="nm">20</span>, db: Session = Depends(get_db)):
+    <span class="kw">return</span> db.query(User).offset(skip).limit(limit).all()
+
+<span class="dc">@router.post(<span class="st">"/"</span>, response_model=<span class="tp">UserRead</span>, status_code=<span class="nm">201</span>)</span>
+<span class="kw">def</span> <span class="fn">create_user</span>(user: <span class="tp">UserCreate</span>, db: Session = Depends(get_db)):
+    <span class="kw">if</span> db.query(User).filter(User.email == user.email).first():
+        <span class="kw">raise</span> HTTPException(<span class="nm">400</span>, <span class="st">"Email already registered"</span>)
+    db_user = User(email=user.email, password=hash_password(user.password))
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    <span class="kw">return</span> db_user</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════ AUTO DOCS ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-docs">
+        <div class="pane-title">Automatic Interactive API Documentation</div>
+        <div class="pane-sub">FastAPI generates full API documentation from your code — no YAML files, no separate doc writing. Every endpoint, parameter, schema, and response is documented automatically.</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Swagger UI at /docs</div>
+              <div class="step-desc">Interactive docs where you can test every endpoint directly in the browser — fill in parameters, send requests, see responses. Auto-generated from your route definitions.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Available automatically when server runs:</span>
+http://localhost:8000/docs        <span class="cm"># Swagger UI — interactive</span>
+http://localhost:8000/redoc       <span class="cm"># ReDoc — cleaner, good for sharing</span>
+http://localhost:8000/openapi.json <span class="cm"># Raw OpenAPI 3.0 schema</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Enriching the Docs</div>
+              <div class="step-desc">Add descriptions, examples, and metadata to your API, routes, and schemas — all appear in the generated docs.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># App-level metadata</span>
+app = FastAPI(
+    title=<span class="st">"My API"</span>,
+    description=<span class="st">"A full-featured API built with FastAPI"</span>,
+    version=<span class="st">"1.0.0"</span>,
+    contact={<span class="st">"name"</span>: <span class="st">"Omer"</span>, <span class="st">"email"</span>: <span class="st">"omer@example.com"</span>},
+)
+
+<span class="cm"># Route-level metadata</span>
+<span class="dc">@app.get(<span class="st">"/items/{item_id}"</span>,
+         summary=<span class="st">"Get item by ID"</span>,
+         description=<span class="st">"Returns a single item. Raises 404 if not found."</span>,
+         response_description=<span class="st">"The item object"</span>,
+         tags=[<span class="st">"items"</span>])</span>
+<span class="kw">def</span> <span class="fn">get_item</span>(item_id: <span class="tp">int</span>):
+    ...
+
+<span class="cm"># Schema-level examples</span>
+<span class="kw">class</span> <span class="fn">Item</span>(BaseModel):
+    name:  <span class="tp">str</span>   = Field(example=<span class="st">"Laptop"</span>)
+    price: <span class="tp">float</span> = Field(example=<span class="nm">999.99</span>)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Disable Docs in Production (Optional)</div>
+              <div class="step-desc">You may want to disable public docs in production for security or to avoid exposing your API structure.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">import</span> os
+
+<span class="cm"># Disable docs in production, keep in development</span>
+app = FastAPI(
+    docs_url=<span class="st">"/docs"</span>   <span class="kw">if</span> os.getenv(<span class="st">"ENV"</span>) != <span class="st">"production"</span> <span class="kw">else</span> <span class="nm">None</span>,
+    redoc_url=<span class="st">"/redoc"</span> <span class="kw">if</span> os.getenv(<span class="st">"ENV"</span>) != <span class="st">"production"</span> <span class="kw">else</span> <span class="nm">None</span>,
+)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-cyan">
+          <span class="callout-icon">🚀</span>
+          <span>The OpenAPI schema at <code>/openapi.json</code> can be fed into tools like <strong>openapi-generator</strong> to auto-generate TypeScript, Kotlin, or Swift client SDKs — zero manual API client code.</span>
+        </div>
+      </div>
+
+      <!-- ══════ CHEATSHEET ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-cheatsheet">
+        <div class="pane-title">FastAPI Quick-Reference Cheatsheet</div>
+        <div class="pane-sub">Essential imports, patterns, and CLI commands in one place.</div>
+
+        <div class="code-block" style="margin-bottom:24px;">
+          <div class="code-header"><span class="code-lang">python — essential imports</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> fastapi <span class="kw">import</span> (
+    FastAPI, APIRouter, Depends, HTTPException, status,
+    Path, Query, Body, Header, BackgroundTasks
+)
+<span class="kw">from</span> fastapi.security <span class="kw">import</span> OAuth2PasswordBearer, OAuth2PasswordRequestForm
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel, Field, EmailStr, field_validator
+<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> Session
+<span class="kw">from</span> typing <span class="kw">import</span> Optional, Annotated
+<span class="kw">from</span> jose <span class="kw">import</span> jwt, JWTError
+<span class="kw">from</span> passlib.context <span class="kw">import</span> CryptContext</div>
+        </div>
+
+        <table class="cmd-table">
+          <thead>
+            <tr><th>Pattern / Command</th><th>What It Does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code class="cmd-code">FastAPI(title, version)</code></td><td class="cmd-desc">Create the app instance with metadata</td></tr>
+            <tr><td><code class="cmd-code">@app.get / post / put / delete / patch</code></td><td class="cmd-desc">Register an HTTP route</td></tr>
+            <tr><td><code class="cmd-code">response_model=Schema</code></td><td class="cmd-desc">Filter and validate the response shape</td></tr>
+            <tr><td><code class="cmd-code">status_code=201</code></td><td class="cmd-desc">Set custom HTTP status on success</td></tr>
+            <tr><td><code class="cmd-code">Depends(func)</code></td><td class="cmd-desc">Inject a dependency into a route</td></tr>
+            <tr><td><code class="cmd-code">HTTPException(status_code, detail)</code></td><td class="cmd-desc">Return an HTTP error response</td></tr>
+            <tr><td><code class="cmd-code">Path(gt=0)</code></td><td class="cmd-desc">Add constraints to a path parameter</td></tr>
+            <tr><td><code class="cmd-code">Query(None, min_length=3)</code></td><td class="cmd-desc">Add constraints to a query parameter</td></tr>
+            <tr><td><code class="cmd-code">Field(min_length=1, example="x")</code></td><td class="cmd-desc">Add constraints and docs to a Pydantic field</td></tr>
+            <tr><td><code class="cmd-code">app.include_router(router, prefix="/v1")</code></td><td class="cmd-desc">Mount an APIRouter into the app</td></tr>
+            <tr><td><code class="cmd-code">uvicorn main:app --reload</code></td><td class="cmd-desc">Start dev server with auto-reload</td></tr>
+            <tr><td><code class="cmd-code">uvicorn main:app --workers 4</code></td><td class="cmd-desc">Start production server with 4 workers</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══════ QUIZ ══════ -->
+      <div class="tab-pane pane-wrap" id="tab-quiz">
+        <div class="pane-title">Test Your FastAPI Knowledge</div>
+        <div class="pane-sub">5 questions covering the key concepts — type hints, Pydantic, async, DI, and auto docs.</div>
+
+        <div id="quizContainer">
+
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="quiz-q-num">1</span>If you declare a route parameter as <code>item_id: int</code> but the client sends <code>/items/abc</code>, what does FastAPI return?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this,'a')"><span class="opt-letter">A</span>500 Internal Server Error</button>
+              <button class="quiz-opt" onclick="answerQ(this,'b')"><span class="opt-letter">B</span>404 Not Found</button>
+              <button class="quiz-opt" onclick="answerQ(this,'c')"><span class="opt-letter">C</span>422 Unprocessable Entity with a validation error message</button>
+              <button class="quiz-opt" onclick="answerQ(this,'d')"><span class="opt-letter">D</span>200 OK with <code>item_id: null</code></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="quiz-q-num">2</span>What is the purpose of <code>response_model=UserRead</code> on a route that returns a SQLAlchemy User object?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this,'a')"><span class="opt-letter">A</span>It validates the incoming request body against UserRead</button>
+              <button class="quiz-opt" onclick="answerQ(this,'b')"><span class="opt-letter">B</span>It filters the response to only include fields defined in UserRead — hiding the password</button>
+              <button class="quiz-opt" onclick="answerQ(this,'c')"><span class="opt-letter">C</span>It converts the SQLAlchemy model into a database query</button>
+              <button class="quiz-opt" onclick="answerQ(this,'d')"><span class="opt-letter">D</span>It generates the URL for the UserRead endpoint</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="a">
+            <div class="quiz-q"><span class="quiz-q-num">3</span>Which ASGI server is the standard choice for running FastAPI in production?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this,'a')"><span class="opt-letter">A</span>Uvicorn</button>
+              <button class="quiz-opt" onclick="answerQ(this,'b')"><span class="opt-letter">B</span>Gunicorn (WSGI)</button>
+              <button class="quiz-opt" onclick="answerQ(this,'c')"><span class="opt-letter">C</span>Apache</button>
+              <button class="quiz-opt" onclick="answerQ(this,'d')"><span class="opt-letter">D</span>Flask's built-in server</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="d">
+            <div class="quiz-q"><span class="quiz-q-num">4</span>In the <code>get_db()</code> dependency, why does it use <code>yield</code> instead of <code>return</code>?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this,'a')"><span class="opt-letter">A</span>yield is faster than return for database operations</button>
+              <button class="quiz-opt" onclick="answerQ(this,'b')"><span class="opt-letter">B</span>FastAPI requires all dependencies to use yield</button>
+              <button class="quiz-opt" onclick="answerQ(this,'c')"><span class="opt-letter">C</span>yield signals that the function is asynchronous</button>
+              <button class="quiz-opt" onclick="answerQ(this,'d')"><span class="opt-letter">D</span>It runs the <code>finally</code> block after the route finishes — guaranteeing the session is closed</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="quiz-q-num">5</span>Where does FastAPI automatically generate interactive API documentation?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this,'a')"><span class="opt-letter">A</span>You must install <code>fastapi-docs</code> and configure it manually</button>
+              <button class="quiz-opt" onclick="answerQ(this,'b')"><span class="opt-letter">B</span>At <code>/swagger</code> only</button>
+              <button class="quiz-opt" onclick="answerQ(this,'c')"><span class="opt-letter">C</span>At <code>/docs</code> (Swagger UI) and <code>/redoc</code> (ReDoc) — automatically, zero config</button>
+              <button class="quiz-opt" onclick="answerQ(this,'d')"><span class="opt-letter">D</span>Only in development mode with <code>--docs</code> flag</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+        </div>
+
+        <div class="quiz-score" id="quizScore">
+          <div class="score-val" id="scoreVal">—</div>
+          <div class="score-lbl" id="scoreLbl">Keep practicing!</div>
+          <button class="quiz-reset" onclick="resetQuiz()">Try Again</button>
+        </div>
+      </div>
+
+      <!-- PAGE NAV -->
+      <div class="page-nav">
+        <a class="nav-link" href="flask.html">← Flask</a>
+        <a class="nav-link" href="./">Backend Home →</a>
+      </div>
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top">↑</button>
+
+<script src="../assets/js/utils.js"></script>
+<script>
+/* ── TABS ──────────────────────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+    this.classList.add('active');
+    document.getElementById(this.dataset.tab).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.sb-link[href^="#tab-"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var id  = this.getAttribute('href').slice(1);
+    var btn = document.querySelector('[data-tab="' + id + '"]');
+    if (btn) { btn.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+});
+
+/* ── COPY BUTTONS ──────────────────────────────────── */
+function copyCode(btn) {
+  var body = btn.closest('.code-block').querySelector('.code-body');
+  navigator.clipboard.writeText(body.innerText).then(function() {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+/* ── QUIZ ──────────────────────────────────────────── */
+var answered = 0, score = 0;
+var total = document.querySelectorAll('.quiz-item').length;
+
+function answerQ(optBtn, chosen) {
+  var item = optBtn.closest('.quiz-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = '1';
+
+  var correct = item.dataset.correct;
+  var fb = item.querySelector('.quiz-feedback');
+  item.querySelectorAll('.quiz-opt').forEach(function(o){ o.disabled = true; });
+  optBtn.classList.add(chosen === correct ? 'correct' : 'wrong');
+
+  if (chosen === correct) {
+    fb.textContent = '✓ Correct!';
+    fb.className = 'quiz-feedback fb-correct';
+    score++;
+  } else {
+    fb.className = 'quiz-feedback fb-wrong';
+    fb.textContent = '✗ Not quite. The correct answer is ' + correct.toUpperCase() + '.';
+    var correctBtn = item.querySelector('[onclick*="answerQ(this,\'' + correct + '\')"]');
+    if (correctBtn) correctBtn.classList.add('correct');
+  }
+  answered++;
+  if (answered === total) showScore();
+}
+
+function showScore() {
+  var el  = document.getElementById('quizScore');
+  var val = document.getElementById('scoreVal');
+  var lbl = document.getElementById('scoreLbl');
+  val.textContent = score + ' / ' + total;
+  var p = (score / total) * 100;
+  lbl.textContent = p >= 80 ? '🎉 Excellent! You know your FastAPI.' : p >= 60 ? '👍 Good — review the tricky parts.' : '📖 Keep studying — you\'ll get there!';
+  el.classList.add('show');
+}
+
+function resetQuiz() {
+  answered = 0; score = 0;
+  document.getElementById('quizScore').classList.remove('show');
+  document.querySelectorAll('.quiz-item').forEach(function(item) {
+    delete item.dataset.answered;
+    item.querySelector('.quiz-feedback').className = 'quiz-feedback';
+    item.querySelector('.quiz-feedback').textContent = '';
+    item.querySelectorAll('.quiz-opt').forEach(function(o){
+      o.disabled = false; o.classList.remove('correct','wrong');
+    });
+  });
+}
+
+/* ── PROGRESS + BACK TO TOP ────────────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  var fill  = document.getElementById('progressFill');
+  var toTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function() {
+    var s = document.body.scrollTop || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (fill)  fill.style.width = (h > 0 ? (s/h)*100 : 0) + '%';
+    if (toTop) toTop.classList.toggle('visible', s > 400);
+  }, { passive: true });
+  if (toTop) toTop.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
+});
+
+/* Scroll animations */
+const _ao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_ao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_ao.observe(el);});
+</script>
+</body>
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>DS & AI Cheat Sheet — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=3">
+    <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+  <style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim); }
+  </style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link current" href="aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu">⋮</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections&#x2026;" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">AI / ML Modules</div>
+      <a class="sb-link" href="aiml-explained.html">Overview</a>
+      <a class="sb-link" href="ml.html">Machine Learning</a>
+      <a class="sb-link" href="dl.html">Deep Learning</a>
+      <a class="sb-link" href="nlp.html">Natural Language Processing</a>
+      <a class="sb-link" href="cv.html">Computer Vision</a>
+      <a class="sb-link" href="rl.html">Reinforcement Learning</a>
+      <a class="sb-link" href="genai.html">Generative AI</a>
+      <a class="sb-link active" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    </nav>
+</aside>
+
+  <main class="main" id="mainContent">
+  <div class="page">
+
+    <div class="pg-head">
+      <div class="pg-head-glow"></div>
+      <div class="pg-crumb"><a href="aiml-explained.html">AI / ML</a><span class="pg-crumb-sep">›</span>DS &amp; AI Cheat Sheet</div>
+      <div class="pg-title">Data Science &amp; AI Cheat Sheet</div>
+      <div class="pg-sub">Every function, method, and syntax you need — Pandas, NumPy, SQL, Excel, Matplotlib, Scikit-Learn, PyTorch, and LangGraph. All in one searchable reference.</div>
+      <div class="pg-badges">
+        <span class="badge b-cyan">8 Libraries</span>
+        <span class="badge b-purple">400+ Functions</span>
+        <span class="badge b-green">Live Search</span>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="cs-search-wrap">
+      <span class="cs-search-icon">🔍</span>
+      <input class="cs-search" id="csSearch" type="text" placeholder="Search any function, method, or keyword… e.g. groupby, INNER JOIN, backward, ToolNode">
+    </div>
+    <div class="cs-count" id="csCount"></div>
+
+    <!-- QUICK NAV -->
+    <div class="quick-nav">
+      <a class="qn-btn qn-pandas"  href="#pandas">🐼 Pandas</a>
+      <a class="qn-btn qn-numpy"   href="#numpy">🔢 NumPy</a>
+      <a class="qn-btn qn-sql"     href="#sql">🗄️ SQL</a>
+      <a class="qn-btn qn-excel"   href="#excel">📊 Excel</a>
+      <a class="qn-btn qn-mpl"     href="#matplotlib">📈 Matplotlib</a>
+      <a class="qn-btn qn-sklearn" href="#sklearn">🤖 Scikit-Learn</a>
+      <a class="qn-btn qn-torch"   href="#pytorch">🔥 PyTorch</a>
+      <a class="qn-btn qn-lg"      href="#langgraph">🦜 LangGraph</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         🐼 PANDAS
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="pandas">
+      <div class="cs-section-header sh-pandas">
+        <span class="cs-icon">🐼</span>
+        <div><div class="cs-title">Pandas</div><div class="cs-subtitle">DataFrame manipulation, cleaning, aggregation, and I/O</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">I/O — Reading &amp; Writing</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>pd.read_csv()</td><td>Read CSV file into DataFrame</td><td>df = pd.read_csv('data.csv')</td></tr>
+              <tr><td>pd.read_excel()</td><td>Read Excel file into DataFrame</td><td>df = pd.read_excel('data.xlsx')</td></tr>
+              <tr><td>pd.read_json()</td><td>Read JSON into DataFrame</td><td>df = pd.read_json('data.json')</td></tr>
+              <tr><td>pd.read_sql()</td><td>Read SQL query into DataFrame</td><td>df = pd.read_sql(query, conn)</td></tr>
+              <tr><td>pd.read_parquet()</td><td>Read Parquet file</td><td>df = pd.read_parquet('data.parquet')</td></tr>
+              <tr><td>df.to_csv()</td><td>Write DataFrame to CSV</td><td>df.to_csv('out.csv', index=False)</td></tr>
+              <tr><td>df.to_excel()</td><td>Write DataFrame to Excel</td><td>df.to_excel('out.xlsx')</td></tr>
+              <tr><td>df.to_parquet()</td><td>Write DataFrame to Parquet</td><td>df.to_parquet('out.parquet')</td></tr>
+              <tr><td>df.to_dict()</td><td>Convert DataFrame to dict</td><td>d = df.to_dict(orient='records')</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Inspection &amp; Exploration</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>df.head(n)</td><td>First n rows (default 5)</td><td>df.head(10)</td></tr>
+              <tr><td>df.tail(n)</td><td>Last n rows</td><td>df.tail(5)</td></tr>
+              <tr><td>df.info()</td><td>Column types, nulls, memory</td><td>df.info()</td></tr>
+              <tr><td>df.describe()</td><td>Summary stats (count, mean…)</td><td>df.describe(include='all')</td></tr>
+              <tr><td>df.shape</td><td>Tuple of (rows, columns)</td><td>rows, cols = df.shape</td></tr>
+              <tr><td>df.dtypes</td><td>Data type of each column</td><td>df.dtypes</td></tr>
+              <tr><td>df.columns</td><td>List of column names</td><td>list(df.columns)</td></tr>
+              <tr><td>df.nunique()</td><td>Count of unique values per col</td><td>df.nunique()</td></tr>
+              <tr><td>df.value_counts()</td><td>Frequency count</td><td>df['city'].value_counts(normalize=True)</td></tr>
+              <tr><td>df.memory_usage()</td><td>Memory used per column</td><td>df.memory_usage(deep=True)</td></tr>
+              <tr><td>df.sample(n)</td><td>Random sample of n rows</td><td>df.sample(5, random_state=42)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Selection &amp; Filtering</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>df['col']</td><td>Select single column (Series)</td><td>df['age']</td></tr>
+              <tr><td>df[['a','b']]</td><td>Select multiple columns</td><td>df[['name', 'age']]</td></tr>
+              <tr><td>df.loc[row, col]</td><td>Label-based indexing</td><td>df.loc[0:5, 'age']</td></tr>
+              <tr><td>df.iloc[row, col]</td><td>Integer-based indexing</td><td>df.iloc[0:5, 1:3]</td></tr>
+              <tr><td>df.at[row, col]</td><td>Single value by label</td><td>df.at[0, 'name']</td></tr>
+              <tr><td>df.iat[row, col]</td><td>Single value by position</td><td>df.iat[0, 1]</td></tr>
+              <tr><td>df.query(expr)</td><td>Filter using string expression</td><td>df.query('age > 30 &amp; city=="NY"')</td></tr>
+              <tr><td>df[df.col > val]</td><td>Boolean mask filter</td><td>df[df['age'] > 30]</td></tr>
+              <tr><td>df.where(cond)</td><td>Keep values where True, else NaN</td><td>df.where(df > 0)</td></tr>
+              <tr><td>df.filter()</td><td>Filter by column/row labels</td><td>df.filter(like='price')</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Cleaning &amp; Transformation</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>df.isnull()</td><td>Boolean mask of null values</td><td>df.isnull().sum()</td></tr>
+              <tr><td>df.dropna()</td><td>Drop rows with any null</td><td>df.dropna(subset=['age'])</td></tr>
+              <tr><td>df.fillna(val)</td><td>Fill nulls with value/method</td><td>df.fillna({'age': 0, 'name': 'N/A'})</td></tr>
+              <tr><td>df.interpolate()</td><td>Interpolate missing numeric vals</td><td>df['price'].interpolate()</td></tr>
+              <tr><td>df.duplicated()</td><td>Boolean mask of duplicate rows</td><td>df.duplicated(subset=['id'])</td></tr>
+              <tr><td>df.drop_duplicates()</td><td>Remove duplicate rows</td><td>df.drop_duplicates(keep='first')</td></tr>
+              <tr><td>df.rename()</td><td>Rename columns/index</td><td>df.rename(columns={'old':'new'})</td></tr>
+              <tr><td>df.astype()</td><td>Cast column to new type</td><td>df['age'].astype(int)</td></tr>
+              <tr><td>df.replace()</td><td>Replace values</td><td>df.replace({'Y':1, 'N':0})</td></tr>
+              <tr><td>df.clip()</td><td>Clip values to min/max</td><td>df['score'].clip(0, 100)</td></tr>
+              <tr><td>df.drop()</td><td>Drop rows or columns</td><td>df.drop(columns=['col1','col2'])</td></tr>
+              <tr><td>df.reset_index()</td><td>Reset row index</td><td>df.reset_index(drop=True)</td></tr>
+              <tr><td>df.set_index()</td><td>Set a column as index</td><td>df.set_index('id')</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Aggregation, Merging &amp; Reshaping</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>df.sort_values()</td><td>Sort by column values</td><td>df.sort_values('age', ascending=False)</td></tr>
+              <tr><td>df.groupby()</td><td>Group rows &amp; aggregate</td><td>df.groupby('city')['salary'].mean()</td></tr>
+              <tr><td>df.agg()</td><td>Apply multiple aggregations</td><td>df.groupby('dept').agg({'sal':['mean','max']})</td></tr>
+              <tr><td>df.pivot_table()</td><td>Create a pivot table</td><td>pd.pivot_table(df, values='sal', index='dept')</td></tr>
+              <tr><td>df.melt()</td><td>Wide to long format</td><td>df.melt(id_vars=['id'], value_vars=['q1','q2'])</td></tr>
+              <tr><td>df.pivot()</td><td>Long to wide format</td><td>df.pivot(index='date', columns='item', values='val')</td></tr>
+              <tr><td>df.apply()</td><td>Apply function along axis</td><td>df['bmi'].apply(lambda x: 'high' if x&gt;25 else 'ok')</td></tr>
+              <tr><td>df.map()</td><td>Map values via dict/function</td><td>df['grade'].map({'A':4,'B':3,'C':2})</td></tr>
+              <tr><td>df.transform()</td><td>Transform keeping shape</td><td>df.groupby('dept')['sal'].transform('mean')</td></tr>
+              <tr><td>df.merge()</td><td>SQL-style join two DataFrames</td><td>pd.merge(df1, df2, on='id', how='left')</td></tr>
+              <tr><td>pd.concat()</td><td>Stack DataFrames row/colwise</td><td>pd.concat([df1, df2], ignore_index=True)</td></tr>
+              <tr><td>df.assign()</td><td>Add/overwrite columns fluently</td><td>df.assign(full_name=df.first+' '+df.last)</td></tr>
+              <tr><td>df.eval()</td><td>Evaluate expression string</td><td>df.eval('profit = revenue - cost')</td></tr>
+              <tr><td>df.explode()</td><td>Explode list column to rows</td><td>df.explode('tags')</td></tr>
+              <tr><td>df.value_counts()</td><td>Frequency count</td><td>df['city'].value_counts(normalize=True)</td></tr>
+              <tr><td>pd.cut()</td><td>Bin continuous data</td><td>pd.cut(df['age'], bins=[0,18,65,100])</td></tr>
+              <tr><td>pd.get_dummies()</td><td>One-hot encode categoricals</td><td>pd.get_dummies(df['color'])</td></tr>
+              <tr><td>df.crosstab()</td><td>Cross-tabulation of two cols</td><td>pd.crosstab(df['dept'], df['gender'])</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">String Methods (df.str.*)</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>df.str.lower()</td><td>Lowercase all strings</td><td>df['name'].str.lower()</td></tr>
+              <tr><td>df.str.upper()</td><td>Uppercase all strings</td><td>df['name'].str.upper()</td></tr>
+              <tr><td>df.str.strip()</td><td>Strip whitespace</td><td>df['name'].str.strip()</td></tr>
+              <tr><td>df.str.contains()</td><td>Check if string contains pattern</td><td>df['email'].str.contains('@gmail')</td></tr>
+              <tr><td>df.str.replace()</td><td>Replace substring</td><td>df['text'].str.replace('old','new')</td></tr>
+              <tr><td>df.str.split()</td><td>Split string to list</td><td>df['full_name'].str.split(' ', expand=True)</td></tr>
+              <tr><td>df.str.len()</td><td>Length of each string</td><td>df['name'].str.len()</td></tr>
+              <tr><td>df.str.extract()</td><td>Extract regex groups</td><td>df['phone'].str.extract(r'(\d{3})')</td></tr>
+              <tr><td>df.str.startswith()</td><td>Check prefix</td><td>df['col'].str.startswith('pre')</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">DateTime Methods (df.dt.*)</div>
+        <div class="cs-table-wrap">
+          <table class="cs-table t-pandas">
+            <thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>pd.to_datetime()</td><td>Parse string to datetime</td><td>pd.to_datetime(df['date'])</td></tr>
+              <tr><td>dt.year / .month / .day</td><td>Extract date components</td><td>df['date'].dt.year</td></tr>
+              <tr><td>dt.dayofweek</td><td>Day of week (0=Mon)</td><td>df['date'].dt.dayofweek</td></tr>
+              <tr><td>dt.hour / .minute</td><td>Extract time components</td><td>df['ts'].dt.hour</td></tr>
+              <tr><td>df.resample()</td><td>Resample time series</td><td>df.resample('M').mean()</td></tr>
+              <tr><td>df.shift()</td><td>Shift values by periods</td><td>df['price'].shift(1)</td></tr>
+              <tr><td>df.diff()</td><td>Difference between rows</td><td>df['price'].diff()</td></tr>
+              <tr><td>df.rolling(n)</td><td>Rolling window calculation</td><td>df['price'].rolling(7).mean()</td></tr>
+              <tr><td>df.expanding()</td><td>Expanding window</td><td>df['price'].expanding().mean()</td></tr>
+              <tr><td>df.ewm()</td><td>Exponentially weighted mean</td><td>df['price'].ewm(span=7).mean()</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /pandas -->
+
+    <!-- ═══════════════════════════════════════════
+         🔢 NUMPY
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="numpy">
+      <div class="cs-section-header sh-numpy">
+        <span class="cs-icon">🔢</span>
+        <div><div class="cs-title">NumPy</div><div class="cs-subtitle">Array creation, manipulation, math, and linear algebra</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Array Creation</div>
+        <div class="cs-table-wrap"><table class="cs-table t-numpy"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>np.array()</td><td>Create array from list/tuple</td><td>np.array([[1,2],[3,4]])</td></tr>
+          <tr><td>np.zeros(shape)</td><td>Array of zeros</td><td>np.zeros((3, 4))</td></tr>
+          <tr><td>np.ones(shape)</td><td>Array of ones</td><td>np.ones((3, 4), dtype=float)</td></tr>
+          <tr><td>np.full(shape, val)</td><td>Fill array with value</td><td>np.full((2,3), 7)</td></tr>
+          <tr><td>np.eye(n)</td><td>Identity matrix</td><td>np.eye(4)</td></tr>
+          <tr><td>np.arange()</td><td>Evenly spaced int range</td><td>np.arange(0, 10, 2)</td></tr>
+          <tr><td>np.linspace()</td><td>Evenly spaced floats</td><td>np.linspace(0, 1, 100)</td></tr>
+          <tr><td>np.random.rand()</td><td>Uniform random [0, 1)</td><td>np.random.rand(3, 4)</td></tr>
+          <tr><td>np.random.randn()</td><td>Standard normal random</td><td>np.random.randn(100)</td></tr>
+          <tr><td>np.random.randint()</td><td>Random integers</td><td>np.random.randint(0, 10, size=(3,3))</td></tr>
+          <tr><td>np.random.seed()</td><td>Set random seed</td><td>np.random.seed(42)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Shape &amp; Manipulation</div>
+        <div class="cs-table-wrap"><table class="cs-table t-numpy"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>arr.reshape()</td><td>Reshape without copying</td><td>arr.reshape(20, 20)</td></tr>
+          <tr><td>arr.ravel()</td><td>Flatten to 1D (view)</td><td>arr.ravel()</td></tr>
+          <tr><td>arr.flatten()</td><td>Flatten to 1D (copy)</td><td>arr.flatten()</td></tr>
+          <tr><td>arr.T / arr.transpose()</td><td>Transpose axes</td><td>arr.T</td></tr>
+          <tr><td>np.expand_dims()</td><td>Add new axis</td><td>np.expand_dims(arr, axis=0)</td></tr>
+          <tr><td>np.squeeze()</td><td>Remove size-1 axes</td><td>np.squeeze(arr)</td></tr>
+          <tr><td>np.concatenate()</td><td>Join arrays along axis</td><td>np.concatenate([a, b], axis=0)</td></tr>
+          <tr><td>np.stack()</td><td>Stack along new axis</td><td>np.stack([a, b], axis=1)</td></tr>
+          <tr><td>np.hstack()</td><td>Stack horizontally</td><td>np.hstack([a, b])</td></tr>
+          <tr><td>np.vstack()</td><td>Stack vertically</td><td>np.vstack([a, b])</td></tr>
+          <tr><td>np.split()</td><td>Split array</td><td>np.split(arr, 3)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Math &amp; Statistics</div>
+        <div class="cs-table-wrap"><table class="cs-table t-numpy"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>np.sum()</td><td>Sum all or along axis</td><td>np.sum(arr, axis=0)</td></tr>
+          <tr><td>np.mean()</td><td>Mean</td><td>np.mean(arr, axis=1)</td></tr>
+          <tr><td>np.median()</td><td>Median</td><td>np.median(arr)</td></tr>
+          <tr><td>np.std()</td><td>Standard deviation</td><td>np.std(arr, ddof=1)</td></tr>
+          <tr><td>np.min() / np.max()</td><td>Min / Max value</td><td>arr.min(axis=0)</td></tr>
+          <tr><td>np.argmin() / argmax()</td><td>Index of min / max</td><td>np.argmin(arr)</td></tr>
+          <tr><td>np.cumsum()</td><td>Cumulative sum</td><td>np.cumsum(arr)</td></tr>
+          <tr><td>np.abs()</td><td>Absolute value</td><td>np.abs(arr)</td></tr>
+          <tr><td>np.sqrt()</td><td>Square root</td><td>np.sqrt(arr)</td></tr>
+          <tr><td>np.exp()</td><td>Exponential (e^x)</td><td>np.exp(arr)</td></tr>
+          <tr><td>np.log()</td><td>Natural log</td><td>np.log(arr)</td></tr>
+          <tr><td>np.dot()</td><td>Dot product / matrix mul</td><td>np.dot(A, B)</td></tr>
+          <tr><td>np.matmul() / @</td><td>Matrix multiplication</td><td>A @ B</td></tr>
+          <tr><td>np.where()</td><td>Conditional select</td><td>np.where(arr > 0, arr, 0)</td></tr>
+          <tr><td>np.unique()</td><td>Unique values + counts</td><td>np.unique(arr, return_counts=True)</td></tr>
+          <tr><td>np.sort()</td><td>Sort array</td><td>np.sort(arr, axis=0)</td></tr>
+          <tr><td>np.percentile()</td><td>Percentile value</td><td>np.percentile(arr, 75)</td></tr>
+          <tr><td>np.corrcoef()</td><td>Correlation matrix</td><td>np.corrcoef(x, y)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Linear Algebra</div>
+        <div class="cs-table-wrap"><table class="cs-table t-numpy"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>np.linalg.inv()</td><td>Matrix inverse</td><td>np.linalg.inv(A)</td></tr>
+          <tr><td>np.linalg.det()</td><td>Determinant</td><td>np.linalg.det(A)</td></tr>
+          <tr><td>np.linalg.eig()</td><td>Eigenvalues &amp; eigenvectors</td><td>vals, vecs = np.linalg.eig(A)</td></tr>
+          <tr><td>np.linalg.svd()</td><td>Singular Value Decomposition</td><td>U, S, V = np.linalg.svd(A)</td></tr>
+          <tr><td>np.linalg.norm()</td><td>Vector / matrix norm</td><td>np.linalg.norm(arr)</td></tr>
+          <tr><td>np.linalg.solve()</td><td>Solve linear system Ax=b</td><td>x = np.linalg.solve(A, b)</td></tr>
+          <tr><td>np.linalg.pinv()</td><td>Pseudo-inverse</td><td>np.linalg.pinv(A)</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /numpy -->
+
+    <!-- ═══════════════════════════════════════════
+         🗄️ SQL
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="sql">
+      <div class="cs-section-header sh-sql">
+        <span class="cs-icon">🗄️</span>
+        <div><div class="cs-title">SQL</div><div class="cs-subtitle">Querying, aggregation, joins, window functions, and CTEs</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Basic Querying</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sql"><thead><tr><th>Syntax</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>SELECT col1, col2</td><td>Choose columns to return</td><td>SELECT name, age FROM users</td></tr>
+          <tr><td>SELECT DISTINCT</td><td>Remove duplicates</td><td>SELECT DISTINCT city FROM customers</td></tr>
+          <tr><td>WHERE condition</td><td>Filter rows</td><td>WHERE salary > 50000 AND dept = 'Eng'</td></tr>
+          <tr><td>IN (list)</td><td>Match any value in list</td><td>WHERE country IN ('US','UK','CA')</td></tr>
+          <tr><td>BETWEEN a AND b</td><td>Range filter (inclusive)</td><td>WHERE date BETWEEN '2024-01-01' AND '2024-12-31'</td></tr>
+          <tr><td>LIKE pattern</td><td>Pattern matching</td><td>WHERE email LIKE '%@gmail.com'</td></tr>
+          <tr><td>IS NULL / IS NOT NULL</td><td>Null checks</td><td>WHERE phone IS NOT NULL</td></tr>
+          <tr><td>ORDER BY col</td><td>Sort results</td><td>ORDER BY salary DESC, name ASC</td></tr>
+          <tr><td>LIMIT n / OFFSET n</td><td>Limit + paginate results</td><td>LIMIT 10 OFFSET 20</td></tr>
+          <tr><td>AS alias</td><td>Rename column/table</td><td>SELECT salary * 1.1 AS adjusted_salary</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Aggregation &amp; Grouping</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sql"><thead><tr><th>Syntax</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>COUNT(*)</td><td>Count all rows</td><td>SELECT COUNT(*) FROM orders</td></tr>
+          <tr><td>SUM(col)</td><td>Sum of column</td><td>SELECT SUM(amount) FROM payments</td></tr>
+          <tr><td>AVG(col)</td><td>Average of column</td><td>SELECT AVG(score) FROM results</td></tr>
+          <tr><td>MIN(col) / MAX(col)</td><td>Min / Max value</td><td>SELECT MIN(price), MAX(price) FROM products</td></tr>
+          <tr><td>GROUP BY col</td><td>Group rows for aggregation</td><td>SELECT dept, AVG(salary) FROM emp GROUP BY dept</td></tr>
+          <tr><td>HAVING condition</td><td>Filter groups (after GROUP BY)</td><td>HAVING COUNT(*) > 5 AND AVG(sal) > 60000</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Joins &amp; Set Operations</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sql"><thead><tr><th>Syntax</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>INNER JOIN</td><td>Rows matching in both tables</td><td>FROM a INNER JOIN b ON a.id = b.id</td></tr>
+          <tr><td>LEFT JOIN</td><td>All left + matched right</td><td>FROM a LEFT JOIN b ON a.id = b.id</td></tr>
+          <tr><td>RIGHT JOIN</td><td>All right + matched left</td><td>FROM a RIGHT JOIN b ON a.id = b.id</td></tr>
+          <tr><td>FULL OUTER JOIN</td><td>All rows from both tables</td><td>FROM a FULL OUTER JOIN b ON a.id = b.id</td></tr>
+          <tr><td>SELF JOIN</td><td>Join table with itself</td><td>FROM emp e1 JOIN emp e2 ON e1.mgr_id = e2.id</td></tr>
+          <tr><td>UNION</td><td>Combine + deduplicate results</td><td>SELECT city FROM a UNION SELECT city FROM b</td></tr>
+          <tr><td>UNION ALL</td><td>Combine keeping duplicates</td><td>SELECT id FROM a UNION ALL SELECT id FROM b</td></tr>
+          <tr><td>INTERSECT</td><td>Rows in both result sets</td><td>SELECT id FROM a INTERSECT SELECT id FROM b</td></tr>
+          <tr><td>EXCEPT / MINUS</td><td>Rows in first but not second</td><td>SELECT id FROM a EXCEPT SELECT id FROM b</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Window Functions</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sql"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>ROW_NUMBER()</td><td>Sequential row number</td><td>ROW_NUMBER() OVER (PARTITION BY dept ORDER BY sal DESC)</td></tr>
+          <tr><td>RANK()</td><td>Rank with gaps for ties</td><td>RANK() OVER (ORDER BY score DESC)</td></tr>
+          <tr><td>DENSE_RANK()</td><td>Rank without gaps</td><td>DENSE_RANK() OVER (PARTITION BY dept ORDER BY sal)</td></tr>
+          <tr><td>NTILE(n)</td><td>Divide into n equal buckets</td><td>NTILE(4) OVER (ORDER BY salary)</td></tr>
+          <tr><td>LAG(col, n)</td><td>Value from n rows before</td><td>LAG(price, 1) OVER (ORDER BY date)</td></tr>
+          <tr><td>LEAD(col, n)</td><td>Value from n rows ahead</td><td>LEAD(price, 1) OVER (ORDER BY date)</td></tr>
+          <tr><td>FIRST_VALUE()</td><td>First value in window</td><td>FIRST_VALUE(price) OVER (PARTITION BY id ORDER BY date)</td></tr>
+          <tr><td>SUM() OVER ()</td><td>Running total</td><td>SUM(amount) OVER (ORDER BY date)</td></tr>
+          <tr><td>AVG() OVER ()</td><td>Moving average</td><td>AVG(price) OVER (ORDER BY date ROWS 6 PRECEDING)</td></tr>
+          <tr><td>PARTITION BY</td><td>Define window partitions</td><td>OVER (PARTITION BY dept ORDER BY salary)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Advanced — CTEs, Subqueries &amp; Functions</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sql"><thead><tr><th>Syntax</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>WITH cte AS (...)</td><td>Common Table Expression</td><td>WITH top AS (SELECT * FROM emp ORDER BY sal DESC LIMIT 10)</td></tr>
+          <tr><td>CASE WHEN</td><td>Conditional logic</td><td>CASE WHEN sal>100k THEN 'high' ELSE 'low' END</td></tr>
+          <tr><td>COALESCE(a, b)</td><td>First non-null value</td><td>COALESCE(phone, email, 'N/A')</td></tr>
+          <tr><td>NULLIF(a, b)</td><td>Return null if a equals b</td><td>NULLIF(score, 0)</td></tr>
+          <tr><td>CAST(col AS type)</td><td>Type conversion</td><td>CAST(price AS DECIMAL(10,2))</td></tr>
+          <tr><td>SUBSTRING()</td><td>Extract part of string</td><td>SUBSTRING(name, 1, 3)</td></tr>
+          <tr><td>CONCAT()</td><td>Join strings</td><td>CONCAT(first_name, ' ', last_name)</td></tr>
+          <tr><td>DATE_TRUNC()</td><td>Truncate date to unit</td><td>DATE_TRUNC('month', created_at)</td></tr>
+          <tr><td>EXTRACT()</td><td>Extract date part</td><td>EXTRACT(YEAR FROM order_date)</td></tr>
+          <tr><td>EXISTS</td><td>Check if subquery has rows</td><td>WHERE EXISTS (SELECT 1 FROM orders WHERE user_id=u.id)</td></tr>
+          <tr><td>EXPLAIN</td><td>Show query execution plan</td><td>EXPLAIN SELECT * FROM large_table WHERE id > 100</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /sql -->
+
+    <!-- ═══════════════════════════════════════════
+         📊 EXCEL
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="excel">
+      <div class="cs-section-header sh-excel">
+        <span class="cs-icon">📊</span>
+        <div><div class="cs-title">Excel</div><div class="cs-subtitle">Lookup, math, text, logic, date functions &amp; dynamic arrays</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Lookup &amp; Reference</div>
+        <div class="cs-table-wrap"><table class="cs-table t-excel"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>VLOOKUP(val,range,col,0)</td><td>Vertical exact match lookup</td><td>=VLOOKUP(A2,Sheet2!A:C,2,0)</td></tr>
+          <tr><td>XLOOKUP(val,arr,ret)</td><td>Modern flexible lookup</td><td>=XLOOKUP(A2,B:B,C:C,"Not Found")</td></tr>
+          <tr><td>INDEX(range,row,col)</td><td>Return value at position</td><td>=INDEX(A1:D10,3,2)</td></tr>
+          <tr><td>MATCH(val,range,0)</td><td>Position of value in range</td><td>=MATCH("Bob",A:A,0)</td></tr>
+          <tr><td>INDEX+MATCH</td><td>Two-way flexible lookup</td><td>=INDEX(C:C,MATCH(A2,B:B,0))</td></tr>
+          <tr><td>HLOOKUP(val,range,row)</td><td>Horizontal lookup</td><td>=HLOOKUP("Q1",A1:D5,3,0)</td></tr>
+          <tr><td>OFFSET(ref,rows,cols)</td><td>Dynamic cell reference</td><td>=OFFSET(A1,3,2)</td></tr>
+          <tr><td>INDIRECT(ref_text)</td><td>Reference from text string</td><td>=INDIRECT("Sheet2!A"&amp;B1)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Math &amp; Statistical</div>
+        <div class="cs-table-wrap"><table class="cs-table t-excel"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>SUM(range)</td><td>Sum values</td><td>=SUM(A1:A100)</td></tr>
+          <tr><td>SUMIF(range,crit,sum)</td><td>Sum with condition</td><td>=SUMIF(B:B,"NY",C:C)</td></tr>
+          <tr><td>SUMIFS()</td><td>Sum with multiple conditions</td><td>=SUMIFS(D:D,B:B,"NY",C:C,"&gt;1000")</td></tr>
+          <tr><td>AVERAGEIF()</td><td>Average with condition</td><td>=AVERAGEIF(A:A,"&gt;18",B:B)</td></tr>
+          <tr><td>COUNTIF(range,crit)</td><td>Count with condition</td><td>=COUNTIF(B:B,"NY")</td></tr>
+          <tr><td>COUNTIFS()</td><td>Count with multiple conditions</td><td>=COUNTIFS(A:A,"&gt;18",B:B,"NY")</td></tr>
+          <tr><td>LARGE(range, k)</td><td>k-th largest value</td><td>=LARGE(A1:A100,3)</td></tr>
+          <tr><td>RANK(val,range)</td><td>Rank of value in range</td><td>=RANK(A2,A:A,0)</td></tr>
+          <tr><td>ROUND(val, digits)</td><td>Round to decimal places</td><td>=ROUND(3.14159, 2)</td></tr>
+          <tr><td>MOD(num, div)</td><td>Remainder after division</td><td>=MOD(10,3)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Text Manipulation</div>
+        <div class="cs-table-wrap"><table class="cs-table t-excel"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>TEXTJOIN(del,T,range)</td><td>Join with delimiter</td><td>=TEXTJOIN(", ",TRUE,A1:A5)</td></tr>
+          <tr><td>LEFT(text, n)</td><td>Extract left n chars</td><td>=LEFT(A2,3)</td></tr>
+          <tr><td>RIGHT(text, n)</td><td>Extract right n chars</td><td>=RIGHT(A2,4)</td></tr>
+          <tr><td>MID(text,start,n)</td><td>Extract from middle</td><td>=MID(A2,5,3)</td></tr>
+          <tr><td>LEN(text)</td><td>String length</td><td>=LEN(A2)</td></tr>
+          <tr><td>TRIM(text)</td><td>Remove extra spaces</td><td>=TRIM(A2)</td></tr>
+          <tr><td>PROPER(text)</td><td>Title Case</td><td>=PROPER("john doe")</td></tr>
+          <tr><td>SUBSTITUTE(t,old,new)</td><td>Replace substring</td><td>=SUBSTITUTE(A2,"-","/")</td></tr>
+          <tr><td>TEXT(val,format)</td><td>Format number as text</td><td>=TEXT(A2,"$#,##0.00")</td></tr>
+          <tr><td>FIND(sub,text)</td><td>Position of substring</td><td>=FIND("@",A2)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Logic &amp; Conditionals</div>
+        <div class="cs-table-wrap"><table class="cs-table t-excel"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>IF(test,true,false)</td><td>Conditional value</td><td>=IF(A2&gt;100,"High","Low")</td></tr>
+          <tr><td>IFS(t1,v1,t2,v2)</td><td>Multiple conditions</td><td>=IFS(A2&gt;90,"A",A2&gt;80,"B",TRUE,"C")</td></tr>
+          <tr><td>AND(cond1,cond2)</td><td>All conditions true</td><td>=IF(AND(A2&gt;0,B2&gt;0),"Both","No")</td></tr>
+          <tr><td>OR(cond1,cond2)</td><td>Any condition true</td><td>=IF(OR(A2="NY",A2="LA"),"Coast","Mid")</td></tr>
+          <tr><td>IFERROR(val,err)</td><td>Handle formula errors</td><td>=IFERROR(A2/B2,0)</td></tr>
+          <tr><td>IFNA(val,na_val)</td><td>Handle #N/A errors</td><td>=IFNA(VLOOKUP(A2,B:C,2,0),"Not found")</td></tr>
+          <tr><td>SWITCH(expr,v1,r1)</td><td>Switch statement</td><td>=SWITCH(A2,1,"Jan",2,"Feb","Other")</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Dynamic Array Functions (Excel 365)</div>
+        <div class="cs-table-wrap"><table class="cs-table t-excel"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>FILTER(arr,cond)</td><td>Dynamic filtered range</td><td>=FILTER(A:B,C:C="NY")</td></tr>
+          <tr><td>SORT(range,col,ord)</td><td>Dynamic sorted range</td><td>=SORT(A1:C10,2,-1)</td></tr>
+          <tr><td>SORTBY(range,by)</td><td>Sort by another range</td><td>=SORTBY(A:B,C:C,-1)</td></tr>
+          <tr><td>UNIQUE(range)</td><td>Unique values list</td><td>=UNIQUE(A2:A100)</td></tr>
+          <tr><td>SEQUENCE(r,c,start)</td><td>Generate number sequence</td><td>=SEQUENCE(12,1,1,1)</td></tr>
+          <tr><td>VSTACK(r1,r2)</td><td>Stack ranges vertically</td><td>=VSTACK(A1:C5,Sheet2!A1:C3)</td></tr>
+          <tr><td>BYROW(range,fn)</td><td>Apply LAMBDA to each row</td><td>=BYROW(A1:C3,LAMBDA(r,SUM(r)))</td></tr>
+          <tr><td>LAMBDA(x,formula)</td><td>Create custom function</td><td>=LAMBDA(x,x*x)(5)</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /excel -->
+
+    <!-- ═══════════════════════════════════════════
+         📈 MATPLOTLIB
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="matplotlib">
+      <div class="cs-section-header sh-mpl">
+        <span class="cs-icon">📈</span>
+        <div><div class="cs-title">Matplotlib</div><div class="cs-subtitle">Chart types, subplots, labels, annotations and styling</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Chart Types</div>
+        <div class="cs-table-wrap"><table class="cs-table t-mpl"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>plt.plot(x, y)</td><td>Line chart</td><td>plt.plot(x, y, color='blue', linewidth=2)</td></tr>
+          <tr><td>plt.scatter(x, y)</td><td>Scatter plot</td><td>plt.scatter(x, y, c=colors, s=sizes, alpha=0.7)</td></tr>
+          <tr><td>plt.bar(x, height)</td><td>Vertical bar chart</td><td>plt.bar(cats, vals, color='steelblue')</td></tr>
+          <tr><td>plt.barh(y, width)</td><td>Horizontal bar chart</td><td>plt.barh(labels, values)</td></tr>
+          <tr><td>plt.hist(x, bins)</td><td>Histogram</td><td>plt.hist(data, bins=30, density=True, alpha=0.7)</td></tr>
+          <tr><td>plt.pie(sizes)</td><td>Pie chart</td><td>plt.pie(sizes, labels=lbls, autopct='%1.1f%%')</td></tr>
+          <tr><td>plt.boxplot(data)</td><td>Box &amp; whisker plot</td><td>plt.boxplot([grp1, grp2], labels=['A','B'])</td></tr>
+          <tr><td>plt.violinplot(data)</td><td>Violin plot</td><td>plt.violinplot(data, showmeans=True)</td></tr>
+          <tr><td>plt.fill_between(x,y1,y2)</td><td>Shade area between lines</td><td>plt.fill_between(x, y1, y2, alpha=0.3)</td></tr>
+          <tr><td>plt.errorbar(x,y,yerr)</td><td>Error bar plot</td><td>plt.errorbar(x, y, yerr=err, fmt='o')</td></tr>
+          <tr><td>plt.stackplot(x, y1,y2)</td><td>Stacked area chart</td><td>plt.stackplot(x, y1, y2, labels=['A','B'])</td></tr>
+          <tr><td>plt.imshow(data)</td><td>Display 2D array as image</td><td>plt.imshow(matrix, cmap='viridis')</td></tr>
+          <tr><td>plt.contourf()</td><td>Filled contour plot</td><td>plt.contourf(X, Y, Z, cmap='RdBu')</td></tr>
+          <tr><td>plt.hexbin(x,y)</td><td>Hexagonal bin plot</td><td>plt.hexbin(x, y, gridsize=30, cmap='Blues')</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Figures, Subplots &amp; Layout</div>
+        <div class="cs-table-wrap"><table class="cs-table t-mpl"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>plt.figure(figsize)</td><td>Create figure with size</td><td>fig = plt.figure(figsize=(10, 6))</td></tr>
+          <tr><td>plt.subplots(r,c)</td><td>Grid of subplots</td><td>fig, axes = plt.subplots(2, 3, figsize=(12,8))</td></tr>
+          <tr><td>ax.twinx()</td><td>Second y-axis on same plot</td><td>ax2 = ax.twinx()</td></tr>
+          <tr><td>plt.tight_layout()</td><td>Auto-fix layout overlap</td><td>plt.tight_layout(pad=2.0)</td></tr>
+          <tr><td>plt.GridSpec()</td><td>Fine-grained grid control</td><td>gs = GridSpec(2, 2, width_ratios=[1,2])</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Labels, Annotations &amp; Styling</div>
+        <div class="cs-table-wrap"><table class="cs-table t-mpl"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>plt.xlabel(text)</td><td>X-axis label</td><td>plt.xlabel('Time (s)', fontsize=12)</td></tr>
+          <tr><td>plt.ylabel(text)</td><td>Y-axis label</td><td>plt.ylabel('Price ($)')</td></tr>
+          <tr><td>plt.title(text)</td><td>Plot title</td><td>plt.title('Sales Over Time', fontsize=14, fontweight='bold')</td></tr>
+          <tr><td>plt.legend()</td><td>Show legend</td><td>plt.legend(loc='upper right', framealpha=0.9)</td></tr>
+          <tr><td>plt.xlim() / ylim()</td><td>Set axis limits</td><td>plt.xlim(0, 100); plt.ylim(-1, 1)</td></tr>
+          <tr><td>plt.xticks() / yticks()</td><td>Custom tick marks</td><td>plt.xticks(range(0,100,10), rotation=45)</td></tr>
+          <tr><td>plt.grid()</td><td>Add grid lines</td><td>plt.grid(True, linestyle='--', alpha=0.5)</td></tr>
+          <tr><td>plt.axhline(y)</td><td>Horizontal line</td><td>plt.axhline(y=0, color='red', linestyle='--')</td></tr>
+          <tr><td>plt.annotate(text)</td><td>Annotate with arrow</td><td>plt.annotate('Peak', xy=(5,10), xytext=(7,12), arrowprops={})</td></tr>
+          <tr><td>plt.savefig(fname)</td><td>Save to file</td><td>plt.savefig('chart.png', dpi=150, bbox_inches='tight')</td></tr>
+          <tr><td>plt.style.use()</td><td>Apply a style theme</td><td>plt.style.use('seaborn-v0_8-darkgrid')</td></tr>
+          <tr><td>plt.rcParams[]</td><td>Set global defaults</td><td>plt.rcParams['font.size'] = 12</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /matplotlib -->
+
+    <!-- ═══════════════════════════════════════════
+         🤖 SCIKIT-LEARN
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="sklearn">
+      <div class="cs-section-header sh-sklearn">
+        <span class="cs-icon">🤖</span>
+        <div><div class="cs-title">Scikit-Learn</div><div class="cs-subtitle">Preprocessing, models, evaluation, pipelines and tuning</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Preprocessing &amp; Encoding</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sklearn"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>train_test_split()</td><td>Split into train/test sets</td><td>X_tr,X_te,y_tr,y_te = train_test_split(X,y,test_size=0.2)</td></tr>
+          <tr><td>StandardScaler()</td><td>Standardize (zero mean, unit var)</td><td>scaler = StandardScaler(); X_sc = scaler.fit_transform(X)</td></tr>
+          <tr><td>MinMaxScaler()</td><td>Scale to [0, 1]</td><td>MinMaxScaler().fit_transform(X)</td></tr>
+          <tr><td>RobustScaler()</td><td>Scale robust to outliers</td><td>RobustScaler().fit_transform(X)</td></tr>
+          <tr><td>LabelEncoder()</td><td>Encode target labels as int</td><td>le = LabelEncoder(); y = le.fit_transform(y)</td></tr>
+          <tr><td>OneHotEncoder()</td><td>One-hot encode categories</td><td>OneHotEncoder(sparse=False).fit_transform(X)</td></tr>
+          <tr><td>SimpleImputer()</td><td>Fill missing values</td><td>SimpleImputer(strategy='mean').fit_transform(X)</td></tr>
+          <tr><td>PolynomialFeatures()</td><td>Create polynomial features</td><td>PolynomialFeatures(degree=2).fit_transform(X)</td></tr>
+          <tr><td>ColumnTransformer()</td><td>Apply transforms per column</td><td>ColumnTransformer([('sc',StandardScaler(),[0,1])])</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Models — Regression, Classification &amp; Clustering</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sklearn"><thead><tr><th>Model</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>LinearRegression()</td><td>Ordinary least squares</td><td>LinearRegression().fit(X_tr, y_tr)</td></tr>
+          <tr><td>Ridge(alpha)</td><td>L2 regularized regression</td><td>Ridge(alpha=1.0).fit(X_tr, y_tr)</td></tr>
+          <tr><td>Lasso(alpha)</td><td>L1 regularized regression</td><td>Lasso(alpha=0.1).fit(X_tr, y_tr)</td></tr>
+          <tr><td>LogisticRegression()</td><td>Binary/multi-class classifier</td><td>LogisticRegression(C=1.0, max_iter=1000)</td></tr>
+          <tr><td>SVC(kernel)</td><td>Support vector classifier</td><td>SVC(kernel='rbf', C=1.0, gamma='scale')</td></tr>
+          <tr><td>RandomForestClassifier()</td><td>Ensemble of decision trees</td><td>RandomForestClassifier(n_estimators=100)</td></tr>
+          <tr><td>GradientBoostingClassifier()</td><td>Gradient boosting trees</td><td>GradientBoostingClassifier(n_estimators=200)</td></tr>
+          <tr><td>XGBClassifier()</td><td>Extreme gradient boosting</td><td>XGBClassifier(n_estimators=200, learning_rate=0.1)</td></tr>
+          <tr><td>GaussianNB()</td><td>Naive Bayes classifier</td><td>GaussianNB().fit(X_tr, y_tr)</td></tr>
+          <tr><td>MLPClassifier()</td><td>Neural network classifier</td><td>MLPClassifier(hidden_layer_sizes=(100,50))</td></tr>
+          <tr><td>KMeans(k)</td><td>K-Means clustering</td><td>KMeans(n_clusters=5, random_state=42)</td></tr>
+          <tr><td>DBSCAN()</td><td>Density-based clustering</td><td>DBSCAN(eps=0.5, min_samples=5)</td></tr>
+          <tr><td>IsolationForest()</td><td>Anomaly detection</td><td>IsolationForest(contamination=0.05)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Dimensionality Reduction &amp; Feature Selection</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sklearn"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>PCA(n)</td><td>Principal Component Analysis</td><td>pca = PCA(n_components=2); X_red = pca.fit_transform(X)</td></tr>
+          <tr><td>TSNE(n)</td><td>t-SNE for visualization</td><td>TSNE(n_components=2, perplexity=30).fit_transform(X)</td></tr>
+          <tr><td>SelectKBest()</td><td>Select k best features</td><td>SelectKBest(f_classif, k=10).fit_transform(X, y)</td></tr>
+          <tr><td>RFE()</td><td>Recursive feature elimination</td><td>RFE(estimator=clf, n_features_to_select=5)</td></tr>
+          <tr><td>VarianceThreshold()</td><td>Remove low-variance features</td><td>VarianceThreshold(threshold=0.01)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Evaluation, Tuning &amp; Pipelines</div>
+        <div class="cs-table-wrap"><table class="cs-table t-sklearn"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>accuracy_score()</td><td>Classification accuracy</td><td>accuracy_score(y_te, y_pred)</td></tr>
+          <tr><td>precision_score()</td><td>Precision</td><td>precision_score(y_te, y_pred, average='macro')</td></tr>
+          <tr><td>recall_score()</td><td>Recall / sensitivity</td><td>recall_score(y_te, y_pred)</td></tr>
+          <tr><td>f1_score()</td><td>F1 harmonic mean of P &amp; R</td><td>f1_score(y_te, y_pred, average='weighted')</td></tr>
+          <tr><td>roc_auc_score()</td><td>AUC of ROC curve</td><td>roc_auc_score(y_te, y_proba)</td></tr>
+          <tr><td>confusion_matrix()</td><td>Confusion matrix</td><td>confusion_matrix(y_te, y_pred)</td></tr>
+          <tr><td>classification_report()</td><td>Full classification metrics</td><td>print(classification_report(y_te, y_pred))</td></tr>
+          <tr><td>mean_squared_error()</td><td>MSE / RMSE for regression</td><td>mean_squared_error(y_te, y_pred, squared=False)</td></tr>
+          <tr><td>r2_score()</td><td>R-squared coefficient</td><td>r2_score(y_te, y_pred)</td></tr>
+          <tr><td>cross_val_score()</td><td>K-fold cross-validation</td><td>cross_val_score(clf, X, y, cv=5, scoring='f1')</td></tr>
+          <tr><td>GridSearchCV()</td><td>Exhaustive hyperparameter search</td><td>GridSearchCV(clf, param_grid, cv=5, scoring='roc_auc')</td></tr>
+          <tr><td>RandomizedSearchCV()</td><td>Random hyperparameter search</td><td>RandomizedSearchCV(clf, params, n_iter=50, cv=5)</td></tr>
+          <tr><td>Pipeline(steps)</td><td>Chain transforms + estimator</td><td>Pipeline([('sc', StandardScaler()), ('clf', SVC())])</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /sklearn -->
+
+    <!-- ═══════════════════════════════════════════
+         🔥 PYTORCH
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="pytorch">
+      <div class="cs-section-header sh-torch">
+        <span class="cs-icon">🔥</span>
+        <div><div class="cs-title">PyTorch</div><div class="cs-subtitle">Tensors, neural network layers, optimizers, training loop, data loading</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Tensor Creation &amp; Manipulation</div>
+        <div class="cs-table-wrap"><table class="cs-table t-torch"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>torch.tensor(data)</td><td>Create tensor from data</td><td>x = torch.tensor([[1.,2.],[3.,4.]])</td></tr>
+          <tr><td>torch.zeros(shape)</td><td>Zeros tensor</td><td>torch.zeros(3, 4, dtype=torch.float32)</td></tr>
+          <tr><td>torch.ones(shape)</td><td>Ones tensor</td><td>torch.ones(3, 4)</td></tr>
+          <tr><td>torch.rand(shape)</td><td>Uniform random [0,1)</td><td>torch.rand(100, 10)</td></tr>
+          <tr><td>torch.randn(shape)</td><td>Standard normal random</td><td>torch.randn(batch_size, 128)</td></tr>
+          <tr><td>torch.arange()</td><td>Range tensor</td><td>torch.arange(0, 10, step=2)</td></tr>
+          <tr><td>torch.from_numpy(arr)</td><td>Tensor from NumPy array</td><td>x = torch.from_numpy(np_array)</td></tr>
+          <tr><td>tensor.numpy()</td><td>Convert tensor to NumPy</td><td>arr = x.cpu().numpy()</td></tr>
+          <tr><td>tensor.item()</td><td>Python scalar from 1-elem tensor</td><td>loss_val = loss.item()</td></tr>
+          <tr><td>tensor.to(device)</td><td>Move to device</td><td>x = x.to('cuda')</td></tr>
+          <tr><td>tensor.view(shape)</td><td>Reshape (contiguous)</td><td>x.view(batch_size, -1)</td></tr>
+          <tr><td>tensor.reshape(shape)</td><td>Reshape (safe)</td><td>x.reshape(-1, 28*28)</td></tr>
+          <tr><td>tensor.permute(dims)</td><td>Reorder dimensions</td><td>x.permute(0, 2, 3, 1)</td></tr>
+          <tr><td>tensor.squeeze(dim)</td><td>Remove size-1 dimension</td><td>x.squeeze(0)</td></tr>
+          <tr><td>tensor.unsqueeze(dim)</td><td>Add size-1 dimension</td><td>x.unsqueeze(1)</td></tr>
+          <tr><td>torch.cat(tensors, dim)</td><td>Concatenate along axis</td><td>torch.cat([a, b], dim=0)</td></tr>
+          <tr><td>torch.stack(tensors)</td><td>Stack along new axis</td><td>torch.stack([a, b], dim=1)</td></tr>
+          <tr><td>torch.matmul(a, b)</td><td>Matrix multiplication</td><td>out = torch.matmul(W, x) + b</td></tr>
+          <tr><td>tensor.detach()</td><td>Detach from computation graph</td><td>y = x.detach()</td></tr>
+          <tr><td>torch.no_grad()</td><td>Context: disable gradients</td><td>with torch.no_grad(): out = model(x)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Neural Network Layers &amp; Losses</div>
+        <div class="cs-table-wrap"><table class="cs-table t-torch"><thead><tr><th>Module</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>nn.Module</td><td>Base class for all models</td><td>class Net(nn.Module): def __init__(self): super().__init__()</td></tr>
+          <tr><td>nn.Linear(in, out)</td><td>Fully-connected layer</td><td>nn.Linear(784, 256)</td></tr>
+          <tr><td>nn.Conv2d(in,out,k)</td><td>2D convolution</td><td>nn.Conv2d(3, 64, kernel_size=3, padding=1)</td></tr>
+          <tr><td>nn.MaxPool2d(k)</td><td>Max pooling</td><td>nn.MaxPool2d(kernel_size=2, stride=2)</td></tr>
+          <tr><td>nn.BatchNorm2d(c)</td><td>Batch normalization (2D)</td><td>nn.BatchNorm2d(64)</td></tr>
+          <tr><td>nn.Dropout(p)</td><td>Dropout regularization</td><td>nn.Dropout(p=0.5)</td></tr>
+          <tr><td>nn.Embedding(n,d)</td><td>Embedding lookup table</td><td>nn.Embedding(vocab_size, embed_dim)</td></tr>
+          <tr><td>nn.LSTM(in,h)</td><td>Long Short-Term Memory</td><td>nn.LSTM(input_size=128, hidden_size=256, num_layers=2)</td></tr>
+          <tr><td>nn.MultiheadAttention()</td><td>Multi-head self-attention</td><td>nn.MultiheadAttention(embed_dim=512, num_heads=8)</td></tr>
+          <tr><td>nn.TransformerEncoder()</td><td>Transformer encoder stack</td><td>nn.TransformerEncoder(encoder_layer, num_layers=6)</td></tr>
+          <tr><td>nn.Sequential(*layers)</td><td>Chain layers sequentially</td><td>nn.Sequential(nn.Linear(784,256), nn.ReLU(), nn.Linear(256,10))</td></tr>
+          <tr><td>nn.CrossEntropyLoss()</td><td>Classification loss</td><td>criterion = nn.CrossEntropyLoss()</td></tr>
+          <tr><td>nn.BCEWithLogitsLoss()</td><td>Binary classification loss</td><td>nn.BCEWithLogitsLoss()</td></tr>
+          <tr><td>nn.MSELoss()</td><td>Mean squared error loss</td><td>criterion = nn.MSELoss()</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Optimizers &amp; Training Loop</div>
+        <div class="cs-table-wrap"><table class="cs-table t-torch"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>optim.Adam()</td><td>Adam optimizer</td><td>optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)</td></tr>
+          <tr><td>optim.AdamW()</td><td>Adam with weight decay fix</td><td>optim.AdamW(model.parameters(), lr=2e-4)</td></tr>
+          <tr><td>optim.SGD()</td><td>Stochastic gradient descent</td><td>optim.SGD(model.parameters(), lr=0.01, momentum=0.9)</td></tr>
+          <tr><td>optimizer.zero_grad()</td><td>Clear accumulated gradients</td><td>optimizer.zero_grad()</td></tr>
+          <tr><td>loss.backward()</td><td>Compute gradients</td><td>loss.backward()</td></tr>
+          <tr><td>optimizer.step()</td><td>Update model parameters</td><td>optimizer.step()</td></tr>
+          <tr><td>nn.utils.clip_grad_norm_()</td><td>Clip gradient norms</td><td>nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)</td></tr>
+          <tr><td>CosineAnnealingLR()</td><td>Cosine LR annealing</td><td>CosineAnnealingLR(optimizer, T_max=100)</td></tr>
+          <tr><td>model.train()</td><td>Set to training mode</td><td>model.train() # enables dropout, batchnorm</td></tr>
+          <tr><td>model.eval()</td><td>Set to eval mode</td><td>model.eval() # disables dropout, batchnorm</td></tr>
+          <tr><td>torch.save(state_dict)</td><td>Save model weights</td><td>torch.save(model.state_dict(), 'model.pt')</td></tr>
+          <tr><td>torch.load()</td><td>Load model weights</td><td>model.load_state_dict(torch.load('model.pt'))</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Data Loading &amp; Transforms</div>
+        <div class="cs-table-wrap"><table class="cs-table t-torch"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Dataset.__getitem__()</td><td>Custom dataset indexing</td><td>def __getitem__(self, idx): return X[idx], y[idx]</td></tr>
+          <tr><td>Dataset.__len__()</td><td>Dataset length</td><td>def __len__(self): return len(self.data)</td></tr>
+          <tr><td>DataLoader(ds, batch)</td><td>Batch + shuffle dataset</td><td>DataLoader(ds, batch_size=32, shuffle=True, num_workers=4)</td></tr>
+          <tr><td>transforms.Compose()</td><td>Chain image transforms</td><td>transforms.Compose([transforms.ToTensor(), transforms.Normalize()])</td></tr>
+          <tr><td>transforms.Normalize()</td><td>Normalize image tensor</td><td>transforms.Normalize(mean=[0.5], std=[0.5])</td></tr>
+          <tr><td>torchvision.datasets.*</td><td>Built-in datasets</td><td>datasets.MNIST('./data', train=True, download=True)</td></tr>
+          <tr><td>torchvision.models.*</td><td>Pretrained models</td><td>models.resnet50(pretrained=True)</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /pytorch -->
+
+    <!-- ═══════════════════════════════════════════
+         🦜 LANGGRAPH
+    ═══════════════════════════════════════════ -->
+    <div class="cs-section" id="langgraph">
+      <div class="cs-section-header sh-lg">
+        <span class="cs-icon">🦜</span>
+        <div><div class="cs-title">LangGraph</div><div class="cs-subtitle">State graphs, memory, HITL, tools, messages and subgraphs</div></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Core State &amp; Graph Primitives</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>StateGraph(schema)</td><td>Create graph with typed state</td><td>graph = StateGraph(MyState)</td></tr>
+          <tr><td>MessageGraph()</td><td>Graph using message list state</td><td>graph = MessageGraph()</td></tr>
+          <tr><td>TypedDict</td><td>Define state schema</td><td>class MyState(TypedDict): messages: list; count: int</td></tr>
+          <tr><td>Annotated[T, reducer]</td><td>Field with custom reducer</td><td>messages: Annotated[list, operator.add]</td></tr>
+          <tr><td>END</td><td>Terminal node constant</td><td>graph.add_edge('node', END)</td></tr>
+          <tr><td>START</td><td>Entry node constant</td><td>graph.add_edge(START, 'first_node')</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Graph Building &amp; Execution</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>graph.add_node(name, fn)</td><td>Register a node function</td><td>graph.add_node('agent', call_llm)</td></tr>
+          <tr><td>graph.add_edge(a, b)</td><td>Static directional edge</td><td>graph.add_edge('tool', 'agent')</td></tr>
+          <tr><td>graph.add_conditional_edges()</td><td>Route based on output</td><td>graph.add_conditional_edges('agent', route_fn, {'tool':'tool','end':END})</td></tr>
+          <tr><td>graph.compile()</td><td>Compile to runnable</td><td>app = graph.compile()</td></tr>
+          <tr><td>graph.compile(checkpointer)</td><td>Compile with memory</td><td>app = graph.compile(checkpointer=MemorySaver())</td></tr>
+          <tr><td>app.invoke(input)</td><td>Run graph synchronously</td><td>result = app.invoke({'messages': [HumanMessage('Hi')]})</td></tr>
+          <tr><td>app.stream(input)</td><td>Stream graph step by step</td><td>for chunk in app.stream(input, config): print(chunk)</td></tr>
+          <tr><td>app.ainvoke(input)</td><td>Async graph invocation</td><td>result = await app.ainvoke(input, config)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Memory &amp; Persistence</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>MemorySaver()</td><td>In-memory thread checkpointer</td><td>checkpointer = MemorySaver()</td></tr>
+          <tr><td>SqliteSaver.from_conn()</td><td>SQLite persistent memory</td><td>SqliteSaver.from_conn_string('memory.db')</td></tr>
+          <tr><td>thread_id in config</td><td>Isolate conversation sessions</td><td>config = {'configurable': {'thread_id': 'user-123'}}</td></tr>
+          <tr><td>app.get_state(config)</td><td>Read current graph state</td><td>state = app.get_state(config)</td></tr>
+          <tr><td>app.update_state(cfg, val)</td><td>Manually patch state</td><td>app.update_state(config, {'count': 5})</td></tr>
+          <tr><td>app.get_state_history(cfg)</td><td>Full state history</td><td>for s in app.get_state_history(config): print(s)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Human-in-the-Loop (HITL)</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>interrupt_before=['node']</td><td>Pause before node runs</td><td>app = graph.compile(interrupt_before=['human_review'])</td></tr>
+          <tr><td>interrupt_after=['node']</td><td>Pause after node runs</td><td>app = graph.compile(interrupt_after=['agent'])</td></tr>
+          <tr><td>app.update_state(cfg, v)</td><td>Inject human feedback</td><td>app.update_state(config, {'approved': True})</td></tr>
+          <tr><td>NodeInterrupt(msg)</td><td>Raise interrupt from node</td><td>raise NodeInterrupt('Need human approval')</td></tr>
+          <tr><td>app.invoke(None, config)</td><td>Resume after interrupt</td><td>app.invoke(None, config)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Tools &amp; Messages</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>ToolNode(tools)</td><td>Built-in node to execute tools</td><td>tool_node = ToolNode([search, calculator])</td></tr>
+          <tr><td>tools_condition(state)</td><td>Route to tool or END</td><td>graph.add_conditional_edges('agent', tools_condition)</td></tr>
+          <tr><td>@tool decorator</td><td>Define a LangChain tool</td><td>@tool def search(q: str) -&gt; str: return web_search(q)</td></tr>
+          <tr><td>bind_tools(tools)</td><td>Bind tools to LLM</td><td>llm_with_tools = llm.bind_tools([search, calculator])</td></tr>
+          <tr><td>HumanMessage(content)</td><td>User message</td><td>HumanMessage(content='What is the weather?')</td></tr>
+          <tr><td>AIMessage(content)</td><td>LLM response message</td><td>AIMessage(content='The weather is...')</td></tr>
+          <tr><td>SystemMessage(content)</td><td>System prompt message</td><td>SystemMessage(content='You are a helpful assistant')</td></tr>
+          <tr><td>ToolMessage</td><td>Result message from a tool</td><td>ToolMessage(content=result, tool_call_id=call.id)</td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="cs-sub">
+        <div class="cs-sub-title">Subgraphs, Fan-out &amp; Advanced Routing</div>
+        <div class="cs-table-wrap"><table class="cs-table t-lg"><thead><tr><th>Function</th><th>Description</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Send(node, state)</td><td>Fan-out: send to multiple</td><td>return [Send('process', {'item': x}) for x in items]</td></tr>
+          <tr><td>Command(goto, update)</td><td>Dynamic routing + update</td><td>return Command(goto='agent', update={'count': n+1})</td></tr>
+          <tr><td>InjectedState</td><td>Pass full state to tool</td><td>def tool(query: str, state: Annotated[State, InjectedState])</td></tr>
+          <tr><td>RunnableConfig</td><td>Pass config to nodes</td><td>def node(state, config: RunnableConfig): ...</td></tr>
+        </tbody></table></div>
+      </div>
+    </div><!-- /langgraph -->
+
+    <div class="page-nav">
+      <a class="nav-link" href="aiml-explained.html">← AI/ML Home</a>
+      <a class="nav-link next" href="ml.html">Machine Learning →</a>
+    </div>
+
+  </div><!-- /page -->
+  </main>
+</div><!-- /layout -->
+
+<a class="back-top" id="backTop" href="#">↑</a>
+
+<script src="../assets/js/utils.js?v=3"></script>
+<script>
+/* ── PROGRESS ── */
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+
+/* ── SIDEBAR ── */
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const navToggle = document.getElementById('navToggle');
+const topNav = document.getElementById('topNav');
+function toggleSidebar() { const c=sidebar.classList.contains('closed'); sidebar.classList.toggle('closed',!c); sidebarOverlay.classList.toggle('visible',c); document.body.classList.toggle('tf-nav-open',c); }
+function toggleNav() { topNav.classList.toggle('mobile-open'); navToggle.setAttribute('aria-expanded', topNav.classList.contains('mobile-open')); }
+if (sidebarToggle) sidebarToggle.addEventListener('click', toggleSidebar);
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', () => { sidebar.classList.add('closed'); sidebarOverlay.classList.remove('visible'); document.body.classList.remove('tf-nav-open'); });
+if (navToggle) navToggle.addEventListener('click', toggleNav);
+
+/* ── LIVE SEARCH ── */
+const csSearch = document.getElementById('csSearch');
+const csCount  = document.getElementById('csCount');
+const ALL_ROWS  = () => document.querySelectorAll('.cs-table tbody tr');
+
+function updateSearch() {
+  const q = csSearch.value.toLowerCase().trim();
+  let visible = 0;
+  ALL_ROWS().forEach(row => {
+    const text = row.textContent.toLowerCase();
+    const match = !q || text.includes(q);
+    row.classList.toggle('row-hidden', !match);
+    if (match) visible++;
+  });
+  const total = ALL_ROWS().length;
+  csCount.textContent = q
+    ? `Showing ${visible} of ${total} entries matching "${csSearch.value}"`
+    : `${total} entries across 8 libraries`;
+}
+
+csSearch.addEventListener('input', updateSearch);
+window.addEventListener('load', () => {
+  updateSearch();
+  // Sidebar search
+  const sidebarSearch = document.getElementById('sidebarSearch');
+  if (sidebarSearch) {
+    sidebarSearch.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      const q = e.target.value.toLowerCase().trim(); if (!q) return;
+      document.querySelectorAll('.sb-link').forEach(link => {
+        if (link.textContent.toLowerCase().includes(q)) {
+          link.scrollIntoView({behavior:'smooth',block:'center'});
+          link.style.background='rgba(0,212,255,0.16)';
+          setTimeout(()=>link.style.background='',1600);
+        }
+      });
+    });
+  }
+});
+</script>
+</body>
+</html>

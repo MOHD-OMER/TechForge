@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="200+ curated interview questions covering DSA, Python, OOP, AI/ML, and SQL — tagged for FAANG and top startups. Track your progress locally."/>
+  <meta property="og:title" content="Interview Q&A Hub — TechForge"/>
+  <meta property="og:description" content="200+ interview questions across DSA, Python, OOP, AI/ML, and SQL. FAANG & Startup tagged. Free, no login."/>
+  <meta property="og:type" content="website"/>
+  <title>Interview Q&A Hub — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=3" rel="stylesheet"/>
+  <style>
+/* ════════════════════════════════════════
+   INTERVIEW HUB — v5 MAJOR UPGRADE
+   ════════════════════════════════════════ */
+
+.int-hero {
+  position: relative; padding: 56px 0 48px;
+  margin-bottom: 48px; border-bottom: 1px solid var(--border); overflow: hidden;
+}
+.int-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at -5% 50%, rgba(251,191,36,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 60% at 105% 20%, rgba(34,211,238,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 40% at 50% 100%, rgba(167,139,250,.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: center;
+}
+.ih-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--amber);
+  background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2);
+  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 20px;
+}
+.ih-dot { width:5px;height:5px;border-radius:50%;background:var(--amber);box-shadow:0 0 6px var(--amber);animation:ihdot 2s ease infinite; }
+@keyframes ihdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+.ih-title {
+  font-family: var(--font-display); font-size: clamp(30px,5.5vw,52px);
+  font-weight: 900; letter-spacing: -2.5px; line-height: 1.0;
+  color: var(--text); margin-bottom: 16px;
+}
+.ih-title .grad {
+  background: linear-gradient(135deg, var(--amber) 0%, #f97316 60%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ih-sub { font-size: 14.5px; color: var(--text2); line-height: 1.82; max-width: 500px; margin-bottom: 28px; }
+.ih-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+.btn-ih-primary {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
+  border-radius: var(--r-md); font-size: 13.5px; font-weight: 700; text-decoration: none;
+  background: linear-gradient(135deg, var(--amber) 0%, #f97316 100%); color: #000;
+  box-shadow: 0 4px 24px rgba(251,191,36,.35); transition: all .2s;
+}
+.btn-ih-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(251,191,36,.5); }
+.btn-ih-ghost {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
+  border-radius: var(--r-md); font-size: 13.5px; font-weight: 600; text-decoration: none;
+  background: var(--card); color: var(--text2); border: 1px solid var(--border2); transition: all .2s;
+}
+.btn-ih-ghost:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+.ih-trust { display: flex; gap: 18px; flex-wrap: wrap; }
+.ih-trust-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
+.ih-trust-dot { width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green); }
+
+/* Hero progress card */
+.hero-progress-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); padding: 24px 22px; position: relative; overflow: hidden;
+}
+.hero-progress-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--amber), #f97316, transparent);
+}
+.hpc-title { font-family:var(--font-mono); font-size:9.5px; letter-spacing:2px; text-transform:uppercase; color:var(--text3); margin-bottom:18px; }
+.hpc-total { display:flex; align-items:baseline; gap:8px; margin-bottom:20px; }
+.hpc-num {
+  font-family:var(--font-mono); font-size:48px; font-weight:900; line-height:1;
+  background: linear-gradient(135deg,var(--amber),var(--cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hpc-of { font-family:var(--font-mono); font-size:14px; color:var(--text3); }
+.hpc-label { font-size:11px; color:var(--text3); margin-top:2px; }
+.hpc-tracks { display:flex; flex-direction:column; gap:10px; }
+.hpc-track-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+.hpc-track-name { font-family:var(--font-mono); font-size:10px; color:var(--text2); }
+.hpc-track-count { font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+.hpc-bar-bg { height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+.hpc-bar-fill { height:100%; border-radius:2px; transition:width .6s ease; }
+.hpc-cta {
+  display:block; margin-top:18px; padding:9px 0; text-align:center;
+  background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.18);
+  border-radius:var(--r-md); font-family:var(--font-mono); font-size:10.5px;
+  font-weight:700; color:var(--amber); text-decoration:none; letter-spacing:.5px; transition:all .2s;
+}
+.hpc-cta:hover { background:rgba(251,191,36,.13); border-color:rgba(251,191,36,.35); }
+
+/* Stats strip */
+.int-stats {
+  display:grid; grid-template-columns:repeat(6,1fr); gap:1px;
+  background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl);
+  overflow:hidden; margin-bottom:48px;
+}
+.ist-box {
+  background:var(--card); padding:20px 12px; display:flex; flex-direction:column;
+  align-items:center; gap:4px; transition:background .2s; text-align:center; position:relative;
+}
+.ist-box::after { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--ist-c,var(--amber)); opacity:0; transition:opacity .2s; }
+.ist-box:hover { background:rgba(255,255,255,.02); }
+.ist-box:hover::after { opacity:1; }
+.ist-val { font-family:var(--font-mono); font-size:22px; font-weight:900; line-height:1; }
+.ist-label { font-size:9px; font-family:var(--font-mono); letter-spacing:1.5px; color:var(--text3); text-transform:uppercase; margin-top:1px; }
+
+/* Section headers */
+.sec-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin-bottom:6px; }
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--amber),transparent); }
+.sec-h2 { font-family:var(--font-display); font-size:clamp(18px,3vw,24px); font-weight:800; letter-spacing:-.5px; color:var(--text); margin-bottom:4px; }
+.sec-sub { font-size:12.5px; color:var(--text3); margin-bottom:22px; }
+.sec-block { margin-bottom:52px; }
+
+/* Search */
+.search-wrap { position:relative; margin-bottom:20px; }
+.search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:14px; opacity:.4; pointer-events:none; }
+.search-input {
+  width:100%; padding:11px 40px 11px 40px; background:var(--card);
+  border:1px solid var(--border); border-radius:var(--r-md);
+  font-family:var(--font-mono); font-size:12.5px; color:var(--text);
+  outline:none; transition:border-color .2s, box-shadow .2s; appearance:none;
+}
+.search-input::placeholder { color:var(--text3); }
+.search-input:focus { border-color:rgba(251,191,36,.4); box-shadow:0 0 0 3px rgba(251,191,36,.08); }
+.search-clear { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; font-size:14px; color:var(--text3); display:none; padding:4px; transition:color .15s; }
+.search-clear:hover { color:var(--text); }
+.search-clear.visible { display:block; }
+
+/* Filter tabs */
+.filter-tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+.ftab {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+  border-radius:var(--r-full); font-family:var(--font-mono); font-size:10.5px; font-weight:600;
+  border:1px solid var(--border); background:var(--card); color:var(--text3);
+  cursor:pointer; transition:all .15s; user-select:none;
+}
+.ftab:hover { border-color:var(--border2); color:var(--text2); }
+.ftab.active { background:rgba(251,191,36,.1); border-color:rgba(251,191,36,.3); color:var(--amber); }
+.ftab-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
+.ftab-count { background:rgba(255,255,255,.06); border-radius:3px; padding:1px 5px; font-size:9px; }
+
+/* Difficulty legend */
+.diff-legend { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:20px; }
+.dl-item { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+.dl-dot { width:8px; height:8px; border-radius:50%; }
+.dl-easy { background:var(--green); }
+.dl-medium { background:var(--amber); }
+.dl-hard { background:var(--red); }
+
+/* Category bento */
+.cat-bento { display:grid; grid-template-columns:repeat(12,1fr); gap:12px; }
+.icat-card {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
+  padding:24px 22px 20px; text-decoration:none; display:flex; flex-direction:column;
+  position:relative; overflow:hidden; transition:all .25s; min-height:210px;
+}
+.icat-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--ic-a,var(--amber)),transparent); opacity:0; transition:opacity .2s; }
+.icat-card::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 80% 10%,var(--ic-glow,rgba(251,191,36,.06)),transparent 55%); opacity:0; transition:opacity .3s; }
+.icat-card:hover { transform:translateY(-4px); border-color:var(--border2); box-shadow:0 16px 48px rgba(0,0,0,.4); }
+.icat-card:hover::before { opacity:1; }
+.icat-card:hover::after  { opacity:1; }
+.icat-card:focus-visible { outline:2px solid var(--ic-a,var(--amber)); outline-offset:2px; }
+.ic-dsa { grid-column:span 4; --ic-a:var(--cyan);   --ic-glow:rgba(34,211,238,.06); }
+.ic-py  { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(79,142,247,.07); }
+.ic-oop { grid-column:span 4; --ic-a:var(--green);  --ic-glow:rgba(52,211,153,.06); }
+.ic-ai  { grid-column:span 6; --ic-a:var(--purple); --ic-glow:rgba(167,139,250,.07); }
+.ic-sql { grid-column:span 6; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
+.ic-icon { font-size:26px; margin-bottom:12px; }
+.ic-label {
+  font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; padding:3px 10px; border-radius:var(--r-full);
+  display:inline-block; margin-bottom:9px; width:fit-content;
+}
+.ic-dsa .ic-label { background:rgba(34,211,238,.07);  color:var(--cyan);   border:1px solid rgba(34,211,238,.18); }
+.ic-py  .ic-label { background:rgba(79,142,247,.1);   color:var(--blue);   border:1px solid rgba(79,142,247,.22); }
+.ic-oop .ic-label { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+.ic-ai  .ic-label { background:rgba(167,139,250,.09); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+.ic-sql .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-title { font-size:15px; font-weight:800; color:var(--text); margin-bottom:6px; letter-spacing:-.3px; }
+.ic-desc  { font-size:11.5px; color:var(--text3); line-height:1.65; flex:1; margin-bottom:14px; }
+.ic-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
+.ic-chip { font-family:var(--font-mono); font-size:8.5px; font-weight:600; padding:2px 7px; border-radius:var(--r-full); background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--text3); }
+.ic-diff-row { display:flex; gap:4px; margin-bottom:12px; }
+.ic-diff-seg { height:3px; border-radius:2px; flex:1; }
+.diff-e { background:var(--green); }
+.diff-m { background:var(--amber); }
+.diff-h { background:var(--red,#f87171); }
+.diff-gray { background:var(--border2); }
+.ic-foot { display:flex; align-items:center; justify-content:space-between; margin-top:auto; }
+.ic-count { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+.ic-dot   { width:5px; height:5px; border-radius:50%; background:var(--ic-a,var(--amber)); }
+.ic-arrow { font-family:var(--font-mono); font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; transition:gap .15s; }
+.ic-dsa .ic-arrow { color:var(--cyan); }
+.ic-py  .ic-arrow { color:var(--blue); }
+.ic-oop .ic-arrow { color:var(--green); }
+.ic-ai  .ic-arrow { color:var(--purple); }
+.ic-sql .ic-arrow { color:var(--amber); }
+.icat-card:hover .ic-arrow { gap:9px; }
+
+/* Company tracks */
+.tracks-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.track-card {
+  background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
+  padding:26px 24px; position:relative; overflow:hidden; transition:border-color .2s,transform .2s;
+}
+.track-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+.track-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--tc-a),transparent); opacity:.8; }
+.tc-faang   { --tc-a:var(--blue); }
+.tc-startup { --tc-a:var(--green); }
+.track-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; }
+.track-icon { font-size:24px; }
+.track-pill { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1px; padding:4px 12px; border-radius:var(--r-full); }
+.tp-blue  { background:rgba(79,142,247,.1);  color:var(--blue);  border:1px solid rgba(79,142,247,.25); }
+.tp-green { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.22); }
+.track-title { font-size:15.5px; font-weight:800; color:var(--text); margin-bottom:10px; }
+.track-desc  { font-size:12.5px; color:var(--text2); line-height:1.75; margin-bottom:16px; }
+.track-tags  { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+.track-tag { font-family:var(--font-mono); font-size:9px; font-weight:600; padding:3px 9px; border-radius:var(--r-full); background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--text3); }
+.track-companies { display:flex; gap:6px; flex-wrap:wrap; padding-top:14px; border-top:1px solid var(--border); }
+.tc-co { font-family:var(--font-mono); font-size:9px; padding:3px 9px; border-radius:var(--r-full); background:rgba(255,255,255,.03); border:1px solid var(--border); color:var(--text3); }
+.tc-label-sm { font-family:var(--font-mono); font-size:9px; color:var(--text3); padding:3px 0; letter-spacing:.5px; }
+
+/* Topic pills */
+.topic-pills-wrap { display:flex; gap:8px; flex-wrap:wrap; }
+.topic-pill {
+  display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+  border-radius:var(--r-full); background:var(--card); border:1px solid var(--border);
+  font-size:12px; color:var(--text2); text-decoration:none;
+  transition:all .15s; font-family:var(--font-mono); white-space:nowrap;
+}
+.topic-pill:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,.3); }
+.topic-pill-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+.tp-cyan   { border-color:rgba(34,211,238,.2);  color:var(--cyan);   }
+.tp-blue2  { border-color:rgba(79,142,247,.2);  color:var(--blue);   }
+.tp-green2 { border-color:rgba(52,211,153,.2);  color:var(--green);  }
+.tp-purple { border-color:rgba(167,139,250,.2); color:var(--purple); }
+.tp-amber  { border-color:rgba(251,191,36,.2);  color:var(--amber);  }
+.topic-pill:hover .topic-pill-dot { box-shadow:0 0 6px currentColor; }
+.topic-group-label { font-family:var(--font-mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+
+/* Prep tips */
+.tips-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.tip-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:22px 20px; position:relative; overflow:hidden; transition:border-color .2s; }
+.tip-card:hover { border-color:var(--border2); }
+.tip-card::before { content:''; position:absolute; left:0;top:0;bottom:0;width:2px; background:var(--tip-c,var(--amber)); opacity:.7; }
+.tip-num   { font-family:var(--font-mono); font-size:9.5px; font-weight:700; color:var(--tip-c,var(--amber)); letter-spacing:1.5px; margin-bottom:10px; }
+.tip-icon  { font-size:20px; margin-bottom:10px; }
+.tip-title { font-size:13.5px; font-weight:700; color:var(--text); margin-bottom:8px; }
+.tip-desc  { font-size:12px; color:var(--text3); line-height:1.68; }
+
+/* Study plan */
+.plan-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.plan-week { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:20px 18px; position:relative; overflow:hidden; }
+.plan-week::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--pw-c,var(--amber)); opacity:.6; }
+.pw-week { font-family:var(--font-mono); font-size:9.5px; font-weight:700; letter-spacing:1.5px; color:var(--pw-c,var(--amber)); margin-bottom:8px; }
+.pw-title { font-size:13px; font-weight:700; color:var(--text); margin-bottom:10px; }
+.pw-list  { list-style:none; display:flex; flex-direction:column; gap:5px; }
+.pw-list li { font-size:11px; color:var(--text3); line-height:1.5; padding-left:14px; position:relative; }
+.pw-list li::before { content:'▸'; position:absolute; left:0; color:var(--pw-c,var(--amber)); font-size:9px; top:1px; }
+
+/* Progress banner */
+.progress-banner {
+  background:linear-gradient(135deg,rgba(34,211,238,.05) 0%,rgba(79,142,247,.04) 100%);
+  border:1px solid rgba(34,211,238,.14); border-radius:var(--r-xl);
+  padding:24px 28px; display:flex; align-items:center; gap:24px; position:relative; overflow:hidden;
+}
+.progress-banner::before { content:''; position:absolute; top:0;left:0;right:0;height:1px; background:linear-gradient(90deg,transparent 10%,var(--cyan) 50%,transparent 90%); opacity:.3; }
+.pb-icon { font-size:32px; flex-shrink:0; }
+.pb-title { font-size:14.5px; font-weight:800; color:var(--text); margin-bottom:5px; }
+.pb-desc  { font-size:12px; color:var(--text3); line-height:1.65; max-width:480px; }
+.pb-stat  { margin-left:auto; flex-shrink:0; text-align:center; }
+.pb-num   { font-family:var(--font-mono); font-size:36px; font-weight:900; color:var(--cyan); line-height:1; }
+.pb-lbl   { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; color:var(--text3); text-transform:uppercase; margin-top:3px; }
+.pb-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.pb-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 16px; border-radius:var(--r-md); font-family:var(--font-mono); font-size:10px; font-weight:700; text-decoration:none; letter-spacing:.3px; transition:all .2s; cursor:pointer; }
+.pb-btn-primary { background:rgba(34,211,238,.1); border:1px solid rgba(34,211,238,.25); color:var(--cyan); }
+.pb-btn-primary:hover { background:rgba(34,211,238,.18); }
+.pb-btn-amber { background:rgba(251,191,36,.08); border:1px solid rgba(251,191,36,.25); color:var(--amber); }
+.pb-btn-amber:hover { background:rgba(251,191,36,.15); }
+.pb-btn-secondary { background:var(--card); border:1px solid var(--border); color:var(--text3); }
+.pb-btn-secondary:hover { border-color:var(--border2); color:var(--text2); }
+
+/* Resources */
+.resources-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.res-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px; text-decoration:none; display:flex; align-items:flex-start; gap:14px; transition:all .2s; }
+.res-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+.res-icon { font-size:22px; flex-shrink:0; }
+.res-title { font-size:13px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.res-desc  { font-size:11px; color:var(--text3); line-height:1.55; }
+
+/* Animations */
+.anim-in { opacity:0; transform:translateY(16px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+/* Responsive */
+@media (max-width:1024px) {
+  .hero-grid { grid-template-columns:1fr; }
+  .hero-right { display:none; }
+  .plan-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:900px) {
+  .int-stats { grid-template-columns:repeat(3,1fr); }
+  .ic-dsa,.ic-py,.ic-oop { grid-column:span 6; }
+  .ic-ai,.ic-sql { grid-column:span 6; }
+  .tracks-grid { grid-template-columns:1fr; }
+  .tips-grid { grid-template-columns:1fr 1fr; }
+  .resources-grid { grid-template-columns:1fr 1fr; }
+}
+@media (max-width:640px) {
+  .int-stats { grid-template-columns:repeat(3,1fr); }
+  .ic-dsa,.ic-py,.ic-oop,.ic-ai,.ic-sql { grid-column:span 12; }
+  .tips-grid,.plan-grid,.resources-grid { grid-template-columns:1fr; }
+  .ih-cta { flex-direction:column; }
+  .btn-ih-primary,.btn-ih-ghost { justify-content:center; min-height:44px; }
+  .progress-banner { flex-direction:column; text-align:center; }
+  .pb-stat { margin-left:0; }
+  .pb-actions { justify-content:center; }
+}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon">⬡</div>
+    <span>TECH</span>·FORGE
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../backend/index.html">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../sql/index.html">SQL</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link current" href="./">Interview Q&amp;A</a>
+    <a class="tb-link" href="../git/index.html">Git</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">⋮</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">Interview Tracks</div>
+    <a class="sb-link active" href="./"><span class="sb-num">🎯</span>All Categories</a>
+    <a class="sb-link" href="dsa-interview.html"><span class="sb-num">📊</span>DSA — 47 Qs</a>
+    <a class="sb-link" href="python-interview.html"><span class="sb-num">🐍</span>Python — 35+ Qs</a>
+    <a class="sb-link" href="oop-interview.html"><span class="sb-num">🧱</span>OOP — 15 Qs</a>
+    <a class="sb-link" href="aiml-interview.html"><span class="sb-num">🤖</span>AI/ML — 25+ Qs</a>
+    <a class="sb-link" href="sql-interview.html"><span class="sb-num">🗄️</span>SQL — 40+ Qs</a>
+    <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+    <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
+    <a class="sb-link" href="#tracks"><span class="sb-num">01</span>Company Tracks</a>
+    <a class="sb-link" href="#categories"><span class="sb-num">02</span>Question Banks</a>
+    <a class="sb-link" href="#popular"><span class="sb-num">03</span>Topic Browser</a>
+    <a class="sb-link" href="#plan"><span class="sb-num">04</span>Study Plan</a>
+    <a class="sb-link" href="#tips"><span class="sb-num">05</span>Prep Strategy</a>
+    <a class="sb-link" href="#progress"><span class="sb-num">06</span>Your Progress</a>
+    <a class="sb-link" href="#resources"><span class="sb-num">07</span>Resources</a>
+  </aside>
+
+  <main class="main" id="mainContent">
+
+    <!-- HERO -->
+    <div class="int-hero">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="ih-eyebrow"><span class="ih-dot"></span>Interview Prep Hub</div>
+          <h1 class="ih-title">
+            <span class="grad">200+ Questions.</span><br/>Zero Paywalls.
+          </h1>
+          <p class="ih-sub">
+            Curated interview questions across DSA, Python, OOP, AI/ML, and SQL —
+            tagged for FAANG and top Indian startups. Track your progress in your browser.
+            No account, no login, no cost.
+          </p>
+          <div class="ih-cta">
+            <a class="btn-ih-primary" href="dsa-interview.html">🎯 Start with DSA</a>
+            <a class="btn-ih-ghost" href="sql-interview.html">🗄️ SQL Interview</a>
+          </div>
+          <div class="ih-trust">
+            <div class="ih-trust-item"><span class="ih-trust-dot"></span>No account required</div>
+            <div class="ih-trust-item"><span class="ih-trust-dot"></span>Progress saved locally</div>
+            <div class="ih-trust-item"><span class="ih-trust-dot"></span>Free forever</div>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-progress-card">
+            <div class="hpc-title">YOUR PROGRESS</div>
+            <div class="hpc-total">
+              <div class="hpc-num" id="heroProgressNum">0</div>
+              <div>
+                <div class="hpc-of">/ 162+ done</div>
+                <div class="hpc-label">questions completed</div>
+              </div>
+            </div>
+            <div class="hpc-tracks">
+              <div class="hpc-track">
+                <div class="hpc-track-header"><span class="hpc-track-name">📊 DSA</span><span class="hpc-track-count">47 Qs</span></div>
+                <div class="hpc-bar-bg"><div class="hpc-bar-fill" id="bar-dsa" style="width:0%;background:var(--cyan)"></div></div>
+              </div>
+              <div class="hpc-track">
+                <div class="hpc-track-header"><span class="hpc-track-name">🐍 Python</span><span class="hpc-track-count">35+ Qs</span></div>
+                <div class="hpc-bar-bg"><div class="hpc-bar-fill" id="bar-py" style="width:0%;background:var(--blue)"></div></div>
+              </div>
+              <div class="hpc-track">
+                <div class="hpc-track-header"><span class="hpc-track-name">🧱 OOP</span><span class="hpc-track-count">15 Qs</span></div>
+                <div class="hpc-bar-bg"><div class="hpc-bar-fill" id="bar-oop" style="width:0%;background:var(--green)"></div></div>
+              </div>
+              <div class="hpc-track">
+                <div class="hpc-track-header"><span class="hpc-track-name">🤖 AI/ML</span><span class="hpc-track-count">25+ Qs</span></div>
+                <div class="hpc-bar-bg"><div class="hpc-bar-fill" id="bar-ai" style="width:0%;background:var(--purple)"></div></div>
+              </div>
+              <div class="hpc-track">
+                <div class="hpc-track-header"><span class="hpc-track-name">🗄️ SQL</span><span class="hpc-track-count">40+ Qs</span></div>
+                <div class="hpc-bar-bg"><div class="hpc-bar-fill" id="bar-sql" style="width:0%;background:var(--amber)"></div></div>
+              </div>
+            </div>
+            <a class="hpc-cta" href="dsa-interview.html">Resume Practice →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div id="stats" class="int-stats anim-in">
+      <div class="ist-box" style="--ist-c:var(--amber)"><span class="ist-val" style="color:var(--amber)">200+</span><span class="ist-label">Total Qs</span></div>
+      <div class="ist-box" style="--ist-c:var(--cyan)"><span class="ist-val" style="color:var(--cyan)">47</span><span class="ist-label">DSA</span></div>
+      <div class="ist-box" style="--ist-c:var(--blue)"><span class="ist-val" style="color:var(--blue)">35+</span><span class="ist-label">Python</span></div>
+      <div class="ist-box" style="--ist-c:var(--green)"><span class="ist-val" style="color:var(--green)">15</span><span class="ist-label">OOP</span></div>
+      <div class="ist-box" style="--ist-c:var(--purple)"><span class="ist-val" style="color:var(--purple)">25+</span><span class="ist-label">AI/ML</span></div>
+      <div class="ist-box" style="--ist-c:var(--amber)"><span class="ist-val" style="color:var(--amber)">40+</span><span class="ist-label">SQL</span></div>
+    </div>
+
+    <!-- COMPANY TRACKS -->
+    <div id="tracks" class="sec-block anim-in">
+      <div class="sec-label">Target Company</div>
+      <h2 class="sec-h2">Which track fits your goal?</h2>
+      <p class="sec-sub">Every question is tagged — pick the path that matches your target company type.</p>
+      <div class="tracks-grid">
+        <div class="track-card tc-faang">
+          <div class="track-top"><div class="track-icon">🏢</div><span class="track-pill tp-blue">PBC Track</span></div>
+          <div class="track-title">Product-Based Companies (FAANG)</div>
+          <div class="track-desc">Google, Amazon, Meta, Microsoft, and Flipkart focus heavily on <strong style="color:var(--text)">DSA depth, system design, and algorithmic thinking.</strong> Expect hard graph problems, DP, and complex tree traversals.</div>
+          <div class="track-tags">
+            <span class="track-tag">Hard DSA</span><span class="track-tag">Graph Algorithms</span>
+            <span class="track-tag">Dynamic Programming</span><span class="track-tag">System Design</span><span class="track-tag">Complexity Analysis</span>
+          </div>
+          <div class="track-companies">
+            <span class="tc-label-sm">Includes:</span>
+            <span class="tc-co">Google</span><span class="tc-co">Amazon</span><span class="tc-co">Meta</span><span class="tc-co">Microsoft</span><span class="tc-co">Flipkart</span>
+          </div>
+        </div>
+        <div class="track-card tc-startup">
+          <div class="track-top"><div class="track-icon">🚀</div><span class="track-pill tp-green">Startup Track</span></div>
+          <div class="track-title">Startups &amp; Growth Companies</div>
+          <div class="track-desc">Zepto, Razorpay, CRED, and Groww value <strong style="color:var(--text)">practical problem solving, backend knowledge, SQL, and shipping fast.</strong> More breadth, less extreme depth.</div>
+          <div class="track-tags">
+            <span class="track-tag">Core DSA</span><span class="track-tag">Python / Backend</span>
+            <span class="track-tag">SQL Queries</span><span class="track-tag">OOP Design</span><span class="track-tag">Real-world Problems</span>
+          </div>
+          <div class="track-companies">
+            <span class="tc-label-sm">Includes:</span>
+            <span class="tc-co">Razorpay</span><span class="tc-co">Zepto</span><span class="tc-co">CRED</span><span class="tc-co">Groww</span><span class="tc-co">Swiggy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTION BANKS -->
+    <div id="categories" class="sec-block anim-in">
+      <div class="sec-label">Interview Tracks</div>
+      <h2 class="sec-h2">All 5 question banks</h2>
+      <p class="sec-sub">Each track is self-contained. Practice the ones that match your interview focus.</p>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" id="trackSearch" placeholder="Search question banks..." autocomplete="off" spellcheck="false"/>
+        <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+      </div>
+      <div class="filter-tabs">
+        <button class="ftab active" data-filter="all">All Tracks <span class="ftab-count">5</span></button>
+        <button class="ftab" data-filter="faang"><span class="ftab-dot" style="color:var(--blue)"></span>FAANG-heavy</button>
+        <button class="ftab" data-filter="startup"><span class="ftab-dot" style="color:var(--green)"></span>Startup-friendly</button>
+        <button class="ftab" data-filter="math"><span class="ftab-dot" style="color:var(--purple)"></span>Math-intensive</button>
+      </div>
+      <div class="cat-bento" id="catBento">
+        <a class="icat-card ic-dsa" href="dsa-interview.html" data-tags="faang startup">
+          <div class="ic-icon">📊</div>
+          <div class="ic-label">Core Track</div>
+          <div class="ic-title">DSA Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Arrays</span><span class="ic-chip">Trees</span><span class="ic-chip">Graphs</span><span class="ic-chip">DP</span><span class="ic-chip">Heaps</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.5"></div><div class="ic-diff-seg diff-m" style="flex:2"></div><div class="ic-diff-seg diff-h" style="flex:1"></div></div>
+          <div class="ic-desc">The most tested category across all companies. Arrays, linked lists, trees, graphs, sorting, and DP — with difficulty ratings and company tags.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>47 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-py" href="python-interview.html" data-tags="startup faang">
+          <div class="ic-icon">🐍</div>
+          <div class="ic-label">Language Track</div>
+          <div class="ic-title">Python Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Decorators</span><span class="ic-chip">GIL</span><span class="ic-chip">Generators</span><span class="ic-chip">OOP</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:2"></div><div class="ic-diff-seg diff-m" style="flex:2"></div><div class="ic-diff-seg diff-h" style="flex:.5"></div></div>
+          <div class="ic-desc">Python-specific questions — decorators, generators, comprehensions, the GIL, memory management, and coding problems written in Python.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>35+ questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-oop" href="oop-interview.html" data-tags="startup faang">
+          <div class="ic-icon">🧱</div>
+          <div class="ic-label">Design Track</div>
+          <div class="ic-title">OOP Interview</div>
+          <div class="ic-chips"><span class="ic-chip">SOLID</span><span class="ic-chip">Patterns</span><span class="ic-chip">Inheritance</span><span class="ic-chip">Polymorphism</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:2"></div><div class="ic-diff-seg diff-m" style="flex:2.5"></div><div class="ic-diff-seg diff-h" style="flex:.5"></div></div>
+          <div class="ic-desc">The four pillars, SOLID principles, common design patterns, and Python-specific OOP features. Asked at every seniority level.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>15 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-ai" href="aiml-interview.html" data-tags="faang math">
+          <div class="ic-icon">🤖</div>
+          <div class="ic-label">AI/ML Track</div>
+          <div class="ic-title">AI / ML Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Neural Networks</span><span class="ic-chip">Transformers</span><span class="ic-chip">LLMs</span><span class="ic-chip">NLP</span><span class="ic-chip">ML Math</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1"></div><div class="ic-diff-seg diff-m" style="flex:2.5"></div><div class="ic-diff-seg diff-h" style="flex:1.5"></div></div>
+          <div class="ic-desc">Machine learning fundamentals, deep learning architecture, NLP, computer vision, transformers, and LLMs. For ML/AI engineer roles at AI-first companies.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>25+ questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-sql" href="sql-interview.html" data-tags="startup faang">
+          <div class="ic-icon">🗄️</div>
+          <div class="ic-label">Database Track</div>
+          <div class="ic-title">SQL Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Joins</span><span class="ic-chip">Window Fns</span><span class="ic-chip">Indexes</span><span class="ic-chip">Normalization</span><span class="ic-chip">Optimization</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.5"></div><div class="ic-diff-seg diff-m" style="flex:2.5"></div><div class="ic-diff-seg diff-h" style="flex:1"></div></div>
+          <div class="ic-desc">SQL queries, joins, subqueries, window functions, indexes, normalization, query optimization, and database design. Tested at virtually every backend and data role.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>40+ questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+      </div>
+      <div class="diff-legend" style="margin-top:14px;">
+        <div class="dl-item"><div class="dl-dot dl-easy"></div>Easy</div>
+        <div class="dl-item"><div class="dl-dot dl-medium"></div>Medium</div>
+        <div class="dl-item"><div class="dl-dot dl-hard"></div>Hard</div>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);margin-left:4px;">— bar shows question distribution per track</span>
+      </div>
+    </div>
+
+    <!-- TOPIC BROWSER -->
+    <div id="popular" class="sec-block anim-in">
+      <div class="sec-label">Quick Jump</div>
+      <h2 class="sec-h2">Browse by topic</h2>
+      <p class="sec-sub">Jump straight to the concept you need — organized by subject.</p>
+      <div style="margin-bottom:16px;">
+        <div class="topic-group-label" style="color:var(--cyan)">📊 DSA</div>
+        <div class="topic-pills-wrap">
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Arrays</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Linked Lists</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Binary Trees</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Dynamic Programming</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Graphs &amp; BFS/DFS</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Sliding Window</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Heaps &amp; Priority Queues</a>
+          <a class="topic-pill tp-cyan" href="dsa-interview.html"><span class="topic-pill-dot" style="background:var(--cyan)"></span>Sorting Algorithms</a>
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div class="topic-group-label" style="color:var(--blue)">🐍 Python</div>
+        <div class="topic-pills-wrap">
+          <a class="topic-pill tp-blue2" href="python-interview.html"><span class="topic-pill-dot" style="background:var(--blue)"></span>Decorators</a>
+          <a class="topic-pill tp-blue2" href="python-interview.html"><span class="topic-pill-dot" style="background:var(--blue)"></span>Generators &amp; Iterators</a>
+          <a class="topic-pill tp-blue2" href="python-interview.html"><span class="topic-pill-dot" style="background:var(--blue)"></span>GIL &amp; Threading</a>
+          <a class="topic-pill tp-blue2" href="python-interview.html"><span class="topic-pill-dot" style="background:var(--blue)"></span>List Comprehensions</a>
+          <a class="topic-pill tp-blue2" href="python-interview.html"><span class="topic-pill-dot" style="background:var(--blue)"></span>Memory Management</a>
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div class="topic-group-label" style="color:var(--green)">🧱 OOP</div>
+        <div class="topic-pills-wrap">
+          <a class="topic-pill tp-green2" href="oop-interview.html"><span class="topic-pill-dot" style="background:var(--green)"></span>Polymorphism</a>
+          <a class="topic-pill tp-green2" href="oop-interview.html"><span class="topic-pill-dot" style="background:var(--green)"></span>SOLID Principles</a>
+          <a class="topic-pill tp-green2" href="oop-interview.html"><span class="topic-pill-dot" style="background:var(--green)"></span>Design Patterns</a>
+          <a class="topic-pill tp-green2" href="oop-interview.html"><span class="topic-pill-dot" style="background:var(--green)"></span>Inheritance vs Composition</a>
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div class="topic-group-label" style="color:var(--purple)">🤖 AI/ML</div>
+        <div class="topic-pills-wrap">
+          <a class="topic-pill tp-purple" href="aiml-interview.html"><span class="topic-pill-dot" style="background:var(--purple)"></span>Transformers</a>
+          <a class="topic-pill tp-purple" href="aiml-interview.html"><span class="topic-pill-dot" style="background:var(--purple)"></span>Overfitting &amp; Bias-Variance</a>
+          <a class="topic-pill tp-purple" href="aiml-interview.html"><span class="topic-pill-dot" style="background:var(--purple)"></span>Backpropagation</a>
+          <a class="topic-pill tp-purple" href="aiml-interview.html"><span class="topic-pill-dot" style="background:var(--purple)"></span>Loss Functions</a>
+          <a class="topic-pill tp-purple" href="aiml-interview.html"><span class="topic-pill-dot" style="background:var(--purple)"></span>Attention Mechanism</a>
+        </div>
+      </div>
+      <div>
+        <div class="topic-group-label" style="color:var(--amber)">🗄️ SQL</div>
+        <div class="topic-pills-wrap">
+          <a class="topic-pill tp-amber" href="sql-interview.html"><span class="topic-pill-dot" style="background:var(--amber)"></span>SQL Joins</a>
+          <a class="topic-pill tp-amber" href="sql-interview.html"><span class="topic-pill-dot" style="background:var(--amber)"></span>Window Functions</a>
+          <a class="topic-pill tp-amber" href="sql-interview.html"><span class="topic-pill-dot" style="background:var(--amber)"></span>Query Optimization</a>
+          <a class="topic-pill tp-amber" href="sql-interview.html"><span class="topic-pill-dot" style="background:var(--amber)"></span>Normalization</a>
+          <a class="topic-pill tp-amber" href="sql-interview.html"><span class="topic-pill-dot" style="background:var(--amber)"></span>Indexes &amp; Execution Plans</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDY PLAN -->
+    <div id="plan" class="sec-block anim-in">
+      <div class="sec-label">Study Plan</div>
+      <h2 class="sec-h2">4-week interview prep roadmap</h2>
+      <p class="sec-sub">Structured path for engineers with 4 weeks before an interview. Adjust based on your strengths.</p>
+      <div class="plan-grid">
+        <div class="plan-week" style="--pw-c:var(--cyan)">
+          <div class="pw-week">WEEK 01</div>
+          <div class="pw-title">DSA Foundations</div>
+          <ul class="pw-list">
+            <li>Arrays, strings, hashing</li>
+            <li>Sliding window &amp; two pointers</li>
+            <li>Stacks &amp; queues</li>
+            <li>Big-O analysis for every topic</li>
+            <li>5–7 DSA questions/day</li>
+          </ul>
+        </div>
+        <div class="plan-week" style="--pw-c:var(--blue)">
+          <div class="pw-week">WEEK 02</div>
+          <div class="pw-title">Trees, Graphs &amp; DP</div>
+          <ul class="pw-list">
+            <li>Binary trees &amp; BST</li>
+            <li>BFS, DFS, Dijkstra</li>
+            <li>Dynamic programming patterns</li>
+            <li>Heaps &amp; priority queues</li>
+            <li>5 DSA + 3 Python questions/day</li>
+          </ul>
+        </div>
+        <div class="plan-week" style="--pw-c:var(--amber)">
+          <div class="pw-week">WEEK 03</div>
+          <div class="pw-title">Backend &amp; DB Depth</div>
+          <ul class="pw-list">
+            <li>All SQL question bank</li>
+            <li>OOP + SOLID principles</li>
+            <li>Python internals (GIL, decorators)</li>
+            <li>REST API design basics</li>
+            <li>10 SQL + 5 OOP questions/day</li>
+          </ul>
+        </div>
+        <div class="plan-week" style="--pw-c:var(--purple)">
+          <div class="pw-week">WEEK 04</div>
+          <div class="pw-title">Review &amp; Mock</div>
+          <ul class="pw-list">
+            <li>Revisit unchecked questions</li>
+            <li>AI/ML if targeting ML roles</li>
+            <li>Timed practice sessions</li>
+            <li>Explain answers out loud</li>
+            <li>Full mock interview on Day 7</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREP TIPS -->
+    <div id="tips" class="sec-block anim-in">
+      <div class="sec-label">Prep Strategy</div>
+      <h2 class="sec-h2">How to use this section effectively</h2>
+      <p class="sec-sub">Don't just read — do this instead.</p>
+      <div class="tips-grid">
+        <div class="tip-card" style="--tip-c:var(--cyan)">
+          <div class="tip-num">STEP 01</div>
+          <div class="tip-icon">🗺️</div>
+          <div class="tip-title">Pick your target track</div>
+          <div class="tip-desc">Are you targeting FAANG or startups? Your answer changes which questions to prioritize. DSA depth matters more for FAANG; SQL and backend matter more for startup roles.</div>
+        </div>
+        <div class="tip-card" style="--tip-c:var(--blue)">
+          <div class="tip-num">STEP 02</div>
+          <div class="tip-icon">✍️</div>
+          <div class="tip-title">Recall before reading</div>
+          <div class="tip-desc">Cover the answer, think for 60 seconds, then read. Active recall is 3× more effective than passive reading — it's the difference between people who prepare and people who just browse.</div>
+        </div>
+        <div class="tip-card" style="--tip-c:var(--green)">
+          <div class="tip-num">STEP 03</div>
+          <div class="tip-icon">✅</div>
+          <div class="tip-title">Mark, track &amp; revisit</div>
+          <div class="tip-desc">Use checkboxes on each track page. Progress saves to localStorage. In your final days, review only unchecked ones — don't waste time re-reading what you already know cold.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS BANNER -->
+    <div id="progress" class="progress-banner anim-in" style="margin-bottom:52px;">
+      <div class="pb-icon">📌</div>
+      <div style="flex:1;">
+        <div class="pb-title">Your progress is saved locally</div>
+        <div class="pb-desc">When you check off a question on any track page, it's saved to your browser's localStorage. No account needed, no data leaves your device.</div>
+        <div class="pb-actions">
+          <a class="pb-btn pb-btn-primary" href="dsa-interview.html">▶ Continue DSA</a>
+          <a class="pb-btn pb-btn-amber" href="sql-interview.html">▶ Continue SQL</a>
+          <button class="pb-btn pb-btn-secondary" id="resetProgress" type="button">↺ Reset Progress</button>
+        </div>
+      </div>
+      <div class="pb-stat">
+        <div class="pb-num" id="doneCount">—</div>
+        <div class="pb-lbl">Done So Far</div>
+      </div>
+    </div>
+
+    <!-- RESOURCES -->
+    <div id="resources" class="sec-block anim-in">
+      <div class="sec-label">Go Deeper</div>
+      <h2 class="sec-h2">Related resources on TechForge</h2>
+      <p class="sec-sub">Pair these tracks with full learning content to reinforce every answer.</p>
+      <div class="resources-grid">
+        <a class="res-card" href="../dsa/index.html">
+          <div class="res-icon">📊</div>
+          <div><div class="res-title">DSA with Live Animations</div><div class="res-desc">See every data structure visualized on canvas — reinforce interview answers with visual intuition.</div></div>
+        </a>
+        <a class="res-card" href="../python/index.html">
+          <div class="res-icon">🐍</div>
+          <div><div class="res-title">Python Deep Reference</div><div class="res-desc">OOP, decorators, generators, async, and libraries — everything to answer Python questions with confidence.</div></div>
+        </a>
+        <a class="res-card" href="../aiml/aiml-explained.html">
+          <div class="res-icon">🤖</div>
+          <div><div class="res-title">AI/ML Explained</div><div class="res-desc">ML, deep learning, NLP, transformers, and RL — clear analogies and real math to back up every AI/ML answer.</div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <a class="nav-link" href="../dsa/index.html">← DSA Home</a>
+      <a class="nav-link next" href="dsa-interview.html">DSA Questions →</a>
+    </div>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+<script src="../assets/js/utils.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function () {
+    var ws = document.body.scrollTop || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (h > 0 ? (ws/h)*100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', ws > 400);
+  }, { passive: true });
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  function countProgress() {
+    var total=0,dsa=0,py=0,oop=0,ai=0,sql=0;
+    try {
+      for (var k in localStorage) {
+        if (k.startsWith('tf_q_')||k.startsWith('done_')||k.startsWith('checked_')) {
+          total++;
+          if (k.includes('dsa')) dsa++;
+          else if (k.includes('py')||k.includes('python')) py++;
+          else if (k.includes('oop')) oop++;
+          else if (k.includes('ai')||k.includes('ml')) ai++;
+          else if (k.includes('sql')) sql++;
+        }
+      }
+    } catch(e){}
+    return {total,dsa,py,oop,ai,sql};
+  }
+
+  function renderProgress() {
+    var p = countProgress();
+    var doneEl = document.getElementById('doneCount');
+    var heroEl = document.getElementById('heroProgressNum');
+    if (doneEl) doneEl.textContent = p.total;
+    if (heroEl) heroEl.textContent = p.total;
+    var setBar = function(id,val,max) {
+      var el = document.getElementById(id);
+      if (el) el.style.width = Math.min(100, Math.round((val/max)*100)) + '%';
+    };
+    setBar('bar-dsa',p.dsa,47); setBar('bar-py',p.py,35);
+    setBar('bar-oop',p.oop,15); setBar('bar-ai',p.ai,25); setBar('bar-sql',p.sql,40);
+  }
+  renderProgress();
+
+  var resetBtn = document.getElementById('resetProgress');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      if (!confirm('Reset all interview progress? This cannot be undone.')) return;
+      try {
+        var del=[];
+        for (var k in localStorage) { if (k.startsWith('tf_q_')||k.startsWith('done_')||k.startsWith('checked_')) del.push(k); }
+        del.forEach(function(k){ localStorage.removeItem(k); });
+      } catch(e){}
+      renderProgress();
+    });
+  }
+
+  var filterTabs = document.querySelectorAll('.ftab');
+  var cards = document.querySelectorAll('#catBento .icat-card');
+  filterTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      filterTabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      var f = tab.dataset.filter;
+      cards.forEach(function(card) {
+        if (f==='all') { card.style.display=''; return; }
+        card.style.display = (card.dataset.tags||'').split(' ').includes(f) ? '' : 'none';
+      });
+    });
+  });
+
+  var searchInput = document.getElementById('trackSearch');
+  var searchClear = document.getElementById('searchClear');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      var q = searchInput.value.toLowerCase().trim();
+      searchClear.classList.toggle('visible', q.length>0);
+      cards.forEach(function(card) {
+        card.style.display = (q===''||card.textContent.toLowerCase().includes(q)) ? '' : 'none';
+      });
+    });
+  }
+  if (searchClear) {
+    searchClear.addEventListener('click', function() {
+      searchInput.value=''; searchClear.classList.remove('visible');
+      cards.forEach(function(card){ card.style.display=''; });
+    });
+  }
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold:0.06, rootMargin:'0px 0px -20px 0px' });
+  document.querySelectorAll('.anim-in').forEach(function(el,i) {
+    el.style.transitionDelay = (i%4)*0.07+'s';
+    obs.observe(el);
+  });
+});
+</script>
+</body>
+</html>
