@@ -63,6 +63,18 @@
   header.topbar .nav-toggle { display: inline-flex !important; }
 }
 </style>
+
+<style id="tf-mobile-nav-css">
+.tf-mobile-home-nav { display: block; padding: 12px 8px 0; }
+.tf-mhn-label { font-family: var(--mono,monospace); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3,#5a7094); padding: 0 8px; margin-bottom: 8px; }
+.tf-mhn-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 4px; }
+.tf-mhn-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 10px; text-decoration: none; background: var(--surface,#141b26); border: 1px solid var(--border,#1f2d42); transition: all .15s; -webkit-tap-highlight-color: transparent; }
+.tf-mhn-item:active { background: var(--surface2,#1a2234); border-color: var(--accent,#4d9ef7); }
+.tf-mhn-icon { font-size: 16px; line-height: 1; }
+.tf-mhn-text { font-family: var(--mono,monospace); font-size: 9px; font-weight: 600; color: var(--text2,#8da0bb); text-align: center; }
+.tf-mhn-divider { height: 1px; background: var(--border,#1f2d42); margin: 12px 0 8px; }
+@media (min-width: 901px) { .tf-mobile-home-nav { display: none !important; } }
+</style>
 </head>
 <body>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -90,6 +102,22 @@
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon">🔧</span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../sql/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">SQL</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../git/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">Git</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
     <div class="search-wrap">
       <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
     </div>
