@@ -465,6 +465,21 @@
   header.topbar .nav-toggle { display: inline-flex !important; }
 }
 </style>
+
+<style id="tf-home-mobile-nav">
+/* Mobile: show grid, hide text links */
+@media (max-width: 900px) {
+  .tb-nav.mobile-visible .tf-mhn-label { display: block; }
+  .tb-nav.mobile-visible .tf-mhn-grid { display: grid; padding: 0 8px; }
+  .tb-nav.mobile-visible .tb-link { display: none; }
+}
+/* Desktop: hide grid, show text links */
+@media (min-width: 901px) {
+  .tb-nav .tf-mhn-label { display: none; }
+  .tb-nav .tf-mhn-grid { display: none; }
+  .tb-nav .tb-link { display: inline-flex; }
+}
+</style>
 </head>
 <body>
 
@@ -481,6 +496,19 @@
     <span>TECH</span>·FORGE
   </a>
   <nav class="tb-nav" id="topNav">
+    <!-- Mobile grid nav (shown on mobile via .mobile-visible) -->
+    <div class="tf-mhn-label" style="margin-top:4px;">Navigate</div>
+    <div class="tf-mhn-grid">
+      <a class="tf-mhn-item" href="index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+      <a class="tf-mhn-item" href="dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+      <a class="tf-mhn-item" href="python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+      <a class="tf-mhn-item" href="backend/index.html"><span class="tf-mhn-icon">🔧</span><span class="tf-mhn-text">Backend</span></a>
+      <a class="tf-mhn-item" href="sql/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">SQL</span></a>
+      <a class="tf-mhn-item" href="aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+      <a class="tf-mhn-item" href="interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+      <a class="tf-mhn-item" href="git/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">Git</span></a>
+    </div>
+    <!-- Desktop text links (hidden on mobile) -->
     <a class="tb-link current" href="index.html">Home</a>
     <a class="tb-link" href="dsa/index.html">DSA</a>
     <a class="tb-link" href="backend/index.html">Backend</a>
