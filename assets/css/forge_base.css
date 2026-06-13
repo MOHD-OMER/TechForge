@@ -773,6 +773,169 @@ button.badge {
   .pillar-card { padding: 16px; }
   .pillar-card h3 { font-size: 14px; }
   .pillar-card p { font-size: 12px; }
+
+  /* ── Cross-page grid stacking (FAANG, compare, two-col) ── */
+  .faang-grid,
+  .exp-grid,
+  .why-grid,
+  .tracks-grid,
+  .tips-grid,
+  .resources-grid,
+  .plan-grid,
+  .norm-grid,
+  .joins-grid,
+  .story-grid,
+  .vs-grid,
+  .hiw-grid,
+  .cheat-row,
+  .cheat-row-3,
+  .cheat-3,
+  .buckets,
+  .framework-grid,
+  .stats-row,
+  .py-stats,
+  .sql-stats,
+  .dsa-stats,
+  .aim-stats,
+  .bk-stats,
+  .git-stats,
+  .int-stats {
+    grid-template-columns: 1fr !important;
+  }
+  .compare-strip {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+  }
+  .compare-strip .cs-item {
+    flex: none !important;
+    width: 100% !important;
+  }
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns:repeat(2,1fr)"],
+  [style*="grid-template-columns: repeat(2,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Hero / section titles (clamp caps) ── */
+  .hero-title,
+  .ph-title, .sh-title, .ih-title, .dh-title,
+  .aim-hero-title, .aim-title, .git-hero-title, .bk-hero-title, .ah-title,
+  .iph-title, .dh2-title, .bkh-title, .mgh-title,
+  .cta-banner-title, .cta-title {
+    font-size: clamp(18px, 5vw, 24px) !important;
+    letter-spacing: -1px !important;
+    line-height: 1.15 !important;
+  }
+  .sec-h2 {
+    font-size: clamp(16px, 4.5vw, 22px) !important;
+  }
+
+  /* ── Text + button CTA rows ── */
+  .interview-cta,
+  .bk-interview-cta,
+  .git-interview-cta,
+  .cta-flex,
+  .progress-banner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center;
+    gap: 16px !important;
+  }
+  .progress-banner .pb-stat {
+    margin-left: 0 !important;
+  }
+  .icta-btn, .bkicta-btn, .gicta-btn,
+  .cta-flex > a,
+  .cta-flex > button {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+    white-space: normal !important;
+    flex-shrink: 1 !important;
+  }
+
+  /* ── Side-by-side button groups ── */
+  .ph-cta, .sh-cta, .dh-cta, .ih-cta,
+  .hero-cta, .hero-actions, .aim-cta,
+  .cta-btns, .cta-buttons, .pb-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .ph-cta > a, .ph-cta > button,
+  .sh-cta > a, .sh-cta > button,
+  .dh-cta > a, .dh-cta > button,
+  .ih-cta > a, .ih-cta > button,
+  .hero-cta > a, .hero-cta > button,
+  .hero-actions > a, .hero-actions > button,
+  .aim-cta > a, .aim-cta > button,
+  .cta-btns > a, .cta-btns > button,
+  .cta-buttons > a, .cta-buttons > button,
+  .pb-actions > a, .pb-actions > button {
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+
+  /* ── Tables: horizontal scroll when not in .table-wrap ── */
+  :is(.main, .page, .py-section, section, div):has(> table:not(.table-wrap table)) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+  .table-wrap,
+  .cs-table-wrap,
+  .ref-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+  .ref-table,
+  .complexity-table {
+    min-width: 480px;
+  }
+
+  /* ── Code blocks ── */
+  pre, .code-pre, .code-block pre, .code-block .code-pre {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  /* ── Back-to-top: safe area + content clearance ── */
+  .back-top {
+    bottom: max(20px, calc(12px + var(--safe-bottom))) !important;
+    right: max(16px, calc(12px + var(--safe-right))) !important;
+    z-index: 90;
+  }
+  .main, .page {
+    scroll-padding-bottom: calc(64px + var(--safe-bottom));
+  }
+
+  /* ── Minimum readable font sizes ── */
+  .stat-key, .stat-label, .pys-label, .ds-label, .dss-label,
+  .bks-label, .gs-label, .is-label, .pys-sub,
+  .hero-trust-item, .footer-col-head, .footer-badge,
+  .tf-mhn-text, .tf-mhn-label, .tf-hmp-text, .tf-hmp-label,
+  .viz-label, .bar-lbl, .cell-idx,
+  .pq-diff, .pf-btn, .info-tab,
+  .sidebar-label, .sb-num,
+  .copy-btn, .dec-pill, .dec-link,
+  .aim-card-num, .aim-chip, .aim-card-tag,
+  .t-card-cat, .t-card-diff, .rw-algo,
+  .bo-slow, .bo-fast, .ps-num, .cat-count,
+  .bucket-num, .bucket-cmd, .sec-label,
+  .pillar-tag, .mbadge-sub, .fw-meta-key,
+  .pb-lbl, .pw-week, .iph-eyebrow, .iph-badge,
+  .ans-code-lang, .qna-num, .ftab {
+    font-size: 12px !important;
+  }
+  [style*="font-size:9px"]:not(pre):not(pre *) {
+    font-size: 12px !important;
+  }
 }
 
 /* Extra Small: <= 400px */
