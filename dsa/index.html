@@ -44,8 +44,8 @@
 @keyframes dhdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
 
 .dh-title {
-  font-family: var(--font-display); font-size: clamp(28px, 5.5vw, 46px);
-  font-weight: 900; letter-spacing: -2px; line-height: 1.02;
+  font-family: var(--font-display); font-size: clamp(22px, 5.5vw, 46px);
+  font-weight: 900; letter-spacing: -1.5px; line-height: 1.05;
   color: var(--text); margin-bottom: 14px;
 }
 .dh-title span {
@@ -281,6 +281,17 @@
   .complexity-table td { padding: 7px 10px; }
 }
   
+
+/* ── MOBILE FIXES ── */
+@media (max-width: 600px) {
+  .dh-title { font-size: 22px !important; letter-spacing: -1px !important; }
+  .faang-grid { grid-template-columns: 1fr !important; }
+  .cta-flex { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
+  .cta-flex a { width: 100% !important; justify-content: center !important; min-height: 44px !important; }
+  .dh-cta { flex-direction: column; }
+  .btn-dh-primary, .btn-dh-ghost { width: 100%; justify-content: center; }
+}
+
 /* ── MOBILE NAV (inline override) ── */
 @media (max-width: 900px) {
   header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
@@ -572,7 +583,7 @@
       <div class="sec-label">Interview Strategy</div>
       <h2 class="sec-h2">What to focus on — FAANG vs Startup</h2>
       <p class="sec-sub">Not all DSA is weighted equally. Know your target before you prep.</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" class="faang-grid">
         <div style="background:var(--card);border:1px solid rgba(79,142,247,.2);border-radius:var(--r-xl);padding:24px 22px;position:relative;overflow:hidden;">
           <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),transparent);"></div>
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--blue);margin-bottom:12px;">🏢 FAANG / PBC TRACK</div>
@@ -602,7 +613,7 @@
 
     <!-- ════ INTERVIEW CTA ════ -->
     <div class="sec-block anim-in">
-      <div style="background:linear-gradient(135deg,rgba(77,158,247,.06) 0%,rgba(34,211,238,.04) 100%);border:1px solid rgba(77,158,247,.16);border-radius:var(--r-xl);padding:28px 28px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,rgba(77,158,247,.06) 0%,rgba(34,211,238,.04) 100%);border:1px solid rgba(77,158,247,.16);border-radius:var(--r-xl);padding:28px 28px;display:flex;align-items:center;gap:24px;position:relative;overflow:hidden;" class="cta-flex">
         <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:.4;"></div>
         <div style="font-size:32px;flex-shrink:0;">🎯</div>
         <div style="flex:1;">
