@@ -12,7 +12,7 @@
 [![No Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/MOHD-OMER/TechForge)
 
-DSA visualizations · Python reference · Backend guides · SQL & MongoDB · AI/ML hub · Interview prep · Git workflows
+DSA visualizations · Python reference · System design guides · SQL & MongoDB · AI/ML hub · Interview prep · DevOps
 
 </div>
 
@@ -20,7 +20,7 @@ DSA visualizations · Python reference · Backend guides · SQL & MongoDB · AI/
 
 ## Overview
 
-TechForge is a fully static, zero-dependency CS learning platform with live Canvas 2D animations for every data structure and algorithm, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
+TechForge is a fully static, zero-dependency CS learning platform with interactive visualizers for every data structure and algorithm, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
 
 It runs entirely in the browser. No build step, no npm, no backend.
 
@@ -36,31 +36,31 @@ It runs entirely in the browser. No build step, no npm, no backend.
 
 | Track | Topics | URL |
 |---|---|---|
-| Data Structures & Algorithms | 29 topics · live canvas animations | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
-| Python | 8 modules · basics through OOP | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
-| Backend | Flask · FastAPI · Django | [/backend](https://tech-forge-dev.vercel.app/backend/index.html) |
-| SQL & MongoDB | Queries · joins · aggregations | [/sql](https://tech-forge-dev.vercel.app/sql/index.html) |
+| Data Structures & Algorithms | 29 topics · interactive visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
+| Python | 7 modules · basics through OOP | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
+| System Design | 23 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://tech-forge-dev.vercel.app/system-design/index.html) |
+| Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://tech-forge-dev.vercel.app/databases/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://tech-forge-dev.vercel.app/aiml/aiml-explained.html) |
 | Interview Prep | 200+ problems · FAANG + startup tagged | [/interview](https://tech-forge-dev.vercel.app/interview/index.html) |
-| Git & GitHub | Workflows · branching · team patterns | [/git](https://tech-forge-dev.vercel.app/git/index.html) |
+| DevOps | 23 guides · Docker · K8s · CI/CD · Cloud | [/devops](https://tech-forge-dev.vercel.app/devops/index.html) |
 
 ---
 
 ## Features
 
-**Data Structures & Algorithms** — 29 topics across 6 categories with live Canvas 2D animations at 60fps, Big-O analysis for every topic, sorting and complexity reference tables, and a recommended learning path from beginner to interview-ready.
+**Data Structures & Algorithms** — 29 topics across 6 categories with interactive visualizers, Big-O analysis for every topic, sorting and complexity reference tables, and a recommended learning path from beginner to interview-ready.
 
 **Python Track** — Complete language reference covering basics, control flow, functions, OOP, collections, and libraries. Includes magic methods, decorators, comprehensions, async patterns, and 50+ annotated practice programs.
 
-**Backend Track** — Production-ready guides for Flask, FastAPI, and Django covering routing, ORM, auth, middleware, and deployment with side-by-side framework comparisons.
+**System Design** — 23 production-grade guides covering distributed systems, caching, Kafka, load balancing, microservices, rate limiting, and more. Includes deep-dive guides for Flask, FastAPI, and Django with routing, ORM, auth, middleware, and deployment.
 
-**SQL & NoSQL** — Full SQL reference with queries, joins, subqueries, window functions, and normalization, plus MongoDB fundamentals across 12 topic sections with real query examples.
+**Databases** — Full SQL reference with queries, joins, subqueries, window functions, and normalization. Plus 13 database deep-dives covering PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, and more.
 
 **AI / ML Hub** — Eight modules spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI, and a Data Science cheat sheet. Clear analogies, real math, live demos, and visual intuition — no hand-waving.
 
-**Interview Prep** — 200+ curated problems across DSA, Python, OOP, SQL, and AI/ML. FAANG and startup tagged, difficulty rated, progress tracked in the browser. No account, no server, no data leaves your device.
+**Interview Prep** — 200+ curated problems across DSA, Python, OOP, SQL, AI/ML, DevOps, and System Design. FAANG and startup tagged, difficulty rated, progress tracked in the browser. No account, no server, no data leaves your device.
 
-**Git & GitHub Guide** — Practical workflows, branching strategies, common command reference, and team patterns.
+**DevOps** — 23 guides covering Git, Docker, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, Prometheus, Terraform, Linux, Bash, and the major cloud platforms (AWS, GCP, Azure).
 
 ---
 
@@ -89,21 +89,29 @@ TechForge/
 ├── assets/
 │   ├── css/
 │   │   ├── forge_base.css      # Global design system & CSS variables
+│   │   ├── lesson.css          # Unified lesson page styles
+│   │   ├── platform.css        # Progress bar, bookmarks, scroll-spy
+│   │   ├── hub.css             # Section hub page styles
+│   │   ├── dsa.css             # DSA visualizer styles
 │   │   ├── aiml-lesson.css     # AI/ML lesson page styles
 │   │   └── aiml-overview.css   # AI/ML overview styles
 │   ├── js/
-│   │   ├── utils.js            # Shared utilities (search, progress, clipboard)
+│   │   ├── platform.js         # Progress tracking, bookmarks, read time
+│   │   ├── utils.js            # Shared utilities (search, clipboard, ARIA)
+│   │   ├── topics-manifest.js  # Canonical topic registry (single source of truth)
+│   │   ├── site-index.js       # Site-wide search index
 │   │   └── aiml-viz.js         # AI/ML interactive visualizations
 │   ├── favicon.svg
 │   └── og-image.png            # Open Graph social preview (1200×630)
 │
-├── dsa/                        # 29 DSA topics with canvas animations
-├── python/                     # 8 Python learning modules
-├── backend/                    # Flask, FastAPI, Django guides
-├── sql/                        # SQL reference + MongoDB
+├── dsa/                        # 29 DSA topics with interactive visualizers
+├── python/                     # 7 Python learning modules
+├── system-design/              # 23 system design + backend framework guides
+├── databases/                  # 14 database deep-dives (SQL, NoSQL, specialized)
 ├── aiml/                       # 8 AI/ML modules
-├── interview/                  # 6 interview question banks
-└── git/                        # Git & GitHub guide
+├── interview/                  # 7 interview question banks
+├── devops/                     # 23 DevOps guides
+└── tools/                      # Build scripts (sitemap, content sync, audit)
 ```
 
 ---
@@ -211,9 +219,9 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ## Roadmap
 
-- [ ] Complete DSA canvas animation coverage (currently ~60%)
+- [ ] Complete DSA canvas animation coverage (11 of 29 topics have canvas; remaining use div-based visualizers)
+- [ ] AI/ML section hub page (`aiml/index.html`)
 - [ ] Python track async/await deep dive
-- [ ] System design section
 - [ ] Offline support via Service Worker
 - [ ] Additional language implementations (JavaScript, Java, C++)
 

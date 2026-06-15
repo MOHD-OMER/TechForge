@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Linux follows the Unix philosophy: everything is a file (devices, sockets, processes in /proc), tools do one thing well, and programs communicate via text…"/>
+  <meta name="keywords" content="Linux Basics, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/linux-basics.html"/>
+  <meta property="og:title" content="Linux Basics — TechForge"/>
+  <meta property="og:description" content="Linux follows the Unix philosophy: everything is a file (devices, sockets, processes in /proc), tools do one thing well, and programs communicate via text…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Linux Basics — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Linux Basics","description":"Linux follows the Unix philosophy: everything is a file (devices, sockets, processes in /proc), tools do one thing well, and programs communicate via text…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/linux-basics" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link active" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Linux Basics</h1>
+      <p class="pg-sub">Filesystem, permissions, processes, systemd, networking.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Linux Basics: Filesystem, permissions, processes, systemd, networking.</div>
+      <p class="lesson-prose">Linux follows the Unix philosophy: everything is a file (devices, sockets, processes in /proc), tools do one thing well, and programs communicate via text streams through pipes. The kernel manages hardware; the shell (bash/zsh/fish) is just a program that interprets commands.</p>
+      <p class="lesson-prose">The filesystem hierarchy standard (FHS): /bin and /usr/bin hold executables, /etc holds config files (plain text, editable), /var holds variable data (logs in /var/log, databases in /var/lib), /tmp is cleared on reboot, /proc and /sys are virtual filesystems exposing kernel state.</p>
+      <p class="lesson-prose">File permissions use a 3×3 bit matrix: owner/group/other each have read(4)/write(2)/execute(1) bits. chmod 755 file sets rwxr-xr-x. chown user:group transfers ownership. Directories need execute bit to be entered (cd). setuid bit (chmod u+s) runs executable as owner — used by sudo, passwd.</p>
+      <p class="lesson-prose">Process management: ps aux lists all processes with PID, CPU, memory. kill -9 PID force-kills; kill -15 (SIGTERM) requests graceful shutdown. top/htop show real-time CPU and memory. systemctl start/stop/restart/status controls systemd units; journalctl -u service -f follows logs.</p>
+      <p class="lesson-prose">Networking: ss -tlnp shows listening sockets with PIDs (replaces netstat). ip addr shows interfaces; ip route shows routing table. curl -v tests HTTP endpoints. tcpdump -i eth0 port 80 captures packets. /etc/hosts for local DNS overrides; /etc/resolv.conf for nameservers.</p>
+      <p class="lesson-prose">Package management: apt (Debian/Ubuntu) uses apt install/remove/update/upgrade/autoremove. apt update refreshes package index; apt upgrade installs updates. dpkg -l lists installed packages. yum/dnf for RHEL/CentOS/Fedora. snap and flatpak for distribution-agnostic packages.</p>
+      <p class="lesson-prose">Cron schedules recurring jobs: crontab -e edits user crontab. Format: minute hour day month weekday command. */5 * * * * runs every 5 minutes. @reboot runs once at startup. Run scripts with absolute paths since cron has a minimal PATH. Redirect stderr: cmd &gt;&gt; /log 2&gt;&amp;1.</p>
+      <p class="lesson-prose">SSH: ssh-keygen -t ed25519 generates a key pair. Copy public key with ssh-copy-id user@host. ~/.ssh/config stores per-host settings (IdentityFile, Port, ProxyJump for bastion hops). ssh -L 5432:db:5432 user@bastion creates a local port forward to a database behind a firewall.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Users / clients
+         |
+  Linux Basics
+         |
+  Core services
+         |
+  Data + observability</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">bash — file &amp; permissions</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># File operations
+ls -lah /var/log          # List with human-readable sizes
+find / -name "*.conf" 2&gt;/dev/null   # Find all .conf files
+grep -rn "error" /var/log/ --include="*.log"  # Recursive search
+tail -f /var/log/syslog   # Follow log in real time
+
+# Permissions
+chmod 755 script.sh       # rwxr-xr-x (owner full, others read+exec)
+chmod 600 ~/.ssh/id_ed25519  # rw------- (private key must be 600)
+chown www-data:www-data /var/www  # Transfer ownership to web server user
+find /uploads -type f -exec chmod 644 {} \;  # Batch permission fix</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash — process &amp; system</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># Process management
+ps aux | grep python      # Find Python processes
+kill -15 1234             # Graceful shutdown (SIGTERM)
+kill -9 1234              # Force kill (SIGKILL) — last resort
+
+# Disk &amp; memory
+df -h                     # Disk usage by filesystem
+du -sh /var/log/*         # Size of each log directory
+free -h                   # Memory usage (used/free/cache/buff)
+vmstat 1 5               # CPU/memory stats every 1s, 5 times
+
+# Network
+ss -tlnp                  # Listening ports with process names
+curl -I https://example.com  # HTTP headers only
+lsof -i :8000             # What process owns port 8000?</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash — ssh &amp; systemd</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># SSH config (~/.ssh/config)
+Host prod-bastion
+    HostName 52.1.2.3
+    User ubuntu
+    IdentityFile ~/.ssh/prod_key
+
+Host db-private
+    HostName 10.0.1.50
+    User ubuntu
+    ProxyJump prod-bastion  # Jump through bastion
+
+# Systemd
+systemctl status nginx
+systemctl restart nginx
+journalctl -u nginx -f        # Follow nginx logs
+journalctl --since "1 hour ago" -u nginx  # Time filter
+systemctl list-units --failed  # Show failed units</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>What does chmod 755 mean in octal notation?</q><p>7 (owner) = 4+2+1 = rwx. 5 (group) = 4+0+1 = r-x. 5 (other) = r-x. Common for executables and directories you want others to read/execute but not write. chmod 644 is typical for files (owner can write, others read-only).</p></div>
+      <div class="lesson-iq"><q>How do you find what process is using port 8080?</q><p>ss -tlnp | grep :8080 (modern), or lsof -i :8080, or fuser 8080/tcp. ss is preferred over deprecated netstat. Output shows PID in the last column.</p></div>
+      <div class="lesson-iq"><q>What is the difference between kill -9 and kill -15?</q><p>SIGTERM (15) asks the process to shut down gracefully — it can catch the signal, flush buffers, and clean up. SIGKILL (9) is sent by the kernel — cannot be caught or ignored, process is immediately terminated. Always try SIGTERM first; use SIGKILL only if the process is unresponsive.</p></div>
+      <div class="lesson-iq"><q>How does sudo work, and what is /etc/sudoers?</q><p>sudo runs a command as another user (default: root). /etc/sudoers defines who can run what as whom. Entry format: user hostname=(runas) commands. NOPASSWD: skips password prompt. Use visudo to edit — it validates syntax to prevent lockouts. Sudoers.d/ directory allows per-file additions.</p></div>
+      <div class="lesson-iq"><q>What is the difference between /etc/passwd and /etc/shadow?</q><p>/etc/passwd is world-readable and contains user info (username, UID, GID, home, shell) but not passwords (shows x). /etc/shadow is root-only and contains hashed passwords with aging info. This split prevents brute-force attacks from unprivileged users.</p></div>
+      <div class="lesson-iq"><q>How would you debug a service that fails to start?</q><p>systemctl status service-name shows last exit code and recent logs. journalctl -u service-name --no-pager -n 50 shows more log context. Check the ExecStart command manually, verify the user the service runs as has permission to its files, and check for port conflicts with ss -tlnp.</p></div>
+      <div class="lesson-iq"><q>What is a zombie process?</q><p>A process that has exited but its entry remains in the process table because the parent hasn't called wait() to collect the exit status. Zombies consume a PID but no memory or CPU. Fix: send SIGCHLD to the parent process or kill the parent (zombies are automatically reaped by init/systemd). Large zombie counts indicate a buggy parent.</p></div>
+      <div class="lesson-iq"><q>FAANG: How would you investigate a Linux server that is suddenly slow?</q><p>Start with top/htop to identify CPU/memory saturation. Check load average — above core count means CPU-bound. vmstat 1 3 shows context switches and IO wait. iostat -xz 1 3 identifies disk bottlenecks. sar -n DEV 1 3 checks network saturation. netstat -s | grep -i retrans shows TCP retransmits (network issues). strace -p PID shows syscalls for a specific process. The RED method: Rate, Errors, Duration for the system's exposed service.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list"><li>Never run production services as root — create a dedicated service user with minimal permissions (<code>useradd -r -s /bin/false svcname</code>).</li>
+        <li>Use <code>systemctl enable svc</code> so services auto-restart on reboot — don't rely on manual restarts after patching.</li>
+        <li>Rotate logs with logrotate — configure daily rotation with <code>compress</code> and <code>delaycompress</code> to prevent disk-fill incidents.</li>
+        <li>Use SSH key authentication everywhere — disable password auth in sshd_config (<code>PasswordAuthentication no</code>).</li>
+        <li>Lock down sudo — grant only the specific commands each service account needs, not blanket NOPASSWD ALL.</li>
+        <li>Set file permissions on private keys to 600 (<code>chmod 600 ~/.ssh/id_ed25519</code>) — SSH refuses to use world-readable keys.</li></ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Linux Basics.</div>
+      <ul class="lesson-list"><li>Setting SSH private key permissions to 644 or 755 — SSH silently refuses to use keys that are group/world-readable, giving a confusing "permission denied" error.</li>
+        <li>Using <code>kill -9</code> first — always try SIGTERM first to allow clean shutdown. SIGKILL can leave locked files, corrupt data, or zombie processes.</li>
+        <li>Editing /etc/sudoers with a regular editor instead of <code>visudo</code> — a syntax error in sudoers locks all users out of sudo permanently.</li>
+        <li>Running <code>chmod -R 777 /var/www</code> to "fix permissions" — makes every file world-writable, trivially exploitable if any web-accessible script has code execution.</li>
+        <li>Cron jobs with relative paths (<code>script.sh</code> instead of <code>/home/user/script.sh</code>) — cron has a minimal PATH that doesn't include user directories, so jobs silently fail.</li></ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>ls -lah</strong><span>List with permissions, sizes, hidden files</span></div>
+      <div class="lesson-cheat-item"><strong>chmod 755 / 644</strong><span>rwxr-xr-x for dirs, rw-r--r-- for files</span></div>
+      <div class="lesson-cheat-item"><strong>ss -tlnp</strong><span>Show listening ports with process names</span></div>
+      <div class="lesson-cheat-item"><strong>journalctl -u svc -f</strong><span>Follow logs for a systemd service</span></div>
+      <div class="lesson-cheat-item"><strong>systemctl restart svc</strong><span>Restart a service (stop + start)</span></div>
+      <div class="lesson-cheat-item"><strong>ps aux | grep name</strong><span>Find processes by name</span></div>
+      <div class="lesson-cheat-item"><strong>kill -15 PID</strong><span>Graceful shutdown (SIGTERM)</span></div>
+      <div class="lesson-cheat-item"><strong>kill -9 PID</strong><span>Force kill (SIGKILL) — last resort</span></div>
+      <div class="lesson-cheat-item"><strong>df -h</strong><span>Disk usage by filesystem (human-readable)</span></div>
+      <div class="lesson-cheat-item"><strong>du -sh /path/*</strong><span>Size of each item in a directory</span></div>
+      <div class="lesson-cheat-item"><strong>ssh -L 5432:db:5432 user@host</strong><span>Local port forward through SSH tunnel</span></div>
+      <div class="lesson-cheat-item"><strong>crontab -e</strong><span>Edit current user's cron schedule</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Service ownership and permissions</strong><p>Create a user <code>webuser</code> with no login shell. Create /var/www/app/ owned by webuser:webuser with 755 on dirs and 644 on files. Write a systemd unit that runs a Python HTTP server as webuser. Enable and verify it survives a reboot.</p></div>
+      <div class="lesson-exercise"><strong>SSH tunnel to a locked-down service</strong><p>Start PostgreSQL on a remote VM with listen_addresses = 'localhost' (no external access). Create an SSH tunnel <code>ssh -L 5432:localhost:5432 user@remote</code>. Connect from your local machine with <code>psql -h localhost -p 5432</code>. Verify you cannot connect without the tunnel.</p></div>
+      <div class="lesson-exercise"><strong>Incident simulation</strong><p>Start a web app. Fill disk by writing <code>dd if=/dev/zero of=/tmp/bigfile bs=1M count=4000</code>. Observe what breaks. Identify the failing service via <code>journalctl -u app -f</code>. Free disk by deleting bigfile. Verify recovery. Write a 5-line post-mortem.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="reverse-proxy.html">← Reverse Proxy</a>
+      <a class="nav-link next" href="bash-scripting.html">Bash Scripting →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

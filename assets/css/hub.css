@@ -1,0 +1,153 @@
+/* TechForge — unified section hub pages (DevOps, System Design, Databases) */
+
+body.tf-hub-page .page.page-wide {
+  padding-bottom: 80px;
+}
+
+/* ── Hero ── */
+.tf-hub-hero {
+  position: relative;
+  padding: 52px 0 44px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.tf-hub-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 60% at 90% 10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
+    radial-gradient(ellipse 40% 50% at 0% 90%, rgba(77, 158, 247, 0.05), transparent 50%);
+}
+.tf-hub-hero > * { position: relative; z-index: 1; }
+
+.tf-hub-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  padding: 5px 14px;
+  border-radius: var(--r-full);
+  margin-bottom: 18px;
+}
+
+.tf-hub-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5.5vw, 46px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  color: var(--text);
+  margin: 0 0 14px;
+}
+.tf-hub-title span {
+  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tf-hub-sub {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 580px;
+  margin: 0 0 24px;
+}
+
+/* ── Stats row ── */
+.tf-hub-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.tf-stat-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 16px 12px;
+  text-align: center;
+  transition: border-color .18s, transform .18s;
+}
+.tf-stat-box:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+.tf-stat-val {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 4px;
+}
+.tf-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: .5px;
+}
+
+/* ── Learning path ── */
+.tf-learning-path {
+  margin-top: 48px;
+  padding: 28px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+}
+.tf-learning-path-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.tf-path-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tf-path-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.tf-path-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Compare table (databases hub) ── */
+.compare-table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .tf-hub-stats { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .tf-hub-stats { grid-template-columns: 1fr 1fr; }
+  .tf-hub-title { font-size: 22px !important; letter-spacing: -1px !important; }
+  .tf-hub-hero { padding: 36px 0 32px; }
+  .tf-learning-path { padding: 20px 16px; }
+}

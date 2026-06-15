@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="38 system design interview questions — scalability, caching, CAP, microservices, case studies — tagged Beginner to FAANG."/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/interview/system-design-interview.html"/>
+  <meta property="og:title" content="System Design Interview Q&amp;A — TechForge"/>
+  <meta property="og:description" content="38 system design interview questions — scalability, caching, CAP, microservices, case studies — tagged Beginner to FAANG."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>System Design Interview Q&amp;A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+<style>
+  :root { --accent: #22c55e; --surface: var(--card); --surface2: rgba(34,211,238,.05); --display: var(--font-display); --mono: var(--font-mono); --orange: #f97316; --bg2: rgba(0,0,0,.25); }
+  .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
+  .int-page-hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,211,238,.06) 0%,transparent 58%),radial-gradient(ellipse 40% 50% at 105% 20%,rgba(77,142,247,.04) 0%,transparent 52%); }
+  .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); background:rgba(34,211,238,.07); border:1px solid rgba(34,211,238,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
+  .iph-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); box-shadow:0 0 5px var(--cyan); animation:iphdot 2s ease infinite; }
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title { font-family:var(--font-display); font-size:clamp(24px,4vw,36px); font-weight:900; letter-spacing:-1.5px; color:var(--text); margin-bottom:10px; }
+  .iph-title span { background:linear-gradient(135deg,var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .iph-sub { font-size:13.5px; color:var(--text2); line-height:1.75; max-width:560px; margin-bottom:18px; }
+  .iph-badges { display:flex; gap:7px; flex-wrap:wrap; }
+  .iph-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; padding:3px 10px; border-radius:var(--r-full); border:1px solid; }
+  .int-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:28px; }
+  .is-box { background:var(--card); padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; }
+  .is-val { font-family:var(--font-mono); font-size:20px; font-weight:900; }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text3); }
+  .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text3); cursor:pointer; transition:all .15s; }
+  .ftab.active { background:rgba(34,211,238,.09); border-color:rgba(34,211,238,.3); color:var(--cyan); }
+  .filter-sep { width:1px; height:20px; background:var(--border); }
+  .qna-list { border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:32px; }
+  .qna-item { border-bottom:1px solid var(--border); }
+  .qna-item:last-child { border-bottom:none; }
+  .qna-item.open { background:rgba(34,211,238,.04); }
+  .qna-q { padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:14px; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text3); min-width:24px; }
+  .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
+  .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
+  .tag-sd { background:rgba(34,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
+  .tag-devops { background:rgba(249,115,22,.08); color:#f97316; border:1px solid rgba(249,115,22,.2); }
+  .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
+  .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
+  .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:#f87171; border:1px solid rgba(248,113,113,.2); }
+  .qna-chevron { font-size:12px; color:var(--text3); flex-shrink:0; transition:transform .2s; }
+  .qna-item.open .qna-chevron { transform:rotate(180deg); }
+  .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
+  .qna-item.open .qna-a { display:block; }
+  .qna-a pre { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; font-family:var(--font-mono); font-size:11px; overflow-x:auto; margin:10px 0; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
+  .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(34,211,238,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:900; color:var(--green); }
+  .no-results { display:none; text-align:center; padding:40px; color:var(--text3); font-family:var(--font-mono); font-size:13px; }
+  .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
+  .anim-in.visible { opacity:1; transform:none; }
+  @media(max-width:900px){ .int-stats{grid-template-columns:repeat(4,1fr);} }
+</style>
+</head>
+<body data-topic-id="iv/system-design-interview" data-section="interview">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link current" href="index.html">Interview Q&A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="search-wrap"><input class="search-input" id="qna-search" type="text" placeholder="Search topics…" autocomplete="off"></div>
+  <div class="sidebar-label">Interview Categories</div>
+  <a class="sb-link" href="index.html"><span class="sb-num">🏠</span>All Categories</a>
+  <a class="sb-link" href="dsa-interview.html"><span class="sb-num">📊</span>DSA</a>
+    <a class="sb-link active" href="system-design-interview.html"><span class="sb-num">🏗️</span>System Design</a>
+    <a class="sb-link" href="devops-interview.html"><span class="sb-num">⎇</span>DevOps</a>
+    <a class="sb-link" href="python-interview.html"><span class="sb-num">🐍</span>Python</a>
+    <a class="sb-link" href="sql-interview.html"><span class="sb-num">💾</span>SQL</a>
+</aside>
+<main class="main" id="mainContent">
+  <div class="int-page-hero anim-in">
+    <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — System Design Track</div>
+    <h1 class="iph-title">System Design <span>Interview Questions</span></h1>
+    <p class="iph-sub">38 curated questions covering scalability, load balancing, caching, databases, messaging, and FAANG case studies with expandable answers.</p>
+    <div class="iph-badges"><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07)">Scalability</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07)">Caching</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07)">Microservices</span><span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07)">Case Studies</span></div>
+  </div>
+  <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">36</span><span class="is-label">Total Qs</span></div>
+      <div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">Beginner</span></div>
+      <div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">14</span><span class="is-label">Intermediate</span></div>
+      <div class="is-box" style="--is-c:#f87171"><span class="is-val" style="color:#f87171">11</span><span class="is-label">Advanced</span></div>
+      <div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">5</span><span class="is-label">FAANG</span></div></div>
+  <div class="progress-banner anim-in">
+    <div style="flex:1;font-size:12.5px;color:var(--text3)"><strong style="color:var(--text)">Progress saved locally.</strong> Expand answers and check off questions as you study.</div>
+    <div style="text-align:center"><div class="pb-count" id="doneCount">0</div><div style="font-family:var(--font-mono);font-size:8.5px;color:var(--text3)">/ 36 Done</div></div>
+  </div>
+  <div class="filter-row anim-in">
+    <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">36</span></button>
+      <button class="ftab" onclick="filterQna('beginner',this)">Beginner</button>
+      <button class="ftab" onclick="filterQna('intermediate',this)">Intermediate</button>
+      <button class="ftab" onclick="filterQna('advanced',this)">Advanced</button>
+      <button class="ftab" onclick="filterQna('faang',this)">FAANG</button>
+  </div>
+  <div class="section-label anim-in">Questions</div>
+  <div class="qna-list anim-in" id="qnaList"><div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">01</span>
+<span class="qna-text">What is horizontal vs vertical scaling?</span>
+<span class="qna-tag tag-sd">Scalability</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a"><strong>Vertical scaling</strong> adds CPU/RAM to one machine (simpler, hits hardware ceiling). <strong>Horizontal scaling</strong> adds more machines behind a load balancer (harder state/consistency, scales further). Most web systems scale out at the application tier first.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">02</span>
+<span class="qna-text">Explain round-robin vs least-connections load balancing.</span>
+<span class="qna-tag tag-sd">Load Balancing</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Round-robin rotates requests evenly — simple but ignores server load. Least-connections sends to the backend with fewest active connections — better for long-lived requests. Use health checks on both; remove unhealthy nodes quickly.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">03</span>
+<span class="qna-text">What is cache-aside pattern?</span>
+<span class="qna-tag tag-sd">Caching</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">App reads cache first; on miss, read DB, populate cache, return. Writes update DB then invalidate/delete cache entry. Pros: flexible. Cons: stampede risk on cold keys — mitigate with single-flight or probabilistic early expiration.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">04</span>
+<span class="qna-text">State the CAP theorem in plain language.</span>
+<span class="qna-tag tag-sd">CAP</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">During a <strong>network partition</strong>, a distributed system cannot simultaneously guarantee both <strong>Consistency</strong> (every read sees latest write) and <strong>Availability</strong> (every request gets a response). Real systems pick CP or AP per subsystem.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">05</span>
+<span class="qna-text">SQL vs NoSQL — when would you pick each?</span>
+<span class="qna-tag tag-sd">Databases</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">SQL when you need ACID transactions, joins, and flexible ad-hoc queries. NoSQL when you need horizontal write scale, flexible schema, or specialized models (documents, wide-column, graph, time-series).</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">06</span>
+<span class="qna-text">What is an API gateway responsible for?</span>
+<span class="qna-tag tag-sd">API Design</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">TLS termination, authentication, routing, rate limiting, request aggregation, protocol translation, and observability at the edge. Keeps microservices from reimplementing cross-cutting concerns.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">07</span>
+<span class="qna-text">Compare synchronous REST vs asynchronous messaging.</span>
+<span class="qna-tag tag-sd">Messaging</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">REST is simple and request-response — good for user-facing paths with tight latency budgets. Messaging decouples producers/consumers, absorbs spikes, enables retries — better for background work. Hybrid architectures are common.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">08</span>
+<span class="qna-text">What is database sharding?</span>
+<span class="qna-tag tag-sd">Sharding</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Splitting data across multiple DB instances by a <strong>shard key</strong>. Enables write scale beyond one node. Challenges: cross-shard queries, rebalancing, hot shards. Often paired with a routing layer or consistent hashing.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">09</span>
+<span class="qna-text">Leader-follower replication — how does failover work?</span>
+<span class="qna-tag tag-sd">Replication</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">One leader accepts writes; followers replicate asynchronously or synchronously. On leader failure, promote a follower (manual or automated). Risk: replication lag causes stale reads or lost writes if promotion is too aggressive.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">10</span>
+<span class="qna-text">What is a circuit breaker?</span>
+<span class="qna-tag tag-sd">Fault Tolerance</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Stops calling a failing dependency after error threshold, fails fast, periodically probes recovery. Prevents cascade failures. Pair with timeouts, bulkheads, and graceful degradation.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">11</span>
+<span class="qna-text">Define SLI, SLO, and SLA.</span>
+<span class="qna-tag tag-sd">Reliability</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a"><strong>SLI</strong> = measured indicator (e.g. availability). <strong>SLO</strong> = internal target (99.9% monthly). <strong>SLA</strong> = contractual commitment with consequences. Error budgets = 1 − SLO, guiding release velocity.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">12</span>
+<span class="qna-text">How does a CDN reduce latency?</span>
+<span class="qna-tag tag-sd">CDN</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Caches static assets at edge PoPs close to users. Reduces origin load and RTT. Use cache headers, versioning in filenames, and origin shield for traffic spikes.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">13</span>
+<span class="qna-text">Token bucket vs sliding window rate limiting.</span>
+<span class="qna-tag tag-sd">Rate Limiting</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Token bucket allows bursts up to bucket size with steady refill — smooth UX. Sliding window counts requests in rolling time window — stricter fairness. Often implemented in Redis or at API gateway.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">14</span>
+<span class="qna-text">Microservices vs modular monolith trade-offs.</span>
+<span class="qna-tag tag-sd">Architecture</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Microservices: independent deploy, tech diversity, fault isolation — but network complexity, distributed tracing, data consistency pain. Modular monolith: simpler ops until team/traffic scale demands service extraction.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">15</span>
+<span class="qna-text">Eventual consistency — give a real example.</span>
+<span class="qna-tag tag-sd">Consistency</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Dynamo-style shopping cart or social feed: writes propagate asynchronously; users may briefly see stale counts. Acceptable when business rules allow temporary inconsistency with convergence guarantees.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">16</span>
+<span class="qna-text">How would you design a URL shortener?</span>
+<span class="qna-tag tag-sd">Case Study</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a"><pre>Clients → LB → API (create/redirect)
+        → SQL/NoSQL (mapping)
+        → Redis cache (hot links)
+        → Analytics queue (async)</pre>Key: base62 ID generation, cache-aside for redirects, rate limit creation, TTL optional.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">17</span>
+<span class="qna-text">Design Twitter/X timeline (high level).</span>
+<span class="qna-tag tag-sd">Case Study</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a"><pre>Post service → Kafka → Fan-out workers
+Home timeline: push (write fan-out) for normal users;
+pull (merge on read) for celebrities.
+Cache timelines in Redis; rank by time/score.</pre>Trade-off: fan-out write amplification vs read latency.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">18</span>
+<span class="qna-text">Design Netflix video streaming architecture.</span>
+<span class="qna-tag tag-sd">Case Study</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Upload → transcode pipeline → object storage + CDN. Playback: adaptive bitrate (ABR), edge caches, regional origin failover. Control plane separate from data plane; SLO-driven capacity planning.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">19</span>
+<span class="qna-text">How do you achieve 99.99% availability?</span>
+<span class="qna-tag tag-sd">High Availability</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Eliminate single points of failure: multi-AZ, redundant load balancers, automated failover, chaos testing, graceful degradation, and error budgets. ~52 min downtime/year — requires defense in depth, not one trick.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">20</span>
+<span class="qna-text">Consistent hashing — why use it?</span>
+<span class="qna-tag tag-sd">Distributed</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Minimizes key remapping when nodes added/removed vs naive modulo hashing. Used in distributed caches, CDNs, and sharding routers. Virtual nodes improve balance.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">21</span>
+<span class="qna-text">What is service discovery?</span>
+<span class="qna-tag tag-sd">Discovery</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Mechanism for clients to find healthy service instances (DNS, Consul, etcd, Kubernetes Services). Client-side (smart client) vs server-side (LB) discovery — K8s often uses ClusterIP + kube-proxy or mesh.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">22</span>
+<span class="qna-text">Kafka vs RabbitMQ — when to choose which?</span>
+<span class="qna-tag tag-sd">Kafka</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Kafka: high-throughput event log, replay, stream processing, retention by time. RabbitMQ: flexible routing (exchanges), task queues, lower operational footprint for classic messaging. Many systems use both.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">23</span>
+<span class="qna-text">What is backpressure?</span>
+<span class="qna-tag tag-sd">Queues</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Slow consumers signal producers to reduce send rate — prevents unbounded queue growth and OOM. Implement via bounded queues, HTTP 429, or reactive streams.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">24</span>
+<span class="qna-text">Hot partition problem — mitigation?</span>
+<span class="qna-tag tag-sd">Partitioning</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Salting keys, composite partition keys, write sharding, or dedicated resources for hot tenants. Monitor per-partition QPS and size.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">25</span>
+<span class="qna-text">Idempotency in distributed APIs.</span>
+<span class="qna-tag tag-sd">API Design</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Clients send Idempotency-Key header; server stores result for key TTL. Retries return same outcome without double charge/side effects. Critical for payments and write APIs.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">26</span>
+<span class="qna-text">What is the thundering herd problem?</span>
+<span class="qna-tag tag-sd">Caching</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Many clients miss cache simultaneously and hammer origin/DB. Fix: request coalescing, jittered TTL, stale-while-revalidate, or pre-warming.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">27</span>
+<span class="qna-text">Active-active vs active-passive DR.</span>
+<span class="qna-tag tag-sd">HA</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Active-passive: standby region idle until failover — simpler, wasted capacity. Active-active: both regions serve traffic — lower RTO, harder data consistency and split-brain handling.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">28</span>
+<span class="qna-text">How do you estimate QPS capacity in an interview?</span>
+<span class="qna-tag tag-sd">Fundamentals</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Back-of-envelope: DAU × actions/day ÷ 86400 × peak factor. Then size app servers (req/s per core), DB writes, cache hit ratio, and bandwidth. State assumptions explicitly.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">29</span>
+<span class="qna-text">Bloom filters in system design.</span>
+<span class="qna-tag tag-sd">Caching</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Probabilistic structure: definitely not in set vs maybe in set. Used to avoid unnecessary DB lookups (e.g. CDN miss path, Cassandra anti-join). False positives possible; no false negatives.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">30</span>
+<span class="qna-text">Two-phase commit limitations.</span>
+<span class="qna-tag tag-sd">Distributed</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">2PC blocks on coordinator failure and is not partition tolerant. Production often uses sagas, outbox pattern, or eventual consistency instead of global 2PC.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">31</span>
+<span class="qna-text">Outbox pattern for reliable events.</span>
+<span class="qna-tag tag-sd">Event-Driven</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Write business row + outbox row in same DB transaction. Separate relay publishes to message bus and marks sent. Guarantees at-least-once delivery without dual-write races.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">32</span>
+<span class="qna-text">Design a rate limiter for 1M RPS API.</span>
+<span class="qna-tag tag-sd">Rate Limiting</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Distributed counters in Redis Cluster with local token buckets at edge gateways for fast reject. Sync periodically; shard by API key hash. Return 429 + Retry-After.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">33</span>
+<span class="qna-text">What metrics define a healthy microservice?</span>
+<span class="qna-tag tag-sd">Monitoring</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">RED: Rate, Errors, Duration. Plus saturation (CPU, queue depth), dependency health, and SLO burn rate. Alert on symptoms users feel, not every infra blip.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">34</span>
+<span class="qna-text">GraphQL vs REST at scale.</span>
+<span class="qna-tag tag-sd">API Design</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">GraphQL reduces over-fetching but complicates caching and can enable expensive queries — need depth/complexity limits. REST simpler at CDN edge; GraphQL popular for mobile BFF layers.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">35</span>
+<span class="qna-text">How does DNS load balancing work?</span>
+<span class="qna-tag tag-sd">Load Balancing</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">DNS returns multiple A records or geo-routed answers. Clients pick randomly; TTL controls cache. Coarse-grained — often paired with L7 LB behind DNS.</div>
+</div>
+<div class="qna-item" data-cat="sd" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">36</span>
+<span class="qna-text">What is saga pattern?</span>
+<span class="qna-tag tag-sd">Microservices</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Sequence of local transactions with compensating actions on failure. Choreography (events) vs orchestration (central coordinator). Chooses availability over immediate cross-service ACID.</div>
+</div></div>
+  <div class="no-results" id="no-results">No questions match this filter.</div>
+    <div class="page-nav">
+      <a class="nav-link" href="sql-interview.html">← SQL Interview</a>
+      <a class="nav-link next" href="devops-interview.html">DevOps Interview →</a>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+const STORAGE_KEY='tf_sd_interview_progress';
+function toggleQ(el){el.closest('.qna-item').classList.toggle('open');}
+function getProgress(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch(e){return {};}}
+function setChecked(n,on){const p=getProgress();if(on)p[n]=1;else delete p[n];localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+function renderProgress(){const p=getProgress();const n=Object.keys(p).length;const el=document.getElementById('doneCount');if(el)el.textContent=n;}
+function filterQna(diff,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const show=diff==='all'||item.dataset.diff===diff;
+    item.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+function searchQna(val){
+  const q=val.trim().toLowerCase();let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const text=item.querySelector('.qna-text')?.textContent.toLowerCase()||'';
+    const ans=item.querySelector('.qna-a')?.textContent.toLowerCase()||'';
+    const match=!q||text.includes(q)||ans.includes(q);
+    item.style.display=match?'':'none';
+    if(match)visible++;
+    if(q)item.classList.remove('open');
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{
+  const n=String(i+1).padStart(2,'0');item.dataset.n=n;
+  const qEl=item.querySelector('.qna-q');
+  if(qEl&&!qEl.querySelector('.qna-cb')){
+    const cb=document.createElement('div');cb.className='qna-cb';cb.style.cssText='width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;cursor:pointer';
+    cb.addEventListener('click',e=>{e.stopPropagation();const on=!cb.classList.contains('checked');cb.classList.toggle('checked',on);if(on){cb.style.background='var(--green)';cb.textContent='✓';}else{cb.style.background='';cb.textContent='';}setChecked(n,on);renderProgress();});
+    qEl.insertBefore(cb,qEl.firstChild);
+  }
+});
+const animObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');animObs.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';animObs.observe(el);});
+renderProgress();
+</script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

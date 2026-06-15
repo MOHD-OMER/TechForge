@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="System design is the process of defining a system's architecture to meet functional requirements (what it does) and non-functional requirements (how well it…"/>
+  <meta name="keywords" content="System Design Fundamentals, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/system-design/fundamentals.html"/>
+  <meta property="og:title" content="System Design Fundamentals — TechForge"/>
+  <meta property="og:description" content="System design is the process of defining a system's architecture to meet functional requirements (what it does) and non-functional requirements (how well it…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>System Design Fundamentals — System Design — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #22c55e; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"System Design Fundamentals","description":"System design is the process of defining a system's architecture to meet functional requirements (what it does) and non-functional requirements (how well it…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="sd/fundamentals" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link active" href="fundamentals.html"><span class="sb-num">📐</span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num">📈</span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num">⚖️</span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic & Performance</div>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num">⚡</span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num">💾</span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num">🌍</span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num">🚦</span>Rate Limiting</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num">🚪</span>API Gateway</a>
+    <div class="sidebar-label">Messaging & Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num">📬</span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num">📨</span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num">🐰</span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num">⚡</span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link" href="microservices.html"><span class="sb-num">🧩</span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num">🏛️</span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num">🌐</span>Distributed Systems</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num">🔗</span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num">🗂️</span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num">📋</span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num">✂️</span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num">🔍</span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num">🛡️</span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num">🔧</span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num">🎸</span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num">🌶️</span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num">⚡</span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← System Design Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Guide</div>
+      <h1 class="pg-title">System Design Fundamentals</h1>
+      <p class="pg-sub">Requirements, CAP, building blocks, design process.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">System design starts with requirements (functional, NFR, scale) before drawing boxes — clarify constraints first.</div>
+      
+      <p class="lesson-prose">System design is the process of defining a system's architecture to meet functional requirements (what it does) and non-functional requirements (how well it does it — latency, availability, throughput, consistency). Every design decision is a trade-off: more consistency means less availability; more horizontal scaling means more operational complexity.</p>
+      <p class="lesson-prose">The design process starts with requirements clarification. Functional: what features must the system support? Non-functional: how many users, what read/write ratio, what latency target (p99 &lt; 200ms?), what availability SLO (99.9% = 8.7h downtime/year, 99.99% = 52m/year)? Back-of-envelope estimation comes next: DAU × requests_per_user = QPS; QPS × data_per_request = storage growth rate.</p>
+      <p class="lesson-prose">The core building blocks appear in almost every system design: load balancers distribute traffic, application servers process requests, caches (Redis, Memcached) serve hot data, databases (SQL for ACID guarantees, NoSQL for horizontal scale) persist state, message queues (Kafka, SQS) decouple services, and CDNs serve static assets from edge nodes close to users.</p>
+      <p class="lesson-prose">CAP theorem (Brewer's theorem): a distributed system can only guarantee two of three properties simultaneously — Consistency (every read reflects the latest write), Availability (every request gets a response), and Partition tolerance (system works despite network splits). Since network partitions are unavoidable, systems choose CP (banks: correct data &gt; availability) or AP (social feeds: available and eventually consistent).</p>
+      <p class="lesson-prose">Scalability approaches: vertical scaling (bigger machine — easier but has a ceiling), horizontal scaling (more machines — requires stateless services or distributed state). A stateless service stores no session data; any instance can handle any request. Stateful components (databases, caches with data) require consistent routing, leader election, or replication to scale horizontally.</p>
+      <p class="lesson-prose">Interview framework for "Design [System]": (1) Clarify requirements and scale, (2) Estimate capacity (QPS, storage, bandwidth), (3) Design API, (4) Define data model and schema, (5) Design high-level architecture, (6) Deep-dive the most critical/risky component, (7) Discuss trade-offs and what you'd change at 10×/100× scale. Interviewers evaluate depth of reasoning, not recall of a memorized answer.</p>
+    
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Requirements (scale, SLO, budget)
+         |
+  High-level components
+         |
+  Data flow + storage choice
+         |
+  Bottlenecks + failure modes
+         |
+  Trade-offs documented</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+            <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">estimate</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>10M DAU × 5 reads/day = 50M reads/day
+≈ 580 reads/sec average, ~3k peak (5×)
+Storage: 500B × 100M records ≈ 50GB + indexes</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Functional vs non-functional reqs?</q><p>Functional: what system does; NFR: latency, availability, consistency, cost, compliance.</p></div>
+      <div class="lesson-iq"><q>Back-of-envelope estimation?</q><p>QPS, storage, bandwidth from DAU × actions — sanity-check before deep design.</p></div>
+      <div class="lesson-iq"><q>Building blocks?</q><p>LB, cache, CDN, DB, queue, object store, search — compose rather than reinvent.</p></div>
+      <div class="lesson-iq"><q>How to structure 45-min interview?</q><p>5 min clarify, 10 min high-level, 15 min deep dive (data + scale), 10 min bottlenecks, 5 min wrap.</p></div>
+      <div class="lesson-iq"><q>CAP in one sentence?</q><p>During partition, choose consistency or availability — real systems pick per operation with tunable models.</p></div>
+      <div class="lesson-iq"><q>What interviewers score?</q><p>Structured thinking, trade-off awareness, operational realism, not memorized buzzwords.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Treat System Design Fundamentals config as code with review and CI validation.</li>
+        <li>Define SLOs and dashboards before production cutover.</li>
+        <li>Document rollback and ownership for on-call.</li>
+        <li>Use least privilege for credentials and secrets.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <ul class="lesson-list">
+        <li>Running System Design Fundamentals in prod without staging parity.</li>
+        <li>No monitoring on golden signals after changes.</li>
+        <li>Skipping backup/state export before major upgrades.</li>
+        <li>Alert fatigue without actionable runbooks.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="tradeoffs">
+      <h2><span class="sec-icon">⚖️</span> Trade-off Analysis</h2>
+      <p class="lesson-prose">System Design Fundamentals improves requirements, cap, building blocks, design process. but adds operational and cognitive complexity — justify with load and team size.</p>
+      <p class="lesson-prose">Favor simplicity until metrics (p99 latency, error rate, cost) prove the pattern necessary.</p>
+      <p class="lesson-prose">Every redundancy layer trades capital/operational cost for availability — align with explicit SLO targets.</p>
+      <p class="lesson-prose">Document accepted inconsistency windows and recovery behavior before production cutover.</p>
+    </section>
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>NFR</strong><span>Latency, availability, scale</span></div>
+      <div class="lesson-cheat-item"><strong>QPS</strong><span>Queries per second</span></div>
+      <div class="lesson-cheat-item"><strong>SLO</strong><span>Target reliability</span></div>
+      <div class="lesson-cheat-item"><strong>Back-of-envelope</strong><span>Rough capacity math</span></div>
+      <div class="lesson-cheat-item"><strong>Trade-off</strong><span>Cost vs complexity</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Design URL shortener</strong><p>Estimate QPS, choose base62 IDs, discuss redirect cache.</p></div>
+      <div class="lesson-exercise"><strong>Rate limits</strong><p>Define per-user QPS for read-heavy API.</p></div>
+      <div class="lesson-exercise"><strong>SLO draft</strong><p>Pick 99.9% availability and error budget for a B2C app.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="index.html">← Hub</a>
+      <a class="nav-link next" href="scalability.html">Scalability →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

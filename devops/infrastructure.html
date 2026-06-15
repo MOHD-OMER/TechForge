@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Infrastructure as Code (IaC) treats infrastructure configuration (servers, networks, databases, DNS) as version-controlled code rather than manually…"/>
+  <meta name="keywords" content="Infrastructure Basics, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/infrastructure.html"/>
+  <meta property="og:title" content="Infrastructure Basics — TechForge"/>
+  <meta property="og:description" content="Infrastructure as Code (IaC) treats infrastructure configuration (servers, networks, databases, DNS) as version-controlled code rather than manually…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Infrastructure Basics — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Infrastructure Basics","description":"Infrastructure as Code (IaC) treats infrastructure configuration (servers, networks, databases, DNS) as version-controlled code rather than manually…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/infrastructure" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link active" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Infrastructure Basics</h1>
+      <p class="pg-sub">Compute, storage, networking, IAM fundamentals.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Infrastructure Basics: Compute, storage, networking, IAM fundamentals.</div>
+      
+      <p class="lesson-prose">Infrastructure as Code (IaC) treats infrastructure configuration (servers, networks, databases, DNS) as version-controlled code rather than manually configured systems. Changes go through code review and automated testing before being applied. The infrastructure state is reproducible — destroy and recreate a full environment from source code in minutes.</p>
+      <p class="lesson-prose">Key tools by scope: Terraform and Pulumi provision cloud resources (VMs, VPCs, RDS, S3 — the infrastructure layer). Ansible, Chef, and Puppet configure the software inside those machines (install Nginx, create users, manage /etc/). Docker/Kubernetes package and run applications inside the configured infrastructure. Each tool operates at a different layer and they're often combined.</p>
+      <p class="lesson-prose">Immutable vs mutable infrastructure: mutable infrastructure (Ansible running on long-lived VMs) changes machines in place — configuration drift accumulates over months. Immutable infrastructure (build a new AMI or Docker image on every change, replace the old one) guarantees reproducibility — every machine started from the same image is identical. Immutable is the preferred pattern for cloud-native teams.</p>
+      <p class="lesson-prose">Idempotency: applying the same IaC configuration multiple times produces the same result. Terraform apply is idempotent — if the resource already exists in the desired state, nothing changes. Ansible tasks are designed to be idempotent: install nginx runs apt install nginx --yes which does nothing if nginx is already installed at the right version.</p>
+      <p class="lesson-prose">Testing IaC: terratest (Go) programmatically applies Terraform, runs assertions, and destroys the environment. Kitchen-Terraform tests Terraform modules. Checkov and tfsec scan Terraform for security misconfigurations before apply. OPA (Open Policy Agent) enforces organizational policies (no resources without cost tags, no public S3 buckets) as code.</p>
+      <p class="lesson-prose">Secrets in IaC: never store secrets in Terraform state or Ansible playbooks committed to Git. Use HashiCorp Vault dynamic secrets (generate short-lived DB credentials on demand), AWS SSM Parameter Store or Secrets Manager (referenced in Terraform data sources, not stored in state), or SOPS-encrypted files for secrets that must live in the repo.</p>
+      <p class="lesson-prose">Drift detection: manual changes to infrastructure (someone SSH-ing in and changing a config) cause drift from IaC state. Terraform detects drift on next plan; AWS Config continuously monitors for changes. Eliminate snowflakes (unique, manually configured servers) by enforcing IaC-only changes via lockdown (no console access, IAM deny for manual resource creation by non-Terraform roles).</p>
+    
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Users / clients
+         |
+  Infrastructure Basics
+         |
+  Core services
+         |
+  Data + observability</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+            <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">bash</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># Infrastructure Basics
+# Compute, storage, networking, IAM fundamentals.
+# Validate in staging before production rollout.</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>What problem does Infrastructure Basics solve?</q><p>It addresses the core use case described in production architecture — map features to reliability, scale, or velocity outcomes.</p></div>
+      <div class="lesson-iq"><q>Key components of Infrastructure Basics?</q><p>Identify inputs, outputs, control plane, data plane, and failure domains — interviewers want structured decomposition.</p></div>
+      <div class="lesson-iq"><q>Common production pitfalls?</q><p>Misconfiguration, missing observability, no rollback path, and scaling bottlenecks under peak load.</p></div>
+      <div class="lesson-iq"><q>How do you test changes safely?</q><p>Staging parity, canary/gradual rollout, automated health checks, and documented rollback.</p></div>
+      <div class="lesson-iq"><q>Metrics to prove success?</q><p>Error rate, latency percentiles, throughput, cost, and toil reduction — pick one primary SLO.</p></div>
+      <div class="lesson-iq"><q>Beginner vs advanced concern?</q><p>Beginners focus on setup; advanced teams focus on blast radius, security boundaries, and operability at 10× scale.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Treat Infrastructure Basics config as code with review and CI validation.</li>
+        <li>Define SLOs and dashboards before production cutover.</li>
+        <li>Document rollback and ownership for on-call.</li>
+        <li>Use least privilege for credentials.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <ul class="lesson-list">
+        <li>Adopting Infrastructure Basics without measurable success criteria.</li>
+        <li>No staging environment mirroring production constraints.</li>
+        <li>Missing rollback path during incidents.</li>
+        <li>Undocumented on-call expectations.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>Infrastructure</strong><span>Compute, storage, networking, IAM fundamentals.</span></div>
+      <div class="lesson-cheat-item"><strong>SLO</strong><span>Service level objective</span></div>
+      <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
+      <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
+      <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Infrastructure Basics sandbox</strong><p>Stand up Infrastructure Basics locally or in free tier; document commands and failure recovery.</p></div>
+      <div class="lesson-exercise"><strong>Failure drill</strong><p>Introduce misconfiguration; practice detection and rollback under time limit.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="grafana.html">← Grafana</a>
+      <a class="nav-link next" href="cloud-fundamentals.html">Cloud Fundamentals →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1520 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+    <meta name="theme-color" content="#030508"/>
+    <meta name="description" content="Django framework tutorial — MVT architecture, ORM, admin panel, authentication, and deployment."/>
+    <title>Django Framework — TechForge</title>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/system-design/django.html"/>
+  <meta property="og:title" content="Django Framework — TechForge"/>
+  <meta property="og:description" content="Django framework tutorial — MVT architecture, ORM, admin panel, authentication, and deployment."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+    <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+
+      <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+<style>
+    :root {
+    --accent: var(--green);
+    --surface: var(--card);
+    --surface2: rgba(34,197,94,0.05);
+    --display: var(--font-display);
+    --mono: var(--font-mono);
+    --bg2: rgba(0,0,0,.25);
+}
+
+    /* ── PAGE SHELL ───────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 48px 20px 100px; }
+
+    /* ── PAGE HEADER ──────────────────────────────── */
+    .pg-head {
+      margin-bottom: 40px; padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .pg-crumb {
+      font-family: var(--mono); font-size: 11px; font-weight: 600;
+      color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+    }
+    .pg-crumb a { color: var(--text2); text-decoration: none; }
+    .pg-crumb a:hover { color: var(--accent); }
+    .pg-title {
+      font-family: var(--display); font-size: clamp(32px, 5vw, 44px);
+      font-weight: 800; color: var(--text); margin-bottom: 14px;
+      letter-spacing: -0.025em; line-height: 1.1;
+    }
+    .pg-sub {
+      font-size: 15px; color: var(--text2); max-width: 640px;
+      line-height: 1.75; margin-bottom: 20px;
+    }
+    .pg-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 100px;
+      font-family: var(--mono); font-size: 11.5px; font-weight: 600;
+    }
+    .b-green  { background: rgba(52,211,153,.1);  color: var(--green);  border: 1px solid rgba(52,211,153,.2); }
+    .b-blue   { background: rgba(77,158,247,.1);  color: var(--blue);   border: 1px solid rgba(77,158,247,.2); }
+    .b-purple { background: rgba(167,139,250,.1); color: var(--purple); border: 1px solid rgba(167,139,250,.2); }
+    .b-amber  { background: rgba(247,204,69,.1);  color: #fcd34d;       border: 1px solid rgba(247,204,69,.2); }
+
+    /* ── TOPIC TABS ───────────────────────────────── */
+    .tab-nav {
+      display: flex; gap: 0; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0; overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 10px 16px; background: transparent;
+      border: none; border-bottom: 2px solid transparent;
+      color: var(--text2); font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all .15s; white-space: nowrap;
+      font-family: var(--body); margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+    .tab-btn.active {
+      color: var(--green); border-bottom-color: var(--green);
+      background: rgba(34,197,94,0.04);
+    }
+    .tab-counter {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 17px; height: 17px; border-radius: 50%;
+      background: rgba(34,197,94,0.12); color: var(--green);
+      font-size: 9px; font-weight: 700; margin-left: 6px;
+      font-family: var(--mono);
+    }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    /* ── PANE WRAPPER ─────────────────────────────── */
+    .pane-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-top: none; border-radius: 0 0 14px 14px;
+      padding: 28px;
+    }
+
+    /* ── TOPIC HEADER INSIDE PANE ─────────────────── */
+    .pane-title {
+      font-family: var(--display); font-size: 18px; font-weight: 800;
+      color: var(--text); margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .pane-sub {
+      font-size: 13px; color: var(--text2); line-height: 1.65;
+      margin-bottom: 24px; max-width: 680px;
+    }
+
+    /* ── STEPS ────────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex; gap: 0;
+      border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .step-num-col {
+      width: 48px; flex-shrink: 0;
+      background: rgba(34,197,94,0.06);
+      border-right: 1px solid var(--border);
+      display: flex; align-items: flex-start;
+      justify-content: center; padding-top: 18px;
+    }
+    .step-num {
+      font-family: var(--mono); font-size: 12px; font-weight: 700;
+      color: var(--green);
+    }
+    .step-body { flex: 1; padding: 16px 18px; }
+    .step-title {
+      font-size: 14px; font-weight: 700; color: var(--text);
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 13px; color: var(--text2); line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .step-desc:last-child { margin-bottom: 0; }
+
+    /* ── CODE BLOCK ───────────────────────────────── */
+    .code-block {
+      position: relative; margin-top: 10px;
+      background: #0d1117; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; overflow: hidden;
+    }
+    .code-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .code-lang {
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: .08em;
+    }
+    .copy-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; color: rgba(255,255,255,0.4);
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      padding: 3px 10px; cursor: pointer; transition: all .15s;
+    }
+    .copy-btn:hover { background: rgba(34,197,94,0.12); color: var(--green); border-color: rgba(34,197,94,0.3); }
+    .copy-btn.copied { color: var(--green); border-color: rgba(34,197,94,0.4); }
+    .code-body {
+      padding: 14px 16px; font-family: var(--mono);
+      font-size: 12.5px; line-height: 1.7;
+      overflow-x: auto; white-space: pre;
+    }
+    /* Syntax colours */
+    .kw  { color: #ff7b72; }   /* keywords */
+    .fn  { color: #d2a8ff; }   /* functions/class names */
+    .st  { color: #a5d6ff; }   /* strings */
+    .cm  { color: #8b949e; font-style: italic; } /* comments */
+    .nm  { color: #79c0ff; }   /* numbers / special */
+    .dc  { color: #ffa657; }   /* decorators */
+    .df  { color: #f7cc45; }   /* default text/variables */
+    .op  { color: #ff7b72; }   /* operators */
+
+    /* ── CALLOUTS ─────────────────────────────────── */
+    .callout {
+      display: flex; gap: 12px; padding: 14px 16px;
+      border-radius: 10px; font-size: 13px; line-height: 1.65;
+      margin: 16px 0; border-left: 3px solid;
+    }
+    .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .c-blue  { background: rgba(77,158,247,.08);  border-color: var(--blue);   color: #9ec8f9; }
+    .c-amber { background: rgba(247,204,69,.07);  border-color: #fcd34d;       color: #fcd34d; }
+    .c-green { background: rgba(34,197,94,.07);   border-color: var(--green);  color: #6ee7b7; }
+
+    /* ── STAT CARDS (used in What is Django) ──────── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px; margin-top: 24px;
+    }
+    .stat-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+      transition: border-color .2s;
+    }
+    .stat-card:hover { border-color: rgba(34,197,94,0.3); }
+    .sc-val {
+      font-family: var(--display); font-size: 20px; font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .sc-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .sc-desc  { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+    /* ── MVT DIAGRAM ──────────────────────────────── */
+    .mvt-diagram {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0; align-items: center;
+      margin: 24px 0; padding: 24px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; overflow-x: auto;
+    }
+    .mvt-box {
+      text-align: center; padding: 18px 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; min-width: 110px;
+    }
+    .mvt-box.active-box { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.05); }
+    .mvt-letter {
+      font-family: var(--display); font-size: 28px; font-weight: 800;
+      color: var(--green); margin-bottom: 4px;
+    }
+    .mvt-name  { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .mvt-role  { font-size: 11px; color: var(--text2); }
+    .mvt-arrow {
+      font-size: 20px; color: var(--border);
+      padding: 0 8px; flex-shrink: 0; text-align: center;
+    }
+
+    /* ── QUIZ ─────────────────────────────────────── */
+    .quiz-section {
+      margin-top: 28px; padding: 24px;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .quiz-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .quiz-icon { font-size: 18px; }
+    .quiz-title {
+      font-family: var(--display); font-size: 15px; font-weight: 800;
+      color: var(--text);
+    }
+    .quiz-subtitle { font-size: 12px; color: var(--text2); margin-left: auto; font-family: var(--mono); }
+
+    .quiz-item { margin-bottom: 28px; }
+    .quiz-item:last-child { margin-bottom: 0; }
+    .quiz-q {
+      font-size: 13.5px; font-weight: 600; color: var(--text);
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .quiz-q-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 6px;
+      background: rgba(34,197,94,0.1); color: var(--green);
+      font-size: 11px; font-weight: 700; margin-right: 8px;
+      font-family: var(--mono); flex-shrink: 0;
+    }
+    .quiz-opts { display: flex; flex-direction: column; gap: 7px; }
+    .quiz-opt {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text2); font-size: 13px; cursor: pointer;
+      text-align: left; transition: all .15s; width: 100%;
+    }
+    .quiz-opt:hover:not([disabled]) { border-color: var(--green); color: var(--text); }
+    .quiz-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.08); color: #6ee7b7; }
+    .quiz-opt.wrong   { border-color: #f87171; background: rgba(248,113,113,0.07);   color: #f87171; }
+    .quiz-opt[disabled] { cursor: default; }
+    .opt-letter {
+      width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      display: grid; place-items: center;
+      font-family: var(--mono); font-size: 10px; font-weight: 700;
+      color: var(--text2);
+    }
+    .quiz-feedback {
+      margin-top: 8px; font-size: 12.5px; font-weight: 600;
+      padding: 8px 12px; border-radius: 7px; display: none;
+    }
+    .fb-correct { background: rgba(34,197,94,0.1); color: #6ee7b7; display: block; }
+    .fb-wrong   { background: rgba(248,113,113,0.1); color: #f87171; display: block; }
+
+    .quiz-score {
+      display: none; margin-top: 20px; padding: 14px 18px;
+      background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px; text-align: center;
+    }
+    .quiz-score.show { display: block; }
+    .score-val {
+      font-family: var(--display); font-size: 28px; font-weight: 800;
+      color: var(--green);
+    }
+    .score-label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+    .quiz-reset {
+      margin-top: 12px; padding: 8px 20px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 8px; color: var(--green); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all .15s;
+    }
+    .quiz-reset:hover { background: rgba(34,197,94,0.18); }
+
+    /* ── PAGE NAV ─────────────────────────────────── */
+    .page-nav {
+      display: flex; justify-content: space-between; gap: 16px;
+      padding-top: 40px; border-top: 1px solid var(--border); margin-top: 40px;
+    }
+    .nav-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text2); text-decoration: none;
+      font-size: 13.5px; font-weight: 500; transition: all .17s;
+    }
+    .nav-link:hover { border-color: var(--green); color: var(--green); }
+
+    /* ── CHEATSHEET TABLE ─────────────────────────── */
+    .cmd-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    .cmd-table th {
+      padding: 10px 14px; background: rgba(255,255,255,0.04);
+      font-size: 11px; font-weight: 700; color: var(--text2);
+      text-align: left; border-bottom: 1px solid var(--border);
+      font-family: var(--mono); text-transform: uppercase; letter-spacing: .07em;
+    }
+    .cmd-table td {
+      padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px; vertical-align: top;
+    }
+    .cmd-table tr:last-child td { border-bottom: none; }
+    .cmd-table tr:hover td { background: rgba(34,197,94,0.03); }
+    .cmd-code {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--green); background: rgba(34,197,94,0.08);
+      padding: 2px 8px; border-radius: 5px;
+      border: 1px solid rgba(34,197,94,0.15);
+    }
+    .cmd-desc { color: var(--text2); font-size: 12.5px; }
+
+    @media (max-width: 600px) {
+      .mvt-diagram { grid-template-columns: 1fr; }
+      .mvt-arrow { transform: rotate(90deg); }
+    }
+    
+  /* ── FORGE HERO ── */
+  .bk-hero{position:relative;padding:44px 0 36px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .bk-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,197,94,.07) 0%,transparent 58%);}
+  .bkh-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .bkh-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:bkhdot 2s ease infinite;}
+  @keyframes bkhdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .bkh-title{font-family:var(--font-display);font-size:clamp(24px,4vw,38px);font-weight:900;letter-spacing:-1.5px;color:var(--text);margin-bottom:10px;}
+  .bkh-title span{background:linear-gradient(135deg,var(--green),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .bkh-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:580px;margin-bottom:16px;}
+  .bkh-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;}
+  .bkh-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid rgba(34,197,94,.25);background:rgba(34,197,94,.07);color:var(--green);}
+  .bk-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .bks-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .bks-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--bks-c,var(--green));opacity:0;transition:opacity .2s;}
+  .bks-box:hover{background:rgba(34,197,94,.03);}.bks-box:hover::after{opacity:1;}
+  .bks-val{font-family:var(--font-mono);font-size:20px;font-weight:900;line-height:1;}
+  .bks-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.bk-stats{grid-template-columns:repeat(2,1fr);}}
+</style>
+
+</head>
+<body data-topic-id="sd/django" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="./">Backend</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+    <div class="sidebar-label">Django Topics</div>
+    <a class="sb-link" href="#tab-what">What is Django?</a>
+    <a class="sb-link" href="#tab-mvt">MVT Architecture</a>
+    <a class="sb-link" href="#tab-orm">ORM</a>
+    <a class="sb-link" href="#tab-admin">Admin Panel</a>
+    <a class="sb-link" href="#tab-urls">URLs &amp; Views</a>
+    <a class="sb-link" href="#tab-auth">Authentication</a>
+    <a class="sb-link" href="#tab-deploy">Deployment</a>
+    <a class="sb-link" href="#tab-cheatsheet">Cheatsheet</a>
+    <a class="sb-link" href="#tab-quiz">Quiz</a>
+
+    <div class="sidebar-label" style="margin-top:20px;">Framework Guides</div>
+    <a class="sb-link" href="./">← Overview</a>
+    <a class="sb-link" href="flask.html">🧪 Flask</a>
+    <a class="sb-link" href="fastapi.html">⚡ FastAPI</a>
+  </aside>
+
+  <main class="main">
+    
+      <!-- FORGE HERO -->
+      <div class="bk-hero anim-in">
+        <div class="bkh-eyebrow"><span class="bkh-dot"></span>Backend — Django</div>
+        <h1 class="bkh-title">🎯 <span>Django Framework</span></h1>
+        <p class="bkh-sub">The batteries-included Python web framework — MVT architecture, powerful ORM, built-in admin, auth, forms, and deployment. The fastest way to ship production web apps.</p>
+        <div class="bkh-badges"><span class="bkh-badge">Full-Stack</span><span class="bkh-badge">Python 3.10+</span><span class="bkh-badge">Batteries Included</span></div>
+      </div>
+      <div class="bk-stats anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">MVT</span><span class="bks-label">Architecture</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">ORM</span><span class="bks-label">Built-in</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">Admin</span><span class="bks-label">Auto-generated</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">Auth</span><span class="bks-label">Built-in</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">✓</span><span class="bks-label">Production Ready</span></div></div>
+
+      <!-- TABS -->
+      <div class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="tab-what">What is Django?</button>
+        <button class="tab-btn" data-tab="tab-mvt">MVT Architecture</button>
+        <button class="tab-btn" data-tab="tab-orm">ORM</button>
+        <button class="tab-btn" data-tab="tab-admin">Admin Panel</button>
+        <button class="tab-btn" data-tab="tab-urls">URLs &amp; Views</button>
+        <button class="tab-btn" data-tab="tab-auth">Authentication</button>
+        <button class="tab-btn" data-tab="tab-deploy">Deployment</button>
+        <button class="tab-btn" data-tab="tab-cheatsheet">Cheatsheet</button>
+        <button class="tab-btn" data-tab="tab-quiz">Quiz <span class="tab-counter">10</span></button>
+      </div>
+
+      <!-- ══════════════ TAB: WHAT IS DJANGO ══════════════ -->
+      <div class="tab-pane active pane-wrap" id="tab-what">
+        <div class="pane-title">The "Batteries-Included" Framework</div>
+        <div class="pane-sub">
+          Django is a high-level Python web framework that encourages rapid development
+          and clean, pragmatic design. Built by experienced developers, it handles much
+          of the complexity of web development so you can focus on writing your app.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Everything Built-In</div>
+              <div class="step-desc">ORM, authentication, admin panel, forms, templates, sessions, caching — no hunting for third-party libraries for core functionality.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Django provides all of this out of the box</span>
+<span class="kw">from</span> django.contrib.auth.models <span class="kw">import</span> User
+<span class="kw">from</span> django.db <span class="kw">import</span> models
+<span class="kw">from</span> django.contrib.admin <span class="kw">import</span> site
+<span class="kw">from</span> django.forms <span class="kw">import</span> ModelForm
+<span class="kw">from</span> django.core.cache <span class="kw">import</span> cache
+<span class="kw">from</span> django.core.mail <span class="kw">import</span> send_mail</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">DRY Philosophy — Define Once, Use Everywhere</div>
+              <div class="step-desc">Write your data model once. Django auto-generates the database schema, admin interface, forms, and API serializers from it.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Define model ONCE in models.py</span>
+<span class="kw">class</span> <span class="fn">Product</span>(models.Model):
+    name  = models.CharField(max_length=<span class="nm">200</span>)
+    price = models.DecimalField(max_digits=<span class="nm">10</span>, decimal_places=<span class="nm">2</span>)
+    stock = models.PositiveIntegerField(default=<span class="nm">0</span>)
+
+<span class="cm"># Django auto-generates:
+# ✔ Database table (via migration)
+# ✔ Admin CRUD interface
+# ✔ ModelForm for HTML forms
+# ✔ REST serializer (with DRF)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Secure by Default</div>
+              <div class="step-desc">Protection against the most common web vulnerabilities is baked in — you have to explicitly opt out to turn it off.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># settings.py — security features enabled by default</span>
+CSRF_COOKIE_SECURE   = <span class="nm">True</span>   <span class="cm"># CSRF token required on all POST forms</span>
+SESSION_COOKIE_SECURE = <span class="nm">True</span>   <span class="cm"># Sessions over HTTPS only</span>
+X_FRAME_OPTIONS      = <span class="st">'DENY'</span>  <span class="cm"># Clickjacking protection</span>
+SECURE_HSTS_SECONDS  = <span class="nm">31536000</span> <span class="cm"># HTTP Strict Transport Security</span>
+
+<span class="cm"># SQL injection: Django ORM escapes all queries automatically
+# XSS: Django templates auto-escape HTML by default</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">04</span></div>
+            <div class="step-body">
+              <div class="step-title">Scalable — From Blog to Instagram</div>
+              <div class="step-desc">Instagram serves over 1 billion users on Django. Its architecture supports horizontal scaling, database sharding, and caching layers.</div>
+              <div class="callout c-blue">
+                <span class="callout-icon">💡</span>
+                <span>Instagram was built on Django from day one and still runs it today — proving Django scales far beyond "just for small projects."</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card"><div class="sc-val" style="color:var(--green)">2005</div><div class="sc-label">Year Released</div><div class="sc-desc">Built at Lawrence Journal-World newspaper</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:var(--blue)">5.x</div><div class="sc-label">Current Version</div><div class="sc-desc">Full async support, improved ORM</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:var(--purple)">BSD</div><div class="sc-label">License</div><div class="sc-desc">Open source, maintained by DSF</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:#fcd34d">1B+</div><div class="sc-label">Instagram Users</div><div class="sc-desc">Most famous Django-powered app</div></div>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: MVT ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-mvt">
+        <div class="pane-title">MVT — Model · View · Template</div>
+        <div class="pane-sub">
+          Django follows the MVT pattern. It looks like MVC, but Django calls the
+          "Controller" layer the <strong>View</strong>, and the presentation layer the <strong>Template</strong>.
+          The framework itself acts as the controller routing requests.
+        </div>
+
+        <div class="mvt-diagram">
+          <div class="mvt-box active-box">
+            <div class="mvt-letter">M</div>
+            <div class="mvt-name">Model</div>
+            <div class="mvt-role">Data & Database</div>
+          </div>
+          <div class="mvt-arrow">⇄</div>
+          <div class="mvt-box active-box">
+            <div class="mvt-letter">V</div>
+            <div class="mvt-name">View</div>
+            <div class="mvt-role">Business Logic</div>
+          </div>
+          <div class="mvt-arrow">⇄</div>
+          <div class="mvt-box active-box">
+            <div class="mvt-letter">T</div>
+            <div class="mvt-name">Template</div>
+            <div class="mvt-role">HTML Presentation</div>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">M</span></div>
+            <div class="step-body">
+              <div class="step-title">Model — The Data Layer</div>
+              <div class="step-desc">Python classes that map directly to database tables. Django ORM handles all SQL generation automatically.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">models.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.db <span class="kw">import</span> models
+<span class="kw">from</span> django.contrib.auth.models <span class="kw">import</span> User
+
+<span class="kw">class</span> <span class="fn">Post</span>(models.Model):
+    title     = models.CharField(max_length=<span class="nm">200</span>)
+    content   = models.TextField()
+    author    = models.ForeignKey(User, on_delete=models.CASCADE)
+    created   = models.DateTimeField(auto_now_add=<span class="nm">True</span>)
+    published = models.BooleanField(default=<span class="nm">False</span>)
+
+    <span class="kw">class</span> <span class="fn">Meta</span>:
+        ordering = [<span class="st">'-created'</span>]
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(self):
+        <span class="kw">return</span> self.title</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">V</span></div>
+            <div class="step-body">
+              <div class="step-title">View — The Business Logic Layer</div>
+              <div class="step-desc">Functions or classes that receive an HTTP request, interact with the Model, and return a response.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">views.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.shortcuts <span class="kw">import</span> render, get_object_or_404
+<span class="kw">from</span> django.contrib.auth.decorators <span class="kw">import</span> login_required
+<span class="kw">from</span> .models <span class="kw">import</span> Post
+
+<span class="kw">def</span> <span class="fn">post_list</span>(request):
+    posts = Post.objects.filter(published=<span class="nm">True</span>)
+    <span class="kw">return</span> render(request, <span class="st">'blog/list.html'</span>, {<span class="st">'posts'</span>: posts})
+
+<span class="dc">@login_required</span>
+<span class="kw">def</span> <span class="fn">post_detail</span>(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    <span class="kw">return</span> render(request, <span class="st">'blog/detail.html'</span>, {<span class="st">'post'</span>: post})</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">T</span></div>
+            <div class="step-body">
+              <div class="step-title">Template — The Presentation Layer</div>
+              <div class="step-desc">HTML files with Django Template Language (DTL) — variables, loops, conditionals, and template inheritance.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">html (dtl)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm">{# blog/list.html #}</span>
+{% extends <span class="st">'base.html'</span> %}
+
+{% block content %}
+  &lt;h1&gt;Latest Posts&lt;/h1&gt;
+  {% for post in posts %}
+    &lt;article&gt;
+      &lt;h2&gt;{{ post.title }}&lt;/h2&gt;
+      &lt;p&gt;by {{ post.author }} · {{ post.created|date:<span class="st">"M d, Y"</span> }}&lt;/p&gt;
+    &lt;/article&gt;
+  {% empty %}
+    &lt;p&gt;No posts yet.&lt;/p&gt;
+  {% endfor %}
+{% endblock %}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-blue" style="margin-top:20px;">
+          <span class="callout-icon">💡</span>
+          <span>The <strong>URL dispatcher</strong> acts as Django's controller — it routes incoming requests to the right View function based on the URL pattern.</span>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: ORM ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-orm">
+        <div class="pane-title">Django ORM — Object-Relational Mapper</div>
+        <div class="pane-sub">
+          The ORM lets you interact with your database using Python instead of SQL.
+          Queries are lazy (only execute when needed) and chainable.
+          Supports PostgreSQL, MySQL, SQLite, and Oracle.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">CRUD Operations</div>
+              <div class="step-desc">Create, Read, Update, Delete — the four core database operations.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># CREATE</span>
+post = Post.objects.create(title=<span class="st">"Hello"</span>, content=<span class="st">"World"</span>, author=user)
+
+<span class="cm"># READ — single object</span>
+post = Post.objects.get(pk=<span class="nm">1</span>)            <span class="cm"># raises DoesNotExist if missing</span>
+post = Post.objects.filter(pk=<span class="nm">1</span>).first()  <span class="cm"># returns None if missing</span>
+
+<span class="cm"># READ — queryset (lazy, evaluated on iteration)</span>
+posts = Post.objects.filter(published=<span class="nm">True</span>).order_by(<span class="st">'-created'</span>)[:10]
+
+<span class="cm"># UPDATE</span>
+Post.objects.filter(author=user).update(published=<span class="nm">True</span>)
+
+<span class="cm"># DELETE</span>
+Post.objects.filter(published=<span class="nm">False</span>).delete()</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">QuerySet Chaining & Lookups</div>
+              <div class="step-desc">Filter with double-underscore (dunder) field lookups. Queries are lazy — no DB hit until you evaluate.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Field lookups with __ (dunder) syntax</span>
+Post.objects.filter(title__icontains=<span class="st">'django'</span>)   <span class="cm"># case-insensitive search</span>
+Post.objects.filter(created__year=<span class="nm">2024</span>)           <span class="cm"># filter by year</span>
+Post.objects.filter(author__username=<span class="st">'omer'</span>)      <span class="cm"># traverse FK relationship</span>
+Post.objects.exclude(published=<span class="nm">False</span>)             <span class="cm"># exclude filter</span>
+
+<span class="cm"># Chaining (lazy — single SQL query generated)</span>
+results = (
+    Post.objects
+    .filter(published=<span class="nm">True</span>)
+    .select_related(<span class="st">'author'</span>)          <span class="cm"># JOIN to avoid N+1</span>
+    .prefetch_related(<span class="st">'tags'</span>)          <span class="cm"># prefetch M2M</span>
+    .order_by(<span class="st">'-created'</span>)
+    .values(<span class="st">'title'</span>, <span class="st">'author__username'</span>)
+)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Model Relationships</div>
+              <div class="step-desc">ForeignKey (many-to-one), ManyToManyField, OneToOneField — Django handles the JOIN logic for you.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">class</span> <span class="fn">Tag</span>(models.Model):
+    name = models.CharField(max_length=<span class="nm">50</span>, unique=<span class="nm">True</span>)
+
+<span class="kw">class</span> <span class="fn">Post</span>(models.Model):
+    <span class="cm"># ForeignKey: many Posts → one Author</span>
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name=<span class="st">'posts'</span>)
+    <span class="cm"># ManyToMany: a Post can have many Tags, a Tag many Posts</span>
+    tags = models.ManyToManyField(Tag, blank=<span class="nm">True</span>)
+
+<span class="cm"># Reverse access via related_name</span>
+user.posts.filter(published=<span class="nm">True</span>).count()  <span class="cm"># all posts by user</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">04</span></div>
+            <div class="step-body">
+              <div class="step-title">Migrations — Schema Version Control</div>
+              <div class="step-desc">Every model change generates a migration file. Your database schema is always in sync with your code.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># After changing a model, always run:</span>
+python manage.py makemigrations   <span class="cm"># generates migration file</span>
+python manage.py migrate          <span class="cm"># applies changes to DB</span>
+
+<span class="cm"># Inspect the generated SQL before applying:</span>
+python manage.py sqlmigrate myapp 0001
+
+<span class="cm"># Check for unapplied migrations:</span>
+python manage.py showmigrations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-amber">
+          <span class="callout-icon">⚠️</span>
+          <span>Always use <code>select_related()</code> for ForeignKey fields and <code>prefetch_related()</code> for M2M fields when looping through querysets. Forgetting this causes the <strong>N+1 query problem</strong>.</span>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: ADMIN ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-admin">
+        <div class="pane-title">Django Admin — Free CRUD Interface</div>
+        <div class="pane-sub">
+          Register any model and instantly get a production-quality admin dashboard —
+          list views, search, filters, form editing, and permissions — with zero extra code.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Register Models</div>
+              <div class="step-desc">One decorator turns any model into a full admin interface.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">admin.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.contrib <span class="kw">import</span> admin
+<span class="kw">from</span> .models <span class="kw">import</span> Post, Tag
+
+<span class="dc">@admin.register(Post)</span>
+<span class="kw">class</span> <span class="fn">PostAdmin</span>(admin.ModelAdmin):
+    list_display   = [<span class="st">'title'</span>, <span class="st">'author'</span>, <span class="st">'published'</span>, <span class="st">'created'</span>]
+    list_filter    = [<span class="st">'published'</span>, <span class="st">'created'</span>]
+    search_fields  = [<span class="st">'title'</span>, <span class="st">'content'</span>, <span class="st">'author__username'</span>]
+    list_editable  = [<span class="st">'published'</span>]          <span class="cm"># edit inline in list view</span>
+    prepopulated_fields = {<span class="st">'slug'</span>: (<span class="st">'title'</span>,)} <span class="cm"># auto-generate slug</span>
+    date_hierarchy = <span class="st">'created'</span>
+
+admin.site.register(Tag)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Inline Models</div>
+              <div class="step-desc">Edit related objects directly within a parent object's admin page.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">admin.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">class</span> <span class="fn">CommentInline</span>(admin.TabularInline):
+    model = Comment
+    extra = <span class="nm">1</span>               <span class="cm"># show 1 empty form by default</span>
+    fields = [<span class="st">'author'</span>, <span class="st">'body'</span>, <span class="st">'approved'</span>]
+
+<span class="dc">@admin.register(Post)</span>
+<span class="kw">class</span> <span class="fn">PostAdmin</span>(admin.ModelAdmin):
+    inlines = [CommentInline]  <span class="cm"># Comments appear inside Post admin</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Superuser &amp; Permissions</div>
+              <div class="step-desc">Django's permission system controls who can view, add, change, or delete each model.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Create admin superuser</span>
+python manage.py createsuperuser
+
+<span class="cm"># Access at: http://127.0.0.1:8000/admin/</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-green">
+          <span class="callout-icon">✅</span>
+          <span>The admin panel is available at <code>/admin/</code> by default. For production, consider changing this URL to something less obvious for security.</span>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: URLS & VIEWS ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-urls">
+        <div class="pane-title">URLs &amp; Views</div>
+        <div class="pane-sub">
+          Django maps URL patterns to view functions/classes. Each app has its own
+          <code>urls.py</code>, which is included in the project's root URL configuration.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">URL Configuration</div>
+              <div class="step-desc">Use <code>path()</code> for exact matches and <code>re_path()</code> for regex patterns. URL parameters are captured with angle brackets.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">urls.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.urls <span class="kw">import</span> path, include
+<span class="kw">from</span> . <span class="kw">import</span> views
+
+<span class="cm"># app/urls.py</span>
+urlpatterns = [
+    path(<span class="st">''</span>,                      views.post_list,   name=<span class="st">'post-list'</span>),
+    path(<span class="st">'posts/&lt;int:pk&gt;/'</span>,       views.post_detail, name=<span class="st">'post-detail'</span>),
+    path(<span class="st">'posts/&lt;slug:slug&gt;/'</span>,    views.post_slug,   name=<span class="st">'post-slug'</span>),
+    path(<span class="st">'category/&lt;str:name&gt;/'</span>, views.by_category, name=<span class="st">'category'</span>),
+]
+
+<span class="cm"># project/urls.py — include app URLs</span>
+urlpatterns = [
+    path(<span class="st">'admin/'</span>, admin.site.urls),
+    path(<span class="st">'blog/'</span>,  include(<span class="st">'blog.urls'</span>)),
+    path(<span class="st">'api/'</span>,   include(<span class="st">'api.urls'</span>)),
+]</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Function-Based Views (FBV)</div>
+              <div class="step-desc">Simple, explicit. Best for custom logic where a CBV would be harder to read.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">views.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.shortcuts <span class="kw">import</span> render, redirect
+<span class="kw">from</span> django.http <span class="kw">import</span> JsonResponse
+<span class="kw">from</span> .forms <span class="kw">import</span> PostForm
+
+<span class="kw">def</span> <span class="fn">create_post</span>(request):
+    <span class="kw">if</span> request.method == <span class="st">'POST'</span>:
+        form = PostForm(request.POST)
+        <span class="kw">if</span> form.is_valid():
+            post = form.save(commit=<span class="nm">False</span>)
+            post.author = request.user
+            post.save()
+            <span class="kw">return</span> redirect(<span class="st">'post-detail'</span>, pk=post.pk)
+    <span class="kw">else</span>:
+        form = PostForm()
+    <span class="kw">return</span> render(request, <span class="st">'blog/create.html'</span>, {<span class="st">'form'</span>: form})</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Class-Based Views (CBV)</div>
+              <div class="step-desc">Generic views eliminate boilerplate for common patterns — list, detail, create, update, delete.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">views.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.views.generic <span class="kw">import</span> ListView, DetailView, CreateView
+<span class="kw">from</span> django.contrib.auth.mixins <span class="kw">import</span> LoginRequiredMixin
+<span class="kw">from</span> django.urls <span class="kw">import</span> reverse_lazy
+
+<span class="kw">class</span> <span class="fn">PostListView</span>(ListView):
+    model           = Post
+    template_name   = <span class="st">'blog/list.html'</span>
+    context_object_name = <span class="st">'posts'</span>
+    paginate_by     = <span class="nm">10</span>
+    queryset        = Post.objects.filter(published=<span class="nm">True</span>)
+
+<span class="kw">class</span> <span class="fn">PostCreateView</span>(LoginRequiredMixin, CreateView):
+    model         = Post
+    fields        = [<span class="st">'title'</span>, <span class="st">'content'</span>, <span class="st">'tags'</span>]
+    success_url   = reverse_lazy(<span class="st">'post-list'</span>)
+
+    <span class="kw">def</span> <span class="fn">form_valid</span>(self, form):
+        form.instance.author = self.request.user
+        <span class="kw">return</span> super().form_valid(form)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: AUTH ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-auth">
+        <div class="pane-title">Authentication &amp; Permissions</div>
+        <div class="pane-sub">
+          Django ships with a complete authentication system — user model, sessions,
+          login/logout views, password hashing (PBKDF2), and a group/permission system.
+          No third-party packages required.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Built-In Auth Views</div>
+              <div class="step-desc">Django provides ready-made views for login, logout, password change, and password reset. Just wire up the URLs.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">urls.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.contrib.auth <span class="kw">import</span> views <span class="kw">as</span> auth_views
+
+urlpatterns = [
+    <span class="cm"># Login / Logout</span>
+    path(<span class="st">'login/'</span>,  auth_views.LoginView.as_view(),  name=<span class="st">'login'</span>),
+    path(<span class="st">'logout/'</span>, auth_views.LogoutView.as_view(), name=<span class="st">'logout'</span>),
+
+    <span class="cm"># Password reset (full email flow)</span>
+    path(<span class="st">'password/reset/'</span>,         auth_views.PasswordResetView.as_view()),
+    path(<span class="st">'password/reset/done/'</span>,     auth_views.PasswordResetDoneView.as_view()),
+    path(<span class="st">'password/reset/&lt;uidb64&gt;/&lt;token&gt;/'</span>, auth_views.PasswordResetConfirmView.as_view()),
+]</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Protecting Views</div>
+              <div class="step-desc">Use decorators (FBV) or mixins (CBV) to restrict access to authenticated users.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.contrib.auth.decorators <span class="kw">import</span> login_required, permission_required
+
+<span class="cm"># Redirect to /login/ if not authenticated</span>
+<span class="dc">@login_required</span>
+<span class="kw">def</span> <span class="fn">dashboard</span>(request):
+    <span class="kw">return</span> render(request, <span class="st">'dashboard.html'</span>)
+
+<span class="cm"># Require specific permission</span>
+<span class="dc">@permission_required(<span class="st">'blog.can_publish'</span>, raise_exception=True)</span>
+<span class="kw">def</span> <span class="fn">publish_post</span>(request, pk):
+    Post.objects.filter(pk=pk).update(published=<span class="nm">True</span>)
+    <span class="kw">return</span> redirect(<span class="st">'post-detail'</span>, pk=pk)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Custom User Model</div>
+              <div class="step-desc">Always extend the default User model at the start of a project. Much harder to change later.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">models.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">from</span> django.contrib.auth.models <span class="kw">import</span> AbstractUser
+
+<span class="kw">class</span> <span class="fn">CustomUser</span>(AbstractUser):
+    bio    = models.TextField(blank=<span class="nm">True</span>)
+    avatar = models.ImageField(upload_to=<span class="st">'avatars/'</span>, null=<span class="nm">True</span>, blank=<span class="nm">True</span>)
+
+<span class="cm"># settings.py</span>
+AUTH_USER_MODEL = <span class="st">'accounts.CustomUser'</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout c-amber">
+          <span class="callout-icon">⚠️</span>
+          <span>Set <code>AUTH_USER_MODEL</code> <strong>before your first migration</strong>. Changing it after creating database tables is painful and error-prone.</span>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: DEPLOYMENT ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-deploy">
+        <div class="pane-title">Deploying Django to Production</div>
+        <div class="pane-sub">
+          Django's development server is not suitable for production. Use Gunicorn/Daphne,
+          configure production settings, serve static files via a CDN or whitenoise, and
+          deploy to Railway, Render, Heroku, or a VPS.
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">01</span></div>
+            <div class="step-body">
+              <div class="step-title">Production Settings Checklist</div>
+              <div class="step-desc">Never run <code>DEBUG=True</code> in production. Use environment variables for secrets.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">settings.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="kw">import</span> os
+
+<span class="cm"># ❌ Never hardcode SECRET_KEY in production</span>
+SECRET_KEY = os.environ.get(<span class="st">'DJANGO_SECRET_KEY'</span>)
+
+DEBUG          = <span class="nm">False</span>
+ALLOWED_HOSTS  = [<span class="st">'yourdomain.com'</span>, <span class="st">'www.yourdomain.com'</span>]
+
+<span class="cm"># Database (use PostgreSQL in production)</span>
+DATABASES = {
+    <span class="st">'default'</span>: {
+        <span class="st">'ENGINE'</span>: <span class="st">'django.db.backends.postgresql'</span>,
+        <span class="st">'NAME'</span>:   os.environ.get(<span class="st">'DB_NAME'</span>),
+        <span class="st">'USER'</span>:   os.environ.get(<span class="st">'DB_USER'</span>),
+        <span class="st">'PASSWORD'</span>: os.environ.get(<span class="st">'DB_PASSWORD'</span>),
+        <span class="st">'HOST'</span>:   os.environ.get(<span class="st">'DB_HOST'</span>),
+    }
+}
+
+<span class="cm"># Static files (WhiteNoise for serving without Nginx)</span>
+STATIC_ROOT    = BASE_DIR / <span class="st">'staticfiles'</span>
+STATICFILES_STORAGE = <span class="st">'whitenoise.storage.CompressedManifestStaticFilesStorage'</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">02</span></div>
+            <div class="step-body">
+              <div class="step-title">Gunicorn WSGI Server</div>
+              <div class="step-desc">Gunicorn is the standard WSGI server for Django in production. For async views, use Daphne (ASGI) instead.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body">pip install gunicorn
+
+<span class="cm"># Run with 4 worker processes</span>
+gunicorn myproject.wsgi:application \
+    --bind 0.0.0.0:8000 \
+    --workers 4 \
+    --timeout 120
+
+<span class="cm"># For async (Django Channels / ASGI)</span>
+pip install daphne
+daphne myproject.asgi:application --bind 0.0.0.0 --port 8000</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num-col"><span class="step-num">03</span></div>
+            <div class="step-body">
+              <div class="step-title">Deploy to Railway (recommended for quick deploys)</div>
+              <div class="step-desc">Railway auto-detects Django projects. Add a Procfile and environment variables.</div>
+              <div class="code-block">
+                <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-body"><span class="cm"># Procfile</span>
+web: gunicorn myproject.wsgi --log-file -
+
+<span class="cm"># runtime.txt (specify Python version)</span>
+python-<span class="nm">3.12</span>.<span class="nm">0</span>
+
+<span class="cm"># Pre-deploy commands (railway.toml or Dashboard)</span>
+python manage.py migrate
+python manage.py collectstatic --noinput</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ TAB: CHEATSHEET ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-cheatsheet">
+        <div class="pane-title">Django Complete Cheatsheet</div>
+        <div class="pane-sub">Everything from project setup to production — all patterns, commands, and best practices in one place.</div>
+
+        <!-- Setup -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">① Installation &amp; Project Setup</div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">bash</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="cm"># Install Django</span>
+pip install django psycopg2-binary whitenoise
+django-admin --version
+
+<span class="cm"># Create project &amp; app</span>
+django-admin startproject projectName
+cd projectName
+python manage.py startapp AppName
+
+<span class="cm"># Register app in settings.py → INSTALLED_APPS += ['AppName']</span>
+python manage.py runserver        <span class="cm"># http://127.0.0.1:8000/</span>
+python manage.py runserver 8080   <span class="cm"># custom port</span></div>
+        </div>
+
+        <!-- MVT Patterns -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">② MVT Patterns</div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">models.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> django.db <span class="kw">import</span> models
+
+<span class="kw">class</span> <span class="fn">Product</span>(models.Model):
+    product_id = models.AutoField(primary_key=<span class="nm">True</span>)
+    name       = models.CharField(max_length=<span class="nm">100</span>)
+    price      = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=<span class="nm">True</span>)
+
+    <span class="kw">def</span> <span class="fn">__str__</span>(self):
+        <span class="kw">return</span> self.name</div>
+        </div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">views.py — FBV &amp; CBV</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> django.shortcuts <span class="kw">import</span> render, redirect
+<span class="kw">from</span> django.views <span class="kw">import</span> View
+<span class="kw">from</span> django.http <span class="kw">import</span> HttpResponse
+
+<span class="cm"># Function-Based View</span>
+<span class="kw">def</span> <span class="fn">index</span>(request):
+    <span class="kw">return</span> render(request, <span class="st">'index.html'</span>, {<span class="st">'title'</span>: <span class="st">'Welcome'</span>})
+
+<span class="cm"># Class-Based View</span>
+<span class="kw">class</span> <span class="fn">SimpleView</span>(View):
+    <span class="kw">def</span> <span class="fn">get</span>(self, request):
+        <span class="kw">return</span> HttpResponse(<span class="st">'Hello from CBV'</span>)
+
+<span class="cm"># Redirect</span>
+<span class="kw">def</span> <span class="fn">go_home</span>(request):
+    <span class="kw">return</span> redirect(<span class="st">'https://example.com'</span>)</div>
+        </div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">urls.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> django.urls <span class="kw">import</span> path, include
+<span class="kw">from</span> . <span class="kw">import</span> views
+
+urlpatterns = [
+    path(<span class="st">''</span>,       views.index, name=<span class="st">'index'</span>),
+    path(<span class="st">'about/'</span>,  views.about, name=<span class="st">'about'</span>),
+    <span class="cm"># Modular apps</span>
+    path(<span class="st">'community/'</span>, include(<span class="st">'aggregator.urls'</span>)),
+]</div>
+        </div>
+
+        <!-- Forms -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">③ Forms</div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">forms.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> django <span class="kw">import</span> forms
+
+<span class="kw">class</span> <span class="fn">SampleForm</span>(forms.Form):
+    name        = forms.CharField(max_length=<span class="nm">50</span>)
+    description = forms.CharField(widget=forms.Textarea)</div>
+        </div>
+
+        <!-- Templates -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">④ Templates</div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">settings.py — template config</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body">TEMPLATES = [{
+    <span class="st">'BACKEND'</span>: <span class="st">'django.template.backends.django.DjangoTemplates'</span>,
+    <span class="st">'DIRS'</span>: [BASE_DIR / <span class="st">'templates'</span>],
+    <span class="st">'APP_DIRS'</span>: <span class="nm">True</span>,
+}]
+
+<span class="cm"># Pass variable in view:</span>
+<span class="cm"># return render(request, 'index.html', {"name": "Omer"})</span>
+<span class="cm"># Access in template: &lt;h1&gt;Hello, {{ name }}&lt;/h1&gt;</span></div>
+        </div>
+
+        <!-- Admin -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">⑤ Admin</div>
+        <div class="code-block" style="margin-bottom:20px;">
+          <div class="code-header"><span class="code-lang">admin.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <div class="code-body"><span class="kw">from</span> django.contrib <span class="kw">import</span> admin
+<span class="kw">from</span> .models <span class="kw">import</span> Product
+
+admin.site.register(Product)  <span class="cm"># simple</span>
+
+<span class="cm"># Or with customization:</span>
+<span class="dc">@admin.register(Product)</span>
+<span class="kw">class</span> <span class="fn">ProductAdmin</span>(admin.ModelAdmin):
+    list_display  = [<span class="st">'name'</span>, <span class="st">'price'</span>, <span class="st">'created_at'</span>]
+    search_fields = [<span class="st">'name'</span>]</div>
+        </div>
+
+        <!-- Best Practices -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">⑥ Best Practices</div>
+        <div class="callout c-green" style="margin-bottom:16px;">
+          <span class="callout-icon">✅</span>
+          <div>
+            Use <strong>virtual environments</strong> for every project.<br/>
+            Always commit <code>requirements.txt</code>: <code>pip freeze &gt; requirements.txt</code><br/>
+            Use <strong>.env files</strong> for secrets — never hardcode them in settings.<br/>
+            Separate <strong>dev &amp; production</strong> settings (use <code>django-environ</code>).<br/>
+            Prefer <strong>class-based views</strong> for reusable, scalable code.
+          </div>
+        </div>
+
+        <!-- All Commands -->
+        <div class="pane-title" style="font-size:14px;margin-bottom:8px;color:var(--green);">⑦ All manage.py Commands</div>
+        <table class="cmd-table">
+          <thead>
+            <tr><th>Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code class="cmd-code">python manage.py runserver</code></td><td class="cmd-desc">Start dev server at localhost:8000</td></tr>
+            <tr><td><code class="cmd-code">python manage.py runserver 8080</code></td><td class="cmd-desc">Start on custom port</td></tr>
+            <tr><td><code class="cmd-code">python manage.py startapp &lt;name&gt;</code></td><td class="cmd-desc">Create a new app inside the project</td></tr>
+            <tr><td><code class="cmd-code">python manage.py makemigrations</code></td><td class="cmd-desc">Generate migration files from model changes</td></tr>
+            <tr><td><code class="cmd-code">python manage.py migrate</code></td><td class="cmd-desc">Apply migrations to the database</td></tr>
+            <tr><td><code class="cmd-code">python manage.py sqlmigrate app 0001</code></td><td class="cmd-desc">View SQL for a specific migration</td></tr>
+            <tr><td><code class="cmd-code">python manage.py createsuperuser</code></td><td class="cmd-desc">Create an admin superuser</td></tr>
+            <tr><td><code class="cmd-code">python manage.py shell</code></td><td class="cmd-desc">Open interactive Django shell with ORM access</td></tr>
+            <tr><td><code class="cmd-code">python manage.py collectstatic</code></td><td class="cmd-desc">Gather all static files to STATIC_ROOT</td></tr>
+            <tr><td><code class="cmd-code">python manage.py showmigrations</code></td><td class="cmd-desc">List all migrations and their applied status</td></tr>
+            <tr><td><code class="cmd-code">python manage.py dbshell</code></td><td class="cmd-desc">Open the raw database CLI</td></tr>
+            <tr><td><code class="cmd-code">python manage.py check</code></td><td class="cmd-desc">Check project for common issues</td></tr>
+            <tr><td><code class="cmd-code">python manage.py test</code></td><td class="cmd-desc">Run the test suite</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══════════════ TAB: QUIZ ══════════════ -->
+      <div class="tab-pane pane-wrap" id="tab-quiz">
+        <div class="pane-title">Test Your Django Knowledge</div>
+        <div class="pane-sub">10 interview-style questions covering ORM, middleware, security, deployment, and Django internals.</div>
+
+        <div id="quizContainer">
+          <!-- Q1 -->
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="quiz-q-num">1</span>In Django's MVT pattern, what is the role of the <strong>View</strong>?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>Renders HTML templates to the browser</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>Handles requests and contains business logic</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Defines the database schema</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>Maps URLs to database tables</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="quiz-q-num">2</span>Which ORM method avoids the <strong>N+1 query problem</strong> when accessing a ForeignKey field in a loop?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span><code>filter()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span><code>values()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span><code>select_related()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span><code>annotate()</code></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="quiz-item" data-correct="a">
+            <div class="quiz-q"><span class="quiz-q-num">3</span>What does <code>python manage.py makemigrations</code> do?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>Generates migration files from model changes (does NOT touch the DB)</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>Applies all pending migrations to the database</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Creates a new Django app</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>Resets the database to a clean state</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="quiz-item" data-correct="d">
+            <div class="quiz-q"><span class="quiz-q-num">4</span>Which decorator protects a view so only logged-in users can access it?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span><code>@admin.register</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span><code>@csrf_exempt</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span><code>@permission_required</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span><code>@login_required</code></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="quiz-q-num">5</span>When should you set <code>AUTH_USER_MODEL</code> in settings?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>After running the first migration, to keep things simple</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>Before running any migrations — at the very start of the project</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Only if you need to add extra fields to the user</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>It doesn't matter when you set it</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="quiz-q-num">6</span>Which method fixes N+1 queries on a <strong>reverse ForeignKey</strong> (many side) in a loop?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span><code>select_related()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span><code>only()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span><code>prefetch_related()</code></button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span><code>defer()</code></button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="quiz-item" data-correct="b">
+            <div class="quiz-q"><span class="quiz-q-num">7</span>What is Django middleware primarily used for?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>Defining database models</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>Processing requests/responses globally (auth, security headers, logging)</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Rendering templates only</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>Managing static files in production</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="quiz-item" data-correct="a">
+            <div class="quiz-q"><span class="quiz-q-num">8</span>How does Django CSRF protection work for POST forms?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>Template includes <code>{% csrf_token %}</code>; middleware validates token on unsafe methods</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>CSRF is disabled by default in DEBUG mode only</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Only JWT APIs need CSRF</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>CSRF tokens are stored in the database per user</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q9 -->
+          <div class="quiz-item" data-correct="d">
+            <div class="quiz-q"><span class="quiz-q-num">9</span>Typical production Django deployment stack?</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span><code>runserver</code> behind Cloudflare only</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>SQLite + single process</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Django ORM replaces need for WSGI server</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>Gunicorn/uWSGI + Nginx reverse proxy + Postgres + static via CDN/WhiteNoise</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Q10 -->
+          <div class="quiz-item" data-correct="c">
+            <div class="quiz-q"><span class="quiz-q-num">10</span>Django signals are best used for…</div>
+            <div class="quiz-opts">
+              <button class="quiz-opt" onclick="answerQ(this, 'a')"><span class="opt-letter">A</span>Replacing all business logic in views</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'b')"><span class="opt-letter">B</span>Heavy synchronous email sends on every request</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'c')"><span class="opt-letter">C</span>Decoupled side effects (cache invalidation, audit hooks) — keep handlers light</button>
+              <button class="quiz-opt" onclick="answerQ(this, 'd')"><span class="opt-letter">D</span>Defining URL routes</button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+        </div>
+
+        <div class="quiz-score" id="quizScore">
+          <div class="score-val" id="scoreVal">—</div>
+          <div class="score-label" id="scoreLabel">Keep practicing!</div>
+          <button class="quiz-reset" onclick="resetQuiz()">Try Again</button>
+        </div>
+      </div>
+
+      <!-- PAGE NAV -->
+      <div class="page-nav">
+        <a class="nav-link" href="./">← System Design Hub</a>
+        <a class="nav-link" href="flask.html">Flask →</a>
+      </div>
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+
+  
+  
+  
+<script src="../assets/js/topics-manifest.js"></script>
+  <script src="../assets/js/site-index.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/platform.js?v=3"></script>
+<script>
+/* ── TABS ──────────────────────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var target = this.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-pane').forEach(function(p) { p.classList.remove('active'); });
+    this.classList.add('active');
+    document.getElementById(target).classList.add('active');
+  });
+});
+
+/* sidebar links scroll to tab */
+document.querySelectorAll('.sb-link[href^="#tab-"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    var id = this.getAttribute('href').slice(1);
+    var btn = document.querySelector('[data-tab="' + id + '"]');
+    if (btn) { btn.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+});
+
+/* ── COPY BUTTON ───────────────────────────────────── */
+function copyCode(btn) {
+  var code = btn.closest('.code-block').querySelector('.code-body');
+  navigator.clipboard.writeText(code.innerText).then(function() {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+/* ── QUIZ ──────────────────────────────────────────── */
+var quizAnswered = 0;
+var quizScore = 0;
+var totalQ = document.querySelectorAll('.quiz-item').length;
+
+function answerQ(optBtn, chosen) {
+  var item = optBtn.closest('.quiz-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = '1';
+
+  var correct = item.dataset.correct;
+  var fb = item.querySelector('.quiz-feedback');
+  var opts = item.querySelectorAll('.quiz-opt');
+
+  opts.forEach(function(o) { o.disabled = true; });
+  optBtn.classList.add(chosen === correct ? 'correct' : 'wrong');
+
+  if (chosen === correct) {
+    fb.textContent = '✓ Correct!';
+    fb.className = 'quiz-feedback fb-correct';
+    quizScore++;
+  } else {
+    fb.className = 'quiz-feedback fb-wrong';
+    fb.textContent = '✗ Not quite. The correct answer is ' + correct.toUpperCase() + '.';
+    item.querySelector('[onclick*="answerQ(this, \'' + correct + '\')"]').classList.add('correct');
+  }
+
+  quizAnswered++;
+  if (quizAnswered === totalQ) showScore();
+}
+
+function showScore() {
+  var scoreEl = document.getElementById('quizScore');
+  var valEl   = document.getElementById('scoreVal');
+  var lblEl   = document.getElementById('scoreLabel');
+  valEl.textContent = quizScore + ' / ' + totalQ;
+  var pct = (quizScore / totalQ) * 100;
+  lblEl.textContent = pct >= 80 ? '🎉 Excellent! You know your Django.' : pct >= 60 ? '👍 Good work — review the tricky parts.' : '📖 Keep studying — you\'ll get there!';
+  scoreEl.classList.add('show');
+}
+
+function resetQuiz() {
+  quizAnswered = 0; quizScore = 0;
+  document.getElementById('quizScore').classList.remove('show');
+  document.querySelectorAll('.quiz-item').forEach(function(item) {
+    delete item.dataset.answered;
+    item.querySelector('.quiz-feedback').className = 'quiz-feedback';
+    item.querySelector('.quiz-feedback').textContent = '';
+    item.querySelectorAll('.quiz-opt').forEach(function(o) {
+      o.disabled = false;
+      o.classList.remove('correct', 'wrong');
+    });
+  });
+}
+
+/* ── SCROLL PROGRESS & BACK TO TOP ────────────────── */
+document.addEventListener('DOMContentLoaded', function() {
+  var progressFill = document.getElementById('progressFill');
+  var backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function() {
+    var s = document.body.scrollTop || document.documentElement.scrollTop;
+    var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (h > 0 ? (s/h)*100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', s > 400);
+  }, { passive: true });
+  if (backTop) backTop.addEventListener('click', function() { window.scrollTo({ top:0, behavior:'smooth' }); });
+});
+
+/* Scroll animations */
+const _ao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_ao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_ao.observe(el);});
+</script>
+</body>
+</html>

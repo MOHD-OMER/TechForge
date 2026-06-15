@@ -1,16 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
   <title>Arrays & Strings — TechForge</title>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/dsa/arrays.html"/>
+  <meta property="og:title" content="Arrays &amp; Strings — TechForge"/>
+  <meta property="og:description" content="Arrays &amp; Strings — theory, examples, interview prep, and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=4" rel="stylesheet">
-  <style>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet">
+    <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+<style>
     /* FIX 1: Removed duplicate :root rule — was declared twice identically */
     :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
     .pg-head { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
@@ -184,31 +193,11 @@
 
   /* Hero always visible — above fold, no animation needed */
   .dsa-hero, .dsa-stats2 { opacity: 1 !important; transform: none !important; }
-
-/* ── MOBILE NAV (inline override) ── */
-@media (max-width: 900px) {
-  header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
-  header.topbar .tb-nav.mobile-visible { display: flex !important; flex-direction: column; position: fixed; top: calc(var(--topbar-h) + var(--safe-top, 0px)); left: 0; right: 0; background: var(--bg2, #0d1117); border-bottom: 1px solid var(--border, #1f2d42); padding: 8px 16px 16px; z-index: 90; box-shadow: 0 16px 48px rgba(0,0,0,0.4); gap: 2px; }
-  header.topbar .tb-nav.mobile-visible .tb-link { min-height: 48px; padding: 12px 16px; font-size: 16px; font-weight: 600; border-radius: 10px; display: flex; align-items: center; }
-  header.topbar .topbar-actions { display: flex !important; margin-left: auto !important; }
-  header.topbar .nav-toggle { display: inline-flex !important; }
-}
 </style>
 
-<style id="tf-mobile-nav-css">
-.tf-mobile-home-nav { display: block; padding: 12px 8px 0; }
-.tf-mhn-label { font-family: var(--mono,monospace); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3,#5a7094); padding: 0 8px; margin-bottom: 8px; }
-.tf-mhn-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 4px; }
-.tf-mhn-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 10px; text-decoration: none; background: var(--surface,#141b26); border: 1px solid var(--border,#1f2d42); transition: all .15s; -webkit-tap-highlight-color: transparent; }
-.tf-mhn-item:active { background: var(--surface2,#1a2234); border-color: var(--accent,#4d9ef7); }
-.tf-mhn-icon { font-size: 16px; line-height: 1; }
-.tf-mhn-text { font-family: var(--mono,monospace); font-size: 9px; font-weight: 600; color: var(--text2,#8da0bb); text-align: center; }
-.tf-mhn-divider { height: 1px; background: var(--border,#1f2d42); margin: 12px 0 8px; }
-@media (min-width: 901px) { .tf-mobile-home-nav { display: none !important; } }
-</style>
 </head>
-<body>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<body data-topic-id="dsa/arrays" data-section="dsa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
   <header class="topbar">
     <a class="tb-logo" href="../index.html">
       <div class="tb-logo-icon">⬡</div>
@@ -217,19 +206,19 @@
     <nav class="tb-nav" id="topNav">
       <a class="tb-link" href="../index.html">Home</a>
       <a class="tb-link current" href="./">DSA</a>
-      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link" href="../system-design/index.html">System Design</a>
       <a class="tb-link" href="../python/index.html">Python</a>
-      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../databases/index.html">Databases</a>
       <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
       <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../devops/index.html">DevOps</a>
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
-      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar">☰</button>
-      <button type="button" class="nav-toggle" id="navToggle" style="display:none!important" aria-label="Open menu">☰</button>
-    </div>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
   </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <div class="layout">
     <aside class="sidebar" id="sidebar">
@@ -240,11 +229,11 @@
         <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
         <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
-        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon">🔧</span><span class="tf-mhn-text">Backend</span></a>
-        <a class="tf-mhn-item" href="../sql/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">SQL</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
         <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../git/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">Git</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -308,6 +297,11 @@
         <h1 class="dh2-title">Arrays &amp; <span>Strings</span></h1>
         <p class="dh2-sub">The most fundamental data structure in computing. Arrays store elements in <strong>contiguous memory</strong>,
           giving you instant O(1) index access — the bedrock of every algorithm you will ever write.</p>
+        <div class="pg-badges tf-learning-actions" style="margin-top:12px;margin-bottom:4px;">
+          <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+          <button type="button" class="lesson-btn" id="lessonBookmark">&#9734; Save</button>
+          <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+        </div>
       </div>
       <div class="dsa-stats2" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(1)</span><span class="dss-label">Access</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">O(n)</span><span class="dss-label">Search</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">O(n)</span><span class="dss-label">Insert</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">Contiguous</span><span class="dss-label">Memory</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">Foundation</span></div></div>
 
@@ -429,7 +423,8 @@
                 <span class="code-lang">python</span>
                 <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
               </div>
-              <pre class="code-pre"><span class="cm"># ── Creating arrays ──────────────────────────</span>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm"># ── Creating arrays ──────────────────────────</span>
 arr = [10, 20, 30, 40, 50]
 arr = list(range(1, 6))         <span class="cm"># [1, 2, 3, 4, 5]</span>
 arr = [0] * 5                   <span class="cm"># [0, 0, 0, 0, 0] — fixed-size init</span>
@@ -517,7 +512,8 @@ flat    = [x for row in matrix for x in row]  <span class="cm"># flatten</span><
             <span class="code-lang">python</span>
             <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
           </div>
-          <pre class="code-pre"><span class="cm"># Strings are immutable</span>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm"># Strings are immutable</span>
 s = "hello"
 s[0] = "H"       <span class="cm"># ✗ TypeError — cannot modify in place</span>
 
@@ -930,9 +926,16 @@ prefix = [0] * (len(arr) + 1)<br>
       </div>
     </main>
   </div>
-  <button class="back-top" id="backTop" title="Back to top" aria-label="Scroll back to top">↑</button>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../assets/js/topics-manifest.js"></script>
+  <script src="../assets/js/site-index.js"></script>
   <script src="../assets/js/utils.js"></script>
-  <script>
+  <script src="../assets/js/platform.js?v=3"></script>
+<script>
     // FIX: Declare arD before DOMContentLoaded so arDraw(-1) inside the
     // callback has the array initialized. With var, the assignment runs
     // after the listener fires, leaving arD=undefined → arD.map() TypeError.
@@ -1191,5 +1194,31 @@ prefix = [0] * (len(arr) + 1)<br>
       _dsao.observe(el);
     });
   </script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
 </body>
 </html>

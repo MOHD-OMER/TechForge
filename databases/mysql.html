@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="MySQL is the world's most deployed open-source relational database. InnoDB is the default storage engine — ACID-compliant with row-level locking, MVCC,…"/>
+  <meta name="keywords" content="MySQL, Database Systems, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/databases/mysql.html"/>
+  <meta property="og:title" content="MySQL — TechForge"/>
+  <meta property="og:description" content="MySQL is the world's most deployed open-source relational database. InnoDB is the default storage engine — ACID-compliant with row-level locking, MVCC,…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>MySQL — Database Systems — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #4d9ef7; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"MySQL","description":"MySQL is the world's most deployed open-source relational database. InnoDB is the default storage engine — ACID-compliant with row-level locking, MVCC,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="db/mysql" data-section="databases">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link current" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Relational (RDBMS)</div>
+    <a class="sb-link" href="sql.html"><span class="sb-num">📘</span>SQL Complete Guide</a>
+    <a class="sb-link" href="postgres.html"><span class="sb-num">🐘</span>PostgreSQL</a>
+    <a class="sb-link active" href="mysql.html"><span class="sb-num">🐬</span>MySQL</a>
+    <a class="sb-link" href="mariadb.html"><span class="sb-num">🦭</span>MariaDB</a>
+    <a class="sb-link" href="sqlite.html"><span class="sb-num">📁</span>SQLite</a>
+    <div class="sidebar-label">NoSQL</div>
+    <a class="sb-link" href="mongodb.html"><span class="sb-num">🍃</span>MongoDB</a>
+    <a class="sb-link" href="redis.html"><span class="sb-num">⚡</span>Redis</a>
+    <a class="sb-link" href="cassandra.html"><span class="sb-num">👁️</span>Cassandra</a>
+    <a class="sb-link" href="dynamodb.html"><span class="sb-num">⚡</span>DynamoDB</a>
+    <a class="sb-link" href="couchdb.html"><span class="sb-num">🛋️</span>CouchDB</a>
+    <div class="sidebar-label">Specialized Stores</div>
+    <a class="sb-link" href="neo4j.html"><span class="sb-num">🕸️</span>Neo4j (Graph)</a>
+    <a class="sb-link" href="graph-databases.html"><span class="sb-num">🔗</span>Graph Databases</a>
+    <a class="sb-link" href="influxdb.html"><span class="sb-num">📈</span>InfluxDB (Time Series)</a>
+    <a class="sb-link" href="elasticsearch.html"><span class="sb-num">🔎</span>Elasticsearch (Search)</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Database Systems Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Database Systems · Guide</div>
+      <h1 class="pg-title">MySQL</h1>
+      <p class="pg-sub">InnoDB, replication, query optimization, common patterns.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Database Systems</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">MySQL: InnoDB, replication, query optimization, common patterns.</div>
+      <p class="lesson-prose">MySQL is the world's most deployed open-source relational database. InnoDB is the default storage engine — ACID-compliant with row-level locking, MVCC, foreign keys, and crash recovery via redo logs. MyISAM is legacy (no transactions) — avoid for new work.</p>
+      <p class="lesson-prose">Transaction isolation: READ COMMITTED (default in many DBs) sees committed changes from other transactions mid-query. REPEATABLE READ is MySQL InnoDB default — consistent snapshot for transaction duration, prevents non-repeatable reads but can have phantom reads (gap locks address this).</p>
+      <p class="lesson-prose">EXPLAIN output columns: type (ALL=full scan, ref=index lookup, range=index range scan), possible_keys, key (index used), key_len (bytes used — composite index prefix), rows (estimated), Extra (Using index = covering index, Using filesort = extra sort pass, Using temporary = temp table).</p>
+      <p class="lesson-prose">Covering index includes all columns needed by a query — InnoDB secondary indexes leaf nodes store primary key; if all SELECT columns are in index, no table lookup (Using index in Extra). Design indexes for your actual query patterns, not every column.</p>
+      <p class="lesson-prose">Binlog (binary log) records all data changes for replication and point-in-time recovery. Row-based format (binlog_format=ROW) is safest for consistency. Primary replicates to replicas asynchronously — replicas may lag (replication lag). Semi-sync replication waits for one replica ack before commit.</p>
+      <p class="lesson-prose">Slow query analysis: enable slow_query_log with long_query_time threshold. pt-query-digest (Percona Toolkit) aggregates slow.log into normalized patterns ranked by total time. Focus on queries with highest Query_time × count product.</p>
+      <p class="lesson-prose">Stored procedures run logic inside the DB — reduce round trips but harder to version/deploy than app code. Use for simple batch operations; avoid complex business logic in procedures for microservice architectures.</p>
+      <p class="lesson-prose">Query optimization workflow: EXPLAIN the slow query, check indexes on WHERE/JOIN/ORDER BY columns, verify cardinality statistics (ANALYZE TABLE), avoid SELECT *, rewrite OR conditions as UNION for index use, and consider read replicas for analytics load.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Users / clients
+         |
+  MySQL
+         |
+  Core services
+         |
+  Data + observability</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">sql — EXPLAIN &amp; covering index</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>EXPLAIN SELECT id, email, status
+FROM users
+WHERE status = 'active' AND created_at &gt; '2024-01-01'
+ORDER BY created_at DESC
+LIMIT 50;
+
+CREATE INDEX idx_users_status_created
+  ON users (status, created_at, email, id);
+-- Covering index: all SELECT columns included → "Using index" in Extra</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">sql — InnoDB transaction</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>START TRANSACTION;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+
+-- Isolation demo: REPEATABLE READ
+SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION;
+SELECT balance FROM accounts WHERE id = 1;  -- 500
+-- (another session updates balance to 400 and commits)
+SELECT balance FROM accounts WHERE id = 1;  -- still 500</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash — slow query analysis</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># Enable slow log
+SET GLOBAL slow_query_log = ON;
+SET GLOBAL long_query_time = 1;
+
+# Analyze with Percona Toolkit
+pt-query-digest /var/log/mysql/slow.log | head -40
+
+# Check replication lag
+SHOW REPLICA STATUS\G
+# Seconds_Behind_Source (or Seconds_Behind_Master)</code></pre>
+      </div>
+    </section>
+    <section class="lesson-section" id="concepts">
+      <h2><span class="sec-icon">🔑</span> Key Concepts</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>Data model</strong><span>How MySQL structures and queries data</span></div>
+      <div class="lesson-cheat-item"><strong>Consistency</strong><span>Guarantees under failure and replication</span></div>
+      <div class="lesson-cheat-item"><strong>Scaling axis</strong><span>Vertical vs horizontal growth patterns</span></div>
+      <div class="lesson-cheat-item"><strong>Ops</strong><span>Backup, monitoring, and upgrade path</span></div></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Why is InnoDB preferred over MyISAM?</q><p>InnoDB supports transactions, row-level locking, foreign keys, and crash recovery. MyISAM has table-level locks and no transactions — corrupts easily on crash. InnoDB is default since MySQL 5.5. Use InnoDB for all production tables.</p></div>
+      <div class="lesson-iq"><q>Explain READ COMMITTED vs REPEATABLE READ in MySQL.</q><p>READ COMMITTED: each statement sees latest committed data — non-repeatable reads possible. REPEATABLE READ (InnoDB default): consistent snapshot from transaction start — InnoDB uses next-key locks to prevent phantoms in most cases. SERIALIZABLE is strictest but slowest.</p></div>
+      <div class="lesson-iq"><q>How do you read MySQL EXPLAIN key_len and Extra?</q><p>key_len shows bytes of index used — partial composite index usage visible here. Extra: Using index = covering index (no table access). Using filesort = extra sort pass (add index for ORDER BY). Using temporary = temp table created. type=ALL means full table scan — add index.</p></div>
+      <div class="lesson-iq"><q>What is a covering index?</q><p>Index containing all columns needed by query — InnoDB secondary index leaves include PK columns. SELECT columns all in index → engine never touches table data. Dramatically reduces I/O for read-heavy queries. Design indexes around query patterns, not individual columns in isolation.</p></div>
+      <div class="lesson-iq"><q>How does MySQL binlog replication work?</q><p>Primary writes changes to binlog. Replica I/O thread fetches binlog events; SQL thread applies them. Async by default — replica can lag. ROW format logs actual row changes (safest). Monitor Seconds_Behind_Source. GTID ensures consistent failover position across topology.</p></div>
+      <div class="lesson-iq"><q>How do you find and fix slow queries?</q><p>Enable slow_query_log, run pt-query-digest for top patterns by total time. EXPLAIN each pattern. Add/adjust indexes, rewrite queries (avoid functions on indexed columns), increase innodb_buffer_pool_size if buffer pool hit rate low. Verify with EXPLAIN after changes.</p></div>
+      <div class="lesson-iq"><q>FAANG: How do you handle 100x read traffic on MySQL?</q><p>Read replicas for read-heavy workloads (eventual consistency). Connection pooling (ProxySQL). Cache hot data in Redis. Shard by tenant/user_id when single instance saturates. Optimize top queries first — often 5 queries cause 80% load. Consider separating OLAP to columnar store.</p></div>
+      <div class="lesson-iq"><q>What causes replication lag and how do you reduce it?</q><p>Replica applies changes slower than primary generates them — large transactions, missing indexes on replica, parallel replication disabled, network latency. Fix: break large transactions, enable replica_parallel_workers, optimize slow replica queries, use semi-sync for critical data, monitor lag alerting.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Enable slow query log in staging with <code>long_query_time=0.5</code> — find real offenders before production tuning.</li>
+        <li>Analyze EXPLAIN <code>rows</code> and <code>Extra</code> — "Using filesort" or "Using temporary" on large tables need indexes or query rewrites.</li>
+        <li>Use <code>ROW</code> binlog format for replication — STATEMENT mode breaks with non-deterministic functions.</li>
+        <li>Prefer <code>ALGORITHM=INPLACE, LOCK=NONE</code> for online DDL when InnoDB supports it — avoid full table copies.</li>
+        <li>Size InnoDB buffer pool to ~70% of RAM on dedicated DB servers — the dominant read performance lever.</li>
+        <li>Use connection pooling (ProxySQL or app-side pool) — MySQL thread-per-connection does not scale like PgBouncer.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around MySQL.</div>
+      <ul class="lesson-list">
+        <li>Adding indexes without checking cardinality — low-cardinality columns (boolean, status) rarely help B-tree lookups.</li>
+        <li>Using <code>SELECT *</code> with JOINs — multiplies row width and prevents covering indexes.</li>
+        <li>Running schema migrations without pt-online-schema-change on huge tables — hours-long locks block writes.</li>
+        <li>Ignoring deadlock logs — recurring deadlocks indicate transaction ordering bugs, not random noise.</li>
+        <li>Mixing MyISAM and InnoDB — MyISAM has no crash recovery or foreign keys; legacy tables cause data loss.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat">
+      <div class="lesson-cheat-item"><strong>EXPLAIN key/rows/Extra</strong><span>Index used, estimated rows, filesort/temp table</span></div>
+      <div class="lesson-cheat-item"><strong>SHOW PROCESSLIST</strong><span>Live view of running queries</span></div>
+      <div class="lesson-cheat-item"><strong>SHOW ENGINE INNODB STATUS</strong><span>Locks, deadlocks, buffer pool stats</span></div>
+      <div class="lesson-cheat-item"><strong>slow_query_log</strong><span>Log queries exceeding long_query_time</span></div>
+      <div class="lesson-cheat-item"><strong>pt-query-digest</strong><span>Aggregate slow log into ranked report</span></div>
+      <div class="lesson-cheat-item"><strong>CREATE INDEX</strong><span>Add B-tree index on filter/join columns</span></div>
+      <div class="lesson-cheat-item"><strong>ALTER TABLE ALGORITHM=INPLACE</strong><span>Online schema change when supported</span></div>
+      <div class="lesson-cheat-item"><strong>binlog_format=ROW</strong><span>Replication-safe row-level change capture</span></div>
+    </div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      
+      <div class="lesson-exercise"><strong>EXPLAIN a join</strong><p>Create orders + customers tables. Write a 3-table JOIN missing an index. Add indexes on FK columns and compare EXPLAIN rows estimates.</p></div>
+      <div class="lesson-exercise"><strong>Slow query digest</strong><p>Enable slow_query_log, run a workload, analyze with pt-query-digest. Fix the top query and remeasure.</p></div>
+      <div class="lesson-exercise"><strong>Replication lag drill</strong><p>Set up primary + replica with ROW binlog. Run a heavy UPDATE. Monitor Seconds_Behind_Master and tune batch size.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="postgres.html">← PostgreSQL</a>
+      <a class="nav-link next" href="mariadb.html">MariaDB →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

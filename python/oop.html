@@ -1,16 +1,25 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
   <title>Python OOP — Complete Object-Oriented Programming | TechForge</title>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/python/oop.html"/>
+  <meta property="og:title" content="Python OOP — Complete Object-Oriented Programming | TechForge"/>
+  <meta property="og:description" content="Python OOP — theory, examples, interview prep, and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=4" rel="stylesheet">
-  <style>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet">
+    <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+<style>
     :root { --accent: var(--py); --accent-dim: var(--py-dim); }
     .pillar-enc { background: rgba(247, 204, 69, .06); border-color: rgba(247, 204, 69, .2); }
     .pillar-enc .pillar-tag { color: var(--py); background: rgba(247, 204, 69, .12); }
@@ -25,31 +34,11 @@
     .b-py { background: rgba(247, 204, 69, .12); color: var(--py); border: 1px solid rgba(247, 204, 69, .25); }
     .b-purple { background: rgba(167, 139, 250, .1); color: var(--purple); border: 1px solid rgba(167, 139, 250, .2); }
     .b-amber { background: rgba(251, 191, 36, .1); color: var(--amber); border: 1px solid rgba(251, 191, 36, .2); }
-  
-/* ── MOBILE NAV (inline override) ── */
-@media (max-width: 900px) {
-  header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
-  header.topbar .tb-nav.mobile-visible { display: flex !important; flex-direction: column; position: fixed; top: calc(var(--topbar-h) + var(--safe-top, 0px)); left: 0; right: 0; background: var(--bg2, #0d1117); border-bottom: 1px solid var(--border, #1f2d42); padding: 8px 16px 16px; z-index: 90; box-shadow: 0 16px 48px rgba(0,0,0,0.4); gap: 2px; }
-  header.topbar .tb-nav.mobile-visible .tb-link { min-height: 48px; padding: 12px 16px; font-size: 16px; font-weight: 600; border-radius: 10px; display: flex; align-items: center; }
-  header.topbar .topbar-actions { display: flex !important; margin-left: auto !important; }
-  header.topbar .nav-toggle { display: inline-flex !important; }
-}
 </style>
 
-<style id="tf-mobile-nav-css">
-.tf-mobile-home-nav { display: block; padding: 12px 8px 0; }
-.tf-mhn-label { font-family: var(--mono,monospace); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text3,#5a7094); padding: 0 8px; margin-bottom: 8px; }
-.tf-mhn-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 4px; }
-.tf-mhn-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; border-radius: 10px; text-decoration: none; background: var(--surface,#141b26); border: 1px solid var(--border,#1f2d42); transition: all .15s; -webkit-tap-highlight-color: transparent; }
-.tf-mhn-item:active { background: var(--surface2,#1a2234); border-color: var(--accent,#4d9ef7); }
-.tf-mhn-icon { font-size: 16px; line-height: 1; }
-.tf-mhn-text { font-family: var(--mono,monospace); font-size: 9px; font-weight: 600; color: var(--text2,#8da0bb); text-align: center; }
-.tf-mhn-divider { height: 1px; background: var(--border,#1f2d42); margin: 12px 0 8px; }
-@media (min-width: 901px) { .tf-mobile-home-nav { display: none !important; } }
-</style>
 </head>
-<body>
-  <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+<body data-topic-id="py/oop" data-section="python">
+<a href="#mainContent" class="skip-link">Skip to content</a>
   <header class="topbar">
     <a class="tb-logo" href="../index.html">
       <div class="tb-logo-icon">⬡</div>
@@ -58,21 +47,21 @@
     <nav class="tb-nav" id="topNav">
       <a class="tb-link" href="../index.html">Home</a>
       <a class="tb-link" href="../dsa/index.html">DSA</a>
-      <a class="tb-link" href="../backend/index.html">Backend</a>
+      <a class="tb-link" href="../system-design/index.html">System Design</a>
       <a class="tb-link current" href="./">Python</a>
-      <a class="tb-link" href="../sql/index.html">SQL</a>
+      <a class="tb-link" href="../databases/index.html">Databases</a>
       <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
       <a class="tb-link" href="../interview/index.html">Interview</a>
-      <a class="tb-link" href="../git/index.html">Git</a>
+      <a class="tb-link" href="../devops/index.html">DevOps</a>
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
-      <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle section sidebar" aria-expanded="false">☰</button>
-      <button type="button" class="nav-toggle" id="navToggle" style="display:none!important" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">☰</button>
-    </div>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
   </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
-  <div class="layout">
+  <div class="layout" id="mainContent">
     <aside class="sidebar" id="sidebar">
     <!-- Mobile section nav — only visible on mobile via CSS -->
     <div class="tf-mobile-home-nav">
@@ -81,11 +70,11 @@
         <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
         <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
-        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon">🔧</span><span class="tf-mhn-text">Backend</span></a>
-        <a class="tf-mhn-item" href="../sql/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">SQL</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
         <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../git/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">Git</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -358,15 +347,76 @@ r = <span class="nm">Rectangle</span>(<span class="nm">4</span>, <span class="nm
           <div class="magic-card"><div class="method-name">__enter__/__exit__</div><div class="method-desc">Context manager</div></div>
         </div>
       </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon">🎯</span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. __init__ is a…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">static method</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">dunder initializer</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">module hook</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">decorator</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. MRO determines…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">memory order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">method lookup order in inheritance</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">import path</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">GC order</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. @classmethod receives…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">instance as self</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">class as cls</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">no implicit first arg</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">module</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. @staticmethod vs @classmethod — static has…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">cls binding</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">no implicit receiver</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only private access</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">must return self</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Encapsulation in Python often uses…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">public only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">_single and __double leading underscores</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">package keyword</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">sealed classes</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
       <div class="page-nav">
         <a class="nav-link" href="functions.html">← Functions</a>
         <a class="nav-link" href="libraries.html">Libraries →</a>
       </div>
     </main>
   </div>
-  <a class="back-top" id="backTop" href="#">↑</a>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../assets/js/topics-manifest.js"></script>
+  <script src="../assets/js/site-index.js"></script>
   <script src="../assets/js/utils.js"></script>
-  <script>
+  <script src="../assets/js/platform.js?v=3"></script>
+<script>
     const pbar = document.getElementById('pbar');
     window.addEventListener('scroll', () => {
       pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Terraform is HashiCorp's Infrastructure as Code tool. You write declarative HCL (HashiCorp Configuration Language) describing the desired state of…"/>
+  <meta name="keywords" content="Terraform, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/terraform.html"/>
+  <meta property="og:title" content="Terraform — TechForge"/>
+  <meta property="og:description" content="Terraform is HashiCorp's Infrastructure as Code tool. You write declarative HCL (HashiCorp Configuration Language) describing the desired state of…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Terraform — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Terraform","description":"Terraform is HashiCorp's Infrastructure as Code tool. You write declarative HCL (HashiCorp Configuration Language) describing the desired state of…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/terraform" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link active" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Terraform</h1>
+      <p class="pg-sub">IaC, state, modules, plan/apply workflow.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Terraform converges cloud resources to declared HCL — always plan before apply and use remote state with locking.</div>
+      
+      <p class="lesson-prose">Terraform is HashiCorp's Infrastructure as Code tool. You write declarative HCL (HashiCorp Configuration Language) describing the desired state of infrastructure — EC2 instances, VPCs, DNS records, S3 buckets — and Terraform computes the diff against the current state and makes only the necessary API calls to converge.</p>
+      <p class="lesson-prose">The workflow: terraform init downloads providers (AWS, GCP, Azure plugins), terraform plan shows what will change (always review before applying), terraform apply makes the changes, terraform destroy tears everything down. State is stored in terraform.tfstate — a JSON file mapping logical resources to real infrastructure IDs.</p>
+      <p class="lesson-prose">Remote state storage (S3 + DynamoDB for AWS) is essential for teams: multiple engineers can't share a local .tfstate file. The S3 backend stores state, DynamoDB provides state locking (only one apply at a time). Never commit terraform.tfstate to version control — it contains secrets in plaintext.</p>
+      <p class="lesson-prose">Modules are reusable units of configuration. A module encapsulates resources (e.g. a VPC module that creates subnets, route tables, NAT gateways). Modules are called with input variables and return outputs. The Terraform Registry hosts public modules; internal modules live in shared VCS repos.</p>
+      <p class="lesson-prose">Workspaces separate state for different environments (dev/staging/prod) using the same configuration. Alternatively, separate directories or branches per environment provide stronger isolation. Variables (terraform.tfvars, environment-specific .tfvars files, or TF_VAR_ env vars) parameterize configurations across environments.</p>
+      <p class="lesson-prose">Import existing infrastructure: terraform import resource.type.name resource_id adds unmanaged infrastructure into state so Terraform can manage it going forward. Refactoring: terraform state mv renames resources in state without destroying/recreating them — critical when reorganizing module structure.</p>
+      <p class="lesson-prose">Providers are Terraform plugins that translate HCL into API calls. The AWS provider alone has 900+ resource types. Provider versioning in required_providers ensures reproducible builds. terraform providers lock generates .terraform.lock.hcl pinning exact provider versions across all team members.</p>
+    
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>HCL modules + variables
+         |
+    terraform plan (diff)
+         |
+  State file (S3 + DynamoDB lock)
+         |
+  Provider plugins (AWS/GCP/Azure)
+         |
+  Live infrastructure</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+            <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">hcl</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>terraform {
+  backend "s3" {
+    bucket         = "tf-state-prod"
+    key            = "vpc/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "tf-lock"
+  }
+}</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>terraform init
+terraform plan -out=plan.tfplan
+terraform apply plan.tfplan</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Why remote state?</q><p>Teams need shared, locked state — local .tfstate breaks collaboration and risks secret leaks in git.</p></div>
+      <div class="lesson-iq"><q>terraform import use case?</q><p>Bring manually created resources under management without destroy/recreate.</p></div>
+      <div class="lesson-iq"><q>Modules vs workspaces?</q><p>Modules reuse config; workspaces share code with separate state — prefer separate dirs for prod isolation.</p></div>
+      <div class="lesson-iq"><q>Drift detection?</q><p>Scheduled terraform plan in CI; policy-as-code (Sentinel/OPA) blocks risky applies.</p></div>
+      <div class="lesson-iq"><q>State mv vs destroy?</q><p>state mv renames in state without API changes; avoid unnecessary destroy/recreate on refactors.</p></div>
+      <div class="lesson-iq"><q>Provider version pinning?</q><p>required_providers + lock file ensures reproducible plans across laptops and CI.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Treat Terraform config as code with review and CI validation.</li>
+        <li>Define SLOs and dashboards before production cutover.</li>
+        <li>Document rollback and ownership for on-call.</li>
+        <li>Use least privilege for credentials and secrets.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <ul class="lesson-list">
+        <li>Running Terraform in prod without staging parity.</li>
+        <li>No monitoring on golden signals after changes.</li>
+        <li>Skipping backup/state export before major upgrades.</li>
+        <li>Alert fatigue without actionable runbooks.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>terraform plan</strong><span>Preview changes</span></div>
+      <div class="lesson-cheat-item"><strong>terraform apply</strong><span>Apply changes</span></div>
+      <div class="lesson-cheat-item"><strong>terraform import</strong><span>Adopt existing resource</span></div>
+      <div class="lesson-cheat-item"><strong>terraform state mv</strong><span>Rename in state</span></div>
+      <div class="lesson-cheat-item"><strong>.tfvars</strong><span>Environment variables</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>S3 backend</strong><p>Configure remote state + locking for a VPC module.</p></div>
+      <div class="lesson-exercise"><strong>Import</strong><p>Import existing S3 bucket into Terraform management.</p></div>
+      <div class="lesson-exercise"><strong>CI gate</strong><p>Run plan on PR; apply only on main with approval.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="gcp-basics.html">← GCP Basics</a>
+      <a class="nav-link next" href="ansible.html">Ansible →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

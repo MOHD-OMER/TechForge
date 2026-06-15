@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…"/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/nginx.html"/>
+  <meta property="og:title" content="Nginx — TechForge"/>
+  <meta property="og:description" content="Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Nginx — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/nginx" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link active" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Nginx</h1>
+      <p class="pg-sub">Reverse proxy, load balancing, SSL termination, caching.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Nginx terminates TLS, routes HTTP, and caches at the edge — validate config with nginx -t before reload.</div>
+      <p class="lesson-prose">Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop, allowing it to handle tens of thousands of concurrent connections with low memory footprint.</p>
+      <p class="lesson-prose">The configuration hierarchy: nginx.conf includes conf.d/*.conf or sites-enabled/ files. Each server block defines a virtual host — server_name, listen port, and root directory. Requests match server blocks by Host header, then location blocks by URI prefix or regex.</p>
+      <p class="lesson-prose">As a reverse proxy, Nginx accepts client connections and forwards them to upstream application servers (Gunicorn, Node, FastAPI). The proxy_pass directive routes requests; proxy_set_header forwards the original Host and client IP so apps can log and auth correctly.</p>
+      <p class="lesson-prose">SSL termination at Nginx decrypts HTTPS from clients, forwarding plain HTTP to backend services. ssl_certificate/ssl_certificate_key point to cert and key files. Modern configs add ssl_protocols TLSv1.2 TLSv1.3 and ssl_ciphers to enforce secure cipher suites.</p>
+      <p class="lesson-prose">Load balancing is configured via upstream blocks: round-robin (default), least_conn (fewest active connections), ip_hash (sticky sessions by client IP), or weighted. Health checks via proxy_next_upstream retry failed backends automatically.</p>
+      <p class="lesson-prose">Nginx serves static files efficiently with sendfile on and open_file_cache to avoid repeated disk I/O. Cache-Control headers set via add_header or expires directive. gzip on with gzip_types compresses text-based responses for faster delivery.</p>
+      <p class="lesson-prose">Rate limiting uses limit_req_zone to define a shared memory zone with a key (e.g. $binary_remote_addr) and rate, then limit_req in location blocks to enforce burst limits. This protects upstream apps from traffic spikes and brute-force attacks.</p>
+      <p class="lesson-prose">nginx -t validates config syntax before reload. nginx -s reload does a zero-downtime config reload (workers drain existing connections, new workers use new config). This is the standard deployment pattern for config changes.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Clients (HTTPS)
+         |
+  Nginx (worker processes)
+         |
+    +----+----+
+    v         v
+ upstream    static/cache
+  app pool</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">nginx.conf — reverse proxy</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>server {
+    listen 80;
+    server_name api.example.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name api.example.com;
+
+    ssl_certificate     /etc/nginx/ssl/cert.pem;
+    ssl_certificate_key /etc/nginx/ssl/key.pem;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+
+    location / {
+        proxy_pass         http://app_upstream;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 60s;
+    }
+
+    location /static/ {
+        root /var/www;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+
+upstream app_upstream {
+    least_conn;
+    server 127.0.0.1:8000 weight=3;
+    server 127.0.0.1:8001;
+    keepalive 32;
+}</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">nginx.conf — rate limiting</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>http {
+    limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
+    limit_req_zone $binary_remote_addr zone=login_limit:1m  rate=1r/s;
+
+    server {
+        location /api/ {
+            limit_req zone=api_limit burst=20 nodelay;
+            proxy_pass http://app_upstream;
+        }
+
+        location /auth/login {
+            limit_req zone=login_limit burst=5;
+            proxy_pass http://app_upstream;
+        }
+    }
+}</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash — nginx operations</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># Test config before applying
+nginx -t
+
+# Zero-downtime reload
+nginx -s reload
+
+# Check which ports nginx listens on
+ss -tlnp | grep nginx
+
+# View access logs with request timing
+tail -f /var/log/nginx/access.log | awk '{print $7, $NF}'
+
+# Check worker process count
+ps aux | grep 'nginx: worker'
+
+# Debug upstream 502s
+cat /var/log/nginx/error.log | grep 'connect() failed'</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>What is the difference between proxy_pass and upstream in Nginx?</q><p>proxy_pass points to a single server or upstream group. upstream defines a named pool with load balancing, health checks, and keepalive settings. Use upstream when you have multiple backend instances or need keepalive connection pooling.</p></div>
+      <div class="lesson-iq"><q>How does Nginx handle SSL termination?</q><p>Nginx decrypts TLS at the edge, forwarding plain HTTP to backends. Certificates are configured via ssl_certificate/ssl_certificate_key. Backends receive X-Forwarded-Proto: https header so they can enforce HTTPS-only behavior without managing certs.</p></div>
+      <div class="lesson-iq"><q>What does nginx -s reload do vs restarting the process?</q><p>reload sends SIGUSR2 to the master process. It starts new workers with the new config and gracefully drains the old workers (they finish existing requests then exit). No connections are dropped. A full restart (systemctl restart nginx) drops active connections.</p></div>
+      <div class="lesson-iq"><q>How would you debug a 502 Bad Gateway from Nginx?</q><p>Check /var/log/nginx/error.log for "connect() failed" or "upstream timed out". Verify backend is running (curl localhost:8000), check proxy_pass URL, increase proxy_read_timeout if backend is slow, ensure upstream keepalive doesn't exceed backend's max connections.</p></div>
+      <div class="lesson-iq"><q>Explain the location block matching order.</q><p>Nginx matches location blocks in this priority: 1) exact match (=), 2) preferential prefix (^~), 3) regex in file order (~, ~*), 4) longest prefix match. This is confusing — use nginx -T to trace config and test with curl -v to verify which block matches.</p></div>
+      <div class="lesson-iq"><q>How do you configure Nginx as a load balancer with health checks?</q><p>Define an upstream block with multiple servers and a method (least_conn, ip_hash). Add proxy_next_upstream error timeout to retry failed backends. For active health checks (not in open source), use nginx_upstream_check_module or Nginx Plus. For passive, configure proxy_connect_timeout and max_fails.</p></div>
+      <div class="lesson-iq"><q>FAANG: How would you handle 100k req/s through Nginx?</q><p>Tune worker_processes to CPU count, worker_connections to 10240+. Enable sendfile, tcp_nopush, tcp_nodelay. Use keepalive 64 on upstream blocks. Add caching (proxy_cache) for idempotent responses. Profile with nginx-module-vts for per-upstream latency histograms. At 100k req/s, multiple Nginx instances behind a cloud LB are typical.</p></div>
+      <div class="lesson-iq"><q>What is the C10k problem and how does Nginx solve it?</q><p>C10k: handling 10,000 concurrent connections. Thread-per-connection servers (Apache prefork) run out of memory (each thread ~1MB). Nginx uses an event loop (epoll on Linux, kqueue on BSD) — one worker handles thousands of connections via non-blocking I/O, using ~2MB total per worker regardless of connection count.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list"><li>Always run <code>nginx -t</code> to validate config before <code>nginx -s reload</code> — one syntax error kills all workers.</li>
+        <li>Version-control nginx.conf and every conf.d/ file; review changes via pull request like application code.</li>
+        <li>Use named <code>upstream</code> blocks even for single backends — makes adding load balancing later a one-line change.</li>
+        <li>Set <code>proxy_set_header X-Real-IP $remote_addr</code> so application logs capture real client IPs, not 127.0.0.1.</li>
+        <li>Use <code>ssl_protocols TLSv1.2 TLSv1.3</code> and explicitly disable older protocols (SSLv3, TLS 1.0, 1.1).</li>
+        <li>Add <code>proxy_read_timeout</code> appropriate for your slowest upstream response — default 60s causes 504s for long-running requests.</li></ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Nginx.</div>
+      <ul class="lesson-list"><li>Running nginx as root in production — use <code>user www-data;</code> and drop privileges after binding privileged ports.</li>
+        <li>Forgetting <code>nginx -t</code> before reload — a single typo in nginx.conf drops all traffic immediately.</li>
+        <li>Using <code>try_files $uri $uri/ =404</code> without understanding the request chain — causes recursive location matching bugs with PHP backends.</li>
+        <li>Setting <code>worker_connections</code> without increasing the OS open file limit (<code>ulimit -n</code>) — connections silently fail at OS ceiling.</li>
+        <li>Logging to a single large access.log with no rotation — fills disk silently over weeks, crashes nginx when disk is full.</li></ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>nginx -t</strong><span>Test config syntax (run before every reload)</span></div>
+      <div class="lesson-cheat-item"><strong>nginx -s reload</strong><span>Zero-downtime config reload</span></div>
+      <div class="lesson-cheat-item"><strong>proxy_pass</strong><span>Forward requests to upstream server/group</span></div>
+      <div class="lesson-cheat-item"><strong>upstream</strong><span>Define named pool of backend servers</span></div>
+      <div class="lesson-cheat-item"><strong>ssl_certificate</strong><span>Path to PEM cert file</span></div>
+      <div class="lesson-cheat-item"><strong>ssl_certificate_key</strong><span>Path to private key file</span></div>
+      <div class="lesson-cheat-item"><strong>limit_req_zone</strong><span>Define shared memory for rate limiting</span></div>
+      <div class="lesson-cheat-item"><strong>gzip on</strong><span>Enable response compression</span></div>
+      <div class="lesson-cheat-item"><strong>worker_processes auto</strong><span>Match worker count to CPU cores</span></div>
+      <div class="lesson-cheat-item"><strong>location ~ \.php$</strong><span>Regex location block (case-sensitive)</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Reverse proxy with rate limiting</strong><p>Run a local Flask or Node app on port 5000. Configure Nginx to proxy :80 → :5000 with limit_req_zone limiting to 5 req/s. Test with Apache Bench: <code>ab -n 100 -c 10 http://localhost/</code> and observe 429 responses.</p></div>
+      <div class="lesson-exercise"><strong>SSL termination with self-signed cert</strong><p>Generate a self-signed cert with <code>openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/cert.pem</code>. Configure an HTTPS server block that redirects HTTP → HTTPS. Test with <code>curl -k https://localhost</code>.</p></div>
+      <div class="lesson-exercise"><strong>Upstream load balancer</strong><p>Start two instances of a simple HTTP server on ports 8001 and 8002. Configure an upstream block with least_conn. Add <code>proxy_next_upstream error timeout</code>. Kill one backend and verify Nginx fails over to the other without returning an error to the client.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="helm.html">← Helm</a>
+      <a class="nav-link next" href="reverse-proxy.html">Reverse Proxy →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

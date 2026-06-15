@@ -131,11 +131,12 @@ function tfInjectSidebarHomeNav() {
     { href: root + 'index.html',               icon: '⬡', label: 'Home' },
     { href: root + 'dsa/index.html',            icon: '📊', label: 'DSA' },
     { href: root + 'python/index.html',         icon: '🐍', label: 'Python' },
-    { href: root + 'backend/index.html',        icon: '🔧', label: 'Backend' },
-    { href: root + 'sql/index.html',            icon: '🗄️', label: 'SQL' },
+    { href: root + 'system-design/index.html',  icon: '🏗️', label: 'Sys Design' },
+    { href: root + 'databases/index.html',      icon: '🗄️', label: 'Databases' },
     { href: root + 'aiml/aiml-explained.html',  icon: '🤖', label: 'AI/ML' },
     { href: root + 'interview/index.html',      icon: '🎯', label: 'Interview' },
-    { href: root + 'git/index.html',            icon: '⎇',  label: 'Git' },
+    { href: root + 'devops/index.html',         icon: '⎇',  label: 'DevOps' },
+    { href: root + 'about.html',                icon: 'ℹ️', label: 'About' },
   ];
 
   const nav = document.createElement('div');
@@ -160,71 +161,8 @@ function tfInjectSidebarHomeNav() {
 /* ─────────────────────────────────────────────────────────────
    Inject styles for the mobile home nav block
 ───────────────────────────────────────────────────────────── */
-function tfInjectMobileNavStyles() {
-  if (document.getElementById('tf-mobile-nav-styles')) return;
-  const style = document.createElement('style');
-  style.id = 'tf-mobile-nav-styles';
-  style.textContent = `
-    .tf-mobile-home-nav {
-      display: block;
-      padding: 12px 8px 0;
-    }
-    .tf-mhn-label {
-      font-family: var(--mono, monospace);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--text3, #5a7094);
-      padding: 0 8px;
-      margin-bottom: 8px;
-    }
-    .tf-mhn-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .tf-mhn-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 4px;
-      border-radius: 10px;
-      text-decoration: none;
-      background: var(--surface, #141b26);
-      border: 1px solid var(--border, #1f2d42);
-      transition: all .15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .tf-mhn-item:hover, .tf-mhn-item:active {
-      background: var(--surface2, #1a2234);
-      border-color: var(--accent, #4d9ef7);
-    }
-    .tf-mhn-icon {
-      font-size: 16px;
-      line-height: 1;
-    }
-    .tf-mhn-text {
-      font-family: var(--mono, monospace);
-      font-size: 9px;
-      font-weight: 600;
-      color: var(--text2, #8da0bb);
-      text-align: center;
-      letter-spacing: .02em;
-    }
-    .tf-mhn-divider {
-      height: 1px;
-      background: var(--border, #1f2d42);
-      margin: 12px 0 8px;
-    }
-    @media (min-width: 901px) {
-      .tf-mobile-home-nav { display: none; }
-    }
-  `;
-  document.head.appendChild(style);
-}
+// tfInjectMobileNavStyles: styles now live in forge_base.css — no JS injection needed.
+function tfInjectMobileNavStyles() {}
 
 function tfInitTopbarChrome() {
   const navToggle = document.getElementById('navToggle');
@@ -246,10 +184,15 @@ function tfInitTopbarChrome() {
       sidebarToggle.style.display = '';
       sidebarToggle.setAttribute('aria-hidden', 'false');
       sidebarToggle.setAttribute('aria-expanded', 'false');
+      sidebarToggle.setAttribute('aria-label', 'Open section menu');
     }
   }
 
-  if (navToggle && topNav) {
+  if (sidebar && navToggle) {
+    navToggle.setAttribute('hidden', 'hidden');
+    navToggle.setAttribute('aria-hidden', 'true');
+    navToggle.style.display = 'none';
+  } else if (navToggle && topNav) {
     navToggle.setAttribute('aria-expanded', 'false');
     navToggle.addEventListener('click', function (e) {
       e.stopPropagation();

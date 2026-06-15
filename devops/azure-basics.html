@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Azure Basics — DevOps guide on TechForge. Theory, examples, interview questions, and best practices."/>
+  <meta name="keywords" content="Azure Basics, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/azure-basics.html"/>
+  <meta property="og:title" content="Azure Basics — TechForge"/>
+  <meta property="og:description" content="Azure Resource Manager (ARM) is the deployment plane — resources live in resource groups within a subscription. Tags drive cost allocation and policy."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Azure Basics — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Azure Basics","description":"Azure Resource Manager (ARM) is the deployment plane — resources live in resource groups within a subscription. Tags drive cost allocation and policy.","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/azure-basics" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link active" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Azure Basics</h1>
+      <p class="pg-sub">VMs, Blob Storage, App Service, Entra ID overview.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Azure organizes everything under subscriptions and resource groups — IAM via Entra ID (formerly Azure AD) is the security backbone.</div>
+      <p class="lesson-prose">Azure Resource Manager (ARM) is the deployment plane — resources live in resource groups within a subscription. Tags drive cost allocation and policy.</p>
+      <p class="lesson-prose">Virtual Machines pair with Virtual Networks (VNets), subnets, NSGs (firewall rules), and Azure Load Balancer or Application Gateway for traffic.</p>
+      <p class="lesson-prose">Azure Blob Storage provides hot/cool/archive tiers for objects; Azure Files offers SMB shares. Use managed identities instead of storage keys in apps.</p>
+      <p class="lesson-prose">Azure Kubernetes Service (AKS) hosts container workloads — control plane is managed; you pay for node pools. Integrate with ACR for images and Key Vault for secrets.</p>
+      <p class="lesson-prose">Azure Functions is the serverless compute tier (consumption or premium plans). Bind to Event Grid, Service Bus, or HTTP triggers; watch cold start on consumption.</p>
+      <p class="lesson-prose">Entra ID provides SSO, conditional access, and RBAC across subscriptions. Prefer managed identities for Azure-to-Azure auth.</p>
+      <p class="lesson-prose">Monitor with Azure Monitor + Log Analytics; Application Insights for APM. Set action groups for alert routing.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>  Entra ID (RBAC)
+       |
+  Subscription --&gt; Resource Group
+       |
+  +----+----+----+----+
+  v    v    v    v    v
+ VM  AKS  Blob Func AppSvc
+       |
+  Log Analytics / Monitor</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">azure cli</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>az group create -n rg-app -l eastus
+az storage account create -n mystore -g rg-app -l eastus --sku Standard_LRS
+az aks create -g rg-app -n myaks --node-count 2 --generate-ssh-keys</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bicep snippet</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>resource stg 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+  name: 'mystore'
+  location: resourceGroup().location
+  sku: { name: 'Standard_LRS' }
+  kind: 'StorageV2'
+}</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Resource group vs subscription?</q><p>Subscription is billing/admin boundary; resource group is lifecycle container for related resources.</p></div>
+      <div class="lesson-iq"><q>NSG vs Azure Firewall?</q><p>NSG is subnet/NIC level rules; Azure Firewall is centralized L3-L7 appliance with FQDN filtering.</p></div>
+      <div class="lesson-iq"><q>AKS vs Container Apps?</q><p>AKS full Kubernetes control; Container Apps is serverless container hosting with simpler ops for microservices.</p></div>
+      <div class="lesson-iq"><q>Managed identity vs service principal?</q><p>Managed identities are Azure-managed credentials for resources; service principals are app registrations with secrets/certificates for external apps.</p></div>
+      <div class="lesson-iq"><q>Bicep vs ARM JSON templates?</q><p>Bicep transpiles to ARM — cleaner syntax, modules, and type safety; ARM JSON is the deployment plane artifact.</p></div>
+      <div class="lesson-iq"><q>How do you control Azure costs?</q><p>Tags for chargeback, budgets/alerts, right-size VMs, reserved capacity, and delete unused public IPs/NAT gateways in dev.</p></div>
+      <div class="lesson-iq"><q>App Service vs AKS for a web API?</q><p>App Service for simple deploy and built-in scaling; AKS when you need K8s ecosystem, sidecars, or multi-service mesh.</p></div>
+      </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Version-control all Azure Basics configuration and review changes like application code.</li>
+        <li>Automate validation (lint, policy checks) in CI before production apply.</li>
+        <li>Document ownership, on-call runbooks, and rollback for every production change.</li>
+        <li>Use least privilege for credentials and rotate secrets regularly.</li>
+        <li>Measure before/after: error rate, deploy time, cost, or toil hours saved.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <ul class="lesson-list">
+        <li>Adopting Azure Basics without a written problem statement or success metric.</li>
+        <li>Skipping staging that mirrors production networking and data volume.</li>
+        <li>No rollback path — forward-only changes during incidents.</li>
+        <li>Alert noise without actionable runbooks — on-call ignores pages.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>az login</strong><span>Authenticate CLI</span></div>
+      <div class="lesson-cheat-item"><strong>Managed Identity</strong><span>Passwordless Azure auth</span></div>
+      <div class="lesson-cheat-item"><strong>ARM/Bicep</strong><span>IaC deployments</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>RG + VM</strong><p>Deploy Linux VM with NSG allowing SSH only from your IP.</p></div>
+      <div class="lesson-exercise"><strong>AKS deploy</strong><p>Push image to ACR; deploy to AKS with liveness probe.</p></div>
+      <div class="lesson-exercise"><strong>Cost tags</strong><p>Apply tags and review Cost Management breakdown.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="aws-basics.html">← AWS Basics</a>
+      <a class="nav-link next" href="gcp-basics.html">GCP Basics →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

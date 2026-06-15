@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Redis is an in-memory data structure store used as cache, database, message broker, and queue. Single-threaded event loop processes commands — extremely low…"/>
+  <meta name="keywords" content="Redis, Database Systems, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/databases/redis.html"/>
+  <meta property="og:title" content="Redis — TechForge"/>
+  <meta property="og:description" content="Redis is an in-memory data structure store used as cache, database, message broker, and queue. Single-threaded event loop processes commands — extremely low…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Redis — Database Systems — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #4d9ef7; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Redis","description":"Redis is an in-memory data structure store used as cache, database, message broker, and queue. Single-threaded event loop processes commands — extremely low…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="db/redis" data-section="databases">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link current" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Relational (RDBMS)</div>
+    <a class="sb-link" href="sql.html"><span class="sb-num">📘</span>SQL Complete Guide</a>
+    <a class="sb-link" href="postgres.html"><span class="sb-num">🐘</span>PostgreSQL</a>
+    <a class="sb-link" href="mysql.html"><span class="sb-num">🐬</span>MySQL</a>
+    <a class="sb-link" href="mariadb.html"><span class="sb-num">🦭</span>MariaDB</a>
+    <a class="sb-link" href="sqlite.html"><span class="sb-num">📁</span>SQLite</a>
+    <div class="sidebar-label">NoSQL</div>
+    <a class="sb-link" href="mongodb.html"><span class="sb-num">🍃</span>MongoDB</a>
+    <a class="sb-link active" href="redis.html"><span class="sb-num">⚡</span>Redis</a>
+    <a class="sb-link" href="cassandra.html"><span class="sb-num">👁️</span>Cassandra</a>
+    <a class="sb-link" href="dynamodb.html"><span class="sb-num">⚡</span>DynamoDB</a>
+    <a class="sb-link" href="couchdb.html"><span class="sb-num">🛋️</span>CouchDB</a>
+    <div class="sidebar-label">Specialized Stores</div>
+    <a class="sb-link" href="neo4j.html"><span class="sb-num">🕸️</span>Neo4j (Graph)</a>
+    <a class="sb-link" href="graph-databases.html"><span class="sb-num">🔗</span>Graph Databases</a>
+    <a class="sb-link" href="influxdb.html"><span class="sb-num">📈</span>InfluxDB (Time Series)</a>
+    <a class="sb-link" href="elasticsearch.html"><span class="sb-num">🔎</span>Elasticsearch (Search)</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Database Systems Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Database Systems · Guide</div>
+      <h1 class="pg-title">Redis</h1>
+      <p class="pg-sub">Key-value, data structures, caching, pub/sub.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Database Systems</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Redis is in-memory with optional persistence — use the right structure (hash, zset, stream) and always set TTLs on cache keys.</div>
+      <p class="lesson-prose">Redis is an in-memory data structure store used as cache, database, message broker, and queue. Single-threaded event loop processes commands — extremely low latency (&lt;1ms) but CPU-bound on one core per instance.</p>
+      <p class="lesson-prose">Strings: SET/GET with optional EX (seconds TTL). Use for session tokens, feature flags, simple cache. INCR/DECR are atomic — perfect for counters and rate limiting without race conditions.</p>
+      <p class="lesson-prose">Hashes: HSET/HGET field-value maps — store objects without serializing entire JSON on each field update. Memory-efficient for objects with many fields accessed individually.</p>
+      <p class="lesson-prose">Lists: LPUSH/RPOP for queues (FIFO with BRPOP blocking pop). Streams: XADD/XREAD for append-only log with consumer groups — Kafka-lite for event sourcing within Redis.</p>
+      <p class="lesson-prose">Sets (SADD/SMEMBERS) for unique collections; Sorted Sets (ZADD/ZRANGE) for leaderboards — score-based ranking with O(log N) inserts. GEO commands built on sorted sets for location queries.</p>
+      <p class="lesson-prose">EXPIRE sets TTL in seconds; EXPIREAT uses Unix timestamp. Keys without TTL persist until manual DEL or eviction. Always set TTL on cache keys — unbounded keys cause OOM. TTL jitter prevents simultaneous expiry stampedes.</p>
+      <p class="lesson-prose">Pipelining sends multiple commands without waiting for each response — reduces RTT overhead. Lua scripting (EVAL) runs multiple operations atomically on server — implement compare-and-set, distributed locks (Redlock with caution).</p>
+      <p class="lesson-prose">Pub/Sub is fire-and-forget messaging — subscribers miss messages if offline. Redis Cluster shards data across nodes by hash slot (16384 slots); Sentinel provides HA failover for single-master setups. Cluster handles horizontal scale; Sentinel handles automatic failover.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>App clients
+         |
+  Redis (single or cluster)
+         |
+    +----+----+----+
+    v    v    v    v
+ cache session rate-limit pub/sub
+         |
+  RDB/AOF persistence (optional)</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">redis — data types &amp; TTL</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>SET session:abc123 "{\"userId\":42}" EX 3600
+INCR page:views:homepage
+HSET user:42 name "Ada" email "ada@example.com"
+ZADD leaderboard 9500 "player1" 8200 "player2"
+ZRANGE leaderboard 0 9 WITHSCORES REV
+
+EXPIRE cache:product:99 300
+TTL cache:product:99</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">redis — pipelining &amp; Lua</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code># Python pipeline — batch commands
+pipe = r.pipeline()
+for key in keys:
+    pipe.get(key)
+results = pipe.execute()
+
+# Atomic lock with Lua
+SET lock:resource NX EX 30
+# Lua: if GET(key) == token then DEL(key)
+EVAL "if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end" 1 lock:resource mytoken</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">redis — streams &amp; pub/sub</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>XADD events * type order_placed order_id 123
+XREAD COUNT 10 STREAMS events 0
+XGROUP CREATE events order_workers $ MKSTREAM
+XREADGROUP GROUP order_workers c1 COUNT 5 STREAMS events &gt;
+
+PUBLISH notifications "user:42:login"
+SUBSCRIBE notifications</code></pre>
+      </div>
+    </section>
+    <section class="lesson-section" id="concepts">
+      <h2><span class="sec-icon">🔑</span> Key Concepts</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>Data model</strong><span>How Redis structures and queries data</span></div>
+      <div class="lesson-cheat-item"><strong>Consistency</strong><span>Guarantees under failure and replication</span></div>
+      <div class="lesson-cheat-item"><strong>Scaling axis</strong><span>Vertical vs horizontal growth patterns</span></div>
+      <div class="lesson-cheat-item"><strong>Ops</strong><span>Backup, monitoring, and upgrade path</span></div></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>When do you use Redis Hash vs String for an object?</q><p>Hash: update individual fields without reading/writing entire object — memory efficient with many small objects. String: store serialized JSON when you always read/write the whole object. Hash wins for partial updates (user profile fields).</p></div>
+      <div class="lesson-iq"><q>How do INCR and SETNX enable atomic operations?</q><p>Redis commands are atomic (single-threaded). INCR counter avoids read-modify-write races. SETNX (SET if Not eXists) implements distributed lock acquisition. Combine SET key value NX EX 30 for lock with auto-expiry. Always set TTL on locks to prevent deadlocks.</p></div>
+      <div class="lesson-iq"><q>What is pipelining and when does it help?</q><p>Send multiple commands before reading responses — one round trip for N commands instead of N trips. Critical for bulk reads/writes over network. Not the same as transactions (MULTI/EXEC) — pipeline has no atomicity guarantee across commands.</p></div>
+      <div class="lesson-iq"><q>Redis pub/sub vs Streams — which to use?</q><p>Pub/sub: real-time broadcast, no persistence, subscribers miss offline messages. Streams: persisted append-only log, consumer groups with ack/retry, replay capability. Use pub/sub for live notifications; Streams for reliable event processing.</p></div>
+      <div class="lesson-iq"><q>Redis Cluster vs Sentinel?</q><p>Sentinel: monitors master, automatic failover to replica, single-shard HA. Cluster: partitions data across nodes (hash slots), horizontal scaling beyond one machine's RAM. Use Sentinel for HA with moderate data; Cluster when data exceeds single node memory or write throughput.</p></div>
+      <div class="lesson-iq"><q>How do you prevent Redis OOM?</q><p>Set maxmemory and maxmemory-policy (allkeys-lru). Always TTL cache keys. Monitor used_memory and evicted_keys. Avoid storing large collections without bounds (unbounded LIST growth). Use Redis Cluster to shard large datasets.</p></div>
+      <div class="lesson-iq"><q>FAANG: Is Redlock a safe distributed lock?</q><p>Controversial. Martin Kleppmann showed edge cases with clock drift and fencing tokens missing. For strict correctness, use a coordination service (ZooKeeper, etcd) or database locks. Redlock acceptable for efficiency where occasional double-execution is tolerable (idempotent workers).</p></div>
+      <div class="lesson-iq"><q>When should you NOT use Redis as primary database?</q><p>When you need durable complex queries, joins, or strong consistency guarantees. Redis persistence (RDB/AOF) has windows of data loss. Use as cache/session store/queue; use PostgreSQL/MySQL as source of truth. Cache-aside pattern with TTL and invalidation.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Always set TTL on cache keys — unbounded growth fills memory and triggers eviction of useful data.</li>
+        <li>Use <code>SCAN</code> instead of <code>KEYS *</code> in production — KEYS blocks the single-threaded event loop.</li>
+        <li>Choose the right structure: Hashes for objects, Sorted Sets for rankings, Lists for queues — not everything as JSON strings.</li>
+        <li>Use <code>INCR</code> for counters and rate limits — atomic without WATCH/MULTI complexity.</li>
+        <li>Configure <code>maxmemory-policy</code> explicitly (e.g. allkeys-lru) — default noeviction causes write failures when full.</li>
+        <li>Enable AOF or RDB persistence if data loss on restart is unacceptable — pure cache can skip persistence.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Redis.</div>
+      <ul class="lesson-list">
+        <li>Using Redis as primary database without persistence — restart wipes all data.</li>
+        <li>Storing large values (>100KB) in single keys — blocks the event loop during serialization.</li>
+        <li>Running <code>KEYS pattern*</code> in production — O(N) scan freezes Redis for seconds on large datasets.</li>
+        <li>Assuming MULTI/EXEC rolls back on error — Redis executes all commands; partial failure leaves inconsistent state.</li>
+        <li>No memory limit — one bad client can OOM the host; set maxmemory and eviction policy.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat">
+      <div class="lesson-cheat-item"><strong>SET / GET / DEL</strong><span>Basic string key operations</span></div>
+      <div class="lesson-cheat-item"><strong>SETEX</strong><span>Set key with TTL in seconds</span></div>
+      <div class="lesson-cheat-item"><strong>HSET / HGET</strong><span>Hash field get/set</span></div>
+      <div class="lesson-cheat-item"><strong>LPUSH / RPOP</strong><span>Queue: push left, pop right</span></div>
+      <div class="lesson-cheat-item"><strong>SADD / SMEMBERS</strong><span>Set add and list all members</span></div>
+      <div class="lesson-cheat-item"><strong>ZADD / ZRANGE</strong><span>Sorted set — leaderboards, rankings</span></div>
+      <div class="lesson-cheat-item"><strong>INCR</strong><span>Atomic integer increment</span></div>
+      <div class="lesson-cheat-item"><strong>EXPIRE / PERSIST / TTL</strong><span>Manage key expiry</span></div>
+      <div class="lesson-cheat-item"><strong>MULTI / EXEC</strong><span>Transaction batch (not rollback on error)</span></div>
+      <div class="lesson-cheat-item"><strong>SCAN</strong><span>Iterate keys without blocking (not KEYS)</span></div>
+    </div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      
+      <div class="lesson-exercise"><strong>Rate limiter with INCR</strong><p>Implement 100 req/min per IP using INCR + EXPIRE. Test with a script exceeding the limit and verify 429 behavior.</p></div>
+      <div class="lesson-exercise"><strong>Leaderboard with ZADD</strong><p>Build a game scoreboard. Use ZADD, ZREVRANGE WITHSCORES, and ZRANK. Add TTL on inactive player keys.</p></div>
+      <div class="lesson-exercise"><strong>Cache-aside pattern</strong><p>Cache Postgres query results with SETEX. On cache miss, load from DB. Measure hit ratio under load.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="mongodb.html">← MongoDB</a>
+      <a class="nav-link next" href="cassandra.html">Cassandra →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

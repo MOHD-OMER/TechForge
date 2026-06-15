@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Kubernetes orchestrates containers across a cluster of nodes. The control plane (API server, etcd, scheduler, controller manager) holds desired state;…"/>
+  <meta name="keywords" content="Kubernetes, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/kubernetes.html"/>
+  <meta property="og:title" content="Kubernetes — TechForge"/>
+  <meta property="og:description" content="Kubernetes orchestrates containers across a cluster of nodes. The control plane (API server, etcd, scheduler, controller manager) holds desired state;…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Kubernetes — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Kubernetes","description":"Kubernetes orchestrates containers across a cluster of nodes. The control plane (API server, etcd, scheduler, controller manager) holds desired state;…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/kubernetes" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link active" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Kubernetes</h1>
+      <p class="pg-sub">Pods, services, deployments, ingress, scaling.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Kubernetes orchestrates containers — master declarative desired state (Deployments, Services) and let the control plane reconcile.</div>
+      <p class="lesson-prose">Kubernetes orchestrates containers across a cluster of nodes. The control plane (API server, etcd, scheduler, controller manager) holds desired state; kubelet on each node runs containers via a container runtime (containerd). You declare intent in YAML; controllers reconcile reality.</p>
+      <p class="lesson-prose">A Pod is the smallest deployable unit — one or more containers sharing network namespace and volumes. Deployments manage ReplicaSets to run stateless apps with rolling updates. StatefulSets give stable network IDs and persistent volumes for databases. DaemonSets run one pod per node (log agents, node exporters).</p>
+      <p class="lesson-prose">Services provide stable cluster DNS names and load balancing to pods. ClusterIP (internal only), NodePort (host port), LoadBalancer (cloud LB), and Headless (direct pod DNS for StatefulSets). Selectors match pod labels — always version your labels and avoid mutable tags like :latest in prod.</p>
+      <p class="lesson-prose">Liveness probes restart unhealthy containers; readiness probes remove pods from Service endpoints until ready. Use HTTP /healthz, exec, or TCP checks. readiness must reflect dependency availability (DB connected); liveness should be lightweight to avoid restart loops.</p>
+      <p class="lesson-prose">resources.requests reserve scheduling capacity; resources.limits cap CPU (throttled) and memory (OOMKilled if exceeded). Set requests from production p95 usage; limits slightly above. Missing limits allow noisy neighbors; missing requests cause unpredictable scheduling.</p>
+      <p class="lesson-prose">ConfigMaps store non-sensitive config as key-value or files; Secrets store sensitive data (base64-encoded, not encrypted by default — enable encryption at rest). Mount as env vars or volumes. Prefer external secret operators (External Secrets, Vault) for rotation.</p>
+      <p class="lesson-prose">Ingress (with an Ingress controller like NGINX or Traefik) routes HTTP/S from outside the cluster to Services by hostname and path. NetworkPolicies restrict pod-to-pod traffic — default allow-all is risky in multi-tenant clusters.</p>
+      <p class="lesson-prose">kubectl is the primary CLI: apply -f manifest.yaml (declarative), get/describe for inspection, logs -f for streaming, exec -it for shells, port-forward for local debugging. Contexts and namespaces isolate environments — always specify -n production explicitly.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>kubectl / GitOps (ArgoCD)
+         |
+  API Server + etcd (desired state)
+         |
+  Scheduler --&gt; Kubelet (nodes)
+         |
+  Pods + Services + Ingress
+         |
+  PersistentVolume / ConfigMap / Secret</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">yaml — Deployment + Service</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels: { app: api }
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: api }
+  template:
+    metadata:
+      labels: { app: api }
+    spec:
+      containers:
+        - name: api
+          image: myregistry/api:1.2.0
+          ports: [{ containerPort: 8080 }]
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits:   { cpu: "500m", memory: "512Mi" }
+          livenessProbe:
+            httpGet: { path: /healthz, port: 8080 }
+            initialDelaySeconds: 10
+          readinessProbe:
+            httpGet: { path: /ready, port: 8080 }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+spec:
+  selector: { app: api }
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">yaml — ConfigMap + Secret</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-config
+data:
+  LOG_LEVEL: info
+  FEATURE_FLAGS: "search=true,beta=false"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-secrets
+type: Opaque
+stringData:
+  DATABASE_URL: postgres://user:pass@db:5432/app
+---
+# In Deployment spec.containers[0]:
+#   envFrom:
+#     - configMapRef: { name: api-config }
+#   env:
+#     - name: DATABASE_URL
+#       valueFrom:
+#         secretKeyRef: { name: api-secrets, key: DATABASE_URL }</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">bash — kubectl operations</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>kubectl apply -f deployment.yaml
+kubectl get pods -n production -w
+kubectl describe pod api-7f8b9c-xyz
+kubectl logs -f deployment/api -n production
+kubectl exec -it api-7f8b9c-xyz -- sh
+kubectl port-forward svc/api 8080:80
+kubectl rollout undo deployment/api
+kubectl top pods -n production</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>What is the difference between a Deployment and a StatefulSet?</q><p>Deployments manage stateless pods with random names and interchangeable replicas — rolling updates replace pods freely. StatefulSets assign stable hostnames (pod-0, pod-1), ordered startup/scale, and persistent volume claims per replica — for databases, Kafka, ZooKeeper.</p></div>
+      <div class="lesson-iq"><q>When should you use a liveness probe vs a readiness probe?</q><p>Liveness: container is deadlocked — kubelet restarts it. Readiness: container cannot serve traffic yet (warming cache, waiting for DB) — removed from Service endpoints but not restarted. Never put dependency checks in liveness or you'll restart loops during upstream outages.</p></div>
+      <div class="lesson-iq"><q>How do Kubernetes Services route traffic to pods?</q><p>Service has a ClusterIP and kube-proxy (iptables or IPVS) forwards to pod IPs matching label selectors. Endpoints object lists healthy pod IPs — readiness probe failures remove pods from endpoints. Headless Services (clusterIP: None) return pod A records directly.</p></div>
+      <div class="lesson-iq"><q>What happens when a pod exceeds its memory limit?</q><p>The container is OOMKilled by the kernel (exit 137). Kubernetes restarts it per restartPolicy. No throttling like CPU — hard kill. Set limits from observed usage; use VPA recommendations or metrics-server data. Missing limits risk node-level OOM affecting other pods.</p></div>
+      <div class="lesson-iq"><q>Explain the role of etcd in Kubernetes.</q><p>etcd is the distributed key-value store holding all cluster state (objects, desired spec). API server is the only component that writes etcd. Loss of etcd quorum loses cluster control plane — backup etcd and run odd-numbered replicas (3 or 5) across failure domains.</p></div>
+      <div class="lesson-iq"><q>How do ConfigMaps differ from Secrets?</q><p>Both inject config into pods. Secrets are intended for sensitive data and stored base64-encoded; enable encryption at rest via KMS provider. Neither is encrypted in etcd by default without configuration. Mount Secrets as volumes for file-based config; env vars leak in process listings.</p></div>
+      <div class="lesson-iq"><q>FAANG: How do you debug CrashLoopBackOff?</q><p>kubectl logs pod --previous for last crashed instance. kubectl describe pod for events (ImagePullBackOff, OOMKilled, failed probe). Check command/args, env vars, missing ConfigMaps. Run debug pod with sleep infinity and same volume mounts. Common causes: wrong entrypoint, missing secret, probe too aggressive before app starts.</p></div>
+      <div class="lesson-iq"><q>What is the difference between requests and limits?</q><p>requests: scheduler uses to place pod on node with enough allocatable resources. limits: runtime cap — CPU throttled beyond limit, memory OOMKilled. Best practice: set requests ≈ steady-state usage, limits = requests or slightly higher for CPU, 1.2–2× for memory burst headroom.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Set both <code>requests</code> and <code>limits</code> on every container — missing requests cause noisy-neighbor scheduling; missing limits allow OOM cascades.</li>
+        <li>Use <code>readinessProbe</code> separate from <code>livenessProbe</code> — never restart pods that are temporarily slow to accept traffic.</li>
+        <li>Pin images by digest or immutable tag in production manifests — floating tags cause surprise rollouts.</li>
+        <li>Use <code>kubectl apply</code> with version-controlled YAML, not imperative <code>kubectl create</code> — drift becomes unrecoverable.</li>
+        <li>Define PodDisruptionBudgets before cluster upgrades — prevents voluntary evictions from taking down all replicas.</li>
+        <li>Label everything consistently (<code>app</code>, <code>env</code>, <code>version</code>) — selectors and NetworkPolicies depend on them.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Kubernetes.</div>
+      <ul class="lesson-list">
+        <li>Using <code>latest</code> image tags in Deployment specs — nodes pull different versions; rollouts become non-deterministic.</li>
+        <li>Omitting resource requests — pods pack onto nodes until the kernel OOM-kills random processes cluster-wide.</li>
+        <li>Liveness probe hitting the same endpoint as readiness with tight timeouts — transient slowness causes restart loops.</li>
+        <li>Running one replica of stateful services with no PDB — a single node drain takes the service offline.</li>
+        <li>Granting cluster-admin to CI service accounts — one leaked token compromises the entire cluster.</li>
+      </ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat">
+      <div class="lesson-cheat-item"><strong>kubectl get pods/svc/deploy</strong><span>List core workload resources</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl describe pod</strong><span>Events, conditions, container state</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl logs -f</strong><span>Stream pod container logs</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl exec -it</strong><span>Shell into a running container</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl apply -f</strong><span>Declarative create/update from YAML</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl rollout undo</strong><span>Rollback deployment to previous revision</span></div>
+      <div class="lesson-cheat-item"><strong>kubectl top nodes/pods</strong><span>CPU/memory usage (metrics-server)</span></div>
+      <div class="lesson-cheat-item"><strong>requests vs limits</strong><span>Scheduler placement vs hard cap / OOM kill</span></div>
+      <div class="lesson-cheat-item"><strong>liveness probe</strong><span>Restart container if app is deadlocked</span></div>
+      <div class="lesson-cheat-item"><strong>readiness probe</strong><span>Remove pod from Service endpoints until ready</span></div>
+    </div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      
+      <div class="lesson-exercise"><strong>Deploy and scale</strong><p>Write a Deployment + Service YAML for nginx with 3 replicas. Scale to 5 with <code>kubectl scale</code>. Delete a pod and watch it reschedule.</p></div>
+      <div class="lesson-exercise"><strong>Rollout and rollback</strong><p>Deploy v1, update image to v2, run <code>kubectl rollout status</code>. Introduce a broken v3, then <code>kubectl rollout undo</code> and verify traffic recovers.</p></div>
+      <div class="lesson-exercise"><strong>Debug CrashLoopBackOff</strong><p>Deploy a pod with a failing command. Use <code>kubectl describe</code> and <code>kubectl logs --previous</code> to find the error. Fix the manifest and re-apply.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="github-actions.html">← GitHub Actions</a>
+      <a class="nav-link next" href="helm.html">Helm →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

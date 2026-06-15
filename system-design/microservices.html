@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Microservices decompose an application into independently deployable services bounded by business domains (DDD). Each service owns its data, codebase, and…"/>
+  <meta name="keywords" content="Microservices, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/system-design/microservices.html"/>
+  <meta property="og:title" content="Microservices — TechForge"/>
+  <meta property="og:description" content="Microservices decompose an application into independently deployable services bounded by business domains (DDD). Each service owns its data, codebase, and…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Microservices — System Design — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #22c55e; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Microservices","description":"Microservices decompose an application into independently deployable services bounded by business domains (DDD). Each service owns its data, codebase, and…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="sd/microservices" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num">📐</span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num">📈</span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num">⚖️</span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic & Performance</div>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num">⚡</span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num">💾</span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num">🌍</span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num">🚦</span>Rate Limiting</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num">🚪</span>API Gateway</a>
+    <div class="sidebar-label">Messaging & Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num">📬</span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num">📨</span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num">🐰</span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num">⚡</span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link active" href="microservices.html"><span class="sb-num">🧩</span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num">🏛️</span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num">🌐</span>Distributed Systems</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num">🔗</span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num">🗂️</span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num">📋</span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num">✂️</span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num">🔍</span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num">🛡️</span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num">🔧</span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num">🎸</span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num">🌶️</span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num">⚡</span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← System Design Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Guide</div>
+      <h1 class="pg-title">Microservices</h1>
+      <p class="pg-sub">Service boundaries, API contracts, operational complexity.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Microservices: Service boundaries, API contracts, operational complexity.</div>
+      <p class="lesson-prose">Microservices decompose an application into independently deployable services bounded by business domains (DDD). Each service owns its data, codebase, and release cycle — enabling team autonomy and technology heterogeneity at the cost of distributed system complexity.</p>
+      <p class="lesson-prose">Decompose by domain capability (orders, payments, inventory) not by technical layer (all DBs together). Services communicate via well-defined APIs. Avoid distributed monolith — services that must deploy together defeat the purpose.</p>
+      <p class="lesson-prose">Synchronous communication (REST, gRPC) is simple and request-response oriented — caller blocks until response. Good for queries needing immediate answers. Creates runtime coupling: callee failure propagates to caller without circuit breakers.</p>
+      <p class="lesson-prose">Asynchronous communication (message queues, event buses) decouples producers and consumers in time. Events announce facts ("OrderPlaced") — multiple subscribers react independently. Enables eventual consistency and load leveling but harder to debug and trace.</p>
+      <p class="lesson-prose">Distributed transactions across services are avoided. Saga pattern coordinates local transactions with compensating actions on failure (e.g. cancel payment if shipment fails). Choreography (events) vs orchestration (central coordinator) — choreography scales better; orchestration is easier to reason about.</p>
+      <p class="lesson-prose">Two-phase commit (2PC) provides atomicity across databases but blocks on coordinator failure and doesn't scale — rarely used in microservices. Prefer sagas with idempotent consumers and outbox pattern for reliable event publishing.</p>
+      <p class="lesson-prose">Service mesh (Istio, Linkerd) injects sidecar proxies handling mTLS, retries, timeouts, traffic splitting, and observability without app code changes. Circuit breaker pattern stops calling failing services after threshold — fail fast instead of cascading timeouts.</p>
+      <p class="lesson-prose">Distributed tracing (OpenTelemetry, Jaeger, Zipkin) correlates requests across services via trace IDs propagated in headers. Essential for debugging latency in microservice call chains. Without tracing, a 2s API response hiding five 400ms serial calls is invisible.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Users / clients
+         |
+  Microservices
+         |
+  Core services
+         |
+  Data + observability</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">protobuf — gRPC service</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>// order.proto
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (Order);
+  rpc GetOrder(GetOrderRequest) returns (Order);
+}
+
+// Client calls with deadline
+ctx, cancel := context.WithTimeout(ctx, 500*time.Millisecond)
+defer cancel()
+order, err := client.CreateOrder(ctx, &amp;pb.CreateOrderRequest{...})</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">json — saga choreography</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>// Order service publishes
+publish("OrderPlaced", { orderId, amount })
+
+// Payment service consumes, publishes
+on("OrderPlaced") -&gt; charge() -&gt; publish("PaymentCompleted")
+on("PaymentFailed") -&gt; publish("PaymentFailed")
+
+// Order service compensates
+on("PaymentFailed") -&gt; cancelOrder(orderId)</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">yaml — Istio circuit breaker</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: payment-cb
+spec:
+  host: payment-service
+  trafficPolicy:
+    connectionPool:
+      tcp: { maxConnections: 100 }
+      http: { http1MaxPendingRequests: 50 }
+    outlierDetection:
+      consecutiveErrors: 5
+      interval: 30s
+      baseEjectionTime: 60s</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>How do you decide service boundaries in microservices?</q><p>Align with business domains (bounded contexts in DDD). Each service owns one capability and its data. Services should change together rarely. If two services always deploy together, merge them. Start with a modular monolith and split when scaling or team boundaries demand it.</p></div>
+      <div class="lesson-iq"><q>REST vs gRPC for inter-service communication?</q><p>REST: HTTP/JSON, human-readable, browser-friendly, larger payloads. gRPC: HTTP/2, Protobuf binary, strongly typed, streaming, lower latency — ideal for internal service-to-service. Use gRPC internally, REST/GraphQL at the edge for clients.</p></div>
+      <div class="lesson-iq"><q>What is the saga pattern and when do you use it?</q><p>Sequence of local transactions with compensating actions on failure — no distributed lock. Choreography: services react to events. Orchestration: central saga manager coordinates steps. Use when business transactions span services and 2PC is unacceptable.</p></div>
+      <div class="lesson-iq"><q>What does a circuit breaker do?</q><p>After N consecutive failures to a downstream service, the breaker opens — fail fast without waiting for timeout. After cooldown, half-open state tests one request. Prevents thread exhaustion from cascading timeouts. Implement in app code (resilience4j) or service mesh (Istio outlier detection).</p></div>
+      <div class="lesson-iq"><q>What is the outbox pattern?</q><p>Write business data and outbound event to the same local DB transaction (outbox table). Separate relay process publishes events to message broker and marks outbox rows sent. Guarantees at-least-once event delivery without dual-write inconsistency between DB and queue.</p></div>
+      <div class="lesson-iq"><q>What problems does a service mesh solve?</q><p>mTLS between all services, retries/timeouts, traffic splitting (canary), observability (metrics/traces per call), and policy enforcement — without modifying application code. Cost: sidecar resource overhead and operational complexity. Worth it at 20+ services with strict security requirements.</p></div>
+      <div class="lesson-iq"><q>FAANG: When should you NOT use microservices?</q><p>Small team (&lt;10 engineers), unproven product, no DevOps maturity, or when domain boundaries are unclear. Premature decomposition creates distributed monolith — all the pain of microservices without autonomy benefits. Start monolith/modular monolith; split on proven scaling or organizational drivers.</p></div>
+      <div class="lesson-iq"><q>How do you debug latency across 10 microservices?</q><p>Distributed tracing with propagated trace context (W3C traceparent header). Each span records service name, operation, duration. Jaeger/Tempo UI shows critical path. Combine with structured logs including trace_id. Without this, serial 200ms calls across 8 services appear as one slow API.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Draw service boundaries around team ownership and data — not around technical layers (never a "database service" for everything).</li>
+        <li>Prefer async events for cross-domain workflows — synchronous chains of 5+ services create fragile latency multiplication.</li>
+        <li>Implement circuit breakers and timeouts on every outbound call — default infinite wait hangs thread pools cluster-wide.</li>
+        <li>Use idempotency keys on write APIs — retries are inevitable in distributed systems.</li>
+        <li>Adopt distributed tracing (OpenTelemetry) from day one — debugging cross-service failures without trace IDs is guesswork.</li>
+        <li>Design for independent deployability — if two services must ship together, they are not separate services yet.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Microservices.</div>
+      <ul class="lesson-list">
+        <li>Splitting monolith by technical layer (API service, DB service) — creates chatty network calls without domain isolation.</li>
+        <li>Synchronous chains for checkout/payment — one slow service blocks the entire user request path.</li>
+        <li>No schema versioning on events — producers upgrade and break all consumers simultaneously.</li>
+        <li>Shared database between services — couples schemas and prevents independent deployment.</li>
+        <li>Distributed monolith — microservices repo structure but everything deployed as one unit.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="tradeoffs">
+      <h2><span class="sec-icon">⚖️</span> Trade-off Analysis</h2>
+      <p class="lesson-prose">Microservices improves service boundaries, api contracts, operational complexity. but adds operational and cognitive complexity — justify with load and team size.</p>
+      <p class="lesson-prose">Favor simplicity until metrics (p99 latency, error rate, cost) prove the pattern necessary.</p>
+      <p class="lesson-prose">Every redundancy layer trades capital/operational cost for availability — align with explicit SLO targets.</p>
+      <p class="lesson-prose">Document accepted inconsistency windows and recovery behavior before production cutover.</p>
+    </section>
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat">
+      <div class="lesson-cheat-item"><strong>Service boundary</strong><span>Split by business capability / bounded context</span></div>
+      <div class="lesson-cheat-item"><strong>Bounded context</strong><span>DDD term — independent model within a domain</span></div>
+      <div class="lesson-cheat-item"><strong>Sync REST/gRPC</strong><span>Request-response between services</span></div>
+      <div class="lesson-cheat-item"><strong>Async events</strong><span>Decouple via message bus / event stream</span></div>
+      <div class="lesson-cheat-item"><strong>Saga pattern</strong><span>Distributed transaction via compensating steps</span></div>
+      <div class="lesson-cheat-item"><strong>Circuit breaker</strong><span>Stop calling failing dependency after threshold</span></div>
+      <div class="lesson-cheat-item"><strong>Service mesh</strong><span>Sidecar handles mTLS, retries, observability</span></div>
+      <div class="lesson-cheat-item"><strong>Distributed tracing</strong><span>Trace ID propagated across service calls</span></div>
+      <div class="lesson-cheat-item"><strong>Idempotency key</strong><span>Safe retries for POST without duplicate side effects</span></div>
+    </div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      
+      <div class="lesson-exercise"><strong>Extract a bounded context</strong><p>Take a monolith module (e.g. notifications). Move to a separate service with its own DB. Communicate via HTTP or events. Document the API contract.</p></div>
+      <div class="lesson-exercise"><strong>Saga with compensation</strong><p>Model order → payment → inventory as three services. Implement cancel/refund compensating actions when inventory fails after payment.</p></div>
+      <div class="lesson-exercise"><strong>Trace a request</strong><p>Add OpenTelemetry to two services. Make a call chain A → B. View the trace in Jaeger and identify span latency breakdown.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="event-driven.html">← Event-Driven Systems</a>
+      <a class="nav-link next" href="monolith.html">Monolith →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

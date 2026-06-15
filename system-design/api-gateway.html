@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="API Gateway — System Design guide on TechForge. Theory, examples, interview questions, and best practices."/>
+  <meta name="keywords" content="API Gateway, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/system-design/api-gateway.html"/>
+  <meta property="og:title" content="API Gateway — TechForge"/>
+  <meta property="og:description" content="API gateways terminate TLS, authenticate clients (JWT, API keys, mTLS), route to backend services, and enforce rate limits and quotas."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>API Gateway — System Design — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #22c55e; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"API Gateway","description":"API gateways terminate TLS, authenticate clients (JWT, API keys, mTLS), route to backend services, and enforce rate limits and quotas.","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="sd/api-gateway" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num">📐</span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num">📈</span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num">⚖️</span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic & Performance</div>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num">⚡</span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num">💾</span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num">🌍</span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num">🚦</span>Rate Limiting</a>
+    <a class="sb-link active" href="api-gateway.html"><span class="sb-num">🚪</span>API Gateway</a>
+    <div class="sidebar-label">Messaging & Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num">📬</span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num">📨</span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num">🐰</span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num">⚡</span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link" href="microservices.html"><span class="sb-num">🧩</span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num">🏛️</span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num">🌐</span>Distributed Systems</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num">🔗</span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num">🗂️</span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num">📋</span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num">✂️</span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num">🔍</span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num">🛡️</span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num">🔧</span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num">🎸</span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num">🌶️</span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num">⚡</span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← System Design Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Guide</div>
+      <h1 class="pg-title">API Gateway</h1>
+      <p class="pg-sub">Routing, auth, aggregation, throttling at the edge.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-green">An API gateway is the front door for clients — centralize cross-cutting concerns so microservices stay focused on domain logic.</div>
+      <p class="lesson-prose">API gateways terminate TLS, authenticate clients (JWT, API keys, mTLS), route to backend services, and enforce rate limits and quotas.</p>
+      <p class="lesson-prose">They enable protocol translation (REST to gRPC), request/response transformation, and API versioning without changing every service.</p>
+      <p class="lesson-prose">BFF (Backend for Frontend) pattern: separate gateway graphs for mobile vs web clients to reduce over-fetching and tailor payloads.</p>
+      <p class="lesson-prose">Kong, AWS API Gateway, Envoy/Gateway API, and NGINX are common implementations — pick based on latency, ops model, and plugin ecosystem.</p>
+      <p class="lesson-prose">Gateways cache responses where safe (GET with Cache-Control), collapsing thundering herds on hot endpoints.</p>
+      <p class="lesson-prose">Observability: per-route metrics, distributed tracing headers (traceparent), and structured access logs feed SLO dashboards.</p>
+      <p class="lesson-prose">Failure modes: gateway becomes single point of failure — run multi-AZ, health-check upstreams, circuit-break when backends degrade.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>  Clients (web/mobile/partners)
+            |
+       API Gateway
+     /    |    \    \
+   auth rate  route cache
+            |
+    +-------+-------+
+    v       v       v
+  Orders  Users  Payments
+  service service service</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">kong declarative</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>_format_version: &quot;3.0&quot;
+services:
+  - name: orders
+    url: http://orders:8080
+    routes:
+      - name: orders-route
+        paths: [&quot;/api/orders&quot;]
+    plugins:
+      - name: rate-limiting
+        config: { minute: 100 }</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">pseudo — JWT validate</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>if (!verifyJwt(req.headers.authorization)) return 401;
+req.headers[&quot;X-User-Id&quot;] = claims.sub;
+forwardToUpstream(req);</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Gateway vs load balancer?</q><p>LB distributes traffic L4/L7; gateway adds auth, routing, transformation, developer portal, and API product features.</p></div>
+      <div class="lesson-iq"><q>How prevent gateway overload?</q><p>Rate limits, circuit breakers, autoscale gateway pool, cache idempotent GETs, shed load with 429 + Retry-After.</p></div>
+      <div class="lesson-iq"><q>Design Stripe-like public API.</q><p>Versioned routes, API keys + OAuth, idempotency keys, per-key rate limits, webhooks, comprehensive audit logs.</p></div>
+      <div class="lesson-iq"><q>What is a BFF (Backend for Frontend)?</q><p>A gateway graph tailored to mobile vs web clients — reduces over-fetching and hides microservice chattiness from clients.</p></div>
+      <div class="lesson-iq"><q>Where terminate mTLS?</q><p>Often at gateway for public clients; service mesh mTLS inside the cluster for east-west zero trust.</p></div>
+      <div class="lesson-iq"><q>Idempotency at the gateway?</q><p>Accept Idempotency-Key header, dedupe within TTL, return same response on retries — critical for payment APIs.</p></div>
+      <div class="lesson-iq"><q>Gateway as single point of failure?</q><p>Run multi-AZ replicas, health-check upstreams, circuit-break degraded backends, autoscale on CPU/latency.</p></div>
+      </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Version-control all API Gateway configuration and review changes like application code.</li>
+        <li>Automate validation (lint, policy checks) in CI before production apply.</li>
+        <li>Document ownership, on-call runbooks, and rollback for every production change.</li>
+        <li>Use least privilege for credentials and rotate secrets regularly.</li>
+        <li>Measure before/after: error rate, deploy time, cost, or toil hours saved.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <ul class="lesson-list">
+        <li>Adopting API Gateway without a written problem statement or success metric.</li>
+        <li>Skipping staging that mirrors production networking and data volume.</li>
+        <li>No rollback path — forward-only changes during incidents.</li>
+        <li>Alert noise without actionable runbooks — on-call ignores pages.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="tradeoffs">
+      <h2><span class="sec-icon">⚖️</span> Trade-off Analysis</h2>
+      <p class="lesson-prose">Central gateway simplifies policy but can become a monolith — mitigate with strict plugin governance and horizontal scale.</p>
+      <p class="lesson-prose">Synchronous aggregation at gateway increases latency vs client-side parallel calls — aggregate only when round-trip savings justify it.</p>
+      <p class="lesson-prose">Managed cloud gateways reduce ops but add vendor lock-in and per-request cost at extreme scale.</p>
+      <p class="lesson-prose">mTLS everywhere is secure but painful for mobile/public clients — often terminate TLS at gateway and use JWT inside.</p>
+    </section>
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>BFF</strong><span>Client-specific API layer</span></div>
+      <div class="lesson-cheat-item"><strong>Idempotency-Key</strong><span>Safe retry header</span></div>
+      <div class="lesson-cheat-item"><strong>429</strong><span>Rate limited response</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Rate limit tier</strong><p>Design free vs paid quota model at gateway.</p></div>
+      <div class="lesson-exercise"><strong>Canary route</strong><p>Route 5% traffic to v2 upstream based on header.</p></div>
+      <div class="lesson-exercise"><strong>Trace propagation</strong><p>Inject W3C trace context through gateway to services.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="rate-limiting.html">← Rate Limiting</a>
+      <a class="nav-link next" href="queues.html">Message Queues →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Amazon Web Services spans 30+ regions; each region has multiple Availability Zones (isolated data centers). Place workloads across AZs for HA; use regions…"/>
+  <meta name="keywords" content="AWS Basics, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/devops/aws-basics.html"/>
+  <meta property="og:title" content="AWS Basics — TechForge"/>
+  <meta property="og:description" content="Amazon Web Services spans 30+ regions; each region has multiple Availability Zones (isolated data centers). Place workloads across AZs for HA; use regions…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>AWS Basics — DevOps — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #f97316; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"AWS Basics","description":"Amazon Web Services spans 30+ regions; each region has multiple Availability Zones (isolated data centers). Place workloads across AZs for HA; use regions…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="devops/aws-basics" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num">⎇</span>Git & Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num">🐙</span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num">🐳</span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num">📦</span>Docker Compose</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num">🔄</span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num">🏗️</span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num">⚡</span>GitHub Actions</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num">☸️</span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num">⎈</span>Helm</a>
+    <div class="sidebar-label">Web & Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num">🌐</span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux & Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num">🐧</span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num">💻</span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num">📡</span>Monitoring & Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num">🔥</span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num">📊</span>Grafana</a>
+    <div class="sidebar-label">Cloud & Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num">🏗️</span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num">☁️</span>Cloud Fundamentals</a>
+    <a class="sb-link active" href="aws-basics.html"><span class="sb-num">🟠</span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num">🔷</span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num">🔴</span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num">🌍</span>Terraform</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num">📋</span>Ansible</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">AWS Basics</h1>
+      <p class="pg-sub">EC2, S3, RDS, Lambda, IAM — core AWS building blocks.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-amber">AWS is API-driven infrastructure — understand IAM, regions/AZs, and billing tags before clicking &quot;launch&quot;.</div>
+      <p class="lesson-prose">Amazon Web Services spans 30+ regions; each region has multiple Availability Zones (isolated data centers). Place workloads across AZs for HA; use regions for latency and compliance.</p>
+      <p class="lesson-prose">EC2 provides virtual machines (instance types: compute, memory, GPU optimized). Auto Scaling Groups + ALB replace failed instances. Use launch templates, not one-off AMIs.</p>
+      <p class="lesson-prose">S3 is object storage (11 nines durability). Buckets are global names; enable versioning, encryption (SSE-S3/KMS), and block public access by default.</p>
+      <p class="lesson-prose">RDS manages relational databases (Postgres, MySQL). Multi-AZ sync replica for failover; read replicas for scale. Backups and maintenance windows are automated.</p>
+      <p class="lesson-prose">Lambda runs event-driven functions — pay per invocation and GB-second. Cold starts matter for latency; use provisioned concurrency for steady traffic.</p>
+      <p class="lesson-prose">IAM is the permission system: users, roles, policies (JSON). Prefer roles for EC2/Lambda over long-lived access keys. Least privilege with policy boundaries.</p>
+      <p class="lesson-prose">VPC isolates networks: subnets (public/private), route tables, NAT gateway for outbound private traffic, security groups (stateful) vs NACLs (stateless).</p>
+      <p class="lesson-prose">CloudWatch collects metrics, logs, and alarms. Wire alarms to SNS/PagerDuty. Cost Explorer and budgets prevent surprise bills.</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>  Users --&gt; Route53 / CloudFront
+              |
+              v
+           ALB (public subnet)
+              |
+         EC2 ASG (private)
+         /          \
+        v            v
+     RDS Multi-AZ   ElastiCache
+        |
+     S3 (assets, backups)
+        |
+   CloudWatch / IAM roles</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">aws cli — S3</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>aws s3 mb s3://my-app-assets-prod
+aws s3 cp ./dist s3://my-app-assets-prod/ --recursive</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">aws cli — EC2 describe</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>aws ec2 describe-instances \
+  --filters &quot;Name=tag:Environment,Values=prod&quot; \
+  --query &quot;Reservations[].Instances[].InstanceId&quot;</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">iam policy snippet</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>{
+  &quot;Effect&quot;: &quot;Allow&quot;,
+  &quot;Action&quot;: [&quot;s3:GetObject&quot;],
+  &quot;Resource&quot;: &quot;arn:aws:s3:::my-bucket/public/*&quot;
+}</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>Region vs Availability Zone?</q><p>Region is geographic; AZ is isolated DC within region. Spread ASG across 2+ AZs for HA.</p></div>
+      <div class="lesson-iq"><q>Security Group vs NACL?</q><p>SG is stateful, instance-level, allow rules. NACL is stateless, subnet-level, allow+deny.</p></div>
+      <div class="lesson-iq"><q>When Lambda vs EC2?</q><p>Lambda for spiky/short tasks and ops glue; EC2 for long-running, custom kernel, or steady high CPU.</p></div>
+      <div class="lesson-iq"><q>S3 consistency model?</q><p>Read-after-write for new objects; strong read consistency for overwrites/deletes (since 2020).</p></div>
+      <div class="lesson-iq"><q>IAM role vs access key?</q><p>Roles rotate automatically via STS — preferred for apps on AWS; keys are static secrets.</p></div>
+      <div class="lesson-iq"><q>RDS failover?</q><p>Multi-AZ: automatic DNS failover to standby; brief disconnect — apps must retry.</p></div>
+      <div class="lesson-iq"><q>How to reduce AWS bill?</q><p>Right-size instances, Savings Plans/RI, S3 lifecycle to Glacier, delete idle EIPs/NAT, tagging for chargeback.</p></div>
+      <div class="lesson-iq"><q>What is VPC peering?</q><p>Private routing between two VPCs — non-transitive; often use Transit Gateway at scale.</p></div>
+      <div class="lesson-iq"><q>FAANG: design multi-region active-active?</q><p>Route53 latency routing, DynamoDB global tables or conflict-aware DB, S3 CRR, careful session stickiness.</p></div>
+      <div class="lesson-iq"><q>Shared responsibility model?</q><p>AWS secures cloud; you secure data, IAM, OS patches on EC2, app code, security group rules.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list"><li>Enable MFA on root; use IAM Identity Center</li>
+        <li>Tag every resource (env, team, cost-center)</li>
+        <li>Private subnets for app/DB tiers</li>
+        <li>Encrypt data at rest and in transit</li>
+        <li>Use Infrastructure as Code (Terraform/CDK)</li>
+        <li>Set billing alarms</li></ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around AWS Basics.</div>
+      <ul class="lesson-list"><li>Public S3 buckets</li>
+        <li>Root access keys in CI</li>
+        <li>Single-AZ RDS for production</li>
+        <li>Oversized instances without metrics review</li>
+        <li>NAT Gateway in every dev VPC 24/7</li></ul>
+    </section>
+    
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>aws sts assume-role</strong><span>Temporary credentials</span></div>
+      <div class="lesson-cheat-item"><strong>aws ec2 describe-instances</strong><span>List VMs</span></div>
+      <div class="lesson-cheat-item"><strong>aws logs tail</strong><span>Stream CloudWatch logs</span></div>
+      <div class="lesson-cheat-item"><strong>Multi-AZ</strong><span>Sync standby failover</span></div>
+      <div class="lesson-cheat-item"><strong>ASG</strong><span>Auto Scaling Group</span></div></div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      <div class="lesson-exercise"><strong>Three-tier VPC</strong><p>Draw public/private subnets, ALB, EC2, RDS with security groups.</p></div>
+      <div class="lesson-exercise"><strong>Lambda + API GW</strong><p>Deploy HTTP API hitting Lambda; add CloudWatch alarm on 5xx.</p></div>
+      <div class="lesson-exercise"><strong>Cost audit</strong><p>Use Cost Explorer to find top 5 spend services; propose savings.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="cloud-fundamentals.html">← Cloud Fundamentals</a>
+      <a class="nav-link next" href="azure-basics.html">Azure Basics →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

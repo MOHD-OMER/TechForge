@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Load balancers distribute incoming traffic across multiple backend servers to improve availability, throughput, and fault tolerance. Without LB, a single…"/>
+  <meta name="keywords" content="Load Balancing, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/system-design/load-balancing.html"/>
+  <meta property="og:title" content="Load Balancing — TechForge"/>
+  <meta property="og:description" content="Load balancers distribute incoming traffic across multiple backend servers to improve availability, throughput, and fault tolerance. Without LB, a single…"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <title>Load Balancing — System Design — TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Syne:wght@400;500;600;700;800&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+  <style>:root { --accent: #22c55e; }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Load Balancing","description":"Load balancers distribute incoming traffic across multiple backend servers to improve availability, throughput, and fault tolerance. Without LB, a single…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+</head>
+<body data-topic-id="sd/load-balancing" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon">⬡</div><span>TECH</span>·FORGE</a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../python/index.html">Python</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/aiml-explained.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/aiml-explained.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num">📐</span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num">📈</span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num">⚖️</span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic & Performance</div>
+    <a class="sb-link active" href="load-balancing.html"><span class="sb-num">⚡</span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">🔀</span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num">💾</span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num">🌍</span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num">🚦</span>Rate Limiting</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num">🚪</span>API Gateway</a>
+    <div class="sidebar-label">Messaging & Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num">📬</span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num">📨</span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num">🐰</span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num">⚡</span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link" href="microservices.html"><span class="sb-num">🧩</span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num">🏛️</span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num">🌐</span>Distributed Systems</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num">🔗</span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num">🗂️</span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num">📋</span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num">✂️</span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num">🔍</span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num">🛡️</span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num">🔧</span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num">🎸</span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num">🌶️</span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num">⚡</span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+  <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← System Design Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Guide</div>
+      <h1 class="pg-title">Load Balancing</h1>
+      <p class="pg-sub">L4/L7 balancers, algorithms, health checks, sticky sessions.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark">☆ Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon">📖</span> Theory</h2>
+      <div class="callout callout-blue">Load Balancing: L4/L7 balancers, algorithms, health checks, sticky sessions.</div>
+      <p class="lesson-prose">Load balancers distribute incoming traffic across multiple backend servers to improve availability, throughput, and fault tolerance. Without LB, a single server failure or traffic spike takes down the service.</p>
+      <p class="lesson-prose">Layer 4 (transport) balancers route by IP and TCP/UDP port — fast, no protocol awareness, can't route by URL path or HTTP headers. Examples: AWS NLB, HAProxy in TCP mode. Good for non-HTTP protocols and extreme throughput.</p>
+      <p class="lesson-prose">Layer 7 (application) balancers understand HTTP — route by hostname, path, headers, cookies. Can terminate TLS, inject headers, rewrite URLs. Examples: AWS ALB, NGINX, Envoy. Higher latency than L4 but far more routing flexibility.</p>
+      <p class="lesson-prose">Round-robin: equal distribution in rotation — simple but ignores server load. Least-connections: sends to backend with fewest active connections — better for long-lived requests. Weighted round-robin: more traffic to powerful nodes. IP hash: same client IP → same backend (sticky without cookies).</p>
+      <p class="lesson-prose">Health checks: active (LB probes /health endpoint periodically, removes unhealthy nodes) vs passive (mark unhealthy on request failure). Configure interval, timeout, healthy/unhealthy thresholds. Aggressive checks cause flapping; lenient checks route to dead backends.</p>
+      <p class="lesson-prose">Sticky sessions (session affinity) pin a user to one backend via cookie or IP hash. Needed for in-memory session state but breaks even load distribution and complicates deploys. Prefer external session store (Redis) and stateless backends.</p>
+      <p class="lesson-prose">Anycast routes the same IP to geographically nearest edge via BGP — used by CDNs and global LBs (Cloudflare, Google). Reduces latency without DNS round-robin. BGP health withdrawal removes bad PoPs from routing.</p>
+      <p class="lesson-prose">DNS load balancing returns multiple A records — clients pick randomly. TTL affects failover speed (low TTL = faster failover, more DNS load). DNS is not a true LB — no health awareness unless using smart DNS (Route53 health checks).</p>
+    </section>
+    <section class="lesson-section" id="diagram">
+      <h2><span class="sec-icon">🗺️</span> Architecture Diagram</h2>
+      <div class="lesson-diagram"><pre>Users / clients
+         |
+  Load Balancing
+         |
+  Core services
+         |
+  Data + observability</pre></div>
+    </section>
+    <section class="lesson-section" id="examples">
+      <h2><span class="sec-icon">💻</span> Examples</h2>
+      <div class="code-block">
+        <div class="code-hdr">
+    <span class="code-lang">nginx — L7 load balancer</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>upstream api_pool {
+    least_conn;
+    server 10.0.1.10:8080 weight=3 max_fails=3 fail_timeout=30s;
+    server 10.0.1.11:8080;
+    server 10.0.1.12:8080 backup;
+    keepalive 64;
+}
+
+server {
+    listen 443 ssl;
+    location /api/ {
+        proxy_pass http://api_pool;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header X-Request-Id $request_id;
+    }
+}</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">haproxy — health checks</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>backend web_servers
+    balance leastconn
+    option httpchk GET /health HTTP/1.1\r\nHost:\ health.local
+    http-check expect status 200
+    server web1 10.0.1.10:80 check inter 3s fall 3 rise 2
+    server web2 10.0.1.11:80 check inter 3s fall 3 rise 2
+    server web3 10.0.1.12:80 check inter 3s fall 3 rise 2</code></pre>
+      </div>
+      <div class="code-block" style="margin-top:16px">
+        <div class="code-hdr">
+    <span class="code-lang">aws — ALB target group</span>
+    <div class="code-dots">
+      <div class="cd" style="background:#f87171"></div>
+      <div class="cd" style="background:#fbbf24"></div>
+      <div class="cd" style="background:#34d399"></div>
+    </div>
+  </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><code>aws elbv2 create-target-group \
+  --name api-tg --protocol HTTP --port 8080 \
+  --vpc-id vpc-abc --health-check-path /health \
+  --healthy-threshold-count 2 --unhealthy-threshold-count 3
+
+aws elbv2 register-targets \
+  --target-group-arn arn:aws:... \
+  --targets Id=10.0.1.10 Id=10.0.1.11</code></pre>
+      </div>
+    </section>
+    
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon">🎯</span> Interview Questions</h2>
+      <div class="lesson-iq"><q>What is the difference between L4 and L7 load balancing?</q><p>L4 routes by IP/port at TCP/UDP layer — fast, protocol-agnostic, no URL routing. L7 understands HTTP — route by path, host, headers; terminate TLS; modify requests. Use L4 for raw TCP/UDP throughput; L7 for HTTP microservices routing.</p></div>
+      <div class="lesson-iq"><q>When would you use least-connections over round-robin?</q><p>When request duration varies widely (long-polling, file uploads, WebSockets). Round-robin sends equal requests but ignores that some backends hold connections longer. Least-connections routes to the least busy backend by active connection count.</p></div>
+      <div class="lesson-iq"><q>What are the downsides of sticky sessions?</q><p>Uneven load when some users are heavier. Backend failure loses session state unless replicated. Rolling deploys drain sticky users slowly. Scaling down removes backends with active sessions. Prefer external session stores and stateless app design.</p></div>
+      <div class="lesson-iq"><q>How do active vs passive health checks differ?</q><p>Active: LB periodically probes /health — removes backends before clients see errors. Passive: mark unhealthy only after real request failures — slower detection but no probe overhead. Production uses active checks with tuned intervals to avoid flapping.</p></div>
+      <div class="lesson-iq"><q>How does DNS load balancing work and what are its limits?</q><p>DNS returns multiple A records; clients pick one. No health awareness (unless smart DNS like Route53 with health checks). TTL controls failover speed. Clients cache DNS — failed node may receive traffic until TTL expires. Not suitable alone for fast failover.</p></div>
+      <div class="lesson-iq"><q>What is anycast and how is it used for load balancing?</q><p>Same IP announced from multiple geographic locations via BGP. Client routes to nearest PoP. Used by CDNs and global anycast LBs. Failure: withdraw BGP announcement to redirect traffic. Requires careful state management — backends must be stateless or replicated globally.</p></div>
+      <div class="lesson-iq"><q>FAANG: How do you load balance WebSocket connections?</q><p>L7 LB with connection-based routing (not request-based). Use least-connections or consistent hashing on client ID. Sticky sessions via cookie or IP hash. Idle timeout must exceed WebSocket heartbeat interval. Drain connections gracefully on deploy with connection-aware shutdown.</p></div>
+      <div class="lesson-iq"><q>How do you handle load balancer as a single point of failure?</q><p>Run LB in HA pair (keepalived/VRRP floating IP), use cloud managed LB (multi-AZ by default), or anycast across PoPs. Health check the LB itself via external synthetic monitoring. Never run a single self-hosted LB without failover for production.</p></div>
+    </section>
+    <section class="lesson-section" id="best-practices">
+      <h2><span class="sec-icon">✅</span> Best Practices</h2>
+      <ul class="lesson-list">
+        <li>Use L7 load balancing when you need path-based routing, TLS termination, or header inspection — L4 only when raw TCP throughput matters.</li>
+        <li>Configure active health checks with thresholds — mark unhealthy after N failures, require M successes to rejoin.</li>
+        <li>Enable connection keepalive between LB and backends — avoids TCP handshake overhead at high RPS.</li>
+        <li>Set reasonable timeouts (connect, read, idle) per upstream latency profile — defaults cause false unhealthy marks.</li>
+        <li>Avoid sticky sessions unless required — they break even load distribution and complicate rolling deploys.</li>
+        <li>Terminate TLS at the LB and use HTTP/2 to backends where supported — reduces connection count.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon">⚠️</span> Common Mistakes</h2>
+      <div class="callout callout-amber">Watch for these patterns — they cause most production incidents around Load Balancing.</div>
+      <ul class="lesson-list">
+        <li>Round-robin to backends with different capacity — weak nodes get equal traffic and become the bottleneck.</li>
+        <li>Health checks that hit a lightweight /health but app DB is down — LB routes traffic to broken instances.</li>
+        <li>No connection draining on deploy — killing backends mid-request causes 502s during rollouts.</li>
+        <li>IP-hash stickiness behind NAT — entire office maps to one backend, defeating load distribution.</li>
+        <li>Single load balancer with no redundancy — LB itself becomes a single point of failure.</li>
+      </ul>
+    </section>
+    <section class="lesson-section" id="tradeoffs">
+      <h2><span class="sec-icon">⚖️</span> Trade-off Analysis</h2>
+      <p class="lesson-prose">Load Balancing improves l4/l7 balancers, algorithms, health checks, sticky sessions. but adds operational and cognitive complexity — justify with load and team size.</p>
+      <p class="lesson-prose">Favor simplicity until metrics (p99 latency, error rate, cost) prove the pattern necessary.</p>
+      <p class="lesson-prose">Every redundancy layer trades capital/operational cost for availability — align with explicit SLO targets.</p>
+      <p class="lesson-prose">Document accepted inconsistency windows and recovery behavior before production cutover.</p>
+    </section>
+    <section class="lesson-section" id="cheatsheet">
+      <h2><span class="sec-icon">📋</span> Cheat Sheet</h2>
+      <div class="lesson-cheat">
+      <div class="lesson-cheat-item"><strong>Round-robin</strong><span>Equal rotation across healthy backends</span></div>
+      <div class="lesson-cheat-item"><strong>least_conn</strong><span>Send to backend with fewest active connections</span></div>
+      <div class="lesson-cheat-item"><strong>ip_hash</strong><span>Sticky routing by client IP hash</span></div>
+      <div class="lesson-cheat-item"><strong>L4 vs L7</strong><span>TCP pass-through vs HTTP-aware routing</span></div>
+      <div class="lesson-cheat-item"><strong>Health check interval</strong><span>How often LB probes backend health</span></div>
+      <div class="lesson-cheat-item"><strong>Sticky session</strong><span>Same client → same backend (cookie or IP)</span></div>
+      <div class="lesson-cheat-item"><strong>Upstream keepalive</strong><span>Reuse TCP connections to backends</span></div>
+      <div class="lesson-cheat-item"><strong>Anycast</strong><span>Same IP announced from multiple locations</span></div>
+      <div class="lesson-cheat-item"><strong>BGP</strong><span>Routes traffic to nearest healthy PoP</span></div>
+    </div>
+    </section>
+    <section class="lesson-section" id="exercises">
+      <h2><span class="sec-icon">🏋️</span> Practical Exercises</h2>
+      
+      <div class="lesson-exercise"><strong>Nginx upstream comparison</strong><p>Configure round-robin and least_conn upstreams with two backends logging requests. Generate load with <code>ab</code> and compare distribution.</p></div>
+      <div class="lesson-exercise"><strong>Health check failover</strong><p>Run two backends, disable one. Observe LB stop routing to it within the health check window. Re-enable and verify recovery.</p></div>
+      <div class="lesson-exercise"><strong>Connection keepalive benchmark</strong><p>Compare RPS with and without <code>keepalive</code> in upstream block. Document latency p99 difference.</p></div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="cap-theorem.html">← CAP Theorem</a>
+      <a class="nav-link next" href="reverse-proxy.html">Reverse Proxy →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js"></script>
+<script src="../assets/js/site-index.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/platform.js?v=3"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
