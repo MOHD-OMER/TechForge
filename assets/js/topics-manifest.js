@@ -194,6 +194,40 @@ window.TF_TOPICS = {
         ]
       }
     ]
+  },
+
+  aiml: {
+    label: 'AI / ML',
+    hub: 'aiml/index.html',
+    accent: '#a78bfa',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'aiml/aiml-explained', file: 'aiml-explained.html', title: 'AI / ML Explained', icon: '🧠', desc: 'The full map — what AI, ML, DL, NLP, CV, and RL are and how they relate.', depth: 'full' },
+          { id: 'aiml/ml', file: 'ml.html', title: 'Machine Learning', icon: '📈', desc: 'Supervised, unsupervised, core algorithms, bias-variance, evaluation metrics.', depth: 'guide' },
+          { id: 'aiml/dl', file: 'dl.html', title: 'Deep Learning', icon: '🔬', desc: 'Neural nets, backprop, CNNs, RNNs, attention, and transformers.', depth: 'guide' }
+        ]
+      },
+      {
+        id: 'specializations',
+        label: 'Specializations',
+        topics: [
+          { id: 'aiml/nlp', file: 'nlp.html', title: 'NLP & LLMs', icon: '💬', desc: 'Text processing, embeddings, attention, BERT, GPT, RAG pipelines.', depth: 'guide' },
+          { id: 'aiml/cv', file: 'cv.html', title: 'Computer Vision', icon: '👁️', desc: 'Image classification, object detection, CNNs, YOLO, transfer learning.', depth: 'guide' },
+          { id: 'aiml/rl', file: 'rl.html', title: 'Reinforcement Learning', icon: '🎮', desc: 'Agents, environments, rewards, Q-learning, policy gradients.', depth: 'guide' },
+          { id: 'aiml/genai', file: 'genai.html', title: 'Generative AI', icon: '✨', desc: 'LLMs, diffusion models, RAG, prompt engineering, production patterns.', depth: 'guide' }
+        ]
+      },
+      {
+        id: 'reference',
+        label: 'Reference',
+        topics: [
+          { id: 'aiml/ds-cheatsheet', file: 'ds-cheatsheet.html', title: 'DS & AI Cheat Sheet', icon: '📋', desc: 'Stats, pandas, sklearn, NumPy, and model evaluation quick reference.', depth: 'guide' }
+        ]
+      }
+    ]
   }
 };
 
