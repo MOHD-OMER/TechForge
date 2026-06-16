@@ -5,11 +5,13 @@
   const TWO_PI = Math.PI * 2;
 
   function resizeCanvas(cv) {
-    cv.width  = cv.offsetWidth  * devicePixelRatio;
-    cv.height = cv.offsetHeight * devicePixelRatio;
+    const W = cv.offsetWidth  || (cv.parentElement && cv.parentElement.offsetWidth) || 600;
+    const H = cv.offsetHeight || parseInt(cv.getAttribute('height') || '300');
+    cv.width  = W * devicePixelRatio;
+    cv.height = H * devicePixelRatio;
     const ctx = cv.getContext('2d');
     ctx.scale(devicePixelRatio, devicePixelRatio);
-    return [cv.offsetWidth, cv.offsetHeight, ctx];
+    return [W, H, ctx];
   }
 
   /* ── TAB SWITCH ── */
@@ -19,7 +21,8 @@
     $('vp-' + key).classList.add('active');
     if (btn) btn.classList.add('active');
     const inits = { kmeans: resetKmeans, linreg: resetLinreg, nn: resetNN, dt: drawDT, pca: resetPCA, gd: resetGD };
-    setTimeout(() => inits[key] && inits[key](), 60);
+    // Double rAF ensures browser has painted display:block before we read offsetWidth
+    requestAnimationFrame(() => requestAnimationFrame(() => inits[key] && inits[key]()));
   }
 
   /* ══ 1. K-MEANS ══ */
