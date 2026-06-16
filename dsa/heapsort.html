@@ -188,8 +188,7 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="bars-wrap" id="heapsort-bars">
-</div>
+<canvas id="heapsort-bars" style="width:100%;height:200px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 <div class="status" id="heapsort-status">
         Press ▶ Sort to begin
        </div>
@@ -451,7 +450,7 @@
   
 <script src="../assets/js/topics-manifest.js"></script>
   <script src="../assets/js/site-index.js"></script>
-  <script src="../assets/js/utils.js?v=3"></script>
+  <script src="../assets/js/utils.js?v=4"></script>
   <script src="../assets/js/platform.js?v=3"></script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){refreshProg("heapsort");});
@@ -495,8 +494,7 @@ updateProgress();
    let hsArr =[12,11,13,5,6,7,64,25,3,90,42,30]; let hsOn =false;
 function hsReset(){
   hsOn=false;
-  let w =document.getElementById('heapsort-bars'),mx=Math.max.apply(null,hsArr);
-  w.innerHTML=hsArr.map(function(v){return '<div class="bar bc-def" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';}).join('');
+  tfDrawBars('heapsort-bars', hsArr, Math.max.apply(null,hsArr), function(){return 'def';});
   setStatus('heapsort-status','Press &#9654; Sort to begin');document.getElementById('heapsort-go').disabled=false;
 }
 async function heapsortRun(){
@@ -504,11 +502,12 @@ async function heapsortRun(){
   let arr =hsArr.slice(),n=arr.length,mx=Math.max.apply(null,arr),done={};
   let spd =function(){return Math.max(60,850-parseInt(document.getElementById('heapsort-spd').value));};
   function render(hl,sw){
-    let w =document.getElementById('heapsort-bars');if(!w)return;
-    w.innerHTML=arr.map(function(v,i){
-      let c ='bc-def';if(done[i])c='bc-srt';else if(i===hl)c='bc-cmp';else if(i===sw)c='bc-swap';
-      return '<div class="bar '+c+'" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';
-    }).join('');
+    tfDrawBars('heapsort-bars', arr, mx, function(i){
+      if(done[i]) return 'srt';
+      if(i===hl) return 'cmp';
+      if(i===sw) return 'swap';
+      return 'def';
+    });
   }
   async function heapify(size,i){
     let lg =i,l=2*i+1,r=2*i+2,t;

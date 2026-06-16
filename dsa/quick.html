@@ -189,8 +189,7 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="bars-wrap" id="quick-bars">
-</div>
+<canvas id="quick-bars" style="width:100%;height:200px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 <div class="status" id="quick-status">
         Press ▶ Sort to begin
        </div>
@@ -455,7 +454,7 @@
   
 <script src="../assets/js/topics-manifest.js"></script>
   <script src="../assets/js/site-index.js"></script>
-  <script src="../assets/js/utils.js?v=3"></script>
+  <script src="../assets/js/utils.js?v=4"></script>
   <script src="../assets/js/platform.js?v=3"></script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){refreshProg("quick");});
@@ -499,8 +498,7 @@ updateProgress();
    let qsArr =[10,7,8,9,1,5,64,34,25,12,22,11]; let qsOn =false;
 function qsReset(){
   qsOn=false;
-  let w =document.getElementById('quick-bars'),mx=Math.max.apply(null,qsArr);
-  w.innerHTML=qsArr.map(function(v){return '<div class="bar bc-def" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';}).join('');
+  tfDrawBars('quick-bars', qsArr, Math.max.apply(null,qsArr), function(){return 'def';});
   setStatus('quick-status','Press &#9654; Sort to begin');document.getElementById('quick-go').disabled=false;
 }
 async function quickRun(){
@@ -508,15 +506,13 @@ async function quickRun(){
   let arr =qsArr.slice(),n=arr.length,mx=Math.max.apply(null,arr),done={};
   let spd =function(){return Math.max(80,900-parseInt(document.getElementById('quick-spd').value));};
   function render(piv,lo,hi,scan){
-    let w =document.getElementById('quick-bars');if(!w)return;
-    w.innerHTML=arr.map(function(v,i){
-      let c ='bc-def';
-      if(done[i])c='bc-srt';
-      else if(i===piv)c='bc-piv';
-      else if(i===scan)c='bc-swap';
-      else if(i>=lo&&i<=hi)c='bc-mrg';
-      return '<div class="bar '+c+'" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';
-    }).join('');
+    tfDrawBars('quick-bars', arr, mx, function(i){
+      if(done[i]) return 'srt';
+      if(i===piv) return 'piv';
+      if(i===scan) return 'swap';
+      if(i>=lo&&i<=hi) return 'mrg';
+      return 'def';
+    });
   }
   async function partition(lo,hi){
     let piv =arr[hi],i=lo-1,t;

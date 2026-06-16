@@ -13,6 +13,74 @@ function setStatus(id, html) {
   if (el) el.innerHTML = html;
 }
 
+/* ---- Shared DSA sorting canvas renderer ----------------------------------
+ * Draws a bar chart on a <canvas>. Each sorting page keeps its own algorithm
+ * and per-bar state logic; it just passes a stateOf(i) callback returning one
+ * of the keys below. Crisp on HiDPI; retries via rAF if laid out at 0 width
+ * (e.g. drawn before layout / on a just-shown tab).                          */
+const TF_BAR_COLORS = {
+  def:  '#33415c', // unsorted / default
+  cmp:  '#f97316', // comparison (orange)
+  swap: '#f87171', // swap (red)
+  srt:  '#22c55e', // sorted (green)
+  piv:  '#a78bfa', // pivot (purple)
+  hl:   '#facc15', // scan / highlight (amber)
+  mrg:  '#4d9ef7'  // active sub-range (blue)
+};
+
+function tfDrawBars(canvasId, arr, max, stateOf, _retry) {
+  const cv = document.getElementById(canvasId);
+  if (!cv || !arr || !arr.length) return;
+  // Width may be 0 if drawn before layout or on a just-shown tab — retry a few
+  // frames, then fall back to the parent's width (and finally a sane default).
+  let w = cv.offsetWidth;
+  if (!w && (_retry || 0) < 5) {
+    requestAnimationFrame(() => tfDrawBars(canvasId, arr, max, stateOf, (_retry || 0) + 1));
+    return;
+  }
+  if (!w) w = (cv.parentElement && cv.parentElement.clientWidth) || 700;
+
+  const dpr = window.devicePixelRatio || 1;
+  const H = cv.clientHeight || 200;
+  cv.width = Math.round(w * dpr);
+  cv.height = Math.round(H * dpr);
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, H);
+
+  const n = arr.length;
+  const gap = n > 30 ? 1 : 4;
+  const bw = (w - gap * (n + 1)) / n;
+  const topPad = 18, botPad = 6;
+  const usableH = H - topPad - botPad;
+  const mono = (getComputedStyle(document.body).getPropertyValue('--font-mono') || 'monospace').trim();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = '10px ' + mono;
+
+  for (let i = 0; i < n; i++) {
+    const st = (stateOf ? stateOf(i) : 'def') || 'def';
+    const col = TF_BAR_COLORS[st] || TF_BAR_COLORS.def;
+    const h = Math.max(6, Math.round((arr[i] / max) * usableH));
+    const x = gap + i * (bw + gap);
+    const y = H - botPad - h;
+    const r = Math.min(3, bw / 2);
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.moveTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.arcTo(x + bw, y, x + bw, y + r, r);
+    ctx.lineTo(x + bw, H - botPad);
+    ctx.lineTo(x, H - botPad);
+    ctx.closePath();
+    ctx.fill();
+    if (bw >= 14) {
+      ctx.fillStyle = st === 'def' ? '#8aa0c0' : col;
+      ctx.fillText(arr[i], x + bw / 2, y - 5);
+    }
+  }
+}
+
 function switchTab(el, paneId) {
   const sec = el.closest('.info-section');
   sec.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));

@@ -179,7 +179,7 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="bars-wrap" id="insertion-bars"></div>
+<canvas id="insertion-bars" style="width:100%;height:200px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 <div class="status" id="insertion-status">Press ▶ Sort to begin</div>
 </div>
 </div>
@@ -357,7 +357,7 @@
   
 <script src="../assets/js/topics-manifest.js"></script>
   <script src="../assets/js/site-index.js"></script>
-  <script src="../assets/js/utils.js?v=3"></script>
+  <script src="../assets/js/utils.js?v=4"></script>
   <script src="../assets/js/platform.js?v=3"></script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){refreshProg("insertion");});
@@ -366,8 +366,7 @@ let isArr =[12,11,13,5,6,7,64,25,3,90]; let isOn =false;
 function insertionReset(){ isReset(); }
 function isReset(){
   isOn=false;
-  let w =document.getElementById('insertion-bars'),mx=Math.max.apply(null,isArr);
-  w.innerHTML=isArr.map(function(v){return '<div class="bar bc-def" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';}).join('');
+  tfDrawBars('insertion-bars', isArr, Math.max.apply(null,isArr), function(){return 'def';});
   setStatus('insertion-status','Press &#9654; Sort to begin'); document.getElementById('insertion-go').disabled=false;
 }
 async function insertionRun(){
@@ -375,14 +374,12 @@ async function insertionRun(){
   let arr =isArr.slice(),n=arr.length,mx=Math.max.apply(null,arr);
   let spd =function(){return 980-parseInt(document.getElementById('insertion-spd').value);};
   function render(cur,ins,sortedTo){
-    let w =document.getElementById('insertion-bars');if(!w)return;
-    w.innerHTML=arr.map(function(v,i){
-      let c ='bc-def';
-      if(i<sortedTo)c='bc-srt';
-      if(i===ins)c='bc-piv';
-      if(i===cur)c='bc-cmp';
-      return '<div class="bar '+c+'" style="height:'+Math.max(8,Math.round(v/mx*148))+'px"><span class="bar-lbl">'+v+'</span></div>';
-    }).join('');
+    tfDrawBars('insertion-bars', arr, mx, function(i){
+      if(i===cur) return 'cmp';
+      if(i===ins) return 'piv';
+      if(i<sortedTo) return 'srt';
+      return 'def';
+    });
   }
   for(let i =1;i<n&&isOn;i++){
     let key =arr[i],j=i-1;
