@@ -196,6 +196,27 @@ window.TF_TOPICS = {
     ]
   },
 
+  interview: {
+    label: 'Interview Prep',
+    hub: 'interview/index.html',
+    accent: '#f97316',
+    categories: [
+      {
+        id: 'interview-banks',
+        label: 'Question Banks',
+        topics: [
+          { id: 'interview/dsa',           file: 'dsa-interview.html',           title: 'DSA Interview',           icon: '📊', desc: '60+ problems — arrays, trees, graphs, DP, sorting, and complexity.', depth: 'full' },
+          { id: 'interview/python',        file: 'python-interview.html',        title: 'Python Interview',        icon: '🐍', desc: 'Python-specific questions — OOP, builtins, decorators, async.', depth: 'guide' },
+          { id: 'interview/oop',           file: 'oop-interview.html',           title: 'OOP Interview',           icon: '🧱', desc: 'Classes, inheritance, SOLID principles, design patterns.', depth: 'guide' },
+          { id: 'interview/sql',           file: 'sql-interview.html',           title: 'SQL Interview',           icon: '🗄️', desc: 'Queries, joins, window functions, normalization, indexing.', depth: 'guide' },
+          { id: 'interview/aiml',          file: 'aiml-interview.html',          title: 'AI/ML Interview',         icon: '🤖', desc: 'ML concepts, model evaluation, bias-variance, system design for AI.', depth: 'guide' },
+          { id: 'interview/devops',        file: 'devops-interview.html',        title: 'DevOps Interview',        icon: '⎇',  desc: 'CI/CD, Docker, Kubernetes, infrastructure, SRE questions.', depth: 'guide' },
+          { id: 'interview/system-design', file: 'system-design-interview.html', title: 'System Design Interview', icon: '🏗️', desc: 'Scale, availability, caching, databases, distributed systems.', depth: 'guide' }
+        ]
+      }
+    ]
+  },
+
   aiml: {
     label: 'AI / ML',
     hub: 'aiml/index.html',
