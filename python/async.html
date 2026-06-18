@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Async / Await — asyncio, Coroutines & Concurrency | TechForge</title>
+  <link rel="canonical" href="https://tech-forge-dev.vercel.app/python/async.html"/>
+  <meta property="og:title" content="Python Async / Await — asyncio, Coroutines & Concurrency | TechForge"/>
+  <meta property="og:description" content="Python async/await — event loop, coroutines, asyncio, gather, aiohttp, real-world patterns, and common pitfalls on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://tech-forge-dev.vercel.app/assets/og-image.png"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=6" rel="stylesheet">
+    <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=2" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--py); --accent-dim: var(--py-dim); }
+    .b-py { background: rgba(247, 204, 69, .12); color: var(--py); border: 1px solid rgba(247, 204, 69, .25); }
+    .b-purple { background: rgba(167, 139, 250, .1); color: var(--purple); border: 1px solid rgba(167, 139, 250, .2); }
+    .b-amber { background: rgba(251, 191, 36, .1); color: var(--amber); border: 1px solid rgba(251, 191, 36, .2); }
+    .memory-trick { background: linear-gradient(135deg, rgba(247, 204, 69, .08), rgba(34, 211, 238, .04)); border: 1px solid rgba(247, 204, 69, .2); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; }
+    .memory-trick h3 { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--py); margin-bottom: 12px; }
+    .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .cmp-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; background: rgba(0,0,0,.2); }
+    .cmp-card h4 { font-family: var(--display); font-size: 14px; margin-bottom: 8px; }
+    .cmp-sync h4 { color: var(--red, #f87171); }
+    .cmp-async h4 { color: var(--green); }
+    .cmp-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    @media (max-width: 640px) { .cmp-grid { grid-template-columns: 1fr; } }
+    .pitfall { border-left: 3px solid var(--red, #f87171); background: rgba(248,113,113,.05); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; padding: 14px 18px; margin-bottom: 14px; }
+    .pitfall .pf-bad { color: var(--red, #f87171); font-weight: 600; }
+    .pitfall .pf-fix { color: var(--green); font-weight: 600; }
+    .pitfall p { font-size: 13px; color: var(--text2); line-height: 1.6; margin-top: 4px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="py/async" data-section="python">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon">⬡</div>
+      <span>TECH</span>·FORGE
+    </a>
+    <nav class="tb-nav" id="topNav">
+      <a class="tb-link" href="../index.html">Home</a>
+      <a class="tb-link" href="../dsa/index.html">DSA</a>
+      <a class="tb-link" href="../system-design/index.html">System Design</a>
+      <a class="tb-link current" href="./">Python</a>
+      <a class="tb-link" href="../databases/index.html">Databases</a>
+      <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+      <a class="tb-link" href="../interview/index.html">Interview</a>
+      <a class="tb-link" href="../devops/index.html">DevOps</a>
+      <a class="tb-link" href="../about.html">About</a>
+    </nav>
+    <div class="topbar-actions">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">←</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">←</span> Programs</a>
+      <div class="sidebar-label" style="margin-top:14px;">Async / Await — Complete</div>
+      <a class="sb-link active" href="#sec-async-intro"><span class="sb-num">01</span> Why Async</a>
+      <a class="sb-link" href="#sec-coroutines"><span class="sb-num">02</span> Coroutines &amp; await</a>
+      <a class="sb-link" href="#sec-event-loop"><span class="sb-num">03</span> The Event Loop</a>
+      <a class="sb-link" href="#sec-tasks"><span class="sb-num">04</span> Tasks &amp; gather</a>
+      <a class="sb-link" href="#sec-patterns"><span class="sb-num">05</span> Concurrency Patterns</a>
+      <a class="sb-link" href="#sec-aiohttp"><span class="sb-num">06</span> aiohttp</a>
+      <a class="sb-link" href="#sec-realworld"><span class="sb-num">07</span> Real-World Patterns</a>
+      <a class="sb-link" href="#sec-pitfalls"><span class="sb-num">08</span> Common Pitfalls</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Async / Await Complete</div>
+        <h1 class="pg-title">Asynchronous <span>Python</span></h1>
+        <p class="pg-sub">Do thousands of I/O operations concurrently on a single thread. Master the event loop, coroutines, <code>async</code>/<code>await</code>, <code>asyncio</code>, and the patterns that power modern Python servers.</p>
+        <div class="pg-badges">
+          <span class="badge b-py">🐍 Python 3.7+</span>
+          <span class="badge b-purple">⚡ Concurrency</span>
+          <span class="badge b-blue">8 Topics</span>
+          <span class="badge b-amber">🔥 Interview Key</span>
+        </div>
+      </header>
+
+      <section class="py-section" id="sec-async-intro">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon">⚡</span><h2 class="sec-title">Why Async? Blocking vs Non-Blocking</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Async</strong> lets a single thread juggle many tasks that spend most of their time <strong>waiting</strong> — network calls, disk reads, database queries. Instead of sitting idle during a wait, the program switches to other work. This is <strong>concurrency</strong>, not parallelism: one worker, never idle, not many workers at once.</p>
+        <div class="cmp-grid">
+          <div class="cmp-card cmp-sync">
+            <h4>🐢 Synchronous (blocking)</h4>
+            <p>Each call must finish before the next starts. Download 3 pages at 1s each → <strong>3 seconds</strong>. The CPU sleeps while the network works.</p>
+          </div>
+          <div class="cmp-card cmp-async">
+            <h4>🚀 Asynchronous (non-blocking)</h4>
+            <p>Start all 3 downloads, await them together. Total ≈ <strong>1 second</strong>. While one waits on I/O, the loop runs the others.</p>
+          </div>
+        </div>
+        <div class="memory-trick">
+          <h3>🧠 When to reach for async</h3>
+          <p class="prose"><strong>I/O-bound</strong> work (APIs, sockets, DB, files) → <strong>asyncio</strong> shines. <strong>CPU-bound</strong> work (number crunching, image processing) → use <code>multiprocessing</code> instead; async won't help because there's no waiting to overlap.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-coroutines">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon">🧬</span><h2 class="sec-title">Coroutines &amp; the await Keyword</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>coroutine</strong> is a function defined with <code>async def</code>. Calling it does <em>not</em> run it — it returns a <strong>coroutine object</strong>. You must <code>await</code> it (or schedule it) to actually execute. <code>await</code> hands control back to the event loop until the awaited thing is ready.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Your First Coroutine</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio
+
+<span class="kw">async def</span> <span class="fn">greet</span>(name):
+    <span class="fn">print</span>(<span class="st">f"Hello {name}"</span>)
+    <span class="kw">await</span> asyncio.<span class="fn">sleep</span>(<span class="nm">1</span>)      <span class="cm"># non-blocking pause — loop runs others</span>
+    <span class="fn">print</span>(<span class="st">f"Bye {name}"</span>)
+    <span class="kw">return</span> <span class="st">f"done: {name}"</span>
+
+<span class="fn">greet</span>(<span class="st">"Ada"</span>)              <span class="cm"># ⚠️ returns a coroutine — does NOT run</span>
+asyncio.<span class="fn">run</span>(<span class="fn">greet</span>(<span class="st">"Ada"</span>))  <span class="cm"># ✅ runs it on the event loop</span></pre>
+        </div>
+        <div class="kv-grid">
+          <div class="kv-card"><div class="kv-label">async def</div><div class="kv-val">Defines a <strong>coroutine function</strong>.</div></div>
+          <div class="kv-card"><div class="kv-label">await</div><div class="kv-val"><strong>Suspends</strong> the coroutine, yields control to the loop until the awaitable completes.</div></div>
+          <div class="kv-card"><div class="kv-label">Awaitable</div><div class="kv-val">A coroutine, <code>Task</code>, or <code>Future</code> — anything you can <code>await</code>.</div></div>
+          <div class="kv-card"><div class="kv-label">Rule</div><div class="kv-val"><code>await</code> is only legal <strong>inside</strong> an <code>async def</code>.</div></div>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-event-loop">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon">🔁</span><h2 class="sec-title">The Event Loop</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The <strong>event loop</strong> is the engine. It maintains a queue of ready tasks, runs one until it hits an <code>await</code> that isn't ready, parks it, and runs the next. When I/O completes, the parked task is re-queued. <code>asyncio.run()</code> creates the loop, runs your main coroutine to completion, then closes it.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Entry Point</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio
+
+<span class="kw">async def</span> <span class="fn">main</span>():
+    <span class="fn">print</span>(<span class="st">"start"</span>)
+    <span class="kw">await</span> asyncio.<span class="fn">sleep</span>(<span class="nm">1</span>)
+    <span class="fn">print</span>(<span class="st">"end"</span>)
+
+<span class="cm"># Python 3.7+ — the modern, only entry point you need</span>
+asyncio.<span class="fn">run</span>(<span class="fn">main</span>())
+
+<span class="cm"># Inside a running loop, grab it with:</span>
+<span class="cm"># loop = asyncio.get_running_loop()</span></pre>
+        </div>
+        <div class="memory-trick">
+          <h3>🧠 One loop, one thread</h3>
+          <p class="prose">There is normally <strong>one event loop per thread</strong>. Never call <code>asyncio.run()</code> from inside a coroutine — it's a top-level entry point. Don't run blocking code (like <code>time.sleep</code> or heavy CPU) on the loop; it freezes everything.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-tasks">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon">📦</span><h2 class="sec-title">Tasks &amp; asyncio.gather</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Awaiting coroutines one by one is still sequential. To run them <strong>concurrently</strong>, wrap them in <strong>Tasks</strong> (which schedule them on the loop immediately) or use <code>asyncio.gather()</code> to launch and collect many at once.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Sequential vs Concurrent</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio, time
+
+<span class="kw">async def</span> <span class="fn">work</span>(n):
+    <span class="kw">await</span> asyncio.<span class="fn">sleep</span>(<span class="nm">1</span>)
+    <span class="kw">return</span> n * n
+
+<span class="kw">async def</span> <span class="fn">main</span>():
+    <span class="cm"># ❌ Sequential — ~3s total</span>
+    a = <span class="kw">await</span> <span class="fn">work</span>(<span class="nm">1</span>); b = <span class="kw">await</span> <span class="fn">work</span>(<span class="nm">2</span>); c = <span class="kw">await</span> <span class="fn">work</span>(<span class="nm">3</span>)
+
+    <span class="cm"># ✅ Concurrent — ~1s total</span>
+    results = <span class="kw">await</span> asyncio.<span class="fn">gather</span>(<span class="fn">work</span>(<span class="nm">1</span>), <span class="fn">work</span>(<span class="nm">2</span>), <span class="fn">work</span>(<span class="nm">3</span>))
+    <span class="fn">print</span>(results)               <span class="cm"># [1, 4, 9] — order preserved</span>
+
+    <span class="cm"># ✅ Or schedule explicit Tasks</span>
+    t1 = asyncio.<span class="fn">create_task</span>(<span class="fn">work</span>(<span class="nm">4</span>))
+    t2 = asyncio.<span class="fn">create_task</span>(<span class="fn">work</span>(<span class="nm">5</span>))
+    <span class="fn">print</span>(<span class="kw">await</span> t1, <span class="kw">await</span> t2)    <span class="cm"># 16 25</span>
+
+asyncio.<span class="fn">run</span>(<span class="fn">main</span>())</pre>
+        </div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Tool</th><th>What it does</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td><code>create_task()</code></td><td>Schedules a coroutine to run now, returns a <code>Task</code></td><td>You need a handle to await/cancel later</td></tr>
+              <tr><td><code>gather(*aws)</code></td><td>Runs all concurrently, returns a list of results in order</td><td>You want all results together</td></tr>
+              <tr><td><code>as_completed()</code></td><td>Yields results as each finishes</td><td>You want to process whichever finishes first</td></tr>
+              <tr><td><code>TaskGroup()</code></td><td>Structured concurrency (3.11+), auto-cancels siblings on error</td><td>Modern, safest grouping</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-patterns">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon">🧩</span><h2 class="sec-title">Concurrency Patterns</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Timeouts, racing for the first result, and limiting how many run at once are the everyday tools of async code.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Timeout, as_completed, Semaphore</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio
+
+<span class="cm"># 1. Timeout — cancel if it takes too long</span>
+<span class="kw">try</span>:
+    <span class="kw">await</span> asyncio.<span class="fn">wait_for</span>(<span class="fn">slow_call</span>(), timeout=<span class="nm">2.0</span>)
+<span class="kw">except</span> asyncio.<span class="nm">TimeoutError</span>:
+    <span class="fn">print</span>(<span class="st">"too slow!"</span>)
+
+<span class="cm"># 2. Process results as they arrive</span>
+<span class="kw">for</span> fut <span class="kw">in</span> asyncio.<span class="fn">as_completed</span>([<span class="fn">work</span>(<span class="nm">1</span>), <span class="fn">work</span>(<span class="nm">2</span>)]):
+    <span class="fn">print</span>(<span class="kw">await</span> fut)
+
+<span class="cm"># 3. Limit concurrency — at most 5 in flight</span>
+sem = asyncio.<span class="fn">Semaphore</span>(<span class="nm">5</span>)
+<span class="kw">async def</span> <span class="fn">guarded</span>(url):
+    <span class="kw">async with</span> sem:
+        <span class="kw">return</span> <span class="kw">await</span> <span class="fn">fetch</span>(url)</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-aiohttp">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon">🌐</span><h2 class="sec-title">Async HTTP with aiohttp</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The <code>requests</code> library is <strong>blocking</strong> — using it in async code stalls the loop. <strong>aiohttp</strong> is the async HTTP client. Fetch hundreds of URLs concurrently with one shared session.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Fetch Many URLs Concurrently</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio, aiohttp
+
+<span class="kw">async def</span> <span class="fn">fetch</span>(session, url):
+    <span class="kw">async with</span> session.<span class="fn">get</span>(url) <span class="kw">as</span> resp:
+        <span class="kw">return</span> <span class="kw">await</span> resp.<span class="fn">text</span>()
+
+<span class="kw">async def</span> <span class="fn">main</span>(urls):
+    <span class="kw">async with</span> aiohttp.<span class="fn">ClientSession</span>() <span class="kw">as</span> session:
+        tasks = [<span class="fn">fetch</span>(session, u) <span class="kw">for</span> u <span class="kw">in</span> urls]
+        pages = <span class="kw">await</span> asyncio.<span class="fn">gather</span>(*tasks)
+        <span class="fn">print</span>(<span class="st">f"fetched {len(pages)} pages"</span>)
+
+asyncio.<span class="fn">run</span>(<span class="fn">main</span>([<span class="st">"https://example.com"</span>] * <span class="nm">50</span>))</pre>
+        </div>
+        <div class="memory-trick">
+          <h3>🧠 Reuse the session</h3>
+          <p class="prose">Create <strong>one</strong> <code>ClientSession</code> and share it across requests — it pools connections. Creating a session per request is a classic performance bug.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-realworld">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon">🏭</span><h2 class="sec-title">Real-World Pattern — Producer / Consumer</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">An <code>asyncio.Queue</code> decouples producers from consumers — the backbone of crawlers, job runners, and pipelines. Workers pull items concurrently while producers push.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Queue with Worker Pool</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> asyncio
+
+<span class="kw">async def</span> <span class="fn">worker</span>(name, queue):
+    <span class="kw">while</span> <span class="nm">True</span>:
+        job = <span class="kw">await</span> queue.<span class="fn">get</span>()
+        <span class="kw">await</span> asyncio.<span class="fn">sleep</span>(<span class="nm">0.5</span>)        <span class="cm"># pretend to work</span>
+        <span class="fn">print</span>(<span class="st">f"{name} did {job}"</span>)
+        queue.<span class="fn">task_done</span>()
+
+<span class="kw">async def</span> <span class="fn">main</span>():
+    queue = asyncio.<span class="fn">Queue</span>()
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">10</span>):
+        queue.<span class="fn">put_nowait</span>(<span class="st">f"job-{i}"</span>)
+
+    workers = [asyncio.<span class="fn">create_task</span>(<span class="fn">worker</span>(<span class="st">f"w{n}"</span>, queue)) <span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">3</span>)]
+    <span class="kw">await</span> queue.<span class="fn">join</span>()            <span class="cm"># wait until every job is done</span>
+    <span class="kw">for</span> w <span class="kw">in</span> workers: w.<span class="fn">cancel</span>()  <span class="cm"># stop idle workers</span>
+
+asyncio.<span class="fn">run</span>(<span class="fn">main</span>())</pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-pitfalls">
+        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon">⚠️</span><h2 class="sec-title">Common Pitfalls</h2></div>
+        <div class="section-divider"></div>
+        <div class="pitfall">
+          <span class="pf-bad">Forgetting await</span>
+          <p><code>greet("x")</code> creates a coroutine that never runs and emits a <em>"coroutine was never awaited"</em> warning. Always <code>await</code> it or wrap in a task.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">Blocking the loop</span>
+          <p>Calling <code>time.sleep()</code>, <code>requests.get()</code>, or heavy CPU work freezes <em>every</em> coroutine. Use <code>asyncio.sleep</code>, <code>aiohttp</code>, or offload with <code>loop.run_in_executor()</code>.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">await in a loop = sequential</span>
+          <p><code>for u in urls: await fetch(u)</code> runs one at a time. Build a list of tasks and <code>gather</code> them for real concurrency.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-fix">Async isn't parallel</span>
+          <p>It's single-threaded cooperative multitasking. For CPU-bound work, reach for <code>multiprocessing</code> or <code>concurrent.futures.ProcessPoolExecutor</code>.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon">🎯</span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. Calling an <code>async def</code> function directly returns…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">its return value</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">a coroutine object</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">None</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">a thread</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. To run three coroutines concurrently you use…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">await a; await b; await c</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">asyncio.gather(a, b, c)</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">a + b + c</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">threading.Thread</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. Which call <strong>blocks</strong> the event loop?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">await asyncio.sleep(1)</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">time.sleep(1)</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">await fetch(url)</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">await queue.get()</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. asyncio is best suited for…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">CPU-bound number crunching</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">I/O-bound work like network calls</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">parallel matrix math</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">bypassing the GIL for compute</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. The modern entry point for an async program is…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">loop.run_forever()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">asyncio.run(main())</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">main().start()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">await main()</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </section>
+
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← OOP</a>
+        <a class="nav-link" href="libraries.html">Libraries →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../assets/js/topics-manifest.js"></script>
+  <script src="../assets/js/site-index.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/platform.js?v=3"></script>
+<script>
+    const pbar = document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

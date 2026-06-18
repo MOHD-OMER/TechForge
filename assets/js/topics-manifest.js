@@ -196,6 +196,40 @@ window.TF_TOPICS = {
     ]
   },
 
+  python: {
+    label: 'Python',
+    hub: 'python/index.html',
+    accent: '#f7cc45',
+    categories: [
+      {
+        id: 'py-core',
+        label: 'Core Language',
+        topics: [
+          { id: 'py/basics', file: 'basics.html', title: 'Python Basics', icon: '🐍', desc: 'Syntax, variables, data types, operators, and I/O.', depth: 'guide' },
+          { id: 'py/collections', file: 'collections.html', title: 'Collections', icon: '📚', desc: 'Lists, tuples, sets, dicts, and comprehensions.', depth: 'guide' },
+          { id: 'py/control', file: 'control.html', title: 'Control Flow', icon: '🔀', desc: 'if/else, loops, match statements, and comprehensions.', depth: 'guide' },
+          { id: 'py/functions', file: 'functions.html', title: 'Functions & I/O', icon: '🧩', desc: 'Args, *args/**kwargs, lambdas, decorators, files.', depth: 'guide' }
+        ]
+      },
+      {
+        id: 'py-advanced',
+        label: 'Advanced',
+        topics: [
+          { id: 'py/oop', file: 'oop.html', title: 'OOP', icon: '🏛️', desc: 'Classes, inheritance, polymorphism, magic methods.', depth: 'full' },
+          { id: 'py/async', file: 'async.html', title: 'Async / Await', icon: '⚡', desc: 'Event loop, coroutines, asyncio, gather, aiohttp, patterns.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'py-applied',
+        label: 'Applied',
+        topics: [
+          { id: 'py/libraries', file: 'libraries.html', title: 'Libraries', icon: '📦', desc: 'Standard library essentials and popular packages.', depth: 'guide' },
+          { id: 'py/programs', file: 'programs.html', title: 'Practice Programs', icon: '💻', desc: '50+ annotated programs from beginner to advanced.', depth: 'guide' }
+        ]
+      }
+    ]
+  },
+
   interview: {
     label: 'Interview Prep',
     hub: 'interview/index.html',
