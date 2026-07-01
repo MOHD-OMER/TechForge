@@ -179,7 +179,8 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="cells-row" id="ls-cells">
+<div style="overflow-x:auto;">
+<canvas id="ls-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 </div>
 <div class="status" id="ls-status">
         Enter target and press Search
@@ -512,9 +513,68 @@ window.addEventListener('scroll', updateProgress);
 updateProgress();
 
 let lsArr =[4,2,7,15,3,37,9,21,14,5,42,8,19,11,33]; let lsOn=false;
+let lsState = {}; // index -> 'active'|'checked'|'found'
+
+function lsDraw() {
+  let cv = document.getElementById('ls-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let boxW = 44, gap = 6, pad = 4;
+  let n = lsArr.length;
+  let cssH = 80;
+  let cssW = Math.max(cv.parentElement.clientWidth || 500, pad * 2 + n * boxW + (n - 1) * gap);
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  cv.style.width = cssW + 'px';
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+  let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  let boxH = 44, midY = cssH / 2 + 6;
+
+  for (let i = 0; i < n; i++) {
+    let x = pad + i * (boxW + gap);
+    let st = lsState[i];
+    let color = cBorder, fill = cSurface, textColor = cText, alpha = 1, scale = 1;
+    if (st === 'active') { color = cAccent; fill = 'rgba(77,158,247,.12)'; textColor = cAccent; scale = 1.08; }
+    else if (st === 'found') { color = cGreen; fill = 'rgba(52,211,153,.12)'; textColor = cGreen; scale = 1.15; }
+    else if (st === 'checked') { alpha = 0.3; }
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if (scale !== 1) {
+      ctx.translate(x + boxW / 2, midY);
+      ctx.scale(scale, scale);
+      ctx.translate(-(x + boxW / 2), -midY);
+    }
+
+    ctx.font = '500 10px ' + mono; ctx.fillStyle = cText3;
+    ctx.fillText(String(i), x + boxW / 2, midY - boxH / 2 - 10);
+
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineWidth = st ? 1.5 : 1;
+    ctx.strokeStyle = color; ctx.stroke();
+
+    ctx.font = '600 13px ' + mono; ctx.fillStyle = textColor;
+    ctx.fillText(String(lsArr[i]), x + boxW / 2, midY);
+    ctx.restore();
+  }
+}
+
 function lsReset(){
-  let w =document.getElementById('ls-cells');
-  w.innerHTML=lsArr.map(function(v,i){return '<div class="cell" id="lsc'+i+'"><span class="cell-idx">'+i+'</span>'+v+'</div>';}).join('');
+  lsState = {};
+  lsDraw();
   setStatus('ls-status','Enter a target value and press Search');
 }
 async function lsRun(){
@@ -523,16 +583,19 @@ async function lsRun(){
   let target =parseInt(document.getElementById('ls-t').value)||37;
   setStatus('ls-status','Searching for <b>'+target+'</b>...');
   for(let i =0;i<lsArr.length;i++){
-    let el =document.getElementById('lsc'+i);if(!el)break;
-    el.className='cell cc-active';
+    lsState[i] = 'active'; lsDraw();
     setStatus('ls-status','Index '+i+': <b>'+lsArr[i]+'</b> == '+target+'? '+(lsArr[i]===target?'<span class="s-ok">YES!</span>':'No'));
     await sleep(400);
-    if(lsArr[i]===target){el.className='cell cc-found';setStatus('ls-status','<span class="s-ok">&#10003; Found '+target+' at index '+i+'!</span>');return;}
-    else el.className='cell cc-checked';
+    if(lsArr[i]===target){lsState[i]='found';lsDraw();setStatus('ls-status','<span class="s-ok">&#10003; Found '+target+' at index '+i+'!</span>');lsOn=false;return;}
+    else { lsState[i]='checked'; lsDraw(); }
   }
   setStatus('ls-status','<span class="s-err">&#10007; '+target+' not found in array</span>');
+  lsOn=false;
 }
-document.addEventListener('DOMContentLoaded',lsReset);
+document.addEventListener('DOMContentLoaded', function() {
+  lsReset();
+  window.addEventListener('resize', lsDraw);
+});
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
