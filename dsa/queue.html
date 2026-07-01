@@ -110,11 +110,7 @@
     .btn.go { background: rgba(77, 158, 247, .1); border-color: var(--blue); color: var(--blue); }
     .btn.soft-red { background: rgba(248, 113, 113, .1); border-color: var(--red); color: var(--red); }
     .viz-body { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; min-height: 200px; }
-    .queue-items { display: flex; flex-direction: column; gap: 4px; align-items: center; }
-    .queue-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); min-width: 140px; justify-content: space-between; }
-    .queue-item.q-front { border-color: var(--green); background: rgba(52, 211, 153, .1); }
-    .itag { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
-    .itag-green { background: var(--green); color: var(--bg); }
+
     .status { font-family: var(--mono); font-size: 12px; color: var(--text2); margin-top: 12px; }
     .s-ok { color: var(--green); }
     .s-err { color: var(--red); }
@@ -318,7 +314,7 @@
           </div>
         </div>
         <div class="viz-body">
-          <div class="queue-items" id="qu-items"></div>
+          <canvas id="qu-canvas" style="width:100%;height:150px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
           <div class="status" id="qu-status">Use Enqueue/Dequeue to operate</div>
         </div>
       </div>
@@ -589,35 +585,92 @@ dq.pop()           <span class="cm"># remove rear</span></pre>
       }
     }
 
-    // Queue Visualization
+    // Queue Visualization (Canvas)
     let quD = [];
-    function quDraw() {
-      let w = document.getElementById('qu-items');
-      if (!w) return;
+    function quDraw(flashIdx, flashColor) {
+      let cv = document.getElementById('qu-canvas');
+      if (!cv) return;
+      let dpr = window.devicePixelRatio || 1;
+      let cssW = cv.clientWidth || cv.parentElement.clientWidth || 600;
+      let cssH = 150;
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      let ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+      let cs = getComputedStyle(document.body);
+      let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+      let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+      let cCyan = cs.getPropertyValue('--cyan').trim() || '#22d3ee';
+
+      ctx.font = '600 12px ' + (cs.getPropertyValue('--mono').trim() || 'monospace');
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
       if (!quD.length) {
-        w.innerHTML = '<div style="color:var(--text2);font-family:var(--mono);font-size:12px;padding:10px">Queue is empty</div>';
+        ctx.fillStyle = cText3;
+        ctx.fillText('Queue is empty', cssW / 2, cssH / 2);
         return;
       }
-      w.innerHTML = quD.map(function(v, i) {
-        let isFront = i === 0;
-        let rear = i === quD.length - 1;
-        return '<div class="queue-item' + (isFront ? ' q-front' : '') + '"><span>' + (isFront ? '→ ' : '') + '' + v + '</span>' + (isFront ? '<span class="itag itag-green">FRONT</span>' : rear ? '<span class="itag" style="background:rgba(0,212,255,.1);color:var(--cyan)">REAR</span>' : '') + '</div>';
-      }).join('');
+
+      let boxW = 64, boxH = 44, gap = 10;
+      let totalW = quD.length * boxW + (quD.length - 1) * gap;
+      let startX = Math.max(12, (cssW - totalW) / 2);
+      let midY = cssH / 2;
+
+      quD.forEach(function(v, i) {
+        let x = startX + i * (boxW + gap);
+        let isFront = i === 0, isRear = i === quD.length - 1;
+        let flashed = i === flashIdx;
+
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+        ctx.fillStyle = flashed ? flashColor : (isFront ? 'rgba(52,211,153,.12)' : cSurface);
+        ctx.fill();
+        ctx.lineWidth = isFront ? 1.5 : 1;
+        ctx.strokeStyle = flashed ? flashColor : (isFront ? cGreen : cBorder);
+        ctx.stroke();
+
+        ctx.fillStyle = cText;
+        ctx.fillText(String(v), x + boxW / 2, midY);
+
+        ctx.font = '700 9px ' + (cs.getPropertyValue('--mono').trim() || 'monospace');
+        if (isFront) { ctx.fillStyle = cGreen; ctx.fillText('FRONT', x + boxW / 2, midY - boxH / 2 - 12); }
+        if (isRear && quD.length > 1) { ctx.fillStyle = cCyan; ctx.fillText('REAR', x + boxW / 2, midY + boxH / 2 + 12); }
+        ctx.font = '600 12px ' + (cs.getPropertyValue('--mono').trim() || 'monospace');
+
+        if (i < quD.length - 1) {
+          ctx.strokeStyle = cText3; ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(x + boxW + 2, midY); ctx.lineTo(x + boxW + gap - 2, midY);
+          ctx.stroke();
+        }
+      });
     }
     let quRunning = false;
 
     async function quEnqueue() {
       if (quRunning) return; quRunning = true;
       let v = parseInt(document.getElementById('qu-v').value) || 42;
-      quD.push(v); quDraw();
+      quD.push(v);
+      quDraw(quD.length - 1, 'rgba(52,211,153,.35)');
       setStatus('qu-status', '<span class="s-ok">Enqueued <b>' + v + '</b> to rear &mdash; O(1)</span>');
+      await sleep(260);
+      quDraw();
       quRunning = false;
     }
 
     async function quDequeue() {
+      if (quRunning) return;
       if (!quD.length) { setStatus('qu-status', '<span class="s-err">Queue is empty!</span>'); return; }
-      let v = quD.shift(); quDraw();
+      quRunning = true;
+      quDraw(0, 'rgba(248,113,113,.35)');
+      await sleep(220);
+      let v = quD.shift();
+      quDraw();
       setStatus('qu-status', '<span class="s-ok">Dequeued <b>' + v + '</b> from front &mdash; O(1)</span>');
+      quRunning = false;
     }
 
     function quReset() { quD = []; quDraw(); setStatus('qu-status', 'Queue cleared'); }
@@ -625,6 +678,7 @@ dq.pop()           <span class="cm"># remove rear</span></pre>
     document.addEventListener('DOMContentLoaded', function() {
       quDraw();
       refreshProg('queue');
+      window.addEventListener('resize', function() { quDraw(); });
     });
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
