@@ -325,7 +325,7 @@
           </div>
         </div>
         <div class="viz-body">
-          <div class="ll-row" id="cll-vis"></div>
+          <canvas id="cll-canvas" style="width:100%;height:300px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
           <div class="status" id="cll-status">Use buttons to operate on the list</div>
         </div>
       </div>
@@ -598,25 +598,103 @@
       }
     }
 
-    // CLL Visualization
+    // CLL Visualization (Canvas — ring layout)
     let cllD = [10, 20, 30, 40, 50];
     let cllRunning = false;
 
     function cllDraw(hl, di) {
       hl = (hl == null) ? -1 : hl;
       di = (di == null) ? -1 : di;
-      let w = document.getElementById('cll-vis'), n = cllD.length;
-      if (!w) return;
-      if (!n) { w.innerHTML = '<span style="color:var(--text2)">Empty list</span>'; return; }
-      let h = '';
-      for (let i = 0; i < n; i++) {
-        let nc = i === hl ? 'n-hl' : i === di ? 'n-del' : i === 0 ? 'n-head' : i === n - 1 ? 'n-tail' : '';
-        let lbl = i === 0 ? '<span class="nd-lbl">head</span>' : i === n - 1 && n > 1 ? '<span class="nd-lbl">tail</span>' : '';
-        h += '<div class="ll-nd"><div class="ll-box ' + nc + '">' + lbl + cllD[i] + '</div>';
-        if (i < n - 1) h += '<div class="ll-arr">&rarr;</div>';
+      let cv = document.getElementById('cll-canvas');
+      if (!cv) return;
+      let dpr = window.devicePixelRatio || 1;
+      let cssW = cv.clientWidth || cv.parentElement.clientWidth || 600;
+      let cssH = 300;
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      let ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      let cs = getComputedStyle(document.body);
+      let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      let cText2 = cs.getPropertyValue('--text2').trim() || '#8da0bb';
+      let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+      let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+      let cAmber = cs.getPropertyValue('--amber').trim() || '#fbbf24';
+      let cRed = cs.getPropertyValue('--red').trim() || '#f87171';
+      let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+      let n = cllD.length;
+      if (!n) {
+        ctx.font = '600 13px ' + mono;
+        ctx.fillStyle = cText2;
+        ctx.fillText('Empty list', cssW / 2, cssH / 2);
+        return;
       }
-      h += '<span class="ll-null">&rarr; back to head</span>';
-      w.innerHTML = h;
+
+      let cx = cssW / 2, cy = cssH / 2 + 6;
+      let radius = Math.min(cssW, cssH) / 2 - 60;
+      let nodeR = 28;
+      let pts = [];
+      for (let i = 0; i < n; i++) {
+        let angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        pts.push({ x: cx + radius * Math.cos(angle), y: cy + radius * Math.sin(angle), angle: angle });
+      }
+
+      function arrowBetween(p1, p2, color) {
+        let dx = p2.x - p1.x, dy = p2.y - p1.y;
+        let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        let ux = dx / dist, uy = dy / dist;
+        let fromX = p1.x + ux * nodeR, fromY = p1.y + uy * nodeR;
+        let toX = p2.x - ux * nodeR, toY = p2.y - uy * nodeR;
+        ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(fromX, fromY); ctx.lineTo(toX, toY); ctx.stroke();
+        let ang = Math.atan2(uy, ux);
+        ctx.beginPath();
+        ctx.moveTo(toX, toY);
+        ctx.lineTo(toX - 7 * Math.cos(ang - 0.5), toY - 7 * Math.sin(ang - 0.5));
+        ctx.lineTo(toX - 7 * Math.cos(ang + 0.5), toY - 7 * Math.sin(ang + 0.5));
+        ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+      }
+
+      // arrows first, so nodes draw on top
+      for (let i = 0; i < n; i++) {
+        let next = (i + 1) % n;
+        let isLoop = next === 0;
+        arrowBetween(pts[i], pts[next], isLoop ? cText2 : cAccent);
+      }
+
+      for (let i = 0; i < n; i++) {
+        let isHl = i === hl, isDel = i === di;
+        let isHead = i === 0, isTail = i === n - 1 && n > 1;
+        let boxColor = isDel ? cRed : isHl ? cAccent : isHead ? cGreen : isTail ? cAmber : cBorder;
+
+        ctx.beginPath();
+        ctx.arc(pts[i].x, pts[i].y, nodeR, 0, Math.PI * 2);
+        ctx.fillStyle = isDel ? 'rgba(248,113,113,.15)' : isHl ? 'rgba(77,158,247,.12)' : cSurface;
+        ctx.fill();
+        ctx.lineWidth = (isHl || isDel) ? 2 : 1.5;
+        ctx.strokeStyle = boxColor;
+        ctx.stroke();
+
+        ctx.font = '600 13px ' + mono; ctx.fillStyle = cText;
+        ctx.fillText(String(cllD[i]), pts[i].x, pts[i].y);
+
+        if (isHead || isTail) {
+          let labelR = radius + 30;
+          let lx = cx + labelR * Math.cos(pts[i].angle), ly = cy + labelR * Math.sin(pts[i].angle);
+          ctx.font = '700 9px ' + mono; ctx.fillStyle = cText2;
+          ctx.fillText(isHead && isTail ? 'head/tail' : isHead ? 'head' : 'tail', lx, ly);
+        }
+      }
+
+      ctx.font = '500 10px ' + mono; ctx.fillStyle = cText2;
+      ctx.textAlign = 'left';
+      ctx.fillText('tail \u2192 head (circular)', 14, cssH - 14);
     }
 
     async function cllPush() {
@@ -648,6 +726,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       cllDraw(null, null);
       refreshProg('cll');
+      window.addEventListener('resize', function() { cllDraw(null, null); });
     });
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
