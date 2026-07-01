@@ -326,7 +326,9 @@
           </div>
         </div>
         <div class="viz-body">
-          <div class="ll-row" id="dll-vis"></div>
+          <div style="overflow-x:auto;padding:4px 0;">
+            <canvas id="dll-canvas" style="height:120px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
+          </div>
           <div class="status" id="dll-status">Use buttons to operate on the list</div>
         </div>
       </div>
@@ -602,27 +604,97 @@
       }
     }
 
-    // DLL Visualization
+    // DLL Visualization (Canvas)
     let dllD = [10, 20, 30, 40, 50];
     let dllRunning = false;
 
     function dllDraw(hl, di) {
       hl = (hl == null) ? -1 : hl;
       di = (di == null) ? -1 : di;
-      var w = document.getElementById('dll-vis'), n = dllD.length;
-      if (!w) return;
-      if (!n) { w.innerHTML = '<span class="ll-null">∅ empty list</span>'; return; }
-      var h = '<span class="ll-null">null</span><span class="ll-prev">&larr;</span>';
-      for (var i = 0; i < n; i++) {
-        var nc = i === hl ? 'n-hl' : i === di ? 'n-del' : i === 0 ? 'n-head' : i === n - 1 ? 'n-tail' : '';
-        var lbl = i === 0 ? '<span class="nd-lbl">head</span>' : i === n - 1 && n > 1 ? '<span class="nd-lbl">tail</span>' : '';
-        h += '<div class="ll-nd"><div class="ll-box ' + nc + '">' + lbl + dllD[i] + '</div></div>';
+      let cv = document.getElementById('dll-canvas');
+      if (!cv) return;
+      let dpr = window.devicePixelRatio || 1;
+      let boxW = 64, boxH = 44, gap = 52, pad = 40;
+      let n = dllD.length;
+      let cssH = 120;
+      let cssW = n ? Math.max(cv.parentElement.clientWidth || 600, pad * 2 + n * boxW + (n - 1) * gap + 20) : (cv.parentElement.clientWidth || 600);
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      cv.style.width = cssW + 'px';
+      let ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      let cs = getComputedStyle(document.body);
+      let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      let cText2 = cs.getPropertyValue('--text2').trim() || '#8da0bb';
+      let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+      let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+      let cAmber = cs.getPropertyValue('--amber').trim() || '#fbbf24';
+      let cRed = cs.getPropertyValue('--red').trim() || '#f87171';
+      let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+      if (!n) {
+        ctx.font = '600 13px ' + mono;
+        ctx.fillStyle = cText2;
+        ctx.fillText('\u2205 empty list', cssW / 2, cssH / 2);
+        return;
+      }
+
+      let midY = cssH / 2 + 6;
+      let x = pad;
+
+      function arrow(fromX, toX, y, color) {
+        ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(fromX, y); ctx.lineTo(toX, y); ctx.stroke();
+        let dir = toX > fromX ? 1 : -1;
+        ctx.beginPath();
+        ctx.moveTo(toX, y); ctx.lineTo(toX - dir * 6, y - 4); ctx.lineTo(toX - dir * 6, y + 4);
+        ctx.closePath(); ctx.fillStyle = color; ctx.fill();
+      }
+
+      // leading null <-
+      ctx.font = '500 11px ' + mono; ctx.fillStyle = cText2;
+      ctx.fillText('null', x - 24, midY - 10);
+      arrow(x - 4, x + 6, midY - 10, cText2);
+
+      for (let i = 0; i < n; i++) {
+        let isHl = i === hl, isDel = i === di;
+        let isHead = i === 0, isTail = i === n - 1 && n > 1;
+        let boxColor = isDel ? cRed : isHl ? cAccent : isHead ? cGreen : isTail ? cAmber : cBorder;
+
+        if (isHead || isTail) {
+          ctx.font = '700 9px ' + mono; ctx.fillStyle = cText2;
+          ctx.fillText(isHead && isTail ? 'head/tail' : isHead ? 'head' : 'tail', x + boxW / 2, midY - boxH / 2 - 14);
+        }
+
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+        ctx.fillStyle = isDel ? 'rgba(248,113,113,.15)' : isHl ? 'rgba(77,158,247,.12)' : cSurface;
+        ctx.fill();
+        ctx.lineWidth = (isHl || isDel) ? 2 : 1.5;
+        ctx.strokeStyle = boxColor;
+        ctx.stroke();
+
+        ctx.font = '600 13px ' + mono; ctx.fillStyle = cText;
+        ctx.fillText(String(dllD[i]), x + boxW / 2, midY);
+
+        x += boxW;
+
         if (i < n - 1) {
-          h += '<span class="ll-link"><span class="ll-prev">&larr;</span><span class="ll-arr">&rarr;</span></span>';
+          arrow(x + 4, x + gap - 8, midY - 10, cAccent);
+          arrow(x + gap - 8, x + 4, midY + 10, cText2);
+          x += gap;
         }
       }
-      h += '<span class="ll-arr">&rarr;</span><span class="ll-null">null</span>';
-      w.innerHTML = h;
+
+      // trailing -> null
+      ctx.font = '500 11px ' + mono; ctx.fillStyle = cText2;
+      arrow(x + 4, x + 24, midY - 10, cAccent);
+      ctx.fillText('null', x + 46, midY - 10);
     }
 
     window.dllPush = async function() {
@@ -658,6 +730,7 @@
     function dllInit() {
       dllDraw(null, null);
       try { refreshProg('dll'); } catch (_) {}
+      window.addEventListener('resize', function() { dllDraw(null, null); });
     }
 
     if (document.readyState === 'loading') {
