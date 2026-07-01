@@ -355,7 +355,9 @@
           </div>
           <div class="viz-body">
             <div style="padding-bottom:24px;">
-              <div class="cells-row" id="ar-cells"></div>
+              <div style="overflow-x:auto;">
+                <canvas id="ar-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
+              </div>
             </div>
             <div class="status" id="ar-status">Enter a value and index, then choose an operation.</div>
           </div>
@@ -1005,22 +1007,68 @@ prefix = [0] * (len(arr) + 1)<br>
 
       refreshProg('arrays');
       arDraw(-1);
+      window.addEventListener('resize', function() { arDraw(-1); });
     });
 
-    // Array visualizer
+    // Array visualizer (Canvas)
     function arDraw(hlIdx, type) {
-      var wrap = document.getElementById('ar-cells');
-      if (!wrap) return;
-      wrap.innerHTML = arD.map(function(v, i) {
-        var cls = 'cell';
-        if (i === hlIdx) {
-          if (type === 'found') cls += ' cc-found';
-          else if (type === 'del') cls += ' cc-deleted';
-          else if (type === 'shift') cls += ' cc-shifting';
-          else cls += ' cc-highlight';
+      var cv = document.getElementById('ar-canvas');
+      if (!cv) return;
+      var dpr = window.devicePixelRatio || 1;
+      var boxW = 48, gap = 6, pad = 4;
+      var n = arD.length;
+      var cssH = 80;
+      var cssW = n ? Math.max(cv.parentElement.clientWidth || 400, pad * 2 + n * boxW + (n - 1) * gap) : (cv.parentElement.clientWidth || 400);
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      cv.style.width = cssW + 'px';
+      var ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      var cs = getComputedStyle(document.body);
+      var cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      var cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      var cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      var cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+      var cBlue = cs.getPropertyValue('--blue').trim() || '#4d9ef7';
+      var cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+      var cAmber = cs.getPropertyValue('--amber').trim() || '#fbbf24';
+      var cRed = cs.getPropertyValue('--red').trim() || '#f87171';
+      var mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+      if (!n) {
+        ctx.font = '600 13px ' + mono; ctx.fillStyle = cText3;
+        ctx.fillText('Array is empty', cssW / 2, cssH / 2);
+        return;
+      }
+
+      var boxH = 48, midY = cssH / 2 + 6;
+
+      for (var i = 0; i < n; i++) {
+        var x = pad + i * (boxW + gap);
+        var isHl = i === hlIdx;
+        var color = cBorder, fill = cSurface, textColor = cText, lift = 0;
+        if (isHl) {
+          if (type === 'found') { color = cGreen; fill = 'rgba(52,211,153,.12)'; textColor = cGreen; lift = -6; }
+          else if (type === 'del') { color = cRed; fill = 'rgba(248,113,113,.12)'; textColor = cRed; lift = -4; }
+          else if (type === 'shift') { color = cAmber; fill = 'rgba(251,191,36,.12)'; textColor = cAmber; }
+          else { color = cBlue; fill = 'rgba(77,158,247,.12)'; textColor = cBlue; lift = -4; }
         }
-        return '<div class="' + cls + '"><span class="cell-idx">' + i + '</span>' + v + '</div>';
-      }).join('');
+
+        ctx.font = '500 10px ' + mono; ctx.fillStyle = cText3;
+        ctx.fillText(String(i), x + boxW / 2, midY - boxH / 2 + lift - 12);
+
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2 + lift, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2 + lift, boxW, boxH);
+        ctx.fillStyle = fill; ctx.fill();
+        ctx.lineWidth = isHl ? 1.5 : 1;
+        ctx.strokeStyle = color; ctx.stroke();
+
+        ctx.font = '600 13px ' + mono; ctx.fillStyle = textColor;
+        ctx.fillText(arD[i] == null ? '' : String(arD[i]), x + boxW / 2, midY + lift);
+      }
     }
 
     function setStatus(id, html) {
