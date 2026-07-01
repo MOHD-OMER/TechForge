@@ -191,8 +191,7 @@
 </div>
 </div>
 <div class="viz-body" style="padding:16px 12px">
-<div id="bit-display">
-</div>
+<canvas id="bit-canvas" style="width:100%;height:190px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 <div class="status" id="bit-status">
         Enter two numbers and choose a bitwise operation
        </div>
@@ -612,16 +611,73 @@ window.addEventListener('scroll', updateProgress);
 updateProgress();
 
 function bitRender(a,b,res,op){
-  let bits =8;
-  function row(label,val,cls){
-    let h ='<div style="display:flex;align-items:center;gap:6px;margin:5px 0"><span style="font-family:var(--font-mono);font-size:11px;color:var(--muted);width:60px;text-align:right">'+label+'</span><div class="bit-row" style="margin:0">';
-    for(let i =bits-1;i>=0;i--){let bit =(val>>i)&1;h+='<div class="bit-cell'+(bit?' b-one':'')+(cls?' '+cls:'')+'" style="width:34px;height:38px;font-size:16px"><span class="bit-pos">'+i+'</span>'+bit+'</div>';}
-    h+='</div><span style="font-family:var(--font-mono);font-size:12px;color:var(--dim);margin-left:8px">= '+val+'</span></div>';
-    return h;
+  let bits = 8;
+  let cv = document.getElementById('bit-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let cssW = cv.parentElement.clientWidth || 600;
+  let cssH = 190;
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText2 = cs.getPropertyValue('--text2').trim() || '#8da0bb';
+  let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  let boxW = 32, boxH = 34, gap = 4, labelW = 62;
+  let rowsY = [26, 96, 152]; // A, (op line between), B, divider, Result
+
+  function drawRow(label, val, y, cls) {
+    ctx.font = '600 11px ' + mono; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = cText2;
+    ctx.fillText(label, labelW - 8, y + boxH / 2);
+
+    for (let i = bits - 1, xi = 0; i >= 0; i--, xi++) {
+      let bit = (val >> i) & 1;
+      let x = labelW + xi * (boxW + gap);
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(x, y, boxW, boxH, 6) : ctx.rect(x, y, boxW, boxH);
+      ctx.fillStyle = cls === 'result' ? 'rgba(52,211,153,.1)' : bit ? 'rgba(77,158,247,.12)' : cSurface;
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = cls === 'result' ? cGreen : bit ? cAccent : cBorder;
+      ctx.stroke();
+
+      ctx.font = '500 8px ' + mono; ctx.textAlign = 'center';
+      ctx.fillStyle = cText2;
+      ctx.fillText(String(i), x + boxW / 2, y - 6);
+
+      ctx.font = '700 14px ' + mono;
+      ctx.fillStyle = cls === 'result' ? cGreen : bit ? cAccent : cText;
+      ctx.fillText(String(bit), x + boxW / 2, y + boxH / 2 + 1);
+    }
+
+    let endX = labelW + bits * (boxW + gap);
+    ctx.font = '500 11px ' + mono; ctx.textAlign = 'left'; ctx.fillStyle = cText2;
+    ctx.fillText('= ' + val, endX + 6, y + boxH / 2);
   }
-  let opLine ='<div style="font-family:var(--font-mono);font-size:11px;color:var(--muted);padding:2px 0 2px 68px">'+op+'</div>';
-  let divLine ='<div style="border-bottom:1px solid var(--border);margin:4px 0 4px 68px"></div>';
-  document.getElementById('bit-display').innerHTML=row('A',a,'')+opLine+row('B',b,'')+divLine+row('Result',res,'b-result');
+
+  drawRow('A', a, rowsY[0], '');
+
+  ctx.font = '500 10px ' + mono; ctx.textAlign = 'left'; ctx.fillStyle = cText2;
+  ctx.fillText(op, labelW, rowsY[0] + boxH + 16);
+
+  drawRow('B', b, rowsY[1], '');
+
+  ctx.strokeStyle = cBorder; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(labelW, rowsY[1] + boxH + 8);
+  ctx.lineTo(labelW + bits * (boxW + gap), rowsY[1] + boxH + 8);
+  ctx.stroke();
+
+  drawRow('Result', res, rowsY[2], 'result');
 }
 function bitRun(op){
   let a =parseInt(document.getElementById('bit-a').value)||12;
@@ -640,6 +696,7 @@ document.addEventListener('DOMContentLoaded',function(){
   let a =parseInt(document.getElementById('bit-a').value)||12;
   let b =parseInt(document.getElementById('bit-b').value)||10;
   bitRender(a,b,a&b,'A & B (AND)');
+  window.addEventListener('resize', function() { bitRender(a,b,a&b,'A & B (AND)'); });
 });
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
