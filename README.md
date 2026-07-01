@@ -10,6 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-7c3aed?style=flat-square)](LICENSE)
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://tech-forge-dev.vercel.app)
 [![No Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
+[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://tech-forge-dev.vercel.app)
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/MOHD-OMER/TechForge)
 
 DSA visualizations · Python reference · System design guides · SQL & MongoDB · AI/ML hub · Interview prep · DevOps
@@ -20,9 +21,9 @@ DSA visualizations · Python reference · System design guides · SQL & MongoDB 
 
 ## Overview
 
-TechForge is a fully static, zero-dependency CS learning platform with interactive visualizers for every data structure and algorithm, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
+TechForge is a fully static, zero-dependency CS learning platform with interactive Canvas visualizers for data structures and algorithms, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
 
-It runs entirely in the browser. No build step, no npm, no backend.
+It runs entirely in the browser. No build step, no npm, no backend. Includes a Service Worker for offline support — pages you've visited remain accessible without a network connection.
 
 <div align="center">
 <img src="assets/og-image.png" alt="TechForge — Free Interactive CS Learning" width="100%" />
@@ -36,31 +37,33 @@ It runs entirely in the browser. No build step, no npm, no backend.
 
 | Track | Topics | URL |
 |---|---|---|
-| Data Structures & Algorithms | 29 topics · interactive visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
-| Python | 7 modules · basics through OOP | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
-| System Design | 23 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://tech-forge-dev.vercel.app/system-design/index.html) |
+| Data Structures & Algorithms | 30 topics · 17 Canvas visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
+| Python | 8 modules · basics through async/await | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
+| System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://tech-forge-dev.vercel.app/system-design/index.html) |
 | Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://tech-forge-dev.vercel.app/databases/index.html) |
-| AI / ML | 8 modules · ML to GenAI | [/aiml](https://tech-forge-dev.vercel.app/aiml/aiml-explained.html) |
-| Interview Prep | 200+ problems · FAANG + startup tagged | [/interview](https://tech-forge-dev.vercel.app/interview/index.html) |
+| AI / ML | 8 modules · ML to GenAI | [/aiml](https://tech-forge-dev.vercel.app/aiml/index.html) |
+| Interview Prep | 200+ problems · 7 question banks | [/interview](https://tech-forge-dev.vercel.app/interview/index.html) |
 | DevOps | 23 guides · Docker · K8s · CI/CD · Cloud | [/devops](https://tech-forge-dev.vercel.app/devops/index.html) |
 
 ---
 
 ## Features
 
-**Data Structures & Algorithms** — 29 topics across 6 categories with interactive visualizers, Big-O analysis for every topic, sorting and complexity reference tables, and a recommended learning path from beginner to interview-ready.
+**Data Structures & Algorithms** — 30 topics across 6 categories with 17 Canvas-based interactive visualizers, Big-O analysis for every topic, sorting and complexity reference tables, and a recommended learning path from beginner to interview-ready.
 
-**Python Track** — Complete language reference covering basics, control flow, functions, OOP, collections, and libraries. Includes magic methods, decorators, comprehensions, async patterns, and 50+ annotated practice programs.
+**Python Track** — Complete language reference covering basics, control flow, functions, OOP, collections, libraries, and async/await concurrency. Includes magic methods, decorators, comprehensions, asyncio patterns, and 50+ annotated practice programs.
 
-**System Design** — 23 production-grade guides covering distributed systems, caching, Kafka, load balancing, microservices, rate limiting, and more. Includes deep-dive guides for Flask, FastAPI, and Django with routing, ORM, auth, middleware, and deployment.
+**System Design** — 26 production-grade guides covering distributed systems, caching, Kafka, load balancing, microservices, rate limiting, and more. Includes deep-dive guides for Flask, FastAPI, and Django with routing, ORM, auth, middleware, and deployment.
 
-**Databases** — Full SQL reference with queries, joins, subqueries, window functions, and normalization. Plus 13 database deep-dives covering PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, and more.
+**Databases** — Full SQL reference with queries, joins, subqueries, window functions, and normalization. Plus 13 database deep-dives covering PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, and graph databases.
 
-**AI / ML Hub** — Eight modules spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI, and a Data Science cheat sheet. Clear analogies, real math, live demos, and visual intuition — no hand-waving.
+**AI / ML Hub** — Eight modules spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI, and a Data Science cheat sheet. Clear analogies, real math, live demos, and visual intuition — no hand-waving. Dedicated hub page at `/aiml/index.html`.
 
-**Interview Prep** — 200+ curated problems across DSA, Python, OOP, SQL, AI/ML, DevOps, and System Design. FAANG and startup tagged, difficulty rated, progress tracked in the browser. No account, no server, no data leaves your device.
+**Interview Prep** — 200+ curated problems across 7 question banks: DSA, Python, OOP, SQL, AI/ML, DevOps, and System Design. FAANG and startup tagged, difficulty rated, progress tracked in the browser. No account, no server, no data leaves your device.
 
-**DevOps** — 23 guides covering Git, Docker, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, Prometheus, Terraform, Linux, Bash, and the major cloud platforms (AWS, GCP, Azure).
+**DevOps** — 23 guides covering Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code, and the major cloud platforms (AWS, GCP, Azure).
+
+**Progressive Web App** — Service Worker (`sw.js`) enables offline access with a network-first strategy for HTML and cache-first for static assets. Custom offline fallback page (`offline.html`) displayed when navigation fails without a cache hit.
 
 ---
 
@@ -71,6 +74,7 @@ It runs entirely in the browser. No build step, no npm, no backend.
 | Markup | HTML5 | Semantic, accessible, universally supported |
 | Styles | CSS custom properties | Single design system via `forge_base.css`, zero runtime |
 | Scripts | Vanilla JavaScript | Canvas 2D API for animations; no framework overhead |
+| PWA | Service Worker + offline.html | Network-first HTML, cache-first assets, graceful offline fallback |
 | Fonts | Google Fonts — Syne, DM Sans, JetBrains Mono | Clean reading experience across all devices |
 | Deploy | Vercel (static) | Zero-config, global CDN, instant redeploys on push |
 
@@ -84,6 +88,10 @@ It runs entirely in the browser. No build step, no npm, no backend.
 TechForge/
 ├── index.html                  # Home page
 ├── about.html                  # About & open-source info
+├── offline.html                # PWA offline fallback page
+├── sw.js                       # Service Worker — offline support
+├── robots.txt                  # Crawler directives
+├── sitemap.xml                 # Generated sitemap
 ├── vercel.json                 # Deploy config — redirects & cache headers
 │
 ├── assets/
@@ -104,14 +112,18 @@ TechForge/
 │   ├── favicon.svg
 │   └── og-image.png            # Open Graph social preview (1200×630)
 │
-├── dsa/                        # 29 DSA topics with interactive visualizers
-├── python/                     # 7 Python learning modules
-├── system-design/              # 23 system design + backend framework guides
+├── dsa/                        # 30 DSA topics · 17 Canvas visualizers
+├── python/                     # 8 Python modules (basics → async/await)
+├── system-design/              # 26 system design + backend framework guides
 ├── databases/                  # 14 database deep-dives (SQL, NoSQL, specialized)
-├── aiml/                       # 8 AI/ML modules
+├── aiml/                       # 8 AI/ML modules + hub index
 ├── interview/                  # 7 interview question banks
 ├── devops/                     # 23 DevOps guides
-└── tools/                      # Build scripts (sitemap, content sync, audit)
+└── tools/                      # Build scripts (sitemap, site-index, content sync)
+    ├── build-site-index.mjs
+    ├── generate-sitemap.mjs
+    ├── sync-all-pages.mjs
+    └── topic-content.json
 ```
 
 ---
@@ -134,6 +146,8 @@ npx serve .
 ```
 
 **VS Code / Cursor** — Install the Live Server extension and open `index.html`.
+
+> The Service Worker only activates over `http://` or `https://` — opening `index.html` directly as a `file://` URL will not register it.
 
 ---
 
@@ -219,11 +233,25 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ## Roadmap
 
-- [ ] Complete DSA canvas animation coverage (11 of 29 topics have canvas; remaining use div-based visualizers)
-- [ ] AI/ML section hub page (`aiml/index.html`)
-- [ ] Python track async/await deep dive
-- [ ] Offline support via Service Worker
-- [ ] Additional language implementations (JavaScript, Java, C++)
+- [ ] Complete DSA Canvas animation coverage (17 of 30 topics have Canvas; remaining use div-based visualizers)
+- [ ] Additional language implementations (JavaScript, Java, C++) per topic
+- [ ] Full-site search powered by `site-index.js`
+- [ ] Dark / light mode toggle
+- [ ] Progress dashboard across all tracks
+
+---
+
+## Recent Updates
+
+- **PWA / Offline support** — Service Worker (`sw.js`) + `offline.html` added; network-first HTML caching with graceful offline fallback
+- **Python Async/Await** — New deep-dive module covering asyncio, coroutines, tasks, and concurrency patterns
+- **AI/ML hub page** — `aiml/index.html` added as a proper section landing page
+- **DSA Canvas expansion** — Canvas visualizers now cover 17 of 30 topics (up from 11), including AVL trees, Trie, Dijkstra, recursion, and all major sort algorithms
+- **System Design expanded** — 26 guides (added RabbitMQ, service discovery, consistency models, partitioning, replication, monolith, event-driven, fault tolerance, high availability, scalability)
+- **Databases expanded** — 14 topics (added CouchDB, Neo4j, InfluxDB, MariaDB, SQLite, graph databases)
+- **Interview Prep** — System Design interview bank added (7 total question banks)
+- **Topics manifest** — `topics-manifest.js` now the single source of truth for all topic metadata site-wide
+- **Build tooling** — `tools/` directory with ESM scripts for sitemap generation, site-index building, and cross-page content sync
 
 ---
 
