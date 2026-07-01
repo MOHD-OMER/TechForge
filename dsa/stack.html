@@ -110,9 +110,7 @@
     .btn.go { background: rgba(77, 158, 247, .1); border-color: var(--blue); color: var(--blue); }
     .btn.soft-red { background: rgba(248, 113, 113, .1); border-color: var(--red); color: var(--red); }
     .viz-body { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; min-height: 200px; }
-    .stack-items { display: flex; flex-direction: column; gap: 4px; align-items: center; }
-    .stack-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--text); min-width: 120px; justify-content: space-between; }
-    .stack-item.s-top { border-color: var(--accent); background: rgba(77, 158, 247, .1); }
+
     .itag { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
     .itag-blue { background: var(--blue); color: var(--bg); }
     .status { font-family: var(--mono); font-size: 12px; color: var(--text2); margin-top: 12px; }
@@ -319,7 +317,7 @@
           </div>
         </div>
         <div class="viz-body">
-          <div class="stack-items" id="sk-items"></div>
+          <canvas id="sk-canvas" style="width:100%;height:260px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
           <div class="status" id="sk-status">Use Push/Pop to operate</div>
         </div>
       </div>
@@ -631,34 +629,92 @@ val = stack.pop()    <span class="cm"># pop  — O(1) → 30</span>
       }
     }
 
-    // Stack Visualization
+    // Stack Visualization (Canvas)
     let skD = [];
-    function skDraw(top) {
-      let w = document.getElementById('sk-items');
-      if (!w) return;
+    function skDraw(flashIdx, flashColor) {
+      let cv = document.getElementById('sk-canvas');
+      if (!cv) return;
+      let dpr = window.devicePixelRatio || 1;
+      let cssW = cv.clientWidth || cv.parentElement.clientWidth || 300;
+      let cssH = 260;
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      let ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+      let cs = getComputedStyle(document.body);
+      let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+      let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+      let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+      ctx.font = '600 12px ' + mono;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
       if (!skD.length) {
-        w.innerHTML = '<div style="color:var(--text2);font-family:var(--mono);font-size:12px;padding:10px">Stack is empty</div>';
+        ctx.fillStyle = cText3;
+        ctx.fillText('Stack is empty', cssW / 2, cssH / 2);
         return;
       }
-      w.innerHTML = skD.map(function(v, i) {
-        let isTop = i === skD.length - 1;
-        return '<div class="stack-item' + (isTop ? ' s-top' : '') + '"><span>' + v + '</span>' + (isTop ? '<span class="itag itag-blue">TOP</span>' : '') + '</div>';
-      }).join('');
+
+      let boxW = 140, boxH = 40, gap = 6;
+      let n = skD.length;
+      let totalH = n * boxH + (n - 1) * gap;
+      let baseY = Math.min(cssH - 20, (cssH + totalH) / 2);
+      let cx = cssW / 2;
+
+      // base line (floor of the stack)
+      ctx.strokeStyle = cText3; ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - boxW / 2 - 14, baseY + 4); ctx.lineTo(cx + boxW / 2 + 14, baseY + 4);
+      ctx.stroke();
+
+      for (let i = 0; i < n; i++) {
+        let v = skD[i];
+        let isTop = i === n - 1;
+        let flashed = i === flashIdx;
+        let y = baseY - boxH - i * (boxH + gap);
+
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(cx - boxW / 2, y, boxW, boxH, 8) : ctx.rect(cx - boxW / 2, y, boxW, boxH);
+        ctx.fillStyle = flashed ? flashColor : (isTop ? 'rgba(77,158,247,.12)' : cSurface);
+        ctx.fill();
+        ctx.lineWidth = isTop ? 1.5 : 1;
+        ctx.strokeStyle = flashed ? flashColor : (isTop ? cAccent : cBorder);
+        ctx.stroke();
+
+        ctx.fillStyle = cText;
+        ctx.fillText(String(v), cx, y + boxH / 2);
+
+        if (isTop) {
+          ctx.font = '700 9px ' + mono;
+          ctx.fillStyle = cAccent;
+          ctx.fillText('← TOP', cx + boxW / 2 + 32, y + boxH / 2);
+          ctx.font = '600 12px ' + mono;
+        }
+      }
     }
     let skRunning = false;
 
     async function skPush() {
       if (skRunning) return; skRunning = true;
       let v = parseInt(document.getElementById('sk-v').value) || 42;
-      skD.push(v); skDraw(true);
+      skD.push(v);
+      skDraw(skD.length - 1, 'rgba(77,158,247,.35)');
       setStatus('sk-status', '<span class="s-ok">Pushed <b>' + v + '</b> to top &mdash; O(1)</span>');
+      await sleep(260);
+      skDraw();
       skRunning = false;
     }
 
     async function skPop() {
       if (skRunning) return; skRunning = true;
-      if (!skD.length) { setStatus('sk-status', '<span class="s-err">Stack underflow &mdash; empty!</span>'); return; }
-      let v = skD.pop(); skDraw(false);
+      if (!skD.length) { setStatus('sk-status', '<span class="s-err">Stack underflow &mdash; empty!</span>'); skRunning = false; return; }
+      skDraw(skD.length - 1, 'rgba(248,113,113,.35)');
+      await sleep(220);
+      let v = skD.pop();
+      skDraw();
       setStatus('sk-status', '<span class="s-ok">Popped <b>' + v + '</b> from top &mdash; O(1)</span>');
       skRunning = false;
     }
@@ -668,11 +724,12 @@ val = stack.pop()    <span class="cm"># pop  — O(1) → 30</span>
       setStatus('sk-status', 'Peek: top element is <b>' + skD[skD.length - 1] + '</b> (not removed)');
     }
 
-    function skReset() { skD = []; skDraw(false); setStatus('sk-status', 'Stack cleared'); }
+    function skReset() { skD = []; skDraw(); setStatus('sk-status', 'Stack cleared'); }
 
     document.addEventListener('DOMContentLoaded', function() {
       skDraw();
       refreshProg('stack');
+      window.addEventListener('resize', function() { skDraw(); });
     });
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
