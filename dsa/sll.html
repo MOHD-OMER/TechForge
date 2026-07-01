@@ -287,7 +287,9 @@
             <button class="badge b-red" onclick="sllPop()" style="border:none; cursor:pointer;">↓ Pop Front</button>
             <button class="badge b-surface" onclick="sllReset()" style="border:none; cursor:pointer;">↺ Reset</button>
           </div>
-          <div class="ll-row" id="sll-vis"></div>
+          <div style="overflow-x:auto;padding:4px 0;">
+            <canvas id="sll-canvas" style="height:120px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
+          </div>
           <div id="sll-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:12px;">Modify the list to see O(1) vs O(n) operations.</div>
         </div>
       </div>
@@ -493,25 +495,91 @@
       refreshProg(topic);
     }
 
-    // SLL Visualization
+    // SLL Visualization (Canvas)
     let sllD = [10, 20, 30, 40, 50];
     function sllDraw(hl) {
-      let w = document.getElementById('sll-vis');
-      if (!w) return;
-      if (!sllD.length) {
-        w.innerHTML = '<span style="color:var(--text2)">Empty list</span>';
+      let cv = document.getElementById('sll-canvas');
+      if (!cv) return;
+      let dpr = window.devicePixelRatio || 1;
+      let boxW = 64, boxH = 44, gap = 40, pad = 16;
+      let n = sllD.length;
+      let cssH = 120;
+      let cssW = n ? Math.max(cv.parentElement.clientWidth || 600, pad * 2 + n * boxW + (n - 1) * gap + 90) : (cv.parentElement.clientWidth || 600);
+      cv.width = cssW * dpr; cv.height = cssH * dpr;
+      cv.style.width = cssW + 'px';
+      let ctx = cv.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      let cs = getComputedStyle(document.body);
+      let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+      let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+      let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+      let cText2 = cs.getPropertyValue('--text2').trim() || '#8da0bb';
+      let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+      let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+      let cAmber = cs.getPropertyValue('--amber').trim() || '#fbbf24';
+      let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+      if (!n) {
+        ctx.font = '600 13px ' + mono;
+        ctx.fillStyle = cText2;
+        ctx.fillText('Empty list', cssW / 2, cssH / 2);
         return;
       }
-      let h = '';
-      for (let i = 0; i < sllD.length; i++) {
-        let nc = i === hl ? 'n-hl' : i === 0 ? 'n-head' : i === sllD.length - 1 && sllD.length > 1 ? 'n-tail' : '';
-        let lbl = i === 0 ? '<span class="nd-lbl">head</span>' : i === sllD.length - 1 && sllD.length > 1 ? '<span class="nd-lbl">tail</span>' : '';
-        h += '<div class="ll-nd"><div class="ll-box ' + nc + '">' + lbl + sllD[i] + '</div>';
-        if (i < sllD.length - 1) h += '<div class="ll-arr">&rarr;</div>';
-        h += '</div>';
+
+      let midY = cssH / 2 + 6;
+      let x = pad;
+
+      for (let i = 0; i < n; i++) {
+        let isHl = i === hl;
+        let isHead = i === 0;
+        let isTail = i === n - 1 && n > 1;
+        let boxColor = isHl ? cAccent : isHead ? cGreen : isTail ? cAmber : cBorder;
+
+        // label
+        if (isHead || isTail) {
+          ctx.font = '700 9px ' + mono;
+          ctx.fillStyle = cText2;
+          ctx.fillText(isHead && isTail ? 'head/tail' : isHead ? 'head' : 'tail', x + boxW / 2, midY - boxH / 2 - 12);
+        }
+
+        // box
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+        ctx.fillStyle = isHl ? 'rgba(77,158,247,.12)' : cSurface;
+        ctx.fill();
+        ctx.lineWidth = isHl ? 2 : 1.5;
+        ctx.strokeStyle = boxColor;
+        ctx.stroke();
+
+        ctx.font = '600 13px ' + mono;
+        ctx.fillStyle = cText;
+        ctx.fillText(String(sllD[i]), x + boxW / 2, midY);
+
+        x += boxW;
+
+        // arrow to next
+        if (i < n - 1) {
+          ctx.strokeStyle = cAccent; ctx.globalAlpha = 0.6; ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(x + 4, midY); ctx.lineTo(x + gap - 8, midY);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(x + gap - 8, midY); ctx.lineTo(x + gap - 14, midY - 4); ctx.lineTo(x + gap - 14, midY + 4);
+          ctx.closePath(); ctx.fillStyle = cAccent; ctx.fill();
+          ctx.globalAlpha = 1;
+          x += gap;
+        }
       }
-      h += '<span class="ll-null">&rarr; null</span>';
-      w.innerHTML = h;
+
+      // → null
+      ctx.font = '500 12px ' + mono;
+      ctx.fillStyle = cText2;
+      ctx.textAlign = 'left';
+      ctx.fillText('\u2192 null', x + 12, midY);
     }
 
     window.sllPush = function() {
@@ -548,6 +616,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       sllDraw(-1);
       refreshProg('sll');
+      window.addEventListener('resize', function() { sllDraw(-1); });
     });
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
