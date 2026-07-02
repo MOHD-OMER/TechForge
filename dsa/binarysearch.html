@@ -173,7 +173,9 @@
       <button class="badge b-accent" onclick="bsrRun()" style="border:none; cursor:pointer;">▶ Find Target</button>
       <button class="badge b-surface" onclick="bsrReset()" style="border:none; cursor:pointer;">↺ Reset</button>
     </div>
-    <div class="bss-row" id="bsr-cells"></div>
+    <div style="overflow-x:auto;">
+      <canvas id="bsr-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
+    </div>
     <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:16px;">Array must be sorted. Press Find.</div>
   </div>
 </div>
@@ -244,15 +246,75 @@
   <script src="../assets/js/utils.js?v=3"></script>
   <script src="../assets/js/platform.js?v=3"></script>
 <script>
-document.addEventListener("DOMContentLoaded",function(){bsrReset();refreshProg("binarysearch");});
+document.addEventListener("DOMContentLoaded",function(){bsrReset();refreshProg("binarysearch");window.addEventListener('resize', bsrDraw);});
 
 let bsrArr =[2,5,8,11,14,19,21,25,33,37,42,47,51,56,64];
 let bsrOff=true;
+let bsrState = {}; // idx -> 'mid'|'range'|'checked'|'found'
+
+function bsrDraw() {
+  let cv = document.getElementById('bsr-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let boxW = 44, gap = 6, pad = 4;
+  let n = bsrArr.length;
+  let cssH = 80;
+  let cssW = Math.max(cv.parentElement.clientWidth || 500, pad * 2 + n * boxW + (n - 1) * gap);
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  cv.style.width = cssW + 'px';
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+  let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+  let cBlue = cs.getPropertyValue('--blue').trim() || '#4d9ef7';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  let boxH = 44, midY = cssH / 2 + 6;
+
+  for (let i = 0; i < n; i++) {
+    let x = pad + i * (boxW + gap);
+    let st = bsrState[i];
+    let color = cBorder, fill = cSurface, textColor = cText, alpha = 1, scale = 1;
+    if (st === 'mid') { color = cAccent; fill = 'rgba(77,158,247,.15)'; textColor = cAccent; scale = 1.1; }
+    else if (st === 'found') { color = cGreen; fill = 'rgba(52,211,153,.15)'; textColor = cGreen; scale = 1.15; }
+    else if (st === 'range') { color = cBlue; }
+    else if (st === 'checked') { alpha = 0.3; }
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if (scale !== 1) {
+      ctx.translate(x + boxW / 2, midY);
+      ctx.scale(scale, scale);
+      ctx.translate(-(x + boxW / 2), -midY);
+    }
+
+    ctx.font = '500 10px ' + mono; ctx.fillStyle = cText3;
+    ctx.fillText(String(i), x + boxW / 2, midY - boxH / 2 - 10);
+
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineWidth = st ? 1.5 : 1;
+    ctx.strokeStyle = color; ctx.stroke();
+
+    ctx.font = '600 13px ' + mono; ctx.fillStyle = textColor;
+    ctx.fillText(String(bsrArr[i]), x + boxW / 2, midY);
+    ctx.restore();
+  }
+}
 
 window.bsrReset = function(){
   bsrOff=true;
-  let w =document.getElementById('bsr-cells'); if(!w)return;
-  w.innerHTML=bsrArr.map((v,i)=>'<div class="bss-cell" id="bsc'+i+'"><span class="bss-cell-idx">'+i+'</span>'+v+'</div>').join('');
+  bsrState = {};
+  bsrDraw();
   document.getElementById('bsr-status').innerText='Array is sorted. Enter target and press Find.';
 }
 
@@ -267,16 +329,16 @@ window.bsrRun = async function(){
     steps++;
     let mid =Math.floor((lo+hi)/2);
     for(let i=0; i<bsrArr.length; i++){
-      let el =document.getElementById('bsc'+i); if(!el)continue;
-      if(i===mid) el.className='bss-cell cc-mid';
-      else if(i>=lo && i<=hi) el.className='bss-cell cc-range';
-      else el.className='bss-cell cc-checked';
+      if(i===mid) bsrState[i]='mid';
+      else if(i>=lo && i<=hi) bsrState[i]='range';
+      else bsrState[i]='checked';
     }
+    bsrDraw();
     document.getElementById('bsr-status').innerHTML = 'Step '+steps+': Checking mid index '+mid+' (value: '+bsrArr[mid]+')';
     await new Promise(r=>setTimeout(r, 700));
 
     if(bsrArr[mid]===target){
-      document.getElementById('bsc'+mid).className='bss-cell cc-found';
+      bsrState[mid]='found'; bsrDraw();
       document.getElementById('bsr-status').innerHTML = '<span style="color:var(--green)">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
       bsrOff=true; return;
     }
