@@ -37,7 +37,7 @@ It runs entirely in the browser. No build step, no npm, no backend. Includes a S
 
 | Track | Topics | URL |
 |---|---|---|
-| Data Structures & Algorithms | 30 topics · 17 Canvas visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
+| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
 | Python | 8 modules · basics through async/await | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://tech-forge-dev.vercel.app/system-design/index.html) |
 | Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://tech-forge-dev.vercel.app/databases/index.html) |
@@ -49,7 +49,7 @@ It runs entirely in the browser. No build step, no npm, no backend. Includes a S
 
 ## Features
 
-**Data Structures & Algorithms** — 30 topics across 6 categories with 17 Canvas-based interactive visualizers, Big-O analysis for every topic, sorting and complexity reference tables, and a recommended learning path from beginner to interview-ready.
+**Data Structures & Algorithms** — 29 topics across 6 categories, 28 with interactive Canvas 2D visualizers (every topic except Dynamic Programming, which uses a dedicated grid table for its LCS matrix). Covers arrays, linked lists (singly, doubly, circular), stacks, queues, trees, graphs, hashing, sorting, searching, sliding window, two pointer, bit manipulation, and more. Big-O analysis for every topic and a recommended learning path from beginner to interview-ready.
 
 **Python Track** — Complete language reference covering basics, control flow, functions, OOP, collections, libraries, and async/await concurrency. Includes magic methods, decorators, comprehensions, asyncio patterns, and 50+ annotated practice programs.
 
@@ -73,7 +73,7 @@ It runs entirely in the browser. No build step, no npm, no backend. Includes a S
 |---|---|---|
 | Markup | HTML5 | Semantic, accessible, universally supported |
 | Styles | CSS custom properties | Single design system via `forge_base.css`, zero runtime |
-| Scripts | Vanilla JavaScript | Canvas 2D API for animations; no framework overhead |
+| Scripts | Vanilla JavaScript | Canvas 2D API for all data structure and algorithm animations; no framework overhead |
 | PWA | Service Worker + offline.html | Network-first HTML, cache-first assets, graceful offline fallback |
 | Fonts | Google Fonts — Syne, DM Sans, JetBrains Mono | Clean reading experience across all devices |
 | Deploy | Vercel (static) | Zero-config, global CDN, instant redeploys on push |
@@ -105,14 +105,14 @@ TechForge/
 │   │   └── aiml-overview.css   # AI/ML overview styles
 │   ├── js/
 │   │   ├── platform.js         # Progress tracking, bookmarks, read time
-│   │   ├── utils.js            # Shared utilities (search, clipboard, ARIA)
+│   │   ├── utils.js            # Shared utilities (search, clipboard, ARIA, canvas bar helper)
 │   │   ├── topics-manifest.js  # Canonical topic registry (single source of truth)
 │   │   ├── site-index.js       # Site-wide search index
 │   │   └── aiml-viz.js         # AI/ML interactive visualizations
 │   ├── favicon.svg
 │   └── og-image.png            # Open Graph social preview (1200×630)
 │
-├── dsa/                        # 30 DSA topics · 17 Canvas visualizers
+├── dsa/                        # 29 DSA topics · 28 with Canvas 2D visualizers
 ├── python/                     # 8 Python modules (basics → async/await)
 ├── system-design/              # 26 system design + backend framework guides
 ├── databases/                  # 14 database deep-dives (SQL, NoSQL, specialized)
@@ -219,9 +219,9 @@ git push origin fix/heap-sort-typo
 
 - Fix bugs or broken links
 - Improve explanations, code examples, or quiz questions
-- Add Canvas animations to DSA topics that are missing them
 - Expand interview question banks (with difficulty tags)
 - Improve accessibility — contrast, keyboard navigation, ARIA
+- Help build the dark/light mode toggle (in progress — see Roadmap)
 
 ---
 
@@ -233,20 +233,20 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ## Roadmap
 
-- [ ] Complete DSA Canvas animation coverage (17 of 30 topics have Canvas; remaining use div-based visualizers)
-- [ ] Additional language implementations (JavaScript, Java, C++) per topic
+- [ ] Dark / light mode toggle (scoped, opt-in rollout to avoid breaking existing pages)
+- [ ] Additional language implementations (JavaScript, Java, C++) per DSA topic
 - [ ] Full-site search powered by `site-index.js`
-- [ ] Dark / light mode toggle
 - [ ] Progress dashboard across all tracks
 
 ---
 
 ## Recent Updates
 
+- **DSA Canvas coverage complete** — 28 of 29 topics now have Canvas 2D visualizers (up from 17), including all linear data structures (queue, stack, singly/doubly/circular linked lists), arrays, bitwise operations, linear search, binary search, sliding window, and two pointer. Dynamic Programming intentionally kept as a grid table (better fit for its LCS matrix than canvas)
+- **Bug fixes across DSA visualizers** — binary search loop failing to run due to a state race condition; linear search, two pointer, and dynamic programming "Run" buttons permanently locking after a successful first run
 - **PWA / Offline support** — Service Worker (`sw.js`) + `offline.html` added; network-first HTML caching with graceful offline fallback
 - **Python Async/Await** — New deep-dive module covering asyncio, coroutines, tasks, and concurrency patterns
 - **AI/ML hub page** — `aiml/index.html` added as a proper section landing page
-- **DSA Canvas expansion** — Canvas visualizers now cover 17 of 30 topics (up from 11), including AVL trees, Trie, Dijkstra, recursion, and all major sort algorithms
 - **System Design expanded** — 26 guides (added RabbitMQ, service discovery, consistency models, partitioning, replication, monolith, event-driven, fault tolerance, high availability, scalability)
 - **Databases expanded** — 14 topics (added CouchDB, Neo4j, InfluxDB, MariaDB, SQLite, graph databases)
 - **Interview Prep** — System Design interview bank added (7 total question banks)
