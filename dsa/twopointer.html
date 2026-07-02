@@ -173,7 +173,8 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="cells-row" id="tp-cells">
+<div style="overflow-x:auto;">
+<canvas id="tp-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 </div>
 <div class="status" id="tp-status">
         Find two numbers that sum to target
@@ -552,9 +553,80 @@ window.addEventListener('scroll', updateProgress);
 updateProgress();
 
 let tpArr =[1,3,5,7,9,11,13,15,17,19]; let tpOn=false;
+let tpState = {}; // idx -> 'left'|'right'|'range'|'checked'|'found'
+
+function tpDraw() {
+  let cv = document.getElementById('tp-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let boxW = 44, gap = 6, pad = 4;
+  let n = tpArr.length;
+  let cssH = 80;
+  let cssW = Math.max(cv.parentElement.clientWidth || 500, pad * 2 + n * boxW + (n - 1) * gap);
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  cv.style.width = cssW + 'px';
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+  let cBlue = cs.getPropertyValue('--blue').trim() || '#4d9ef7';
+  let cPink = cs.getPropertyValue('--pink').trim() || '#f472b6';
+  let cTeal = cs.getPropertyValue('--teal').trim() || '#2dd4bf';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  let boxH = 44, midY = cssH / 2 + 6;
+
+  for (let i = 0; i < n; i++) {
+    let x = pad + i * (boxW + gap);
+    let st = tpState[i];
+    let color = cBorder, fill = cSurface, textColor = cText, alpha = 1, scale = 1;
+    if (st === 'left') { color = cBlue; fill = 'rgba(77,158,247,.18)'; textColor = cBlue; }
+    else if (st === 'right') { color = cPink; fill = 'rgba(244,114,182,.18)'; textColor = cPink; }
+    else if (st === 'range') { color = cTeal; fill = 'rgba(45,212,191,.08)'; textColor = cTeal; }
+    else if (st === 'checked') { alpha = 0.35; }
+    else if (st === 'found') { color = cGreen; fill = 'rgba(52,211,153,.18)'; textColor = cGreen; scale = 1.1; }
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if (scale !== 1) {
+      ctx.translate(x + boxW / 2, midY);
+      ctx.scale(scale, scale);
+      ctx.translate(-(x + boxW / 2), -midY);
+    }
+
+    ctx.font = '500 10px ' + mono; ctx.fillStyle = cText3;
+    ctx.fillText(String(i), x + boxW / 2, midY - boxH / 2 - 10);
+
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2, boxW, boxH);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineWidth = st ? 1.5 : 1;
+    ctx.strokeStyle = color; ctx.stroke();
+
+    ctx.font = '600 13px ' + mono; ctx.fillStyle = textColor;
+    ctx.fillText(String(tpArr[i]), x + boxW / 2, midY);
+    ctx.restore();
+
+    if (st === 'left') {
+      ctx.font = '700 9px ' + mono; ctx.fillStyle = cBlue;
+      ctx.fillText('LO', x + boxW / 2, midY + boxH / 2 + 12);
+    } else if (st === 'right') {
+      ctx.font = '700 9px ' + mono; ctx.fillStyle = cPink;
+      ctx.fillText('HI', x + boxW / 2, midY + boxH / 2 + 12);
+    }
+  }
+}
+
 function tpReset(){
-  let w =document.getElementById('tp-cells');
-  w.innerHTML=tpArr.map(function(v,i){return '<div class="cell" id="tpc'+i+'"><span class="cell-idx">'+i+'</span>'+v+'</div>';}).join('');
+  tpState = {};
+  tpDraw();
   setStatus('tp-status','Sorted array. Enter target sum and press Find Pair.');
 }
 async function tpRun(){
@@ -566,12 +638,12 @@ async function tpRun(){
   while(lo<hi){
     steps++;
     for(let i =0;i<tpArr.length;i++){
-      let el =document.getElementById('tpc'+i);if(!el)continue;
-      if(i===lo)el.className='cell cc-left';
-      else if(i===hi)el.className='cell cc-right';
-      else if(i>lo&&i<hi)el.className='cell cc-range';
-      else el.className='cell cc-checked';
+      if(i===lo)tpState[i]='left';
+      else if(i===hi)tpState[i]='right';
+      else if(i>lo&&i<hi)tpState[i]='range';
+      else tpState[i]='checked';
     }
+    tpDraw();
     let sum =tpArr[lo]+tpArr[hi];
     let msg ='Step '+steps+': <span style="color:var(--blue)">lo['+lo+']='+tpArr[lo]+'</span> + <span style="color:var(--pink)">hi['+hi+']='+tpArr[hi]+'</span> = <b>'+sum+'</b>';
     if(sum===target)msg+=' == '+target;
@@ -580,15 +652,19 @@ async function tpRun(){
     setStatus('tp-status',msg);
     await sleep(750);
     if(sum===target){
-      document.getElementById('tpc'+lo).className='cell cc-found';
-      document.getElementById('tpc'+hi).className='cell cc-found';
+      tpState[lo]='found';
+      tpState[hi]='found';
+      tpDraw();
       setStatus('tp-status','<span class="s-ok">&#10003; Found! '+tpArr[lo]+' + '+tpArr[hi]+' = '+target+' at ['+lo+', '+hi+'] in '+steps+' steps</span>');
+      tpOn=false;
       return;
     } else if(sum<target) lo++; else hi--;
   }
   setStatus('tp-status','<span class="s-err">No pair found that sums to '+target+'</span>');
+  tpOn=false;
 }
 document.addEventListener('DOMContentLoaded',tpReset);
+window.addEventListener('resize', tpDraw);
   
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
