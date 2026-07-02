@@ -171,7 +171,8 @@
 </div>
 </div>
 <div class="viz-body">
-<div class="cells-row" id="sw-cells">
+<div style="overflow-x:auto;">
+<canvas id="sw-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
 </div>
 <div class="status" id="sw-status">
         Set k and Press Run
@@ -526,12 +527,68 @@ updateProgress();
 
 let swArr = [2,1,5,1,3,2,4,8,1,6,3,2];
 let swOn = false;
+let swState = {}; // idx -> 'mid'|'found'|'checked'|null
+
+function swDraw() {
+  let cv = document.getElementById('sw-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let boxW = 44, gap = 6, pad = 4;
+  let n = swArr.length;
+  let cssH = 80;
+  let cssW = Math.max(cv.parentElement.clientWidth || 500, pad * 2 + n * boxW + (n - 1) * gap);
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  cv.style.width = cssW + 'px';
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText3 = cs.getPropertyValue('--text3').trim() || '#5a7094';
+  let cBlue = cs.getPropertyValue('--blue').trim() || '#4d9ef7';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  let boxH = 44, midY = cssH / 2 + 6;
+
+  for (let i = 0; i < n; i++) {
+    let x = pad + i * (boxW + gap);
+    let st = swState[i];
+    let color = cBorder, fill = cSurface, textColor = cText, alpha = 1, lift = 0, scale = 1;
+    if (st === 'mid') { color = cBlue; fill = 'rgba(77,158,247,.18)'; textColor = cBlue; lift = -6; }
+    else if (st === 'found') { color = cGreen; fill = 'rgba(52,211,153,.18)'; textColor = cGreen; lift = -6; scale = 1.07; }
+    else if (st === 'checked') { alpha = 0.55; textColor = cText3; }
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if (scale !== 1) {
+      ctx.translate(x + boxW / 2, midY + lift);
+      ctx.scale(scale, scale);
+      ctx.translate(-(x + boxW / 2), -(midY + lift));
+    }
+
+    ctx.font = '500 10px ' + mono; ctx.fillStyle = cText3;
+    ctx.fillText(String(i), x + boxW / 2, midY - boxH / 2 + lift - 10);
+
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x, midY - boxH / 2 + lift, boxW, boxH, 8) : ctx.rect(x, midY - boxH / 2 + lift, boxW, boxH);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.lineWidth = st ? 1.5 : 1;
+    ctx.strokeStyle = color; ctx.stroke();
+
+    ctx.font = '600 13px ' + mono; ctx.fillStyle = textColor;
+    ctx.fillText(String(swArr[i]), x + boxW / 2, midY + lift);
+    ctx.restore();
+  }
+}
 
 function swReset() {
-  let w = document.getElementById('sw-cells');
-  w.innerHTML = swArr.map(function(v,i) {
-    return '<div class="cell" id="swc'+i+'"><span class="cell-idx">'+i+'</span>'+v+'</div>';
-  }).join('');
+  swState = {};
+  swDraw();
   setStatus('sw-status', 'Set k and press Run to find max sum subarray of size k');
 }
 
@@ -546,12 +603,11 @@ async function swRun() {
   mxSum = ws;
   function paint(l, r, best) {
     for (let i = 0; i < n; i++) {
-      let el = document.getElementById('swc'+i);
-      if (!el) continue;
-      if (i >= l && i < r) el.className = 'cell' + (best ? ' cc-found' : ' cc-mid');
-      else if (i < l) el.className = 'cell cc-checked';
-      else el.className = 'cell';
+      if (i >= l && i < r) swState[i] = best ? 'found' : 'mid';
+      else if (i < l) swState[i] = 'checked';
+      else swState[i] = null;
     }
+    swDraw();
   }
   paint(0, k, false);
   setStatus('sw-status', 'Initial window [0..'+(k-1)+']: sum = <b>'+ws+'</b>');
@@ -571,6 +627,7 @@ async function swRun() {
 window.swRun = swRun;
 window.swReset = swReset;
 document.addEventListener('DOMContentLoaded', swReset);
+window.addEventListener('resize', swDraw);
 
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
