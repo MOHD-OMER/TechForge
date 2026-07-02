@@ -319,8 +319,9 @@ window.bsrReset = function(){
 }
 
 window.bsrRun = async function(){
-  if(!bsrOff)return; bsrOff=false;
+  if(!bsrOff)return;
   bsrReset(); await new Promise(r=>setTimeout(r, 100));
+  bsrOff=false;
   let target =parseInt(document.getElementById('bs-t').value)||37;
   let lo =0, hi=bsrArr.length-1, steps=0;
   document.getElementById('bsr-status').innerHTML = 'Searching for <b>'+target+'</b>...';
