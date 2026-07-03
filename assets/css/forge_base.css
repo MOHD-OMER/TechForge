@@ -60,6 +60,61 @@
   --safe-right: env(safe-area-inset-right, 0px);
 }
 
+/* Light theme — opt-in via html.light, doesn't touch dark defaults above */
+html.light {
+  --bg:        #f7f8fb;
+  --bg2:       #eef1f6;
+  --bg3:       #e6eaf1;
+  --surface:   #ffffff;
+  --surface2:  #f4f6fa;
+  --border:    #dde3ed;
+  --border2:   #cbd4e3;
+
+  --text:      #10192b;
+  --text2:     #4b5b74;
+  --text3:     #7c8aa0;
+
+  --accent-dim: #dceafd;
+  --blue-dim:  #dceafd;
+  --py-dim:    #fdf3d0;
+  --green-dim: #d6f5e8;
+  --amber-dim: #fdecc8;
+  --orange-dim: #fde3d0;
+  --red-dim:   #fbdada;
+  --cyan-dim:  #d3f3fa;
+  --purple-dim:#e8e0fc;
+}
+
+html.light img:not([data-no-invert]) { filter: brightness(0.97); }
+
+html.light .code-block,
+html.light .code-block .code-pre,
+html.light .code-block pre,
+html.light pre {
+  background: #0d1117;
+  border-color: #1f2d42;
+}
+html.light .code-hdr {
+  background: #111722;
+  border-color: #1f2d42;
+}
+html.light .code-lang { color: #8da0bb; }
+html.light .code-block .code-pre,
+html.light .code-block pre,
+html.light pre { color: #e2e8f4; }
+
+body, body * { transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text2); cursor: pointer; font-size: 16px;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.theme-toggle:hover { color: var(--text); border-color: var(--border2); }
+
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {

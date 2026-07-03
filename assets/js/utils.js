@@ -342,3 +342,27 @@ function tfInitTopbarChrome() {
 }
 
 document.addEventListener('DOMContentLoaded', tfInitTopbarChrome);
+
+// Theme toggle (light/dark) — class set on <html> via inline head script to avoid flash;
+// this IIFE is a fallback in case the inline script was skipped.
+(function () {
+  try {
+    var saved = localStorage.getItem('tf-theme');
+    if (saved === 'light') document.documentElement.classList.add('light');
+  } catch (_) {}
+})();
+
+function tfToggleTheme() {
+  var isLight = document.documentElement.classList.toggle('light');
+  try { localStorage.setItem('tf-theme', isLight ? 'light' : 'dark'); } catch (_) {}
+  var btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = isLight ? '\u2600' : '\u263D';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var btn = document.getElementById('themeToggle');
+  if (btn) {
+    btn.textContent = document.documentElement.classList.contains('light') ? '\u2600' : '\u263D';
+    btn.addEventListener('click', tfToggleTheme);
+  }
+});
