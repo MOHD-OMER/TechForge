@@ -111,7 +111,28 @@ html.light .topic-card:hover {
   border-color: var(--accent) !important;
 }
 
-html.light img:not([data-no-invert]) { filter: brightness(0.97); }
+/* Signature moment: the demo terminal is the one thing that gets to glow —
+   a spotlight on blueprint paper, everything else stays quiet */
+html.light .hero-right { position: relative; }
+html.light .hero-right::before {
+  content: '';
+  position: absolute;
+  inset: -40px -30px;
+  background: radial-gradient(ellipse 70% 65% at 50% 40%, rgba(77,158,247,.20) 0%, rgba(167,139,250,.10) 45%, transparent 75%);
+  filter: blur(20px);
+  z-index: -1;
+  pointer-events: none;
+}
+html.light .canvas-panel {
+  background: #0d1117 !important;
+  border-color: #1f2d42 !important;
+  box-shadow: 0 20px 60px rgba(77,158,247,.18), 0 8px 24px rgba(16,24,32,.12);
+}
+html.light .hero-title .line-2 {
+  background: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%) !important;
+  -webkit-background-clip: text !important; background-clip: text !important;
+}
+html.light .hero-title .cursor { background: #2563eb !important; }
 
 html.light .hero-eyebrow {
   color: #0891b2 !important;
@@ -123,13 +144,8 @@ html.light .eyebrow-dot {
   box-shadow: 0 0 8px rgba(8,145,178,.5) !important;
 }
 
-/* Code, demo panel, and terminal-style widgets stay dark — matches the
-   platform's own dark-mode identity and keeps syntax colors readable */
-html.light .canvas-panel {
-  background: #0d1117 !important;
-  border-color: #1f2d42 !important;
-  box-shadow: var(--shadow-md);
-}
+/* Code and demo panel stay dark — matches the platform's own dark-mode
+   identity and keeps syntax colors readable */
 html.light .cpb-title { color: #5a7094 !important; }
 html.light .code-block,
 html.light .code-block .code-pre,
