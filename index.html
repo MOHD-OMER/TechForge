@@ -176,8 +176,35 @@
   display: flex; flex-direction: column; gap: 12px;
   animation: fadeUp .5s .18s ease both;
 }
+.laptop-mockup { position: relative; }
+.laptop-screen {
+  background: #1c1c1e;
+  border-radius: 16px 16px 5px 5px;
+  padding: 12px 12px 8px;
+  position: relative;
+  box-shadow: inset 0 0 0 2px #2e2e30, inset 0 0 0 3px #0a0a0a;
+}
+.laptop-notch {
+  position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #0a0a0a; box-shadow: inset 0 0 0 1px #333;
+}
+.laptop-base {
+  height: 14px;
+  margin: 0 -8px;
+  background: linear-gradient(180deg, #2c2c2e 0%, #1c1c1e 100%);
+  border-radius: 0 0 10px 10px;
+  position: relative;
+}
+.laptop-base::after {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 70px; height: 5px;
+  background: #0a0a0a;
+  border-radius: 0 0 8px 8px;
+}
 .canvas-panel {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl);
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
   overflow: hidden; position: relative;
 }
 .canvas-panel-bar {
@@ -590,7 +617,7 @@
         Free Forever · No Ads · No Account · No Login
       </div>
       <h1 class="hero-title">
-        <span class="line-1">Master CS 💻</span>
+        <span class="line-1">Master CS</span>
         <span class="line-2"><span id="typeTarget">Level Up.</span><span class="cursor"></span></span>
       </h1>
       <p class="hero-sub">
@@ -610,12 +637,18 @@
     </div>
 
     <div class="hero-right">
-      <div class="canvas-panel">
-        <div class="canvas-panel-bar">
-          <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
-          <span class="cpb-title" id="canvasLabel">bubble-sort.py · live visualization</span>
+      <div class="laptop-mockup">
+        <div class="laptop-screen">
+          <div class="laptop-notch"></div>
+          <div class="canvas-panel">
+            <div class="canvas-panel-bar">
+              <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
+              <span class="cpb-title" id="canvasLabel">bubble-sort.py · live visualization</span>
+            </div>
+            <canvas id="heroCanvas"></canvas>
+          </div>
         </div>
-        <canvas id="heroCanvas"></canvas>
+        <div class="laptop-base"></div>
       </div>
       <div class="canvas-mini-pills">
         <button class="cmp active" data-mode="sort"  onclick="switchViz(this,'sort')">Bubble Sort</button>
