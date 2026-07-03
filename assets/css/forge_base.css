@@ -62,17 +62,21 @@
 
 /* Light theme — opt-in via html.light, doesn't touch dark defaults above */
 html.light {
-  --bg:        #f6f5f1;
-  --bg2:       #efeee8;
-  --bg3:       #e7e5dc;
-  --surface:   #ffffff;
-  --surface2:  #faf9f5;
-  --border:    #e3e1d6;
-  --border2:   #d1cebd;
+  --bg:        #f8f6f0;
+  --bg2:       #f1ede4;
+  --bg3:       #e9e4d8;
+  --surface:   #fbfaf4;
+  --surface2:  #f5f3eb;
+  --border:    #e4e0d3;
+  --border2:   #d4cebd;
 
-  --text:      #1a1917;
-  --text2:     #5c5a51;
-  --text3:     #8b8778;
+  --text:      #1c1a16;
+  --text2:     #5f5b50;
+  --text3:     #8c8777;
+
+  --shadow-sm: 0 1px 2px rgba(28,26,22,.04), 0 1px 1px rgba(28,26,22,.03);
+  --shadow-md: 0 4px 16px rgba(28,26,22,.06), 0 2px 6px rgba(28,26,22,.04);
+  --shadow-lg: 0 16px 40px rgba(28,26,22,.10), 0 4px 12px rgba(28,26,22,.05);
 
   --accent-dim: #dceafd;
   --blue-dim:  #dceafd;
@@ -85,18 +89,39 @@ html.light {
   --purple-dim:#e8e0fc;
 }
 
+/* Premium touches — soft shadows on cards/blocks instead of flat borders alone */
+html.light .topic-card,
+html.light .canvas-panel,
+html.light .card,
+html.light .viz-block,
+html.light .stat-item {
+  box-shadow: var(--shadow-sm);
+}
+html.light .topic-card:hover {
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-4px);
+}
+
 html.light img:not([data-no-invert]) { filter: brightness(0.97); }
 
 html.light header.topbar {
-  background: rgba(255,255,255,0.92) !important;
+  background: rgba(251,250,244,0.85) !important;
+  backdrop-filter: blur(20px) saturate(1.1) !important;
 }
 html.light .canvas-panel {
   background: #0d1117 !important;
   border-color: #1f2d42 !important;
 }
 html.light .cpb-title { color: #5a7094 !important; }
-html.light .landing-bg::before { opacity: .35; }
-html.light .orb { opacity: .3; }
+html.light .landing-bg::before {
+  opacity: .5;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(77,158,247,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 35% at 5% 90%, rgba(251,191,36,.05) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 30% at 95% 85%, rgba(167,139,250,.04) 0%, transparent 55%) !important;
+}
+html.light .orb { opacity: .25; }
+
 html.light .hero-eyebrow {
   color: #0891b2 !important;
   background: rgba(8,145,178,.08) !important;
