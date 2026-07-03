@@ -61,22 +61,24 @@
 }
 
 /* Light theme — opt-in via html.light, doesn't touch dark defaults above */
+/* "Blueprint paper" direction: pale technical blue-white, grounded in the
+   platform's own subject (algorithm tracing, drafting-paper reference) rather
+   than a generic warm-SaaS or cool-SaaS neutral. */
 html.light {
-  --bg:        #f8f6f0;
-  --bg2:       #f1ede4;
-  --bg3:       #e9e4d8;
-  --surface:   #fbfaf4;
-  --surface2:  #f5f3eb;
-  --border:    #e4e0d3;
-  --border2:   #d4cebd;
+  --bg:        #f4f7fb;
+  --bg2:       #eaf0f7;
+  --bg3:       #dde7f0;
+  --surface:   #ffffff;
+  --surface2:  #f3f6fa;
+  --border:    #d7e1ec;
+  --border2:   #b9c8db;
 
-  --text:      #1c1a16;
-  --text2:     #5f5b50;
-  --text3:     #8c8777;
+  --text:      #101820;
+  --text2:     #4a5568;
+  --text3:     #7c8797;
 
-  --shadow-sm: 0 1px 2px rgba(28,26,22,.04), 0 1px 1px rgba(28,26,22,.03);
-  --shadow-md: 0 4px 16px rgba(28,26,22,.06), 0 2px 6px rgba(28,26,22,.04);
-  --shadow-lg: 0 16px 40px rgba(28,26,22,.10), 0 4px 12px rgba(28,26,22,.05);
+  --shadow-sm: 0 1px 2px rgba(16,24,32,.04);
+  --shadow-md: 0 6px 20px rgba(16,24,32,.08);
 
   --accent-dim: #dceafd;
   --blue-dim:  #dceafd;
@@ -89,38 +91,27 @@ html.light {
   --purple-dim:#e8e0fc;
 }
 
-/* Premium touches — soft shadows on cards/blocks instead of flat borders alone */
-html.light .topic-card,
-html.light .canvas-panel,
-html.light .card,
-html.light .viz-block,
-html.light .stat-item {
+/* Signature: graph-paper grid, amplified from the barely-visible dark-mode version.
+   Ties directly to the subject — tracing algorithms by hand on grid paper. */
+html.light .landing-bg::after {
+  opacity: .5 !important;
+  background-size: 32px 32px !important;
+}
+html.light .landing-bg::before { display: none; }
+html.light .orb { display: none; }
+
+/* Shadows used sparingly — functional spots only, not decorating every card */
+html.light header.topbar {
+  background: rgba(255,255,255,0.82) !important;
+  backdrop-filter: blur(20px) saturate(1.1) !important;
   box-shadow: var(--shadow-sm);
 }
 html.light .topic-card:hover {
-  box-shadow: var(--shadow-lg) !important;
-  transform: translateY(-4px);
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--accent) !important;
 }
 
 html.light img:not([data-no-invert]) { filter: brightness(0.97); }
-
-html.light header.topbar {
-  background: rgba(251,250,244,0.85) !important;
-  backdrop-filter: blur(20px) saturate(1.1) !important;
-}
-html.light .canvas-panel {
-  background: #0d1117 !important;
-  border-color: #1f2d42 !important;
-}
-html.light .cpb-title { color: #5a7094 !important; }
-html.light .landing-bg::before {
-  opacity: .5;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(77,158,247,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 35% at 5% 90%, rgba(251,191,36,.05) 0%, transparent 55%),
-    radial-gradient(ellipse 35% 30% at 95% 85%, rgba(167,139,250,.04) 0%, transparent 55%) !important;
-}
-html.light .orb { opacity: .25; }
 
 html.light .hero-eyebrow {
   color: #0891b2 !important;
@@ -132,7 +123,14 @@ html.light .eyebrow-dot {
   box-shadow: 0 0 8px rgba(8,145,178,.5) !important;
 }
 
-
+/* Code, demo panel, and terminal-style widgets stay dark — matches the
+   platform's own dark-mode identity and keeps syntax colors readable */
+html.light .canvas-panel {
+  background: #0d1117 !important;
+  border-color: #1f2d42 !important;
+  box-shadow: var(--shadow-md);
+}
+html.light .cpb-title { color: #5a7094 !important; }
 html.light .code-block,
 html.light .code-block .code-pre,
 html.light .code-block pre,
