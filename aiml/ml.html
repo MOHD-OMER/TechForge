@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/forge_base.css?v=7">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
       <link href="../assets/css/platform.css?v=2" rel="stylesheet"/>
 <link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=2">
   <style>
@@ -53,13 +54,13 @@
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
         <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
-        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon">📊</span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon">🐍</span><span class="tf-mhn-text">Python</span></a>
-        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon">🏗️</span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon">🗄️</span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon">🤖</span><span class="tf-mhn-text">AI/ML</span></a>
-        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon">🎯</span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon">⎇</span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -109,7 +110,7 @@
         <div class="info-tab" onclick="switchTab(this,'ml-roadmap')">Roadmap</div>
         <div class="info-tab" onclick="switchTab(this,'ml-interview')">Interview Q&amp;A</div>
         <div class="info-tab" onclick="switchTab(this,'ml-quiz')">Quiz</div>
-        <div class="info-tab" onclick="switchTab(this,'ml-cheatsheet')">⚡ Cheat Sheet</div>
+        <div class="info-tab" onclick="switchTab(this,'ml-cheatsheet')"><i class="ti ti-bolt"></i> Cheat Sheet</div>
       </div>
 
       <!-- TAB 1: WHAT IS ML -->
@@ -212,43 +213,43 @@ pipe.fit(X_train, y_train)
           <div class="df-question" id="df-q0">
             <div class="df-q-text">Do you have labelled data (known outputs)?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfAnswer('supervised')">✅ Yes — I have labels</button>
-              <button class="df-btn" onclick="dfAnswer('unsupervised')">❌ No labels available</button>
+              <button class="df-btn" onclick="dfAnswer('supervised')"><i class="ti ti-circle-check"></i> Yes — I have labels</button>
+              <button class="df-btn" onclick="dfAnswer('unsupervised')"><i class="ti ti-x"></i> No labels available</button>
             </div>
           </div>
           <div class="df-question" id="df-q-supervised" style="display:none">
             <div class="df-q-text">What is your output type?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfAnswer('regression')">📈 Continuous number</button>
-              <button class="df-btn" onclick="dfAnswer('classification')">🏷️ Category / class</button>
+              <button class="df-btn" onclick="dfAnswer('regression')"><i class="ti ti-trending-up"></i> Continuous number</button>
+              <button class="df-btn" onclick="dfAnswer('classification')"><i class="ti ti-tag"></i> Category / class</button>
             </div>
           </div>
           <div class="df-question" id="df-q-regression" style="display:none">
             <div class="df-q-text">Data type?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('🥇 XGBoost / LightGBM\n📋 Tabular structured data → gradient boosting wins. Use early stopping + cross-validation. Try Random Forest as a strong baseline.\n\n⚡ Code: xgb.XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=5)')">📊 Tabular / structured</button>
-              <button class="df-btn" onclick="dfResult('🥇 LSTM or Transformer\n📋 Time series with temporal dependencies → recurrent or attention models. For classical forecasting: ARIMA / Holt-Winters or LightGBM with lag features.\n\n⚡ Code: from statsmodels.tsa.arima.model import ARIMA')">📅 Time series</button>
-              <button class="df-btn" onclick="dfResult('🥇 CNN + Regression Head\n📋 Images with continuous output (e.g. age from photo, price from image) → CNN backbone + linear output layer. Use pretrained ResNet and fine-tune.\n\n⚡ Code: torchvision.models.resnet50(pretrained=True)')">🖼️ Images</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> XGBoost / LightGBM\n<i class="ti ti-checklist"></i> Tabular structured data → gradient boosting wins. Use early stopping + cross-validation. Try Random Forest as a strong baseline.\n\n<i class="ti ti-bolt"></i> Code: xgb.XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=5)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> LSTM or Transformer\n<i class="ti ti-checklist"></i> Time series with temporal dependencies → recurrent or attention models. For classical forecasting: ARIMA / Holt-Winters or LightGBM with lag features.\n\n<i class="ti ti-bolt"></i> Code: from statsmodels.tsa.arima.model import ARIMA')"><i class="ti ti-calendar"></i> Time series</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> CNN + Regression Head\n<i class="ti ti-checklist"></i> Images with continuous output (e.g. age from photo, price from image) → CNN backbone + linear output layer. Use pretrained ResNet and fine-tune.\n\n<i class="ti ti-bolt"></i> Code: torchvision.models.resnet50(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
             </div>
           </div>
           <div class="df-question" id="df-q-classification" style="display:none">
             <div class="df-q-text">Data type?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('🥇 XGBoost / LightGBM\n📋 Best for tabular classification. Start with Logistic Regression as baseline, then XGBoost. Use F1/AUC for imbalanced classes. Apply SMOTE if &lt;15% minority.\n\n⚡ Code: xgb.XGBClassifier(n_estimators=300, scale_pos_weight=neg/pos)')">📊 Tabular / structured</button>
-              <button class="df-btn" onclick="dfResult('🥇 Transformers (BERT / RoBERTa)\n📋 Short text: TF-IDF + Logistic Regression as baseline. Long text / semantic: Sentence Transformers + cosine similarity. Fine-tune BERT for highest accuracy.\n\n⚡ Code: from transformers import AutoModelForSequenceClassification')">📝 Text / NLP</button>
-              <button class="df-btn" onclick="dfResult('🥇 CNN (ResNet / EfficientNet)\n📋 Images → CNN is standard. Pretrain on ImageNet, fine-tune on your data. &lt;1k images → data augmentation + transfer learning. ViT for &gt;1M images.\n\n⚡ Code: torchvision.models.efficientnet_b0(pretrained=True)')">🖼️ Images</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> XGBoost / LightGBM\n<i class="ti ti-checklist"></i> Best for tabular classification. Start with Logistic Regression as baseline, then XGBoost. Use F1/AUC for imbalanced classes. Apply SMOTE if &lt;15% minority.\n\n<i class="ti ti-bolt"></i> Code: xgb.XGBClassifier(n_estimators=300, scale_pos_weight=neg/pos)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> Transformers (BERT / RoBERTa)\n<i class="ti ti-checklist"></i> Short text: TF-IDF + Logistic Regression as baseline. Long text / semantic: Sentence Transformers + cosine similarity. Fine-tune BERT for highest accuracy.\n\n<i class="ti ti-bolt"></i> Code: from transformers import AutoModelForSequenceClassification')"><i class="ti ti-pencil"></i> Text / NLP</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> CNN (ResNet / EfficientNet)\n<i class="ti ti-checklist"></i> Images → CNN is standard. Pretrain on ImageNet, fine-tune on your data. &lt;1k images → data augmentation + transfer learning. ViT for &gt;1M images.\n\n<i class="ti ti-bolt"></i> Code: torchvision.models.efficientnet_b0(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
             </div>
           </div>
           <div class="df-question" id="df-q-unsupervised" style="display:none">
             <div class="df-q-text">What do you want to discover?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('🥇 K-Means + DBSCAN\n📋 K-Means: fast, scalable, use Elbow Method for K. DBSCAN: arbitrary-shape clusters + outlier detection. Run both and compare Silhouette scores.\n\n⚡ Code: KMeans(n_clusters=5) | DBSCAN(eps=0.5, min_samples=5)')">👥 Groups / clusters</button>
-              <button class="df-btn" onclick="dfResult('🥇 Isolation Forest / Autoencoder\n📋 Isolation Forest: fast, no labels needed. Autoencoder: high reconstruction error = anomaly. DBSCAN marks outliers as noise. Use contamination param to tune.\n\n⚡ Code: IsolationForest(contamination=0.05)')">⚠️ Anomalies / outliers</button>
-              <button class="df-btn" onclick="dfResult('🥇 PCA → then t-SNE / UMAP\n📋 PCA first to reduce to ~50 dims. Then t-SNE/UMAP for 2D visualisation. Never use t-SNE for downstream ML features — visualisation only.\n\n⚡ Code: PCA(n_components=50) → UMAP(n_components=2)')">📉 Reduce dimensions</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> K-Means + DBSCAN\n<i class="ti ti-checklist"></i> K-Means: fast, scalable, use Elbow Method for K. DBSCAN: arbitrary-shape clusters + outlier detection. Run both and compare Silhouette scores.\n\n<i class="ti ti-bolt"></i> Code: KMeans(n_clusters=5) | DBSCAN(eps=0.5, min_samples=5)')"><i class="ti ti-users"></i> Groups / clusters</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> Isolation Forest / Autoencoder\n<i class="ti ti-checklist"></i> Isolation Forest: fast, no labels needed. Autoencoder: high reconstruction error = anomaly. DBSCAN marks outliers as noise. Use contamination param to tune.\n\n<i class="ti ti-bolt"></i> Code: IsolationForest(contamination=0.05)')"><i class="ti ti-alert-triangle"></i> Anomalies / outliers</button>
+              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> PCA → then t-SNE / UMAP\n<i class="ti ti-checklist"></i> PCA first to reduce to ~50 dims. Then t-SNE/UMAP for 2D visualisation. Never use t-SNE for downstream ML features — visualisation only.\n\n<i class="ti ti-bolt"></i> Code: PCA(n_components=50) → UMAP(n_components=2)')"><i class="ti ti-trending-down"></i> Reduce dimensions</button>
             </div>
           </div>
           <div class="df-result" id="df-result" style="display:none">
-            <div class="df-result-icon">🎯</div>
+            <div class="df-result-icon"><i class="ti ti-target"></i></div>
             <div class="df-result-text" id="df-result-text"></div>
             <button class="df-btn" style="margin-top:16px;" onclick="dfReset()">↺ Start over</button>
           </div>
@@ -475,7 +476,7 @@ study = optuna.create_study(direction="maximize")</div></div>
 
       <!-- TAB 15: CHEAT SHEET -->
       <div class="info-pane" id="ml-cheatsheet">
-        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;"><span class="callout-icon">⚡</span><div>Everything you need for an ML interview or project — on one page. Bookmark this tab.</div></div>
+        <div class="callout callout-blue" style="margin-top:0;margin-bottom:24px;"><span class="callout-icon"><i class="ti ti-bolt"></i></span><div>Everything you need for an ML interview or project — on one page. Bookmark this tab.</div></div>
 
         <div class="sub-heading">Algorithm Selection</div>
         <div class="cheat-row">
@@ -594,7 +595,7 @@ study = optuna.create_study(direction="maximize")</div></div>
           <div class="mp-step"><div class="mp-num">6</div><div class="mp-label">Deploy + Monitor</div><div class="mp-note">FastAPI · drift alerts</div></div>
         </div>
 
-        <div class="callout callout-amber" style="margin-top:24px;"><span class="callout-icon">⚠️</span><div><strong>3 rules to never break:</strong> (1) Never evaluate on training data. (2) Never fit scalers/encoders before the train/test split. (3) Never use accuracy on imbalanced classes.</div></div>
+        <div class="callout callout-amber" style="margin-top:24px;"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><strong>3 rules to never break:</strong> (1) Never evaluate on training data. (2) Never fit scalers/encoders before the train/test split. (3) Never use accuracy on imbalanced classes.</div></div>
       </div>
 
     </div>
@@ -615,10 +616,10 @@ study = optuna.create_study(direction="maximize")</div></div>
   
   
   
-<script src="../assets/js/topics-manifest.js"></script>
-  <script src="../assets/js/site-index.js"></script>
-  <script src="../assets/js/utils.js?v=3"></script>
-  <script src="../assets/js/platform.js?v=3"></script>
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../assets/js/site-index.js?v=2"></script>
+  <script src="../assets/js/utils.js?v=5"></script>
+  <script src="../assets/js/platform.js?v=4"></script>
 <script>
 const pbar = document.getElementById('progressFill');
 window.addEventListener('scroll', () => {

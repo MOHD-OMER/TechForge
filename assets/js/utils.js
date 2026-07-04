@@ -196,15 +196,15 @@ function tfInjectSidebarHomeNav() {
   const root = inSubfolder ? '../' : '';
 
   const sections = [
-    { href: root + 'index.html',               icon: '⬡', label: 'Home' },
-    { href: root + 'dsa/index.html',            icon: '📊', label: 'DSA' },
-    { href: root + 'python/index.html',         icon: '🐍', label: 'Python' },
-    { href: root + 'system-design/index.html',  icon: '🏗️', label: 'Sys Design' },
-    { href: root + 'databases/index.html',      icon: '🗄️', label: 'Databases' },
-    { href: root + 'aiml/aiml-explained.html',  icon: '🤖', label: 'AI/ML' },
-    { href: root + 'interview/index.html',      icon: '🎯', label: 'Interview' },
-    { href: root + 'devops/index.html',         icon: '⎇',  label: 'DevOps' },
-    { href: root + 'about.html',                icon: 'ℹ️', label: 'About' },
+    { href: root + 'index.html',               icon: '<i class="ti ti-home"></i>', label: 'Home' },
+    { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
+    { href: root + 'python/index.html',         icon: '<i class="ti ti-brand-python"></i>', label: 'Python' },
+    { href: root + 'system-design/index.html',  icon: '<i class="ti ti-building"></i>', label: 'Sys Design' },
+    { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
+    { href: root + 'aiml/aiml-explained.html',  icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },
+    { href: root + 'interview/index.html',      icon: '<i class="ti ti-target"></i>', label: 'Interview' },
+    { href: root + 'devops/index.html',         icon: '<i class="ti ti-server-2"></i>',  label: 'DevOps' },
+    { href: root + 'about.html',                icon: '<i class="ti ti-info-circle"></i>', label: 'About' },
   ];
 
   const nav = document.createElement('div');
