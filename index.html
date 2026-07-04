@@ -177,52 +177,58 @@
   display: flex; flex-direction: column; gap: 12px;
   animation: fadeUp .5s .18s ease both;
 }
-.laptop-mockup { position: relative; }
-.laptop-screen {
+.monitor-mockup { position: relative; padding-bottom: 8px; }
+.monitor-screen {
   background: #1c1c1e;
-  border-radius: 16px 16px 5px 5px;
-  padding: 12px 12px 8px;
+  border-radius: 10px;
+  padding: 10px;
   position: relative;
   box-shadow: inset 0 0 0 2px #2e2e30, inset 0 0 0 3px #0a0a0a;
 }
-.laptop-notch {
-  position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #0a0a0a; box-shadow: inset 0 0 0 1px #333;
+.monitor-stand {
+  width: 14px; height: 34px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #2c2c2e 0%, #1a1a1c 100%);
+  clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
 }
-.laptop-base {
-  height: 68px;
-  margin: 0 -14px 0;
-  background: linear-gradient(180deg, #3a3a3c 0%, #1c1c1e 55%, #141416 100%);
-  border-radius: 0 0 12px 12px;
-  position: relative;
-  padding: 8px 20px 0;
-  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+.monitor-base {
+  width: 130px; height: 8px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #333335 0%, #19191b 100%);
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.3);
 }
-.laptop-base::before {
-  content: '';
-  position: absolute; top: 0; left: 6%; right: 6%; height: 3px;
-  background: rgba(0,0,0,.4);
-  border-radius: 0 0 3px 3px;
+.desk-accessories {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin-top: 14px;
 }
-.laptop-keys {
+.desk-keyboard {
+  width: 150px; height: 34px;
+  background: linear-gradient(180deg, #2e2e30 0%, #1a1a1c 100%);
+  border-radius: 6px;
+  padding: 5px 6px;
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 1fr;
   gap: 2px;
-  padding: 6px 4px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
 }
-.laptop-keys span {
-  height: 5px;
+.desk-keyboard span {
   background: #0f0f10;
   border-radius: 1.5px;
-  box-shadow: inset 0 0.5px 0 rgba(255,255,255,.06);
+  box-shadow: inset 0 0.5px 0 rgba(255,255,255,.05);
 }
-.laptop-trackpad {
-  width: 100px; height: 22px;
-  margin: 8px auto 0;
-  background: #0a0a0b;
-  border-radius: 3px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+.desk-mouse {
+  width: 20px; height: 30px;
+  background: linear-gradient(180deg, #2e2e30 0%, #1a1a1c 100%);
+  border-radius: 10px 10px 12px 12px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+.desk-mouse::after {
+  content: '';
+  position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 10px; background: rgba(255,255,255,.12);
 }
 .canvas-panel {
   background: var(--card); border: 1px solid var(--border); border-radius: 8px;
@@ -658,9 +664,8 @@
     </div>
 
     <div class="hero-right">
-      <div class="laptop-mockup">
-        <div class="laptop-screen">
-          <div class="laptop-notch"></div>
+      <div class="monitor-mockup">
+        <div class="monitor-screen">
           <div class="canvas-panel">
             <div class="canvas-panel-bar">
               <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
@@ -669,11 +674,11 @@
             <canvas id="heroCanvas"></canvas>
           </div>
         </div>
-        <div class="laptop-base">
-          <div class="laptop-keys"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="laptop-keys"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="laptop-keys"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="laptop-trackpad"></div>
+        <div class="monitor-stand"></div>
+        <div class="monitor-base"></div>
+        <div class="desk-accessories">
+          <div class="desk-keyboard"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="desk-mouse"></div>
         </div>
       </div>
       <div class="canvas-mini-pills">
