@@ -75,7 +75,8 @@ It runs entirely in the browser. No build step, no npm, no backend. Includes a S
 | Styles | CSS custom properties | Single design system via `forge_base.css`, zero runtime |
 | Scripts | Vanilla JavaScript | Canvas 2D API for all data structure and algorithm animations; no framework overhead |
 | PWA | Service Worker + offline.html | Network-first HTML, cache-first assets, graceful offline fallback |
-| Fonts | Google Fonts — Syne, DM Sans, JetBrains Mono | Clean reading experience across all devices |
+| Fonts | Google Fonts — IBM Plex Sans, JetBrains Mono | Clean reading experience across all devices |
+| Icons | Tabler Icons webfont | Consistent line-icon system site-wide, no emoji rendering differences across platforms |
 | Deploy | Vercel (static) | Zero-config, global CDN, instant redeploys on push |
 
 > Zero npm packages. Zero build toolchain. Zero runtime dependencies.
@@ -221,7 +222,7 @@ git push origin fix/heap-sort-typo
 - Improve explanations, code examples, or quiz questions
 - Expand interview question banks (with difficulty tags)
 - Improve accessibility — contrast, keyboard navigation, ARIA
-- Help build the dark/light mode toggle (in progress — see Roadmap)
+- Add new topics, visualizers, or deep-dive guides
 
 ---
 
@@ -233,7 +234,6 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ## Roadmap
 
-- [ ] Dark / light mode toggle (scoped, opt-in rollout to avoid breaking existing pages)
 - [ ] Additional language implementations (JavaScript, Java, C++) per DSA topic
 - [ ] Full-site search powered by `site-index.js`
 - [ ] Progress dashboard across all tracks
@@ -242,6 +242,11 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ## Recent Updates
 
+- **Dark / light mode toggle** — now live on every page. Theme persists via `localStorage`, applied pre-paint to avoid flash, synced across the whole site
+- **Typography refresh** — site-wide switch to IBM Plex Sans (from Syne / DM Sans), font weights and letter-spacing recalibrated for the new letterforms
+- **Icon system** — 3,400+ emojis replaced with the Tabler Icons webfont for consistent rendering across platforms; navigation, sidebars, section headers, and quiz feedback all use line icons now
+- **Brand refresh** — new SVG logo mark rolled out to all pages
+- **Cache correctness** — every CSS/JS asset reference is now explicitly versioned (`?v=`), fixing stale-cache bugs for returning visitors
 - **DSA Canvas coverage complete** — 28 of 29 topics now have Canvas 2D visualizers (up from 17), including all linear data structures (queue, stack, singly/doubly/circular linked lists), arrays, bitwise operations, linear search, binary search, sliding window, and two pointer. Dynamic Programming intentionally kept as a grid table (better fit for its LCS matrix than canvas)
 - **Bug fixes across DSA visualizers** — binary search loop failing to run due to a state race condition; linear search, two pointer, and dynamic programming "Run" buttons permanently locking after a successful first run
 - **PWA / Offline support** — Service Worker (`sw.js`) + `offline.html` added; network-first HTML caching with graceful offline fallback
