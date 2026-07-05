@@ -1282,12 +1282,12 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
   }
 
   const modes = {
-    sort:  {init:initSort,  step:stepSort,  draw:drawSort },
-    bfs:   {init:initBFS,   step:stepBFS,   draw:drawBFS  },
-    stack: {init:initStack, step:stepStack, draw:drawStack},
-    hash:  {init:initHash,  step:stepHash,  draw:drawHash },
+    sort:  {init:initSort,  step:stepSort,  draw:drawSort,  key:'arr'     },
+    bfs:   {init:initBFS,   step:stepBFS,   draw:drawBFS,   key:'nodes'   },
+    stack: {init:initStack, step:stepStack, draw:drawStack, key:'stack'   },
+    hash:  {init:initHash,  step:stepHash,  draw:drawHash,  key:'buckets' },
   };
-  function loop(){ modes[mode].step(); modes[mode].draw(); raf=requestAnimationFrame(loop); }
+  function loop(){ const md=modes[mode]; if(state[md.key]!==undefined){ md.step(); md.draw(); } raf=requestAnimationFrame(loop); }
   function start(m){ if(raf) cancelAnimationFrame(raf); mode=m; modes[m].init(); loop(); }
   start('sort');
 
