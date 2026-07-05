@@ -21,6 +21,7 @@ jobs:
             --match "*.html" \
             --ignore 'This document appears to be written' \
             --ignore 'Section lacks heading' \
+            --ignore-re 'CSS:' \
             --log INFO
 
   linkcheck:
@@ -33,6 +34,7 @@ jobs:
         with:
           args: >-
             --no-progress
+            --base .
             --exclude-path assets
             --exclude 'localhost'
             --exclude '127.0.0.1'

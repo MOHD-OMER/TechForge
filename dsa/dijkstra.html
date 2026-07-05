@@ -233,10 +233,10 @@
            Relax Edges
           </div>
 <div class="step-desc">
-           For each neighbor: if dist[u]+w < dist[v], update.
+           For each neighbor: if dist[u]+w &lt; dist[v], update.
           </div>
 <div class="step-code">
-           if dist[u]+w < dist[v]: dist[v]=dist[u]+w
+           if dist[u]+w &lt; dist[v]: dist[v]=dist[u]+w
           </div>
 </div>
 </div>
@@ -283,7 +283,7 @@
         d, u = heapq.heappop(heap)
         <span class="kw">if</span> d > dist[u]: <span class="kw">continue</span>  <span class="cm"># stale</span>
         <span class="kw">for</span> v, w <span class="kw">in</span> graph[u]:
-            <span class="kw">if</span> dist[u] + w < dist[v]:
+            <span class="kw">if</span> dist[u] + w &lt; dist[v]:
                 dist[v] = dist[u] + w
                 heapq.heappush(heap, (dist[v], v))
     <span class="kw">return</span> dist</pre>

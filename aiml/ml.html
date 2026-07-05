@@ -151,7 +151,7 @@
           <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-title">Random Forest</div><div class="step-desc">Ensemble of N decision trees, each trained on a random data and feature subset. Prediction = majority vote or mean. Dramatically reduces overfitting. Excellent out-of-the-box performance on tabular data.</div><div class="step-code">&#x177; = mode/mean(tree&#x2081;(x), tree&#x2082;(x), ..., tree&#x2099;(x)) &#xb7; n_estimators=100&#x2013;500</div></div></div>
           <div class="step"><div class="step-num">05</div><div class="step-body"><div class="step-title">Gradient Boosting &#x2014; XGBoost / LightGBM</div><div class="step-desc">Builds trees sequentially, each correcting residual errors of the previous. The most powerful algorithm for tabular data. Wins Kaggle. Hyperparameter-sensitive &#x2014; tune carefully with cross-validation.</div><div class="step-code">F(x) = f&#x2081;(x) + &#x3b1;&#xb7;f&#x2082;(residuals) + &#x3b1;&#xb7;f&#x2083;(...) &#xb7; lr=0.05&#x2013;0.3, depth=3&#x2013;7</div></div></div>
           <div class="step"><div class="step-num">06</div><div class="step-body"><div class="step-title">Support Vector Machine (SVM)</div><div class="step-desc">Finds the hyperplane maximising the margin between classes. Kernel trick (RBF) maps data to higher dimensions for non-linear separation. Powerful for small, high-dimensional datasets. Slow on large data.</div><div class="step-code">max margin between classes &#xb7; Kernel: RBF best default &#xb7; C controls margin-error tradeoff</div></div></div>
-          <div class="step"><div class="step-num">07</div><div class="step-body"><div class="step-title">K-Nearest Neighbors (KNN)</div><div class="step-desc">No training step (lazy learner). At predict time, find K nearest training points and use majority vote. O(n) per prediction &#x2014; unusable at scale. K controls bias-variance. Always normalise features before using KNN.</div><div class="step-code">predict(x) = majority_vote(k nearest points) &#xb7; start K = &#x221an;, use odd K</div></div></div>
+          <div class="step"><div class="step-num">07</div><div class="step-body"><div class="step-title">K-Nearest Neighbors (KNN)</div><div class="step-desc">No training step (lazy learner). At predict time, find K nearest training points and use majority vote. O(n) per prediction &#x2014; unusable at scale. K controls bias-variance. Always normalise features before using KNN.</div><div class="step-code">predict(x) = majority_vote(k nearest points) &#xb7; start K = &#x221a;n, use odd K</div></div></div>
           <div class="step"><div class="step-num">08</div><div class="step-body"><div class="step-title">Naive Bayes</div><div class="step-desc">Probabilistic classifier using Bayes&#x2019; theorem. Assumes features are independent. Fast, handles high-dimensional sparse data. Best choice for text classification baselines.</div><div class="step-code">P(y|X) &#x221d; P(y) &#xb7; &#x220f; P(x&#x1d62;|y) &#xb7; Use: spam, sentiment, news classification</div></div></div>
         </div>
         <div class="code-block" style="margin-top:24px;">
@@ -230,25 +230,25 @@ pipe.fit(X_train, y_train)
           <div class="df-question" id="df-q-regression" style="display:none">
             <div class="df-q-text">Data type?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> XGBoost / LightGBM\n<i class="ti ti-checklist"></i> Tabular structured data → gradient boosting wins. Use early stopping + cross-validation. Try Random Forest as a strong baseline.\n\n<i class="ti ti-bolt"></i> Code: xgb.XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=5)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> LSTM or Transformer\n<i class="ti ti-checklist"></i> Time series with temporal dependencies → recurrent or attention models. For classical forecasting: ARIMA / Holt-Winters or LightGBM with lag features.\n\n<i class="ti ti-bolt"></i> Code: from statsmodels.tsa.arima.model import ARIMA')"><i class="ti ti-calendar"></i> Time series</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> CNN + Regression Head\n<i class="ti ti-checklist"></i> Images with continuous output (e.g. age from photo, price from image) → CNN backbone + linear output layer. Use pretrained ResNet and fine-tune.\n\n<i class="ti ti-bolt"></i> Code: torchvision.models.resnet50(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
+              <button class="df-btn" onclick="dfResult('Recommended: XGBoost / LightGBM\nWhy: Tabular structured data → gradient boosting wins. Use early stopping + cross-validation. Try Random Forest as a strong baseline.\n\nCode: xgb.XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=5)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('Recommended: LSTM or Transformer\nWhy: Time series with temporal dependencies → recurrent or attention models. For classical forecasting: ARIMA / Holt-Winters or LightGBM with lag features.\n\nCode: from statsmodels.tsa.arima.model import ARIMA')"><i class="ti ti-calendar"></i> Time series</button>
+              <button class="df-btn" onclick="dfResult('Recommended: CNN + Regression Head\nWhy: Images with continuous output (e.g. age from photo, price from image) → CNN backbone + linear output layer. Use pretrained ResNet and fine-tune.\n\nCode: torchvision.models.resnet50(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
             </div>
           </div>
           <div class="df-question" id="df-q-classification" style="display:none">
             <div class="df-q-text">Data type?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> XGBoost / LightGBM\n<i class="ti ti-checklist"></i> Best for tabular classification. Start with Logistic Regression as baseline, then XGBoost. Use F1/AUC for imbalanced classes. Apply SMOTE if &lt;15% minority.\n\n<i class="ti ti-bolt"></i> Code: xgb.XGBClassifier(n_estimators=300, scale_pos_weight=neg/pos)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> Transformers (BERT / RoBERTa)\n<i class="ti ti-checklist"></i> Short text: TF-IDF + Logistic Regression as baseline. Long text / semantic: Sentence Transformers + cosine similarity. Fine-tune BERT for highest accuracy.\n\n<i class="ti ti-bolt"></i> Code: from transformers import AutoModelForSequenceClassification')"><i class="ti ti-pencil"></i> Text / NLP</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> CNN (ResNet / EfficientNet)\n<i class="ti ti-checklist"></i> Images → CNN is standard. Pretrain on ImageNet, fine-tune on your data. &lt;1k images → data augmentation + transfer learning. ViT for &gt;1M images.\n\n<i class="ti ti-bolt"></i> Code: torchvision.models.efficientnet_b0(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
+              <button class="df-btn" onclick="dfResult('Recommended: XGBoost / LightGBM\nWhy: Best for tabular classification. Start with Logistic Regression as baseline, then XGBoost. Use F1/AUC for imbalanced classes. Apply SMOTE if &lt;15% minority.\n\nCode: xgb.XGBClassifier(n_estimators=300, scale_pos_weight=neg/pos)')"><i class="ti ti-chart-bar"></i> Tabular / structured</button>
+              <button class="df-btn" onclick="dfResult('Recommended: Transformers (BERT / RoBERTa)\nWhy: Short text: TF-IDF + Logistic Regression as baseline. Long text / semantic: Sentence Transformers + cosine similarity. Fine-tune BERT for highest accuracy.\n\nCode: from transformers import AutoModelForSequenceClassification')"><i class="ti ti-pencil"></i> Text / NLP</button>
+              <button class="df-btn" onclick="dfResult('Recommended: CNN (ResNet / EfficientNet)\nWhy: Images → CNN is standard. Pretrain on ImageNet, fine-tune on your data. &lt;1k images → data augmentation + transfer learning. ViT for &gt;1M images.\n\nCode: torchvision.models.efficientnet_b0(pretrained=True)')"><i class="ti ti-photo"></i> Images</button>
             </div>
           </div>
           <div class="df-question" id="df-q-unsupervised" style="display:none">
             <div class="df-q-text">What do you want to discover?</div>
             <div class="df-buttons">
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> K-Means + DBSCAN\n<i class="ti ti-checklist"></i> K-Means: fast, scalable, use Elbow Method for K. DBSCAN: arbitrary-shape clusters + outlier detection. Run both and compare Silhouette scores.\n\n<i class="ti ti-bolt"></i> Code: KMeans(n_clusters=5) | DBSCAN(eps=0.5, min_samples=5)')"><i class="ti ti-users"></i> Groups / clusters</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> Isolation Forest / Autoencoder\n<i class="ti ti-checklist"></i> Isolation Forest: fast, no labels needed. Autoencoder: high reconstruction error = anomaly. DBSCAN marks outliers as noise. Use contamination param to tune.\n\n<i class="ti ti-bolt"></i> Code: IsolationForest(contamination=0.05)')"><i class="ti ti-alert-triangle"></i> Anomalies / outliers</button>
-              <button class="df-btn" onclick="dfResult('<i class="ti ti-medal"></i> PCA → then t-SNE / UMAP\n<i class="ti ti-checklist"></i> PCA first to reduce to ~50 dims. Then t-SNE/UMAP for 2D visualisation. Never use t-SNE for downstream ML features — visualisation only.\n\n<i class="ti ti-bolt"></i> Code: PCA(n_components=50) → UMAP(n_components=2)')"><i class="ti ti-trending-down"></i> Reduce dimensions</button>
+              <button class="df-btn" onclick="dfResult('Recommended: K-Means + DBSCAN\nWhy: K-Means: fast, scalable, use Elbow Method for K. DBSCAN: arbitrary-shape clusters + outlier detection. Run both and compare Silhouette scores.\n\nCode: KMeans(n_clusters=5) | DBSCAN(eps=0.5, min_samples=5)')"><i class="ti ti-users"></i> Groups / clusters</button>
+              <button class="df-btn" onclick="dfResult('Recommended: Isolation Forest / Autoencoder\nWhy: Isolation Forest: fast, no labels needed. Autoencoder: high reconstruction error = anomaly. DBSCAN marks outliers as noise. Use contamination param to tune.\n\nCode: IsolationForest(contamination=0.05)')"><i class="ti ti-alert-triangle"></i> Anomalies / outliers</button>
+              <button class="df-btn" onclick="dfResult('Recommended: PCA → then t-SNE / UMAP\nWhy: PCA first to reduce to ~50 dims. Then t-SNE/UMAP for 2D visualisation. Never use t-SNE for downstream ML features — visualisation only.\n\nCode: PCA(n_components=50) → UMAP(n_components=2)')"><i class="ti ti-trending-down"></i> Reduce dimensions</button>
             </div>
           </div>
           <div class="df-result" id="df-result" style="display:none">
@@ -602,14 +602,11 @@ study = optuna.create_study(direction="maximize")</div></div>
       </div>
 
     </div>
-      <a class="nav-link" href="aiml-explained.html">&#x2190; Overview</a>
-      <a class="nav-link next" href="dl.html">Deep Learning &#x2192;</a>
-    </div>
-  </div>
       <div class="page-nav">
       <a class="nav-link" href="aiml-explained.html">← AI/ML Overview</a>
       <a class="nav-link next" href="dl.html">Deep Learning →</a>
     </div>
+  </div>
   </main>
 </div>
 
