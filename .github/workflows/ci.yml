@@ -1,0 +1,42 @@
+name: CI — Validate HTML & Links
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install html5validator
+        run: pip install html5validator
+
+      - name: Validate HTML
+        run: |
+          html5validator --root . \
+            --match "*.html" \
+            --ignore 'This document appears to be written' \
+            --ignore 'Section lacks heading' \
+            --log INFO
+
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-path assets
+            --exclude 'localhost'
+            --exclude '127.0.0.1'
+            --timeout 30
+            --max-retries 2
+            './**/*.html'
+          fail: true
