@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="https://tech-forge-dev.vercel.app/assets/favicon.svg" width="80" height="80" alt="TechForge Logo" />
+<img src="https://techforge-dev.vercel.app/assets/favicon.svg" width="80" height="80" alt="TechForge Logo" />
 
 # TechForge
 
 **Free, Interactive Computer Science Learning for Developers**
 
-[![Live Site](https://img.shields.io/badge/Live%20Site-tech--forge--dev.vercel.app-00d4ff?style=flat-square&logo=vercel)](https://tech-forge-dev.vercel.app)
+[![Live Site](https://img.shields.io/badge/Live%20Site-techforge--dev.vercel.app-00d4ff?style=flat-square&logo=vercel)](https://techforge-dev.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-7c3aed?style=flat-square)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-2.0.0-green?style=flat-square)](RELEASES.md)
-[![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://tech-forge-dev.vercel.app)
+[![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://techforge-dev.vercel.app)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
-[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://tech-forge-dev.vercel.app)
+[![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://techforge-dev.vercel.app)
 
 **100% Static · Zero Build Step · Zero Backend · Security Hardened · Production Ready**
 
@@ -37,17 +37,17 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 ## Live Demo
 
-**[tech-forge-dev.vercel.app](https://tech-forge-dev.vercel.app)**
+**[techforge-dev.vercel.app](https://techforge-dev.vercel.app)**
 
 | Track | Topics | URL |
 |---|---|---|
-| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers | [/dsa](https://tech-forge-dev.vercel.app/dsa/index.html) |
-| Python | 8 modules · basics through async/await | [/python](https://tech-forge-dev.vercel.app/python/index.html) |
-| System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://tech-forge-dev.vercel.app/system-design/index.html) |
-| Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://tech-forge-dev.vercel.app/databases/index.html) |
-| AI / ML | 8 modules · ML to GenAI | [/aiml](https://tech-forge-dev.vercel.app/aiml/index.html) |
-| Interview Prep | 200+ problems · 7 question banks | [/interview](https://tech-forge-dev.vercel.app/interview/index.html) |
-| DevOps | 23 guides · Docker · K8s · CI/CD · Cloud | [/devops](https://tech-forge-dev.vercel.app/devops/index.html) |
+| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
+| Python | 8 modules · basics through async/await | [/python](https://techforge-dev.vercel.app/python/index.html) |
+| System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
+| Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://techforge-dev.vercel.app/databases/index.html) |
+| AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
+| Interview Prep | 200+ problems · 7 question banks | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
+| DevOps | 23 guides · Docker · K8s · CI/CD · Cloud | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
 
 ---
 
@@ -418,7 +418,7 @@ You are free to use, modify, and distribute TechForge. Attribution is appreciate
 CS (AI/ML) Engineer  
 
 - **GitHub**: [@MOHD-OMER](https://github.com/MOHD-OMER)
-- **Live Site**: [tech-forge-dev.vercel.app](https://tech-forge-dev.vercel.app)
+- **Live Site**: [techforge-dev.vercel.app](https://techforge-dev.vercel.app)
 - **Email**: Contact via GitHub
 
 ---
@@ -440,6 +440,6 @@ No ads. No paywalls. No tracking. Forever free.
 
 [⭐ Star this repo if TechForge helped you learn](https://github.com/MOHD-OMER/TechForge)
 
-[🚀 Start Learning](https://tech-forge-dev.vercel.app)
+[🚀 Start Learning](https://techforge-dev.vercel.app)
 
 </div>
