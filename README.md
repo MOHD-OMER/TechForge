@@ -1,6 +1,8 @@
 <div align="center">
 
-![TechForge Logo](https://tech-forge-dev.vercel.app/assets/favicon.svg)
+<img src="https://tech-forge-dev.vercel.app/assets/favicon.svg" width="80" height="80" alt="TechForge Logo" />
+
+# TechForge
 
 **Free, Interactive Computer Science Learning for Developers**
 
