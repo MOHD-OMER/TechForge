@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://techforge-dev.vercel.app/assets/favicon.svg" width="80" height="80" alt="TechForge Logo" />
+<img src="https://techforge-dev.vercel.app/assets/icon-512.png?v=2" width="96" height="96" alt="TechForge Logo" />
 
 # TechForge
 
