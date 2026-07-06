@@ -1,19 +1,19 @@
 <div align="center">
 
-<img src="assets/favicon.svg" width="52" height="52" alt="TechForge Logo" />
+![TechForge Logo](https://tech-forge-dev.vercel.app/assets/favicon.svg)
 
-# TechForge
-
-**Free, interactive computer science learning — built for developers who want to understand, not just memorize.**
+**Free, Interactive Computer Science Learning for Developers**
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-tech--forge--dev.vercel.app-00d4ff?style=flat-square&logo=vercel)](https://tech-forge-dev.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-7c3aed?style=flat-square)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-2.0.0-green?style=flat-square)](RELEASES.md)
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://tech-forge-dev.vercel.app)
-[![No Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://tech-forge-dev.vercel.app)
-[![Deploy](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/MOHD-OMER/TechForge)
 
-DSA visualizations · Python reference · System design guides · SQL & MongoDB · AI/ML hub · Interview prep · DevOps
+**100% Static · Zero Build Step · Zero Backend · Security Hardened · Production Ready**
+
+Data Structures & Algorithms · Python Reference · System Design Guides · SQL & NoSQL · AI/ML · DevOps · Interview Prep
 
 </div>
 
@@ -21,9 +21,11 @@ DSA visualizations · Python reference · System design guides · SQL & MongoDB 
 
 ## Overview
 
-TechForge is a fully static, zero-dependency CS learning platform with interactive Canvas visualizers for data structures and algorithms, 200+ curated interview problems, and seven complete learning tracks — all free, forever, with no account required.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 200+ curated interview problems, and seven complete learning tracks—all free, forever, with no account required.
 
-It runs entirely in the browser. No build step, no npm, no backend. Includes a Service Worker for offline support — pages you've visited remain accessible without a network connection.
+Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero npm dependencies, and zero backend infrastructure. A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
+
+**Perfect for developers preparing for technical interviews, learning new topics, or reviewing fundamentals.**
 
 <div align="center">
 <img src="assets/og-image.png" alt="TechForge — Free Interactive CS Learning" width="100%" />
@@ -47,39 +49,70 @@ It runs entirely in the browser. No build step, no npm, no backend. Includes a S
 
 ---
 
-## Features
+## ✨ Key Features
 
-**Data Structures & Algorithms** — 29 topics across 6 categories, 28 with interactive Canvas 2D visualizers (every topic except Dynamic Programming, which uses a dedicated grid table for its LCS matrix). Covers arrays, linked lists (singly, doubly, circular), stacks, queues, trees, graphs, hashing, sorting, searching, sliding window, two pointer, bit manipulation, and more. Big-O analysis for every topic and a recommended learning path from beginner to interview-ready.
+### Data Structures & Algorithms
+- **29 in-depth topics** across 6 categories
+- **28 interactive Canvas 2D visualizers** (every topic except Dynamic Programming)
+- Comprehensive coverage: arrays, linked lists, stacks, queues, trees, graphs, hashing, sorting, searching, bit manipulation, sliding window, two pointer
+- Big-O analysis and recommended learning paths
+- Step-by-step algorithm execution with visual state
 
-**Python Track** — Complete language reference covering basics, control flow, functions, OOP, collections, libraries, and async/await concurrency. Includes magic methods, decorators, comprehensions, asyncio patterns, and 50+ annotated practice programs.
+### Python Track
+- **8 complete modules** from basics through async/await
+- Covers: control flow, functions, OOP, collections, libraries, and concurrency patterns
+- 50+ annotated practice programs
+- Magic methods, decorators, comprehensions, asyncio patterns
 
-**System Design** — 26 production-grade guides covering distributed systems, caching, Kafka, load balancing, microservices, rate limiting, and more. Includes deep-dive guides for Flask, FastAPI, and Django with routing, ORM, auth, middleware, and deployment.
+### System Design
+- **26 production-grade deep-dive guides**
+- Topics: distributed systems, caching, Kafka, load balancing, microservices, rate limiting, consistency models, partitioning, replication
+- Framework guides: Flask, FastAPI, Django (routing, ORM, auth, middleware, deployment)
+- Real-world scenarios and trade-offs
 
-**Databases** — Full SQL reference with queries, joins, subqueries, window functions, and normalization. Plus 13 database deep-dives covering PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, and graph databases.
+### Databases
+- **Full SQL reference** with queries, joins, subqueries, window functions, normalization
+- **13 database deep-dives**: PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, graph databases
 
-**AI / ML Hub** — Eight modules spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI, and a Data Science cheat sheet. Clear analogies, real math, live demos, and visual intuition — no hand-waving. Dedicated hub page at `/aiml/index.html`.
+### AI/ML Hub
+- **8 comprehensive modules** spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI
+- Clear analogies, real mathematics, visual intuition
+- Data Science cheat sheet
+- Interactive visualizations
 
-**Interview Prep** — 200+ curated problems across 7 question banks: DSA, Python, OOP, SQL, AI/ML, DevOps, and System Design. FAANG and startup tagged, difficulty rated, progress tracked in the browser. No account, no server, no data leaves your device.
+### Interview Preparation
+- **200+ curated problems** across 7 question banks
+- Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design
+- FAANG and startup tagged · Difficulty rated · Progress tracked in browser
+- No account required · No data leaves your device
 
-**DevOps** — 23 guides covering Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code, and the major cloud platforms (AWS, GCP, Azure).
+### DevOps
+- **23 comprehensive guides** covering the entire DevOps landscape
+- Topics: Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code
+- Major cloud platforms: AWS, GCP, Azure
 
-**Progressive Web App** — Service Worker (`sw.js`) enables offline access with a network-first strategy for HTML and cache-first for static assets. Custom offline fallback page (`offline.html`) displayed when navigation fails without a cache hit.
+### Progressive Web App
+- **Service Worker** (`sw.js`) with network-first HTML caching and cache-first asset strategy
+- **Offline fallback** with custom `offline.html` error page
+- **Installable** on mobile and desktop via `manifest.json`
+- **Theme-aware** — respects system dark/light mode preference, toggle persists via localStorage
+- **192×512 icons** for home screen and splash screens
 
 ---
 
-## Tech Stack
+## 🛠 Tech Stack
 
-| Layer | Choice | Reason |
-|---|---|---|
-| Markup | HTML5 | Semantic, accessible, universally supported |
-| Styles | CSS custom properties | Single design system via `forge_base.css`, zero runtime |
-| Scripts | Vanilla JavaScript | Canvas 2D API for all data structure and algorithm animations; no framework overhead |
-| PWA | Service Worker + offline.html | Network-first HTML, cache-first assets, graceful offline fallback |
-| Fonts | Google Fonts — IBM Plex Sans, JetBrains Mono | Clean reading experience across all devices |
-| Icons | Tabler Icons webfont | Consistent line-icon system site-wide, no emoji rendering differences across platforms |
-| Deploy | Vercel (static) | Zero-config, global CDN, instant redeploys on push |
+| Layer | Technology | Rationale |
+|-------|-----------|-----------|
+| **Markup** | HTML5 | Semantic, accessible, universally supported |
+| **Styles** | CSS custom properties | Single design system via `forge_base.css`, zero runtime overhead |
+| **Interactivity** | Vanilla JavaScript | Canvas 2D for all visualizations; no framework overhead |
+| **PWA** | Service Worker + `offline.html` | Network-first HTML, cache-first assets, graceful offline fallback |
+| **Typography** | IBM Plex Sans · JetBrains Mono | Professional reading experience, technical code clarity |
+| **Icons** | Tabler Icons webfont | Consistent line-icon system, no emoji rendering differences |
+| **Deployment** | Vercel (static) | Zero-config, global CDN, instant deploys, auto HTTPS, security headers |
 
-> Zero npm packages. Zero build toolchain. Zero runtime dependencies.
+**Zero npm packages · Zero build toolchain · Zero runtime dependencies · 100% vanilla**
 
 ---
 
@@ -129,11 +162,13 @@ TechForge/
 
 ---
 
-## Run Locally
+## 🚀 Getting Started
 
-No install required. Any static file server works.
+### Run Locally
 
-**Python (recommended)**
+No installation required. Any static file server works.
+
+**Python (Recommended)**
 ```bash
 git clone https://github.com/MOHD-OMER/TechForge.git
 cd TechForge
@@ -141,36 +176,123 @@ python -m http.server 8080
 ```
 Open [http://localhost:8080](http://localhost:8080).
 
-**Node**
+**Node.js**
 ```bash
 npx serve .
 ```
 
-**VS Code / Cursor** — Install the Live Server extension and open `index.html`.
+**VS Code / Cursor**
+Install the **Live Server** extension and open `index.html`.
 
-> The Service Worker only activates over `http://` or `https://` — opening `index.html` directly as a `file://` URL will not register it.
+> **Note**: The Service Worker only activates over `http://` or `https://`. Opening `index.html` as a `file://` URL will not register the Service Worker.
 
 ---
 
-## Deploy Your Own
+## 📦 Project Structure
 
-### One-click Vercel
+```
+TechForge/
+├── index.html                    # Home page with hero visualizer
+├── about.html                    # About & open-source info
+├── offline.html                  # PWA offline fallback (Vercel)
+├── 404.html                      # Branded 404 error page (Vercel)
+├── sw.js                         # Service Worker — offline support
+├── manifest.json                 # PWA metadata & icons
+├── robots.txt                    # SEO crawler directives
+├── sitemap.xml                   # Generated sitemap
+├── vercel.json                   # Deployment config — headers, CSP, redirects, caching
+│
+├── assets/
+│   ├── css/
+│   │   ├── forge_base.css        # Global design system, CSS variables, typography
+│   │   ├── lesson.css            # Unified lesson page styles
+│   │   ├── platform.css          # Progress tracking, bookmarks, scroll-spy
+│   │   ├── hub.css               # Section hub page styles
+│   │   ├── dsa.css               # DSA-specific visualizer styles
+│   │   ├── aiml-lesson.css       # AI/ML lesson styles
+│   │   └── aiml-overview.css     # AI/ML section overview
+│   ├── js/
+│   │   ├── platform.js           # Progress tracking, bookmarks, reading time, search
+│   │   ├── utils.js              # Shared utilities (clipboard, ARIA, canvas helpers)
+│   │   ├── topics-manifest.js    # Canonical topic registry (single source of truth)
+│   │   ├── site-index.js         # Client-side full-site search index
+│   │   └── aiml-viz.js           # AI/ML interactive visualizations
+│   ├── favicon.svg               # SVG favicon (all formats)
+│   ├── icon-192.png              # PWA home screen icon
+│   ├── icon-512.png              # PWA splash screen icon
+│   └── og-image.png              # Open Graph social preview (1200×630)
+│
+├── dsa/                          # Data Structures & Algorithms (29 topics)
+├── python/                       # Python Track (8 modules)
+├── system-design/                # System Design (26 guides)
+├── databases/                    # Databases (14 deep-dives)
+├── aiml/                         # AI/ML Hub (8 modules)
+├── interview/                    # Interview Prep (7 banks, 200+ problems)
+├── devops/                       # DevOps (23 guides)
+│
+├── tools/                        # Build & utility scripts
+│   ├── build-site-index.mjs      # Generate site-index.js
+│   ├── generate-sitemap.mjs      # Generate sitemap.xml
+│   ├── sync-all-pages.mjs        # Cross-page metadata sync
+│   └── topic-content.json        # Content registry
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml                # GitHub Actions CI — HTML validation + link checking
+│
+├── LICENSE                       # MIT License
+└── README.md                     # This file
+```
+
+---
+
+## 🔒 Security & Performance
+
+### Security Headers (vercel.json)
+- **X-Content-Type-Options**: nosniff (MIME type sniffing protection)
+- **X-Frame-Options**: DENY (clickjacking prevention)
+- **Referrer-Policy**: strict-origin-when-cross-origin (referrer leakage protection)
+- **Permissions-Policy**: camera=(), microphone=(), geolocation=() (disable invasive APIs)
+- **Content-Security-Policy**: Strict whitelist for scripts, styles, fonts, manifests
+
+### Performance Optimizations
+- **Immutable asset caching**: `/assets/*` cached for 1 year with explicit `?v=N` versioning
+- **Network-first HTML**: Always fetch fresh pages, fall back to cache
+- **Cache-first assets**: Use cached assets, fall back to network
+- **Zero external JavaScript**: No analytics, no tracking, no ads
+- **Minified CSS/JS**: Optimized for fast loading
+- **Vercel global CDN**: Geographic distribution, instant cache invalidation
+
+### Validation
+- **100% HTML validation** (all 126 files pass Nu validator)
+- **5,300+ links verified** (Lychee link checker in GitHub Actions)
+- **WCAG 2.1 AA accessibility** target (semantic HTML, ARIA labels, keyboard navigation)
+
+---
+
+## 🚀 Deployment
+
+### One-Click Vercel Deploy
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MOHD-OMER/TechForge)
 
-### Manual
+### Manual Deployment
 
-1. Fork this repository
+1. **Fork** this repository
 2. Import the fork at [vercel.com/new](https://vercel.com/new)
-3. Set Framework Preset to **Other**
-4. Leave Build Command and Output Directory empty
-5. Deploy
+3. Set **Framework Preset** to **Other**
+4. Leave **Build Command** and **Output Directory** empty
+5. Click **Deploy**
 
-`vercel.json` handles all redirects and asset caching automatically.
+`vercel.json` automatically handles redirects, CSP headers, and asset caching.
 
-### Netlify / GitHub Pages
+### Deploy to Other Platforms
 
-Plain static HTML — drop it into any static host. No build step, no configuration beyond pointing to the root directory.
+TechForge is pure static HTML—drop it anywhere:
+- **Netlify**: Drag & drop the folder or connect Git
+- **GitHub Pages**: Enable in repository settings
+- **AWS S3 + CloudFront**: Static hosting + CDN
+- **Any web host**: Just copy the files
 
 ---
 
@@ -226,17 +348,64 @@ git push origin fix/heap-sort-typo
 
 ---
 
-## Reporting Issues
+## 🐛 Reporting Issues
 
-Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the page URL or file path, what you expected vs. what happened, your browser and device, and a screenshot or steps to reproduce.
+Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with:
+
+- **Page URL** or file path
+- **Expected vs. actual behavior**
+- **Browser and device** (Chrome 120 on macOS, Safari on iPhone 14, etc.)
+- **Steps to reproduce**
+- **Screenshot or screen recording** (if relevant)
+
+Example:
+> **Title**: Canvas visualizer crashes when switching modes  
+> **URL**: /dsa/binarysearch.html  
+> **Browser**: Chrome 120 on Windows 11  
+> **Steps**:  
+> 1. Open page  
+> 2. Click "Run" button  
+> 3. While animation is running, click mode dropdown  
+> 4. Select "BFS"  
+> **Expected**: Mode switches smoothly  
+> **Actual**: Console error, visualizer freezes
 
 ---
 
-## Roadmap
+## 📈 Roadmap
 
-- [ ] Additional language implementations (JavaScript, Java, C++) per DSA topic
-- [ ] Full-site search powered by `site-index.js`
-- [ ] Progress dashboard across all tracks
+### v2.1.0 (Q3 2026)
+- [ ] Full-site search with modal (`Cmd+K` / `Ctrl+K`)
+- [ ] Cross-track progress dashboard
+- [ ] Interview timed quiz mode
+- [ ] Accessibility audit & WCAG 2.1 AA compliance
+- [ ] Unit & E2E test suite (Jest + Playwright)
+
+### v2.2.0 (Q4 2026)
+- [ ] Code implementations (JavaScript, Java, C++ per DSA topic)
+- [ ] Interview company tagging & company-specific guides
+- [ ] Difficulty-based problem filtering
+- [ ] Performance monitoring & analytics
+
+### v2.3.0 (Q1 2027)
+- [ ] Spaced repetition / flashcard system
+- [ ] Interactive coding challenges with code editor
+- [ ] Customizable learning paths
+- [ ] "Review weak areas" recommendations
+
+### v3.0.0 (Q2 2027)
+- [ ] Community discussions (GitHub-backed comments)
+- [ ] User contributions system (alternative explanations, examples)
+- [ ] Mobile app wrapper (React Native / Flutter)
+- [ ] Social sharing & referral system
+
+### v3.1.0+ (Future)
+- [ ] AI-powered Q&A (ChatGPT integration)
+- [ ] Video lessons (screen-recorded walkthroughs)
+- [ ] Real-time collaboration (pair programming)
+- [ ] Content translations (Spanish, Mandarin, Hindi)
+
+See [RELEASES.md](RELEASES.md) for detailed v2.0.0 changelog.
 
 ---
 
@@ -302,26 +471,42 @@ Open a [GitHub Issue](https://github.com/MOHD-OMER/TechForge/issues) with the pa
 
 ---
 
-## License
+## 📄 License
 
-MIT — see [LICENSE](LICENSE) for details. Free to use, modify, and distribute. Attribution appreciated but not required.
+**MIT License** — See [LICENSE](LICENSE) for full text.
+
+You are free to use, modify, and distribute TechForge. Attribution is appreciated but not required.
 
 ---
 
-## Author
+## 👤 Author
 
-**Mohd Abdul Omer** — CS (AI/ML) Engineer
+**Mohd Abdul Omer**  
+CS (AI/ML) Engineer  
 
-- GitHub: [@MOHD-OMER](https://github.com/MOHD-OMER)
-- Live site: [tech-forge-dev.vercel.app](https://tech-forge-dev.vercel.app)
+- **GitHub**: [@MOHD-OMER](https://github.com/MOHD-OMER)
+- **Live Site**: [tech-forge-dev.vercel.app](https://tech-forge-dev.vercel.app)
+- **Email**: Contact via GitHub
+
+---
+
+## ❤️ Acknowledgments
+
+- **Tabler Icons**: Free, open-source icon library
+- **IBM Plex**: Beautiful, accessible typefaces
+- **Vercel**: Zero-cost, zero-config static hosting
+- **The open-source community**: For inspiration and support
 
 ---
 
 <div align="center">
 
-Built for developers, by developers.<br/>
-No ads. No paywalls. No tracking. Ever.
+**Built for developers, by developers.**
 
-**[⭐ Star this repo if TechForge helped you learn](https://github.com/MOHD-OMER/TechForge)**
+No ads. No paywalls. No tracking. Forever free.
+
+[⭐ Star this repo if TechForge helped you learn](https://github.com/MOHD-OMER/TechForge)
+
+[🚀 Start Learning](https://tech-forge-dev.vercel.app)
 
 </div>
