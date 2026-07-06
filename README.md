@@ -401,11 +401,6 @@ Example:
 - [ ] Mobile app wrapper (React Native / Flutter)
 - [ ] Social sharing & referral system
 
-### v3.1.0+ (Future)
-- [ ] AI-powered Q&A (ChatGPT integration)
-- [ ] Video lessons (screen-recorded walkthroughs)
-- [ ] Real-time collaboration (pair programming)
-- [ ] Content translations (Spanish, Mandarin, Hindi)
 
 ---
 
