@@ -178,68 +178,18 @@
   display: flex; flex-direction: column; gap: 12px;
   animation: fadeUp .5s .18s ease both;
 }
-.monitor-mockup { position: relative; padding-bottom: 10px; filter: drop-shadow(0 24px 32px rgba(0,0,0,.28)); }
-.monitor-screen {
-  background: #1c1c1e;
-  border-radius: 12px;
-  padding: 10px;
+.monitor-mockup {
   position: relative;
-  box-shadow:
-    inset 0 0 0 2px #38383a,
-    inset 0 0 0 3px #0a0a0a,
-    inset 0 1px 0 rgba(255,255,255,.06);
+  width: 100%;
+  aspect-ratio: 600 / 480;
+  filter: drop-shadow(0 24px 32px rgba(0,0,0,.28));
 }
-.monitor-screen::after {
-  content: '';
-  position: absolute; inset: 10px;
+.monitor-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.monitor-screen-overlay {
+  position: absolute;
+  left: 8%; top: 5.42%; width: 84%; height: 57.92%;
   border-radius: 6px;
-  background: linear-gradient(115deg, rgba(255,255,255,.05) 0%, transparent 30%);
-  pointer-events: none;
-}
-.monitor-stand {
-  width: 16px; height: 30px;
-  margin: 0 auto;
-  background: linear-gradient(90deg, #17171a 0%, #3a3a3d 45%, #2a2a2c 55%, #131315 100%);
-  clip-path: polygon(32% 0%, 68% 0%, 88% 100%, 12% 100%);
-}
-.monitor-base {
-  width: 120px; height: 10px;
-  margin: 0 auto;
-  background: linear-gradient(180deg, #3a3a3d 0%, #1a1a1c 100%);
-  border-radius: 50%;
-  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset;
-}
-.desk-accessories {
-  display: flex; align-items: center; justify-content: center; gap: 16px;
-  margin-top: 18px;
-}
-.desk-keyboard {
-  width: 160px; height: 36px;
-  background: linear-gradient(180deg, #333335 0%, #19191b 100%);
-  border-radius: 7px;
-  padding: 5px 7px;
-  display: grid;
-  grid-template-columns: repeat(15, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 2.5px;
-  box-shadow: 0 6px 14px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05);
-}
-.desk-keyboard span {
-  background: #0d0d0e;
-  border-radius: 2px;
-  box-shadow: inset 0 0.5px 0 rgba(255,255,255,.07);
-}
-.desk-mouse {
-  width: 22px; height: 32px;
-  background: linear-gradient(180deg, #333335 0%, #19191b 100%);
-  border-radius: 11px 11px 13px 13px;
-  position: relative;
-  box-shadow: 0 6px 14px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.desk-mouse::after {
-  content: '';
-  position: absolute; top: 3px; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 12px; background: rgba(0,0,0,.5);
+  overflow: hidden;
 }
 .canvas-panel {
   height: 100%; display: flex; flex-direction: column;
@@ -677,7 +627,29 @@
 
     <div class="hero-right">
       <div class="monitor-mockup">
-        <div class="monitor-screen">
+        <svg class="monitor-svg" viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="bezelGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3a3a3c"/>
+              <stop offset="100%" stop-color="#1c1c1e"/>
+            </linearGradient>
+            <linearGradient id="standGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#333335"/>
+              <stop offset="100%" stop-color="#19191b"/>
+            </linearGradient>
+          </defs>
+          <rect x="30" y="10" width="540" height="320" rx="16" fill="url(#bezelGrad)"/>
+          <rect x="48" y="26" width="504" height="278" rx="6" fill="#0d1117"/>
+          <circle cx="300" cy="317" r="2.5" fill="#0a0a0a"/>
+          <rect x="280" y="330" width="40" height="52" fill="url(#standGrad)"/>
+          <ellipse cx="300" cy="388" rx="88" ry="10" fill="url(#standGrad)"/>
+          <ellipse cx="300" cy="386" rx="88" ry="4" fill="#3a3a3c" opacity="0.5"/>
+          <rect x="185" y="420" width="170" height="40" rx="8" fill="url(#standGrad)"/>
+          <rect x="189.0" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="200.7" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="212.4" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="224.1" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="235.9" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="247.6" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="259.3" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="271.0" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="282.7" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="294.4" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="306.1" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="317.9" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="329.6" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="341.3" y="424.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="189.0" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="200.7" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="212.4" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="224.1" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="235.9" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="247.6" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="259.3" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="271.0" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="282.7" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="294.4" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="306.1" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="317.9" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="329.6" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="341.3" y="432.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="189.0" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="200.7" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="212.4" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="224.1" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="235.9" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="247.6" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="259.3" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="271.0" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="282.7" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="294.4" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="306.1" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="317.9" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="329.6" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="341.3" y="441.0" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="189.0" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="200.7" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="212.4" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="224.1" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="235.9" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="247.6" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="259.3" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="271.0" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="282.7" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="294.4" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="306.1" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="317.9" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="329.6" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/><rect x="341.3" y="449.5" width="9.7" height="6.5" rx="1.2" fill="#0f0f10"/>
+          <path d="M 393 418 q -13 0 -13 13 v 20 q 0 13 13 13 q 13 0 13 -13 v -20 q 0 -13 -13 -13 z" fill="url(#standGrad)"/>
+          <line x1="393" y1="424" x2="393" y2="436" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        </svg>
+        <div class="monitor-screen-overlay">
           <div class="canvas-panel">
             <div class="canvas-panel-bar">
               <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
@@ -685,12 +657,6 @@
             </div>
             <canvas id="heroCanvas"></canvas>
           </div>
-        </div>
-        <div class="monitor-stand"></div>
-        <div class="monitor-base"></div>
-        <div class="desk-accessories">
-          <div class="desk-keyboard"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-          <div class="desk-mouse"></div>
         </div>
       </div>
       <div class="canvas-mini-pills">
