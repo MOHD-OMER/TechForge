@@ -15,11 +15,12 @@
 
   /* ── styles ── */
   var css = [
-    '.tfs-trigger{display:flex;align-items:center;gap:8px;margin-left:auto;margin-right:6px;padding:6px 10px;background:var(--card,#0d1420);border:1px solid var(--border,#1f2d42);border-radius:9px;color:var(--dim,#8b98ab);font:inherit;font-size:13px;cursor:pointer;transition:border-color .15s ease,color .15s ease;}',
-    '.tfs-trigger:hover{border-color:var(--blue,#4d9ef7);color:var(--text,#e6edf3);}',
-    '.tfs-trigger .ti{font-size:15px;}',
-    '.tfs-trigger kbd{font-family:var(--font-mono,monospace);font-size:10.5px;padding:2px 5px;border:1px solid var(--border,#1f2d42);border-radius:5px;background:var(--bg2,#0d1117);color:var(--dim,#8b98ab);}',
-    '@media(max-width:760px){.tfs-trigger span,.tfs-trigger kbd{display:none;}.tfs-trigger{padding:6px 8px;}}',
+    '.tfs-trigger{display:flex;align-items:center;gap:10px;margin-left:20px;margin-right:auto;padding:8px 12px 8px 14px;background:var(--card,#0d1420);border:1px solid var(--border,#1f2d42);border-radius:10px;color:var(--dim,#8b98ab);font:inherit;font-size:13px;cursor:pointer;transition:border-color .18s ease,color .18s ease,box-shadow .18s ease,background .18s ease;box-shadow:0 1px 2px rgba(0,0,0,.15);min-width:190px;}',
+    '.tfs-trigger:hover{border-color:var(--blue,#4d9ef7);color:var(--text,#e6edf3);box-shadow:0 0 0 3px rgba(77,158,247,.12),0 2px 8px rgba(0,0,0,.2);background:var(--bg2,#0d1117);}',
+    '.tfs-trigger .ti{font-size:16px;flex-shrink:0;}',
+    '.tfs-trigger span{flex:1;text-align:left;}',
+    '.tfs-trigger kbd{font-family:var(--font-mono,monospace);font-size:10.5px;font-weight:600;letter-spacing:.02em;padding:3px 6px;border:1px solid var(--border2,var(--border,#2a3a52));border-radius:5px;background:var(--bg,#05070a);color:var(--dim,#8b98ab);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 1px 1px rgba(0,0,0,.2);flex-shrink:0;}',
+    '@media(max-width:760px){.tfs-trigger{min-width:0;margin-left:12px;}.tfs-trigger span,.tfs-trigger kbd{display:none;}.tfs-trigger{padding:8px;}}',
     '.tfs-backdrop{position:fixed;inset:0;z-index:400;background:rgba(2,4,10,.62);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .14s ease;}',
     '.tfs-backdrop.on{opacity:1;pointer-events:auto;}',
     '.tfs-panel{position:fixed;z-index:401;top:11vh;left:50%;transform:translateX(-50%) scale(.98);width:min(620px,calc(100vw - 32px));max-height:70vh;display:none;flex-direction:column;background:var(--bg2,#0d1117);border:1px solid var(--border2,var(--border,#1f2d42));border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 0 1px rgba(77,158,247,.06);overflow:hidden;opacity:0;transition:opacity .14s ease,transform .14s ease;}',
@@ -221,7 +222,7 @@
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Search (Ctrl+K)');
       var mac = /Mac|iPhone|iPad/.test(navigator.platform || '');
-      btn.innerHTML = '<i class="ti ti-search"></i><span>Search</span><kbd>' + (mac ? '⌘' : 'Ctrl') + ' K</kbd>';
+      btn.innerHTML = '<i class="ti ti-search"></i><span>Search...</span><kbd>' + (mac ? '⌘' : 'Ctrl') + '</kbd><kbd>K</kbd>';
       btn.addEventListener('click', show);
       var nav = topbar.querySelector('.tb-nav');
       if (nav) topbar.insertBefore(btn, nav); else topbar.appendChild(btn);
