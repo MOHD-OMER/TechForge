@@ -546,17 +546,6 @@
 }
 </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
-</head>
-<body>
-<div id="tfLoader" aria-hidden="true">
-  <div class="tfl-mark-wrap">
-    <span class="tfl-ring tfl-ring-1"></span>
-    <span class="tfl-ring tfl-ring-2"></span>
-    <img class="tfl-mark" src="assets/favicon.svg" width="140" height="140" alt=""/>
-  </div>
-  <div class="tfl-word">TECH<span>FORGE</span></div>
-  <div class="tfl-bar"><div class="tfl-bar-fill"></div></div>
-</div>
 <style>
   #tfLoader {
     position: fixed; inset: 0; z-index: 100000;
@@ -611,6 +600,17 @@
     .tfl-ring { display: none; }
   }
 </style>
+</head>
+<body>
+<div id="tfLoader" aria-hidden="true">
+  <div class="tfl-mark-wrap">
+    <span class="tfl-ring tfl-ring-1"></span>
+    <span class="tfl-ring tfl-ring-2"></span>
+    <img class="tfl-mark" src="assets/favicon.svg" width="140" height="140" alt=""/>
+  </div>
+  <div class="tfl-word">TECH<span>FORGE</span></div>
+  <div class="tfl-bar"><div class="tfl-bar-fill"></div></div>
+</div>
 <script>
   (function () {
     function hide() {
@@ -1170,7 +1170,7 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
       ctx.strokeStyle = isSorted?GREEN+'44':isCur?CYAN+'aa':BORDER; ctx.lineWidth=1; ctx.stroke();
       ctx.fillStyle = isSorted?GREEN:isCur?'#fff':'#3a5270';
       ctx.font=`bold 9px 'JetBrains Mono',monospace`; ctx.textAlign='center';
-      ctx.fillText(v,x+barW/2,y-5);
+      if (barW >= 18) ctx.fillText(v,x+barW/2,y-5);
     });
     ctx.fillStyle='#3a5270'; ctx.font=`10px 'JetBrains Mono',monospace`; ctx.textAlign='left';
     ctx.fillText(`Pass ${s.sorted.length+1}  ◆  j = ${s.j}`,pad,h-10);
