@@ -93,12 +93,17 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Topics: Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code
 - Major cloud platforms: AWS, GCP, Azure
 
+### Platform & UX
+- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all seven tracks from a keyboard-driven command palette, no page reload
+- **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
+- **Branded loading screen** — animated splash on load, so opening the app never shows a blank flash
+- **Progress tracking** — mark topics and interview questions complete, saved locally, no account needed
+
 ### Progressive Web App
 - **Service Worker** (`sw.js`) with network-first HTML caching and cache-first asset strategy
 - **Offline fallback** with custom `offline.html` error page
 - **Installable** on mobile and desktop via `manifest.json`
-- **Theme-aware** — respects system dark/light mode preference, toggle persists via localStorage
-- **192×512 icons** for home screen and splash screens
+- **192×512 + maskable icons** for home screen and splash screens across Android/iOS
 
 ---
 
@@ -115,78 +120,6 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | **Deployment** | Vercel (static) | Zero-config, global CDN, instant deploys, auto HTTPS, security headers |
 
 **Zero npm packages · Zero build toolchain · Zero runtime dependencies · 100% vanilla**
-
----
-
-## Project Structure
-
-```
-TechForge/
-├── index.html                  # Home page
-├── about.html                  # About & open-source info
-├── offline.html                # PWA offline fallback page
-├── sw.js                       # Service Worker — offline support
-├── robots.txt                  # Crawler directives
-├── sitemap.xml                 # Generated sitemap
-├── vercel.json                 # Deploy config — redirects & cache headers
-│
-├── assets/
-│   ├── css/
-│   │   ├── forge_base.css      # Global design system & CSS variables
-│   │   ├── lesson.css          # Unified lesson page styles
-│   │   ├── platform.css        # Progress bar, bookmarks, scroll-spy
-│   │   ├── hub.css             # Section hub page styles
-│   │   ├── dsa.css             # DSA visualizer styles
-│   │   ├── aiml-lesson.css     # AI/ML lesson page styles
-│   │   └── aiml-overview.css   # AI/ML overview styles
-│   ├── js/
-│   │   ├── platform.js         # Progress tracking, bookmarks, read time
-│   │   ├── utils.js            # Shared utilities (search, clipboard, ARIA, canvas bar helper)
-│   │   ├── topics-manifest.js  # Canonical topic registry (single source of truth)
-│   │   ├── site-index.js       # Site-wide search index
-│   │   └── aiml-viz.js         # AI/ML interactive visualizations
-│   ├── favicon.svg
-│   └── og-image.png            # Open Graph social preview (1200×630)
-│
-├── dsa/                        # 29 DSA topics · 28 with Canvas 2D visualizers
-├── python/                     # 8 Python modules (basics → async/await)
-├── system-design/              # 26 system design + backend framework guides
-├── databases/                  # 14 database deep-dives (SQL, NoSQL, specialized)
-├── aiml/                       # 8 AI/ML modules + hub index
-├── interview/                  # 7 interview question banks
-├── devops/                     # 23 DevOps guides
-└── tools/                      # Build scripts (sitemap, site-index, content sync)
-    ├── build-site-index.mjs
-    ├── generate-sitemap.mjs
-    ├── sync-all-pages.mjs
-    └── topic-content.json
-```
-
----
-
-## 🚀 Getting Started
-
-### Run Locally
-
-No installation required. Any static file server works.
-
-**Python (Recommended)**
-```bash
-git clone https://github.com/MOHD-OMER/TechForge.git
-cd TechForge
-python -m http.server 8080
-```
-Open [http://localhost:8080](http://localhost:8080).
-
-**Node.js**
-```bash
-npx serve .
-```
-
-**VS Code / Cursor**
-Install the **Live Server** extension and open `index.html`.
-
-> **Note**: The Service Worker only activates over `http://` or `https://`. Opening `index.html` as a `file://` URL will not register the Service Worker.
 
 ---
 
@@ -214,14 +147,15 @@ TechForge/
 │   │   ├── aiml-lesson.css       # AI/ML lesson styles
 │   │   └── aiml-overview.css     # AI/ML section overview
 │   ├── js/
-│   │   ├── platform.js           # Progress tracking, bookmarks, reading time, search
-│   │   ├── utils.js              # Shared utilities (clipboard, ARIA, canvas helpers)
+│   │   ├── platform.js           # Progress tracking, bookmarks, reading time
+│   │   ├── utils.js              # Shared utilities, theme toggle, canvas helpers
+│   │   ├── search-modal.js       # Ctrl K / ⌘K instant search command palette
 │   │   ├── topics-manifest.js    # Canonical topic registry (single source of truth)
 │   │   ├── site-index.js         # Client-side full-site search index
 │   │   └── aiml-viz.js           # AI/ML interactive visualizations
 │   ├── favicon.svg               # SVG favicon (all formats)
-│   ├── icon-192.png              # PWA home screen icon
-│   ├── icon-512.png              # PWA splash screen icon
+│   ├── icon-192.png / icon-512.png         # PWA home screen / splash icons
+│   ├── icon-192-maskable.png / icon-512-maskable.png  # Android adaptive icons
 │   └── og-image.png              # Open Graph social preview (1200×630)
 │
 ├── dsa/                          # Data Structures & Algorithms (29 topics)
@@ -245,6 +179,32 @@ TechForge/
 ├── LICENSE                       # MIT License
 └── README.md                     # This file
 ```
+
+---
+
+## 🚀 Getting Started
+
+### Run Locally
+
+No installation required. Any static file server works.
+
+**Python (Recommended)**
+```bash
+git clone https://github.com/MOHD-OMER/TechForge.git
+cd TechForge
+python -m http.server 8080
+```
+Open [http://localhost:8080](http://localhost:8080).
+
+**Node.js**
+```bash
+npx serve .
+```
+
+**VS Code / Cursor**
+Install the **Live Server** extension and open `index.html`.
+
+> **Note**: The Service Worker only activates over `http://` or `https://`. Opening `index.html` as a `file://` URL will not register the Service Worker.
 
 ---
 
@@ -377,7 +337,6 @@ Example:
 ## 📈 Roadmap
 
 ### v2.1.0 (Q3 2026)
-- [ ] Full-site search with modal (`Cmd+K` / `Ctrl+K`)
 - [ ] Cross-track progress dashboard
 - [ ] Interview timed quiz mode
 - [ ] Accessibility audit & WCAG 2.1 AA compliance
