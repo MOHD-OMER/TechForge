@@ -19,12 +19,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=16" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-  <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
-  :root { --accent: #22c55e; --surface: var(--card); --surface2: rgba(34,211,238,.05); --display: var(--font-display); --mono: var(--font-mono); --orange: #f97316; --bg2: rgba(0,0,0,.25); }
+  :root { --accent: var(--green); --surface: var(--card); --surface2: rgba(34,211,238,.05); --display: var(--font-display); --mono: var(--font-mono); --orange: #f97316; --bg2: rgba(0,0,0,.25); }
   .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
   .int-page-hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,211,238,.06) 0%,transparent 58%),radial-gradient(ellipse 40% 50% at 105% 20%,rgba(77,142,247,.04) 0%,transparent 52%); }
   .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); background:rgba(34,211,238,.07); border:1px solid rgba(34,211,238,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
@@ -38,7 +38,7 @@
   .int-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:28px; }
   .is-box { background:var(--card); padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; }
   .is-val { font-family:var(--font-mono); font-size:20px; font-weight:700; }
-  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text3); }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text2); }
   .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
   .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text3); cursor:pointer; transition:all .15s; }
   .ftab.active { background:rgba(34,211,238,.09); border-color:rgba(34,211,238,.3); color:var(--cyan); }
@@ -48,7 +48,7 @@
   .qna-item:last-child { border-bottom:none; }
   .qna-item.open { background:rgba(34,211,238,.04); }
   .qna-q { padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:14px; }
-  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text3); min-width:24px; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); min-width:24px; }
   .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
   .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
   .tag-sd { background:rgba(34,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
@@ -56,13 +56,13 @@
   .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
   .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
   .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
-  .diff-h { background:rgba(248,113,113,.08); color:#f87171; border:1px solid rgba(248,113,113,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
   .qna-chevron { font-size:12px; color:var(--text3); flex-shrink:0; transition:transform .2s; }
   .qna-item.open .qna-chevron { transform:rotate(180deg); }
   .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
   .qna-item.open .qna-a { display:block; }
   .qna-a pre { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; font-family:var(--font-mono); font-size:11px; overflow-x:auto; margin:10px 0; }
-  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text2); text-transform:uppercase; margin:36px 0 14px; }
   .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
   .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(34,211,238,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
   .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--green); }
@@ -116,7 +116,7 @@
   <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">36</span><span class="is-label">Total Qs</span></div>
       <div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">Beginner</span></div>
       <div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">14</span><span class="is-label">Intermediate</span></div>
-      <div class="is-box" style="--is-c:#f87171"><span class="is-val" style="color:#f87171">11</span><span class="is-label">Advanced</span></div>
+      <div class="is-box" style="--is-c:#f87171"><span class="is-val" style="color:var(--red)">11</span><span class="is-label">Advanced</span></div>
       <div class="is-box" style="--is-c:var(--cyan)"><span class="is-val" style="color:var(--cyan)">5</span><span class="is-label">FAANG</span></div></div>
   <div class="progress-banner anim-in">
     <div style="flex:1;font-size:12.5px;color:var(--text3)"><strong style="color:var(--text)">Progress saved locally.</strong> Expand answers and check off questions as you study.</div>
@@ -507,7 +507,7 @@ Cache timelines in Redis; rank by time/score.</pre>Trade-off: fan-out write ampl
 <script src="../assets/js/topics-manifest.js?v=2"></script>
 <script src="../assets/js/site-index.js?v=2"></script>
 <script src="../assets/js/search-modal.js?v=1" defer></script>
-<script src="../assets/js/utils.js?v=5"></script>
+<script src="../assets/js/utils.js?v=7"></script>
 <script src="../assets/js/platform.js?v=4"></script>
 <script>
 const STORAGE_KEY='tf_sd_interview_progress';

@@ -14,7 +14,11 @@
 
   --text:      #e2e8f4;
   --text2:     #8da0bb;
-  --text3:     #5a7094;
+  /* text3 at #5a7094 reads as ~3.4-3.8:1 against --bg2/--surface, below the
+     4.5:1 AA floor for normal-size text — and it's used as real body copy
+     (breadcrumbs, meta tags, cheat-sheet items), not just decoration.
+     Brightened just enough to clear AA while staying visibly dimmer than text2. */
+  --text3:     #7e93b5;
 
   /* Theme Defaults (can be overridden in specific pages) */
   --accent:     #4d9ef7;       /* Default: Blue */
@@ -43,7 +47,7 @@
   --code-fn:   #4d9ef7;
   --code-str:  #34d399;
   --code-nm:   #c084fc;
-  --code-cm:   #4a6078;
+  --code-cm:   #7e93b5;
 
   --radius:    10px;
   --radius-lg: 16px;
@@ -74,11 +78,17 @@ html.light {
 
   --text:      #241705;
   --text2:     #5c4a2e;
-  --text3:     #8c7a5a;
+  --text3:     #665538;
 
   --shadow-sm: 0 1px 2px rgba(36,23,5,.05);
   --shadow-md: 0 6px 20px rgba(36,23,5,.09);
 
+  /* --accent itself was missing from this light-theme swap — pages that use
+     the bare default (no page-local --accent override) got the dark-theme
+     bright blue (#4d9ef7) verbatim, which fails AA against pale backgrounds
+     (as low as 2.1:1). Matches --amber's light value since --accent-dim
+     already leans amber ("amber ledger" light direction). */
+  --accent: #431d00;
   --accent-dim: #fde9c8;
   --blue-dim:  #dceafd;
   --py-dim:    #fdf3d0;
@@ -88,6 +98,23 @@ html.light {
   --red-dim:   #fbdada;
   --cyan-dim:  #d3f3fa;
   --purple-dim:#e8e0fc;
+
+  /* The palette's base hue tokens (--blue, --py, etc.) are bright/saturated
+     shades tuned for dark backgrounds. In light theme they're frequently used
+     as text color on top of their own pale "-dim" background (badges, tags,
+     cheat-sheet chips) — bright-on-pale fails AA badly (as low as 2.1:1).
+     Reusing each color's own dark-theme "-dim" value as its light-theme *text*
+     color keeps the same hue family and clears AA with a wide margin (6-13:1)
+     against both the matching -dim background and the general page background. */
+  --blue:   #0c2444;
+  --py:     #6b5700;
+  --green:  #063a28;
+  --amber:  #431d00;
+  --orange: #431200;
+  --red:    #3b0a0a;
+  --cyan:   #042533;
+  --purple: #200d45;
+  --pink:   #500724;
 }
 
 /* Signature: graph-paper grid, amplified from the barely-visible dark-mode version.
@@ -194,6 +221,32 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
   touch-action: manipulation;
+}
+
+/* ══════════════════════════════════════════
+   ACCESSIBILITY UTILITIES
+══════════════════════════════════════════ */
+/* "Skip to content" link, present on every page. Previously had no CSS at
+   all, so it rendered as a plain, always-visible browser-default link
+   (default anchor blue on a dark bg fails contrast at 2.1:1). Standard
+   pattern: hidden off-screen until keyboard focus reveals it. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100001;
+  padding: 10px 18px;
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 0 0 8px 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
 }
 
 /* ══════════════════════════════════════════
@@ -362,7 +415,9 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
   font-size: 10px; font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text3);
+  /* text3 fails WCAG AA contrast at this size/weight in both themes
+     (3.4-3.8:1, needs 4.5:1) — text2 passes comfortably (~7:1) in both. */
+  color: var(--text2);
   padding: 0 8px;
   margin-bottom: 10px;
 }
@@ -384,7 +439,7 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
 .sb-num {
   font-family: var(--mono);
   font-size: 10px; font-weight: 600;
-  color: var(--text3);
+  color: var(--text2);
   width: 22px; flex-shrink: 0;
   text-align: right;
 }
@@ -667,13 +722,13 @@ button.badge {
   border-left: 3px solid;
 }
 .callout::before { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.callout-blue   { background: var(--blue-dim);   border-color: var(--blue);   color: #9ec8f9; }
+.callout-blue   { background: var(--blue-dim);   border-color: var(--blue);   color: var(--blue); }
 .callout-blue::before   { content: 'ℹ'; color: var(--blue); }
-.callout-green  { background: var(--green-dim);  border-color: var(--green);  color: #6ee7b7; }
+.callout-green  { background: var(--green-dim);  border-color: var(--green);  color: var(--green); }
 .callout-green::before  { content: '✓'; color: var(--green); font-weight: 700; }
-.callout-amber  { background: var(--amber-dim);  border-color: var(--amber);  color: #fcd34d; }
+.callout-amber  { background: var(--amber-dim);  border-color: var(--amber);  color: var(--amber); }
 .callout-amber::before  { content: '⚠'; color: var(--amber); }
-.callout-red    { background: var(--red-dim);    border-color: var(--red);    color: #fca5a5; }
+.callout-red    { background: var(--red-dim);    border-color: var(--red);    color: var(--red); }
 .callout-red::before    { content: '!'; color: var(--red); font-weight: 700; }
 
 /* ══════════════════════════════════════════
@@ -835,7 +890,6 @@ button.badge {
   }
   .pg-title { font-size: 22px; }
   .pg-sub { font-size: 14px; }
-  .tb-nav { display: none; }
   .tb-nav.mobile-visible {
     display: flex;
     flex-direction: column;
@@ -1540,7 +1594,7 @@ button.badge {
 .viz-label {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--text3);
+  color: var(--text2);
   letter-spacing: 1.5px;
   display: flex;
   align-items: center;

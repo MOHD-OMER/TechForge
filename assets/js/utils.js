@@ -366,3 +366,25 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.addEventListener('click', tfToggleTheme);
   }
 });
+
+// a11y: .info-tabs, code blocks, and some canvas/viz wrappers scroll
+// horizontally when their content is wider than the container (narrow
+// viewports, long code lines, fixed-width canvases). WCAG 2.1 AA
+// (scrollable-region-focusable) requires any scrollable region to be
+// reachable by keyboard. Only made focusable when it actually overflows, so
+// pages where content already fits get no extra tab stop.
+function tfMakeScrollRegionsFocusable() {
+  var selectors = '.info-tabs, .code-pre, .code-block pre, .viz-body, [style*="overflow-x"]';
+  document.querySelectorAll(selectors).forEach(function (el) {
+    if (el.scrollWidth > el.clientWidth) {
+      el.setAttribute('tabindex', '0');
+      if (!el.hasAttribute('aria-label')) {
+        el.setAttribute('aria-label', el.classList.contains('info-tabs') ? 'Scrollable tab list' : 'Scrollable content');
+      }
+    } else {
+      el.removeAttribute('tabindex');
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', tfMakeScrollRegionsFocusable);
+window.addEventListener('resize', tfMakeScrollRegionsFocusable);

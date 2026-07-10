@@ -20,9 +20,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=16" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
   :root {
@@ -54,7 +54,7 @@
   .is-box::after { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--is-c,var(--cyan)); opacity:0; transition:opacity .2s; }
   .is-box:hover { background:rgba(255,255,255,.02); }.is-box:hover::after { opacity:1; }
   .is-val   { font-family:var(--font-mono); font-size:20px; font-weight:700; line-height:1; }
-  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text3); }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text2); }
 
   /* ── FILTER TABS ── */
   .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
@@ -75,7 +75,7 @@
   .qna-cb:hover { border-color:var(--green); }
   .qna-cb.checked { background:var(--green); border-color:var(--green); }
   .qna-cb.checked::after { content:'✓'; font-size:10px; font-weight:700; color:#000; }
-  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text3); min-width:24px; flex-shrink:0; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); min-width:24px; flex-shrink:0; }
   .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
   .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
   .tag-dsa    { background:rgba(34,211,238,.08);  color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
@@ -86,7 +86,7 @@
   .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
   .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
   .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
-  .diff-h { background:rgba(248,113,113,.08); color:#f87171;     border:1px solid rgba(248,113,113,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:var(--red);     border:1px solid rgba(248,113,113,.2); }
   .qna-chevron { font-size:12px; color:var(--text3); flex-shrink:0; transition:transform .2s; }
   .qna-item.open .qna-chevron { transform:rotate(180deg); }
   .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
@@ -111,7 +111,7 @@
   .callout-blue   { background:rgba(77,142,247,.07);  border:1px solid rgba(77,142,247,.18); color:var(--text2); }
 
   /* ── SECTION LABEL ── */
-  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text2); text-transform:uppercase; margin:36px 0 14px; }
   .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
 
   /* ── PROGRESS BANNER ── */
@@ -127,7 +127,7 @@
 
   /* ── ROADMAP ── */
   .roadmap-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl); padding:24px; margin-bottom:32px; overflow-x:auto; }
-  .roadmap-wrap pre { margin:0; font-family:var(--font-mono); font-size:12px; line-height:1.8; color:var(--text2); }
+  .roadmap-wrap pre { margin:0; font-family:var(--font-mono); font-size:12px; line-height:1.8; color:#8da0bb; }
 
   /* ── ANIM ── */
   .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
@@ -233,7 +233,7 @@
       <div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">Strings</span></div>
       <div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">8</span><span class="is-label">Trees</span></div>
       <div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">7</span><span class="is-label">Graphs</span></div>
-      <div class="is-box" style="--is-c:#f97316"><span class="is-val" style="color:#f97316">6</span><span class="is-label">DP</span></div>
+      <div class="is-box" style="--is-c:#f97316"><span class="is-val" style="color:var(--orange)">6</span><span class="is-label">DP</span></div>
     </div>
 
     <!-- PROGRESS BANNER -->
@@ -1614,7 +1614,7 @@ factorial(5)
 <script src="../assets/js/topics-manifest.js?v=2"></script>
   <script src="../assets/js/site-index.js?v=2"></script>
 <script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
+  <script src="../assets/js/utils.js?v=7"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
 const TRACK = 'dsa';
@@ -1754,4 +1754,4 @@ function copyCode(btn) {
 })();
 </script>
 </body>
-</html>
+</html>     

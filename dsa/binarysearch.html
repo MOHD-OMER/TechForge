@@ -18,9 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=16">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
   :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim); }
@@ -62,7 +62,7 @@
   .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
   .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
   .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
-  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
@@ -180,7 +180,7 @@
     <div style="overflow-x:auto;">
       <canvas id="bsr-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
     </div>
-    <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:16px;">Array must be sorted. Press Find.</div>
+    <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:#8da0bb; margin-top:16px;">Array must be sorted. Press Find.</div>
   </div>
 </div>
 
@@ -248,7 +248,7 @@
 <script src="../assets/js/topics-manifest.js?v=2"></script>
   <script src="../assets/js/site-index.js?v=2"></script>
 <script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
+  <script src="../assets/js/utils.js?v=7"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){bsrReset();refreshProg("binarysearch");window.addEventListener('resize', bsrDraw);});
@@ -345,14 +345,14 @@ window.bsrRun = async function(){
 
     if(bsrArr[mid]===target){
       bsrState[mid]='found'; bsrDraw();
-      document.getElementById('bsr-status').innerHTML = '<span style="color:var(--green)">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
+      document.getElementById('bsr-status').innerHTML = '<span style="color:#34d399">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
       bsrOff=true; return;
     }
     else if(bsrArr[mid]<target){ lo=mid+1; }
     else { hi=mid-1; }
     await new Promise(r=>setTimeout(r, 400));
   }
-  document.getElementById('bsr-status').innerHTML = '<span style="color:var(--red)"><i class="ti ti-x"></i> '+target+' not found in array.</span>';
+  document.getElementById('bsr-status').innerHTML = '<span style="color:#f87171"><i class="ti ti-x"></i> '+target+' not found in array.</span>';
   bsrOff=true;
 }
 

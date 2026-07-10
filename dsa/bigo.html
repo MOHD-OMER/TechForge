@@ -18,9 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet">
+  <link href="../assets/css/forge_base.css?v=16" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
     :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
@@ -54,12 +54,21 @@
     .bar-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 32px; animation: fadeUp .35s ease both; }
     .bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .bar-header-left { display: flex; align-items: center; gap: 8px; }
-    .section-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 1px; }
+    .section-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text2); letter-spacing: 1px; }
     .n-slider-wrap { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--text3); }
     #n-slider { width: 120px; accent-color: var(--cyan); }
     .bar-body { display: flex; flex-direction: column; gap: 8px; }
     .bar-row { display: flex; align-items: center; gap: 10px; }
     .bar-name { font-family: var(--mono); font-size: 10.5px; font-weight: 600; width: 70px; flex-shrink: 0; }
+    /* Bar-chart colors are a fixed complexity-scale gradient (dark-theme
+       brights), JS-rendered as inline styles. On white in light theme several
+       drop as low as 1.4:1 — darken each same-hue color for the legend text. */
+    html.light .bar-name[style*="color:#00f5a8"] { color: #004932 !important; }
+    html.light .bar-name[style*="color:#00e5ff"] { color: #00444c !important; }
+    html.light .bar-name[style*="color:#5b9cf6"] { color: #052b5f !important; }
+    html.light .bar-name[style*="color:#b49dfc"] { color: #1f0377 !important; }
+    html.light .bar-name[style*="color:#ffc53d"] { color: #5e4200 !important; }
+    html.light .bar-name[style*="color:#ff5070"] { color: #640012 !important; }
     .bar-track { flex: 1; height: 22px; background: var(--bg2); border-radius: 4px; overflow: hidden; position: relative; }
     .bar-fill { height: 100%; display: flex; align-items: center; padding-left: 6px; transition: width .2s; }
     .bar-val { font-family: var(--mono); font-size: 9.5px; font-weight: 700; }
@@ -87,7 +96,7 @@
     .step-desc { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
     .step-code { font-family: var(--mono); font-size: 11px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--accent); }
     .callout { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--radius); font-size: 13.5px; border-left: 3px solid; }
-    .callout-cyan { background: rgba(34,211,238,.08); border-color: var(--cyan); color: #9ec8f9; }
+    .callout-cyan { background: rgba(34,211,238,.08); border-color: var(--cyan); color: var(--cyan); }
     .tbl-scroll { overflow-x: auto; }
     .cmp-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
     .cmp-tbl th { font-weight: 600; font-size: 10px; text-transform: uppercase; color: var(--text3); text-align: left; padding: 10px 12px; background: var(--surface); border-bottom: 1px solid var(--border); font-family: var(--mono); letter-spacing: .5px; }
@@ -135,7 +144,7 @@
   .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
   .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
   .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
-  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
@@ -275,7 +284,7 @@
             </div>
             <div class="n-slider-wrap">
               <span>1</span>
-              <input id="n-slider" max="20" min="1" oninput="updateBars(this.value)" type="range" value="10"/>
+              <input id="n-slider" max="20" min="1" oninput="updateBars(this.value)" type="range" value="10" aria-label="Input size n"/>
               <span>20</span>
             </div>
           </div>
@@ -418,7 +427,7 @@
   <script src="../assets/js/topics-manifest.js?v=2"></script>
   <script src="../assets/js/site-index.js?v=2"></script>
 <script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
+  <script src="../assets/js/utils.js?v=7"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
     let CURVES = [
@@ -774,6 +783,3 @@ function copyCode(btn) {
   }, { rootMargin: '-15% 0px -70% 0px' });
   document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
 })();
-</script>
-</body>
-</html>
