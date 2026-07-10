@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>My Progress — TechForge</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/dashboard.html"/>
+  <meta property="og:title" content="My Progress — TechForge"/>
+  <meta property="og:description" content="Your personal learning dashboard — progress, bookmarks, and solved problems across all TechForge tracks."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png"/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="assets/css/forge_base.css?v=8" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="assets/css/platform.css?v=3" rel="stylesheet"/>
+<style>
+  .dash-main { max-width: 1080px; margin: 0 auto; padding: calc(var(--topbar-h, 58px) + 40px) 24px 90px; }
+  .dash-head { margin-bottom: 34px; }
+  .dash-crumb { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 600; color: var(--accent, var(--blue, #4d9ef7)); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+  .dash-title { font-family: var(--font-display, inherit); font-size: clamp(26px, 4vw, 38px); font-weight: 700; letter-spacing: -.5px; }
+  .dash-title span { color: var(--blue, #4d9ef7); }
+  .dash-sub { color: var(--text2); font-size: 14px; margin-top: 8px; max-width: 560px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+  @media (max-width: 760px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-card { background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+  .stat-val { font-family: var(--font-mono, monospace); font-size: 28px; font-weight: 700; line-height: 1.1; }
+  .stat-lbl { font-size: 11px; color: var(--text3, var(--text2)); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+  .dash-sec { margin-bottom: 40px; }
+  .dash-sec h2 { font-size: 17px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .track-row { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+  .track-name { width: 150px; flex-shrink: 0; font-size: 13.5px; font-weight: 600; }
+  .track-bar { flex: 1; height: 8px; background: var(--surface, rgba(0,0,0,.3)); border-radius: 99px; overflow: hidden; }
+  .track-fill { height: 100%; border-radius: 99px; background: var(--tc, var(--blue, #4d9ef7)); transition: width .5s ease; }
+  .track-pct { width: 76px; text-align: right; font-family: var(--font-mono, monospace); font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  .bk-list, .rc-list { display: flex; flex-direction: column; gap: 6px; }
+  .bk-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 13.5px; transition: border-color .15s; }
+  .bk-item:hover { border-color: var(--blue, #4d9ef7); }
+  .bk-item .ti { color: var(--blue, #4d9ef7); }
+  .bk-when { margin-left: auto; font-family: var(--font-mono, monospace); font-size: 10.5px; color: var(--text3, var(--text2)); }
+  .empty { color: var(--text3, var(--text2)); font-size: 13px; padding: 14px 0; }
+  .data-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .dbtn { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; border: 1px solid var(--border); background: var(--card, rgba(255,255,255,.02)); color: var(--text); padding: 9px 18px; border-radius: 99px; font-size: 13px; font-weight: 600; font-family: inherit; transition: border-color .15s; }
+  .dbtn:hover { border-color: var(--blue, #4d9ef7); }
+  .dbtn.danger:hover { border-color: var(--red, #f87171); color: var(--red, #f87171); }
+  .dash-note { font-size: 11.5px; color: var(--text3, var(--text2)); margin-top: 10px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-section="dashboard">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="index.html">
+    <div class="tb-logo-icon"><img src="assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="index.html">Home</a>
+    <a class="tb-link" href="dsa/index.html">DSA</a>
+    <a class="tb-link" href="system-design/index.html">System Design</a>
+    <a class="tb-link" href="python/index.html">Python</a>
+    <a class="tb-link" href="databases/index.html">Databases</a>
+    <a class="tb-link" href="aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="interview/index.html">Interview</a>
+    <a class="tb-link" href="devops/index.html">DevOps</a>
+    <a class="tb-link" href="about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main class="dash-main" id="mainContent">
+  <div class="dash-head">
+    <div class="dash-crumb">Dashboard</div>
+    <h1 class="dash-title">My <span>Progress</span></h1>
+    <p class="dash-sub">Everything lives in your browser — no account, no server. Export a backup before clearing your browser data.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-val" id="stTopics" style="color:var(--green,#34d399)">0</div><div class="stat-lbl">Topics completed</div></div>
+    <div class="stat-card"><div class="stat-val" id="stSolved" style="color:var(--amber,#fbbf24)">0</div><div class="stat-lbl">Problems solved</div></div>
+    <div class="stat-card"><div class="stat-val" id="stBookmarks" style="color:var(--blue,#4d9ef7)">0</div><div class="stat-lbl">Bookmarks</div></div>
+    <div class="stat-card"><div class="stat-val" id="stTracks" style="color:var(--purple,#a78bfa)">0/7</div><div class="stat-lbl">Tracks started</div></div>
+  </div>
+
+  <section class="dash-sec">
+    <h2><i class="ti ti-chart-bar"></i> Track progress</h2>
+    <div id="trackRows"></div>
+  </section>
+
+  <section class="dash-sec">
+    <h2><i class="ti ti-bookmark"></i> Bookmarks</h2>
+    <div class="bk-list" id="bkList"><div class="empty">No bookmarks yet — hit &#9734; Save on any lesson.</div></div>
+  </section>
+
+  <section class="dash-sec">
+    <h2><i class="ti ti-history"></i> Recently viewed</h2>
+    <div class="rc-list" id="rcList"><div class="empty">Nothing yet — go read something.</div></div>
+  </section>
+
+  <section class="dash-sec">
+    <h2><i class="ti ti-database-export"></i> Your data</h2>
+    <div class="data-btns">
+      <button type="button" class="dbtn" id="btnExport"><i class="ti ti-download"></i> Export JSON</button>
+      <button type="button" class="dbtn" id="btnImport"><i class="ti ti-upload"></i> Import JSON</button>
+      <button type="button" class="dbtn danger" id="btnReset"><i class="ti ti-trash"></i> Reset all progress</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none"/>
+    </div>
+    <p class="dash-note">Export includes completed topics, bookmarks, solved problems, recents, and preferences.</p>
+  </section>
+</main>
+
+<script src="assets/js/topics-manifest.js?v=2"></script>
+<script src="assets/js/site-index.js?v=2"></script>
+<script src="assets/js/utils.js?v=5"></script>
+<script src="assets/js/platform.js?v=4"></script>
+<script src="/assets/js/palette.js?v=2" defer></script>
+<script>
+(function () {
+  'use strict';
+  function get(k, fb) { try { return JSON.parse(localStorage.getItem(k) || fb); } catch (e) { return JSON.parse(fb); } }
+
+  var completed = get('tf_completed_topics', '[]');
+  var bookmarks = get('tf_bookmarks', '[]');
+  var recent = get('tf_recent_pages', '[]');
+
+  /* solved problems: every dsa_done_* key */
+  var solved = 0, doneKeys = [];
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k && k.indexOf('dsa_done_') === 0) { doneKeys.push(k); solved += get(k, '[]').length; }
+  }
+
+  /* tracks: DSA is not in the manifest — count by id prefix */
+  var tracks = [{ label: 'DSA', total: 29, match: function (id) { return id.indexOf('dsa/') === 0; }, color: '#4d9ef7', hub: 'dsa/index.html' }];
+  var accents = { devops: '#f97316', 'system-design': '#22c55e', databases: '#4d9ef7', python: '#f7cc45', interview: '#fb923c', aiml: '#a78bfa' };
+  Object.keys(window.TF_TOPICS || {}).forEach(function (key) {
+    var sec = window.TF_TOPICS[key];
+    var ids = [];
+    sec.categories.forEach(function (c) { c.topics.forEach(function (t) { ids.push(t.id); }); });
+    tracks.push({ label: sec.label, total: ids.length, match: function (id) { return ids.indexOf(id) >= 0; }, color: sec.accent || accents[key] || '#4d9ef7', hub: sec.hub });
+  });
+
+  var started = 0, rowsHtml = '';
+  tracks.forEach(function (t) {
+    var done = completed.filter(t.match).length;
+    if (done > 0) started++;
+    var pct = t.total ? Math.round(done / t.total * 100) : 0;
+    rowsHtml += '<div class="track-row"><a class="track-name" style="color:inherit;text-decoration:none" href="' + t.hub + '">' + t.label + '</a>' +
+      '<div class="track-bar"><div class="track-fill" style="--tc:' + t.color + ';width:' + pct + '%"></div></div>' +
+      '<span class="track-pct">' + done + '/' + t.total + ' &middot; ' + pct + '%</span></div>';
+  });
+
+  document.getElementById('stTopics').textContent = completed.length;
+  document.getElementById('stSolved').textContent = solved;
+  document.getElementById('stBookmarks').textContent = bookmarks.length;
+  document.getElementById('stTracks').textContent = started + '/' + tracks.length;
+  document.getElementById('trackRows').innerHTML = rowsHtml;
+
+  function ago(ts) {
+    if (!ts) return '';
+    var d = Math.floor((Date.now() - ts) / 86400000);
+    return d === 0 ? 'today' : d === 1 ? '1d ago' : d + 'd ago';
+  }
+  function esc(s) { return String(s || '').replace(/</g, '&lt;'); }
+
+  if (bookmarks.length) {
+    document.getElementById('bkList').innerHTML = bookmarks.slice().reverse().map(function (b) {
+      return '<a class="bk-item" href="' + esc(b.href) + '"><i class="ti ti-bookmark"></i>' + esc(b.title) +
+        '<span class="bk-when">' + ago(b.at) + '</span></a>';
+    }).join('');
+  }
+  if (recent.length) {
+    document.getElementById('rcList').innerHTML = recent.slice(0, 8).map(function (r) {
+      return '<a class="bk-item" href="' + esc(r.href) + '"><i class="ti ti-history"></i>' + esc(r.title) + '</a>';
+    }).join('');
+  }
+
+  /* export / import / reset */
+  var DATA_KEYS = ['tf_completed_topics', 'tf_bookmarks', 'tf_recent_pages', 'tf_continue_dismissed', 'tf-theme', 'tf-lang'];
+  document.getElementById('btnExport').addEventListener('click', function () {
+    var out = {};
+    DATA_KEYS.concat(doneKeys).forEach(function (k) {
+      var v = localStorage.getItem(k);
+      if (v !== null) out[k] = v;
+    });
+    var blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'techforge-progress.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('btnImport').addEventListener('click', function () {
+    document.getElementById('importFile').click();
+  });
+  document.getElementById('importFile').addEventListener('change', function () {
+    var f = this.files[0];
+    if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () {
+      try {
+        var data = JSON.parse(rd.result);
+        Object.keys(data).forEach(function (k) {
+          if (k.indexOf('tf_') === 0 || k.indexOf('tf-') === 0 || k.indexOf('dsa_done_') === 0) {
+            localStorage.setItem(k, data[k]);
+          }
+        });
+        location.reload();
+      } catch (e) { alert('Invalid backup file.'); }
+    };
+    rd.readAsText(f);
+  });
+  document.getElementById('btnReset').addEventListener('click', function () {
+    if (!confirm('Reset ALL progress, bookmarks, and solved problems? This cannot be undone.')) return;
+    DATA_KEYS.concat(doneKeys).forEach(function (k) { localStorage.removeItem(k); });
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>

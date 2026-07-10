@@ -95,6 +95,7 @@
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -197,7 +198,7 @@
 <div class="info-section">
   <div class="info-tabs">
     <div class="info-tab active" onclick="switchTab(this,'tp-bub-0')">How It Works</div>
-    <div class="info-tab" onclick="switchTab(this,'tp-bub-1')">Python Code</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bub-1')">Code</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bub-prac')">Practice <i class="ti ti-trophy"></i></div>
   </div>
 
@@ -209,6 +210,12 @@
   </div>
 
   <div class="info-pane" id="tp-bub-1">
+    <div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
     <div class="code-block">
       <pre class="code-pre">def bubble_sort(arr):
     n = len(arr)
@@ -219,6 +226,41 @@
                 arr[j], arr[j+1] = arr[j+1], arr[j]
                 swapped = True
         if not swapped: break # Early exit</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function bubbleSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i &lt; n; i++) {
+    let swapped = false;
+    for (let j = 0; j &lt; n - i - 1; j++) {
+      if (arr[j] &gt; arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        swapped = true;
+      }
+    }
+    if (!swapped) break; // Early exit
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void bubbleSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i &lt; n; i++) {
+        boolean swapped = false;
+        for (int j = 0; j &lt; n - i - 1; j++) {
+            if (arr[j] &gt; arr[j + 1]) {
+                int t = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = t;
+                swapped = true;
+            }
+        }
+        if (!swapped) break; // Early exit
+    }
+}</pre>
+    </div>
     </div>
   </div>
 
@@ -399,5 +441,6 @@ function copyCode(btn) {
   document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
 })();
 </script>
+<script src="/assets/js/palette.js?v=2" defer></script>
 </body>
 </html>

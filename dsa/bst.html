@@ -228,6 +228,7 @@
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -325,7 +326,7 @@
       <div class="info-section">
         <div class="info-tabs">
           <div class="info-tab active" onclick="switchTab(this,'tp-bst-0')">How It Works</div>
-          <div class="info-tab" onclick="switchTab(this,'tp-bst-1')">Python Code</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-bst-1')">Code</div>
           <div class="info-tab" onclick="switchTab(this,'tp-bst-2')">Complexity</div>
           <div class="info-tab" onclick="switchTab(this,'tp-bst-3')">Quiz</div>
           <div class="info-tab" onclick="switchTab(this,'tp-bst-prac')">Practice <i class="ti ti-trophy"></i></div>
@@ -367,6 +368,12 @@
         </div>
 
         <div class="info-pane" id="tp-bst-1">
+          <div class="lang-toggle" role="tablist" aria-label="Code language">
+            <button type="button" class="lt-btn active" data-lang="python">Python</button>
+            <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+            <button type="button" class="lt-btn" data-lang="java">Java</button>
+          </div>
+          <div class="lang-pane" data-lang="python">
           <div class="code-block">
             <div class="code-hdr"><span class="code-lang">Python — BST Insert &amp; Search</span>
               <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
@@ -383,6 +390,56 @@
         <span class="kw">if not</span> root <span class="kw">or</span> root.val == val: <span class="kw">return</span> root
         <span class="kw">if</span> val &lt; root.val: <span class="kw">return</span> self.<span class="fn">search</span>(root.left, val)
         <span class="kw">return</span>             self.<span class="fn">search</span>(root.right, val)</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="javascript" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">JavaScript — BST Insert &amp; Search</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">class</span> <span class="fn">Node</span> {
+  <span class="fn">constructor</span>(val) { <span class="kw">this</span>.val = val; <span class="kw">this</span>.left = <span class="kw">this</span>.right = <span class="nm">null</span>; }
+}
+
+<span class="kw">function</span> <span class="fn">insert</span>(root, val) {
+  <span class="kw">if</span> (!root) <span class="kw">return new</span> <span class="fn">Node</span>(val);
+  <span class="kw">if</span> (val &lt; root.val)      root.left  = <span class="fn">insert</span>(root.left,  val);
+  <span class="kw">else if</span> (val &gt; root.val) root.right = <span class="fn">insert</span>(root.right, val);
+  <span class="kw">return</span> root;
+}
+
+<span class="kw">function</span> <span class="fn">search</span>(root, val) {
+  <span class="kw">if</span> (!root || root.val === val) <span class="kw">return</span> root;
+  <span class="kw">if</span> (val &lt; root.val) <span class="kw">return</span> <span class="fn">search</span>(root.left, val);
+  <span class="kw">return</span> <span class="fn">search</span>(root.right, val);
+}</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="java" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Java — BST Insert &amp; Search</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">class</span> <span class="fn">Node</span> {
+    <span class="kw">int</span> val; Node left, right;
+    <span class="fn">Node</span>(<span class="kw">int</span> val) { <span class="kw">this</span>.val = val; }
+}
+
+Node <span class="fn">insert</span>(Node root, <span class="kw">int</span> val) {
+    <span class="kw">if</span> (root == <span class="nm">null</span>) <span class="kw">return new</span> <span class="fn">Node</span>(val);
+    <span class="kw">if</span> (val &lt; root.val)      root.left  = <span class="fn">insert</span>(root.left,  val);
+    <span class="kw">else if</span> (val &gt; root.val) root.right = <span class="fn">insert</span>(root.right, val);
+    <span class="kw">return</span> root;
+}
+
+Node <span class="fn">search</span>(Node root, <span class="kw">int</span> val) {
+    <span class="kw">if</span> (root == <span class="nm">null</span> || root.val == val) <span class="kw">return</span> root;
+    <span class="kw">if</span> (val &lt; root.val) <span class="kw">return</span> <span class="fn">search</span>(root.left, val);
+    <span class="kw">return</span> <span class="fn">search</span>(root.right, val);
+}</pre>
+          </div>
           </div>
         </div>
 
@@ -777,5 +834,6 @@
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
 </script>
+<script src="/assets/js/palette.js?v=2" defer></script>
 </body>
 </html>

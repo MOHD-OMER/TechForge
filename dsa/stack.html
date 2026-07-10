@@ -228,6 +228,7 @@
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -330,7 +331,7 @@
       <div class="info-section">
         <div class="info-tabs">
           <div class="info-tab active" onclick="switchTab(this,'tp-stack-0')">How It Works</div>
-          <div class="info-tab" onclick="switchTab(this,'tp-stack-1')">Python Code</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-stack-1')">Code</div>
           <div class="info-tab" onclick="switchTab(this,'tp-stack-2')">Complexity</div>
           <div class="info-tab" onclick="switchTab(this,'tp-stack-3')">Quiz</div>
           <div class="info-tab" onclick="switchTab(this,'tp-stack-prac')">Practice <i class="ti ti-trophy"></i></div>
@@ -373,6 +374,12 @@
         </div>
 
         <div class="info-pane" id="tp-stack-1">
+          <div class="lang-toggle" role="tablist" aria-label="Code language">
+            <button type="button" class="lt-btn active" data-lang="python">Python</button>
+            <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+            <button type="button" class="lt-btn" data-lang="java">Java</button>
+          </div>
+          <div class="lang-pane" data-lang="python">
           <div class="code-block">
             <div class="code-hdr"><span class="code-lang">Python — Stack &amp; Balanced Parens</span>
               <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
@@ -394,6 +401,59 @@ val = stack.pop()    <span class="cm"># pop  — O(1) → 30</span>
         <span class="kw">elif</span> st: st.pop()
         <span class="kw">else</span>: <span class="kw">return</span> <span class="kw">False</span>
     <span class="kw">return not</span> st</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="javascript" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">JavaScript — Stack &amp; Balanced Parens</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="cm">// Array as stack</span>
+<span class="kw">const</span> stack = [];
+stack.push(<span class="nm">10</span>);     <span class="cm">// push — O(1)</span>
+stack.push(<span class="nm">20</span>);
+stack.push(<span class="nm">30</span>);
+<span class="kw">const</span> top = stack[stack.length - <span class="nm">1</span>]; <span class="cm">// peek — O(1) → 30</span>
+<span class="kw">const</span> val = stack.pop();             <span class="cm">// pop  — O(1) → 30</span>
+
+<span class="cm">// Balanced parentheses</span>
+<span class="kw">function</span> <span class="fn">isValid</span>(s) {
+  <span class="kw">const</span> st = [];
+  <span class="kw">for</span> (<span class="kw">const</span> c <span class="kw">of</span> s) {
+    <span class="kw">if</span> (c === <span class="st">'('</span>) st.push(c);
+    <span class="kw">else if</span> (st.length) st.pop();
+    <span class="kw">else return</span> <span class="nm">false</span>;
+  }
+  <span class="kw">return</span> st.length === <span class="nm">0</span>;
+}</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="java" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Java — Stack &amp; Balanced Parens</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="cm">// ArrayDeque as stack (preferred over legacy Stack)</span>
+Deque&lt;Integer&gt; stack = <span class="kw">new</span> <span class="fn">ArrayDeque</span>&lt;&gt;();
+stack.push(<span class="nm">10</span>);      <span class="cm">// push — O(1)</span>
+stack.push(<span class="nm">20</span>);
+stack.push(<span class="nm">30</span>);
+<span class="kw">int</span> top = stack.peek();  <span class="cm">// peek — O(1) → 30</span>
+<span class="kw">int</span> val = stack.pop();   <span class="cm">// pop  — O(1) → 30</span>
+
+<span class="cm">// Balanced parentheses</span>
+<span class="kw">boolean</span> <span class="fn">isValid</span>(String s) {
+    Deque&lt;Character&gt; st = <span class="kw">new</span> <span class="fn">ArrayDeque</span>&lt;&gt;();
+    <span class="kw">for</span> (<span class="kw">char</span> c : s.toCharArray()) {
+        <span class="kw">if</span> (c == <span class="st">'('</span>) st.push(c);
+        <span class="kw">else if</span> (!st.isEmpty()) st.pop();
+        <span class="kw">else return false</span>;
+    }
+    <span class="kw">return</span> st.isEmpty();
+}</pre>
+          </div>
           </div>
         </div>
 
@@ -739,5 +799,6 @@ val = stack.pop()    <span class="cm"># pop  — O(1) → 30</span>
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
 </script>
+<script src="/assets/js/palette.js?v=2" defer></script>
 </body>
 </html>

@@ -226,6 +226,7 @@
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -327,7 +328,7 @@
       <div class="info-section">
         <div class="info-tabs">
           <div class="info-tab active" onclick="switchTab(this,'tp-queue-0')">How It Works</div>
-          <div class="info-tab" onclick="switchTab(this,'tp-queue-1')">Python Code</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-queue-1')">Code</div>
           <div class="info-tab" onclick="switchTab(this,'tp-queue-2')">Complexity</div>
           <div class="info-tab" onclick="switchTab(this,'tp-queue-3')">Quiz</div>
           <div class="info-tab" onclick="switchTab(this,'tp-queue-prac')">Practice <i class="ti ti-trophy"></i></div>
@@ -370,6 +371,12 @@
         </div>
 
         <div class="info-pane" id="tp-queue-1">
+          <div class="lang-toggle" role="tablist" aria-label="Code language">
+            <button type="button" class="lt-btn active" data-lang="python">Python</button>
+            <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+            <button type="button" class="lt-btn" data-lang="java">Java</button>
+          </div>
+          <div class="lang-pane" data-lang="python">
           <div class="code-block">
             <div class="code-hdr"><span class="code-lang">Python — Queue &amp; Deque</span>
               <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
@@ -390,6 +397,52 @@ dq.appendleft(<span class="nm">5</span>)   <span class="cm"># insert at front</s
 dq.append(<span class="nm">10</span>)      <span class="cm"># insert at rear</span>
 dq.popleft()       <span class="cm"># remove front</span>
 dq.pop()           <span class="cm"># remove rear</span></pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="javascript" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">JavaScript — Queue (O(1) head pointer)</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="cm">// Naive: array (shift is O(n) — fine for small n)</span>
+<span class="kw">const</span> q = [];
+q.push(<span class="nm">10</span>);        <span class="cm">// enqueue rear  — O(1)</span>
+q.push(<span class="nm">20</span>);
+q.push(<span class="nm">30</span>);
+<span class="kw">const</span> front = q[<span class="nm">0</span>]; <span class="cm">// peek front   — O(1)</span>
+<span class="kw">const</span> val = q.shift(); <span class="cm">// dequeue   — O(n)!</span>
+
+<span class="cm">// Proper O(1) queue — head pointer, no shifting</span>
+<span class="kw">class</span> <span class="fn">Queue</span> {
+  #items = []; #head = <span class="nm">0</span>;
+  <span class="fn">enqueue</span>(v) { <span class="kw">this</span>.#items.push(v); }        <span class="cm">// O(1)</span>
+  <span class="fn">dequeue</span>() { <span class="kw">return this</span>.#items[<span class="kw">this</span>.#head++]; } <span class="cm">// O(1)</span>
+  <span class="kw">get</span> <span class="fn">front</span>() { <span class="kw">return this</span>.#items[<span class="kw">this</span>.#head]; }
+}</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="java" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Java — Queue &amp; Deque (ArrayDeque)</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="cm">// ArrayDeque as queue</span>
+Deque&lt;Integer&gt; q = <span class="kw">new</span> <span class="fn">ArrayDeque</span>&lt;&gt;();
+q.offer(<span class="nm">10</span>);       <span class="cm">// enqueue rear  — O(1)</span>
+q.offer(<span class="nm">20</span>);
+q.offer(<span class="nm">30</span>);
+<span class="kw">int</span> front = q.peek();  <span class="cm">// peek front    — O(1)</span>
+<span class="kw">int</span> val = q.poll();    <span class="cm">// dequeue front — O(1)</span>
+
+<span class="cm">// Deque (double-ended)</span>
+Deque&lt;Integer&gt; dq = <span class="kw">new</span> <span class="fn">ArrayDeque</span>&lt;&gt;();
+dq.offerFirst(<span class="nm">5</span>);   <span class="cm">// insert at front</span>
+dq.offerLast(<span class="nm">10</span>);   <span class="cm">// insert at rear</span>
+dq.pollFirst();     <span class="cm">// remove front</span>
+dq.pollLast();      <span class="cm">// remove rear</span></pre>
+          </div>
           </div>
         </div>
 
@@ -688,5 +741,6 @@ dq.pop()           <span class="cm"># remove rear</span></pre>
 const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
 document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
 </script>
+<script src="/assets/js/palette.js?v=2" defer></script>
 </body>
 </html>
