@@ -78,7 +78,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     var st = document.createElement('style');
     st.textContent =
-      '.pyrun-btn{position:absolute;top:9px;right:76px;z-index:2;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.1);color:#34d399;font-family:var(--mono,monospace);font-size:10px;font-weight:700;padding:4px 12px;border-radius:6px;cursor:pointer;letter-spacing:.5px}' +
+      '.pyrun-btn{position:absolute;top:8px;right:124px;z-index:2;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.1);color:#34d399;font-family:var(--mono,monospace);font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;cursor:pointer;letter-spacing:.5px}' +
       '.pyrun-btn:hover{background:rgba(52,211,153,.2)}' +
       '.pyrun-btn:disabled{opacity:.5;cursor:wait}' +
       '.pyrun-out{border-top:1px solid var(--border,#1f2d42);padding:12px 18px;font-family:var(--mono,monospace);font-size:12px;line-height:1.7;background:rgba(0,0,0,.25)}' +
