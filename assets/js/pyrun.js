@@ -8,9 +8,10 @@
   var PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
   var pyodidePromise = null;
 
-  /* skip blocks that can't run in a browser sandbox */
+  /* skip blocks that can't run in a browser sandbox.
+   * input() is NOT skipped — it's bridged to window.prompt() below. */
   function runnable(code) {
-    return !/\baiohttp\b|\binput\s*\(|\bopen\s*\(|\bpip\b|\brequests\b/.test(code);
+    return !/\baiohttp\b|\bopen\s*\(|\bpip\b|\brequests\b/.test(code);
   }
 
   function loadPyodideOnce() {
@@ -50,13 +51,27 @@
       var lines = [];
       py.setStdout({ batched: function (t) { lines.push(t); } });
       py.setStderr({ batched: function (t) { lines.push(t); } });
+      /* input() bridge: window.prompt() blocks the main thread synchronously,
+       * same trick browser Python playgrounds (Trinket, Repl.it) use — so a
+       * plain synchronous Python input() call works without an async rewrite. */
+      py.globals.set('_tf_prompt', function (p) {
+        var v = window.prompt(p === undefined || p === null ? '' : String(p));
+        return v === null ? '' : v;
+      });
       var code = pre.textContent;
       /* Pyodide's event loop is already running — asyncio.run() would throw.
        * runPythonAsync supports top-level await, so rewrite it. */
       code = code.replace(/\basyncio\.run\((.+)\)/g, 'await $1');
+      var preamble =
+        'import builtins as _tf_builtins\n' +
+        'def _tf_input(prompt=""):\n' +
+        '    _v = _tf_prompt(prompt)\n' +
+        '    print(str(prompt) + str(_v))\n' +
+        '    return _v\n' +
+        '_tf_builtins.input = _tf_input\n';
       var result;
       try {
-        result = await py.runPythonAsync(code);
+        result = await py.runPythonAsync(preamble + code);
       } finally {
         py.setStdout({}); py.setStderr({});
       }
