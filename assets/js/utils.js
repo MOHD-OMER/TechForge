@@ -425,6 +425,18 @@ document.addEventListener('DOMContentLoaded', function () {
 function tfMakeScrollRegionsFocusable() {
   var selectors = '.info-tabs, .code-pre, .code-block pre, .viz-body, [style*="overflow-x"]';
   document.querySelectorAll(selectors).forEach(function (el) {
+    // Elements explicitly marked up as a scrollable region (role="region",
+    // added by hand around canvas visualizations) keep their tabindex
+    // unconditionally. Their content is a canvas whose drawing width is set
+    // by a later script, so on first load — before that resize logic runs —
+    // scrollWidth can still equal clientWidth even though the region is
+    // meant to be scrollable at other sizes/DPIs. Stripping tabindex here
+    // based on a premature measurement re-introduces the very
+    // scrollable-region-focusable violation this function exists to fix.
+    if (el.getAttribute('role') === 'region') {
+      el.setAttribute('tabindex', '0');
+      return;
+    }
     if (el.scrollWidth > el.clientWidth) {
       el.setAttribute('tabindex', '0');
       if (!el.hasAttribute('aria-label')) {
