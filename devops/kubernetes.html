@@ -139,15 +139,40 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>kubectl / GitOps (ArgoCD)
-         |
-  API Server + etcd (desired state)
-         |
-  Scheduler --&gt; Kubelet (nodes)
-         |
-  Pods + Services + Ingress
-         |
-  PersistentVolume / ConfigMap / Secret</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 350" width="100%" role="img" aria-label="Kubernetes cluster: kubectl talks to the API server which stores desired state in etcd; the scheduler places pods onto worker nodes where kubelet runs them; services and ingress route external traffic to pods" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="k8s-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="k8s-arw-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--blue)"/></marker>
+            <marker id="k8s-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="130" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="85" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">kubectl</text>
+          <text x="85" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">or GitOps CD</text>
+          <rect x="250" y="40" width="210" height="110" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="355" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Control Plane</text>
+          <text x="355" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">API server · etcd · scheduler</text>
+          <rect x="250" y="210" width="210" height="100" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="355" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Worker Node</text>
+          <text x="355" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">kubelet + container runtime</text>
+          <rect x="560" y="210" width="170" height="100" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Worker Node</text>
+          <text x="645" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">kubelet + container runtime</text>
+          <rect x="560" y="60" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="645" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Ingress / Svc</text>
+          <text x="645" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">external traffic</text>
+          <line x1="150" y1="150" x2="242" y2="110" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#k8s-arw-text3)"/>
+          <text x="186" y="115" text-anchor="middle" fill="var(--text3)" font-size="10">apply YAML</text>
+          <line x1="355" y1="150" x2="355" y2="202" stroke="var(--blue)" stroke-width="1.5" marker-end="url(#k8s-arw-blue)"/>
+          <text x="420" y="180" text-anchor="middle" fill="var(--blue)" font-size="10">schedule pods</text>
+          <line x1="460" y1="130" x2="600" y2="202" stroke="var(--blue)" stroke-width="1.5" marker-end="url(#k8s-arw-blue)"/>
+          <line x1="645" y1="124" x2="645" y2="202" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#k8s-arw-amber)"/>
+          <text x="695" y="168" text-anchor="middle" fill="var(--amber)" font-size="10">routes to pods</text>
+          <text x="355" y="290" text-anchor="middle" fill="var(--text3)" font-size="11">◻ ◻ ◻ pods</text>
+          <text x="645" y="290" text-anchor="middle" fill="var(--text3)" font-size="11">◻ ◻ pods</text>
+          <text x="380" y="336" text-anchor="middle" fill="var(--text3)" font-size="10">reconciliation loop: actual state drifts → controllers converge it back to desired state in etcd</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

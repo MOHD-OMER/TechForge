@@ -140,13 +140,35 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Grafana
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Grafana connects to multiple data sources — Prometheus for metrics, Loki for logs, Postgres for business data — and renders them into shared dashboards with panels, variables and alerting" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="grf-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="grf-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="40" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="95" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Prometheus</text>
+          <text x="95" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">metrics</text>
+          <rect x="20" y="130" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="95" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Loki</text>
+          <text x="95" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">logs</text>
+          <rect x="20" y="220" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="95" y="247" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Postgres</text>
+          <text x="95" y="266" text-anchor="middle" fill="var(--text3)" font-size="10">business data</text>
+          <rect x="320" y="120" width="170" height="76" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="405" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Grafana</text>
+          <text x="405" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">query + transform</text>
+          <rect x="600" y="120" width="140" height="76" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="670" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Dashboards</text>
+          <text x="670" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">panels · alerts</text>
+          <line x1="170" y1="72" x2="312" y2="135" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#grf-arw-text3)"/>
+          <line x1="170" y1="158" x2="312" y2="158" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#grf-arw-text3)"/>
+          <text x="240" y="149" text-anchor="middle" fill="var(--text3)" font-size="10">data sources</text>
+          <line x1="170" y1="244" x2="312" y2="180" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#grf-arw-text3)"/>
+          <line x1="490" y1="158" x2="592" y2="158" stroke="var(--green)" stroke-width="1.5" marker-end="url(#grf-arw-green)"/>
+          <text x="375" y="282" text-anchor="middle" fill="var(--text3)" font-size="10">one pane of glass: correlate metric spike ↔ log lines ↔ trace in same time window</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -125,13 +125,37 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Elasticsearch (Search)
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Elasticsearch cluster: documents are indexed into shards spread across nodes with replicas; a search request fans out to all shards in parallel and results merge back, powered by inverted indexes mapping terms to documents" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="es-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="es-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">REST / JSON</text>
+          <rect x="260" y="120" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="340" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Coordinating</text>
+          <text x="340" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">fan-out + merge</text>
+          <rect x="560" y="30" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Shard 0 + R</text>
+          <text x="645" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">node A (replica on B)</text>
+          <rect x="560" y="124" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="151" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Shard 1 + R</text>
+          <text x="645" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">node B (replica on C)</text>
+          <rect x="560" y="218" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="245" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Shard 2 + R</text>
+          <text x="645" y="264" text-anchor="middle" fill="var(--text3)" font-size="10">node C (replica on A)</text>
+          <line x1="150" y1="152" x2="252" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#es-arw-text3)"/>
+          <text x="201" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">query</text>
+          <line x1="420" y1="136" x2="552" y2="60" stroke="var(--green)" stroke-width="1.5" marker-end="url(#es-arw-green)"/>
+          <line x1="420" y1="152" x2="552" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#es-arw-green)"/>
+          <text x="486" y="143" text-anchor="middle" fill="var(--green)" font-size="10">parallel scatter</text>
+          <line x1="420" y1="168" x2="552" y2="246" stroke="var(--green)" stroke-width="1.5" marker-end="url(#es-arw-green)"/>
+          <text x="370" y="282" text-anchor="middle" fill="var(--text2)" font-size="10">inverted index: term → [doc ids] — why full-text search is fast</text>
+          <text x="370" y="304" text-anchor="middle" fill="var(--text3)" font-size="10">near-realtime: docs searchable ~1s after index (refresh interval)</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

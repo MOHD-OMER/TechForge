@@ -139,13 +139,35 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Linux Basics
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Linux essentials map: filesystem hierarchy from root with etc for config, var slash log for logs, home for users; processes managed by systemd with journalctl for logs; permissions rwx for user group other control access" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="lnx-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+          </defs>
+          <rect x="30" y="50" width="220" height="230" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="140" y="169.5" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Filesystem</text>
+          <rect x="290" y="50" width="220" height="230" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="400" y="169.5" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Processes</text>
+          <rect x="550" y="50" width="190" height="230" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="645" y="169.5" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Permissions</text>
+          <text x="140" y="130" text-anchor="middle" fill="var(--text2)" font-size="10">/etc → config files</text>
+          <text x="140" y="155" text-anchor="middle" fill="var(--text2)" font-size="10">/var/log → logs</text>
+          <text x="140" y="180" text-anchor="middle" fill="var(--text2)" font-size="10">/home → user data</text>
+          <text x="140" y="205" text-anchor="middle" fill="var(--text2)" font-size="10">/proc → kernel view</text>
+          <text x="140" y="245" text-anchor="middle" fill="var(--text3)" font-size="10">everything is a file</text>
+          <text x="400" y="130" text-anchor="middle" fill="var(--text2)" font-size="10">systemctl start/status</text>
+          <text x="400" y="155" text-anchor="middle" fill="var(--text2)" font-size="10">journalctl -u nginx -f</text>
+          <text x="400" y="180" text-anchor="middle" fill="var(--text2)" font-size="10">ps aux · top · kill -9</text>
+          <text x="400" y="205" text-anchor="middle" fill="var(--text2)" font-size="10">PID 1 = systemd</text>
+          <text x="400" y="245" text-anchor="middle" fill="var(--text3)" font-size="10">signals: TERM then KILL</text>
+          <text x="645" y="130" text-anchor="middle" fill="var(--text2)" font-size="10" font-weight="700">rwx r-x r--</text>
+          <text x="645" y="155" text-anchor="middle" fill="var(--text2)" font-size="10">user · group · other</text>
+          <text x="645" y="180" text-anchor="middle" fill="var(--text2)" font-size="10">chmod 754 · chown</text>
+          <text x="645" y="205" text-anchor="middle" fill="var(--text2)" font-size="10">sudo = audited root</text>
+          <text x="645" y="245" text-anchor="middle" fill="var(--text3)" font-size="10">755 dirs · 644 files</text>
+          <text x="385" y="312" text-anchor="middle" fill="var(--text3)" font-size="10">90% of prod debugging: ssh in → journalctl / tail -f logs → ps/top → df -h disk full?</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

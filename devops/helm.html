@@ -140,13 +140,33 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Helm
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Helm packaging: a chart of templates plus a values file render into concrete Kubernetes manifests; helm install applies them to the cluster as a versioned release that can be upgraded or rolled back" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="hlm-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="hlm-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="40" width="150" height="60" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="95" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Chart</text>
+          <text x="95" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">templates/*.yaml</text>
+          <rect x="20" y="160" width="150" height="60" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="95" y="187" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">values.yaml</text>
+          <text x="95" y="206" text-anchor="middle" fill="var(--text3)" font-size="10">env-specific config</text>
+          <rect x="300" y="100" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="380" y="127" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Render</text>
+          <text x="380" y="146" text-anchor="middle" fill="var(--text3)" font-size="10">helm template</text>
+          <rect x="580" y="100" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="127" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Release v3</text>
+          <text x="655" y="146" text-anchor="middle" fill="var(--text3)" font-size="10">live in cluster</text>
+          <line x1="170" y1="80" x2="292" y2="118" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#hlm-arw-text3)"/>
+          <line x1="170" y1="180" x2="292" y2="146" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#hlm-arw-text3)"/>
+          <text x="230" y="175" text-anchor="middle" fill="var(--text3)" font-size="10">merge</text>
+          <line x1="460" y1="132" x2="572" y2="132" stroke="var(--green)" stroke-width="1.5" marker-end="url(#hlm-arw-green)"/>
+          <text x="516" y="123" text-anchor="middle" fill="var(--green)" font-size="10">helm install / upgrade</text>
+          <text x="370" y="230" text-anchor="middle" fill="var(--text3)" font-size="10">helm rollback release 2 → previous manifests re-applied instantly</text>
+          <text x="370" y="268" text-anchor="middle" fill="var(--text3)" font-size="10">same chart + different values = dev / staging / prod from one package</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

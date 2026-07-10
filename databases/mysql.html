@@ -125,13 +125,39 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  MySQL
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="MySQL InnoDB write path: client query passes the parser and optimizer, InnoDB buffer pool caches pages, writes record redo log before commit and update data files; binlog streams changes to replicas" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="my-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="my-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="my-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+            <marker id="my-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">connection pool</text>
+          <rect x="260" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="345" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">SQL layer</text>
+          <text x="345" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">parse + optimize</text>
+          <rect x="560" y="30" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Buffer pool</text>
+          <text x="645" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">InnoDB page cache</text>
+          <rect x="560" y="124" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="645" y="151" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Redo log</text>
+          <text x="645" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">crash safety</text>
+          <rect x="560" y="218" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="645" y="245" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Binlog</text>
+          <text x="645" y="264" text-anchor="middle" fill="var(--text3)" font-size="10">→ replicas / CDC</text>
+          <line x1="150" y1="152" x2="252" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#my-arw-text3)"/>
+          <line x1="430" y1="136" x2="552" y2="60" stroke="var(--green)" stroke-width="1.5" marker-end="url(#my-arw-green)"/>
+          <text x="486" y="78" text-anchor="middle" fill="var(--green)" font-size="10">reads</text>
+          <line x1="430" y1="152" x2="552" y2="152" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#my-arw-amber)"/>
+          <text x="490" y="143" text-anchor="middle" fill="var(--amber)" font-size="10" font-weight="700">commit path</text>
+          <line x1="430" y1="168" x2="552" y2="246" stroke="var(--cyan)" stroke-width="1.5" marker-end="url(#my-arw-cyan)"/>
+          <text x="480" y="230" text-anchor="middle" fill="var(--cyan)" font-size="10">row events</text>
+          <text x="375" y="302" text-anchor="middle" fill="var(--text3)" font-size="10">binlog powers replication + change-data-capture (Debezium) — redo log is InnoDB-internal</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -140,13 +140,36 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  CI/CD Overview
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="CI/CD pipeline stages: a git push triggers build, then automated tests, then artifact packaging, deploy to staging with smoke tests, and finally production deploy — any red stage stops the pipeline before bad code ships" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cicd-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="cicd-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="110" width="110" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="75" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Push</text>
+          <text x="75" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">git commit</text>
+          <rect x="160" y="110" width="110" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="215" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Build</text>
+          <text x="215" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">compile + lint</text>
+          <rect x="300" y="110" width="110" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="355" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Test</text>
+          <text x="355" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">unit + integration</text>
+          <rect x="440" y="110" width="110" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="495" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Stage</text>
+          <text x="495" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">deploy + smoke</text>
+          <rect x="580" y="110" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Production</text>
+          <text x="655" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">canary / rolling</text>
+          <line x1="130" y1="142" x2="152" y2="142" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cicd-arw-green)"/>
+          <line x1="270" y1="142" x2="292" y2="142" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cicd-arw-green)"/>
+          <line x1="410" y1="142" x2="432" y2="142" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cicd-arw-green)"/>
+          <line x1="550" y1="142" x2="572" y2="142" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cicd-arw-green)"/>
+          <text x="505" y="100" text-anchor="middle" fill="var(--green)" font-size="10">gate: approval / auto</text>
+          <text x="375" y="220" text-anchor="middle" fill="var(--red)" font-size="10">fail any stage → pipeline stops → nothing ships → fix and push again</text>
+          <text x="375" y="265" text-anchor="middle" fill="var(--text3)" font-size="10">CI = build + test every push · CD = every green build deployable (or deployed)</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

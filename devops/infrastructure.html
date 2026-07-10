@@ -140,13 +140,32 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Infrastructure Basics
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 310" width="100%" role="img" aria-label="Infrastructure as code loop: engineers edit declarative config in git, a PR triggers plan output for review, merge applies changes to cloud infrastructure, and drift detection alerts when live state diverges from code" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="iac-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="iac-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="iac-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+          </defs>
+          <rect x="20" y="110" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="90" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Git repo</text>
+          <text x="90" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">*.tf / *.yaml</text>
+          <rect x="270" y="110" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="350" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">PR + plan</text>
+          <text x="350" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">diff reviewed</text>
+          <rect x="560" y="110" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Cloud infra</text>
+          <text x="645" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">applied on merge</text>
+          <line x1="160" y1="142" x2="262" y2="142" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#iac-arw-text3)"/>
+          <text x="211" y="133" text-anchor="middle" fill="var(--text3)" font-size="10">propose change</text>
+          <line x1="430" y1="142" x2="552" y2="142" stroke="var(--green)" stroke-width="1.5" marker-end="url(#iac-arw-green)"/>
+          <text x="490" y="133" text-anchor="middle" fill="var(--green)" font-size="10">merge → apply</text>
+          <line x1="600" y1="174" x2="120" y2="180" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#iac-arw-red)"/>
+          <text x="360" y="205" text-anchor="middle" fill="var(--red)" font-size="10">drift detection — live ≠ code → alert / auto-revert</text>
+          <text x="375" y="270" text-anchor="middle" fill="var(--text3)" font-size="10">infra reviewed like code: history, rollback = git revert, no snowflake servers</text>
+          <text x="375" y="292" text-anchor="middle" fill="var(--text3)" font-size="10">never click-ops in console — the code is the source of truth</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

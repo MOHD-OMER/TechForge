@@ -139,19 +139,40 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>  Users --&gt; Route53 / CloudFront
-              |
-              v
-           ALB (public subnet)
-              |
-         EC2 ASG (private)
-         /          \
-        v            v
-     RDS Multi-AZ   ElastiCache
-        |
-     S3 (assets, backups)
-        |
-   CloudWatch / IAM roles</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 340" width="100%" role="img" aria-label="Core AWS request path: Route 53 DNS resolves to CloudFront CDN, then an Application Load Balancer spreads traffic across EC2 or ECS compute in private subnets, which read S3 for objects and RDS for relational data, with IAM governing every call" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="aws-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="aws-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="120" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Route 53</text>
+          <text x="80" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">DNS</text>
+          <rect x="180" y="120" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="245" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">CloudFront</text>
+          <text x="245" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">CDN edge</text>
+          <rect x="350" y="120" width="120" height="56" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="410" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">ALB</text>
+          <text x="410" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">load balancer</text>
+          <rect x="520" y="120" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="585" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">EC2 / ECS</text>
+          <text x="585" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">private subnet</text>
+          <rect x="420" y="240" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="485" y="267" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">S3</text>
+          <text x="485" y="286" text-anchor="middle" fill="var(--text3)" font-size="10">objects + static</text>
+          <rect x="600" y="240" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="665" y="267" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">RDS</text>
+          <text x="665" y="286" text-anchor="middle" fill="var(--text3)" font-size="10">Postgres/MySQL</text>
+          <line x1="140" y1="148" x2="172" y2="148" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#aws-arw-text3)"/>
+          <line x1="310" y1="148" x2="342" y2="148" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#aws-arw-text3)"/>
+          <line x1="470" y1="148" x2="512" y2="148" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#aws-arw-text3)"/>
+          <line x1="555" y1="176" x2="500" y2="234" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#aws-arw-amber)"/>
+          <line x1="610" y1="176" x2="655" y2="232" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#aws-arw-amber)"/>
+          <text x="680" y="210" text-anchor="middle" fill="var(--amber)" font-size="10">private access</text>
+          <text x="375" y="66" text-anchor="middle" fill="var(--text3)" font-size="10">IAM wraps every arrow: least-privilege roles, no long-lived keys on instances</text>
+          <text x="375" y="326" text-anchor="middle" fill="var(--text3)" font-size="10">VPC: public subnet = ALB only · compute + data in private subnets</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

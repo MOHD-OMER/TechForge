@@ -138,15 +138,36 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>  Entra ID (RBAC)
-       |
-  Subscription --&gt; Resource Group
-       |
-  +----+----+----+----+
-  v    v    v    v    v
- VM  AKS  Blob Func AppSvc
-       |
-  Log Analytics / Monitor</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 340" width="100%" role="img" aria-label="Core Azure request path: Azure DNS and Front Door route to an Application Gateway, which distributes to App Service or AKS compute inside a VNet, backed by Blob Storage and Azure SQL, with Entra ID controlling identity" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="azr-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="azr-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Front Door</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">global entry + CDN</text>
+          <rect x="200" y="120" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="275" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App Gateway</text>
+          <text x="275" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">L7 LB + WAF</text>
+          <rect x="410" y="120" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="485" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App Service / AKS</text>
+          <text x="485" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">compute in VNet</text>
+          <rect x="320" y="240" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="395" y="267" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Blob Storage</text>
+          <text x="395" y="286" text-anchor="middle" fill="var(--text3)" font-size="10">objects</text>
+          <rect x="530" y="240" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="605" y="267" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Azure SQL</text>
+          <text x="605" y="286" text-anchor="middle" fill="var(--text3)" font-size="10">managed DB</text>
+          <line x1="150" y1="148" x2="192" y2="148" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#azr-arw-text3)"/>
+          <line x1="350" y1="148" x2="402" y2="148" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#azr-arw-text3)"/>
+          <line x1="450" y1="176" x2="405" y2="234" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#azr-arw-amber)"/>
+          <line x1="520" y1="176" x2="585" y2="232" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#azr-arw-amber)"/>
+          <text x="625" y="210" text-anchor="middle" fill="var(--amber)" font-size="10">private endpoints</text>
+          <text x="375" y="66" text-anchor="middle" fill="var(--text3)" font-size="10">Entra ID (AAD): managed identities for service-to-service auth — no secrets in config</text>
+          <text x="375" y="326" text-anchor="middle" fill="var(--text3)" font-size="10">Resource Groups: everything tagged, deployed, deleted together</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

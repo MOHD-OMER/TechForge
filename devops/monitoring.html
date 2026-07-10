@@ -140,13 +140,38 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Monitoring &amp; Alerts
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Three pillars of observability: metrics answer what is wrong via dashboards and alerts, logs answer why with searchable events, traces answer where in the request path time was spent; all three feed incident response" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="mon-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="mon-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="mon-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+            <marker id="mon-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+          </defs>
+          <rect x="40" y="60" width="190" height="80" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="135" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Metrics</text>
+          <text x="135" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">numbers over time</text>
+          <rect x="285" y="60" width="190" height="80" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="380" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Logs</text>
+          <text x="380" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">discrete events</text>
+          <rect x="530" y="60" width="190" height="80" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="625" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Traces</text>
+          <text x="625" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">request journey</text>
+          <rect x="285" y="220" width="190" height="64" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5"/>
+          <text x="380" y="247" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">On-call</text>
+          <text x="380" y="266" text-anchor="middle" fill="var(--text3)" font-size="10">alert → diagnose → fix</text>
+          <line x1="135" y1="140" x2="330" y2="228" stroke="var(--green)" stroke-width="1.5" marker-end="url(#mon-arw-green)"/>
+          <text x="150" y="195" text-anchor="middle" fill="var(--green)" font-size="10">WHAT is wrong</text>
+          <line x1="380" y1="140" x2="380" y2="212" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#mon-arw-amber)"/>
+          <text x="405" y="180" text-anchor="middle" fill="var(--amber)" font-size="10">WHY</text>
+          <line x1="625" y1="140" x2="430" y2="228" stroke="var(--cyan)" stroke-width="1.5" marker-end="url(#mon-arw-cyan)"/>
+          <text x="610" y="195" text-anchor="middle" fill="var(--cyan)" font-size="10">WHERE it's slow</text>
+          <text x="135" y="160" text-anchor="middle" fill="var(--text3)" font-size="10">Prometheus · CloudWatch</text>
+          <text x="380" y="160" text-anchor="middle" fill="var(--text3)" font-size="10">Loki · ELK</text>
+          <text x="625" y="160" text-anchor="middle" fill="var(--text3)" font-size="10">Jaeger · Tempo · OTel</text>
+          <text x="380" y="308" text-anchor="middle" fill="var(--text3)" font-size="10">alert on symptoms (SLO burn), not causes — page a human only when users hurt</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

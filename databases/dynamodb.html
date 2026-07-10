@@ -126,13 +126,37 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  DynamoDB
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="DynamoDB request path: application calls the AWS API with a partition key; DynamoDB hashes it to storage partitions replicated across three availability zones, delivering single-digit millisecond reads at any scale with on-demand capacity" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="ddb-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="ddb-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">AWS SDK</text>
+          <rect x="260" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="345" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">DynamoDB</text>
+          <text x="345" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">hash(partition key)</text>
+          <rect x="560" y="30" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Partition A</text>
+          <text x="645" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">replicated 3× AZ</text>
+          <rect x="560" y="124" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="151" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Partition B</text>
+          <text x="645" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">replicated 3× AZ</text>
+          <rect x="560" y="218" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="245" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Partition C</text>
+          <text x="645" y="264" text-anchor="middle" fill="var(--text3)" font-size="10">replicated 3× AZ</text>
+          <line x1="150" y1="152" x2="252" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#ddb-arw-text3)"/>
+          <text x="204" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">GetItem(pk)</text>
+          <line x1="430" y1="136" x2="552" y2="60" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ddb-arw-text3)"/>
+          <line x1="430" y1="152" x2="552" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ddb-arw-green)"/>
+          <text x="492" y="143" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">single-digit ms</text>
+          <line x1="430" y1="168" x2="552" y2="246" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ddb-arw-text3)"/>
+          <text x="375" y="290" text-anchor="middle" fill="var(--text3)" font-size="10">design for access patterns first: no joins, no ad-hoc queries — model table around reads</text>
+          <text x="375" y="308" text-anchor="middle" fill="var(--text3)" font-size="10">hot partition = throttling: spread keys, avoid sequential ids</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

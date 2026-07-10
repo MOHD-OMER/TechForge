@@ -139,20 +139,31 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>  Control node (ansible-playbook)
-         | SSH / WinRM
-         v
-  +------------------+
-  |  Inventory       |
-  |  web, db, cache  |
-  +------------------+
-         |
-    +----+----+----+
-    v    v    v    v
-  web1 web2 db1 cache1
-         |
-    Modules: apt, copy,
-    template, systemd</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Ansible push model: control node reads playbooks and inventory, then connects over plain SSH to managed servers — no agent installed — executing idempotent modules so repeat runs change nothing once desired state is reached" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="ans-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="ans-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="100" width="170" height="100" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="105" y="127" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Control node</text>
+          <text x="105" y="146" text-anchor="middle" fill="var(--text3)" font-size="10">playbook + inventory</text>
+          <rect x="560" y="30" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">web-1</text>
+          <text x="635" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">no agent</text>
+          <rect x="560" y="120" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">web-2</text>
+          <text x="635" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">no agent</text>
+          <rect x="560" y="210" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">db-1</text>
+          <text x="635" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">no agent</text>
+          <line x1="190" y1="130" x2="552" y2="58" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ans-arw-green)"/>
+          <line x1="190" y1="150" x2="552" y2="148" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ans-arw-green)"/>
+          <text x="370" y="139" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">SSH — push tasks</text>
+          <line x1="190" y1="170" x2="552" y2="238" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ans-arw-green)"/>
+          <text x="370" y="282" text-anchor="middle" fill="var(--text3)" font-size="10">idempotent: 'ensure nginx installed' — run 1 installs, run 2 does nothing</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

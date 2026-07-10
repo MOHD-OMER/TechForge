@@ -140,13 +140,37 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Docker Compose
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Docker Compose: one YAML file defines web, api and database services; compose up creates a shared network where services reach each other by service name, plus named volumes for persistent data" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="dcmp-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="dcmp-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="dcmp-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="105" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">compose.yml</text>
+          <text x="105" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">services + volumes</text>
+          <rect x="300" y="40" width="420" height="220" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="510" y="154.5" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700"></text>
+          <rect x="330" y="80" width="140" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="400" y="107" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">web</text>
+          <text x="400" y="126" text-anchor="middle" fill="var(--text3)" font-size="10">port 80:3000</text>
+          <rect x="530" y="80" width="140" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="600" y="107" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">api</text>
+          <text x="600" y="126" text-anchor="middle" fill="var(--text3)" font-size="10">talks to db by name</text>
+          <rect x="430" y="180" width="140" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="500" y="207" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">db</text>
+          <text x="500" y="226" text-anchor="middle" fill="var(--text3)" font-size="10">volume: pgdata</text>
+          <line x1="190" y1="152" x2="292" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dcmp-arw-text3)"/>
+          <text x="240" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">docker compose up</text>
+          <line x1="470" y1="108" x2="522" y2="108" stroke="var(--green)" stroke-width="1.5" marker-end="url(#dcmp-arw-green)"/>
+          <text x="496" y="99" text-anchor="middle" fill="var(--green)" font-size="10">http://api:8000</text>
+          <line x1="570" y1="136" x2="520" y2="180" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#dcmp-arw-amber)"/>
+          <text x="625" y="168" text-anchor="middle" fill="var(--amber)" font-size="10">postgres://db:5432</text>
+          <text x="510" y="62" text-anchor="middle" fill="var(--blue)" font-size="10" font-weight="700">SHARED NETWORK — DNS by service name</text>
+          <text x="375" y="300" text-anchor="middle" fill="var(--text3)" font-size="10">one command: whole stack up, torn down, rebuilt — dev env in version control</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

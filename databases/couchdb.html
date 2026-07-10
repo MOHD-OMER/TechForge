@@ -126,13 +126,30 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  CouchDB
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="CouchDB multi-master replication: JSON documents with revision trees sync bidirectionally between server and mobile or edge replicas; conflicts are kept, flagged and resolved by the application — built for offline-first sync" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cdb-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="cdb-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="cdb-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="40" y="110" width="170" height="74" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="125" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">CouchDB A</text>
+          <text x="125" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">server — docs + _rev</text>
+          <rect x="540" y="40" width="170" height="60" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="625" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">CouchDB B</text>
+          <text x="625" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">another DC</text>
+          <rect x="540" y="180" width="170" height="60" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="625" y="207" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">PouchDB</text>
+          <text x="625" y="226" text-anchor="middle" fill="var(--text3)" font-size="10">browser / mobile</text>
+          <line x1="210" y1="130" x2="532" y2="70" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cdb-arw-green)"/>
+          <text x="370" y="85" text-anchor="middle" fill="var(--green)" font-size="10">⇄ bidirectional sync</text>
+          <line x1="210" y1="165" x2="532" y2="205" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#cdb-arw-amber)"/>
+          <text x="370" y="205" text-anchor="middle" fill="var(--amber)" font-size="10">⇄ offline-first sync</text>
+          <text x="375" y="262" text-anchor="middle" fill="var(--text3)" font-size="10">every doc carries revision history — concurrent edits create conflict revisions, app picks winner</text>
+          <text x="375" y="282" text-anchor="middle" fill="var(--text3)" font-size="10">HTTP/JSON API only: curl is the client</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

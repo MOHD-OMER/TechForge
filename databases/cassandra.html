@@ -124,14 +124,38 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>  Client (CQL)
-      |
-  Coordinator node
-      |
-  +---+---+---+
-  v   v   v   v
-  N1  N2  N3  N4   (ring)
-  RF=3 replicas per DC</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Cassandra ring: client sends CQL to any node acting as coordinator, which hashes the partition key to find replica nodes; with replication factor three the write goes to three nodes and succeeds when the consistency level quorum acknowledges" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cas-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="cas-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="130" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="85" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="85" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">CQL driver</text>
+          <rect x="260" y="130" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="340" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Coordinator</text>
+          <text x="340" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">any node can be</text>
+          <rect x="540" y="30" width="90" height="52" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="585" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">N1</text>
+          <text x="585" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">replica</text>
+          <rect x="640" y="110" width="90" height="52" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="685" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">N2</text>
+          <text x="685" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">replica</text>
+          <rect x="640" y="210" width="90" height="52" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="685" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">N3</text>
+          <text x="685" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">replica</text>
+          <rect x="540" y="280" width="90" height="45" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="585" y="307" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">N4</text>
+          <line x1="150" y1="162" x2="252" y2="162" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#cas-arw-text3)"/>
+          <line x1="420" y1="140" x2="532" y2="62" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cas-arw-green)"/>
+          <line x1="420" y1="155" x2="632" y2="132" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cas-arw-green)"/>
+          <text x="505" y="110" text-anchor="middle" fill="var(--green)" font-size="10">hash(pk) → RF=3 replicas</text>
+          <line x1="420" y1="175" x2="632" y2="228" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cas-arw-green)"/>
+          <text x="330" y="250" text-anchor="middle" fill="var(--text2)" font-size="10">QUORUM = 2 of 3 ack → success (tunable consistency per query)</text>
+          <text x="375" y="315" text-anchor="middle" fill="var(--text3)" font-size="10">no primary, no single point of failure — every node equal, ring rebalances on join/leave</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

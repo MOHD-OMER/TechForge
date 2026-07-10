@@ -140,13 +140,36 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Jenkins
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Jenkins architecture: webhook from git triggers the controller which schedules pipeline stages onto agent nodes; agents run build, test and deploy stages defined in a Jenkinsfile and report status back" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="jnk-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="jnk-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="90" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Git webhook</text>
+          <text x="90" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">push / PR event</text>
+          <rect x="280" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="365" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Controller</text>
+          <text x="365" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">Jenkinsfile pipeline</text>
+          <rect x="580" y="40" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Agent 1</text>
+          <text x="655" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">build + test</text>
+          <rect x="580" y="134" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="161" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Agent 2</text>
+          <text x="655" y="180" text-anchor="middle" fill="var(--text3)" font-size="10">docker builds</text>
+          <rect x="580" y="228" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="255" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Agent 3</text>
+          <text x="655" y="274" text-anchor="middle" fill="var(--text3)" font-size="10">deploy stage</text>
+          <line x1="160" y1="152" x2="272" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#jnk-arw-text3)"/>
+          <text x="216" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">trigger</text>
+          <line x1="450" y1="136" x2="572" y2="70" stroke="var(--green)" stroke-width="1.5" marker-end="url(#jnk-arw-green)"/>
+          <line x1="450" y1="152" x2="572" y2="162" stroke="var(--green)" stroke-width="1.5" marker-end="url(#jnk-arw-green)"/>
+          <text x="508" y="143" text-anchor="middle" fill="var(--green)" font-size="10">distribute stages</text>
+          <line x1="450" y1="168" x2="572" y2="254" stroke="var(--green)" stroke-width="1.5" marker-end="url(#jnk-arw-green)"/>
+          <text x="375" y="302" text-anchor="middle" fill="var(--text3)" font-size="10">pipeline as code: Jenkinsfile in repo — stages { build → test → deploy } versioned with app</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

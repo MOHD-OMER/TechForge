@@ -140,13 +140,38 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  GitHub Actions
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="GitHub Actions: events like push or pull request trigger a workflow YAML; the workflow spawns jobs that each run on a fresh runner VM, jobs contain sequential steps and can depend on each other via needs" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="gha-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="gha-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="gha-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="90" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Event</text>
+          <text x="90" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">push · PR · cron</text>
+          <rect x="270" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="355" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Workflow</text>
+          <text x="355" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">.github/workflows/*.yml</text>
+          <rect x="560" y="40" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Job: test</text>
+          <text x="645" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">ubuntu runner VM</text>
+          <rect x="560" y="130" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Job: build</text>
+          <text x="645" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">needs: test</text>
+          <rect x="560" y="220" width="170" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="645" y="247" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Job: deploy</text>
+          <text x="645" y="266" text-anchor="middle" fill="var(--text3)" font-size="10">needs: build + secrets</text>
+          <line x1="160" y1="152" x2="262" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#gha-arw-text3)"/>
+          <text x="212" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">triggers</text>
+          <line x1="440" y1="140" x2="552" y2="68" stroke="var(--green)" stroke-width="1.5" marker-end="url(#gha-arw-green)"/>
+          <line x1="645" y1="96" x2="645" y2="122" stroke="var(--green)" stroke-width="1.5" marker-end="url(#gha-arw-green)"/>
+          <text x="682" y="112" text-anchor="middle" fill="var(--green)" font-size="10">needs</text>
+          <line x1="645" y1="186" x2="645" y2="212" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#gha-arw-amber)"/>
+          <text x="682" y="202" text-anchor="middle" fill="var(--amber)" font-size="10">needs</text>
+          <text x="370" y="302" text-anchor="middle" fill="var(--text3)" font-size="10">each job = fresh VM — share artifacts via actions/upload-artifact or cache</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

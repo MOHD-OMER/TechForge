@@ -126,13 +126,34 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  InfluxDB (Time Series)
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="InfluxDB time-series pipeline: metrics ingested as line protocol with timestamp tags and fields, stored in time-partitioned shards with high compression, queried by time range with downsampling and retention policies expiring old data automatically" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="ifx-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="ifx-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="ifx-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="110" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="95" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Ingest</text>
+          <text x="95" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">line protocol / Telegraf</text>
+          <rect x="280" y="110" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="365" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">TSM storage</text>
+          <text x="365" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">time-partitioned shards</text>
+          <rect x="580" y="50" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="77" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queries</text>
+          <text x="655" y="96" text-anchor="middle" fill="var(--text3)" font-size="10">range + aggregate</text>
+          <rect x="580" y="180" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="655" y="207" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Retention</text>
+          <text x="655" y="226" text-anchor="middle" fill="var(--text3)" font-size="10">auto-expire old shards</text>
+          <line x1="170" y1="142" x2="272" y2="142" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#ifx-arw-text3)"/>
+          <text x="222" y="133" text-anchor="middle" fill="var(--text3)" font-size="10">cpu,host=a val=0.9 ts</text>
+          <line x1="450" y1="128" x2="572" y2="82" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ifx-arw-green)"/>
+          <text x="505" y="92" text-anchor="middle" fill="var(--green)" font-size="10">last 1h avg by host</text>
+          <line x1="450" y1="156" x2="572" y2="204" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#ifx-arw-amber)"/>
+          <text x="505" y="200" text-anchor="middle" fill="var(--amber)" font-size="10">drop shards &gt; 30d</text>
+          <text x="375" y="278" text-anchor="middle" fill="var(--text3)" font-size="10">append-mostly + time-ordered = extreme compression; downsample to 5m rollups for long history</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

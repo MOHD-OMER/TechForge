@@ -140,15 +140,41 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>HCL modules + variables
-         |
-    terraform plan (diff)
-         |
-  State file (S3 + DynamoDB lock)
-         |
-  Provider plugins (AWS/GCP/Azure)
-         |
-  Live infrastructure</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Terraform workflow: HCL modules go through terraform plan which diffs desired config against the state file, then terraform apply calls provider plugins to create or update real cloud infrastructure and records results back to remote state with locking" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="tf-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="tf-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+            <marker id="tf-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+            <marker id="tf-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="90" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">HCL config</text>
+          <text x="90" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">modules + vars</text>
+          <rect x="270" y="120" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="350" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">plan / apply</text>
+          <text x="350" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">diff engine</text>
+          <rect x="560" y="30" width="170" height="60" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="645" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">State</text>
+          <text x="645" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">S3 + DynamoDB lock</text>
+          <rect x="560" y="130" width="170" height="60" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="645" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Providers</text>
+          <text x="645" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">AWS · GCP · Azure</text>
+          <rect x="560" y="230" width="170" height="60" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="645" y="257" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Live infra</text>
+          <text x="645" y="276" text-anchor="middle" fill="var(--text3)" font-size="10">VPCs, VMs, DBs…</text>
+          <line x1="160" y1="152" x2="262" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#tf-arw-text3)"/>
+          <text x="212" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">terraform plan</text>
+          <line x1="430" y1="136" x2="552" y2="62" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#tf-arw-amber)"/>
+          <text x="475" y="80" text-anchor="middle" fill="var(--amber)" font-size="10">read + lock state</text>
+          <line x1="430" y1="152" x2="552" y2="158" stroke="var(--cyan)" stroke-width="1.5" marker-end="url(#tf-arw-cyan)"/>
+          <text x="494" y="149" text-anchor="middle" fill="var(--cyan)" font-size="10">apply → API calls</text>
+          <line x1="645" y1="190" x2="645" y2="222" stroke="var(--green)" stroke-width="1.5" marker-end="url(#tf-arw-green)"/>
+          <line x1="600" y1="230" x2="580" y2="94" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#tf-arw-amber)"/>
+          <text x="540" y="215" text-anchor="middle" fill="var(--amber)" font-size="10">record real ids</text>
+          <text x="375" y="312" text-anchor="middle" fill="var(--text3)" font-size="10">state = source of truth for what TF manages — never edit by hand, always lock in teams</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>
