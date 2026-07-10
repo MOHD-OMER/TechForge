@@ -523,6 +523,430 @@ a, b = b, a
     <span class="fn">print</span>(<span class="st">f"{year} is not a leap year"</span>)</pre>
           </div>
         </div>
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#28</span>
+            <span class="prog-title">Print Primes in an Interval</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">lower, upper = <span class="nm">1</span>, <span class="nm">10</span>
+
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(lower, upper + <span class="nm">1</span>):
+    <span class="kw">if</span> num &gt; <span class="nm">1</span>:
+        <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">2</span>, num):
+            <span class="kw">if</span> num % i == <span class="nm">0</span>:
+                <span class="kw">break</span>
+        <span class="kw">else</span>:
+            <span class="fn">print</span>(num)
+<span class="cm"># Output: 2 3 5 7</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#29</span>
+            <span class="prog-title">Multiplication Table</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter a number: "</span>))
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">11</span>):
+    <span class="fn">print</span>(<span class="st">f"{num} x {i} = {num * i}"</span>)
+<span class="cm"># 5 x 1 = 5 ... 5 x 10 = 50</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#30</span>
+            <span class="prog-title">Check Armstrong Number</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter a number: "</span>))
+order = <span class="fn">len</span>(<span class="fn">str</span>(num))
+
+total = <span class="fn">sum</span>(<span class="fn">int</span>(d) ** order <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num))
+
+<span class="kw">if</span> num == total:
+    <span class="fn">print</span>(<span class="st">f"{num} is an Armstrong number"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">f"{num} is not an Armstrong number"</span>)
+<span class="cm"># 153 = 1^3 + 5^3 + 3^3 = 153  -&gt; Armstrong</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#31</span>
+            <span class="prog-title">Armstrong Numbers in an Interval</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">lower, upper = <span class="nm">1</span>, <span class="nm">1000</span>
+
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(lower, upper + <span class="nm">1</span>):
+    order = <span class="fn">len</span>(<span class="fn">str</span>(num))
+    <span class="kw">if</span> num == <span class="fn">sum</span>(<span class="fn">int</span>(d) ** order <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num)):
+        <span class="fn">print</span>(num)
+<span class="cm"># Output: 1 2 3 4 5 6 7 8 9 153 370 371 407</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#32</span>
+            <span class="prog-title">Sum of Natural Numbers</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter n: "</span>))
+
+<span class="cm"># Loop approach</span>
+total = <span class="nm">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, n + <span class="nm">1</span>):
+    total += i
+<span class="fn">print</span>(total)
+
+<span class="cm"># Formula approach: n(n+1)/2</span>
+<span class="fn">print</span>(n * (n + <span class="nm">1</span>) // <span class="nm">2</span>)  <span class="cm"># same result, O(1)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#33</span>
+            <span class="prog-title">Find LCM of Two Numbers</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">lcm</span>(a, b):
+    greater = <span class="fn">max</span>(a, b)
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">if</span> greater % a == <span class="nm">0</span> <span class="kw">and</span> greater % b == <span class="nm">0</span>:
+            <span class="kw">return</span> greater
+        greater += <span class="nm">1</span>
+
+<span class="fn">print</span>(<span class="fn">lcm</span>(<span class="nm">4</span>, <span class="nm">6</span>))  <span class="cm"># 12</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#34</span>
+            <span class="prog-title">Find HCF (GCD) of Two Numbers</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">hcf</span>(a, b):
+    <span class="cm"># Euclidean algorithm</span>
+    <span class="kw">while</span> b:
+        a, b = b, a % b
+    <span class="kw">return</span> a
+
+<span class="fn">print</span>(<span class="fn">hcf</span>(<span class="nm">54</span>, <span class="nm">24</span>))  <span class="cm"># 6</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#35</span>
+            <span class="prog-title">Decimal to Binary, Octal, Hexadecimal</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter a decimal number: "</span>))
+
+<span class="fn">print</span>(<span class="fn">bin</span>(num))  <span class="cm"># 0b101010</span>
+<span class="fn">print</span>(<span class="fn">oct</span>(num))  <span class="cm"># 0o52</span>
+<span class="fn">print</span>(<span class="fn">hex</span>(num))  <span class="cm"># 0x2a</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#36</span>
+            <span class="prog-title">ASCII Value of a Character</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">ch = <span class="fn">input</span>(<span class="st">"Enter a character: "</span>)
+
+<span class="fn">print</span>(<span class="st">f"ASCII value of {ch} is {ord(ch)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Character for 65 is {chr(65)}"</span>)  <span class="cm"># A</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#37</span>
+            <span class="prog-title">Simple Calculator</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">calculator</span>():
+    a = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"First number: "</span>))
+    op = <span class="fn">input</span>(<span class="st">"Operator (+ - * /): "</span>)
+    b = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Second number: "</span>))
+
+    <span class="kw">if</span> op == <span class="st">'+'</span>: <span class="kw">return</span> a + b
+    <span class="kw">if</span> op == <span class="st">'-'</span>: <span class="kw">return</span> a - b
+    <span class="kw">if</span> op == <span class="st">'*'</span>: <span class="kw">return</span> a * b
+    <span class="kw">if</span> op == <span class="st">'/'</span>:
+        <span class="kw">if</span> b == <span class="nm">0</span>: <span class="kw">return</span> <span class="st">"Cannot divide by zero"</span>
+        <span class="kw">return</span> a / b
+    <span class="kw">return</span> <span class="st">"Invalid operator"</span>
+
+<span class="fn">print</span>(<span class="fn">calculator</span>())</pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#38</span>
+            <span class="prog-title">Body Mass Index (BMI) Calculator</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">weight = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Weight in kg: "</span>))
+height = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Height in metres: "</span>))
+
+bmi = weight / (height ** <span class="nm">2</span>)
+<span class="fn">print</span>(<span class="st">f"BMI: {bmi:.1f}"</span>)
+
+<span class="kw">if</span> bmi &lt; <span class="nm">18.5</span>:   <span class="fn">print</span>(<span class="st">"Underweight"</span>)
+<span class="kw">elif</span> bmi &lt; <span class="nm">25</span>:   <span class="fn">print</span>(<span class="st">"Normal weight"</span>)
+<span class="kw">elif</span> bmi &lt; <span class="nm">30</span>:   <span class="fn">print</span>(<span class="st">"Overweight"</span>)
+<span class="kw">else</span>:            <span class="fn">print</span>(<span class="st">"Obese"</span>)</pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#39</span>
+            <span class="prog-title">Natural Logarithm of a Number</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+num = <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Enter a positive number: "</span>))
+
+<span class="fn">print</span>(<span class="st">f"ln({num}) = {math.log(num)}"</span>)
+<span class="fn">print</span>(<span class="st">f"log10({num}) = {math.log10(num)}"</span>)
+<span class="fn">print</span>(<span class="st">f"log2({num}) = {math.log2(num)}"</span>)</pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#40</span>
+            <span class="prog-title">Cube Sum of First N Natural Numbers</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">cube_sum</span>(n):
+    <span class="kw">return</span> <span class="fn">sum</span>(i ** <span class="nm">3</span> <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, n + <span class="nm">1</span>))
+
+<span class="cm"># Formula: (n(n+1)/2)^2</span>
+<span class="kw">def</span> <span class="fn">cube_sum_formula</span>(n):
+    <span class="kw">return</span> (n * (n + <span class="nm">1</span>) // <span class="nm">2</span>) ** <span class="nm">2</span>
+
+<span class="fn">print</span>(<span class="fn">cube_sum</span>(<span class="nm">5</span>))          <span class="cm"># 225</span>
+<span class="fn">print</span>(<span class="fn">cube_sum_formula</span>(<span class="nm">5</span>))  <span class="cm"># 225</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#41</span>
+            <span class="prog-title">Check Disarium Number</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_disarium</span>(num):
+    <span class="cm"># Sum of digits raised to their positions equals the number</span>
+    digits = <span class="fn">str</span>(num)
+    total = <span class="fn">sum</span>(<span class="fn">int</span>(d) ** (i + <span class="nm">1</span>) <span class="kw">for</span> i, d <span class="kw">in</span> <span class="fn">enumerate</span>(digits))
+    <span class="kw">return</span> total == num
+
+<span class="fn">print</span>(<span class="fn">is_disarium</span>(<span class="nm">135</span>))  <span class="cm"># True: 1^1 + 3^2 + 5^3 = 135</span>
+<span class="fn">print</span>(<span class="fn">is_disarium</span>(<span class="nm">80</span>))   <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#42</span>
+            <span class="prog-title">Disarium Numbers Between 1 and 100</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_disarium</span>(num):
+    digits = <span class="fn">str</span>(num)
+    <span class="kw">return</span> num == <span class="fn">sum</span>(<span class="fn">int</span>(d) ** (i + <span class="nm">1</span>) <span class="kw">for</span> i, d <span class="kw">in</span> <span class="fn">enumerate</span>(digits))
+
+<span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">101</span>):
+    <span class="kw">if</span> <span class="fn">is_disarium</span>(n):
+        <span class="fn">print</span>(n)
+<span class="cm"># Output: 1 2 3 4 5 6 7 8 9 89</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#43</span>
+            <span class="prog-title">Check Happy Number</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_happy</span>(num):
+    <span class="cm"># Repeatedly replace with sum of squares of digits;</span>
+    <span class="cm"># happy if the process reaches 1</span>
+    seen = <span class="fn">set</span>()
+    <span class="kw">while</span> num != <span class="nm">1</span> <span class="kw">and</span> num <span class="kw">not</span> <span class="kw">in</span> seen:
+        seen.<span class="fn">add</span>(num)
+        num = <span class="fn">sum</span>(<span class="fn">int</span>(d) ** <span class="nm">2</span> <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num))
+    <span class="kw">return</span> num == <span class="nm">1</span>
+
+<span class="fn">print</span>(<span class="fn">is_happy</span>(<span class="nm">19</span>))  <span class="cm"># True: 1+81=82, 64+4=68, 36+64=100, 1</span>
+<span class="fn">print</span>(<span class="fn">is_happy</span>(<span class="nm">4</span>))   <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#44</span>
+            <span class="prog-title">Happy Numbers Between 1 and 100</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_happy</span>(num):
+    seen = <span class="fn">set</span>()
+    <span class="kw">while</span> num != <span class="nm">1</span> <span class="kw">and</span> num <span class="kw">not</span> <span class="kw">in</span> seen:
+        seen.<span class="fn">add</span>(num)
+        num = <span class="fn">sum</span>(<span class="fn">int</span>(d) ** <span class="nm">2</span> <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num))
+    <span class="kw">return</span> num == <span class="nm">1</span>
+
+<span class="fn">print</span>([n <span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">101</span>) <span class="kw">if</span> <span class="fn">is_happy</span>(n)])
+<span class="cm"># [1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49, 68, 70, 79, 82, 86, 91, 94, 97, 100]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#45</span>
+            <span class="prog-title">Check Harshad Number</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_harshad</span>(num):
+    <span class="cm"># Divisible by the sum of its own digits</span>
+    digit_sum = <span class="fn">sum</span>(<span class="fn">int</span>(d) <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num))
+    <span class="kw">return</span> num % digit_sum == <span class="nm">0</span>
+
+<span class="fn">print</span>(<span class="fn">is_harshad</span>(<span class="nm">18</span>))  <span class="cm"># True: 18 % (1+8) == 0</span>
+<span class="fn">print</span>(<span class="fn">is_harshad</span>(<span class="nm">19</span>))  <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#46</span>
+            <span class="prog-title">Pronic Numbers Between 1 and 100</span>
+            <span class="prog-diff diff-basic">Basic</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_pronic</span>(num):
+    <span class="cm"># Product of two consecutive integers: n*(n+1)</span>
+    n = <span class="nm">0</span>
+    <span class="kw">while</span> n * (n + <span class="nm">1</span>) &lt; num:
+        n += <span class="nm">1</span>
+    <span class="kw">return</span> n * (n + <span class="nm">1</span>) == num
+
+<span class="fn">print</span>([x <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">101</span>) <span class="kw">if</span> <span class="fn">is_pronic</span>(x)])
+<span class="cm"># [2, 6, 12, 20, 30, 42, 56, 72, 90]</span></pre>
+          </div>
+        </div>
+
       </section>
 
       <section class="prog-section" id="prog-inter">
@@ -662,6 +1086,1723 @@ ll.append(<span class="nm">3</span>)
 <span class="fn">print</span>(ll.display())  <span class="cm"># 1 -> 2 -> 3</span></pre>
           </div>
         </div>
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#47</span>
+            <span class="prog-title">Sum of Array Elements</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">arr = [<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>]
+
+<span class="cm"># Manual loop</span>
+total = <span class="nm">0</span>
+<span class="kw">for</span> x <span class="kw">in</span> arr:
+    total += x
+<span class="fn">print</span>(total)      <span class="cm"># 150</span>
+
+<span class="cm"># Built-in</span>
+<span class="fn">print</span>(<span class="fn">sum</span>(arr))   <span class="cm"># 150</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#48</span>
+            <span class="prog-title">Largest Element in an Array</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">find_largest</span>(arr):
+    largest = arr[<span class="nm">0</span>]
+    <span class="kw">for</span> x <span class="kw">in</span> arr:
+        <span class="kw">if</span> x &gt; largest:
+            largest = x
+    <span class="kw">return</span> largest
+
+arr = [<span class="nm">10</span>, <span class="nm">45</span>, <span class="nm">22</span>, <span class="nm">89</span>, <span class="nm">3</span>]
+<span class="fn">print</span>(<span class="fn">find_largest</span>(arr))  <span class="cm"># 89</span>
+<span class="fn">print</span>(<span class="fn">max</span>(arr))           <span class="cm"># 89 (built-in)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#49</span>
+            <span class="prog-title">Rotate an Array by D Positions</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">rotate_array</span>(arr, d):
+    d = d % <span class="fn">len</span>(arr)          <span class="cm"># handle d &gt; len</span>
+    <span class="kw">return</span> arr[d:] + arr[:d]
+
+arr = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">7</span>]
+<span class="fn">print</span>(<span class="fn">rotate_array</span>(arr, <span class="nm">2</span>))  <span class="cm"># [3, 4, 5, 6, 7, 1, 2]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#50</span>
+            <span class="prog-title">Split Array and Add First Part to End</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">split_and_move</span>(arr, k):
+    <span class="kw">return</span> arr[k:] + arr[:k]
+
+arr = [<span class="nm">12</span>, <span class="nm">10</span>, <span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">52</span>, <span class="nm">36</span>]
+<span class="fn">print</span>(<span class="fn">split_and_move</span>(arr, <span class="nm">2</span>))
+<span class="cm"># [5, 6, 52, 36, 12, 10]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#51</span>
+            <span class="prog-title">Check if Array is Monotonic</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_monotonic</span>(arr):
+    increasing = <span class="fn">all</span>(arr[i] &lt;= arr[i+<span class="nm">1</span>] <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(arr)-<span class="nm">1</span>))
+    decreasing = <span class="fn">all</span>(arr[i] &gt;= arr[i+<span class="nm">1</span>] <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(arr)-<span class="nm">1</span>))
+    <span class="kw">return</span> increasing <span class="kw">or</span> decreasing
+
+<span class="fn">print</span>(<span class="fn">is_monotonic</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>]))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_monotonic</span>([<span class="nm">6</span>, <span class="nm">5</span>, <span class="nm">4</span>, <span class="nm">4</span>]))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_monotonic</span>([<span class="nm">1</span>, <span class="nm">3</span>, <span class="nm">2</span>]))      <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#52</span>
+            <span class="prog-title">Multiply All Numbers in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+numbers = [<span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>]
+
+<span class="cm"># Manual loop</span>
+product = <span class="nm">1</span>
+<span class="kw">for</span> x <span class="kw">in</span> numbers:
+    product *= x
+<span class="fn">print</span>(product)             <span class="cm"># 120</span>
+
+<span class="fn">print</span>(math.<span class="fn">prod</span>(numbers))  <span class="cm"># 120 (Python 3.8+)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#53</span>
+            <span class="prog-title">Smallest Number in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">numbers = [<span class="nm">34</span>, <span class="nm">12</span>, <span class="nm">89</span>, <span class="nm">5</span>, <span class="nm">67</span>]
+
+smallest = numbers[<span class="nm">0</span>]
+<span class="kw">for</span> x <span class="kw">in</span> numbers:
+    <span class="kw">if</span> x &lt; smallest:
+        smallest = x
+<span class="fn">print</span>(smallest)      <span class="cm"># 5</span>
+<span class="fn">print</span>(<span class="fn">min</span>(numbers))  <span class="cm"># 5 (built-in)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#54</span>
+            <span class="prog-title">Second Largest Number in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">numbers = [<span class="nm">10</span>, <span class="nm">45</span>, <span class="nm">22</span>, <span class="nm">89</span>, <span class="nm">67</span>]
+
+unique = <span class="fn">list</span>(<span class="fn">set</span>(numbers))
+unique.<span class="fn">sort</span>()
+<span class="fn">print</span>(unique[-<span class="nm">2</span>])  <span class="cm"># 67</span>
+
+<span class="cm"># Single pass, no sort</span>
+first = second = <span class="fn">float</span>(<span class="st">'-inf'</span>)
+<span class="kw">for</span> x <span class="kw">in</span> numbers:
+    <span class="kw">if</span> x &gt; first:
+        first, second = x, first
+    <span class="kw">elif</span> first &gt; x &gt; second:
+        second = x
+<span class="fn">print</span>(second)  <span class="cm"># 67</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#55</span>
+            <span class="prog-title">N Largest Elements from a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> heapq
+
+numbers = [<span class="nm">4</span>, <span class="nm">90</span>, <span class="nm">21</span>, <span class="nm">45</span>, <span class="nm">78</span>, <span class="nm">3</span>, <span class="nm">56</span>]
+
+<span class="fn">print</span>(heapq.<span class="fn">nlargest</span>(<span class="nm">3</span>, numbers))   <span class="cm"># [90, 78, 56]</span>
+<span class="fn">print</span>(<span class="fn">sorted</span>(numbers, reverse=<span class="kw">True</span>)[:<span class="nm">3</span>])  <span class="cm"># same idea</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#56</span>
+            <span class="prog-title">Even Numbers in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">numbers = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>, <span class="nm">10</span>]
+
+evens = [x <span class="kw">for</span> x <span class="kw">in</span> numbers <span class="kw">if</span> x % <span class="nm">2</span> == <span class="nm">0</span>]
+<span class="fn">print</span>(evens)  <span class="cm"># [2, 4, 6, 8, 10]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#57</span>
+            <span class="prog-title">Odd Numbers in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">numbers = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>, <span class="nm">10</span>]
+
+odds = [x <span class="kw">for</span> x <span class="kw">in</span> numbers <span class="kw">if</span> x % <span class="nm">2</span> != <span class="nm">0</span>]
+<span class="fn">print</span>(odds)  <span class="cm"># [1, 3, 5, 7, 9]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#58</span>
+            <span class="prog-title">Remove Empty Lists from a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">data = [[<span class="nm">1</span>, <span class="nm">2</span>], [], [<span class="nm">3</span>], [], [<span class="nm">4</span>, <span class="nm">5</span>], []]
+
+cleaned = [x <span class="kw">for</span> x <span class="kw">in</span> data <span class="kw">if</span> x]  <span class="cm"># empty list is falsy</span>
+<span class="fn">print</span>(cleaned)  <span class="cm"># [[1, 2], [3], [4, 5]]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#59</span>
+            <span class="prog-title">Clone or Copy a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">original = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>]
+
+copy1 = original[:]          <span class="cm"># slice</span>
+copy2 = <span class="fn">list</span>(original)       <span class="cm"># constructor</span>
+copy3 = original.<span class="fn">copy</span>()      <span class="cm"># method</span>
+
+<span class="kw">import</span> copy
+deep = copy.<span class="fn">deepcopy</span>(original)  <span class="cm"># for nested lists</span>
+
+copy1.<span class="fn">append</span>(<span class="nm">6</span>)
+<span class="fn">print</span>(original)  <span class="cm"># [1, 2, 3, 4, 5] — unchanged</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#60</span>
+            <span class="prog-title">Count Occurrences of an Element</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">numbers = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">2</span>, <span class="nm">4</span>, <span class="nm">2</span>, <span class="nm">5</span>, <span class="nm">2</span>]
+
+<span class="fn">print</span>(numbers.<span class="fn">count</span>(<span class="nm">2</span>))  <span class="cm"># 4</span>
+
+<span class="cm"># Count everything at once</span>
+<span class="kw">from</span> collections <span class="kw">import</span> Counter
+<span class="fn">print</span>(<span class="fn">Counter</span>(numbers))
+<span class="cm"># Counter({2: 4, 1: 1, 3: 1, 4: 1, 5: 1})</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#61</span>
+            <span class="prog-title">Filter Integers from a Mixed List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">filter_integers</span>(lst):
+    <span class="kw">return</span> [x <span class="kw">for</span> x <span class="kw">in</span> lst <span class="kw">if</span> <span class="fn">isinstance</span>(x, int)]
+
+mixed = [<span class="nm">1</span>, <span class="st">'a'</span>, <span class="nm">2</span>, <span class="st">'b'</span>, <span class="nm">3.5</span>, <span class="nm">4</span>, <span class="st">'c'</span>]
+<span class="fn">print</span>(<span class="fn">filter_integers</span>(mixed))  <span class="cm"># [1, 2, 4]</span>
+
+<span class="cm"># Note: isinstance(True, int) is True in Python —</span>
+<span class="cm"># add `and not isinstance(x, bool)` to exclude booleans</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#62</span>
+            <span class="prog-title">Unpack a List into Variables</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">lst = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>]
+
+a, b, *rest = lst
+<span class="fn">print</span>(a, b)    <span class="cm"># 1 2</span>
+<span class="fn">print</span>(rest)    <span class="cm"># [3, 4, 5, 6]</span>
+
+first, *middle, last = lst
+<span class="fn">print</span>(middle)  <span class="cm"># [2, 3, 4, 5]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#63</span>
+            <span class="prog-title">Move All of One Element Type to the End</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">move_to_end</span>(lst, el):
+    <span class="kw">return</span> [x <span class="kw">for</span> x <span class="kw">in</span> lst <span class="kw">if</span> x != el] + [x <span class="kw">for</span> x <span class="kw">in</span> lst <span class="kw">if</span> x == el]
+
+<span class="fn">print</span>(<span class="fn">move_to_end</span>([<span class="nm">1</span>, <span class="nm">3</span>, <span class="nm">2</span>, <span class="nm">4</span>, <span class="nm">4</span>, <span class="nm">1</span>], <span class="nm">1</span>))
+<span class="cm"># [3, 2, 4, 4, 1, 1]</span>
+<span class="fn">print</span>(<span class="fn">move_to_end</span>([<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>], <span class="st">'a'</span>))
+<span class="cm"># ['b', 'a', 'a', 'a']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#64</span>
+            <span class="prog-title">Find the Missing Number (1 to 10)</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">missing_num</span>(lst):
+    <span class="kw">return</span> <span class="fn">sum</span>(<span class="fn">range</span>(<span class="nm">1</span>, <span class="nm">11</span>)) - <span class="fn">sum</span>(lst)
+
+<span class="fn">print</span>(<span class="fn">missing_num</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">6</span>, <span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>, <span class="nm">10</span>]))  <span class="cm"># 5</span>
+
+<span class="cm"># General: expected sum n(n+1)/2 minus actual sum</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#65</span>
+            <span class="prog-title">Append and Shift a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">next_in_line</span>(lst, num):
+    <span class="kw">if</span> <span class="kw">not</span> lst:
+        <span class="kw">return</span> <span class="st">'No list has been selected'</span>
+    lst.<span class="fn">append</span>(num)
+    lst.<span class="fn">pop</span>(<span class="nm">0</span>)
+    <span class="kw">return</span> lst
+
+<span class="fn">print</span>(<span class="fn">next_in_line</span>([<span class="nm">5</span>, <span class="nm">6</span>, <span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>], <span class="nm">1</span>))  <span class="cm"># [6, 7, 8, 9, 1]</span>
+<span class="fn">print</span>(<span class="fn">next_in_line</span>([], <span class="nm">6</span>))               <span class="cm"># No list has been selected</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#66</span>
+            <span class="prog-title">Sort a List and Remove Duplicates</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">unique_sort</span>(lst):
+    <span class="kw">return</span> <span class="fn">sorted</span>(<span class="fn">set</span>(lst))
+
+<span class="fn">print</span>(<span class="fn">unique_sort</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">4</span>, <span class="nm">3</span>]))        <span class="cm"># [1, 2, 3, 4]</span>
+<span class="fn">print</span>(<span class="fn">unique_sort</span>([<span class="nm">1</span>, <span class="nm">4</span>, <span class="nm">4</span>, <span class="nm">4</span>, <span class="nm">4</span>]))     <span class="cm"># [1, 4]</span>
+<span class="fn">print</span>(<span class="fn">unique_sort</span>([<span class="nm">5</span>, <span class="nm">4</span>, <span class="nm">3</span>, <span class="nm">2</span>, <span class="nm">1</span>]))     <span class="cm"># [1, 2, 3, 4, 5]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#67</span>
+            <span class="prog-title">Find the Unique Number in a List</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">find_unique</span>(lst):
+    <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">set</span>(lst):
+        <span class="kw">if</span> lst.<span class="fn">count</span>(x) == <span class="nm">1</span>:
+            <span class="kw">return</span> x
+
+<span class="fn">print</span>(<span class="fn">find_unique</span>([<span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">7</span>, <span class="nm">3</span>, <span class="nm">3</span>]))     <span class="cm"># 7</span>
+<span class="fn">print</span>(<span class="fn">find_unique</span>([<span class="nm">0</span>, <span class="nm">0</span>, <span class="nm">0.77</span>, <span class="nm">0</span>, <span class="nm">0</span>]))     <span class="cm"># 0.77</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#68</span>
+            <span class="prog-title">Sort Strings by Length</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">sort_by_length</span>(words):
+    <span class="kw">return</span> <span class="fn">sorted</span>(words, key=len)
+
+<span class="fn">print</span>(<span class="fn">sort_by_length</span>([<span class="st">'Google'</span>, <span class="st">'Apple'</span>, <span class="st">'Microsoft'</span>]))
+<span class="cm"># ['Apple', 'Google', 'Microsoft']</span>
+<span class="fn">print</span>(<span class="fn">sort_by_length</span>([<span class="st">'Leonardo'</span>, <span class="st">'Michelangelo'</span>, <span class="st">'Raphael'</span>, <span class="st">'Donatello'</span>]))
+<span class="cm"># ['Raphael', 'Leonardo', 'Donatello', 'Michelangelo']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#69</span>
+            <span class="prog-title">Sort Words in Alphabetic Order</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">sentence = <span class="fn">input</span>(<span class="st">"Enter a sentence: "</span>)
+
+words = sentence.<span class="fn">split</span>()
+words.<span class="fn">sort</span>(key=str.lower)
+
+<span class="kw">for</span> word <span class="kw">in</span> words:
+    <span class="fn">print</span>(word)
+<span class="cm"># 'the quick Brown fox' -&gt; Brown fox quick the</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#70</span>
+            <span class="prog-title">Remove Punctuation from a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> string
+
+text = <span class="st">"Hello!!!, he said ---and went."</span>
+
+cleaned = <span class="st">''</span>.<span class="fn">join</span>(ch <span class="kw">for</span> ch <span class="kw">in</span> text <span class="kw">if</span> ch <span class="kw">not</span> <span class="kw">in</span> string.punctuation)
+<span class="fn">print</span>(cleaned)  <span class="cm"># Hello he said and went</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#71</span>
+            <span class="prog-title">Words Longer Than Length K</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">find_words</span>(words, k):
+    <span class="kw">return</span> [w <span class="kw">for</span> w <span class="kw">in</span> words <span class="kw">if</span> <span class="fn">len</span>(w) &gt; k]
+
+words = [<span class="st">'apple'</span>, <span class="st">'cat'</span>, <span class="st">'banana'</span>, <span class="st">'dog'</span>, <span class="st">'elephant'</span>]
+<span class="fn">print</span>(<span class="fn">find_words</span>(words, <span class="nm">3</span>))
+<span class="cm"># ['apple', 'banana', 'elephant']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#72</span>
+            <span class="prog-title">Remove a Character from a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">text = <span class="st">"programming"</span>
+
+<span class="cm"># Remove all occurrences</span>
+<span class="fn">print</span>(text.<span class="fn">replace</span>(<span class="st">'m'</span>, <span class="st">''</span>))    <span class="cm"># prograing</span>
+
+<span class="cm"># Remove character at index i</span>
+i = <span class="nm">3</span>
+<span class="fn">print</span>(text[:i] + text[i+<span class="nm">1</span>:])    <span class="cm"># proramming</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#73</span>
+            <span class="prog-title">Split and Join a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">sentence = <span class="st">"Python is fun to learn"</span>
+
+words = sentence.<span class="fn">split</span>()         <span class="cm"># split on whitespace</span>
+<span class="fn">print</span>(words)   <span class="cm"># ['Python', 'is', 'fun', 'to', 'learn']</span>
+
+joined = <span class="st">'-'</span>.<span class="fn">join</span>(words)
+<span class="fn">print</span>(joined)  <span class="cm"># Python-is-fun-to-learn</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#74</span>
+            <span class="prog-title">Check if a String is Binary</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_binary</span>(s):
+    <span class="kw">return</span> <span class="fn">set</span>(s) &lt;= {<span class="st">'0'</span>, <span class="st">'1'</span>}
+
+<span class="fn">print</span>(<span class="fn">is_binary</span>(<span class="st">'101010'</span>))  <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_binary</span>(<span class="st">'101201'</span>))  <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#75</span>
+            <span class="prog-title">Uncommon Words from Two Strings</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">uncommon_words</span>(str1, str2):
+    words1, words2 = <span class="fn">set</span>(str1.<span class="fn">split</span>()), <span class="fn">set</span>(str2.<span class="fn">split</span>())
+    <span class="kw">return</span> <span class="fn">sorted</span>(words1 ^ words2)  <span class="cm"># symmetric difference</span>
+
+<span class="fn">print</span>(<span class="fn">uncommon_words</span>(<span class="st">'apple banana mango'</span>, <span class="st">'banana fruits mango'</span>))
+<span class="cm"># ['apple', 'fruits']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#76</span>
+            <span class="prog-title">Find Duplicate Characters in a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">from</span> collections <span class="kw">import</span> Counter
+
+text = <span class="st">"programming"</span>
+
+dupes = [ch <span class="kw">for</span> ch, n <span class="kw">in</span> <span class="fn">Counter</span>(text).<span class="fn">items</span>() <span class="kw">if</span> n &gt; <span class="nm">1</span>]
+<span class="fn">print</span>(dupes)  <span class="cm"># ['r', 'g', 'm']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#77</span>
+            <span class="prog-title">Check for Special Characters</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> re
+
+<span class="kw">def</span> <span class="fn">has_special</span>(s):
+    <span class="kw">return</span> <span class="fn">bool</span>(re.<span class="fn">search</span>(<span class="st">r'[^A-Za-z0-9\s]'</span>, s))
+
+<span class="fn">print</span>(<span class="fn">has_special</span>(<span class="st">'Hello World'</span>))   <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">has_special</span>(<span class="st">'Hello@World!'</span>))  <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#78</span>
+            <span class="prog-title">Check Order of Characters in a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">from</span> collections <span class="kw">import</span> OrderedDict
+
+<span class="kw">def</span> <span class="fn">check_order</span>(s, pattern):
+    d = OrderedDict.<span class="fn">fromkeys</span>(s)
+    p = <span class="nm">0</span>
+    <span class="kw">for</span> key <span class="kw">in</span> d:
+        <span class="kw">if</span> key == pattern[p]:
+            p += <span class="nm">1</span>
+        <span class="kw">if</span> p == <span class="fn">len</span>(pattern):
+            <span class="kw">return</span> <span class="kw">True</span>
+    <span class="kw">return</span> <span class="kw">False</span>
+
+<span class="fn">print</span>(<span class="fn">check_order</span>(<span class="st">'engineers rock'</span>, <span class="st">'er'</span>))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">check_order</span>(<span class="st">'engineers rock'</span>, <span class="st">'egr'</span>))  <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#79</span>
+            <span class="prog-title">Sort Comma-Separated Words</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">line = <span class="fn">input</span>(<span class="st">"Enter comma-separated words: "</span>)
+<span class="cm"># e.g. without,hello,bag,world</span>
+
+words = line.<span class="fn">split</span>(<span class="st">','</span>)
+<span class="fn">print</span>(<span class="st">','</span>.<span class="fn">join</span>(<span class="fn">sorted</span>(words)))
+<span class="cm"># bag,hello,without,world</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#80</span>
+            <span class="prog-title">Remove Duplicate Words and Sort</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">line = <span class="fn">input</span>(<span class="st">"Enter words: "</span>)
+<span class="cm"># e.g. hello world and practice makes perfect and hello world again</span>
+
+unique = <span class="fn">sorted</span>(<span class="fn">set</span>(line.<span class="fn">split</span>()))
+<span class="fn">print</span>(<span class="st">' '</span>.<span class="fn">join</span>(unique))
+<span class="cm"># again and hello makes perfect practice world</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#81</span>
+            <span class="prog-title">Count Letters and Digits in a Sentence</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">sentence = <span class="fn">input</span>(<span class="st">"Enter a sentence: "</span>)
+<span class="cm"># e.g. hello world! 123</span>
+
+letters = <span class="fn">sum</span>(ch.<span class="fn">isalpha</span>() <span class="kw">for</span> ch <span class="kw">in</span> sentence)
+digits = <span class="fn">sum</span>(ch.<span class="fn">isdigit</span>() <span class="kw">for</span> ch <span class="kw">in</span> sentence)
+
+<span class="fn">print</span>(<span class="st">f"LETTERS {letters}"</span>)  <span class="cm"># LETTERS 10</span>
+<span class="fn">print</span>(<span class="st">f"DIGITS {digits}"</span>)    <span class="cm"># DIGITS 3</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#82</span>
+            <span class="prog-title">Password Validity Checker</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> re
+
+<span class="kw">def</span> <span class="fn">is_valid</span>(pw):
+    <span class="cm"># 6-12 chars, at least one lowercase, uppercase,</span>
+    <span class="cm"># digit and special character from [$#@]</span>
+    <span class="kw">if</span> <span class="kw">not</span> <span class="nm">6</span> &lt;= <span class="fn">len</span>(pw) &lt;= <span class="nm">12</span>: <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> <span class="kw">not</span> re.<span class="fn">search</span>(<span class="st">r'[a-z]'</span>, pw): <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> <span class="kw">not</span> re.<span class="fn">search</span>(<span class="st">r'[A-Z]'</span>, pw): <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> <span class="kw">not</span> re.<span class="fn">search</span>(<span class="st">r'[0-9]'</span>, pw): <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">if</span> <span class="kw">not</span> re.<span class="fn">search</span>(<span class="st">r'[$#@]'</span>, pw): <span class="kw">return</span> <span class="kw">False</span>
+    <span class="kw">return</span> <span class="kw">True</span>
+
+<span class="fn">print</span>(<span class="fn">is_valid</span>(<span class="st">'ABd1234@1'</span>))  <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_valid</span>(<span class="st">'a F1#'</span>))      <span class="cm"># False (too short)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#83</span>
+            <span class="prog-title">Extract Username and Company from Email</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> re
+
+email = <span class="st">"john.doe@techforge.com"</span>
+
+m = re.<span class="fn">match</span>(<span class="st">r'(?P&lt;user&gt;[\w.]+)@(?P&lt;company&gt;\w+)\.com'</span>, email)
+<span class="fn">print</span>(m.<span class="fn">group</span>(<span class="st">'user'</span>))     <span class="cm"># john.doe</span>
+<span class="fn">print</span>(m.<span class="fn">group</span>(<span class="st">'company'</span>))  <span class="cm"># techforge</span>
+
+<span class="cm"># Without regex</span>
+user, domain = email.<span class="fn">split</span>(<span class="st">'@'</span>)
+<span class="fn">print</span>(user, domain.<span class="fn">split</span>(<span class="st">'.'</span>)[<span class="nm">0</span>])</pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#84</span>
+            <span class="prog-title">Stutter a Word</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">stutter</span>(word):
+    start = word[:<span class="nm">2</span>]
+    <span class="kw">return</span> <span class="st">f"{start}... {start}... {word}?"</span>
+
+<span class="fn">print</span>(<span class="fn">stutter</span>(<span class="st">'incredible'</span>))
+<span class="cm"># in... in... incredible?</span>
+<span class="fn">print</span>(<span class="fn">stutter</span>(<span class="st">'enthusiastic'</span>))
+<span class="cm"># en... en... enthusiastic?</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#85</span>
+            <span class="prog-title">Replace Vowels with a Character</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">replace_vowels</span>(s, ch):
+    <span class="kw">return</span> <span class="st">''</span>.<span class="fn">join</span>(ch <span class="kw">if</span> c.<span class="fn">lower</span>() <span class="kw">in</span> <span class="st">'aeiou'</span> <span class="kw">else</span> c <span class="kw">for</span> c <span class="kw">in</span> s)
+
+<span class="fn">print</span>(<span class="fn">replace_vowels</span>(<span class="st">'the aardvark'</span>, <span class="st">'#'</span>))
+<span class="cm"># th# ##rdv#rk</span>
+<span class="fn">print</span>(<span class="fn">replace_vowels</span>(<span class="st">'minnie mouse'</span>, <span class="st">'?'</span>))
+<span class="cm"># m?nn?? m??s?</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#86</span>
+            <span class="prog-title">Hamming Distance Between Two Strings</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">hamming_distance</span>(s1, s2):
+    <span class="cm"># number of positions where characters differ</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(a != b <span class="kw">for</span> a, b <span class="kw">in</span> <span class="fn">zip</span>(s1, s2))
+
+<span class="fn">print</span>(<span class="fn">hamming_distance</span>(<span class="st">'abcde'</span>, <span class="st">'bcdef'</span>))  <span class="cm"># 5</span>
+<span class="fn">print</span>(<span class="fn">hamming_distance</span>(<span class="st">'abcde'</span>, <span class="st">'abcde'</span>))  <span class="cm"># 0</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#87</span>
+            <span class="prog-title">Reverse a String and Swap Case</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">reverser</span>(s):
+    <span class="kw">return</span> s[::-<span class="nm">1</span>].<span class="fn">swapcase</span>()
+
+<span class="fn">print</span>(<span class="fn">reverser</span>(<span class="st">'Hello World'</span>))  <span class="cm"># DLROw OLLEh</span>
+<span class="fn">print</span>(<span class="fn">reverser</span>(<span class="st">'ReVeRsE'</span>))      <span class="cm"># eSrEvEr</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#88</span>
+            <span class="prog-title">Repeat Each Character Once</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">double_char</span>(s):
+    <span class="kw">return</span> <span class="st">''</span>.<span class="fn">join</span>(ch * <span class="nm">2</span> <span class="kw">for</span> ch <span class="kw">in</span> s)
+
+<span class="fn">print</span>(<span class="fn">double_char</span>(<span class="st">'String'</span>))  <span class="cm"># SSttrriinngg</span>
+<span class="fn">print</span>(<span class="fn">double_char</span>(<span class="st">'1234!_ '</span>)) <span class="cm"># 11223344!!__</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#89</span>
+            <span class="prog-title">Indices of Capital Letters</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">capital_indices</span>(s):
+    <span class="kw">return</span> [i <span class="kw">for</span> i, ch <span class="kw">in</span> <span class="fn">enumerate</span>(s) <span class="kw">if</span> ch.<span class="fn">isupper</span>()]
+
+<span class="fn">print</span>(<span class="fn">capital_indices</span>(<span class="st">'eDaBiT'</span>))       <span class="cm"># [1, 3, 5]</span>
+<span class="fn">print</span>(<span class="fn">capital_indices</span>(<span class="st">'EdAbIt'</span>))       <span class="cm"># [0, 2, 4]</span>
+<span class="fn">print</span>(<span class="fn">capital_indices</span>(<span class="st">'strawberry'</span>))   <span class="cm"># []</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#90</span>
+            <span class="prog-title">Alphabetize the Letters in a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">alphabet_soup</span>(s):
+    <span class="kw">return</span> <span class="st">''</span>.<span class="fn">join</span>(<span class="fn">sorted</span>(s))
+
+<span class="fn">print</span>(<span class="fn">alphabet_soup</span>(<span class="st">'hello'</span>))   <span class="cm"># ehllo</span>
+<span class="fn">print</span>(<span class="fn">alphabet_soup</span>(<span class="st">'edabit'</span>))  <span class="cm"># abdeit</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#91</span>
+            <span class="prog-title">Secret Society Name from Initials</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">society_name</span>(names):
+    <span class="kw">return</span> <span class="st">''</span>.<span class="fn">join</span>(<span class="fn">sorted</span>(name[<span class="nm">0</span>] <span class="kw">for</span> name <span class="kw">in</span> names))
+
+<span class="fn">print</span>(<span class="fn">society_name</span>([<span class="st">'Adam'</span>, <span class="st">'Sarah'</span>, <span class="st">'Malcolm'</span>]))
+<span class="cm"># AMS</span>
+<span class="fn">print</span>(<span class="fn">society_name</span>([<span class="st">'Harry'</span>, <span class="st">'Newt'</span>, <span class="st">'Luna'</span>, <span class="st">'Cho'</span>]))
+<span class="cm"># CHLN</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#92</span>
+            <span class="prog-title">Check if a Word is an Isogram</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_isogram</span>(word):
+    <span class="cm"># no repeating letters, case-insensitive</span>
+    word = word.<span class="fn">lower</span>()
+    <span class="kw">return</span> <span class="fn">len</span>(<span class="fn">set</span>(word)) == <span class="fn">len</span>(word)
+
+<span class="fn">print</span>(<span class="fn">is_isogram</span>(<span class="st">'Algorism'</span>))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_isogram</span>(<span class="st">'PasSword'</span>))   <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">is_isogram</span>(<span class="st">'Consecutive'</span>))<span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#93</span>
+            <span class="prog-title">Check if Characters Are in Alphabetical Order</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_in_order</span>(s):
+    <span class="kw">return</span> s == <span class="st">''</span>.<span class="fn">join</span>(<span class="fn">sorted</span>(s))
+
+<span class="fn">print</span>(<span class="fn">is_in_order</span>(<span class="st">'abc'</span>))    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_in_order</span>(<span class="st">'edabit'</span>)) <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">is_in_order</span>(<span class="st">'123'</span>))    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_in_order</span>(<span class="st">'xyzz'</span>))   <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#94</span>
+            <span class="prog-title">Check if a Number is Symmetrical (Palindrome)</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_symmetrical</span>(num):
+    s = <span class="fn">str</span>(num)
+    <span class="kw">return</span> s == s[::-<span class="nm">1</span>]
+
+<span class="fn">print</span>(<span class="fn">is_symmetrical</span>(<span class="nm">7227</span>))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_symmetrical</span>(<span class="nm">12567</span>))  <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">is_symmetrical</span>(<span class="nm">44444444</span>)) <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#95</span>
+            <span class="prog-title">Product of Numbers in a String</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">multiply_nums</span>(s):
+    product = <span class="nm">1</span>
+    <span class="kw">for</span> n <span class="kw">in</span> s.<span class="fn">split</span>(<span class="st">', '</span>):
+        product *= <span class="fn">int</span>(n)
+    <span class="kw">return</span> product
+
+<span class="fn">print</span>(<span class="fn">multiply_nums</span>(<span class="st">'2, 3'</span>))        <span class="cm"># 6</span>
+<span class="fn">print</span>(<span class="fn">multiply_nums</span>(<span class="st">'1, 2, 3, 4'</span>))  <span class="cm"># 24</span>
+<span class="fn">print</span>(<span class="fn">multiply_nums</span>(<span class="st">'10, -2'</span>))      <span class="cm"># -20</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#96</span>
+            <span class="prog-title">Capitalize by ASCII Code Parity</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">ascii_capitalize</span>(s):
+    <span class="kw">return</span> <span class="st">''</span>.<span class="fn">join</span>(
+        ch.<span class="fn">upper</span>() <span class="kw">if</span> <span class="fn">ord</span>(ch.<span class="fn">lower</span>()) % <span class="nm">2</span> == <span class="nm">0</span> <span class="kw">else</span> ch.<span class="fn">lower</span>()
+        <span class="kw">for</span> ch <span class="kw">in</span> s
+    )
+
+<span class="fn">print</span>(<span class="fn">ascii_capitalize</span>(<span class="st">'to be or not to be!'</span>))
+<span class="cm"># To Be oR NoT To Be!</span>
+<span class="fn">print</span>(<span class="fn">ascii_capitalize</span>(<span class="st">'THE LITTLE MERMAID'</span>))
+<span class="cm"># THe LiTTLe meRmaiD</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#97</span>
+            <span class="prog-title">Extract Unique Dictionary Values</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">data = {<span class="st">'a'</span>: [<span class="nm">1</span>, <span class="nm">2</span>], <span class="st">'b'</span>: [<span class="nm">3</span>, <span class="nm">1</span>], <span class="st">'c'</span>: [<span class="nm">4</span>, <span class="nm">5</span>], <span class="st">'d'</span>: [<span class="nm">2</span>, <span class="nm">5</span>]}
+
+unique = <span class="fn">sorted</span>({v <span class="kw">for</span> values <span class="kw">in</span> data.<span class="fn">values</span>() <span class="kw">for</span> v <span class="kw">in</span> values})
+<span class="fn">print</span>(unique)  <span class="cm"># [1, 2, 3, 4, 5]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#98</span>
+            <span class="prog-title">Sum of All Items in a Dictionary</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">prices = {<span class="st">'apple'</span>: <span class="nm">40</span>, <span class="st">'banana'</span>: <span class="nm">10</span>, <span class="st">'cherry'</span>: <span class="nm">90</span>}
+
+<span class="fn">print</span>(<span class="fn">sum</span>(prices.<span class="fn">values</span>()))  <span class="cm"># 140</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#99</span>
+            <span class="prog-title">Merge Two Dictionaries</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">d1 = {<span class="st">'a'</span>: <span class="nm">1</span>, <span class="st">'b'</span>: <span class="nm">2</span>}
+d2 = {<span class="st">'b'</span>: <span class="nm">3</span>, <span class="st">'c'</span>: <span class="nm">4</span>}
+
+<span class="cm"># Merge operator (Python 3.9+)</span>
+<span class="fn">print</span>(d1 | d2)        <span class="cm"># {'a': 1, 'b': 3, 'c': 4}</span>
+
+<span class="cm"># Unpacking (3.5+)</span>
+<span class="fn">print</span>({**d1, **d2})   <span class="cm"># same</span>
+
+<span class="cm"># In-place</span>
+d1.<span class="fn">update</span>(d2)
+<span class="fn">print</span>(d1)             <span class="cm"># same</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#100</span>
+            <span class="prog-title">Key-Value Pair List to Flat Dictionary</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">pairs = [(<span class="st">'a'</span>, <span class="nm">1</span>), (<span class="st">'b'</span>, <span class="nm">2</span>), (<span class="st">'c'</span>, <span class="nm">3</span>), (<span class="st">'d'</span>, <span class="nm">4</span>)]
+
+flat = <span class="fn">dict</span>(pairs)
+<span class="fn">print</span>(flat)  <span class="cm"># {'a': 1, 'b': 2, 'c': 3, 'd': 4}</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#101</span>
+            <span class="prog-title">Insert at the Beginning of an OrderedDict</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">from</span> collections <span class="kw">import</span> OrderedDict
+
+od = <span class="fn">OrderedDict</span>([(<span class="st">'b'</span>, <span class="nm">2</span>), (<span class="st">'c'</span>, <span class="nm">3</span>)])
+
+od[<span class="st">'a'</span>] = <span class="nm">1</span>
+od.<span class="fn">move_to_end</span>(<span class="st">'a'</span>, last=<span class="kw">False</span>)  <span class="cm"># move to front</span>
+
+<span class="fn">print</span>(od)  <span class="cm"># OrderedDict([('a', 1), ('b', 2), ('c', 3)])</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#102</span>
+            <span class="prog-title">Sort a Dictionary by Key or Value</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">scores = {<span class="st">'maths'</span>: <span class="nm">90</span>, <span class="st">'english'</span>: <span class="nm">75</span>, <span class="st">'science'</span>: <span class="nm">85</span>}
+
+<span class="cm"># By key</span>
+<span class="fn">print</span>(<span class="fn">dict</span>(<span class="fn">sorted</span>(scores.<span class="fn">items</span>())))
+<span class="cm"># {'english': 75, 'maths': 90, 'science': 85}</span>
+
+<span class="cm"># By value (descending)</span>
+<span class="fn">print</span>(<span class="fn">dict</span>(<span class="fn">sorted</span>(scores.<span class="fn">items</span>(), key=<span class="kw">lambda</span> kv: kv[<span class="nm">1</span>], reverse=<span class="kw">True</span>)))
+<span class="cm"># {'maths': 90, 'science': 85, 'english': 75}</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#103</span>
+            <span class="prog-title">Sum of Budgets in a List of Dictionaries</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">get_budgets</span>(people):
+    <span class="kw">return</span> <span class="fn">sum</span>(p[<span class="st">'budget'</span>] <span class="kw">for</span> p <span class="kw">in</span> people)
+
+<span class="fn">print</span>(<span class="fn">get_budgets</span>([
+    {<span class="st">'name'</span>: <span class="st">'John'</span>, <span class="st">'age'</span>: <span class="nm">21</span>, <span class="st">'budget'</span>: <span class="nm">23000</span>},
+    {<span class="st">'name'</span>: <span class="st">'Steve'</span>, <span class="st">'age'</span>: <span class="nm">32</span>, <span class="st">'budget'</span>: <span class="nm">40000</span>},
+    {<span class="st">'name'</span>: <span class="st">'Martin'</span>, <span class="st">'age'</span>: <span class="nm">16</span>, <span class="st">'budget'</span>: <span class="nm">2700</span>},
+]))  <span class="cm"># 65700</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#104</span>
+            <span class="prog-title">Dictionary to List of (Key, Value) Tuples</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">d = {<span class="st">'D'</span>: <span class="nm">1</span>, <span class="st">'B'</span>: <span class="nm">2</span>, <span class="st">'C'</span>: <span class="nm">3</span>}
+
+<span class="fn">print</span>(<span class="fn">list</span>(d.<span class="fn">items</span>()))
+<span class="cm"># [('D', 1), ('B', 2), ('C', 3)]</span>
+
+<span class="cm"># Lower/upper letter mapping</span>
+<span class="fn">print</span>({ch: ch.<span class="fn">upper</span>() <span class="kw">for</span> ch <span class="kw">in</span> <span class="st">'abc'</span>})
+<span class="cm"># {'a': 'A', 'b': 'B', 'c': 'C'}</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#105</span>
+            <span class="prog-title">Add Two Matrices</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">A = [[<span class="nm">1</span>, <span class="nm">2</span>], [<span class="nm">3</span>, <span class="nm">4</span>]]
+B = [[<span class="nm">5</span>, <span class="nm">6</span>], [<span class="nm">7</span>, <span class="nm">8</span>]]
+
+result = [[A[i][j] + B[i][j] <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(A[<span class="nm">0</span>]))]
+          <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(A))]
+
+<span class="fn">print</span>(result)  <span class="cm"># [[6, 8], [10, 12]]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#106</span>
+            <span class="prog-title">Multiply Two Matrices</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">A = [[<span class="nm">1</span>, <span class="nm">2</span>], [<span class="nm">3</span>, <span class="nm">4</span>]]
+B = [[<span class="nm">5</span>, <span class="nm">6</span>], [<span class="nm">7</span>, <span class="nm">8</span>]]
+
+result = [[<span class="fn">sum</span>(A[i][k] * B[k][j] <span class="kw">for</span> k <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(B)))
+           <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(B[<span class="nm">0</span>]))]
+          <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(A))]
+
+<span class="fn">print</span>(result)  <span class="cm"># [[19, 22], [43, 50]]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#107</span>
+            <span class="prog-title">Transpose a Matrix</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">M = [[<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>],
+     [<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>]]
+
+transposed = [<span class="fn">list</span>(row) <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">zip</span>(*M)]
+<span class="fn">print</span>(transposed)
+<span class="cm"># [[1, 4], [2, 5], [3, 6]]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#108</span>
+            <span class="prog-title">Formula: Q = sqrt(2CD/H)</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="cm"># Q = sqrt(2 * C * D / H) with C=50, H=30</span>
+<span class="cm"># for comma-separated D values</span>
+C, H = <span class="nm">50</span>, <span class="nm">30</span>
+
+values = <span class="fn">input</span>(<span class="st">"Enter D values: "</span>)  <span class="cm"># e.g. 100,150,180</span>
+results = [<span class="fn">str</span>(<span class="fn">round</span>(math.<span class="fn">sqrt</span>(<span class="nm">2</span> * C * <span class="fn">int</span>(d) / H)))
+           <span class="kw">for</span> d <span class="kw">in</span> values.<span class="fn">split</span>(<span class="st">','</span>)]
+
+<span class="fn">print</span>(<span class="st">','</span>.<span class="fn">join</span>(results))  <span class="cm"># 18,22,24</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#109</span>
+            <span class="prog-title">Generate a 2D Array of i*j</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">x, y = <span class="nm">3</span>, <span class="nm">5</span>
+
+grid = [[i * j <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(y)] <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(x)]
+<span class="fn">print</span>(grid)
+<span class="cm"># [[0, 0, 0, 0, 0],</span>
+<span class="cm">#  [0, 1, 2, 3, 4],</span>
+<span class="cm">#  [0, 2, 4, 6, 8]]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#110</span>
+            <span class="prog-title">Radians to Degrees</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="kw">def</span> <span class="fn">to_degrees</span>(rad):
+    <span class="kw">return</span> <span class="fn">round</span>(rad * <span class="nm">180</span> / math.pi, <span class="nm">1</span>)
+
+<span class="fn">print</span>(<span class="fn">to_degrees</span>(<span class="nm">1</span>))     <span class="cm"># 57.3</span>
+<span class="fn">print</span>(<span class="fn">to_degrees</span>(<span class="nm">20</span>))    <span class="cm"># 1145.9</span>
+<span class="fn">print</span>(math.<span class="fn">degrees</span>(<span class="nm">1</span>))   <span class="cm"># built-in equivalent</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#111</span>
+            <span class="prog-title">Check Curzon Number</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_curzon</span>(num):
+    <span class="cm"># (2^num + 1) divisible by (2*num + 1)</span>
+    <span class="kw">return</span> (<span class="nm">2</span> ** num + <span class="nm">1</span>) % (<span class="nm">2</span> * num + <span class="nm">1</span>) == <span class="nm">0</span>
+
+<span class="fn">print</span>(<span class="fn">is_curzon</span>(<span class="nm">5</span>))   <span class="cm"># True: 33 % 11 == 0</span>
+<span class="fn">print</span>(<span class="fn">is_curzon</span>(<span class="nm">10</span>))  <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">is_curzon</span>(<span class="nm">14</span>))  <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#112</span>
+            <span class="prog-title">Area of a Hexagon</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="kw">def</span> <span class="fn">hexagon_area</span>(x):
+    <span class="cm"># regular hexagon with side length x</span>
+    <span class="kw">return</span> <span class="fn">round</span>(<span class="nm">3</span> * math.<span class="fn">sqrt</span>(<span class="nm">3</span>) * x ** <span class="nm">2</span> / <span class="nm">2</span>, <span class="nm">1</span>)
+
+<span class="fn">print</span>(<span class="fn">hexagon_area</span>(<span class="nm">1</span>))  <span class="cm"># 2.6</span>
+<span class="fn">print</span>(<span class="fn">hexagon_area</span>(<span class="nm">2</span>))  <span class="cm"># 10.4</span>
+<span class="fn">print</span>(<span class="fn">hexagon_area</span>(<span class="nm">3</span>))  <span class="cm"># 23.4</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#113</span>
+            <span class="prog-title">Decimal String to Binary</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">to_binary</span>(decimal_str):
+    <span class="kw">return</span> <span class="fn">bin</span>(<span class="fn">int</span>(decimal_str))[<span class="nm">2</span>:]
+
+<span class="fn">print</span>(<span class="fn">to_binary</span>(<span class="st">'10'</span>))   <span class="cm"># 1010</span>
+<span class="fn">print</span>(<span class="fn">to_binary</span>(<span class="st">'35'</span>))   <span class="cm"># 100011</span>
+<span class="fn">print</span>(<span class="fn">to_binary</span>(<span class="st">'2'</span>))    <span class="cm"># 10</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#114</span>
+            <span class="prog-title">Sum of Numbers Divisible by C in a Range</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">evenly_divisible</span>(a, b, c):
+    <span class="kw">return</span> <span class="fn">sum</span>(x <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(a, b + <span class="nm">1</span>) <span class="kw">if</span> x % c == <span class="nm">0</span>)
+
+<span class="fn">print</span>(<span class="fn">evenly_divisible</span>(<span class="nm">1</span>, <span class="nm">10</span>, <span class="nm">20</span>))  <span class="cm"># 0</span>
+<span class="fn">print</span>(<span class="fn">evenly_divisible</span>(<span class="nm">1</span>, <span class="nm">10</span>, <span class="nm">2</span>))   <span class="cm"># 30 (2+4+6+8+10)</span>
+<span class="fn">print</span>(<span class="fn">evenly_divisible</span>(<span class="nm">1</span>, <span class="nm">10</span>, <span class="nm">3</span>))   <span class="cm"># 18 (3+6+9)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#115</span>
+            <span class="prog-title">Evaluate an Inequality Expression</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">correct_signs</span>(expr):
+    <span class="cm"># expr like '3 &lt; 7 &lt; 11' — eval is safe here only</span>
+    <span class="cm"># because input is restricted to numbers and &lt; &gt;</span>
+    <span class="kw">return</span> <span class="fn">eval</span>(expr)
+
+<span class="fn">print</span>(<span class="fn">correct_signs</span>(<span class="st">'3 &lt; 7 &lt; 11'</span>))          <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">correct_signs</span>(<span class="st">'13 &gt; 44 &gt; 33 &gt; 1'</span>))    <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">correct_signs</span>(<span class="st">'1 &lt; 2 &lt; 6 &lt; 9 &gt; 3'</span>))   <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#116</span>
+            <span class="prog-title">Paper Fold Thickness</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">num_layers</span>(n):
+    <span class="cm"># 0.5mm doubled n times, answer in metres</span>
+    thickness_m = <span class="nm">0.0005</span> * (<span class="nm">2</span> ** n)
+    <span class="kw">return</span> <span class="st">f"{thickness_m}m"</span>
+
+<span class="fn">print</span>(<span class="fn">num_layers</span>(<span class="nm">1</span>))   <span class="cm"># 0.001m</span>
+<span class="fn">print</span>(<span class="fn">num_layers</span>(<span class="nm">4</span>))   <span class="cm"># 0.008m</span>
+<span class="fn">print</span>(<span class="fn">num_layers</span>(<span class="nm">21</span>))  <span class="cm"># 1048.576m</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#117</span>
+            <span class="prog-title">Add Element Index to Itself</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">add_indexes</span>(lst):
+    <span class="kw">return</span> [i + x <span class="kw">for</span> i, x <span class="kw">in</span> <span class="fn">enumerate</span>(lst)]
+
+<span class="fn">print</span>(<span class="fn">add_indexes</span>([<span class="nm">0</span>, <span class="nm">0</span>, <span class="nm">0</span>, <span class="nm">0</span>, <span class="nm">0</span>]))  <span class="cm"># [0, 1, 2, 3, 4]</span>
+<span class="fn">print</span>(<span class="fn">add_indexes</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>]))  <span class="cm"># [1, 3, 5, 7, 9]</span>
+<span class="fn">print</span>(<span class="fn">add_indexes</span>([<span class="nm">5</span>, <span class="nm">4</span>, <span class="nm">3</span>, <span class="nm">2</span>, <span class="nm">1</span>]))  <span class="cm"># [5, 5, 5, 5, 5]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#118</span>
+            <span class="prog-title">Volume of a Cone</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="kw">def</span> <span class="fn">cone_volume</span>(h, r):
+    <span class="kw">return</span> <span class="fn">round</span>(math.pi * r ** <span class="nm">2</span> * h / <span class="nm">3</span>, <span class="nm">2</span>)
+
+<span class="fn">print</span>(<span class="fn">cone_volume</span>(<span class="nm">3</span>, <span class="nm">2</span>))    <span class="cm"># 12.57</span>
+<span class="fn">print</span>(<span class="fn">cone_volume</span>(<span class="nm">15</span>, <span class="nm">6</span>))   <span class="cm"># 565.49</span>
+<span class="fn">print</span>(<span class="fn">cone_volume</span>(<span class="nm">7</span>, <span class="nm">28</span>))   <span class="cm"># 5747.02</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#119</span>
+            <span class="prog-title">Nth Triangular Number</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">triangle</span>(n):
+    <span class="cm"># dots forming a triangle: 1, 3, 6, 10, 15...</span>
+    <span class="kw">return</span> n * (n + <span class="nm">1</span>) // <span class="nm">2</span>
+
+<span class="fn">print</span>(<span class="fn">triangle</span>(<span class="nm">1</span>))    <span class="cm"># 1</span>
+<span class="fn">print</span>(<span class="fn">triangle</span>(<span class="nm">6</span>))    <span class="cm"># 21</span>
+<span class="fn">print</span>(<span class="fn">triangle</span>(<span class="nm">215</span>))  <span class="cm"># 23220</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#120</span>
+            <span class="prog-title">Compound Interest Calculator</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">compound_interest</span>(principal, years, rate, periods):
+    <span class="cm"># rate compounded `periods` times per year</span>
+    amount = principal * (<span class="nm">1</span> + rate / periods) ** (periods * years)
+    <span class="kw">return</span> <span class="fn">round</span>(amount, <span class="nm">2</span>)
+
+<span class="fn">print</span>(<span class="fn">compound_interest</span>(<span class="nm">10000</span>, <span class="nm">10</span>, <span class="nm">0.06</span>, <span class="nm">12</span>))
+<span class="cm"># 18193.97  ($10,000 at 6% monthly for 10 years)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#121</span>
+            <span class="prog-title">List of Numbers Divisible by N in a Range</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">divisible_by</span>(x, y, n):
+    <span class="kw">return</span> [i <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(x, y + <span class="nm">1</span>) <span class="kw">if</span> i % n == <span class="nm">0</span>]
+
+<span class="fn">print</span>(<span class="fn">divisible_by</span>(<span class="nm">1</span>, <span class="nm">10</span>, <span class="nm">3</span>))    <span class="cm"># [3, 6, 9]</span>
+<span class="fn">print</span>(<span class="fn">divisible_by</span>(<span class="nm">7</span>, <span class="nm">9</span>, <span class="nm">2</span>))     <span class="cm"># [8]</span>
+<span class="fn">print</span>(<span class="fn">divisible_by</span>(<span class="nm">15</span>, <span class="nm">20</span>, <span class="nm">7</span>))   <span class="cm"># []</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#122</span>
+            <span class="prog-title">Square Every Digit of a Number</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">square_digits</span>(num):
+    <span class="kw">return</span> <span class="fn">int</span>(<span class="st">''</span>.<span class="fn">join</span>(<span class="fn">str</span>(<span class="fn">int</span>(d) ** <span class="nm">2</span>) <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num)))
+
+<span class="fn">print</span>(<span class="fn">square_digits</span>(<span class="nm">9119</span>))  <span class="cm"># 811181</span>
+<span class="fn">print</span>(<span class="fn">square_digits</span>(<span class="nm">2483</span>))  <span class="cm"># 416649</span>
+<span class="fn">print</span>(<span class="fn">square_digits</span>(<span class="nm">3212</span>))  <span class="cm"># 9414</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#123</span>
+            <span class="prog-title">Mean of All Digits</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">mean_of_digits</span>(num):
+    digits = [<span class="fn">int</span>(d) <span class="kw">for</span> d <span class="kw">in</span> <span class="fn">str</span>(num)]
+    <span class="kw">return</span> <span class="fn">sum</span>(digits) / <span class="fn">len</span>(digits)
+
+<span class="fn">print</span>(<span class="fn">mean_of_digits</span>(<span class="nm">42</span>))    <span class="cm"># 3.0</span>
+<span class="fn">print</span>(<span class="fn">mean_of_digits</span>(<span class="nm">12345</span>)) <span class="cm"># 3.0</span>
+<span class="fn">print</span>(<span class="fn">mean_of_digits</span>(<span class="nm">666</span>))   <span class="cm"># 6.0</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#124</span>
+            <span class="prog-title">FizzBuzz-Style List (1 to N)</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">fizz_buzz_list</span>(n):
+    out = []
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">1</span>, n + <span class="nm">1</span>):
+        <span class="kw">if</span> i % <span class="nm">15</span> == <span class="nm">0</span>:  out.<span class="fn">append</span>(<span class="st">'FizzBuzz'</span>)
+        <span class="kw">elif</span> i % <span class="nm">3</span> == <span class="nm">0</span>: out.<span class="fn">append</span>(<span class="st">'Fizz'</span>)
+        <span class="kw">elif</span> i % <span class="nm">5</span> == <span class="nm">0</span>: out.<span class="fn">append</span>(<span class="st">'Buzz'</span>)
+        <span class="kw">else</span>:            out.<span class="fn">append</span>(i)
+    <span class="kw">return</span> out
+
+<span class="fn">print</span>(<span class="fn">fizz_buzz_list</span>(<span class="nm">15</span>))
+<span class="cm"># [1, 2, 'Fizz', 4, 'Buzz', ..., 14, 'FizzBuzz']</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#125</span>
+            <span class="prog-title">Validate a Pythagorean Triplet</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">is_triplet</span>(a, b, c):
+    x, y, z = <span class="fn">sorted</span>([a, b, c])
+    <span class="kw">return</span> x ** <span class="nm">2</span> + y ** <span class="nm">2</span> == z ** <span class="nm">2</span>
+
+<span class="fn">print</span>(<span class="fn">is_triplet</span>(<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>))    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">is_triplet</span>(<span class="nm">13</span>, <span class="nm">5</span>, <span class="nm">12</span>))  <span class="cm"># True (order doesn't matter)</span>
+<span class="fn">print</span>(<span class="fn">is_triplet</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>))    <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#126</span>
+            <span class="prog-title">Count Equal Values Among Three Integers</span>
+            <span class="prog-diff diff-inter">Intermediate</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">equal</span>(a, b, c):
+    unique = <span class="fn">len</span>({a, b, c})
+    <span class="kw">if</span> unique == <span class="nm">1</span>: <span class="kw">return</span> <span class="nm">3</span>   <span class="cm"># all equal</span>
+    <span class="kw">if</span> unique == <span class="nm">2</span>: <span class="kw">return</span> <span class="nm">2</span>   <span class="cm"># two equal</span>
+    <span class="kw">return</span> <span class="nm">0</span>                   <span class="cm"># none equal</span>
+
+<span class="fn">print</span>(<span class="fn">equal</span>(<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">3</span>))  <span class="cm"># 2</span>
+<span class="fn">print</span>(<span class="fn">equal</span>(<span class="nm">1</span>, <span class="nm">1</span>, <span class="nm">1</span>))  <span class="cm"># 3</span>
+<span class="fn">print</span>(<span class="fn">equal</span>(<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>))  <span class="cm"># 0</span></pre>
+          </div>
+        </div>
+
       </section>
 
       <section class="prog-section" id="prog-adv">
@@ -858,6 +2999,278 @@ acc.withdraw(<span class="nm">200</span>)
 <span class="fn">print</span>(acc.show_history())</pre>
           </div>
         </div>
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#127</span>
+            <span class="prog-title">Fibonacci Using Recursion</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">fib</span>(n):
+    <span class="kw">if</span> n &lt;= <span class="nm">1</span>:
+        <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">fib</span>(n - <span class="nm">1</span>) + <span class="fn">fib</span>(n - <span class="nm">2</span>)
+
+<span class="fn">print</span>([<span class="fn">fib</span>(i) <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">10</span>)])
+<span class="cm"># [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</span>
+
+<span class="cm"># Memoized — avoids exponential blowup</span>
+<span class="kw">from</span> functools <span class="kw">import</span> lru_cache
+
+@<span class="fn">lru_cache</span>(maxsize=<span class="kw">None</span>)
+<span class="kw">def</span> <span class="fn">fib_fast</span>(n):
+    <span class="kw">return</span> n <span class="kw">if</span> n &lt;= <span class="nm">1</span> <span class="kw">else</span> <span class="fn">fib_fast</span>(n - <span class="nm">1</span>) + <span class="fn">fib_fast</span>(n - <span class="nm">2</span>)
+
+<span class="fn">print</span>(<span class="fn">fib_fast</span>(<span class="nm">50</span>))  <span class="cm"># 12586269025, instant</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#128</span>
+            <span class="prog-title">Generator: Numbers Divisible by 7</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">class</span> DivisibleBySeven:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, n):
+        self.n = n
+
+    <span class="kw">def</span> <span class="fn">generate</span>(self):
+        <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">0</span>, self.n + <span class="nm">1</span>, <span class="nm">7</span>):
+            <span class="kw">yield</span> i
+
+gen = <span class="fn">DivisibleBySeven</span>(<span class="nm">50</span>)
+<span class="fn">print</span>(<span class="fn">list</span>(gen.<span class="fn">generate</span>()))
+<span class="cm"># [0, 7, 14, 21, 28, 35, 42, 49]</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#129</span>
+            <span class="prog-title">Generator: Divisible by 5 and 7</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">div_by_5_and_7</span>(n):
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n + <span class="nm">1</span>):
+        <span class="kw">if</span> i % <span class="nm">35</span> == <span class="nm">0</span>:  <span class="cm"># divisible by both 5 and 7</span>
+            <span class="kw">yield</span> i
+
+n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter n: "</span>))  <span class="cm"># e.g. 100</span>
+<span class="fn">print</span>(<span class="st">','</span>.<span class="fn">join</span>(<span class="fn">str</span>(x) <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">div_by_5_and_7</span>(n)))
+<span class="cm"># 0,35,70</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#130</span>
+            <span class="prog-title">Generator: Even Numbers Up to N</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">even_numbers</span>(n):
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">0</span>, n + <span class="nm">1</span>, <span class="nm">2</span>):
+        <span class="kw">yield</span> i
+
+n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter n: "</span>))  <span class="cm"># e.g. 10</span>
+<span class="fn">print</span>(<span class="st">','</span>.<span class="fn">join</span>(<span class="fn">str</span>(x) <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">even_numbers</span>(n)))
+<span class="cm"># 0,2,4,6,8,10</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#131</span>
+            <span class="prog-title">Inheritance: Person, Male and Female</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">class</span> Person:
+    <span class="kw">def</span> <span class="fn">get_gender</span>(self):
+        <span class="kw">return</span> <span class="st">'Unknown'</span>
+
+<span class="kw">class</span> <span class="fn">Male</span>(Person):
+    <span class="kw">def</span> <span class="fn">get_gender</span>(self):
+        <span class="kw">return</span> <span class="st">'Male'</span>
+
+<span class="kw">class</span> <span class="fn">Female</span>(Person):
+    <span class="kw">def</span> <span class="fn">get_gender</span>(self):
+        <span class="kw">return</span> <span class="st">'Female'</span>
+
+<span class="fn">print</span>(<span class="fn">Male</span>().<span class="fn">get_gender</span>())    <span class="cm"># Male</span>
+<span class="fn">print</span>(<span class="fn">Female</span>().<span class="fn">get_gender</span>())  <span class="cm"># Female</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#132</span>
+            <span class="prog-title">Generate All Sentence Combinations</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">from</span> itertools <span class="kw">import</span> product
+
+subjects = [<span class="st">'I'</span>, <span class="st">'You'</span>]
+verbs = [<span class="st">'Play'</span>, <span class="st">'Love'</span>]
+objects = [<span class="st">'Hockey'</span>, <span class="st">'Football'</span>]
+
+<span class="kw">for</span> s, v, o <span class="kw">in</span> <span class="fn">product</span>(subjects, verbs, objects):
+    <span class="fn">print</span>(<span class="st">f"{s} {v} {o}"</span>)
+<span class="cm"># I Play Hockey ... You Love Football (8 sentences)</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#133</span>
+            <span class="prog-title">Compress and Decompress a String</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> zlib
+
+text = <span class="st">'hello world!'</span> * <span class="nm">4</span>
+data = text.<span class="fn">encode</span>()
+
+compressed = zlib.<span class="fn">compress</span>(data)
+<span class="fn">print</span>(<span class="fn">len</span>(data), <span class="st">'-&gt;'</span>, <span class="fn">len</span>(compressed))  <span class="cm"># 48 -&gt; 24</span>
+
+restored = zlib.<span class="fn">decompress</span>(compressed).<span class="fn">decode</span>()
+<span class="fn">print</span>(restored == text)  <span class="cm"># True</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#134</span>
+            <span class="prog-title">OOP: Shape and Square with area()</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">class</span> Shape:
+    <span class="kw">def</span> <span class="fn">area</span>(self):
+        <span class="kw">return</span> <span class="nm">0</span>
+
+<span class="kw">class</span> <span class="fn">Square</span>(Shape):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, length):
+        self.length = length
+
+    <span class="kw">def</span> <span class="fn">area</span>(self):
+        <span class="kw">return</span> self.length ** <span class="nm">2</span>
+
+<span class="fn">print</span>(<span class="fn">Shape</span>().<span class="fn">area</span>())    <span class="cm"># 0</span>
+<span class="fn">print</span>(<span class="fn">Square</span>(<span class="nm">5</span>).<span class="fn">area</span>())  <span class="cm"># 25</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#135</span>
+            <span class="prog-title">Reverse a Boolean Value</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">reverse_bool</span>(value):
+    <span class="kw">if</span> <span class="fn">isinstance</span>(value, bool):
+        <span class="kw">return</span> <span class="kw">not</span> value
+    <span class="kw">return</span> <span class="st">'boolean expected'</span>
+
+<span class="fn">print</span>(<span class="fn">reverse_bool</span>(<span class="kw">True</span>))   <span class="cm"># False</span>
+<span class="fn">print</span>(<span class="fn">reverse_bool</span>(<span class="kw">False</span>))  <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">reverse_bool</span>(<span class="nm">0</span>))      <span class="cm"># boolean expected</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#136</span>
+            <span class="prog-title">Check if a List Trails Another by One</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">def</span> <span class="fn">simon_says</span>(lst1, lst2):
+    <span class="cm"># second list must repeat first list shifted by one</span>
+    <span class="kw">return</span> lst1[:-<span class="nm">1</span>] == lst2[<span class="nm">1</span>:]
+
+<span class="fn">print</span>(<span class="fn">simon_says</span>([<span class="nm">1</span>, <span class="nm">2</span>], [<span class="nm">5</span>, <span class="nm">1</span>]))          <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">simon_says</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">4</span>], [<span class="nm">5</span>, <span class="nm">1</span>, <span class="nm">2</span>]))    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="fn">simon_says</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>], [<span class="nm">5</span>, <span class="nm">5</span>, <span class="nm">1</span>]))    <span class="cm"># False</span></pre>
+          </div>
+        </div>
+
+        <div class="prog-card">
+          <div class="prog-header">
+            <span class="prog-num">#137</span>
+            <span class="prog-title">Circle Class: getArea and getPerimeter</span>
+            <span class="prog-diff diff-adv">Advanced</span>
+          </div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre"><span class="kw">import</span> math
+
+<span class="kw">class</span> Circle:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, radius):
+        self.radius = radius
+
+    <span class="kw">def</span> <span class="fn">get_area</span>(self):
+        <span class="kw">return</span> <span class="fn">round</span>(math.pi * self.radius ** <span class="nm">2</span>, <span class="nm">2</span>)
+
+    <span class="kw">def</span> <span class="fn">get_perimeter</span>(self):
+        <span class="kw">return</span> <span class="fn">round</span>(<span class="nm">2</span> * math.pi * self.radius, <span class="nm">2</span>)
+
+c = <span class="fn">Circle</span>(<span class="nm">4.44</span>)
+<span class="fn">print</span>(c.<span class="fn">get_area</span>())       <span class="cm"># 61.93</span>
+<span class="fn">print</span>(c.<span class="fn">get_perimeter</span>())  <span class="cm"># 27.9</span></pre>
+          </div>
+        </div>
+
       </section>
 
       <div class="page-nav">
