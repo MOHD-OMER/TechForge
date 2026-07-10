@@ -106,7 +106,12 @@
     .pb-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); }
     .pb-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
     .pb-desc { font-size: 13.5px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
-    .pb-example { font-family: var(--mono); font-size: 12px; color: var(--text3); background: var(--bg2); border-radius: 6px; padding: 10px 14px; line-height: 1.8; }
+    .pb-example { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); border-radius: 6px; padding: 10px 14px; line-height: 1.8; }
+    /* .pb-example's bg (--bg2) swaps to pale cream in light theme, but its inline
+       syntax-highlight colors are dark-theme-only constants (~1.3–2.3:1 against
+       light bg2) — override with darkened equivalents, same fix as the Big-O legend. */
+    html.light .pb-example [style*="color:#f7cc45"] { color: #816305 !important; }
+    html.light .pb-example [style*="color:#4d9ef7"] { color: #0965ca !important; }
     .cplx-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
     .cplx-table th { background: var(--surface); color: var(--text2); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
     .cplx-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
@@ -665,7 +670,7 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">if</span> s == target: <span style="color:#f7cc45;font-weight:600">return</span> [l, r]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">elif</span> s &lt; target: l += 1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">else</span>: r -= 1<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Two Sum II, 3Sum, Container With Most Water, Valid Palindrome</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Two Sum II, 3Sum, Container With Most Water, Valid Palindrome</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -682,10 +687,10 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 <span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_sum_subarray</span>(arr, k):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window = sum(arr[:k]); best = window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> i <span style="color:#f7cc45;font-weight:600">in</span> range(k, len(arr)):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window += arr[i] - arr[i-k]  <span style="color:#4a6078;font-style:italic"># slide: add new, drop old</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window += arr[i] - arr[i-k]  <span style="color:var(--text2);font-style:italic"># slide: add new, drop old</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, window)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Longest Substring, Min Window Substring, Max Sum Subarray</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Longest Substring, Min Window Substring, Max Sum Subarray</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -702,8 +707,8 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 prefix = [0] * (len(arr) + 1)<br>
 <span style="color:#f7cc45;font-weight:600">for</span> i, x <span style="color:#f7cc45;font-weight:600">in</span> enumerate(arr):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;prefix[i+1] = prefix[i] + x<br><br>
-<span style="color:#4a6078;font-style:italic"># sum(arr[l:r]) = prefix[r] - prefix[l]  → O(1) per query</span><br>
-<span style="color:#4a6078;font-style:italic"># Use for: Product of Array Except Self, Range Sum Query, Subarray Sum = K</span>
+<span style="color:var(--text2);font-style:italic"># sum(arr[l:r]) = prefix[r] - prefix[l]  → O(1) per query</span><br>
+<span style="color:var(--text2);font-style:italic"># Use for: Product of Array Except Self, Range Sum Query, Subarray Sum = K</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -720,10 +725,10 @@ prefix = [0] * (len(arr) + 1)<br>
 <span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_subarray</span>(arr):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;curr = best = arr[0]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> x <span style="color:#f7cc45;font-weight:600">in</span> arr[1:]:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curr = max(x, curr + x)  <span style="color:#4a6078;font-style:italic"># extend or restart?</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curr = max(x, curr + x)  <span style="color:var(--text2);font-style:italic"># extend or restart?</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, curr)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Maximum Subarray, Maximum Product Subarray, Best Time to Buy/Sell</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Maximum Subarray, Maximum Product Subarray, Best Time to Buy/Sell</span>
           </div>
         </div>
       </div>

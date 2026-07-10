@@ -105,7 +105,24 @@ document.addEventListener('DOMContentLoaded', function () {
     '.lt-btn:hover{color:var(--text)}' +
     '.lt-btn.active{background:var(--accent-dim,rgba(77,158,247,.15));color:var(--accent,var(--blue))}';
   document.head.appendChild(st);
+  /* Wire up proper ARIA tabs relationships: .lang-toggle already has
+   * role="tablist" in markup, but the buttons/panes never got role="tab" /
+   * role="tabpanel", which makes the aria-selected set below invalid ARIA.
+   * Only one .lang-toggle group exists per page, so data-lang is a safe
+   * unique id suffix here. */
   document.querySelectorAll('.lt-btn').forEach(function (b) {
+    var tabId = 'lt-tab-' + b.dataset.lang;
+    var panelId = 'lt-panel-' + b.dataset.lang;
+    b.id = tabId;
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-controls', panelId);
+    var pane = document.querySelector('.lang-pane[data-lang="' + b.dataset.lang + '"]');
+    if (pane) {
+      pane.id = panelId;
+      pane.setAttribute('role', 'tabpanel');
+      pane.setAttribute('aria-labelledby', tabId);
+      pane.setAttribute('tabindex', '0');
+    }
     b.addEventListener('click', function () { tfLangSwitch(b.dataset.lang); });
   });
   var lang = 'python';

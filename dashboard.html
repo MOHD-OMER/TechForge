@@ -171,17 +171,31 @@
     var d = Math.floor((Date.now() - ts) / 86400000);
     return d === 0 ? 'today' : d === 1 ? '1d ago' : d + 'd ago';
   }
-  function esc(s) { return String(s || '').replace(/</g, '&lt;'); }
+  /* escape for both attribute and text-node use — quotes matter here because
+   * these strings get concatenated straight into an href="..." attribute. */
+  function esc(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  /* bookmarks/recent come from localStorage, which the Import feature writes
+   * to from an uploaded JSON file — treat href as untrusted. Only root-relative
+   * site links are allowed; anything else (javascript:, data:, //evil.com) is
+   * dropped rather than rendered as a clickable link. */
+  function safeHref(h) {
+    h = String(h || '');
+    return /^\/(?!\/)/.test(h) ? h : '#';
+  }
 
   if (bookmarks.length) {
     document.getElementById('bkList').innerHTML = bookmarks.slice().reverse().map(function (b) {
-      return '<a class="bk-item" href="' + esc(b.href) + '"><i class="ti ti-bookmark"></i>' + esc(b.title) +
+      return '<a class="bk-item" href="' + esc(safeHref(b.href)) + '"><i class="ti ti-bookmark"></i>' + esc(b.title) +
         '<span class="bk-when">' + ago(b.at) + '</span></a>';
     }).join('');
   }
   if (recent.length) {
     document.getElementById('rcList').innerHTML = recent.slice(0, 8).map(function (r) {
-      return '<a class="bk-item" href="' + esc(r.href) + '"><i class="ti ti-history"></i>' + esc(r.title) + '</a>';
+      return '<a class="bk-item" href="' + esc(safeHref(r.href)) + '"><i class="ti ti-history"></i>' + esc(r.title) + '</a>';
     }).join('');
   }
 
