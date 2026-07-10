@@ -32,11 +32,13 @@
       transition: all 0.3s ease;
   }
   .bss-cell-idx { position: absolute; top: -16px; font-size: 10px; color: var(--text2); }
-  /* Buttons sit inside the always-dark .code-block demo area; .b-accent/.b-surface
-     use theme-swapping vars meant for normal surfaces, so override with fixed
-     dark-appropriate colors here (same fix as dsa/bubble.html). */
+  /* .b-accent uses a semi-transparent rgba background that blends with the
+     always-dark .code-block backdrop, so its theme-swapping var(--accent) text
+     goes unreadable in light theme — override with a fixed dark-appropriate
+     color. (.b-surface is NOT touched: its background is fully opaque
+     var(--surface2), which legitimately swaps to a light surface of its own,
+     so var(--text2) is already correct there.) */
   .code-block .badge.b-accent { color: #5b9cf6; }
-  .code-block .badge.b-surface { color: #8da0bb; }
   .cc-mid { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.1); box-shadow: 0 0 15px var(--accent-dim); }
   .cc-range { border-color: var(--blue); }
   .cc-checked { opacity: 0.3; filter: grayscale(1); }
