@@ -138,13 +138,45 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Distributed Systems
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Distributed system: multiple nodes across two data centers coordinate over an unreliable network; nodes replicate state, elect leaders on failure, and must tolerate network partitions between regions" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="dist-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="dist-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="dist-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="40" y="60" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="105" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Node 1</text>
+          <text x="105" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">leader</text>
+          <rect x="40" y="160" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="105" y="187" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Node 2</text>
+          <text x="105" y="206" text-anchor="middle" fill="var(--text3)" font-size="10">follower</text>
+          <rect x="40" y="260" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="105" y="287" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Node 3</text>
+          <text x="105" y="306" text-anchor="middle" fill="var(--text3)" font-size="10">follower</text>
+          <rect x="570" y="60" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="635" y="87" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Node 4</text>
+          <text x="635" y="106" text-anchor="middle" fill="var(--text3)" font-size="10">follower</text>
+          <rect x="570" y="160" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="635" y="187" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Node 5</text>
+          <text x="635" y="206" text-anchor="middle" fill="var(--text3)" font-size="10">follower</text>
+          <line x1="105" y1="116" x2="105" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#dist-arw-green)"/>
+          <text x="142" y="138" text-anchor="middle" fill="var(--green)" font-size="10">replicate</text>
+          <line x1="105" y1="216" x2="105" y2="252" stroke="var(--green)" stroke-width="1.5" marker-end="url(#dist-arw-green)"/>
+          <line x1="170" y1="88" x2="562" y2="88" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#dist-arw-amber)"/>
+          <text x="366" y="78" text-anchor="middle" fill="var(--amber)" font-size="10">WAN link — can partition</text>
+          <line x1="170" y1="188" x2="562" y2="188" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#dist-arw-amber)"/>
+          <line x1="635" y1="116" x2="635" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#dist-arw-green)"/>
+          <text x="105" y="40" text-anchor="middle" fill="var(--text2)" font-size="11" font-weight="700">DC-1 (eu-west)</text>
+          <text x="635" y="40" text-anchor="middle" fill="var(--text2)" font-size="11" font-weight="700">DC-2 (us-east)</text>
+          <text x="370" y="250" text-anchor="middle" fill="var(--red)" font-size="10">✂ partition here → split brain risk → quorum (majority) decides who leads</text>
+          <text x="370" y="310" text-anchor="middle" fill="var(--text3)" font-size="10">clocks drift · messages reorder · nodes fail independently</text>
+          <line x1="24" y1="316" x2="52" y2="316" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="320" fill="var(--text2)" font-size="10">replication</text>
+          <line x1="145.6" y1="316" x2="173.6" y2="316" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="179.6" y="320" fill="var(--text2)" font-size="10">cross-DC network (unreliable)</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -138,13 +138,43 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Replication
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Primary-replica replication: all writes go to the primary which streams its log to two read replicas; reads are spread across replicas, and replication lag means replicas can serve slightly stale data" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="rep-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="rep-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="rep-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+            <marker id="rep-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">reads + writes</text>
+          <rect x="290" y="120" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="370" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Primary</text>
+          <text x="370" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">accepts all writes</text>
+          <rect x="580" y="50" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="655" y="77" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Replica 1</text>
+          <text x="655" y="96" text-anchor="middle" fill="var(--text3)" font-size="10">reads only</text>
+          <rect x="580" y="210" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="655" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Replica 2</text>
+          <text x="655" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">reads only</text>
+          <line x1="150" y1="140" x2="282" y2="140" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rep-arw-green)"/>
+          <text x="216" y="131" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">writes</text>
+          <line x1="450" y1="136" x2="572" y2="85" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#rep-arw-cyan)"/>
+          <line x1="450" y1="168" x2="572" y2="230" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#rep-arw-cyan)"/>
+          <text x="502" y="210" text-anchor="middle" fill="var(--cyan)" font-size="10">WAL / binlog stream</text>
+          <line x1="150" y1="168" x2="572" y2="250" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#rep-arw-amber)"/>
+          <text x="300" y="245" text-anchor="middle" fill="var(--amber)" font-size="10">reads (load spread)</text>
+          <line x1="152" y1="128" x2="572" y2="68" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#rep-arw-amber)"/>
+          <text x="380" y="300" text-anchor="middle" fill="var(--text3)" font-size="10">replication lag: replica may be ms–s behind → read-your-writes needs primary or sticky reads</text>
+          <line x1="24" y1="306" x2="52" y2="306" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="310" fill="var(--text2)" font-size="10">writes → primary only</text>
+          <line x1="201.6" y1="306" x2="229.6" y2="306" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="235.6" y="310" fill="var(--text2)" font-size="10">reads → replicas</text>
+          <line x1="351.2" y1="306" x2="379.2" y2="306" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="385.2" y="310" fill="var(--text2)" font-size="10">async replication</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -138,13 +138,42 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  RabbitMQ
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="RabbitMQ routing: producer publishes to an exchange with a routing key; the exchange routes copies to bound queues by type — direct matches exact keys, topic matches patterns, fanout copies to all — and consumers read from queues" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="rmq-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="rmq-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="130" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="85" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Producer</text>
+          <text x="85" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">routing key: order.eu</text>
+          <rect x="270" y="120" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="350" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Exchange</text>
+          <text x="350" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">direct · topic · fanout</text>
+          <rect x="560" y="30" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queue: eu</text>
+          <text x="635" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">binds order.eu.*</text>
+          <rect x="560" y="124" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="151" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queue: us</text>
+          <text x="635" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">binds order.us.*</text>
+          <rect x="560" y="218" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="245" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queue: audit</text>
+          <text x="635" y="264" text-anchor="middle" fill="var(--text3)" font-size="10">binds order.#</text>
+          <line x1="150" y1="152" x2="262" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#rmq-arw-text3)"/>
+          <text x="206" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">publish + key</text>
+          <line x1="430" y1="136" x2="552" y2="60" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rmq-arw-green)"/>
+          <text x="475" y="80" text-anchor="middle" fill="var(--green)" font-size="10">matches binding</text>
+          <line x1="430" y1="152" x2="552" y2="152" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#rmq-arw-text3)"/>
+          <text x="492" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">no match — dropped</text>
+          <line x1="430" y1="168" x2="552" y2="242" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rmq-arw-green)"/>
+          <text x="470" y="232" text-anchor="middle" fill="var(--green)" font-size="10"># wildcard catches all</text>
+          <text x="370" y="300" text-anchor="middle" fill="var(--text3)" font-size="10">queues are durable; exchange is pure router (stores nothing)</text>
+          <line x1="24" y1="306" x2="52" y2="306" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="310" fill="var(--text2)" font-size="10">binding match → copy delivered</text>
+          <line x1="252" y1="306" x2="280" y2="306" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="286" y="310" fill="var(--text2)" font-size="10">unmatched key</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

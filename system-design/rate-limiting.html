@@ -138,13 +138,41 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Rate Limiting
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Token bucket rate limiter: a bucket holding up to N tokens refills at a fixed rate; each incoming request must take a token — requests that find the bucket empty are rejected with HTTP 429" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="rl-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="rl-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="rl-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="120" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Clients</text>
+          <text x="80" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">burst traffic</text>
+          <rect x="270" y="100" width="180" height="110" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="360" y="127" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Token Bucket</text>
+          <text x="360" y="146" text-anchor="middle" fill="var(--text3)" font-size="10">capacity N tokens</text>
+          <rect x="580" y="50" width="150" height="60" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="77" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">API Server</text>
+          <text x="655" y="96" text-anchor="middle" fill="var(--text3)" font-size="10">request allowed</text>
+          <rect x="580" y="210" width="150" height="60" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5"/>
+          <text x="655" y="237" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">429 Rejected</text>
+          <text x="655" y="256" text-anchor="middle" fill="var(--text3)" font-size="10">Retry-After header</text>
+          <line x1="140" y1="152" x2="262" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#rl-arw-text3)"/>
+          <text x="200" y="143" text-anchor="middle" fill="var(--text3)" font-size="10">request</text>
+          <line x1="450" y1="130" x2="572" y2="85" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rl-arw-green)"/>
+          <text x="505" y="66" text-anchor="middle" fill="var(--green)" font-size="10">token available → consume 1</text>
+          <line x1="450" y1="180" x2="572" y2="235" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#rl-arw-red)"/>
+          <text x="508" y="248" text-anchor="middle" fill="var(--red)" font-size="10">bucket empty</text>
+          <line x1="360" y1="60" x2="360" y2="92" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#rl-arw-green)"/>
+          <text x="360" y="50" text-anchor="middle" fill="var(--green)" font-size="10">refill r tokens/sec</text>
+          <text x="360" y="185" text-anchor="middle" fill="var(--green)" font-size="13">● ● ● ● ○ ○</text>
+          <text x="360" y="235" text-anchor="middle" fill="var(--text3)" font-size="10">burst up to N, sustained rate r</text>
+          <line x1="24" y1="306" x2="52" y2="306" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="310" fill="var(--text2)" font-size="10">allowed</text>
+          <line x1="123.19999999999999" y1="306" x2="151.2" y2="306" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="157.2" y="310" fill="var(--text2)" font-size="10">throttled (429)</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

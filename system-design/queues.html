@@ -138,13 +138,42 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Message Queues
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Message queue decouples producers from consumers: producers publish messages to a durable queue and continue immediately; consumers pull messages at their own pace and acknowledge each one, with failed messages going to a dead-letter queue" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="mq-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="mq-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="mq-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+          </defs>
+          <rect x="20" y="110" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="90" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Producer</text>
+          <text x="90" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">publishes + moves on</text>
+          <rect x="280" y="110" width="190" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="375" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queue</text>
+          <text x="375" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">durable buffer (FIFO)</text>
+          <rect x="580" y="40" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Consumer 1</text>
+          <text x="655" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">pull + ack</text>
+          <rect x="580" y="128" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="155" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Consumer 2</text>
+          <text x="655" y="174" text-anchor="middle" fill="var(--text3)" font-size="10">pull + ack</text>
+          <rect x="580" y="216" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="655" y="243" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">DLQ</text>
+          <text x="655" y="262" text-anchor="middle" fill="var(--text3)" font-size="10">failed after N retries</text>
+          <line x1="160" y1="142" x2="272" y2="142" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#mq-arw-text3)"/>
+          <text x="216" y="133" text-anchor="middle" fill="var(--text3)" font-size="10">publish (async)</text>
+          <line x1="470" y1="128" x2="572" y2="72" stroke="var(--green)" stroke-width="1.5" marker-end="url(#mq-arw-green)"/>
+          <line x1="470" y1="146" x2="572" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#mq-arw-green)"/>
+          <text x="520" y="137" text-anchor="middle" fill="var(--green)" font-size="10">work shared, own pace</text>
+          <line x1="470" y1="164" x2="572" y2="238" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#mq-arw-red)"/>
+          <text x="505" y="222" text-anchor="middle" fill="var(--red)" font-size="10">poison msg</text>
+          <text x="375" y="205" text-anchor="middle" fill="var(--text3)" font-size="10">▮▮▮▮▮ msgs wait here — absorbs traffic spikes</text>
+          <line x1="24" y1="286" x2="52" y2="286" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="290" fill="var(--text2)" font-size="10">consume + ack</text>
+          <line x1="156.8" y1="286" x2="184.8" y2="286" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="190.8" y="290" fill="var(--text2)" font-size="10">dead-letter path</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -141,14 +141,71 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Client request
-         |
-    Cache lookup
-    /         \
-  HIT        MISS
-   |           |
- return    Origin / DB
-           + populate cache</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Cache-aside flow: client sends request to app server, app checks cache first; on hit data returns immediately, on miss app queries the database then populates the cache before responding" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cach-arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="var(--text3)"/>
+            </marker>
+            <marker id="cach-arw-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="var(--green)"/>
+            </marker>
+            <marker id="cach-arw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0 0L10 5L0 10z" fill="var(--amber)"/>
+            </marker>
+          </defs>
+
+          <!-- Client -->
+          <rect x="20" y="120" width="120" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="80" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">browser / app</text>
+
+          <!-- App server -->
+          <rect x="230" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="300" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App Server</text>
+          <text x="300" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">owns cache logic</text>
+
+          <!-- Cache -->
+          <rect x="520" y="34" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="595" y="61" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Cache</text>
+          <text x="595" y="80" text-anchor="middle" fill="var(--text3)" font-size="10">Redis / Memcached</text>
+
+          <!-- Database -->
+          <rect x="520" y="212" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="595" y="239" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Database</text>
+          <text x="595" y="258" text-anchor="middle" fill="var(--text3)" font-size="10">source of truth</text>
+
+          <!-- 1: client -> app -->
+          <line x1="140" y1="152" x2="222" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#cach-arw)"/>
+          <text x="181" y="143" text-anchor="middle" fill="var(--text2)" font-size="10">1. request</text>
+
+          <!-- 2: app -> cache (GET) -->
+          <line x1="370" y1="132" x2="514" y2="72" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cach-arw-g)"/>
+          <text x="428" y="88" text-anchor="middle" fill="var(--green)" font-size="10">2. GET key</text>
+
+          <!-- HIT return -->
+          <line x1="520" y1="90" x2="376" y2="140" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#cach-arw-g)"/>
+          <text x="490" y="150" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">HIT → return</text>
+
+          <!-- 3: MISS -> DB -->
+          <line x1="370" y1="172" x2="514" y2="232" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#cach-arw-a)"/>
+          <text x="420" y="232" text-anchor="middle" fill="var(--amber)" font-size="10">3. MISS → query DB</text>
+
+          <!-- 4: DB -> cache populate -->
+          <line x1="595" y1="212" x2="595" y2="104" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#cach-arw-a)"/>
+          <text x="682" y="160" text-anchor="middle" fill="var(--amber)" font-size="10">4. SETEX + TTL</text>
+
+          <!-- 5: response back -->
+          <line x1="222" y1="170" x2="140" y2="170" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#cach-arw)"/>
+          <text x="181" y="186" text-anchor="middle" fill="var(--text2)" font-size="10">5. response</text>
+
+          <!-- Legend -->
+          <line x1="24" y1="300" x2="52" y2="300" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="304" fill="var(--text2)" font-size="10">hit path (fast)</text>
+          <line x1="160" y1="300" x2="188" y2="300" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="194" y="304" fill="var(--text2)" font-size="10">miss path (slow, populates cache)</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

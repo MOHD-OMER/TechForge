@@ -138,13 +138,35 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Fault Tolerance
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Circuit breaker state machine: closed state passes calls and counts failures; too many failures trip it open where calls fail fast without hitting the broken service; after a timeout it goes half-open to test recovery, closing on success or reopening on failure" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cb-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="cb-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+            <marker id="cb-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+            <marker id="cb-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="60" y="110" width="160" height="70" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="140" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">CLOSED</text>
+          <text x="140" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">calls pass, count fails</text>
+          <rect x="480" y="110" width="160" height="70" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5"/>
+          <text x="560" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">OPEN</text>
+          <text x="560" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">fail fast, no calls out</text>
+          <rect x="270" y="240" width="180" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="360" y="267" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">HALF-OPEN</text>
+          <text x="360" y="286" text-anchor="middle" fill="var(--text3)" font-size="10">let 1 probe through</text>
+          <line x1="220" y1="135" x2="472" y2="135" stroke="var(--red)" stroke-width="1.5" marker-end="url(#cb-arw-red)"/>
+          <text x="346" y="126" text-anchor="middle" fill="var(--red)" font-size="10">failures ≥ threshold → trip</text>
+          <line x1="540" y1="180" x2="420" y2="246" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#cb-arw-amber)"/>
+          <text x="518" y="225" text-anchor="middle" fill="var(--amber)" font-size="10">timeout elapsed</text>
+          <line x1="300" y1="246" x2="170" y2="184" stroke="var(--green)" stroke-width="1.5" marker-end="url(#cb-arw-green)"/>
+          <text x="190" y="230" text-anchor="middle" fill="var(--green)" font-size="10">probe OK → close</text>
+          <line x1="450" y1="262" x2="600" y2="186" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#cb-arw-red)"/>
+          <text x="610" y="240" text-anchor="middle" fill="var(--red)" font-size="10">probe fails → reopen</text>
+          <text x="380" y="40" text-anchor="middle" fill="var(--text3)" font-size="10">protects callers from hammering a dead dependency — fail fast + recover automatically</text>
+          <text x="380" y="320" text-anchor="middle" fill="var(--text3)" font-size="10">pair with: timeouts · retries w/ backoff · bulkheads</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

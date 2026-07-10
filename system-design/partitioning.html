@@ -138,13 +138,38 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Partitioning
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Table partitioning: one logical events table split by month range into three physical partitions; queries with a date filter scan only the matching partition, and old partitions drop instantly" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="prt-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="prt-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="90" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Query</text>
+          <text x="90" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">WHERE ts in July</text>
+          <rect x="290" y="120" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="370" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">events table</text>
+          <text x="370" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">logical — planner prunes</text>
+          <rect x="580" y="30" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="655" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">events_2026_06</text>
+          <text x="655" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">June rows</text>
+          <rect x="580" y="124" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="151" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">events_2026_07</text>
+          <text x="655" y="170" text-anchor="middle" fill="var(--text3)" font-size="10">July rows</text>
+          <rect x="580" y="218" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="655" y="245" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">events_2026_08</text>
+          <text x="655" y="264" text-anchor="middle" fill="var(--text3)" font-size="10">August rows</text>
+          <line x1="160" y1="152" x2="282" y2="152" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#prt-arw-text3)"/>
+          <line x1="450" y1="152" x2="572" y2="152" stroke="var(--green)" stroke-width="1.5" marker-end="url(#prt-arw-green)"/>
+          <text x="500" y="143" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">partition pruning → scan 1 of 3</text>
+          <text x="370" y="280" text-anchor="middle" fill="var(--text3)" font-size="10">same node, one logical table (vs sharding = separate DBs)</text>
+          <text x="370" y="300" text-anchor="middle" fill="var(--text3)" font-size="10">DROP PARTITION events_2026_06 → instant archive delete</text>
+          <line x1="24" y1="306" x2="52" y2="306" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="310" fill="var(--text2)" font-size="10">scanned</text>
+          <line x1="123.19999999999999" y1="306" x2="151.2" y2="306" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="157.2" y="310" fill="var(--text2)" font-size="10">pruned — never touched</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

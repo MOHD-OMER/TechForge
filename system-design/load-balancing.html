@@ -141,13 +141,46 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Load Balancing
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="Load balancer receives client requests and distributes them across three healthy app servers using an algorithm such as round-robin; a fourth server marked unhealthy by health checks receives no traffic" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="lb-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="lb-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="lb-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+          </defs>
+          <rect x="20" y="130" width="120" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Clients</text>
+          <text x="80" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">many users</text>
+          <rect x="250" y="130" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="325" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Load Balancer</text>
+          <text x="325" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">nginx / ALB / L4-L7</text>
+          <rect x="560" y="20" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="47" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Server 1</text>
+          <text x="635" y="66" text-anchor="middle" fill="var(--text3)" font-size="10">healthy</text>
+          <rect x="560" y="100" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="127" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Server 2</text>
+          <text x="635" y="146" text-anchor="middle" fill="var(--text3)" font-size="10">healthy</text>
+          <rect x="560" y="180" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="635" y="207" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Server 3</text>
+          <text x="635" y="226" text-anchor="middle" fill="var(--text3)" font-size="10">healthy</text>
+          <rect x="560" y="260" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="635" y="287" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Server 4</text>
+          <text x="635" y="306" text-anchor="middle" fill="var(--text3)" font-size="10">failed health check</text>
+          <line x1="140" y1="162" x2="242" y2="162" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#lb-arw-text3)"/>
+          <text x="191" y="153" text-anchor="middle" fill="var(--text3)" font-size="10">requests</text>
+          <line x1="400" y1="146" x2="552" y2="52" stroke="var(--green)" stroke-width="1.5" marker-end="url(#lb-arw-green)"/>
+          <line x1="400" y1="156" x2="552" y2="128" stroke="var(--green)" stroke-width="1.5" marker-end="url(#lb-arw-green)"/>
+          <line x1="400" y1="170" x2="552" y2="204" stroke="var(--green)" stroke-width="1.5" marker-end="url(#lb-arw-green)"/>
+          <text x="455" y="215" text-anchor="middle" fill="var(--green)" font-size="10">round-robin / least-conn</text>
+          <line x1="400" y1="184" x2="552" y2="284" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#lb-arw-red)"/>
+          <text x="460" y="265" text-anchor="middle" fill="var(--red)" font-size="10">no traffic</text>
+          <text x="325" y="215" text-anchor="middle" fill="var(--text3)" font-size="10">health checks every N sec ↺</text>
+          <line x1="24" y1="316" x2="52" y2="316" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="320" fill="var(--text2)" font-size="10">routed traffic</text>
+          <line x1="162.39999999999998" y1="316" x2="190.39999999999998" y2="316" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="196.39999999999998" y="320" fill="var(--text2)" font-size="10">unhealthy — removed from pool</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

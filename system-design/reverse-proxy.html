@@ -142,13 +142,41 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Reverse Proxy
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Reverse proxy sits between the internet and private backend servers: it terminates TLS, can cache and compress responses, and forwards requests to backends whose addresses stay hidden from clients" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="rp-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="rp-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+          </defs>
+          <rect x="20" y="110" width="120" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="80" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">public internet</text>
+          <rect x="250" y="110" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="330" y="137" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Reverse Proxy</text>
+          <text x="330" y="156" text-anchor="middle" fill="var(--text3)" font-size="10">nginx / Caddy</text>
+          <rect x="580" y="30" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="57" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Backend A</text>
+          <text x="655" y="76" text-anchor="middle" fill="var(--text3)" font-size="10">10.0.0.11 (private)</text>
+          <rect x="580" y="118" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="145" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Backend B</text>
+          <text x="655" y="164" text-anchor="middle" fill="var(--text3)" font-size="10">10.0.0.12 (private)</text>
+          <rect x="580" y="206" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="233" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Backend C</text>
+          <text x="655" y="252" text-anchor="middle" fill="var(--text3)" font-size="10">10.0.0.13 (private)</text>
+          <line x1="140" y1="142" x2="242" y2="142" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#rp-arw-text3)"/>
+          <text x="191" y="133" text-anchor="middle" fill="var(--text3)" font-size="10">HTTPS :443</text>
+          <line x1="410" y1="128" x2="572" y2="62" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rp-arw-green)"/>
+          <line x1="410" y1="142" x2="572" y2="146" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rp-arw-green)"/>
+          <text x="490" y="135" text-anchor="middle" fill="var(--green)" font-size="10">plain HTTP, internal net</text>
+          <line x1="410" y1="156" x2="572" y2="230" stroke="var(--green)" stroke-width="1.5" marker-end="url(#rp-arw-green)"/>
+          <text x="330" y="200" text-anchor="middle" fill="var(--text3)" font-size="10">TLS termination · caching · gzip · single public IP</text>
+          <text x="330" y="218" text-anchor="middle" fill="var(--text3)" font-size="10">clients never see backend addresses</text>
+          <line x1="24" y1="286" x2="52" y2="286" stroke="var(--text3)" stroke-width="1.5"/>
+          <text x="58" y="290" fill="var(--text2)" font-size="10">encrypted public hop</text>
+          <line x1="196" y1="286" x2="224" y2="286" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="230" y="290" fill="var(--text2)" font-size="10">internal forwarding</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -141,15 +141,48 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Requirements (scale, SLO, budget)
-         |
-  High-level components
-         |
-  Data flow + storage choice
-         |
-  Bottlenecks + failure modes
-         |
-  Trade-offs documented</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 340" width="100%" role="img" aria-label="Typical web system building blocks: clients hit DNS then a load balancer, which fans out to stateless app servers; apps read through a cache before the database, push heavy work to a queue for async workers, and serve static assets from a CDN" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="fund-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="fund-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+            <marker id="fund-arw-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker>
+            <marker id="fund-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+          </defs>
+          <rect x="20" y="130" width="110" height="56" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="75" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Client</text>
+          <text x="75" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">DNS → IP</text>
+          <rect x="200" y="130" width="120" height="56" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="260" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">LB</text>
+          <text x="260" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">spreads load</text>
+          <rect x="390" y="130" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="455" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">App ×N</text>
+          <text x="455" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">stateless</text>
+          <rect x="600" y="40" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="665" y="67" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Cache</text>
+          <text x="665" y="86" text-anchor="middle" fill="var(--text3)" font-size="10">hot reads</text>
+          <rect x="600" y="130" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="665" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Database</text>
+          <text x="665" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">source of truth</text>
+          <rect x="600" y="220" width="130" height="56" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5"/>
+          <text x="665" y="247" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Queue</text>
+          <text x="665" y="266" text-anchor="middle" fill="var(--text3)" font-size="10">async workers</text>
+          <rect x="200" y="250" width="120" height="56" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="260" y="277" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">CDN</text>
+          <text x="260" y="296" text-anchor="middle" fill="var(--text3)" font-size="10">static assets</text>
+          <line x1="130" y1="158" x2="192" y2="158" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#fund-arw-text3)"/>
+          <line x1="320" y1="158" x2="382" y2="158" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#fund-arw-text3)"/>
+          <line x1="520" y1="142" x2="592" y2="76" stroke="var(--cyan)" stroke-width="1.5" marker-end="url(#fund-arw-cyan)"/>
+          <text x="536" y="92" text-anchor="middle" fill="var(--cyan)" font-size="10">read-through</text>
+          <line x1="520" y1="158" x2="592" y2="158" stroke="var(--amber)" stroke-width="1.5" marker-end="url(#fund-arw-amber)"/>
+          <text x="556" y="149" text-anchor="middle" fill="var(--amber)" font-size="10">miss / writes</text>
+          <line x1="520" y1="174" x2="592" y2="240" stroke="var(--red)" stroke-width="1.5" marker-end="url(#fund-arw-red)"/>
+          <text x="536" y="228" text-anchor="middle" fill="var(--red)" font-size="10">heavy jobs</text>
+          <line x1="85" y1="186" x2="192" y2="268" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#fund-arw-cyan)"/>
+          <text x="110" y="250" text-anchor="middle" fill="var(--cyan)" font-size="10">images, js, css</text>
+          <text x="380" y="322" text-anchor="middle" fill="var(--text3)" font-size="10">stateless apps = any server handles any request = horizontal scaling works</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

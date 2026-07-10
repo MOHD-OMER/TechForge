@@ -138,13 +138,40 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Service Discovery
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 320" width="100%" role="img" aria-label="Service discovery: service instances register themselves with a registry and send heartbeats; a client service queries the registry to find healthy instances of the users service, then calls a returned address directly" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="sdisc-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="sdisc-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="sdisc-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+          </defs>
+          <rect x="20" y="120" width="140" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="90" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Orders svc</text>
+          <text x="90" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">needs users svc</text>
+          <rect x="290" y="120" width="170" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="375" y="147" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Registry</text>
+          <text x="375" y="166" text-anchor="middle" fill="var(--text3)" font-size="10">Consul / etcd / Eureka</text>
+          <rect x="580" y="50" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="77" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">users-1</text>
+          <text x="655" y="96" text-anchor="middle" fill="var(--text3)" font-size="10">10.0.0.5:8080 ♥</text>
+          <rect x="580" y="144" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="655" y="171" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">users-2</text>
+          <text x="655" y="190" text-anchor="middle" fill="var(--text3)" font-size="10">10.0.0.6:8080 ♥</text>
+          <rect x="580" y="238" width="150" height="56" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="655" y="265" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">users-3</text>
+          <text x="655" y="284" text-anchor="middle" fill="var(--text3)" font-size="10">heartbeat missed</text>
+          <line x1="160" y1="140" x2="282" y2="140" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#sdisc-arw-text3)"/>
+          <text x="220" y="131" text-anchor="middle" fill="var(--text3)" font-size="10">1. where is users?</text>
+          <line x1="282" y1="160" x2="160" y2="160" stroke="var(--text3)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sdisc-arw-text3)"/>
+          <text x="221" y="178" text-anchor="middle" fill="var(--text3)" font-size="10">2. [10.0.0.5, 10.0.0.6]</text>
+          <line x1="160" y1="128" x2="572" y2="76" stroke="var(--green)" stroke-width="1.5" marker-end="url(#sdisc-arw-green)"/>
+          <text x="350" y="85" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">3. direct call</text>
+          <line x1="572" y1="86" x2="460" y2="128" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sdisc-arw-cyan)"/>
+          <line x1="572" y1="180" x2="460" y2="160" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sdisc-arw-cyan)"/>
+          <text x="520" y="205" text-anchor="middle" fill="var(--cyan)" font-size="10">register + heartbeat</text>
+          <text x="380" y="310" text-anchor="middle" fill="var(--text3)" font-size="10">users-3 dropped from results after missed heartbeats — clients never see dead nodes</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

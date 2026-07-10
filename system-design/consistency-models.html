@@ -138,13 +138,32 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  Consistency Models
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 300" width="100%" role="img" aria-label="Consistency spectrum from strong to eventual: strong consistency makes every read return the latest write at the cost of latency and availability; eventual consistency returns fast possibly-stale reads that converge over time; causal and session consistency sit between" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="cons-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+          </defs>
+          <rect x="30" y="90" width="160" height="70" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="110" y="117" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Strong</text>
+          <text x="110" y="136" text-anchor="middle" fill="var(--text3)" font-size="10">read = latest write</text>
+          <rect x="230" y="90" width="150" height="70" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <text x="305" y="117" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Causal</text>
+          <text x="305" y="136" text-anchor="middle" fill="var(--text3)" font-size="10">order of causes kept</text>
+          <rect x="420" y="90" width="150" height="70" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="495" y="117" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Session</text>
+          <text x="495" y="136" text-anchor="middle" fill="var(--text3)" font-size="10">read-your-writes</text>
+          <rect x="610" y="90" width="130" height="70" rx="10" fill="var(--surface2)" stroke="var(--red)" stroke-width="1.5"/>
+          <text x="675" y="117" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Eventual</text>
+          <text x="675" y="136" text-anchor="middle" fill="var(--text3)" font-size="10">converges later</text>
+          <line x1="40" y1="210" x2="730" y2="210" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#cons-arw-text3)"/>
+          <text x="0" y="0" text-anchor="middle" fill="var(--text3)" font-size="10"></text>
+          <text x="115" y="75" text-anchor="middle" fill="var(--green)" font-size="10">slower · coordinated · CP</text>
+          <text x="665" y="75" text-anchor="middle" fill="var(--red)" font-size="10">faster · available · AP</text>
+          <text x="150" y="232" text-anchor="middle" fill="var(--text2)" font-size="10">← stricter guarantees</text>
+          <text x="580" y="232" text-anchor="middle" fill="var(--text2)" font-size="10">weaker, faster, more available →</text>
+          <text x="385" y="275" text-anchor="middle" fill="var(--text3)" font-size="10">bank balance: strong · social feed: eventual · chat thread: causal · cart: session</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>

@@ -138,13 +138,39 @@
     </section>
     <section class="lesson-section" id="diagram">
       <h2><span class="sec-icon"><i class="ti ti-map"></i></span> Architecture Diagram</h2>
-      <div class="lesson-diagram"><pre>Users / clients
-         |
-  High Availability
-         |
-  Core services
-         |
-  Data + observability</pre></div>
+      <div class="lesson-diagram">
+        <svg viewBox="0 0 760 330" width="100%" role="img" aria-label="High availability with active-passive failover: traffic flows through a load balancer to the active node while a passive standby stays in sync; when health checks detect active failure, traffic fails over to the standby within seconds" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <defs>
+            <marker id="ha-arw-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker>
+            <marker id="ha-arw-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--green)"/></marker>
+            <marker id="ha-arw-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker>
+            <marker id="ha-arw-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--cyan)"/></marker>
+          </defs>
+          <rect x="20" y="130" width="120" height="64" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/>
+          <text x="80" y="166.5" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Traffic</text>
+          <rect x="240" y="130" width="150" height="64" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/>
+          <text x="315" y="157" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">LB / VIP</text>
+          <text x="315" y="176" text-anchor="middle" fill="var(--text3)" font-size="10">health checks</text>
+          <rect x="560" y="50" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="640" y="77" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Active</text>
+          <text x="640" y="96" text-anchor="middle" fill="var(--text3)" font-size="10">serving now</text>
+          <rect x="560" y="220" width="160" height="64" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/>
+          <text x="640" y="247" text-anchor="middle" fill="var(--text)" font-size="13" font-weight="700">Standby</text>
+          <text x="640" y="266" text-anchor="middle" fill="var(--text3)" font-size="10">synced, idle</text>
+          <line x1="140" y1="162" x2="232" y2="162" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#ha-arw-text3)"/>
+          <line x1="390" y1="146" x2="552" y2="86" stroke="var(--green)" stroke-width="1.5" marker-end="url(#ha-arw-green)"/>
+          <text x="465" y="95" text-anchor="middle" fill="var(--green)" font-size="10" font-weight="700">normal path</text>
+          <line x1="390" y1="178" x2="552" y2="248" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ha-arw-red)"/>
+          <text x="450" y="242" text-anchor="middle" fill="var(--red)" font-size="10">failover on health-check fail</text>
+          <line x1="640" y1="114" x2="640" y2="212" stroke="var(--cyan)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ha-arw-cyan)"/>
+          <text x="685" y="168" text-anchor="middle" fill="var(--cyan)" font-size="10">state sync</text>
+          <text x="380" y="310" text-anchor="middle" fill="var(--text3)" font-size="10">availability math: 99.9% = 8.7h down/yr · 99.99% = 52min · 99.999% = 5min</text>
+          <line x1="24" y1="316" x2="52" y2="316" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="58" y="320" fill="var(--text2)" font-size="10">active path</text>
+          <line x1="145.6" y1="316" x2="173.6" y2="316" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="179.6" y="320" fill="var(--text2)" font-size="10">failover path</text>
+        </svg>
+      </div>
     </section>
     <section class="lesson-section" id="examples">
       <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Examples</h2>
