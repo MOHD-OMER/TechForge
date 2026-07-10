@@ -219,6 +219,7 @@
       <a class="tb-link" href="../about.html">About</a>
     </nav>
     <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -369,7 +370,7 @@
         <div class="info-section">
           <div class="info-tabs">
             <div class="info-tab active" onclick="switchTab(this,'tp-arr-ops')">Operations</div>
-            <div class="info-tab" onclick="switchTab(this,'tp-arr-code')">Python Code</div>
+            <div class="info-tab" onclick="switchTab(this,'tp-arr-code')">Code</div>
             <div class="info-tab" onclick="switchTab(this,'tp-arr-quiz')">Quiz</div>
           </div>
           <div class="info-pane active" id="tp-arr-ops">
@@ -425,6 +426,12 @@
             </div>
           </div>
           <div class="info-pane" id="tp-arr-code">
+            <div class="lang-toggle" role="tablist" aria-label="Code language">
+              <button type="button" class="lt-btn active" data-lang="python">Python</button>
+              <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+              <button type="button" class="lt-btn" data-lang="java">Java</button>
+            </div>
+            <div class="lang-pane" data-lang="python">
             <div class="code-block">
               <div class="code-hdr">
                 <span class="code-lang">python</span>
@@ -464,6 +471,87 @@ s_arr   = set(arr)  <span class="cm"># O(n) build, then O(1) lookup</span>
 squares = [x**2 for x in arr]              <span class="cm"># O(n)</span>
 evens   = [x for x in arr if x % 2 == 0]  <span class="cm"># O(n)</span>
 flat    = [x for row in matrix for x in row]  <span class="cm"># flatten</span></pre>
+            </div>
+            </div>
+            <div class="lang-pane" data-lang="javascript" style="display:none">
+            <div class="code-block">
+              <div class="code-hdr">
+                <span class="code-lang">javascript</span>
+                <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+              </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm">// ── Creating arrays ──────────────────────────</span>
+<span class="kw">let</span> arr = [<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>];
+arr = Array.from({length: <span class="nm">5</span>}, (_, i) =&gt; i + <span class="nm">1</span>); <span class="cm">// [1..5]</span>
+arr = <span class="kw">new</span> <span class="fn">Array</span>(<span class="nm">5</span>).fill(<span class="nm">0</span>);       <span class="cm">// [0, 0, 0, 0, 0]</span>
+<span class="kw">let</span> matrix = Array.from({length: <span class="nm">3</span>}, () =&gt; <span class="kw">new</span> <span class="fn">Array</span>(<span class="nm">3</span>).fill(<span class="nm">0</span>));
+
+<span class="cm">// ── Access &amp; slicing ─────────────────────────</span>
+<span class="kw">let</span> x    = arr[<span class="nm">2</span>];         <span class="cm">// O(1) → 30</span>
+<span class="kw">let</span> last = arr.at(-<span class="nm">1</span>);     <span class="cm">// O(1) → 50</span>
+<span class="kw">let</span> sub  = arr.slice(<span class="nm">1</span>, <span class="nm">4</span>); <span class="cm">// O(k) → copy!</span>
+<span class="kw">let</span> rev  = [...arr].reverse(); <span class="cm">// O(n) — spread avoids mutating</span>
+
+<span class="cm">// ── Mutations ────────────────────────────────</span>
+arr.push(<span class="nm">60</span>);        <span class="cm">// O(1) amortized</span>
+arr.unshift(<span class="nm">5</span>);      <span class="cm">// O(n) — prepend, shifts all!</span>
+arr.pop();           <span class="cm">// O(1) — remove last</span>
+arr.splice(<span class="nm">2</span>, <span class="nm">1</span>);    <span class="cm">// O(n) — remove at index</span>
+
+<span class="cm">// ── Searching &amp; sorting ──────────────────────</span>
+<span class="kw">let</span> idx = arr.indexOf(<span class="nm">40</span>);     <span class="cm">// O(n) linear scan</span>
+arr.sort((a, b) =&gt; a - b);    <span class="cm">// numeric! default is lexicographic</span>
+arr.sort((a, b) =&gt; b - a);    <span class="cm">// descending</span>
+
+<span class="cm">// ── Useful built-ins ─────────────────────────</span>
+<span class="kw">let</span> n       = arr.length;        <span class="cm">// O(1)</span>
+<span class="kw">let</span> present = arr.includes(<span class="nm">30</span>);  <span class="cm">// O(n) — use Set for O(1)</span>
+<span class="kw">let</span> s       = <span class="kw">new</span> <span class="fn">Set</span>(arr);      <span class="cm">// O(n) build, O(1) lookup</span>
+
+<span class="cm">// ── Map / filter / flat ──────────────────────</span>
+<span class="kw">let</span> squares = arr.map(v =&gt; v * v);           <span class="cm">// O(n)</span>
+<span class="kw">let</span> evens   = arr.filter(v =&gt; v % <span class="nm">2</span> === <span class="nm">0</span>); <span class="cm">// O(n)</span>
+<span class="kw">let</span> flat    = matrix.flat();                 <span class="cm">// flatten</span></pre>
+            </div>
+            </div>
+            <div class="lang-pane" data-lang="java" style="display:none">
+            <div class="code-block">
+              <div class="code-hdr">
+                <span class="code-lang">java</span>
+                <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+              </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm">// ── Creating arrays ──────────────────────────</span>
+<span class="kw">int</span>[] arr = {<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>};
+<span class="kw">int</span>[] zeros = <span class="kw">new int</span>[<span class="nm">5</span>];            <span class="cm">// [0, 0, 0, 0, 0]</span>
+<span class="kw">int</span>[][] matrix = <span class="kw">new int</span>[<span class="nm">3</span>][<span class="nm">3</span>];     <span class="cm">// 3×3 2D array</span>
+List&lt;Integer&gt; list = <span class="kw">new</span> <span class="fn">ArrayList</span>&lt;&gt;(List.of(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>));
+
+<span class="cm">// ── Access &amp; slicing ─────────────────────────</span>
+<span class="kw">int</span> x    = arr[<span class="nm">2</span>];                     <span class="cm">// O(1) → 30</span>
+<span class="kw">int</span> last = arr[arr.length - <span class="nm">1</span>];       <span class="cm">// O(1) → 50</span>
+<span class="kw">int</span>[] sub = Arrays.copyOfRange(arr, <span class="nm">1</span>, <span class="nm">4</span>); <span class="cm">// O(k) copy</span>
+
+<span class="cm">// ── Mutations (ArrayList) ────────────────────</span>
+list.add(<span class="nm">60</span>);                <span class="cm">// O(1) amortized</span>
+list.add(<span class="nm">0</span>, <span class="nm">5</span>);              <span class="cm">// O(n) — prepend, shifts all!</span>
+list.remove(list.size() - <span class="nm">1</span>); <span class="cm">// O(1) — remove last</span>
+list.remove(Integer.valueOf(<span class="nm">30</span>)); <span class="cm">// O(n) — remove by value</span>
+
+<span class="cm">// ── Searching &amp; sorting ──────────────────────</span>
+<span class="kw">int</span> idx = list.indexOf(<span class="nm">40</span>);   <span class="cm">// O(n) linear scan</span>
+Arrays.sort(arr);             <span class="cm">// O(n log n) dual-pivot quicksort</span>
+list.sort(Comparator.reverseOrder()); <span class="cm">// descending</span>
+
+<span class="cm">// ── Useful built-ins ─────────────────────────</span>
+<span class="kw">int</span> n = arr.length;                    <span class="cm">// O(1)</span>
+<span class="kw">boolean</span> present = list.contains(<span class="nm">30</span>);  <span class="cm">// O(n) — use HashSet for O(1)</span>
+Set&lt;Integer&gt; set = <span class="kw">new</span> <span class="fn">HashSet</span>&lt;&gt;(list); <span class="cm">// O(n) build, O(1) lookup</span>
+
+<span class="cm">// ── Streams ──────────────────────────────────</span>
+<span class="kw">int</span>[] squares = Arrays.stream(arr).map(v -&gt; v * v).toArray();
+<span class="kw">int</span>[] evens = Arrays.stream(arr).filter(v -&gt; v % <span class="nm">2</span> == <span class="nm">0</span>).toArray();</pre>
+            </div>
             </div>
           </div>
           <div class="info-pane" id="tp-arr-quiz">
