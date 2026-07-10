@@ -626,4 +626,16 @@
       document.getElementById(id).innerHTML = txt;
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+      sllDraw(-1);
+      refreshProg('sll');
+      window.addEventListener('resize', function() { sllDraw(-1); });
+    });
+
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+</body>
+</html>
+
     document.addEventListener(
