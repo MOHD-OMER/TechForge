@@ -12,8 +12,8 @@
 <meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 200+ interview questions."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://techforge-dev.vercel.app"/>
-<meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png"/>
-<meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png"/>
+<meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
 <link rel="canonical" href="https://techforge-dev.vercel.app/"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <title>TechForge — Master CS Fundamentals</title>
@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-<link href="assets/css/forge_base.css?v=8" rel="stylesheet"/><style>
+<link href="assets/css/forge_base.css?v=10" rel="stylesheet"/><style>
 
 /* --------------------------------------
    TECHFORGE HOME — v4
@@ -546,8 +546,107 @@
 }
 </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+<style>
+  #tfLoader {
+    position: fixed; inset: 0; z-index: 100000;
+    background: radial-gradient(ellipse 60% 50% at 50% 45%, #0a1220 0%, #030508 70%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 26px;
+    transition: opacity .5s cubic-bezier(.4,0,.2,1), visibility .5s;
+  }
+  #tfLoader.tfl-hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .tfl-mark-wrap {
+    position: relative; width: 132px; height: 132px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* Rotating hexagon orbit — echoes the hexagon in the brand mark */
+  .tfl-orbit {
+    position: absolute; inset: -14px;
+    animation: tfl-spin 3.2s linear infinite;
+  }
+  .tfl-orbit svg { width: 100%; height: 100%; display: block; }
+  .tfl-orbit polygon {
+    fill: none; stroke: #1e3a5f; stroke-width: 1.25;
+  }
+  .tfl-orbit .tfl-arc {
+    fill: none; stroke: #4d9ef7; stroke-width: 1.75; stroke-linecap: round;
+    stroke-dasharray: 70 374;
+    filter: drop-shadow(0 0 4px rgba(77,158,247,.7));
+  }
+  .tfl-mark {
+    width: 108px; height: 108px; position: relative; z-index: 2;
+    border-radius: 24px;
+    animation: tfl-settle .85s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .tfl-word {
+    font-family: var(--font-mono, monospace); font-size: 12px; font-weight: 600;
+    letter-spacing: .34em; color: #64748b; text-indent: .34em;
+    animation: tfl-fade .7s .35s ease both;
+  }
+  .tfl-word span { color: #e2e8f4; }
+
+  @keyframes tfl-spin { to { transform: rotate(360deg); } }
+  @keyframes tfl-settle {
+    0%   { opacity: 0; transform: scale(.55); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes tfl-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tfl-orbit { animation: none; }
+    .tfl-mark, .tfl-word { animation: none; opacity: 1; transform: none; }
+  }
+</style>
 </head>
 <body>
+<div id="tfLoader" aria-hidden="true">
+  <div class="tfl-mark-wrap">
+    <div class="tfl-orbit">
+      <svg viewBox="0 0 160 160" aria-hidden="true">
+        <polygon points="80,6 144,43 144,117 80,154 16,117 16,43"/>
+        <polygon class="tfl-arc" points="80,6 144,43 144,117 80,154 16,117 16,43"/>
+      </svg>
+    </div>
+    <img class="tfl-mark" src="assets/favicon.svg" width="108" height="108" alt=""/>
+  </div>
+  <div class="tfl-word">TECH<span>FORGE</span></div>
+</div>
+<script>
+  (function () {
+    var el = document.getElementById('tfLoader');
+    if (!el) return;
+
+    // Show the splash only on a genuine first arrival in this tab.
+    // sessionStorage persists across in-tab navigations but clears when the tab closes,
+    // so internal page-to-page moves never re-trigger it.
+    var seen;
+    try { seen = sessionStorage.getItem('tf-splash'); } catch (e) { seen = null; }
+
+    if (seen) { el.remove(); return; }
+    try { sessionStorage.setItem('tf-splash', '1'); } catch (e) {}
+
+    function hide() {
+      if (!el.isConnected) return;
+      el.classList.add('tfl-hide');
+      setTimeout(function () { el.remove(); }, 550);
+    }
+
+    // Hold briefly so the animation reads as intentional rather than a flicker,
+    // but never block a slow load beyond the safety cap.
+    var MIN_MS = 900;
+    var start = Date.now();
+    function finish() {
+      var waited = Date.now() - start;
+      setTimeout(hide, Math.max(0, MIN_MS - waited));
+    }
+
+    if (document.readyState === 'complete') { finish(); }
+    else { window.addEventListener('load', finish); }
+    setTimeout(hide, 3000); // safety net
+  })();
+</script>
 <a href="#mainContent" class="skip-link">Skip to content</a>
 
 <a href="#main-content" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" onfocus="this.style.cssText='position:fixed;left:16px;top:16px;width:auto;height:auto;z-index:9999;background:var(--cyan);color:#000;padding:12px 20px;border-radius:8px;font-weight:700;'">Skip to content</a>
@@ -1096,7 +1195,7 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
       ctx.strokeStyle = isSorted?GREEN+'44':isCur?CYAN+'aa':BORDER; ctx.lineWidth=1; ctx.stroke();
       ctx.fillStyle = isSorted?GREEN:isCur?'#fff':'#3a5270';
       ctx.font=`bold 9px 'JetBrains Mono',monospace`; ctx.textAlign='center';
-      ctx.fillText(v,x+barW/2,y-5);
+      if (barW >= 18) ctx.fillText(v,x+barW/2,y-5);
     });
     ctx.fillStyle='#3a5270'; ctx.font=`10px 'JetBrains Mono',monospace`; ctx.textAlign='left';
     ctx.fillText(`Pass ${s.sorted.length+1}  ◆  j = ${s.j}`,pad,h-10);
@@ -1301,6 +1400,7 @@ document.addEventListener('visibilitychange',()=>{
 })();
 </script>
 
-<script src="/assets/js/palette.js?v=2" defer></script>
+<script src="assets/js/site-index.js?v=2"></script>
+<script src="assets/js/search-modal.js?v=1" defer></script>
 </body>
 </html>

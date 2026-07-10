@@ -1,7 +1,7 @@
 /* TechForge service worker — offline support.
  * Strategy: network-first for HTML navigations (fresh content, offline
  * fallback), cache-first for static assets (CSS/JS/fonts/images). */
-const VERSION = 'tf-v1';
+const VERSION = 'tf-v2';
 const STATIC_CACHE = 'tf-static-' + VERSION;
 const PAGE_CACHE = 'tf-pages-' + VERSION;
 const OFFLINE_URL = '/offline.html';
