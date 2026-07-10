@@ -110,6 +110,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -319,6 +320,49 @@ cat /var/log/nginx/error.log | grep 'connect() failed'</code></pre>
       <div class="lesson-cheat-item"><strong>gzip on</strong><span>Enable response compression</span></div>
       <div class="lesson-cheat-item"><strong>worker_processes auto</strong><span>Match worker count to CPU cores</span></div>
       <div class="lesson-cheat-item"><strong>location ~ \.php$</strong><span>Regex location block (case-sensitive)</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. proxy_pass in a server block makes nginx act as…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Mail server</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Reverse proxy to an upstream</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS resolver</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Static host only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. TLS termination at nginx means…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">No encryption anywhere</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">HTTPS decrypted at nginx; backends speak plain HTTP internally</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Backends need certs too</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Clients connect over HTTP</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Which directive picks the backend group?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">location</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">upstream</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">listen</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">root</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Serving /static/* from disk, /api/* to app — mechanism?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Two nginx instances</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">location blocks with different handlers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS split</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">iptables</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

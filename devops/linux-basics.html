@@ -110,6 +110,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -293,6 +294,49 @@ systemctl list-units --failed  # Show failed units</code></pre>
       <div class="lesson-cheat-item"><strong>du -sh /path/*</strong><span>Size of each item in a directory</span></div>
       <div class="lesson-cheat-item"><strong>ssh -L 5432:db:5432 user@host</strong><span>Local port forward through SSH tunnel</span></div>
       <div class="lesson-cheat-item"><strong>crontab -e</strong><span>Edit current user's cron schedule</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Service logs on a systemd box:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">cat /dev/log</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">journalctl -u &lt;service&gt;</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">dmesg only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">ps aux</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. chmod 754 file → group can…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Read+write+exec</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Read+exec (5 = r-x)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Only read</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Graceful then forceful kill:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">kill -9 then -15</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">kill (TERM) first, kill -9 (KILL) if ignored</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">killall always</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Ctrl+C twice</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. 'Disk full' quick check:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">top</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">df -h (then du to find culprit)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">free -m</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">uptime</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

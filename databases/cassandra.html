@@ -96,6 +96,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -232,6 +233,49 @@ SELECT * FROM orders_by_user WHERE user_id = ? LIMIT 20;</code></pre>
       <div class="lesson-cheat"><div class="lesson-cheat-item"><strong>RF</strong><span>Replica count</span></div>
       <div class="lesson-cheat-item"><strong>CL</strong><span>Consistency level</span></div>
       <div class="lesson-cheat-item"><strong>SSTable</strong><span>On-disk immutable file</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Cassandra has no primary node because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It uses Zookeeper</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Every node is equal in a hash ring</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Coordinator is elected</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Writes go to all nodes</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. RF=3, CL=QUORUM — write succeeds after…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1 ack</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">2 of 3 replica acks</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">All 3</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Coordinator only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Data modeling starts from…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Normalized ER diagram</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Query patterns — one table per query</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Foreign keys</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Indexes</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Cassandra shines at…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Ad-hoc joins</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Massive write throughput across DCs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Small single-node apps</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Strong consistency default</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

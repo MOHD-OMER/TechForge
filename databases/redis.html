@@ -96,6 +96,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -274,6 +275,49 @@ SUBSCRIBE notifications</code></pre>
       <div class="lesson-cheat-item"><strong>MULTI / EXEC</strong><span>Transaction batch (not rollback on error)</span></div>
       <div class="lesson-cheat-item"><strong>SCAN</strong><span>Iterate keys without blocking (not KEYS)</span></div>
     </div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Redis serves reads in &lt;1ms mainly because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">SSD optimized</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Data lives in RAM</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">HTTP/2</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Compression</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Rate limiting pattern in Redis:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">GET/SET only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">INCR counter + EXPIRE window</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Pub/sub</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">LPUSH</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. RDB vs AOF?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Same file</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">RDB = point-in-time snapshot; AOF = append-only op log</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">AOF is faster to restore</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">RDB is per-key</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Treating Redis as your only datastore is risky because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Too slow</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Memory-bound + cache-grade durability defaults</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">No data types</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">License</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>
