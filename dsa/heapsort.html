@@ -282,7 +282,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-heapsort-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -311,6 +317,52 @@
         arr[i],arr[largest]=arr[largest],arr[i]
         <span class="fn">heapify</span>(arr,n,largest)</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function heapSort(arr) {
+  const n = arr.length;
+  for (let i = Math.floor(n / 2) - 1; i &gt;= 0; i--) heapify(arr, n, i);
+  for (let i = n - 1; i &gt; 0; i--) {
+    [arr[0], arr[i]] = [arr[i], arr[0]];
+    heapify(arr, i, 0);
+  }
+}
+
+function heapify(arr, n, i) {
+  let largest = i;
+  const l = 2 * i + 1, r = 2 * i + 2;
+  if (l &lt; n &amp;&amp; arr[l] &gt; arr[largest]) largest = l;
+  if (r &lt; n &amp;&amp; arr[r] &gt; arr[largest]) largest = r;
+  if (largest !== i) {
+    [arr[i], arr[largest]] = [arr[largest], arr[i]];
+    heapify(arr, n, largest);
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void heapSort(int[] arr) {
+    int n = arr.length;
+    for (int i = n / 2 - 1; i &gt;= 0; i--) heapify(arr, n, i);
+    for (int i = n - 1; i &gt; 0; i--) {
+        int t = arr[0]; arr[0] = arr[i]; arr[i] = t;
+        heapify(arr, i, 0);
+    }
+}
+
+void heapify(int[] arr, int n, int i) {
+    int largest = i, l = 2 * i + 1, r = 2 * i + 2;
+    if (l &lt; n &amp;&amp; arr[l] &gt; arr[largest]) largest = l;
+    if (r &lt; n &amp;&amp; arr[r] &gt; arr[largest]) largest = r;
+    if (largest != i) {
+        int t = arr[i]; arr[i] = arr[largest]; arr[largest] = t;
+        heapify(arr, n, largest);
+    }
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-heapsort-2">
 <div class="concept-grid">

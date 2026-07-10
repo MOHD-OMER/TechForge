@@ -289,7 +289,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-bits-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -321,6 +327,54 @@ n &lt;&lt; <span class="nm">1</span>        <span class="cm"># multiply by 2 →
         count += <span class="nm">1</span>
     <span class="kw">return</span> count</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// Common bit tricks
+const n = 12;   // 1100 in binary
+
+n &amp; 1;          // check if odd → 0 (even)
+n &amp; (n - 1);    // clear lowest set bit → 8
+n | (n - 1);    // set all bits below MSB
+n ^ n;          // XOR with self → 0
+n &gt;&gt; 1;         // divide by 2 → 6
+n &lt;&lt; 1;         // multiply by 2 → 24
+
+// Count set bits (Brian Kernighan)
+function countBits(n) {
+  let count = 0;
+  while (n) {
+    n &amp;= n - 1;  // clears lowest set bit
+    count++;
+  }
+  return count;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// Common bit tricks
+int n = 12;     // 1100 in binary
+
+n &amp; 1;          // check if odd → 0 (even)
+n &amp; (n - 1);    // clear lowest set bit → 8
+n | (n - 1);    // set all bits below MSB
+n ^ n;          // XOR with self → 0
+n &gt;&gt; 1;         // divide by 2 → 6
+n &lt;&lt; 1;         // multiply by 2 → 24
+
+// Count set bits (Brian Kernighan)
+int countBits(int n) {
+    int count = 0;
+    while (n != 0) {
+        n &amp;= n - 1;  // clears lowest set bit
+        count++;
+    }
+    return count;
+    // or: Integer.bitCount(n)
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-bits-2">
 <div class="concept-grid">

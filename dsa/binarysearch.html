@@ -208,6 +208,12 @@
   </div>
 
   <div class="info-pane" id="tp-bs-1">
+    <div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
     <div class="code-block">
       <pre class="code-pre">def binary_search(arr, target):
     lo, hi = 0, len(arr) - 1
@@ -217,6 +223,35 @@
         elif arr[mid] &lt; target: lo = mid + 1
         else: hi = mid - 1
     return -1</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function binarySearch(arr, target) {
+  let lo = 0, hi = arr.length - 1;
+  while (lo &lt;= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] &lt; target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">int binarySearch(int[] arr, int target) {
+    int lo = 0, hi = arr.length - 1;
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;  // overflow-safe
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] &lt; target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}</pre>
+    </div>
     </div>
   </div>
 

@@ -260,7 +260,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-heap-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -290,6 +296,62 @@ max_v = -heapq.heappop(heap)
 <span class="cm"># Build heap in O(n)</span>
 heapq.heapify(arr)</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// No built-in heap in JS — minimal min-heap
+class MinHeap {
+  constructor() { this.a = []; }
+  push(v) {
+    this.a.push(v);
+    let i = this.a.length - 1;
+    while (i &gt; 0) {
+      const p = (i - 1) &gt;&gt; 1;
+      if (this.a[p] &lt;= this.a[i]) break;
+      [this.a[p], this.a[i]] = [this.a[i], this.a[p]];
+      i = p;
+    }
+  }
+  pop() {
+    const top = this.a[0], last = this.a.pop();
+    if (this.a.length) { this.a[0] = last; this.sink(0); }
+    return top;
+  }
+  sink(i) {
+    const n = this.a.length;
+    while (true) {
+      let s = i, l = 2*i+1, r = 2*i+2;
+      if (l &lt; n &amp;&amp; this.a[l] &lt; this.a[s]) s = l;
+      if (r &lt; n &amp;&amp; this.a[r] &lt; this.a[s]) s = r;
+      if (s === i) break;
+      [this.a[s], this.a[i]] = [this.a[i], this.a[s]];
+      i = s;
+    }
+  }
+}
+// Max-heap: push negated values</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// PriorityQueue = min-heap by default
+PriorityQueue&lt;Integer&gt; heap = new PriorityQueue&lt;&gt;();
+heap.offer(5);
+heap.offer(1);
+heap.offer(3);
+int minV = heap.poll();   // → 1
+
+// Max-heap: reverse comparator
+PriorityQueue&lt;Integer&gt; maxHeap =
+    new PriorityQueue&lt;&gt;(Comparator.reverseOrder());
+maxHeap.offer(5);
+int maxV = maxHeap.poll(); // → 5
+
+// Build heap from array: O(n)
+PriorityQueue&lt;Integer&gt; fromArr =
+    new PriorityQueue&lt;&gt;(List.of(5, 1, 3));</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-heap-2">
 <div class="concept-grid">

@@ -325,7 +325,13 @@
         </div>
 
         <div class="info-pane" id="tp-sll-1">
-          <div class="code-block">
+          <div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
             <div class="code-hdr"><span class="code-lang">Python — SLL Implementation</span>
               <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
             </div>
@@ -369,6 +375,94 @@
             curr = curr.next
         <span class="kw">return False</span></pre>
           </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+class SLL {
+  constructor() { this.head = null; }
+
+  pushFront(val) {  // O(1)
+    const node = new Node(val);
+    node.next = this.head;
+    this.head = node;
+  }
+
+  append(val) {  // O(n)
+    const node = new Node(val);
+    if (!this.head) { this.head = node; return; }
+    let curr = this.head;
+    while (curr.next) curr = curr.next;
+    curr.next = node;
+  }
+
+  popFront() {  // O(1)
+    if (!this.head) return null;
+    const val = this.head.val;
+    this.head = this.head.next;
+    return val;
+  }
+
+  find(val) {  // O(n)
+    let curr = this.head;
+    while (curr) {
+      if (curr.val === val) return true;
+      curr = curr.next;
+    }
+    return false;
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">class Node {
+    int val;
+    Node next;
+    Node(int val) { this.val = val; }
+}
+
+class SLL {
+    Node head;
+
+    void pushFront(int val) {  // O(1)
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+    }
+
+    void append(int val) {  // O(n)
+        Node node = new Node(val);
+        if (head == null) { head = node; return; }
+        Node curr = head;
+        while (curr.next != null) curr = curr.next;
+        curr.next = node;
+    }
+
+    Integer popFront() {  // O(1)
+        if (head == null) return null;
+        int val = head.val;
+        head = head.next;
+        return val;
+    }
+
+    boolean find(int val) {  // O(n)
+        Node curr = head;
+        while (curr != null) {
+            if (curr.val == val) return true;
+            curr = curr.next;
+        }
+        return false;
+    }
+}</pre>
+    </div>
+    </div>
         </div>
 
         <div class="info-pane" id="tp-sll-2">

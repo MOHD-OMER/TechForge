@@ -270,7 +270,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-recursion-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -302,6 +308,50 @@
     smaller = <span class="fn">reduce</span>(problem)
     <span class="kw">return</span> <span class="fn">combine</span>(<span class="fn">solve</span>(smaller))</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// Naive recursion — O(2^n)
+function fib(n) {
+  if (n &lt;= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+// Memoized recursion — O(n)
+function fibMemo(n, memo = {}) {
+  if (n &lt;= 1) return n;
+  if (n in memo) return memo[n];
+  memo[n] = fibMemo(n - 1, memo) + fibMemo(n - 2, memo);
+  return memo[n];
+}
+
+// General template
+function solve(problem) {
+  if (baseCase(problem)) return baseResult;
+  const smaller = reduce(problem);
+  return combine(solve(smaller));
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// Naive recursion — O(2^n)
+int fib(int n) {
+    if (n &lt;= 1) return n;
+    return fib(n - 1) + fib(n - 2);
+}
+
+// Memoized recursion — O(n)
+Map&lt;Integer, Integer&gt; memo = new HashMap&lt;&gt;();
+int fibMemo(int n) {
+    if (n &lt;= 1) return n;
+    if (memo.containsKey(n)) return memo.get(n);
+    int result = fibMemo(n - 1) + fibMemo(n - 2);
+    memo.put(n, result);
+    return result;
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-recursion-2">
 <div class="concept-grid">

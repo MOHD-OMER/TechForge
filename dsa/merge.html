@@ -284,7 +284,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-merge-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -312,6 +318,49 @@
         <span class="kw">else</span>:            res.append(R[j]); j+=1
     <span class="kw">return</span> res + L[i:] + R[j:]</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function mergeSort(arr) {
+  if (arr.length &lt;= 1) return arr;
+  const mid = Math.floor(arr.length / 2);
+  const L = mergeSort(arr.slice(0, mid));
+  const R = mergeSort(arr.slice(mid));
+  return merge(L, R);
+}
+
+function merge(L, R) {
+  const res = [];
+  let i = 0, j = 0;
+  while (i &lt; L.length &amp;&amp; j &lt; R.length) {
+    if (L[i] &lt;= R[j]) res.push(L[i++]);
+    else res.push(R[j++]);
+  }
+  return res.concat(L.slice(i), R.slice(j));
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">int[] mergeSort(int[] arr) {
+    if (arr.length &lt;= 1) return arr;
+    int mid = arr.length / 2;
+    int[] L = mergeSort(Arrays.copyOfRange(arr, 0, mid));
+    int[] R = mergeSort(Arrays.copyOfRange(arr, mid, arr.length));
+    return merge(L, R);
+}
+
+int[] merge(int[] L, int[] R) {
+    int[] res = new int[L.length + R.length];
+    int i = 0, j = 0, k = 0;
+    while (i &lt; L.length &amp;&amp; j &lt; R.length)
+        res[k++] = (L[i] &lt;= R[j]) ? L[i++] : R[j++];
+    while (i &lt; L.length) res[k++] = L[i++];
+    while (j &lt; R.length) res[k++] = R[j++];
+    return res;
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-merge-2">
 <div class="concept-grid">

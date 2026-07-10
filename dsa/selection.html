@@ -234,7 +234,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-selection-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">python</span>
 <div class="code-dots">
@@ -252,6 +258,35 @@
                 min_idx = j
         arr[i], arr[min_idx] = arr[min_idx], arr[i]</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function selectionSort(arr) {
+  const n = arr.length;
+  for (let i = 0; i &lt; n; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j &lt; n; j++) {
+      if (arr[j] &lt; arr[minIdx]) minIdx = j;
+    }
+    [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void selectionSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i &lt; n; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j &lt; n; j++) {
+            if (arr[j] &lt; arr[minIdx]) minIdx = j;
+        }
+        int t = arr[i]; arr[i] = arr[minIdx]; arr[minIdx] = t;
+    }
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-selection-2">
 <div class="concept-grid">

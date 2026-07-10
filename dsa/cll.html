@@ -381,7 +381,13 @@
         </div>
 
         <div class="info-pane" id="tp-cll-1">
-          <div class="code-block">
+          <div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
             <div class="code-hdr"><span class="code-lang">Python — CLL Append</span>
               <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
             </div>
@@ -397,6 +403,39 @@
     cur.next = node
     node.next = self.head       <span class="cm"># circular!</span></pre>
           </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">append(val) {
+  const node = new Node(val);
+  if (!this.head) {
+    this.head = node;
+    node.next = this.head;   // self-loop
+    return;
+  }
+  let cur = this.head;
+  while (cur.next !== this.head) cur = cur.next;
+  cur.next = node;
+  node.next = this.head;     // circular!
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void append(int val) {
+    Node node = new Node(val);
+    if (head == null) {
+        head = node;
+        node.next = head;    // self-loop
+        return;
+    }
+    Node cur = head;
+    while (cur.next != head) cur = cur.next;
+    cur.next = node;
+    node.next = head;        // circular!
+}</pre>
+    </div>
+    </div>
         </div>
 
         <div class="info-pane" id="tp-cll-2">

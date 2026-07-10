@@ -254,7 +254,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-hashtable-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -282,6 +288,53 @@ val = d["name"]         <span class="cm"># O(1) lookup</span>
         idx = hash(key) % len(self.table)
         self.table[idx].append((key, val))</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// JS Map is a hash table
+const d = new Map();
+d.set("name", "Alice");   // O(1) insert
+const val = d.get("name"); // O(1) lookup
+d.delete("name");          // O(1) delete
+
+// Custom hash table with chaining
+class HashTable {
+  constructor(size = 10) {
+    this.table = Array.from({length: size}, () =&gt; []);
+  }
+  hash(key) {
+    let h = 0;
+    for (const ch of String(key)) h = (h * 31 + ch.charCodeAt(0)) | 0;
+    return Math.abs(h) % this.table.length;
+  }
+  put(key, val) {
+    this.table[this.hash(key)].push([key, val]);
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">// Java HashMap is a hash table
+Map&lt;String, String&gt; d = new HashMap&lt;&gt;();
+d.put("name", "Alice");        // O(1) insert
+String val = d.get("name");    // O(1) lookup
+d.remove("name");              // O(1) delete
+
+// Custom hash table with chaining
+class HashTable {
+    List&lt;List&lt;Map.Entry&lt;String, String&gt;&gt;&gt; table;
+    HashTable(int size) {
+        table = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; size; i++) table.add(new ArrayList&lt;&gt;());
+    }
+    void put(String key, String val) {
+        int idx = Math.abs(key.hashCode()) % table.size();
+        table.get(idx).add(Map.entry(key, val));
+    }
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-hashtable-2">
 <div class="concept-grid">

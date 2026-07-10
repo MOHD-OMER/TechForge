@@ -268,7 +268,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-sliding-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -291,6 +297,35 @@
         mx = max(mx, ws)
     <span class="kw">return</span> mx</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function maxSubarraySum(arr, k) {
+  let ws = 0;
+  for (let i = 0; i &lt; k; i++) ws += arr[i];
+  let mx = ws;
+  for (let i = k; i &lt; arr.length; i++) {
+    ws += arr[i] - arr[i - k];
+    mx = Math.max(mx, ws);
+  }
+  return mx;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">int maxSubarraySum(int[] arr, int k) {
+    int ws = 0;
+    for (int i = 0; i &lt; k; i++) ws += arr[i];
+    int mx = ws;
+    for (int i = k; i &lt; arr.length; i++) {
+        ws += arr[i] - arr[i - k];
+        mx = Math.max(mx, ws);
+    }
+    return mx;
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-sliding-2">
 <div class="prose">

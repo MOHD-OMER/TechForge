@@ -286,7 +286,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-quick-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -315,6 +321,55 @@
     arr[i+1], arr[hi] = arr[hi], arr[i+1]
     <span class="kw">return</span> i + 1</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function quicksort(arr, lo, hi) {
+  if (lo &lt; hi) {
+    const pi = partition(arr, lo, hi);
+    quicksort(arr, lo, pi - 1);
+    quicksort(arr, pi + 1, hi);
+  }
+}
+
+function partition(arr, lo, hi) {
+  const pivot = arr[hi];
+  let i = lo - 1;
+  for (let j = lo; j &lt; hi; j++) {
+    if (arr[j] &lt;= pivot) {
+      i++;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  [arr[i + 1], arr[hi]] = [arr[hi], arr[i + 1]];
+  return i + 1;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void quicksort(int[] arr, int lo, int hi) {
+    if (lo &lt; hi) {
+        int pi = partition(arr, lo, hi);
+        quicksort(arr, lo, pi - 1);
+        quicksort(arr, pi + 1, hi);
+    }
+}
+
+int partition(int[] arr, int lo, int hi) {
+    int pivot = arr[hi];
+    int i = lo - 1;
+    for (int j = lo; j &lt; hi; j++) {
+        if (arr[j] &lt;= pivot) {
+            i++;
+            int t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+    }
+    int t = arr[i + 1]; arr[i + 1] = arr[hi]; arr[hi] = t;
+    return i + 1;
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-quick-2">
 <div class="concept-grid">

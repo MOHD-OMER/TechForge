@@ -211,7 +211,13 @@
 </div>
 
 <div class="info-pane" id="tp-bfs-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">python</span>
 <div class="code-dots">
@@ -235,6 +241,46 @@
                 visited.<span class="fn">add</span>(neighbor)
                 queue.<span class="fn">append</span>(neighbor)</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function bfs(graph, start) {
+  const visited = new Set([start]);
+  const queue = [start];
+
+  while (queue.length) {
+    const node = queue.shift();
+    process.stdout.write(node + " ");
+
+    for (const neighbor of graph[node]) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push(neighbor);
+      }
+    }
+  }
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">void bfs(Map&lt;Integer, List&lt;Integer&gt;&gt; graph, int start) {
+    Set&lt;Integer&gt; visited = new HashSet&lt;&gt;(List.of(start));
+    Deque&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;(List.of(start));
+
+    while (!queue.isEmpty()) {
+        int node = queue.poll();
+        System.out.print(node + " ");
+
+        for (int neighbor : graph.get(node)) {
+            if (visited.add(neighbor)) {  // true if newly added
+                queue.offer(neighbor);
+            }
+        }
+    }
+}</pre>
+    </div>
+    </div>
 </div>
 
 <div class="info-pane" id="tp-bfs-2">

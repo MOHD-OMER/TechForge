@@ -260,7 +260,13 @@
 </div>
 </div>
 <div class="info-pane" id="tp-dijkstra-1">
-<div class="code-block">
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
+    <div class="code-block">
 <div class="code-hdr">
 <span class="code-lang">
           python
@@ -289,6 +295,55 @@
                 heapq.heappush(heap, (dist[v], v))
     <span class="kw">return</span> dist</pre>
 </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function dijkstra(graph, src) {
+  const dist = {};
+  for (const v in graph) dist[v] = Infinity;
+  dist[src] = 0;
+  // [dist, node] pairs; array + sort = simple PQ substitute
+  const heap = [[0, src]];
+  while (heap.length) {
+    heap.sort((a, b) =&gt; a[0] - b[0]);
+    const [d, u] = heap.shift();
+    if (d &gt; dist[u]) continue;  // stale entry
+    for (const [v, w] of graph[u]) {
+      if (dist[u] + w &lt; dist[v]) {
+        dist[v] = dist[u] + w;
+        heap.push([dist[v], v]);
+      }
+    }
+  }
+  return dist;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">Map&lt;Integer, Integer&gt; dijkstra(Map&lt;Integer, List&lt;int[]&gt;&gt; graph, int src) {
+    Map&lt;Integer, Integer&gt; dist = new HashMap&lt;&gt;();
+    for (int v : graph.keySet()) dist.put(v, Integer.MAX_VALUE);
+    dist.put(src, 0);
+    // int[]{dist, node}
+    PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; a[0] - b[0]);
+    pq.offer(new int[]{0, src});
+    while (!pq.isEmpty()) {
+        int[] top = pq.poll();
+        int d = top[0], u = top[1];
+        if (d &gt; dist.get(u)) continue;  // stale
+        for (int[] edge : graph.get(u)) {
+            int v = edge[0], w = edge[1];
+            if (dist.get(u) + w &lt; dist.get(v)) {
+                dist.put(v, dist.get(u) + w);
+                pq.offer(new int[]{dist.get(v), v});
+            }
+        }
+    }
+    return dist;
+}</pre>
+    </div>
+    </div>
 </div>
 <div class="info-pane" id="tp-dijkstra-2">
 <div class="concept-grid">
