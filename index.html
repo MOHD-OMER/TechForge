@@ -598,6 +598,25 @@
     .tfl-orbit { animation: none; }
     .tfl-mark, .tfl-word { animation: none; opacity: 1; transform: none; }
   }
+
+/* ── CS UNIVERSE MAP ── */
+    .csmap-section { padding: 56px 0 40px; }
+    .csmap-svg { display: block; max-width: 820px; margin: 0 auto; width: 100%; font-family: var(--font-mono, monospace); }
+    .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
+    .csmap-flow { stroke-width: 1.5; stroke-dasharray: 5 90; stroke-linecap: round; opacity: .9; }
+    .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 1.5; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
+    .csmap-node text { fill: var(--text); font-size: 12.5px; font-weight: 700; }
+    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 9px; font-weight: 400; }
+    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.12); }
+    .csmap-node:focus-visible { outline: 2.4px solid var(--blue, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
+    .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
+    @keyframes csmapPulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
+    @keyframes csmapDash { to { stroke-dashoffset: -95; } }
+    .csmap-flow { animation: csmapDash 3.8s linear infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .csmap-flow, .csmap-core circle { animation: none; }
+      .csmap-node circle { transition: none; }
+    }
 </style>
 </head>
 <body>
@@ -777,25 +796,6 @@
   <div class="section-divider"></div>
 
   <!-- ---- CS UNIVERSE MAP ---- -->
-  <style>
-    .csmap-section { padding: 56px 0 40px; }
-    .csmap-svg { display: block; max-width: 820px; margin: 0 auto; width: 100%; font-family: var(--font-mono, monospace); }
-    .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
-    .csmap-flow { stroke-width: 1.5; stroke-dasharray: 5 90; stroke-linecap: round; opacity: .9; }
-    .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 1.5; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
-    .csmap-node text { fill: var(--text); font-size: 12.5px; font-weight: 700; }
-    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 9px; font-weight: 400; }
-    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.12); }
-    .csmap-node:focus-visible { outline: 2.4px solid var(--blue, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
-    .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
-    @keyframes csmapPulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
-    @keyframes csmapDash { to { stroke-dashoffset: -95; } }
-    .csmap-flow { animation: csmapDash 3.8s linear infinite; }
-    @media (prefers-reduced-motion: reduce) {
-      .csmap-flow, .csmap-core circle { animation: none; }
-      .csmap-node circle { transition: none; }
-    }
-  </style>
   <section class="csmap-section anim-in" aria-labelledby="csmapTitle">
     <div class="section-wrap">
       <div class="section-header">
@@ -803,7 +803,8 @@
         <h2 id="csmapTitle" style="font-family:var(--font-display,inherit);font-size:clamp(20px,3vw,28px);font-weight:700;margin:6px 0 4px">One connected body of knowledge</h2>
         <p style="font-size:13.5px;color:var(--text2);max-width:560px">Every track feeds the same goal. Click any node to jump in.</p>
       </div>
-      <svg class="csmap-svg" viewBox="0 0 760 430" role="group" aria-label="Map of TechForge learning tracks. Six tracks — DSA, Python, System Design, Databases, DevOps and AI/ML — all connect to Interview Prep at the centre.">
+      <svg class="csmap-svg" viewBox="0 0 760 430" aria-labelledby="csmapSvgTitle">
+        <title id="csmapSvgTitle">Map of TechForge learning tracks. Six tracks — DSA, Python, System Design, Databases, DevOps and AI/ML — all connect to Interview Prep at the centre.</title>
         <!-- static edges -->
         <g class="csmap-edges" aria-hidden="true">
           <line class="csmap-edge" x1="180" y1="120" x2="380" y2="215"/>
