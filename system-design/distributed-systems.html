@@ -112,6 +112,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -237,6 +238,49 @@
       <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
       <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
       <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Network partitions in distributed systems are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Preventable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Inevitable — design must tolerate them</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Rare enough to ignore</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Illegal</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Split brain =</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fast failover</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Two nodes both think they lead → conflicting writes</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CPU overload</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Cache miss</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Quorum (majority) prevents split brain because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It's faster</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Only one side of a partition can hold majority</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Uses TLS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Doubles nodes</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Safe assumption about clocks across nodes:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Perfectly synced</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">They drift — never trust cross-node timestamp ordering</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">UTC fixes it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">NTP is exact</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

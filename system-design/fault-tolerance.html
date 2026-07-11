@@ -112,6 +112,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -227,6 +228,49 @@
       <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
       <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
       <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Circuit breaker OPEN state does what?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Passes all calls</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Fails fast without calling broken dependency</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Retries harder</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Queues calls</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. HALF-OPEN exists to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Log errors</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Test recovery with limited probe calls</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Split traffic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Cool CPU</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Retries without backoff cause…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Faster recovery</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Retry storms hammering a struggling service</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Better UX</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Bulkhead pattern =</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Bigger pools</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Isolated resource pools so one failing dependency can't exhaust everything</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">One giant pool</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A firewall</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

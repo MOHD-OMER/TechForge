@@ -112,6 +112,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -230,6 +231,49 @@
       <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
       <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
       <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Partitioning vs sharding:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Same thing</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Partitioning = split within one DB; sharding = split across DBs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Sharding is per-table</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Partitioning is multi-node</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Partition pruning means…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Deleting partitions</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Planner scans only partitions matching the filter</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Compression</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Reindexing</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Dropping old time-partitioned data =</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Slow DELETE</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Instant DROP PARTITION</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">VACUUM</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Impossible</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Range partition by month suits…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Random UUID lookups</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Time-series data queried by date windows</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Joins</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Small tables</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

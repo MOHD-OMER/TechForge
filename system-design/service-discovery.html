@@ -112,6 +112,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -232,6 +233,49 @@
       <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
       <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
       <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Services register in the registry and prove liveness via…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Certificates</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Heartbeats/TTL renewal</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Logs</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Missed heartbeats →</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Alert only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Instance dropped from lookup results — clients stop seeing it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Restart</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Client-side vs server-side discovery:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Same</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Client queries registry + picks instance vs LB/proxy resolves for client</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Server-side has no LB</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Client-side uses DNS only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Hardcoding service IPs breaks because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Slow</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Instances scale/move/die dynamically</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">IPv6</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Security</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>

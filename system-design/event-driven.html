@@ -112,6 +112,7 @@
     <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
     <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
     <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
     <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
   </aside>
   <main class="main">
@@ -229,6 +230,49 @@
       <div class="lesson-cheat-item"><strong>Rollback</strong><span>Revert to last known good</span></div>
       <div class="lesson-cheat-item"><strong>Canary</strong><span>Limited blast-radius rollout</span></div>
       <div class="lesson-cheat-item"><strong>Runbook</strong><span>Incident steps</span></div></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Producer in event-driven system knows…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">All consumers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Nothing about consumers — emits and forgets</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Consumer count</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Consumer addresses</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Adding new consumer requires…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Producer redeploy</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Just subscribing — zero producer changes</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Schema change</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Downtime</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Event vs command?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Same</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Event = fact that happened; command = request to do something</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Command is async</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Event has one target</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Main debugging cost of event-driven:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Slow events</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Flow scattered across services — need correlation IDs + tracing</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Big payloads</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">No retries</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
     </section>
     <section class="lesson-section" id="exercises">
       <h2><span class="sec-icon"><i class="ti ti-barbell"></i></span> Practical Exercises</h2>
