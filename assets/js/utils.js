@@ -449,3 +449,30 @@ function tfMakeScrollRegionsFocusable() {
 }
 document.addEventListener('DOMContentLoaded', tfMakeScrollRegionsFocusable);
 window.addEventListener('resize', tfMakeScrollRegionsFocusable);
+/* ─────────────────────────────────────────────────────────────
+   Keyboard access for legacy clickable divs/spans.
+   Many pages attach onclick to non-interactive elements
+   (.info-tab, .pq-item, .qna-q, .ftab, div.quiz-opt …), which are
+   unreachable by keyboard. Give every such element a tab stop,
+   a button role, and Enter/Space activation.
+───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+  var NATIVE = ['BUTTON', 'A', 'INPUT', 'SELECT', 'TEXTAREA', 'SUMMARY'];
+  document.querySelectorAll('[onclick]').forEach(function (el) {
+    if (NATIVE.indexOf(el.tagName) !== -1) return;
+    if (el.hasAttribute('tabindex')) return;
+    /* Never make a container interactive when it already holds an
+       interactive child (button/link inside a clickable card) — axe
+       "nested-interactive". Such cards need their own inner keyboard
+       path instead (e.g. a real <a> on the title). */
+    if (el.querySelector('button, a[href], input, select, textarea, [tabindex]')) return;
+    el.setAttribute('tabindex', '0');
+    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+});

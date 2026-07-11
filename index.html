@@ -719,10 +719,10 @@
         <a class="btn-secondary" href="interview/index.html"><i class="ti ti-target" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Interview Prep →</a>
       </div>
       <div class="stat-row">
-        <div class="stat-item"><span class="stat-val">7</span><span class="stat-key">Tracks</span></div>
-        <div class="stat-item"><span class="stat-val">70+</span><span class="stat-key">Topics</span></div>
-        <div class="stat-item"><span class="stat-val">200+</span><span class="stat-key">Questions</span></div>
-        <div class="stat-item"><span class="stat-val">0</span><span class="stat-key">Cost</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="7">7</span><span class="stat-key">Tracks</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="125" data-suffix="+">125+</span><span class="stat-key">Pages</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="200" data-suffix="+">200+</span><span class="stat-key">Questions</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="137">137</span><span class="stat-key">Programs</span></div>
       </div>
     </div>
 
@@ -773,6 +773,96 @@
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track" id="tickerTrack"></div>
   </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ---- CS UNIVERSE MAP ---- -->
+  <style>
+    .csmap-section { padding: 56px 0 40px; }
+    .csmap-svg { display: block; max-width: 820px; margin: 0 auto; width: 100%; font-family: var(--font-mono, monospace); }
+    .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
+    .csmap-flow { stroke-width: 1.5; stroke-dasharray: 5 90; stroke-linecap: round; opacity: .9; }
+    .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 1.5; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
+    .csmap-node text { fill: var(--text); font-size: 12.5px; font-weight: 700; }
+    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 9px; font-weight: 400; }
+    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.12); }
+    .csmap-node:focus-visible { outline: 2.4px solid var(--blue, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
+    .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
+    @keyframes csmapPulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
+    @keyframes csmapDash { to { stroke-dashoffset: -95; } }
+    .csmap-flow { animation: csmapDash 3.8s linear infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .csmap-flow, .csmap-core circle { animation: none; }
+      .csmap-node circle { transition: none; }
+    }
+  </style>
+  <section class="csmap-section anim-in" aria-labelledby="csmapTitle">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-eyebrow">The Map</div>
+        <h2 id="csmapTitle" style="font-family:var(--font-display,inherit);font-size:clamp(20px,3vw,28px);font-weight:700;margin:6px 0 4px">One connected body of knowledge</h2>
+        <p style="font-size:13.5px;color:var(--text2);max-width:560px">Every track feeds the same goal. Click any node to jump in.</p>
+      </div>
+      <svg class="csmap-svg" viewBox="0 0 760 430" role="group" aria-label="Map of TechForge learning tracks. Six tracks — DSA, Python, System Design, Databases, DevOps and AI/ML — all connect to Interview Prep at the centre.">
+        <!-- static edges -->
+        <g class="csmap-edges" aria-hidden="true">
+          <line class="csmap-edge" x1="180" y1="120" x2="380" y2="215"/>
+          <line class="csmap-edge" x1="180" y1="320" x2="380" y2="215"/>
+          <line class="csmap-edge" x1="580" y1="120" x2="380" y2="215"/>
+          <line class="csmap-edge" x1="580" y1="320" x2="380" y2="215"/>
+          <line class="csmap-edge" x1="380" y1="62"  x2="380" y2="215"/>
+          <line class="csmap-edge" x1="380" y1="376" x2="380" y2="215"/>
+          <line class="csmap-edge" x1="180" y1="120" x2="380" y2="62"  opacity=".45"/>
+          <line class="csmap-edge" x1="580" y1="120" x2="380" y2="62"  opacity=".45"/>
+          <line class="csmap-edge" x1="180" y1="320" x2="380" y2="376" opacity=".45"/>
+          <line class="csmap-edge" x1="580" y1="320" x2="380" y2="376" opacity=".45"/>
+          <!-- animated pulses flowing toward the core -->
+          <line class="csmap-flow" x1="180" y1="120" x2="380" y2="215" stroke="var(--green,#34d399)"/>
+          <line class="csmap-flow" x1="180" y1="320" x2="380" y2="215" stroke="var(--amber,#fbbf24)" style="animation-delay:-1.2s"/>
+          <line class="csmap-flow" x1="580" y1="120" x2="380" y2="215" stroke="var(--blue,#4d9ef7)" style="animation-delay:-2.1s"/>
+          <line class="csmap-flow" x1="580" y1="320" x2="380" y2="215" stroke="var(--cyan,#22d3ee)" style="animation-delay:-0.6s"/>
+          <line class="csmap-flow" x1="380" y1="62"  x2="380" y2="215" stroke="var(--purple,#a78bfa)" style="animation-delay:-2.9s"/>
+          <line class="csmap-flow" x1="380" y1="376" x2="380" y2="215" stroke="var(--red,#f87171)" style="animation-delay:-1.7s"/>
+        </g>
+        <!-- track nodes (real links) -->
+        <a class="csmap-node" href="dsa/index.html" aria-label="DSA track — algorithms and data structures">
+          <circle cx="180" cy="120" r="46" stroke="var(--green,#34d399)"/>
+          <text x="180" y="117" text-anchor="middle">DSA</text>
+          <text x="180" y="133" text-anchor="middle" class="csmap-sub">30 topics</text>
+        </a>
+        <a class="csmap-node" href="python/index.html" aria-label="Python track — language plus 137 programs">
+          <circle cx="180" cy="320" r="46" stroke="var(--amber,#fbbf24)"/>
+          <text x="180" y="317" text-anchor="middle">Python</text>
+          <text x="180" y="333" text-anchor="middle" class="csmap-sub">137 programs</text>
+        </a>
+        <a class="csmap-node" href="system-design/index.html" aria-label="System Design track — 26 architecture topics">
+          <circle cx="580" cy="120" r="46" stroke="var(--blue,#4d9ef7)"/>
+          <text x="580" y="117" text-anchor="middle">Sys Design</text>
+          <text x="580" y="133" text-anchor="middle" class="csmap-sub">26 topics</text>
+        </a>
+        <a class="csmap-node" href="databases/index.html" aria-label="Databases track — SQL and NoSQL engines">
+          <circle cx="580" cy="320" r="46" stroke="var(--cyan,#22d3ee)"/>
+          <text x="580" y="317" text-anchor="middle">Databases</text>
+          <text x="580" y="333" text-anchor="middle" class="csmap-sub">14 engines</text>
+        </a>
+        <a class="csmap-node" href="devops/index.html" aria-label="DevOps track — ship, automate, monitor">
+          <circle cx="380" cy="62" r="44" stroke="var(--purple,#a78bfa)"/>
+          <text x="380" y="59" text-anchor="middle">DevOps</text>
+          <text x="380" y="75" text-anchor="middle" class="csmap-sub">23 topics</text>
+        </a>
+        <a class="csmap-node" href="aiml/index.html" aria-label="AI and machine learning track">
+          <circle cx="380" cy="376" r="44" stroke="var(--red,#f87171)"/>
+          <text x="380" y="373" text-anchor="middle">AI / ML</text>
+          <text x="380" y="389" text-anchor="middle" class="csmap-sub">8 modules</text>
+        </a>
+        <a class="csmap-node csmap-core" href="interview/index.html" aria-label="Interview Prep — where every track leads. 200 plus questions">
+          <circle cx="380" cy="215" r="56" stroke="var(--text)" stroke-width="2"/>
+          <text x="380" y="209" text-anchor="middle">Interview</text>
+          <text x="380" y="226" text-anchor="middle" class="csmap-sub">200+ questions</text>
+        </a>
+      </svg>
+    </div>
+  </section>
 
   <div class="section-divider"></div>
 
@@ -1402,5 +1492,38 @@ document.addEventListener('visibilitychange',()=>{
 
 <script src="assets/js/site-index.js?v=2"></script>
 <script src="assets/js/search-modal.js?v=1" defer></script>
+<script>
+/* Count-up hero stats on first scroll into view. Skips animation for
+   prefers-reduced-motion users — values jump straight to final. */
+(function () {
+  var els = document.querySelectorAll('.stat-val[data-count]');
+  if (!els.length) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el) {
+    var target = parseInt(el.dataset.count, 10);
+    var suffix = el.dataset.suffix || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    var t0 = null, dur = 900;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  var seen = new WeakSet();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !seen.has(e.target)) {
+        seen.add(e.target);
+        run(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>
