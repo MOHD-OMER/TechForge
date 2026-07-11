@@ -287,6 +287,46 @@
               <div class="step-code">Frontier: GPT-4o, Claude 3.5 · Open: Llama 3, Mistral · Efficient: Phi-3, Gemma</div>
             </div>
           </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">Text Generation Strategies — Decoding</div>
+              <div class="step-desc"><strong>Greedy:</strong> always pick the highest-probability token — fast but repetitive. <strong>Beam search:</strong> track the K best sequences in parallel, approximating the globally best output — good for translation, dull for creative text. <strong>Top-k:</strong> sample from the k most likely tokens. <strong>Top-p (nucleus):</strong> sample from the smallest set whose probabilities sum to p — adapts set size per step. <strong>Min-p:</strong> keep tokens above a fraction of the top token's probability — quality at high temperature.</div>
+              <div class="step-code">greedy → deterministic · beam(k) → best sequence · top-p 0.9 → creative default</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">07</div>
+            <div class="step-body">
+              <div class="step-title">Mixture of Experts (MoE)</div>
+              <div class="step-desc">How models scale without impossible compute: keep total parameters huge but activate only a few <strong>expert</strong> sub-networks per token. A learned <strong>router</strong> picks which experts handle each token, so capacity grows without proportional inference cost. Trade-off: all experts must sit in memory, and training the router is tricky. Used by Mixtral, GPT-4 (reported), DeepSeek.</div>
+              <div class="step-code">Dense: every token → all params · MoE: router → top-2 of N experts → cheap FLOPs, big capacity</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">08</div>
+            <div class="step-body">
+              <div class="step-title">Knowledge Distillation — Train an LLM with an LLM</div>
+              <div class="step-desc">Compress a big <strong>Teacher</strong> model into a small <strong>Student</strong>. The teacher produces <strong>soft labels</strong> — full softmax probability distributions, not just the answer — and the student trains to match them, learning nuance a hard label can't carry ("cat 0.7, tiger 0.2"). Happens at pre-training or post-training. This is how Phi, Gemma-class small models get frontier-like behaviour cheaply.</div>
+              <div class="step-code">Teacher softmax probs → Student mimics distribution · small model, most of the quality</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">09</div>
+            <div class="step-body">
+              <div class="step-title">KV Caching — Why Chat Feels Fast</div>
+              <div class="step-desc">Generating token N recomputes attention over all previous tokens — wasteful, since their Key/Value projections never change. <strong>KV cache</strong> stores them so each new token only computes its own K/V and attends to the cache. Result: massive speedup for long outputs; cost: GPU memory grows with context length. This is why long-context serving is memory-bound and why providers charge for cached vs uncached input differently.</div>
+              <div class="step-code">without: O(n²) recompute per token · with: reuse cached K/V → only new token computed</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">10</div>
+            <div class="step-body">
+              <div class="step-title">Run LLMs Locally — Ollama</div>
+              <div class="step-desc">Local inference gives privacy (data never leaves the machine), zero API cost, offline use, and full control. <strong>Ollama</strong> makes it one command and exposes an OpenAI-compatible API on localhost, so existing client code works by swapping the base URL. Quantised models (4-bit) let 7B-13B models run on consumer hardware.</div>
+              <div class="step-code">ollama run llama3 · POST localhost:11434/v1/chat/completions (OpenAI-compatible)</div>
+            </div>
+          </div>
         </div>
 
         <div class="concept-grid" style="margin-top:24px;">
@@ -400,6 +440,38 @@
               <div class="step-title">Why RAG Instead of Fine-Tuning?</div>
               <div class="step-desc"><strong>Fine-tuning</strong> is expensive (GPU hours), slow (days), needs labelled data, and the model can still hallucinate on facts it wasn't trained on. Knowledge goes stale. <strong>RAG</strong> is cheap (vector search), fast (milliseconds), requires no labels, always up-to-date, and you can inspect exactly which sources were retrieved. Use fine-tuning for style/format/behaviour; use RAG for knowledge.</div>
               <div class="step-code">RAG: cheap + fast + always fresh · Fine-tune: style + behaviour + custom tasks</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <div class="step-title">5 Chunking Strategies</div>
+              <div class="step-desc"><strong>Fixed-size:</strong> uniform token/char windows + overlap so ideas aren't cut — simple, batch-friendly, but breaks sentences. <strong>Semantic:</strong> split on sentences/paragraphs, merge neighbours while embedding cosine similarity stays high — chunks follow meaning. <strong>Recursive:</strong> split by separators (sections → paragraphs → sentences) until chunks fit. <strong>Document-structure:</strong> respect headings/tables/code blocks. <strong>LLM-based:</strong> ask a model to segment — best quality, highest cost. Chunking quality caps retrieval quality.</div>
+              <div class="step-code">fixed+overlap = default start · semantic = better retrieval · structure-aware for docs/code</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <div class="step-title">HyDE — Hypothetical Document Embeddings</div>
+              <div class="step-desc">Problem: questions are not semantically similar to their answers, so plain question-vs-chunk similarity retrieves irrelevant context. <strong>HyDE:</strong> first ask an LLM to write a <em>hypothetical answer</em> to the query (doesn't need to be correct), embed <em>that</em>, and search with it. Answer-shaped text matches answer-shaped chunks — retrieval precision jumps.</div>
+              <div class="step-code">query → LLM drafts fake answer H → embed(H) → similarity search → real chunks → final answer</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-body">
+              <div class="step-title">Agentic RAG</div>
+              <div class="step-desc">Traditional RAG is one fixed retrieve→generate pass. <strong>Agentic RAG</strong> puts an agent in charge of the loop: it rewrites vague queries, chooses <em>which</em> source to search (vector DB, web, SQL), inspects retrieved chunks, and retries with a better query if the context looks weak — only then generates. Slower and costlier, but far more robust on messy real-world questions.</div>
+              <div class="step-code">agent: rewrite query → pick source → retrieve → judge context → retry or answer</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">CAG — Cache-Augmented Generation</div>
+              <div class="step-desc">RAG re-fetches the same stable context on every query — redundant and slow. <strong>CAG</strong> preloads rarely-changing knowledge (policies, product docs) directly into the model's KV cache so it's "remembered" across queries. Best combined: <strong>RAG + CAG</strong> — static layer cached once, dynamic/fresh data still retrieved per query.</div>
+              <div class="step-code">static knowledge → KV cache (once) · volatile knowledge → vector DB (per query)</div>
             </div>
           </div>
         </div>
@@ -526,6 +598,14 @@ result = qa_chain(<span class="st">"What is our refund policy?"</span>)
               <div class="step-code">{"instruction": "Summarize...", "input": "text...", "output": "summary..."} × 1000+</div>
             </div>
           </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">SFT vs RFT — and GRPO Reasoning Models</div>
+              <div class="step-desc"><strong>SFT</strong> (supervised fine-tuning) imitates labelled examples — great when you have gold answers, but the model only gets as good as its data. <strong>RFT</strong> (reinforcement fine-tuning) scores outputs with a reward instead: the model explores, gets graded (correctness, format), and improves beyond its examples. <strong>GRPO</strong> (DeepSeek's method) makes this cheap — sample a group of answers per prompt, reward each, push the model toward above-group-average ones. This is how compact reasoning models are trained.</div>
+              <div class="step-code">SFT: imitate labels · RFT: maximise reward · GRPO: group sampling → relative reward → update</div>
+            </div>
+          </div>
         </div>
 
         <div class="callout callout-amber" style="margin-top:20px;">
@@ -577,6 +657,54 @@ result = qa_chain(<span class="st">"What is our refund policy?"</span>)
               <div class="step-title">Challenges &amp; Limitations</div>
               <div class="step-desc"><strong>Reliability:</strong> Agents can get stuck in loops or make wrong tool choices. <strong>Cost:</strong> Multi-step reasoning = many LLM calls = high cost. <strong>Latency:</strong> Sequential tool calls add up. <strong>Safety:</strong> Agents with write access (email, code execution) need human checkpoints. Current best practice: always have a human-in-the-loop for consequential actions.</div>
               <div class="step-code">Production agents: max_iterations=10, human approval for irreversible actions, full audit log</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-body">
+              <div class="step-title">Agent Memory Types</div>
+              <div class="step-desc">Without memory an agent is stateless — iteration #2 knows nothing about iteration #1. Long-term memory splits like human memory: <strong>Semantic</strong> — facts and knowledge ("user prefers Python"). <strong>Episodic</strong> — past experiences and completed tasks ("last deploy failed on step 3"). <strong>Procedural</strong> — learned how-to, internalised instructions. Memory lets agents adapt across sessions <em>without retraining weights</em> — the cheapest form of continual learning.</div>
+              <div class="step-code">short-term: conversation window · long-term: semantic + episodic + procedural (vector store)</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-body">
+              <div class="step-title">5 Agentic Design Patterns</div>
+              <div class="step-desc"><strong>Reflection:</strong> agent critiques and iterates on its own output before finalising. <strong>Tool use:</strong> query vector DBs, run code, call APIs — escape the training-data ceiling. <strong>ReAct:</strong> reflection + tools in a Thought→Action→Observation loop. <strong>Planning:</strong> decompose the goal into a step plan first, then execute. <strong>Multi-agent:</strong> specialised agents collaborate under an orchestrator. Most production agents = ReAct + planning + a critic.</div>
+              <div class="step-code">Reflection · Tool use · ReAct · Planning · Multi-agent — compose, don't pick one</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">07</div>
+            <div class="step-body">
+              <div class="step-title">5 Levels of Agency</div>
+              <div class="step-desc">A maturity ladder for how much control the LLM has: <strong>1. Basic responder</strong> — human drives, LLM just answers. <strong>2. Router</strong> — LLM picks which predefined path runs. <strong>3. Tool calling</strong> — LLM decides when to call which tool and with what arguments. <strong>4. Multi-agent</strong> — a manager agent coordinates sub-agents iteratively. <strong>5. Autonomous</strong> — agent generates and executes its own code/workflows. Ship at the lowest level that solves the problem.</div>
+              <div class="step-code">responder → router → tool calling → multi-agent → autonomous · autonomy ↑ = risk ↑</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">08</div>
+            <div class="step-body">
+              <div class="step-title">Context Engineering</div>
+              <div class="step-desc">Agents usually fail from <em>missing context</em>, not weak models — a SOTA LLM can never compensate for an incomplete context, but a modest one thrives on a good one. Context engineering = systematically curating everything in the window: <strong>instructions</strong> (who/why/how), <strong>examples</strong>, <strong>knowledge</strong> (RAG), <strong>memory</strong>, <strong>tool definitions</strong>, and <strong>tool results</strong>. RAG rule of thumb: 80% of quality is retrieval, 20% generation.</div>
+              <div class="step-code">6 context types: instructions · examples · knowledge · memory · tools · tool results</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">09</div>
+            <div class="step-body">
+              <div class="step-title">MCP — Model Context Protocol</div>
+              <div class="step-desc">Connecting M agents to N tools used to mean M×N custom integrations — like learning five languages to talk to five people. <strong>MCP is the translator:</strong> one standardised interface between AI models and external tools, resources and environments. An <strong>MCP client</strong> (inside the agent app) talks to <strong>MCP servers</strong>, each exposing three primitives: <strong>tools</strong> (functions the model can call), <strong>resources</strong> (data it can read), <strong>prompts</strong> (reusable templates). Vs plain function calling: schemas are discovered at runtime from the server — add a tool, zero client code changes.</div>
+              <div class="step-code">Agent ↔ MCP client ↔ [server: filesystem] [server: GitHub] [server: DB] · M×N → M+N</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">10</div>
+            <div class="step-body">
+              <div class="step-title">Agent Protocols — A2A &amp; AG-UI</div>
+              <div class="step-desc">The emerging protocol stack around agents: <strong>MCP</strong> connects an agent to tools. <strong>A2A</strong> (Agent2Agent) lets independent agents discover each other and collaborate across vendors — each publishes an "agent card" describing its capabilities. <strong>AG-UI</strong> standardises agent ↔ user-interface streaming (progress, tool calls, partial output). Together: tools ↔ agent ↔ other agents ↔ user.</div>
+              <div class="step-code">MCP: agent↔tools · A2A: agent↔agent · AG-UI: agent↔frontend</div>
             </div>
           </div>
         </div>
