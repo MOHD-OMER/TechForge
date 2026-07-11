@@ -1,4 +1,4 @@
-name: CI — Validate HTML & Links
+name: CI — Validate HTML, Links & Accessibility
 
 on:
   pull_request:
@@ -42,3 +42,29 @@ jobs:
             --max-retries 2
             './**/*.html'
           fail: true
+
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dev tooling
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run axe-core WCAG 2.1 AA audit (dark + light themes)
+        run: npm run a11y -- --fail-on=serious
+
+      - name: Upload a11y report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: a11y-report.json
