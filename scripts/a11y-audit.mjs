@@ -112,6 +112,20 @@ async function main() {
   });
   const contexts = { dark: darkContext, light: lightContext };
 
+  // Warm each context's HTTP cache before the timed scan loop. The first
+  // CDN-referencing page a fresh context loads pays cold DNS + TLS + full
+  // download for the Tabler icon CSS and Google Fonts (404.html references
+  // nothing external, so /about.html used to be that victim and flaked
+  // against the 10s goto timeout). One throwaway load with a generous
+  // timeout absorbs that cost; failures here are non-fatal by design.
+  for (const ctx of Object.values(contexts)) {
+    const warm = await ctx.newPage();
+    try {
+      await warm.goto(`http://localhost:${PORT}/about.html`, { waitUntil: 'load', timeout: 45000 });
+    } catch { /* warmup is best-effort */ }
+    await warm.close();
+  }
+
   const allResults = []; // { url, theme, violations }
   const failures = [];   // { url, theme, error }
 
@@ -122,7 +136,15 @@ async function main() {
       done++;
       process.stdout.write(`  [${done}/${total}] ${urlPath} (${theme}) ... `);
       try {
-        const { violations } = await scanPage(contexts[theme], urlPath);
+        let result;
+        try {
+          result = await scanPage(contexts[theme], urlPath);
+        } catch (firstErr) {
+          // One retry absorbs transient flakes (CDN hiccup, slow first paint)
+          // so a single timeout doesn't mark the page as unscanned.
+          result = await scanPage(contexts[theme], urlPath);
+        }
+        const { violations } = result;
         allResults.push({ url: urlPath, theme, violations });
         console.log(violations.length ? `${violations.length} violation(s)` : 'clean');
       } catch (err) {

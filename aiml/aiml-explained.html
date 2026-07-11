@@ -170,6 +170,24 @@
   .aim-cta { flex-direction: column; align-items: stretch; }
   .btn-aim-primary, .btn-aim-ghost { width: 100%; justify-content: center; min-height: 44px; }
 }
+/* ── Foundations block ─────────────────────────────── */
+.aimx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.aimx-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.aimx-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg, 14px); padding: 16px 18px; }
+.aimx-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.aimx-card h3 i { color: var(--purple); }
+.aimx-card p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+.aimx-card .aimx-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); display: block; margin-bottom: 6px; }
+.aimx-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.aimx-chip { font-family: var(--mono); font-size: 11px; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 5px 13px; }
+.aimx-formula { font-family: var(--mono); font-size: 13px; color: var(--purple); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 10px 0; display: inline-block; }
+.aimx-venn-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg, 14px); padding: 18px; margin-bottom: 14px; }
+@media (max-width: 860px) {
+  .aimx-grid, .aimx-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .aimx-grid, .aimx-grid-4 { grid-template-columns: 1fr; }
+}
 </style>
 
 
@@ -334,6 +352,150 @@
           <span class="aim-step-name">Cheat Sheet</span>
           <span class="aim-step-badge badge-adv">Reference</span>
         </a>
+      </div>
+    </div>
+
+    <!-- ════ AI FOUNDATIONS ════ -->
+    <div id="foundations" class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">What is Artificial Intelligence?</h2>
+      <p class="aim-sec-sub">Coined by John McCarthy in 1956. AI is the design of intelligence in an artificial device — machines that acquire, understand and apply knowledge to achieve goals, able to learn and solve problems on their own. It borders mathematics, computer science, philosophy, psychology, biology and cognitive science.</p>
+
+      <div class="aimx-venn-wrap">
+        <svg viewBox="0 0 760 400" width="100%" role="img" aria-label="Nested circles showing how the fields relate: Artificial Intelligence is the outermost field, Machine Learning is a subset of AI, Deep Learning is a subset of ML, and Generative AI is the innermost subset of Deep Learning" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <circle cx="380" cy="200" r="185" fill="var(--purple)" opacity="0.07"/>
+          <circle cx="380" cy="200" r="185" fill="none" stroke="var(--purple)" stroke-width="1.5"/>
+          <circle cx="380" cy="232" r="148" fill="var(--blue)" opacity="0.07"/>
+          <circle cx="380" cy="232" r="148" fill="none" stroke="var(--blue)" stroke-width="1.5"/>
+          <circle cx="380" cy="266" r="108" fill="var(--cyan)" opacity="0.08"/>
+          <circle cx="380" cy="266" r="108" fill="none" stroke="var(--cyan)" stroke-width="1.5"/>
+          <circle cx="380" cy="304" r="64" fill="var(--green)" opacity="0.09"/>
+          <circle cx="380" cy="304" r="64" fill="none" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="380" y="48" text-anchor="middle" fill="var(--purple)" font-size="14" font-weight="700">Artificial Intelligence</text>
+          <text x="380" y="66" text-anchor="middle" fill="var(--text3)" font-size="10">any technique that mimics intelligent behaviour — search, logic, planning, agents</text>
+          <text x="380" y="118" text-anchor="middle" fill="var(--blue)" font-size="13" font-weight="700">Machine Learning</text>
+          <text x="380" y="135" text-anchor="middle" fill="var(--text3)" font-size="10">learns patterns from data instead of hand-coded rules</text>
+          <text x="380" y="188" text-anchor="middle" fill="var(--cyan)" font-size="12.5" font-weight="700">Deep Learning</text>
+          <text x="380" y="205" text-anchor="middle" fill="var(--text3)" font-size="10">multi-layer neural networks</text>
+          <text x="380" y="298" text-anchor="middle" fill="var(--green)" font-size="12" font-weight="700">Generative AI</text>
+          <text x="380" y="315" text-anchor="middle" fill="var(--text3)" font-size="9.5">LLMs · diffusion</text>
+        </svg>
+      </div>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Think · Human-like</span>
+          <h3><i class="ti ti-brain"></i>Cognitive Science approach</h3>
+          <p>Model human cognition precisely enough to simulate it — the goal is reproducing the <em>reasoning steps</em> a human follows, not just the answer.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Think · Rationally</span>
+          <h3><i class="ti ti-scale"></i>Laws of Thought approach</h3>
+          <p>Formal logic and inference mechanisms that are provably correct and guarantee an optimal solution when one exists.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Act · Human-like</span>
+          <h3><i class="ti ti-message-chatbot"></i>Turing Test approach</h3>
+          <p>A machine is intelligent if a human interrogator can't tell its answers from a person's — behaviour over mechanism.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Act · Rationally</span>
+          <h3><i class="ti ti-target"></i>Rational Agent approach</h3>
+          <p>Build agents that do the <em>best possible action</em> given what they know — the dominant view in modern AI (Russell &amp; Norvig).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Intelligent agents</h2>
+      <p class="aim-sec-sub">An agent perceives its environment through sensors and acts on it through actuators: <strong>agent = architecture + program</strong>. A task environment is specified as PEAS — Performance measure, Environment, Actuators, Sensors.</p>
+
+      <div class="aimx-grid-4">
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 1</span>
+          <h3><i class="ti ti-bolt"></i>Simple reflex</h3>
+          <p>Acts only on the current percept via condition→action rules. Ignores history; needs a fully observable environment.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 2</span>
+          <h3><i class="ti ti-database"></i>Model-based reflex</h3>
+          <p>Keeps an internal state + a model of "how the world works" — handles partially observable environments.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 3</span>
+          <h3><i class="ti ti-flag"></i>Goal-based</h3>
+          <p>Has an agenda: searches and plans toward an explicit goal, choosing actions by whether they get closer to it.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 4</span>
+          <h3><i class="ti ti-gauge"></i>Utility-based</h3>
+          <p>When many paths reach the goal, picks the <em>best</em> one by maximising a utility ("happiness") function.</p>
+        </div>
+      </div>
+
+      <p class="aim-sec-sub" style="margin:18px 0 10px">Environment properties that shape agent design:</p>
+      <div class="aimx-chips">
+        <span class="aimx-chip">Fully vs partially observable</span>
+        <span class="aimx-chip">Deterministic vs stochastic</span>
+        <span class="aimx-chip">Episodic vs sequential</span>
+        <span class="aimx-chip">Static vs dynamic</span>
+        <span class="aimx-chip">Discrete vs continuous</span>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Classical AI: search &amp; game playing</h2>
+      <p class="aim-sec-sub">Before ML, AI solved problems by searching a state space — start state, goal state, and operators between them. Still the backbone of pathfinding, planning and game AI.</p>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Uninformed (blind) search</span>
+          <h3><i class="ti ti-search"></i>BFS · DFS · Iterative Deepening</h3>
+          <p>No knowledge of how far the goal is. BFS explores level-by-level (optimal for unit costs, memory-hungry); DFS dives deep (light on memory, can loop); iterative-deepening DFS combines both — DFS memory with BFS completeness.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Informed (heuristic) search</span>
+          <h3><i class="ti ti-bulb"></i>Hill Climbing · Best-First · A*</h3>
+          <p>Uses a heuristic h(n) estimating distance to goal. Hill climbing greedily improves and gets stuck on local maxima/plateaus; A* orders by f(n) = g(n) + h(n) and is optimal when h never overestimates (admissible).</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Adversarial search</span>
+          <h3><i class="ti ti-chess"></i>Minimax + Alpha-Beta pruning</h3>
+          <p>Two-player games: MAX picks moves maximising the score, MIN minimises it, evaluated bottom-up from leaf positions. Alpha-beta pruning skips branches that can't change the outcome — same answer, far fewer nodes.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Constraint satisfaction</span>
+          <h3><i class="ti ti-puzzle"></i>CSP: Backtracking + Local Search</h3>
+          <p>Variables, domains, constraints (map colouring, Sudoku, scheduling). Backtracking assigns values and undoes dead ends; local search repairs a complete assignment step-by-step.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Knowledge representation &amp; reasoning</h2>
+      <p class="aim-sec-sub">How an agent stores facts and derives new ones.</p>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Logic</span>
+          <h3><i class="ti ti-math-symbols"></i>Propositional &amp; First-Order Logic</h3>
+          <p>Propositional logic: whole statements joined by ¬ ∧ ∨ → ↔. First-order logic adds objects, relations and quantifiers (∀, ∃) — expressive enough to state "every student passed some exam".</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Inference</span>
+          <h3><i class="ti ti-arrows-right-left"></i>Forward vs Backward chaining</h3>
+          <p>Forward chaining: start from known facts, fire rules until the goal appears — data-driven. Backward chaining: start from the goal and work back to supporting facts — goal-driven (Prolog-style).</p>
+        </div>
+      </div>
+
+      <div class="aimx-card" style="margin-top:14px">
+        <span class="aimx-tag">Probabilistic reasoning</span>
+        <h3><i class="ti ti-percentage"></i>Bayes' theorem</h3>
+        <div class="aimx-formula">P(H|E) = P(E|H) · P(H) / P(E)</div>
+        <p>Update belief in hypothesis H after seeing evidence E. Foundation of Naive Bayes classifiers, spam filters and medical diagnosis — reasoning under uncertainty instead of hard true/false logic.</p>
       </div>
     </div>
 
