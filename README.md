@@ -23,7 +23,7 @@ Data Structures & Algorithms · Python Reference · System Design Guides · SQL 
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 200+ curated interview problems, and seven complete learning tracks—all free, forever, with no account required.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 200+ curated interview problems, and eight complete learning tracks — complete computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero npm dependencies, and zero backend infrastructure. A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -86,7 +86,6 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **200+ curated problems** across 7 question banks
 - Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design
 - FAANG and startup tagged · Difficulty rated · Progress tracked in browser
-- No account required · No data leaves your device
 
 ### DevOps
 - **23 comprehensive guides** covering the entire DevOps landscape
@@ -97,7 +96,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all seven tracks from a keyboard-driven command palette, no page reload
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
 - **Branded loading screen** — animated splash on load, so opening the app never shows a blank flash
-- **Progress tracking** — mark topics and interview questions complete, saved locally, no account needed
+- **Progress tracking** — mark topics and interview questions complete, saved in the browser
 
 ### Progressive Web App
 - **Service Worker** (`sw.js`) with network-first HTML caching and cache-first asset strategy
@@ -221,7 +220,7 @@ Install the **Live Server** extension and open `index.html`.
 - **Immutable asset caching**: `/assets/*` cached for 1 year with explicit `?v=N` versioning
 - **Network-first HTML**: Always fetch fresh pages, fall back to cache
 - **Cache-first assets**: Use cached assets, fall back to network
-- **Zero external JavaScript**: No analytics, no tracking, no ads
+- **Zero external JavaScript**: No third-party scripts or bundles
 - **Minified CSS/JS**: Optimized for fast loading
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
@@ -395,7 +394,7 @@ CS (AI/ML) Engineer
 
 **Built for developers, by developers.**
 
-No ads. No paywalls. No tracking. Forever free.
+Complete computer science, one platform.
 
 [⭐ Star this repo if TechForge helped you learn](https://github.com/MOHD-OMER/TechForge)
 
