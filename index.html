@@ -87,12 +87,10 @@
 .hero-left { display: flex; flex-direction: column; }
 
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--cyan);
-  background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.16);
-  padding: 7px 18px; border-radius: var(--r-full);
-  margin-bottom: 28px; width: fit-content;
+  display: inline-flex; align-items: center; gap: 11px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 26px; width: fit-content;
   animation: fadeUp .5s ease both;
 }
 .eyebrow-dot {
@@ -116,12 +114,6 @@
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   min-height: 1.1em;
 }
-.hero-title .cursor {
-  display: inline-block; width: 3px; height: .82em;
-  background: var(--cyan); vertical-align: middle; margin-left: 3px;
-  animation: blink 1.1s step-end infinite;
-}
-@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
 .hero-sub {
   font-size: clamp(14px, 1.8vw, 16px); color: var(--text2);
@@ -155,24 +147,19 @@
 
 .stat-row {
   display: flex; gap: 0; flex-wrap: wrap;
-  border: 1px solid var(--border); border-radius: var(--r-lg);
-  overflow: hidden; background: var(--card);
   animation: fadeUp .5s .27s ease both;
   width: fit-content;
 }
 .stat-item {
-  padding: 16px 22px; display: flex; flex-direction: column; align-items: center; gap: 3px;
-  border-right: 1px solid var(--border); transition: background .2s;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 2px 26px; border-left: 1px solid var(--border);
 }
-.stat-item:last-child { border-right: none; }
-.stat-item:hover { background: rgba(0,212,255,.04); }
+.stat-item:first-child { padding-left: 0; border-left: none; }
 .stat-val {
-  font-family: var(--font-mono); font-size: 20px; font-weight: 700;
-  background: linear-gradient(135deg, var(--text) 30%, var(--cyan) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  line-height: 1;
+  font-family: var(--font-mono); font-size: 27px; font-weight: 700;
+  color: var(--text); line-height: 1; letter-spacing: -0.5px;
 }
-.stat-key { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.stat-key { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.8px; color: var(--text3); text-transform: uppercase; }
 
 /* canvas panel */
 .hero-right {
@@ -601,22 +588,17 @@
 
 /* ── CS UNIVERSE MAP ── */
     .csmap-section { padding: 56px 0 40px; }
-    .csmap-svg { display: block; max-width: 820px; margin: 0 auto; width: 100%; font-family: var(--font-mono, monospace); }
+    /* Square-ish radial map that scales to fit ANY width — no scroll. */
+    .csmap-svg { display: block; max-width: 560px; margin: 0 auto; width: 100%; height: auto; font-family: var(--font-mono, monospace); }
     .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
-    .csmap-flow { stroke-width: 1.5; stroke-dasharray: 5 90; stroke-linecap: round; opacity: .9; }
+    .csmap-flow { stroke-width: 1.6; stroke-dasharray: 5 88; stroke-linecap: round; opacity: .9; }
     .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 2; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
-    .csmap-node text { fill: var(--text); font-size: 13px; font-weight: 700; }
-    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 9.5px; font-weight: 400; }
+    .csmap-node text { fill: var(--text); font-size: 17px; font-weight: 700; }
+    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 12px; font-weight: 400; }
     /* Light theme: solid node faces + darker edges so the map doesn't wash out on cream */
     html.light .csmap-node circle { fill: #fffdf7; }
     html.light .csmap-edge { stroke: var(--text3, #6b6355); opacity: .45; }
     html.light .csmap-node .csmap-sub { fill: var(--text2); }
-    /* Mobile: keep the map legible — fixed drawing width inside a swipeable strip */
-    .csmap-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    @media (max-width: 640px) {
-      .csmap-svg { min-width: 640px; }
-      .csmap-scroll { margin: 0 -16px; padding: 0 16px 8px; }
-    }
     .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.12); }
     .csmap-node:focus-visible { outline: 2.4px solid var(--blue, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
     .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
@@ -736,8 +718,8 @@
         Complete Computer Science · Interactive · Interview-Ready
       </div>
       <h1 class="hero-title">
-        <span class="line-1">Master CS</span>
-        <span class="line-2"><span id="typeTarget">Level Up.</span><span class="cursor"></span></span>
+        <span class="line-1">Understand it.</span>
+        <span class="line-2">Don't memorize it.</span>
       </h1>
       <p class="hero-sub">
         The interactive CS platform built for engineers who want to <strong style="color:var(--text)">understand, not just memorize</strong>.
@@ -813,67 +795,67 @@
         <h2 id="csmapTitle" style="font-family:var(--font-display,inherit);font-size:clamp(20px,3vw,28px);font-weight:700;margin:6px 0 4px">One connected body of knowledge</h2>
         <p style="font-size:13.5px;color:var(--text2);max-width:560px">Every track feeds the same goal. Click any node to jump in.</p>
       </div>
-      <div class="csmap-scroll" role="region" aria-label="Learning track map — scrolls horizontally on small screens" tabindex="0">
-      <svg class="csmap-svg" viewBox="0 0 760 430" aria-labelledby="csmapSvgTitle">
-        <title id="csmapSvgTitle">Map of TechForge learning tracks. Six tracks — DSA, Python, System Design, Databases, DevOps and AI/ML — all connect to Interview Prep at the centre.</title>
-        <!-- static edges -->
+      <svg class="csmap-svg" viewBox="0 0 620 600" aria-labelledby="csmapSvgTitle">
+        <title id="csmapSvgTitle">Map of TechForge learning tracks. Six tracks — DSA, System Design, Databases, AI/ML, DevOps and Programming Languages — all connect to Interview Prep at the centre.</title>
         <g class="csmap-edges" aria-hidden="true">
-          <line class="csmap-edge" x1="180" y1="120" x2="380" y2="215"/>
-          <line class="csmap-edge" x1="180" y1="320" x2="380" y2="215"/>
-          <line class="csmap-edge" x1="580" y1="120" x2="380" y2="215"/>
-          <line class="csmap-edge" x1="580" y1="320" x2="380" y2="215"/>
-          <line class="csmap-edge" x1="380" y1="62"  x2="380" y2="215"/>
-          <line class="csmap-edge" x1="380" y1="376" x2="380" y2="215"/>
-          <line class="csmap-edge" x1="180" y1="120" x2="380" y2="62"  opacity=".45"/>
-          <line class="csmap-edge" x1="580" y1="120" x2="380" y2="62"  opacity=".45"/>
-          <line class="csmap-edge" x1="180" y1="320" x2="380" y2="376" opacity=".45"/>
-          <line class="csmap-edge" x1="580" y1="320" x2="380" y2="376" opacity=".45"/>
+          <!-- spokes: every track → hub -->
+          <line class="csmap-edge" x1="310" y1="90"  x2="310" y2="300"/>
+          <line class="csmap-edge" x1="492" y1="195" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="492" y1="405" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="310" y1="510" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="128" y1="405" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="128" y1="195" x2="310" y2="300"/>
+          <!-- faint ring: tracks connect to each other -->
+          <line class="csmap-edge" x1="310" y1="90"  x2="492" y2="195" opacity=".4"/>
+          <line class="csmap-edge" x1="492" y1="195" x2="492" y2="405" opacity=".4"/>
+          <line class="csmap-edge" x1="492" y1="405" x2="310" y2="510" opacity=".4"/>
+          <line class="csmap-edge" x1="310" y1="510" x2="128" y2="405" opacity=".4"/>
+          <line class="csmap-edge" x1="128" y1="405" x2="128" y2="195" opacity=".4"/>
+          <line class="csmap-edge" x1="128" y1="195" x2="310" y2="90"  opacity=".4"/>
           <!-- animated pulses flowing toward the core -->
-          <line class="csmap-flow" x1="180" y1="120" x2="380" y2="215" stroke="var(--green,#34d399)"/>
-          <line class="csmap-flow" x1="180" y1="320" x2="380" y2="215" stroke="var(--amber,#fbbf24)" style="animation-delay:-1.2s"/>
-          <line class="csmap-flow" x1="580" y1="120" x2="380" y2="215" stroke="var(--blue,#4d9ef7)" style="animation-delay:-2.1s"/>
-          <line class="csmap-flow" x1="580" y1="320" x2="380" y2="215" stroke="var(--cyan,#22d3ee)" style="animation-delay:-0.6s"/>
-          <line class="csmap-flow" x1="380" y1="62"  x2="380" y2="215" stroke="var(--purple,#a78bfa)" style="animation-delay:-2.9s"/>
-          <line class="csmap-flow" x1="380" y1="376" x2="380" y2="215" stroke="var(--red,#f87171)" style="animation-delay:-1.7s"/>
+          <line class="csmap-flow" x1="310" y1="90"  x2="310" y2="300" stroke="var(--green,#34d399)"/>
+          <line class="csmap-flow" x1="492" y1="195" x2="310" y2="300" stroke="var(--blue,#4d9ef7)"  style="animation-delay:-0.8s"/>
+          <line class="csmap-flow" x1="492" y1="405" x2="310" y2="300" stroke="var(--cyan,#22d3ee)"  style="animation-delay:-1.6s"/>
+          <line class="csmap-flow" x1="310" y1="510" x2="310" y2="300" stroke="var(--red,#f87171)"   style="animation-delay:-2.4s"/>
+          <line class="csmap-flow" x1="128" y1="405" x2="310" y2="300" stroke="var(--purple,#a78bfa)" style="animation-delay:-3.2s"/>
+          <line class="csmap-flow" x1="128" y1="195" x2="310" y2="300" stroke="var(--amber,#fbbf24)"  style="animation-delay:-1.2s"/>
         </g>
-        <!-- track nodes (real links) -->
         <a class="csmap-node" href="dsa/index.html" aria-label="DSA track — algorithms and data structures">
-          <circle cx="180" cy="120" r="46" stroke="var(--green,#34d399)"/>
-          <text x="180" y="117" text-anchor="middle">DSA</text>
-          <text x="180" y="133" text-anchor="middle" class="csmap-sub">30 topics</text>
-        </a>
-        <a class="csmap-node" href="programming/index.html" aria-label="Programming Languages track — Python live plus more coming">
-          <circle cx="180" cy="320" r="46" stroke="var(--amber,#fbbf24)"/>
-          <text x="180" y="317" text-anchor="middle">Languages</text>
-          <text x="180" y="333" text-anchor="middle" class="csmap-sub">Python live</text>
+          <circle cx="310" cy="90" r="54" stroke="var(--green,#34d399)"/>
+          <text x="310" y="87" text-anchor="middle">DSA</text>
+          <text x="310" y="107" text-anchor="middle" class="csmap-sub">30 topics</text>
         </a>
         <a class="csmap-node" href="system-design/index.html" aria-label="System Design track — 26 architecture topics">
-          <circle cx="580" cy="120" r="46" stroke="var(--blue,#4d9ef7)"/>
-          <text x="580" y="117" text-anchor="middle">Sys Design</text>
-          <text x="580" y="133" text-anchor="middle" class="csmap-sub">26 topics</text>
+          <circle cx="492" cy="195" r="54" stroke="var(--blue,#4d9ef7)"/>
+          <text x="492" y="192" text-anchor="middle">Sys Design</text>
+          <text x="492" y="212" text-anchor="middle" class="csmap-sub">26 topics</text>
         </a>
         <a class="csmap-node" href="databases/index.html" aria-label="Databases track — SQL and NoSQL engines">
-          <circle cx="580" cy="320" r="46" stroke="var(--cyan,#22d3ee)"/>
-          <text x="580" y="317" text-anchor="middle">Databases</text>
-          <text x="580" y="333" text-anchor="middle" class="csmap-sub">14 engines</text>
-        </a>
-        <a class="csmap-node" href="devops/index.html" aria-label="DevOps track — ship, automate, monitor">
-          <circle cx="380" cy="62" r="44" stroke="var(--purple,#a78bfa)"/>
-          <text x="380" y="59" text-anchor="middle">DevOps</text>
-          <text x="380" y="75" text-anchor="middle" class="csmap-sub">23 topics</text>
+          <circle cx="492" cy="405" r="54" stroke="var(--cyan,#22d3ee)"/>
+          <text x="492" y="402" text-anchor="middle">Databases</text>
+          <text x="492" y="422" text-anchor="middle" class="csmap-sub">14 engines</text>
         </a>
         <a class="csmap-node" href="aiml/index.html" aria-label="AI and machine learning track">
-          <circle cx="380" cy="376" r="44" stroke="var(--red,#f87171)"/>
-          <text x="380" y="373" text-anchor="middle">AI / ML</text>
-          <text x="380" y="389" text-anchor="middle" class="csmap-sub">8 modules</text>
+          <circle cx="310" cy="510" r="54" stroke="var(--red,#f87171)"/>
+          <text x="310" y="507" text-anchor="middle">AI / ML</text>
+          <text x="310" y="527" text-anchor="middle" class="csmap-sub">8 modules</text>
+        </a>
+        <a class="csmap-node" href="devops/index.html" aria-label="DevOps track — ship, automate, monitor">
+          <circle cx="128" cy="405" r="54" stroke="var(--purple,#a78bfa)"/>
+          <text x="128" y="402" text-anchor="middle">DevOps</text>
+          <text x="128" y="422" text-anchor="middle" class="csmap-sub">23 topics</text>
+        </a>
+        <a class="csmap-node" href="programming/index.html" aria-label="Programming Languages track — Python live plus more coming">
+          <circle cx="128" cy="195" r="54" stroke="var(--amber,#fbbf24)"/>
+          <text x="128" y="192" text-anchor="middle">Languages</text>
+          <text x="128" y="212" text-anchor="middle" class="csmap-sub">Python live</text>
         </a>
         <a class="csmap-node csmap-core" href="interview/index.html" aria-label="Interview Prep — where every track leads. 200 plus questions">
-          <circle cx="380" cy="215" r="56" stroke="var(--text)" stroke-width="2"/>
-          <text x="380" y="209" text-anchor="middle">Interview</text>
-          <text x="380" y="226" text-anchor="middle" class="csmap-sub">200+ questions</text>
+          <circle cx="310" cy="300" r="62" stroke="var(--text)" stroke-width="2"/>
+          <text x="310" y="296" text-anchor="middle">Interview</text>
+          <text x="310" y="317" text-anchor="middle" class="csmap-sub">200+ Qs</text>
         </a>
       </svg>
-      </div>
     </div>
   </section>
 
@@ -1189,31 +1171,6 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
   el.style.transitionDelay = (i % 5) * 0.08 + 's';
   obs.observe(el);
 });
-
-// Typewriter
-(function () {
-  const words = ['Level Up.', 'Think Sharp.', 'Get Hired.', 'Build Better.', 'Go Deep.'];
-  const el = document.getElementById('typeTarget');
-  if (!el) return;
-  let wi = 0, ci = words[0].length, deleting = false, paused = false;
-  el.textContent = words[0];
-  function tick() {
-    const word = words[wi];
-    if (paused) { paused = false; setTimeout(tick, 1500); return; }
-    if (!deleting) {
-      ci++;
-      el.textContent = word.slice(0, ci);
-      if (ci >= word.length) { deleting = true; paused = true; setTimeout(tick, 120); return; }
-      setTimeout(tick, 85 + Math.random() * 50);
-    } else {
-      ci--;
-      el.textContent = word.slice(0, ci);
-      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 320); return; }
-      setTimeout(tick, 42);
-    }
-  }
-  setTimeout(tick, 2200);
-})();
 
 // Ticker
 (function () {
