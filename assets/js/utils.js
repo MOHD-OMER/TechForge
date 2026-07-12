@@ -238,16 +238,18 @@ function tfInjectSidebarHomeNav() {
   if (!sidebar) return;
   if (sidebar.querySelector('.tf-mobile-home-nav')) return; // already injected
 
-  // Detect root path — check if we're in a subfolder
+  // Detect root path by directory depth (languages sit two levels deep:
+  // /programming/python/*.html → ../../).
   const path = window.location.pathname;
-  const inSubfolder = path.split('/').filter(p => p && p.includes('.')).length > 0 
-    && path.split('/').filter(Boolean).length > 1;
-  const root = inSubfolder ? '../' : '';
+  const segs = path.split('/').filter(Boolean);
+  const last = segs[segs.length - 1] || '';
+  const depth = last.includes('.') ? segs.length - 1 : segs.length;
+  const root = '../'.repeat(depth);
 
   const sections = [
     { href: root + 'index.html',               icon: '<i class="ti ti-home"></i>', label: 'Home' },
     { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
-    { href: root + 'python/index.html',         icon: '<i class="ti ti-brand-python"></i>', label: 'Python' },
+    { href: root + 'programming/index.html',    icon: '<i class="ti ti-code"></i>', label: 'Programming' },
     { href: root + 'system-design/index.html',  icon: '<i class="ti ti-building"></i>', label: 'Sys Design' },
     { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
     { href: root + 'aiml/aiml-explained.html',  icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },

@@ -13,7 +13,11 @@
 
   function rootPath() {
     var p = window.location.pathname.replace(/\\/g, '/');
-    if (p.includes('/dsa/') || p.includes('/python/') || p.includes('/devops/') ||
+    // Languages live one level deeper: /programming/python/*  → ../../
+    if (p.includes('/programming/python/')) {
+      return '../../';
+    }
+    if (p.includes('/programming/') || p.includes('/dsa/') || p.includes('/devops/') ||
         p.includes('/system-design/') || p.includes('/databases/') ||
         p.includes('/aiml/') || p.includes('/interview/')) {
       return '../';

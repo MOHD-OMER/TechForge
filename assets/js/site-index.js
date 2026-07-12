@@ -850,7 +850,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/basics.html",
+    "href": "programming/python/basics.html",
     "depth": "guide"
   },
   {
@@ -860,7 +860,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/collections.html",
+    "href": "programming/python/collections.html",
     "depth": "guide"
   },
   {
@@ -870,7 +870,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/control.html",
+    "href": "programming/python/control.html",
     "depth": "guide"
   },
   {
@@ -880,7 +880,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/functions.html",
+    "href": "programming/python/functions.html",
     "depth": "guide"
   },
   {
@@ -890,7 +890,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/index.html",
+    "href": "programming/python/index.html",
     "depth": "guide"
   },
   {
@@ -900,7 +900,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/libraries.html",
+    "href": "programming/python/libraries.html",
     "depth": "guide"
   },
   {
@@ -910,7 +910,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/oop.html",
+    "href": "programming/python/oop.html",
     "depth": "guide"
   },
   {
@@ -920,7 +920,7 @@
     "icon": "<i class=\'ti ti-brand-python\'></i>",
     "section": "Python",
     "sectionKey": "python",
-    "href": "python/programs.html",
+    "href": "programming/python/programs.html",
     "depth": "guide"
   },
   {

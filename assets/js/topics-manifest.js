@@ -198,7 +198,7 @@ window.TF_TOPICS = {
 
   python: {
     label: 'Python',
-    hub: 'python/index.html',
+    hub: 'programming/python/index.html',
     accent: '#f7cc45',
     categories: [
       {

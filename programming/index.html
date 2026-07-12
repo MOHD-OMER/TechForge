@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Programming Languages hub — learn how languages turn ideas into instructions. Python is live with 7 modules and 137 programs; JavaScript, Java, C++ and HTML/CSS tracks are coming soon."/>
+  <meta property="og:title" content="Programming Languages — TechForge"/>
+  <meta property="og:description" content="Learn programming languages from the ground up. Python live today; more languages on the way."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Programming Languages — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=16" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/hub.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--green); }
+    .pl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 12px; }
+    .pl-card {
+      display: flex; flex-direction: column; gap: 9px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px 22px;
+      text-decoration: none; color: var(--text);
+    }
+    .pl-card.pl-live { transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .pl-card.pl-live:hover, .pl-card.pl-live:focus-visible {
+      border-color: var(--green); transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(52,211,153,.14);
+    }
+    .pl-card.pl-soon { border-style: dashed; background: var(--card, rgba(255,255,255,.015)); }
+    .pl-head { display: flex; align-items: center; justify-content: space-between; }
+    .pl-icon { font-size: 30px; }
+    .pl-badge { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+    .pl-badge-live { color: var(--green); background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.28); }
+    .pl-badge-soon { color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .pl-name { font-family: var(--font-display, inherit); font-size: 19px; font-weight: 700; letter-spacing: -.3px; }
+    .pl-meta { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text2); letter-spacing: .5px; }
+    .pl-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; flex: 1; }
+    .pl-foot { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+    .pl-live .pl-foot { color: var(--green); }
+    .pl-arrow { transition: transform .2s; }
+    .pl-live:hover .pl-arrow { transform: translateX(4px); }
+    .pl-note { font-size: 12px; color: var(--text3); margin: 4px 0 34px; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body class="tf-hub-page">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link current" href="./">Programming</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-code"></i></span>Overview</a>
+    <div class="sidebar-label">Python</div>
+    <a class="sb-link" href="python/index.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python Guide</a>
+    <a class="sb-link" href="python/basics.html"><span class="sb-num">01</span>Basics</a>
+    <a class="sb-link" href="python/collections.html"><span class="sb-num">02</span>Collections</a>
+    <a class="sb-link" href="python/control.html"><span class="sb-num">03</span>Control Flow</a>
+    <a class="sb-link" href="python/functions.html"><span class="sb-num">04</span>Functions</a>
+    <a class="sb-link" href="python/oop.html"><span class="sb-num">05</span>OOP</a>
+    <a class="sb-link" href="python/libraries.html"><span class="sb-num">06</span>Libraries</a>
+    <a class="sb-link" href="python/programs.html"><span class="sb-num">07</span>137 Programs</a>
+    <a class="sb-link" href="python/async.html"><span class="sb-num">08</span>Async / Await</a>
+    <div class="sidebar-label">More Languages</div>
+    <a class="sb-link" href="#languages"><span class="sb-num"><i class="ti ti-clock"></i></span>More languages soon</a>
+  </aside>
+  <main class="main">
+    <div class="page page-wide">
+
+  <div class="tf-hub-hero anim-in">
+    <div class="tf-hub-eyebrow"><i class="ti ti-code"></i> Speak · Build · Ship</div>
+    <h1 class="tf-hub-title">Programming <span>Languages</span></h1>
+    <p class="tf-hub-sub">A programming language is how you turn ideas into instructions a machine runs — each trades differently between speed, safety, and expressiveness. Start with Python, the friendliest on-ramp in computer science. More languages are on the way.</p>
+  </div>
+
+  <div class="tf-hub-stats anim-in">
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--accent)">1</span><span class="tf-stat-label">Live now</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--green)">137</span><span class="tf-stat-label">Programs</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--blue)">7</span><span class="tf-stat-label">Modules</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--amber)">4</span><span class="tf-stat-label">Coming soon</span></div>
+  </div>
+
+  <div class="sec-label anim-in" id="languages">Pick your language</div>
+  <p class="pl-note anim-in">Compiled or interpreted, static or dynamic — every language is a different set of trade-offs. Deep tracks for each are in the works; Python is live today.</p>
+  <div class="pl-grid anim-in">
+    <a class="pl-card pl-live" href="python/index.html">
+      <div class="pl-head"><i class="ti ti-brand-python pl-icon" style="color:var(--green)"></i><span class="pl-badge pl-badge-live">Live</span></div>
+      <div class="pl-name">Python</div>
+      <div class="pl-meta">interpreted · dynamic</div>
+      <div class="pl-desc">Batteries included and beginner-friendly. 7 modules, 137 runnable programs, OOP through async — the best first language and a DSA-interview staple.</div>
+      <div class="pl-foot">Start learning <span class="pl-arrow">→</span></div>
+    </a>
+    <div class="pl-card pl-soon" aria-label="JavaScript track — coming soon">
+      <div class="pl-head"><i class="ti ti-brand-javascript pl-icon" style="color:var(--amber)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
+      <div class="pl-name">JavaScript</div>
+      <div class="pl-meta">interpreted · dynamic</div>
+      <div class="pl-desc">The language of the browser — closures, the event loop, async/await, and the runtime that also powers Node on the server.</div>
+      <div class="pl-foot">In the works</div>
+    </div>
+    <div class="pl-card pl-soon" aria-label="Java track — coming soon">
+      <div class="pl-head"><i class="ti ti-coffee pl-icon" style="color:var(--red)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
+      <div class="pl-name">Java</div>
+      <div class="pl-meta">compiled · static · JVM</div>
+      <div class="pl-desc">Bytecode on the JVM with static types — the enterprise workhorse and a classic choice for data-structures interviews.</div>
+      <div class="pl-foot">In the works</div>
+    </div>
+    <div class="pl-card pl-soon" aria-label="C++ track — coming soon">
+      <div class="pl-head"><i class="ti ti-binary pl-icon" style="color:var(--blue)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
+      <div class="pl-name">C++</div>
+      <div class="pl-meta">compiled · manual memory</div>
+      <div class="pl-desc">Zero-cost abstractions and direct memory control — where performance ceilings live, from game engines to competitive programming.</div>
+      <div class="pl-foot">In the works</div>
+    </div>
+    <div class="pl-card pl-soon" aria-label="HTML and CSS track — coming soon">
+      <div class="pl-head"><i class="ti ti-brand-html5 pl-icon" style="color:var(--cyan)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
+      <div class="pl-name">HTML &amp; CSS</div>
+      <div class="pl-meta">markup · styling</div>
+      <div class="pl-desc">The structure and style of the web — semantic markup, layout systems (flex/grid), and responsive, accessible design.</div>
+      <div class="pl-foot">In the works</div>
+    </div>
+  </div>
+
+  <div class="tf-learning-path anim-in">
+    <div class="tf-learning-path-title">New to programming? Start here</div>
+    <div class="tf-path-steps">
+      <div class="tf-path-step"><span class="tf-path-num">01</span><span><strong>Python Basics</strong> — variables, types, operators, and input/output.</span></div>
+      <div class="tf-path-step"><span class="tf-path-num">02</span><span><strong>Collections &amp; Control Flow</strong> — lists, dicts, loops, conditionals, comprehensions.</span></div>
+      <div class="tf-path-step"><span class="tf-path-num">03</span><span><strong>Functions &amp; OOP</strong> — reusable logic, then the four pillars of object-oriented design.</span></div>
+      <div class="tf-path-step"><span class="tf-path-num">04</span><span><strong>137 Practice Programs</strong> — cement it by writing real code, basic to advanced.</span></div>
+    </div>
+  </div>
+
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+<script src="../assets/js/site-index.js?v=2"></script>
+<script src="../assets/js/search-modal.js?v=1" defer></script>
+<script src="../assets/js/utils.js?v=8"></script>
+<script src="../assets/js/platform.js?v=4"></script>
+</body>
+</html>
