@@ -13,13 +13,14 @@
 
   function rootPath() {
     var p = window.location.pathname.replace(/\\/g, '/');
-    // Languages live one level deeper: /programming/python/*  → ../../
-    if (p.includes('/programming/python/')) {
+    // Wings live one level deeper (/programming/python/, /systems/os/ …) → ../../
+    if (/\/(programming|systems)\/[a-z0-9-]+\//.test(p)) {
       return '../../';
     }
     if (p.includes('/programming/') || p.includes('/dsa/') || p.includes('/devops/') ||
         p.includes('/system-design/') || p.includes('/databases/') ||
-        p.includes('/aiml/') || p.includes('/interview/')) {
+        p.includes('/aiml/') || p.includes('/interview/') ||
+        p.includes('/systems/') || p.includes('/data-cloud/')) {
       return '../';
     }
     return '';

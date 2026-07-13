@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="OS &amp; Networks hub — operating systems (processes, threads, memory, scheduling) and computer networking (TCP/IP, HTTP, DNS) from first principles. Security and computation theory coming soon."/>
+  <meta property="og:title" content="OS &amp; Networks — TechForge"/>
+  <meta property="og:description" content="The systems layer of computer science — how machines run programs and talk to each other."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>OS &amp; Networks — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=17" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/hub.css?v=2" rel="stylesheet"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--blue); }
+    .sysp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 12px; }
+    .sysp-card {
+      display: flex; flex-direction: column; gap: 9px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px 22px;
+      text-decoration: none; color: var(--text);
+    }
+    .sysp-card.sysp-live { transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .sysp-card.sysp-live:hover, .sysp-card.sysp-live:focus-visible {
+      border-color: var(--blue); transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(77,158,247,.14);
+    }
+    .sysp-card.sysp-soon { border-style: dashed; background: var(--card, rgba(255,255,255,.015)); }
+    .sysp-head { display: flex; align-items: center; justify-content: space-between; }
+    .sysp-icon { font-size: 30px; }
+    .sysp-badge { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+    .sysp-badge-live { color: var(--blue); background: rgba(77,158,247,.12); border: 1px solid rgba(77,158,247,.28); }
+    .sysp-badge-soon { color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .sysp-name { font-family: var(--font-display, inherit); font-size: 19px; font-weight: 700; letter-spacing: -.3px; }
+    .sysp-meta { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text2); letter-spacing: .5px; }
+    .sysp-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; flex: 1; }
+    .sysp-foot { font-family: var(--font-mono, monospace); font-size: 11px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+    .sysp-live .sysp-foot { color: var(--blue); }
+    .sysp-arrow { transition: transform .2s; }
+    .sysp-live:hover .sysp-arrow { transform: translateX(4px); }
+    .sysp-note { font-size: 12px; color: var(--text3); margin: 4px 0 34px; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body class="tf-hub-page">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="./">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Overview</a>
+    <div class="sidebar-label">Operating Systems</div>
+    <a class="sb-link" href="os/index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>OS Roadmap</a>
+    <div class="sidebar-label">Networking</div>
+    <a class="sb-link" href="networking/index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking Roadmap</a>
+    <div class="sidebar-label">Coming Soon</div>
+    <a class="sb-link" href="#pillars"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Security</a>
+    <a class="sb-link" href="#pillars"><span class="sb-num"><i class="ti ti-math-function"></i></span>Theory of Computation</a>
+  </aside>
+  <main class="main">
+    <div class="page page-wide">
+
+  <div class="tf-hub-hero anim-in">
+    <div class="tf-hub-eyebrow"><i class="ti ti-cpu"></i> Below the Code</div>
+    <h1 class="tf-hub-title">OS <span>&amp; Networks</span></h1>
+    <p class="tf-hub-sub">The systems layer of computer science — how one machine runs your program (processes, memory, scheduling) and how millions of machines talk to each other (TCP/IP, HTTP, DNS). The knowledge every other track quietly depends on.</p>
+  </div>
+
+  <div class="tf-hub-stats anim-in">
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--blue)">2</span><span class="tf-stat-label">Pillars building</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--green)">16+</span><span class="tf-stat-label">Topics planned</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--amber)">2</span><span class="tf-stat-label">Coming soon</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--purple)">100%</span><span class="tf-stat-label">Interview-relevant</span></div>
+  </div>
+
+  <div class="sec-label anim-in" id="pillars">Four pillars</div>
+  <p class="sysp-note anim-in">OS and Networking roadmaps are live now and filling with full guides. Security and Theory follow.</p>
+  <div class="sysp-grid anim-in">
+    <a class="sysp-card sysp-live" href="os/index.html">
+      <div class="sysp-head"><i class="ti ti-settings sysp-icon" style="color:var(--blue)"></i><span class="sysp-badge sysp-badge-live">Roadmap live</span></div>
+      <div class="sysp-name">Operating Systems</div>
+      <div class="sysp-meta">processes · memory · scheduling</div>
+      <div class="sysp-desc">What actually happens when you run a program — processes vs threads, virtual memory, CPU scheduling, filesystems, and the concurrency bugs interviewers love.</div>
+      <div class="sysp-foot">View roadmap <span class="sysp-arrow">→</span></div>
+    </a>
+    <a class="sysp-card sysp-live" href="networking/index.html">
+      <div class="sysp-head"><i class="ti ti-network sysp-icon" style="color:var(--green)"></i><span class="sysp-badge sysp-badge-live">Roadmap live</span></div>
+      <div class="sysp-name">Networking</div>
+      <div class="sysp-meta">TCP/IP · HTTP · DNS</div>
+      <div class="sysp-desc">What happens when you type a URL — the TCP/IP stack, HTTP/S, DNS resolution, sockets, and the handshakes underneath every request your apps make.</div>
+      <div class="sysp-foot">View roadmap <span class="sysp-arrow">→</span></div>
+    </a>
+    <div class="sysp-card sysp-soon" aria-label="Security pillar — coming soon">
+      <div class="sysp-head"><i class="ti ti-shield-lock sysp-icon" style="color:var(--amber)"></i><span class="sysp-badge sysp-badge-soon">Coming soon</span></div>
+      <div class="sysp-name">Security</div>
+      <div class="sysp-meta">authn · crypto · OWASP</div>
+      <div class="sysp-desc">Authentication vs authorization, hashing and TLS, the OWASP top 10, and how real attacks work — the layer every production system needs.</div>
+      <div class="sysp-foot">In the works</div>
+    </div>
+    <div class="sysp-card sysp-soon" aria-label="Theory of computation pillar — coming soon">
+      <div class="sysp-head"><i class="ti ti-math-function sysp-icon" style="color:var(--purple)"></i><span class="sysp-badge sysp-badge-soon">Coming soon</span></div>
+      <div class="sysp-name">Theory of Computation</div>
+      <div class="sysp-meta">automata · complexity</div>
+      <div class="sysp-desc">Finite automata, regular expressions under the hood, Turing machines, and P vs NP — why some problems are hard no matter the hardware.</div>
+      <div class="sysp-foot">In the works</div>
+    </div>
+  </div>
+
+  <div class="tf-learning-path anim-in">
+    <div class="tf-learning-path-title">Why this section exists</div>
+    <div class="tf-path-steps">
+      <div class="tf-path-step"><span class="tf-path-num">01</span><span><strong>System design assumes it</strong> — you can't reason about load balancers without TCP, or containers without processes.</span></div>
+      <div class="tf-path-step"><span class="tf-path-num">02</span><span><strong>Interviews probe it</strong> — "what happens when you type a URL" and "process vs thread" are evergreen questions.</span></div>
+      <div class="tf-path-step"><span class="tf-path-num">03</span><span><strong>Debugging lives here</strong> — memory leaks, port conflicts, DNS failures: the systems layer is where prod issues hide.</span></div>
+    </div>
+  </div>
+
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+<script src="../assets/js/site-index.js?v=2"></script>
+<script src="../assets/js/search-modal.js?v=1" defer></script>
+<script src="../assets/js/utils.js?v=8"></script>
+<script src="../assets/js/platform.js?v=4"></script>
+</body>
+</html>

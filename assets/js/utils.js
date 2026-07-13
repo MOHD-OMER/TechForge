@@ -248,13 +248,13 @@ function tfInjectSidebarHomeNav() {
 
   const sections = [
     { href: root + 'index.html',               icon: '<i class="ti ti-home"></i>', label: 'Home' },
-    { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
     { href: root + 'programming/index.html',    icon: '<i class="ti ti-code"></i>', label: 'Programming' },
+    { href: root + 'aiml/index.html',           icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },
+    { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
     { href: root + 'system-design/index.html',  icon: '<i class="ti ti-building"></i>', label: 'Sys Design' },
-    { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
-    { href: root + 'aiml/aiml-explained.html',  icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },
+    { href: root + 'data-cloud/index.html',     icon: '<i class="ti ti-cloud-data-connection"></i>', label: 'Data & Cloud' },
+    { href: root + 'systems/index.html',        icon: '<i class="ti ti-cpu"></i>', label: 'OS & Networks' },
     { href: root + 'interview/index.html',      icon: '<i class="ti ti-target"></i>', label: 'Interview' },
-    { href: root + 'devops/index.html',         icon: '<i class="ti ti-server-2"></i>',  label: 'DevOps' },
     { href: root + 'about.html',                icon: '<i class="ti ti-info-circle"></i>', label: 'About' },
   ];
 
