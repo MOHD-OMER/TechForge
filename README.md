@@ -15,7 +15,7 @@
 
 **100% Static · Zero Build Step · Zero Backend · Security Hardened · Production Ready**
 
-Data Structures & Algorithms · Python Reference · System Design Guides · SQL & NoSQL · AI/ML · DevOps · Interview Prep
+Programming Languages · DSA · System Design · Data & Cloud · OS & Networks · AI/ML · Interview Prep
 
 </div>
 
@@ -42,12 +42,12 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | Track | Topics | URL |
 |---|---|---|
 | Data Structures & Algorithms | 29 topics · 28 Canvas visualizers | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
-| Python | 8 modules · basics through async/await | [/python](https://techforge-dev.vercel.app/python/index.html) |
+| Programming | Python live (8 modules · 137 programs) · JS/Java/C++/HTML coming | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
-| Databases | 14 topics · SQL, NoSQL, and specialized stores | [/databases](https://techforge-dev.vercel.app/databases/index.html) |
+| Data & Cloud | 14 DB engines + 23 DevOps guides (databases + DevOps combined) | [/data-cloud](https://techforge-dev.vercel.app/data-cloud/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
 | Interview Prep | 200+ problems · 7 question banks | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
-| DevOps | 23 guides · Docker · K8s · CI/CD · Cloud | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
+| OS & Networks | Operating systems + networking roadmaps · Security & Theory soon | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
 
 ---
 
@@ -84,7 +84,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 ### Interview Preparation
 - **200+ curated problems** across 7 question banks
-- Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design
+- Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design (OS & Networks banks coming)
 - FAANG and startup tagged · Difficulty rated · Progress tracked in browser
 
 ### DevOps
@@ -93,7 +93,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Major cloud platforms: AWS, GCP, Azure
 
 ### Platform & UX
-- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all seven tracks from a keyboard-driven command palette, no page reload
+- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all eight tracks from a keyboard-driven command palette, no page reload
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
 - **Branded loading screen** — animated splash on load, so opening the app never shows a blank flash
 - **Progress tracking** — mark topics and interview questions complete, saved in the browser
@@ -158,12 +158,14 @@ TechForge/
 │   └── og-image.png              # Open Graph social preview (1200×630)
 │
 ├── dsa/                          # Data Structures & Algorithms (29 topics)
-├── python/                       # Python Track (8 modules)
+├── programming/                  # Programming Languages hub
+│   └── python/                   # Python (8 modules · 137 programs)
 ├── system-design/                # System Design (26 guides)
-├── databases/                    # Databases (14 deep-dives)
+├── databases/                    # Databases (14 deep-dives)  ┐ Data & Cloud
 ├── aiml/                         # AI/ML Hub (8 modules)
 ├── interview/                    # Interview Prep (7 banks, 200+ problems)
-├── devops/                       # DevOps (23 guides)
+├── devops/                       # DevOps (23 guides)         ┘ (data-cloud/ hub)
+├── systems/                      # OS & Networks (os/ + networking/ roadmaps)
 │
 ├── tools/                        # Build & utility scripts
 │   ├── build-site-index.mjs      # Generate site-index.js
