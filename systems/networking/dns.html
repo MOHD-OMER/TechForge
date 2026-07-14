@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>DNS — Networking | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/networking/dns.html"/>
+  <meta property="og:title" content="DNS — Networking | TechForge"/>
+  <meta property="og:description" content="DNS — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/net-dns" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Networking Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Networking</div>
+      <a class="sb-link" href="stack.html"><span class="sb-num">01</span> The TCP/IP Stack</a>
+      <a class="sb-link" href="tcp-udp.html"><span class="sb-num">02</span> TCP vs UDP</a>
+      <a class="sb-link active" href="dns.html"><span class="sb-num">03</span> DNS</a>
+      <a class="sb-link" href="http.html"><span class="sb-num">04</span> HTTP &amp; HTTPS</a>
+      <a class="sb-link" href="url-journey.html"><span class="sb-num">05</span> Typing a URL</a>
+      <a class="sb-link" href="sockets.html"><span class="sb-num">06</span> Sockets &amp; Ports</a>
+      <a class="sb-link" href="routing.html"><span class="sb-num">07</span> IP, Subnets &amp; Routing</a>
+      <a class="sb-link" href="realtime.html"><span class="sb-num">08</span> WebSockets &amp; Real-Time</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Networking · DNS</div>
+        <h1 class="pg-title">DNS — the Internet’s <span>Phonebook</span></h1>
+        <p class="pg-sub">How example.com becomes 93.184.216.34 — resolution, record types, caching, and what TTL really controls.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-network"></i> Networking</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-address-book"></i></span><h2 class="sec-title">The Problem DNS Solves</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Machines route by IP address; humans remember names. <strong>DNS</strong> (Domain Name System) is a <strong>distributed, hierarchical database</strong> mapping names to records. No single server holds it all — authority is delegated down the name: root knows who owns <code>.com</code>, <code>.com</code> knows who owns <code>example.com</code>, and example.com’s <strong>authoritative servers</strong> hold the actual records.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Read a domain right-to-left to see the hierarchy: <code>api.shop.example.com</code> → root → <code>com</code> → <code>example</code> → <code>shop</code> → <code>api</code>.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-route"></i></span><h2 class="sec-title">Resolution — Recursive vs Iterative</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Your device asks a <strong>recursive resolver</strong> (your ISP’s, or 1.1.1.1 / 8.8.8.8) and waits. The resolver does the legwork <em>iteratively</em>: ask root, follow the referral to the TLD, follow again to the authoritative server, cache everything, return the answer.</p>        <div class="lesson-diagram"><svg viewBox="0 0 470 250" width="100%" role="img" aria-label="DNS resolution: stub resolver asks recursive resolver, which iteratively queries root, TLD and authoritative servers, then returns and caches the answer" style="max-width:470px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <rect x="10" y="100" width="90" height="40" rx="8" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="55" y="124" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Your device</text>
+      <rect x="160" y="100" width="100" height="40" rx="8" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="210" y="118" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Recursive</text><text x="210" y="131" text-anchor="middle" fill="var(--text2)" font-size="9">resolver + cache</text>
+      <rect x="340" y="20" width="110" height="36" rx="8" fill="var(--surface2)" stroke="var(--amber,#fbbf24)" stroke-width="1.5"/><text x="395" y="42" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Root ( . )</text>
+      <rect x="340" y="105" width="110" height="36" rx="8" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="395" y="127" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">TLD (.com)</text>
+      <rect x="340" y="190" width="110" height="36" rx="8" fill="var(--surface2)" stroke="var(--purple,#a78bfa)" stroke-width="1.5"/><text x="395" y="206" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Authoritative</text><text x="395" y="219" text-anchor="middle" fill="var(--text2)" font-size="9">example.com</text>
+      <line x1="100" y1="115" x2="160" y2="115" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#da)"/><text x="130" y="108" text-anchor="middle" fill="var(--text3)" font-size="9">1</text>
+      <line x1="260" y1="105" x2="340" y2="45" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#da)"/><text x="295" y="65" text-anchor="middle" fill="var(--text3)" font-size="9">2 → “ask .com”</text>
+      <line x1="260" y1="120" x2="340" y2="120" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#da)"/><text x="300" y="113" text-anchor="middle" fill="var(--text3)" font-size="9">3 → “ask ns1”</text>
+      <line x1="260" y1="135" x2="340" y2="200" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#da)"/><text x="290" y="180" text-anchor="middle" fill="var(--text3)" font-size="9">4 → A record</text>
+      <line x1="160" y1="130" x2="100" y2="130" stroke="var(--green,#34d399)" stroke-width="1.4" marker-end="url(#da)"/><text x="130" y="145" text-anchor="middle" fill="var(--green,#34d399)" font-size="9">5 answer</text>
+      <defs><marker id="da" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--text2)"/></marker></defs>
+    </svg></div>        <p class="prose">Next time anyone asks the same resolver, steps 2-4 are skipped — the answer comes from <strong>cache</strong> until its <strong>TTL</strong> expires.</p>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-list-details"></i></span><h2 class="sec-title">Record Types You Must Know</h2></div>
+        <div class="section-divider"></div>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Record</th><th>Maps</th><th>Example use</th></tr></thead><tbody><tr><td><code>A</code></td><td>name → IPv4</td><td>example.com → 93.184.216.34</td></tr><tr><td><code>AAAA</code></td><td>name → IPv6</td><td>example.com → 2606:2800::c</td></tr><tr><td><code>CNAME</code></td><td>name → another name</td><td>www → example.com (alias)</td></tr><tr><td><code>MX</code></td><td>domain → mail server</td><td>where email for @example.com goes</td></tr><tr><td><code>NS</code></td><td>zone → authoritative servers</td><td>delegation glue of the hierarchy</td></tr><tr><td><code>TXT</code></td><td>name → arbitrary text</td><td>SPF, domain verification</td></tr></tbody></table></div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>TTL is a promise, not a suggestion</strong>: resolvers may serve a cached record until TTL runs out. Lower TTL <em>before</em> a migration (hours ahead), or old IPs keep receiving traffic long after you flip the record.</span></div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-terminal-2"></i></span><h2 class="sec-title">Interrogate DNS Yourself</h2></div>
+        <div class="section-divider"></div>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">bash — dig</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># full answer with TTLs</span>
+dig example.com A
+
+<span class="cm"># trace the whole delegation chain root → TLD → authoritative</span>
+dig +trace example.com
+
+<span class="cm"># ask a specific resolver; check propagation</span>
+dig @1.1.1.1 example.com
+
+<span class="cm"># reverse lookup: IP → name</span>
+dig -x 93.184.216.34</pre>
+        </div>        <p class="prose"><code>dig +trace</code> is the single best way to <em>see</em> the hierarchy: it starts at the root servers and follows each referral exactly like a resolver does.</p>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Walk me through what happens on a DNS lookup.</q><p>Stub resolver checks local cache → asks the configured recursive resolver → resolver (on cache miss) iteratively queries root, TLD, then authoritative servers → answer returns with a TTL and is cached at every hop, including the OS and browser.</p></div><div class="iq"><q>Recursive vs iterative query?</q><p>Recursive: “get me the final answer” — the client delegates all work. Iterative: “tell me who to ask next” — the resolver follows referrals itself. Stubs speak recursive; resolvers speak iterative upstream.</p></div><div class="iq"><q>CNAME vs A record?</q><p>A maps a name directly to an IPv4 address; CNAME aliases one name to another name, and resolution restarts on the target. A CNAME cannot coexist with other records on the same name — which is why zone apexes use A/ALIAS.</p></div><div class="iq"><q>Why can DNS changes take “48 hours to propagate”?</q><p>It’s not propagation — it’s caching. Resolvers worldwide serve the old record until its TTL expires. The fix is lowering TTL well before the change.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which server actually holds example.com’s records?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Root server</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Recursive resolver</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TLD server</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Authoritative nameserver</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Your laptop’s query to 8.8.8.8 is a ___ query.</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">iterative</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">recursive</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">reverse</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">zone transfer</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Record type for name → IPv6:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">MX</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">AAAA</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CNAME</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. TTL controls…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">how many hops a packet lives</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">how long resolvers may cache a record</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">retry count for lost queries</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the zone transfer interval</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. dig +trace shows…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">packet route to the server</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the full delegation chain from root</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">HTTP redirects</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TLS certificate chain</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="tcp-udp.html">← TCP vs UDP</a>
+        <a class="nav-link" href="http.html">HTTP &amp; HTTPS →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

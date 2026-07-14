@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Sockets & Ports — Networking | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/networking/sockets.html"/>
+  <meta property="og:title" content="Sockets & Ports — Networking | TechForge"/>
+  <meta property="og:description" content="Sockets & Ports — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/net-sockets" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Networking Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Networking</div>
+      <a class="sb-link" href="stack.html"><span class="sb-num">01</span> The TCP/IP Stack</a>
+      <a class="sb-link" href="tcp-udp.html"><span class="sb-num">02</span> TCP vs UDP</a>
+      <a class="sb-link" href="dns.html"><span class="sb-num">03</span> DNS</a>
+      <a class="sb-link" href="http.html"><span class="sb-num">04</span> HTTP &amp; HTTPS</a>
+      <a class="sb-link" href="url-journey.html"><span class="sb-num">05</span> Typing a URL</a>
+      <a class="sb-link active" href="sockets.html"><span class="sb-num">06</span> Sockets &amp; Ports</a>
+      <a class="sb-link" href="routing.html"><span class="sb-num">07</span> IP, Subnets &amp; Routing</a>
+      <a class="sb-link" href="realtime.html"><span class="sb-num">08</span> WebSockets &amp; Real-Time</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Networking · Sockets & Ports</div>
+        <h1 class="pg-title">Sockets <span>&amp;</span> Ports</h1>
+        <p class="pg-sub">The API where applications meet the network — and what a “connection” actually is to the kernel.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-network"></i> Networking</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-plug"></i></span><h2 class="sec-title">What a Socket Is</h2></div>
+        <div class="section-divider"></div>        <p class="prose">A <strong>socket</strong> is the OS’s handle for a network endpoint — to your program it’s just a file descriptor you <code>read()</code> and <code>write()</code>. A TCP <strong>connection</strong> is uniquely identified by the <strong>4-tuple</strong>: <code>(src IP, src port, dst IP, dst port)</code>. That’s why one server port can hold thousands of connections — each client arrives from a different IP:port, so each 4-tuple is distinct.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Port range</th><th>Name</th><th>Use</th></tr></thead><tbody><tr><td>0–1023</td><td>Well-known</td><td>80 HTTP, 443 HTTPS, 22 SSH, 53 DNS — need root to bind</td></tr><tr><td>1024–49151</td><td>Registered</td><td>5432 Postgres, 6379 Redis, 3306 MySQL</td></tr><tr><td>49152–65535</td><td>Ephemeral</td><td>Kernel assigns these to outgoing client connections</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-refresh"></i></span><h2 class="sec-title">The Server Lifecycle</h2></div>
+        <div class="section-divider"></div>        <div class="lesson-diagram"><svg viewBox="0 0 460 240" width="100%" role="img" aria-label="Socket lifecycle: server calls socket, bind, listen, accept; client calls socket then connect; accept returns a new socket per client" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <text x="120" y="30" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Server</text>
+      <text x="360" y="30" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Client</text>
+      <rect x="60" y="45"  width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="120" y="63" text-anchor="middle" fill="var(--text)" font-size="10">socket()</text>
+      <rect x="60" y="81"  width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="120" y="99" text-anchor="middle" fill="var(--text)" font-size="10">bind(:443)</text>
+      <rect x="60" y="117" width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="120" y="135" text-anchor="middle" fill="var(--text)" font-size="10">listen()</text>
+      <rect x="60" y="153" width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--amber,#fbbf24)" stroke-width="1.5"/><text x="120" y="171" text-anchor="middle" fill="var(--text)" font-size="10">accept() — blocks</text>
+      <rect x="300" y="81" width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="360" y="99" text-anchor="middle" fill="var(--text)" font-size="10">socket()</text>
+      <rect x="300" y="130" width="120" height="28" rx="6" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="360" y="148" text-anchor="middle" fill="var(--text)" font-size="10">connect()</text>
+      <line x1="300" y1="150" x2="182" y2="167" stroke="var(--green,#34d399)" stroke-width="1.5" marker-end="url(#sa)"/>
+      <text x="245" y="150" text-anchor="middle" fill="var(--green,#34d399)" font-size="9">3-way handshake</text>
+      <rect x="60" y="195" width="180" height="28" rx="6" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="150" y="213" text-anchor="middle" fill="var(--text)" font-size="10">new socket per client → read/write</text>
+      <defs><marker id="sa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--text2)"/></marker></defs>
+    </svg></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><code>accept()</code> returns a <strong>new socket</strong> for each client; the listening socket keeps listening. The kernel even completes handshakes in the background and queues them (the <strong>backlog</strong>) until you accept.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-code"></i></span><h2 class="sec-title">A Real Server — the Accept Loop</h2></div>
+        <div class="section-divider"></div>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — TCP echo server</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> socket
+
+srv = socket.<span class="fn">socket</span>(socket.AF_INET, socket.SOCK_STREAM)
+srv.<span class="fn">setsockopt</span>(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="nm">1</span>)
+srv.<span class="fn">bind</span>((<span class="st">"0.0.0.0"</span>, <span class="nm">9000</span>))   <span class="cm"># all interfaces, port 9000</span>
+srv.<span class="fn">listen</span>(<span class="nm">128</span>)              <span class="cm"># backlog of pending handshakes</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    conn, addr = srv.<span class="fn">accept</span>()   <span class="cm"># blocks until a client connects</span>
+    data = conn.<span class="fn">recv</span>(<span class="nm">4096</span>)
+    conn.<span class="fn">sendall</span>(data)          <span class="cm"># echo it back</span>
+    conn.<span class="fn">close</span>()</pre>
+        </div>        <p class="prose">One loop, one client at a time. Real servers wrap <code>accept</code> in threads, processes, or an event loop (<code>epoll</code>) — that story is in the OS pillar’s I/O guide.</p>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><code>SO_REUSEADDR</code> matters: without it a restarted server can’t rebind while old connections sit in <code>TIME_WAIT</code> — the classic “Address already in use”.</span></div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-terminal-2"></i></span><h2 class="sec-title">Reading netstat / ss Like a Pro</h2></div>
+        <div class="section-divider"></div>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">bash — who is talking to whom</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># listening sockets + owning process</span>
+ss -tlnp
+
+<span class="cm"># established connections to port 443</span>
+ss -tn state established '( dport = :443 )'
+
+<span class="cm"># count connections per state — spot TIME_WAIT floods</span>
+ss -tan | awk '{print $1}' | sort | uniq -c</pre>
+        </div>        <div class="table-wrap"><table class="py-table"><thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td><code>LISTEN</code></td><td>Server waiting for connections</td></tr><tr><td><code>ESTABLISHED</code></td><td>Live connection, data can flow</td></tr><tr><td><code>TIME_WAIT</code></td><td>Closed locally; lingering ~60s to catch stray packets</td></tr><tr><td><code>CLOSE_WAIT</code></td><td>Peer closed; <strong>your app</strong> hasn’t called close() — a leak signature</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>How can one port serve thousands of clients?</q><p>Connections are keyed by the full 4-tuple (src IP, src port, dst IP, dst port), not the server port alone. Every client arrives from a distinct IP:port, so the kernel demultiplexes thousands of sockets all “on” port 443.</p></div><div class="iq"><q>What does the backlog in listen(128) mean?</q><p>The queue of connections the kernel has already handshaken but the app hasn’t accept()ed yet. If it fills, new SYNs are dropped or refused — clients see timeouts under accept-loop stalls.</p></div><div class="iq"><q>Lots of CLOSE_WAIT sockets — what does it tell you?</q><p>The remote side closed but our application never called close() on its end — a file-descriptor leak in our code (missing close in an error path), not a network problem.</p></div><div class="iq"><q>Ephemeral ports — what and why?</q><p>Short-lived ports (~49152-65535) the kernel auto-assigns to outgoing connections as the client side of the 4-tuple. Exhausting them (many rapid short connections) causes connect failures; fixes include keep-alive and connection pooling.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. A TCP connection is uniquely identified by…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">destination port</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the 4-tuple src IP/port + dst IP/port</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the socket fd number</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the MAC address pair</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. accept() returns…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the listening socket</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a new socket for that client</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a port number</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a thread</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Binding to port 80 typically requires…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nothing special</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">root/admin privileges</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a registered domain</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TLS certificates</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Many CLOSE_WAIT states indicate…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">normal shutdown</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the network dropping packets</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">your app forgot to close() sockets</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS failures</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Ephemeral ports are used by…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">servers listening</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">clients’ outgoing connections</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">routers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS zone transfers</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="url-journey.html">← Typing a URL</a>
+        <a class="nav-link" href="routing.html">IP, Subnets &amp; Routing →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

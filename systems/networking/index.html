@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Networking roadmap — the TCP/IP stack, HTTP and HTTPS, DNS, sockets and load-balancing fundamentals. Full guides landing topic by topic."/>
+  <meta name="description" content="Networking roadmap — the TCP/IP stack, TCP vs UDP, DNS, HTTP &amp; HTTPS, sockets, subnets and WebSockets. Eight full guides with diagrams, interview questions and quizzes."/>
   <meta property="og:title" content="Networking — TechForge"/>
   <meta property="og:description" content="How machines talk to each other — the networking pillar of the Systems track."/>
   <meta property="og:type" content="website"/>
@@ -47,12 +47,16 @@
     .lp-track::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
     .lp-step { position: relative; margin-bottom: 12px; }
     .lp-node { position: absolute; left: -44px; top: 13px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono,monospace); font-size: 12px; font-weight: 700; color: var(--accent); z-index: 1; }
-    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 14px 18px; color: var(--text); }
+    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .lp-card:hover, .lp-card:focus-visible { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent); }
+    .lp-step:hover .lp-node { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
     .lp-body { flex: 1; min-width: 0; }
     .lp-title { font-size: 14.5px; font-weight: 700; }
     .lp-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
-    .lp-badge { font-family: var(--font-mono,monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; flex-shrink: 0; color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .lp-go { color: var(--text3); flex-shrink: 0; transition: transform .2s, color .2s; }
+    .lp-card:hover .lp-go { transform: translateX(3px); color: var(--accent); }
     .lp-note { font-size: 12.5px; color: var(--text3); margin: 2px 0 16px; }
+    @media (prefers-reduced-motion: reduce) { .lp-card, .lp-go { transition: none; } .lp-card:hover { transform: none; } }
   </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
@@ -85,9 +89,18 @@
       <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
     </div>
     <a class="sb-link" href="../index.html"><span class="sb-num">⬡</span>OS &amp; Networks hub</a>
-    <div class="sidebar-label">Pillars</div>
+    <div class="sidebar-label">Networking</div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Roadmap</a>
+    <a class="sb-link" href="stack.html"><span class="sb-num">01</span> The TCP/IP Stack</a>
+    <a class="sb-link" href="tcp-udp.html"><span class="sb-num">02</span> TCP vs UDP</a>
+    <a class="sb-link" href="dns.html"><span class="sb-num">03</span> DNS</a>
+    <a class="sb-link" href="http.html"><span class="sb-num">04</span> HTTP &amp; HTTPS</a>
+    <a class="sb-link" href="url-journey.html"><span class="sb-num">05</span> Typing a URL</a>
+    <a class="sb-link" href="sockets.html"><span class="sb-num">06</span> Sockets &amp; Ports</a>
+    <a class="sb-link" href="routing.html"><span class="sb-num">07</span> IP, Subnets &amp; Routing</a>
+    <a class="sb-link" href="realtime.html"><span class="sb-num">08</span> WebSockets &amp; Real-Time</a>
+    <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
     <a class="sb-link" href="../os/index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Operating Systems</a>
-    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
   </aside>
   <main class="main">
     <div class="page page-wide">
@@ -95,7 +108,7 @@
   <div class="tf-hub-hero anim-in">
     <div class="tf-hub-eyebrow"><i class="ti ti-network"></i> Pillar 2 · Networking</div>
     <h1 class="tf-hub-title">Net<span>working</span></h1>
-    <p class="tf-hub-sub">How machines talk to each other. Eight guides are being written in the full TechForge style — diagrams, quizzes, interview questions — and land here topic by topic.</p>
+    <p class="tf-hub-sub">How machines talk to each other. Eight guides in the full TechForge style — diagrams, quizzes, interview questions — from the TCP/IP stack to WebSockets.</p>
   </div>
 
   <div class="sec-label anim-in">Start here</div>
@@ -107,16 +120,16 @@
   </div>
 
   <div class="sec-label anim-in">Learning path</div>
-  <p class="lp-note anim-in">Eight guides, in the works — same TechForge style as the OS pillar. Order shown; content lands soon.</p>
+  <p class="lp-note anim-in">Eight guides, in order — diagrams, real commands, interview questions and a quiz in each.</p>
   <div class="lp-track anim-in">
-    <div class="lp-step"><span class="lp-node">1</span><div class="lp-card"><div class="lp-body"><div class="lp-title">The TCP/IP Stack</div><div class="lp-desc">Four layers, what each one adds, and how a packet is wrapped and unwrapped end to end.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">2</span><div class="lp-card"><div class="lp-body"><div class="lp-title">TCP vs UDP</div><div class="lp-desc">Handshakes, reliability, ordering, and when you deliberately choose the unreliable one.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">3</span><div class="lp-card"><div class="lp-body"><div class="lp-title">DNS</div><div class="lp-desc">Recursive vs authoritative resolution, record types, caching and TTLs — the internet’s phonebook.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">4</span><div class="lp-card"><div class="lp-body"><div class="lp-title">HTTP &amp; HTTPS</div><div class="lp-desc">Methods, status codes, headers, HTTP/1.1 vs 2 vs 3, and what TLS actually encrypts.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">5</span><div class="lp-card"><div class="lp-body"><div class="lp-title">What Happens When You Type a URL</div><div class="lp-desc">The evergreen interview question, answered layer by layer with a full diagram.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">6</span><div class="lp-card"><div class="lp-body"><div class="lp-title">Sockets &amp; Ports</div><div class="lp-desc">What a socket is, the accept loop, ephemeral ports, and reading netstat like a pro.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">7</span><div class="lp-card"><div class="lp-body"><div class="lp-title">IP, Subnets &amp; Routing</div><div class="lp-desc">CIDR notation, public vs private ranges, NAT, and how routers pick a path.</div></div><span class="lp-badge">Soon</span></div></div>
-    <div class="lp-step"><span class="lp-node">8</span><div class="lp-card"><div class="lp-body"><div class="lp-title">WebSockets &amp; Real-Time</div><div class="lp-desc">Upgrading past request/response — long polling, SSE, WebSockets, and when each wins.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">1</span><a class="lp-card" href="stack.html"><div class="lp-body"><div class="lp-title">The TCP/IP Stack</div><div class="lp-desc">Four layers, what each one adds, and how a packet is wrapped and unwrapped end to end.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">2</span><a class="lp-card" href="tcp-udp.html"><div class="lp-body"><div class="lp-title">TCP vs UDP</div><div class="lp-desc">Handshakes, reliability, ordering, and when you deliberately choose the unreliable one.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">3</span><a class="lp-card" href="dns.html"><div class="lp-body"><div class="lp-title">DNS</div><div class="lp-desc">Recursive vs authoritative resolution, record types, caching and TTLs — the internet’s phonebook.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">4</span><a class="lp-card" href="http.html"><div class="lp-body"><div class="lp-title">HTTP &amp; HTTPS</div><div class="lp-desc">Methods, status codes, headers, HTTP/1.1 vs 2 vs 3, and what TLS actually encrypts.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">5</span><a class="lp-card" href="url-journey.html"><div class="lp-body"><div class="lp-title">What Happens When You Type a URL</div><div class="lp-desc">The evergreen interview question, answered layer by layer with a full diagram.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">6</span><a class="lp-card" href="sockets.html"><div class="lp-body"><div class="lp-title">Sockets &amp; Ports</div><div class="lp-desc">What a socket is, the accept loop, ephemeral ports, and reading netstat like a pro.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">7</span><a class="lp-card" href="routing.html"><div class="lp-body"><div class="lp-title">IP, Subnets &amp; Routing</div><div class="lp-desc">CIDR notation, public vs private ranges, NAT, and how routers pick a path.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">8</span><a class="lp-card" href="realtime.html"><div class="lp-body"><div class="lp-title">WebSockets &amp; Real-Time</div><div class="lp-desc">Upgrading past request/response — long polling, SSE, WebSockets, and when each wins.</div></div><span class="lp-go">→</span></a></div>
   </div>
 
     </div>

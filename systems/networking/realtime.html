@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>WebSockets & Real-Time — Networking | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/networking/realtime.html"/>
+  <meta property="og:title" content="WebSockets & Real-Time — Networking | TechForge"/>
+  <meta property="og:description" content="WebSockets & Real-Time — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/net-realtime" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Networking Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Networking</div>
+      <a class="sb-link" href="stack.html"><span class="sb-num">01</span> The TCP/IP Stack</a>
+      <a class="sb-link" href="tcp-udp.html"><span class="sb-num">02</span> TCP vs UDP</a>
+      <a class="sb-link" href="dns.html"><span class="sb-num">03</span> DNS</a>
+      <a class="sb-link" href="http.html"><span class="sb-num">04</span> HTTP &amp; HTTPS</a>
+      <a class="sb-link" href="url-journey.html"><span class="sb-num">05</span> Typing a URL</a>
+      <a class="sb-link" href="sockets.html"><span class="sb-num">06</span> Sockets &amp; Ports</a>
+      <a class="sb-link" href="routing.html"><span class="sb-num">07</span> IP, Subnets &amp; Routing</a>
+      <a class="sb-link active" href="realtime.html"><span class="sb-num">08</span> WebSockets &amp; Real-Time</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Networking · WebSockets & Real-Time</div>
+        <h1 class="pg-title">WebSockets <span>&amp;</span> Real-Time</h1>
+        <p class="pg-sub">HTTP asks; real-time apps need the server to speak first. Four patterns, one decision table.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-network"></i> Networking</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-arrows-down-up"></i></span><h2 class="sec-title">The Problem: HTTP Only Answers</h2></div>
+        <div class="section-divider"></div>        <p class="prose">HTTP is request/response — the server can never start a conversation. But chat, live dashboards, multiplayer games and notifications all need <strong>server push</strong>. Everything in this guide is a workaround for that one asymmetry, from “ask repeatedly” to “keep a genuine two-way pipe open”.</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 220" width="100%" role="img" aria-label="Comparison of polling, long polling, server-sent events and WebSocket message flows between client and server" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <text x="65"  y="24" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Polling</text>
+      <text x="180" y="24" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Long poll</text>
+      <text x="295" y="24" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">SSE</text>
+      <text x="405" y="24" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">WebSocket</text>
+      <line x1="35" y1="40" x2="35" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/><line x1="95" y1="40" x2="95" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/>
+      <line x1="150" y1="40" x2="150" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/><line x1="210" y1="40" x2="210" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/>
+      <line x1="265" y1="40" x2="265" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/><line x1="325" y1="40" x2="325" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/>
+      <line x1="375" y1="40" x2="375" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/><line x1="435" y1="40" x2="435" y2="200" stroke="var(--border2,#263449)" stroke-width="1.5"/>
+      <line x1="35" y1="55"  x2="95" y2="65"  stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/><line x1="95" y1="75"  x2="35" y2="85"  stroke="var(--text3)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="35" y1="105" x2="95" y2="115" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/><line x1="95" y1="125" x2="35" y2="135" stroke="var(--text3)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="35" y1="155" x2="95" y2="165" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/><line x1="95" y1="175" x2="35" y2="185" stroke="var(--text3)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <text x="65" y="212" text-anchor="middle" fill="var(--text3)" font-size="8">ask, ask, ask…</text>
+      <line x1="150" y1="55" x2="210" y2="65" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="210" y1="140" x2="150" y2="150" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="150" y1="165" x2="210" y2="175" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <text x="180" y="212" text-anchor="middle" fill="var(--text3)" font-size="8">held until data</text>
+      <line x1="265" y1="55" x2="325" y2="65" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="325" y1="95"  x2="265" y2="105" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="325" y1="130" x2="265" y2="140" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="325" y1="165" x2="265" y2="175" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <text x="295" y="212" text-anchor="middle" fill="var(--text3)" font-size="8">one-way stream</text>
+      <line x1="375" y1="55"  x2="435" y2="65"  stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="435" y1="90"  x2="375" y2="100" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="375" y1="120" x2="435" y2="130" stroke="var(--cyan,#22d3ee)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <line x1="435" y1="155" x2="375" y2="165" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#ra)"/>
+      <text x="405" y="212" text-anchor="middle" fill="var(--text3)" font-size="8">full duplex</text>
+      <defs><marker id="ra" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--text2)"/></marker></defs>
+    </svg></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-table"></i></span><h2 class="sec-title">The Decision Table</h2></div>
+        <div class="section-divider"></div>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Pattern</th><th>How</th><th>Latency</th><th>Cost</th><th>Reach for it when</th></tr></thead><tbody><tr><td><strong>Polling</strong></td><td>GET every n seconds</td><td>up to n</td><td>n× wasted requests</td><td>Data changes rarely; simplicity wins</td></tr><tr><td><strong>Long polling</strong></td><td>Server holds request until data</td><td>low</td><td>1 connection per client, re-opened</td><td>WebSockets blocked; legacy infra</td></tr><tr><td><strong>SSE</strong></td><td>One HTTP response, kept open, server streams events</td><td>low</td><td>cheap; auto-reconnect built in</td><td>One-way push: feeds, tickers, notifications</td></tr><tr><td><strong>WebSocket</strong></td><td>Upgraded TCP socket, full duplex</td><td>lowest</td><td>stateful connections to manage</td><td>Two-way: chat, games, collaborative editing</td></tr></tbody></table></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><strong>SSE is criminally underused.</strong> If the client never needs to push (dashboards, notifications), SSE gives WebSocket-grade latency over plain HTTP — proxies, auth and HTTP/2 all just work.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-plug-connected"></i></span><h2 class="sec-title">How the WebSocket Upgrade Works</h2></div>
+        <div class="section-divider"></div>        <p class="prose">A WebSocket <em>starts life as an HTTP request</em> carrying <code>Upgrade: websocket</code>. The server answers <code>101 Switching Protocols</code>, and from that moment the TCP connection stops speaking HTTP — both sides exchange lightweight <strong>frames</strong> in either direction until someone closes.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">HTTP — the upgrade handshake</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="st">GET /chat HTTP/1.1</span>
+<span class="fn">Host:</span> example.com
+<span class="fn">Upgrade:</span> websocket
+<span class="fn">Connection:</span> Upgrade
+<span class="fn">Sec-WebSocket-Key:</span> dGhlIHNhbXBsZSBub25jZQ==
+
+<span class="cm">— server —</span>
+<span class="st">HTTP/1.1 101 Switching Protocols</span>
+<span class="fn">Upgrade:</span> websocket
+<span class="fn">Sec-WebSocket-Accept:</span> s3pPLMBiTxaQ9kYGzzhZRbK+xOo=</pre>
+        </div>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — client in 6 lines</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> ws = <span class="kw">new</span> <span class="fn">WebSocket</span>(<span class="st">"wss://example.com/chat"</span>);
+ws.<span class="fn">addEventListener</span>(<span class="st">"open"</span>,    () =&gt; ws.<span class="fn">send</span>(<span class="st">"hello"</span>));
+ws.<span class="fn">addEventListener</span>(<span class="st">"message"</span>, (e) =&gt; console.<span class="fn">log</span>(e.data));
+ws.<span class="fn">addEventListener</span>(<span class="st">"close"</span>,   () =&gt; <span class="cm">/* reconnect with backoff */</span> <span class="nm">0</span>);</pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-scale"></i></span><h2 class="sec-title">The Real Cost: Scaling Statefulness</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Plain HTTP servers are stateless — any instance can serve any request. A WebSocket pins each client to <strong>one specific server</strong> for minutes or hours. Now: how does server A deliver a message to a user connected to server B? You need a <strong>pub/sub backbone</strong> (Redis, Kafka) between instances, sticky-aware load balancing, heartbeats to detect dead connections, and reconnect-with-backoff on the client.</p>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Interview trap: “just use WebSockets” is the junior answer. The senior answer weighs the ops cost of a million open stateful connections against SSE or polling — and picks the boring option when one-way is enough.</span></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Polling vs long polling vs SSE vs WebSocket — 30 seconds.</q><p>Polling asks on a timer (simple, wasteful). Long polling holds the request until data exists (low latency, still per-message overhead). SSE keeps one HTTP response open for a one-way server stream. WebSocket upgrades to a raw full-duplex pipe — lowest latency, highest operational cost.</p></div><div class="iq"><q>How does a WebSocket get past HTTP infrastructure?</q><p>It begins as a normal HTTP GET with Upgrade headers, so it traverses proxies and auth like any request; after 101 Switching Protocols the same TCP connection carries WebSocket frames instead of HTTP.</p></div><div class="iq"><q>Two servers, one chat room — user A on server 1, user B on server 2. Deliver a message.</q><p>Servers subscribe to a shared pub/sub channel (e.g. Redis). Server 1 publishes A’s message; server 2, subscribed, receives it and pushes down B’s socket. The socket layer and the fan-out layer are separate systems.</p></div><div class="iq"><q>Why choose SSE over WebSocket for a live dashboard?</q><p>The data flows one way. SSE rides plain HTTP: no protocol upgrade, native auto-reconnect with Last-Event-ID, works with existing LBs/auth/HTTP2. WebSocket buys duplex you don’t need at the price of stateful infrastructure.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The WebSocket handshake starts as…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a raw TCP SYN</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">an HTTP request with Upgrade headers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a TLS extension</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a UDP probe</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Status code that switches protocols:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">200</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">301</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">101</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">426</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. One-way server push over plain HTTP =</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">long polling</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">SSE</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">WebSocket</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">gRPC</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. WebSockets make scaling harder because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">they use more bandwidth</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">connections are stateful and pinned to a server</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">they bypass TLS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">browsers limit them to one per tab</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Cross-server message delivery typically uses…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">shared memory</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a pub/sub backbone like Redis</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS updates</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">sticky cookies alone</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="routing.html">← IP, Subnets &amp; Routing</a>
+        <a class="nav-link" href="index.html">Networking Roadmap →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

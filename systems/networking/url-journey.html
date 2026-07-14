@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>What Happens When You Type a URL — Networking | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/networking/url-journey.html"/>
+  <meta property="og:title" content="What Happens When You Type a URL — Networking | TechForge"/>
+  <meta property="og:description" content="What Happens When You Type a URL — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/net-url-journey" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Networking Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Networking</div>
+      <a class="sb-link" href="stack.html"><span class="sb-num">01</span> The TCP/IP Stack</a>
+      <a class="sb-link" href="tcp-udp.html"><span class="sb-num">02</span> TCP vs UDP</a>
+      <a class="sb-link" href="dns.html"><span class="sb-num">03</span> DNS</a>
+      <a class="sb-link" href="http.html"><span class="sb-num">04</span> HTTP &amp; HTTPS</a>
+      <a class="sb-link active" href="url-journey.html"><span class="sb-num">05</span> Typing a URL</a>
+      <a class="sb-link" href="sockets.html"><span class="sb-num">06</span> Sockets &amp; Ports</a>
+      <a class="sb-link" href="routing.html"><span class="sb-num">07</span> IP, Subnets &amp; Routing</a>
+      <a class="sb-link" href="realtime.html"><span class="sb-num">08</span> WebSockets &amp; Real-Time</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Networking · Typing a URL</div>
+        <h1 class="pg-title">What Happens When You <span>Type a URL</span></h1>
+        <p class="pg-sub">The evergreen interview question — answered layer by layer, from keystroke to pixels.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-network"></i> Networking</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-map"></i></span><h2 class="sec-title">The Whole Journey at a Glance</h2></div>
+        <div class="section-divider"></div>        <p class="prose">This one question touches every guide in this pillar. The strong answer names the <strong>stages in order</strong> and can zoom into any of them on request:</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 300" width="100%" role="img" aria-label="URL journey stages in order: URL parse, DNS lookup, TCP handshake, TLS handshake, HTTP request, server work, response, then browser parse and render" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <line x1="40" y1="30" x2="40" y2="275" stroke="var(--border2,#263449)" stroke-width="2"/>
+      <circle cx="40" cy="40"  r="5" fill="var(--red,#f87171)"/><text x="60" y="44"  fill="var(--text)" font-size="11" font-weight="700">1 · Parse URL</text><text x="230" y="44" fill="var(--text3)" font-size="10">scheme, host, port, path</text>
+      <circle cx="40" cy="72"  r="5" fill="var(--amber,#fbbf24)"/><text x="60" y="76"  fill="var(--text)" font-size="11" font-weight="700">2 · DNS</text><text x="230" y="76" fill="var(--text3)" font-size="10">cache → resolver → A/AAAA record</text>
+      <circle cx="40" cy="104" r="5" fill="var(--green,#34d399)"/><text x="60" y="108" fill="var(--text)" font-size="11" font-weight="700">3 · TCP handshake</text><text x="230" y="108" fill="var(--text3)" font-size="10">SYN / SYN-ACK / ACK to :443</text>
+      <circle cx="40" cy="136" r="5" fill="var(--cyan,#22d3ee)"/><text x="60" y="140" fill="var(--text)" font-size="11" font-weight="700">4 · TLS handshake</text><text x="230" y="140" fill="var(--text3)" font-size="10">certificate verified, keys agreed</text>
+      <circle cx="40" cy="168" r="5" fill="var(--purple,#a78bfa)"/><text x="60" y="172" fill="var(--text)" font-size="11" font-weight="700">5 · HTTP request</text><text x="230" y="172" fill="var(--text3)" font-size="10">GET / + headers</text>
+      <circle cx="40" cy="200" r="5" fill="var(--red,#f87171)"/><text x="60" y="204" fill="var(--text)" font-size="11" font-weight="700">6 · Server side</text><text x="230" y="204" fill="var(--text3)" font-size="10">LB → app → cache/DB → response</text>
+      <circle cx="40" cy="232" r="5" fill="var(--amber,#fbbf24)"/><text x="60" y="236" fill="var(--text)" font-size="11" font-weight="700">7 · Response</text><text x="230" y="236" fill="var(--text3)" font-size="10">status + headers + HTML</text>
+      <circle cx="40" cy="264" r="5" fill="var(--green,#34d399)"/><text x="60" y="268" fill="var(--text)" font-size="11" font-weight="700">8 · Render</text><text x="230" y="268" fill="var(--text3)" font-size="10">parse HTML → CSSOM → layout → paint</text>
+    </svg></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-search"></i></span><h2 class="sec-title">Before the Network: Parse & Cache Checks</h2></div>
+        <div class="section-divider"></div>        <p class="prose">The browser first decides <em>is this a URL or a search?</em>, normalizes it (adds <code>https://</code>, punycodes unicode hosts), then races through caches before touching the wire: <strong>HSTS list</strong> (force HTTPS?), <strong>browser DNS cache</strong>, <strong>OS cache</strong>, even the <strong>HTTP cache</strong> — a fresh cached page can skip the network entirely.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Interviewers love this detail: the fastest request is the one never sent. <code>Cache-Control: max-age</code> plus a valid cached copy means steps 2-7 simply don’t happen.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-server"></i></span><h2 class="sec-title">On the Server Side</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Your packet rarely hits “the server”. It lands on a <strong>load balancer</strong> (which terminated TLS, often), gets routed to one of many app instances, which consults <strong>caches</strong> (Redis), then the <strong>database</strong>, renders or serializes a response, and hands it back. Every arrow here is another network hop with its own latency budget.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Hop</th><th>Typical latency</th></tr></thead><tbody><tr><td>CDN edge cache hit</td><td>~10–30 ms total — origin never touched</td></tr><tr><td>LB → app server</td><td>&lt;1 ms (same datacenter)</td></tr><tr><td>App → Redis</td><td>~0.5 ms</td></tr><tr><td>App → SQL database</td><td>1–10 ms per query</td></tr><tr><td>Cross-region origin call</td><td>50–150 ms</td></tr></tbody></table></div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>This is where the question turns into a <strong>system design</strong> interview: mention CDN, load balancer, cache, DB — then let them pick which to drill into.</span></div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-brush"></i></span><h2 class="sec-title">Rendering: Bytes to Pixels</h2></div>
+        <div class="section-divider"></div>        <p class="prose">The browser parses HTML into the <strong>DOM</strong>, CSS into the <strong>CSSOM</strong>, combines them into the render tree, computes <strong>layout</strong>, and <strong>paints</strong>. Parsing pauses on synchronous <code>&lt;script&gt;</code> tags (they can mutate the DOM), which is why scripts go at the bottom or carry <code>defer</code>. Subresources (CSS, JS, images) each restart the journey — DNS, TCP, TLS, HTTP — though usually reusing the warm connection.</p>        <p class="prose">A complete answer ends here: <em>“…and the page paints. Want me to zoom into DNS, TLS, the server side, or rendering?”</em> — showing you know the map <em>and</em> the territory.</p>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Give the 30-second version.</q><p>Parse the URL → resolve the name via DNS (caches first) → TCP three-way handshake to port 443 → TLS handshake, certificate verified → send the HTTP request → server (LB, app, cache, DB) builds a response → browser parses HTML, fetches subresources, lays out and paints.</p></div><div class="iq"><q>Where can this be slow, and how do you find out?</q><p>Each stage has a signature: slow DNS (first visit only), slow TLS/TCP (high RTT — move closer via CDN), slow TTFB (server/DB work), slow render (huge JS). Browser devtools’ network waterfall breaks a request into exactly these phases.</p></div><div class="iq"><q>What changes on the second visit?</q><p>Warm caches everywhere: DNS cached, connection possibly kept alive (skip TCP+TLS), HTTP cache may serve 304 or skip the request entirely, and HTTP/3 0-RTT can send data in the first flight.</p></div><div class="iq"><q>Why port 443 and who decided that?</q><p>The scheme implies the default port: https→443, http→80. IANA assigns well-known ports; the URL can override with an explicit :port.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Correct order:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS → TLS → TCP → HTTP</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">DNS → TCP → TLS → HTTP</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TCP → DNS → TLS → HTTP</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TLS → DNS → TCP → HTTP</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Which cache can make the network request unnecessary entirely?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS cache</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">ARP cache</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">HTTP cache</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TLS session cache</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. TTFB mostly reflects…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">DNS speed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">server-side work time</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">browser paint time</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TCP handshake</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Parsing pauses on…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">images</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">synchronous script tags</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CSS links with media=print</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">video tags</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Second visit is faster mainly because of…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">faster routers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">warm caches and reused connections</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">smaller HTML</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">browser updates</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="http.html">← HTTP &amp; HTTPS</a>
+        <a class="nav-link" href="sockets.html">Sockets &amp; Ports →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>
