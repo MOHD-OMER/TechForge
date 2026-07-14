@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="30 operating systems interview questions — processes, threads, scheduling, memory, concurrency, deadlocks, filesystems and I/O."/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/interview/os-interview.html"/>
+  <meta property="og:title" content="OS Interview Q&amp;A — TechForge"/>
+  <meta property="og:description" content="30 operating systems interview questions — processes, threads, scheduling, memory, concurrency, deadlocks, filesystems and I/O."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>OS Interview Q&amp;A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=18" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+  :root { --accent: var(--teal); --surface: var(--card); --surface2: rgba(248,113,113,.05); --display: var(--font-display); --mono: var(--font-mono); --bg2: rgba(0,0,0,.25); }
+  .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
+  .int-page-hero::before{content:none;}
+  .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--red); background:rgba(248,113,113,.07); border:1px solid rgba(248,113,113,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
+  .iph-dot { width:5px; height:5px; border-radius:50%; background:var(--red); box-shadow:0 0 5px var(--red); animation:iphdot 2s ease infinite; }
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title { font-family:var(--font-display); font-size:clamp(24px,4vw,36px); font-weight:700; letter-spacing:-0.5px; color:var(--text); margin-bottom:10px; }
+  .iph-title span { color:var(--red); }
+  .iph-sub { font-size:13.5px; color:var(--text2); line-height:1.75; max-width:560px; margin-bottom:18px; }
+  .iph-badges { display:flex; gap:7px; flex-wrap:wrap; }
+  .iph-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; padding:3px 10px; border-radius:var(--r-full); border:1px solid; }
+  .int-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:28px; }
+  .is-box { background:var(--card); padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; }
+  .is-val { font-family:var(--font-mono); font-size:20px; font-weight:700; }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text2); }
+  .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text2); cursor:pointer; transition:all .15s; }
+  .ftab.active { background:rgba(248,113,113,.09); border-color:rgba(248,113,113,.3); color:var(--red); }
+  .qna-list { border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:32px; }
+  .qna-item { border-bottom:1px solid var(--border); }
+  .qna-item:last-child { border-bottom:none; }
+  .qna-item.open { background:rgba(248,113,113,.04); }
+  .qna-q { padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:14px; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); min-width:24px; }
+  .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
+  .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
+  .tag-os { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .tag-net { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
+  .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
+  .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .qna-chevron { font-size:12px; color:var(--text2); flex-shrink:0; transition:transform .2s; }
+  .qna-item.open .qna-chevron { transform:rotate(180deg); }
+  .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
+  .qna-item.open .qna-a { display:block; }
+  .qna-a pre { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; font-family:var(--font-mono); font-size:11px; overflow-x:auto; margin:10px 0; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text2); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--red),transparent); }
+  .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(248,113,113,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--green); }
+  .no-results { display:none; text-align:center; padding:40px; color:var(--text2); font-family:var(--font-mono); font-size:13px; }
+  .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
+  .anim-in.visible { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) { .anim-in { opacity:1; transform:none; transition:none; } .iph-dot { animation:none; } }
+  @media(max-width:900px){ .int-stats{grid-template-columns:repeat(4,1fr);} }
+</style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="iv/os-interview" data-section="interview">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link current" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="search-wrap"><input class="search-input" id="qna-search" type="text" placeholder="Search questions…" autocomplete="off"></div>
+  <div class="sidebar-label">Interview Categories</div>
+  <a class="sb-link" href="index.html"><span class="sb-num"><i class="ti ti-home"></i></span>All Categories</a>
+  <a class="sb-link" href="dsa-interview.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>DSA</a>
+    <a class="sb-link" href="system-design-interview.html"><span class="sb-num"><i class="ti ti-building"></i></span>System Design</a>
+    <a class="sb-link" href="devops-interview.html"><span class="sb-num"><i class="ti ti-server-2"></i></span>DevOps</a>
+    <a class="sb-link active" href="os-interview.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Operating Systems</a>
+    <a class="sb-link" href="networking-interview.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
+    <a class="sb-link" href="python-interview.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python</a>
+    <a class="sb-link" href="sql-interview.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>SQL</a>
+  <div class="sidebar-label" style="margin-top:20px">Learn First</div>
+  <a class="sb-link" href="../systems/os/index.html"><span class="sb-num">→</span>OS Guides (8)</a>
+</aside>
+<main class="main" id="mainContent">
+  <div class="int-page-hero anim-in">
+    <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — Operating Systems Track</div>
+    <h1 class="iph-title">OS <span>Interview Questions</span></h1>
+    <p class="iph-sub">30 questions on processes, scheduling, virtual memory, concurrency, deadlocks, filesystems and I/O — with answers that survive follow-ups.</p>
+    <div class="iph-badges"><span class="iph-badge" style="color:var(--red);border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.07)">Processes</span><span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07)">Memory</span><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07)">Concurrency</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07)">Scheduling</span></div>
+  </div>
+  <div class="int-stats anim-in"><div class="is-box"><span class="is-val" style="color:var(--red)">30</span><span class="is-label">Total Qs</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--green)">9</span><span class="is-label">Beginner</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--amber)">14</span><span class="is-label">Intermediate</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--red)">5</span><span class="is-label">Advanced</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--cyan)">2</span><span class="is-label">FAANG</span></div></div>
+  <div class="progress-banner anim-in">
+    <div style="flex:1;font-size:12.5px;color:var(--text2)"><strong style="color:var(--text)">Progress saved locally.</strong> Expand answers and check off questions as you study.</div>
+    <div style="text-align:center"><div class="pb-count" id="doneCount">0</div><div style="font-family:var(--font-mono);font-size:8.5px;color:var(--text2)">/ 30 Done</div></div>
+  </div>
+  <div class="filter-row anim-in">
+    <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button>
+      <button class="ftab" onclick="filterQna('beginner',this)">Beginner</button>
+      <button class="ftab" onclick="filterQna('intermediate',this)">Intermediate</button>
+      <button class="ftab" onclick="filterQna('advanced',this)">Advanced</button>
+      <button class="ftab" onclick="filterQna('faang',this)">FAANG</button>
+  </div>
+  <div class="section-label anim-in">Questions</div>
+  <div class="qna-list anim-in" id="qnaList"><div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">01</span>
+<span class="qna-text">What is the difference between a program and a process?</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A program is a passive file on disk; a process is that program in execution — with its own address space (code, data, heap, stack), registers, program counter, and a PCB the kernel tracks it with.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">02</span>
+<span class="qna-text">Process vs thread — one sentence.</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A process is an isolated execution environment with its own address space; a thread is a lighter unit of execution inside a process that shares the address space but keeps its own stack and registers.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">03</span>
+<span class="qna-text">What is a Process Control Block (PCB)?</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The kernel’s per-process bookkeeping record: PID, state, saved registers, memory map, open file descriptors, scheduling info. Context switches save into and restore from it.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">04</span>
+<span class="qna-text">Name the five classic process states.</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">New (being created), Ready (waiting for CPU), Running (on the CPU), Waiting (blocked on I/O or an event), Terminated (finished, awaiting cleanup). The scheduler cycles Ready ⇄ Running.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">05</span>
+<span class="qna-text">What is a system call, and why do user and kernel mode exist?</span>
+<span class="qna-tag tag-os">Boot</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A controlled entry point into the kernel for privileged work (file I/O, process creation, networking). User mode can’t touch hardware or other processes’ memory; the mode split is what makes isolation and security enforceable.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">06</span>
+<span class="qna-text">Preemptive vs non-preemptive scheduling.</span>
+<span class="qna-tag tag-os">Scheduling</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Preemptive: the OS can interrupt a running process when its time slice expires or a higher-priority task arrives. Non-preemptive: a process runs until it yields or blocks. All modern general-purpose OSes are preemptive.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">07</span>
+<span class="qna-text">What is virtual memory?</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">An abstraction giving each process its own private address space, mapped to physical frames by page tables. Enables isolation, overcommit (more virtual than RAM, spilling to disk), and shared pages like libraries.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">08</span>
+<span class="qna-text">What is a page fault?</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A trap raised when a process touches a virtual page with no valid mapping. Minor: the page is in memory, just not mapped — fix the table. Major: load it from disk. Invalid: segfault.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">09</span>
+<span class="qna-text">Mutex vs semaphore.</span>
+<span class="qna-tag tag-os">Concurrency</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A mutex is a lock with ownership — one holder, who must release it. A counting semaphore is a counter for N permits with wait/signal, no ownership — usable for signaling between threads, not just mutual exclusion.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">10</span>
+<span class="qna-text">Why does fork() return twice?</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">fork() clones the caller. Execution resumes in both processes from the same point, so the one call returns in each: 0 in the child, the child’s PID in the parent — that return value is how the code tells them apart.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">11</span>
+<span class="qna-text">Zombie vs orphan process.</span>
+<span class="qna-tag tag-os">Processes</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Zombie: child exited but the parent hasn’t wait()ed — the dead entry lingers holding its exit status. Orphan: parent died first — the child is re-parented to init/systemd, which reaps it. Fix zombies by handling SIGCHLD or double-forking.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">12</span>
+<span class="qna-text">What makes a context switch expensive?</span>
+<span class="qna-tag tag-os">Scheduling</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Saving/restoring registers and the PC, switching page tables for a different process, and — the hidden cost — flushed TLB entries and cold CPU caches afterwards. Thread switches within a process skip the address-space swap, so they’re cheaper.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">13</span>
+<span class="qna-text">Round-robin: what happens if the time quantum is too small or too large?</span>
+<span class="qna-tag tag-os">Scheduling</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Too small: context-switch overhead dominates — throughput collapses. Too large: it degrades into FCFS and interactive latency dies. Rule of thumb: quantum much larger than switch cost, small enough to feel responsive (~ms range).</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">14</span>
+<span class="qna-text">SJF is provably optimal for average waiting time — why don’t we use it?</span>
+<span class="qna-tag tag-os">Scheduling</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">You can’t know burst lengths in advance, and long jobs starve while short ones keep jumping ahead. Real schedulers approximate it: MLFQ demotes CPU hogs, favoring short interactive bursts — SJF behavior without the crystal ball.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">15</span>
+<span class="qna-text">Paging vs segmentation.</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Paging chops memory into fixed-size pages — no external fragmentation, hardware-friendly, what everything uses. Segmentation uses variable-size logical units (code/heap/stack) — matches program structure but fragments; modern OSes are page-based.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">16</span>
+<span class="qna-text">What does the TLB do, and what happens on a miss?</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">It caches virtual→physical translations so hits skip the page-table walk. A miss means walking a multi-level page table (several memory reads); the result is cached. This is why locality matters and why context switches hurt.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">17</span>
+<span class="qna-text">What is thrashing, and how do you detect it?</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The system spends more time servicing page faults than doing work — working sets exceed RAM, every process steals frames from the others. Signature: CPU utilization drops while disk I/O saturates. Fix: fewer processes, more RAM, or better locality.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">18</span>
+<span class="qna-text">Define race condition and critical section.</span>
+<span class="qna-tag tag-os">Concurrency</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Race: correctness depends on the interleaving of concurrent accesses to shared state. Critical section: the code touching that shared state, which must execute mutually exclusively — guarded by a mutex or made atomic.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">19</span>
+<span class="qna-text">Solve producer-consumer with semaphores.</span>
+<span class="qna-tag tag-os">Concurrency</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Three primitives: <code>empty</code> counting free slots (init N), <code>full</code> counting filled (init 0), a mutex over the buffer. Producer: wait(empty), lock, insert, unlock, signal(full). Consumer mirrors it. Ordering of waits matters — swap them and you deadlock.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">20</span>
+<span class="qna-text">The four Coffman conditions for deadlock.</span>
+<span class="qna-tag tag-os">Deadlocks</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Mutual exclusion, hold-and-wait, no preemption, circular wait — all four must hold simultaneously. Break any one and deadlock is impossible; the practical one is circular wait, via global lock ordering.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">21</span>
+<span class="qna-text">Deadlock prevention vs avoidance vs detection.</span>
+<span class="qna-tag tag-os">Deadlocks</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Prevention: structurally break a Coffman condition (lock ordering). Avoidance: consider requests at runtime, grant only if the state stays safe (Banker’s). Detection: let it happen, find cycles in the wait-for graph, kill a victim — what databases do.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">22</span>
+<span class="qna-text">What is an inode? Hard link vs symlink.</span>
+<span class="qna-tag tag-os">Filesystems</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The inode holds a file’s metadata and block pointers — everything except its name. Hard link: another directory entry pointing at the same inode (equal peer, survives deleting the original). Symlink: a small file containing a path — can dangle, can cross filesystems.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">23</span>
+<span class="qna-text">What does a journaling filesystem protect against?</span>
+<span class="qna-tag tag-os">Filesystems</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Corruption from crashes mid-update. Changes are written to a journal first, then applied; on reboot, replay or discard incomplete transactions. Metadata journaling (default ext4) protects structure; full-data journaling protects contents at a write-amplification cost.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">24</span>
+<span class="qna-text">How does copy-on-write make fork() cheap?</span>
+<span class="qna-tag tag-os">Memory</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">fork() doesn’t copy memory — parent and child share all pages, marked read-only. Only when either writes does the kernel trap and copy that single page. fork+exec is nearly free since exec replaces the image anyway.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">25</span>
+<span class="qna-text">Explain the Banker’s algorithm in one breath.</span>
+<span class="qna-tag tag-os">Deadlocks</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Grant a resource request only if, assuming every process may still demand its declared maximum, there exists some order in which all can finish — a “safe state”. If granting would leave no such order, block the request. Requires declared maximums, so it’s rarely used outside coursework.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">26</span>
+<span class="qna-text">select vs epoll — why does epoll win at 10k connections?</span>
+<span class="qna-tag tag-os">I/O</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">select scans the whole fd set every call: O(n) per event, plus copying the set in and out of the kernel. epoll registers interest once; the kernel pushes ready fds to a queue — O(1) per event regardless of connection count. That’s the C10k answer.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">27</span>
+<span class="qna-text">What is DMA and why do interrupts get coalesced?</span>
+<span class="qna-tag tag-os">I/O</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">DMA lets devices move data to/from RAM without the CPU copying byte-by-byte — the CPU sets up the transfer and gets one interrupt on completion. At high packet rates even that is too many interrupts, so NICs batch: one interrupt per group of packets (NAPI/polling hybrids).</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">28</span>
+<span class="qna-text">Priority inversion — what is it and how is it fixed?</span>
+<span class="qna-tag tag-os">Concurrency</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A low-priority thread holds a lock a high-priority thread needs, while medium-priority threads starve the low one — so the high-priority thread waits on the medium ones. Fix: priority inheritance — the lock holder temporarily gets the waiter’s priority. Famously hit the Mars Pathfinder.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">29</span>
+<span class="qna-text">Walk me from power button to shell prompt.</span>
+<span class="qna-tag tag-os">Boot</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Firmware (UEFI) POSTs and loads the bootloader from the EFI partition → bootloader (GRUB) loads kernel + initramfs → kernel initializes hardware, mounts root, starts PID 1 → init/systemd brings up services in dependency order → getty/display manager → login → your shell. Know which stage to blame when boot hangs.</div>
+</div>
+<div class="qna-item" data-cat="tag-os" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">30</span>
+<span class="qna-text">Design a thread pool — what are the key decisions?</span>
+<span class="qna-tag tag-os">Concurrency</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Pool size (CPU-bound: ~cores; I/O-bound: larger, or work-stealing), a bounded task queue (unbounded queues hide overload — prefer backpressure or rejection policy), shutdown semantics (drain vs abort), and avoiding deadlock from tasks that submit and wait on other tasks in the same pool.</div>
+</div></div>
+  <div class="no-results" id="no-results">No questions match your filter.</div>
+</main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+<script src="../assets/js/site-index.js?v=2"></script>
+<script src="../assets/js/search-modal.js?v=1" defer></script>
+<script src="../assets/js/utils.js?v=8"></script>
+<script src="../assets/js/platform.js?v=4"></script>
+<script>
+const STORAGE_KEY='tf_os_interview_progress';
+function toggleQ(el){el.closest('.qna-item').classList.toggle('open');}
+function getProgress(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch(e){return {};}}
+function setChecked(n,on){const p=getProgress();if(on)p[n]=1;else delete p[n];localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+function renderProgress(){const p=getProgress();const n=Object.keys(p).length;const el=document.getElementById('doneCount');if(el)el.textContent=n;}
+function filterQna(diff,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const show=diff==='all'||item.dataset.diff===diff;
+    item.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+function searchQna(val){
+  const q=val.trim().toLowerCase();let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const text=item.querySelector('.qna-text')?.textContent.toLowerCase()||'';
+    const ans=item.querySelector('.qna-a')?.textContent.toLowerCase()||'';
+    const match=!q||text.includes(q)||ans.includes(q);
+    item.style.display=match?'':'none';
+    if(match)visible++;
+    if(q)item.classList.remove('open');
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{
+  const n=String(i+1).padStart(2,'0');item.dataset.n=n;
+  const qEl=item.querySelector('.qna-q');
+  if(qEl&&!qEl.querySelector('.qna-cb')){
+    const cb=document.createElement('div');cb.className='qna-cb';cb.style.cssText='width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;cursor:pointer';
+    cb.addEventListener('click',e=>{e.stopPropagation();const on=!cb.classList.contains('checked');cb.classList.toggle('checked',on);if(on){cb.style.background='var(--green)';cb.textContent='✓';}else{cb.style.background='';cb.textContent='';}setChecked(n,on);renderProgress();});
+    qEl.insertBefore(cb,qEl.firstChild);
+  }
+});
+const animObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');animObs.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';animObs.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>

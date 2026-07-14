@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="30 networking interview questions — TCP/IP, TCP vs UDP, DNS, HTTP/HTTPS, sockets, subnets, NAT and real-time protocols."/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/interview/networking-interview.html"/>
+  <meta property="og:title" content="Networking Interview Q&amp;A — TechForge"/>
+  <meta property="og:description" content="30 networking interview questions — TCP/IP, TCP vs UDP, DNS, HTTP/HTTPS, sockets, subnets, NAT and real-time protocols."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Networking Interview Q&amp;A — TechForge</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=18" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+  :root { --accent: var(--teal); --surface: var(--card); --surface2: rgba(248,113,113,.05); --display: var(--font-display); --mono: var(--font-mono); --bg2: rgba(0,0,0,.25); }
+  .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
+  .int-page-hero::before{content:none;}
+  .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--red); background:rgba(248,113,113,.07); border:1px solid rgba(248,113,113,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
+  .iph-dot { width:5px; height:5px; border-radius:50%; background:var(--red); box-shadow:0 0 5px var(--red); animation:iphdot 2s ease infinite; }
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title { font-family:var(--font-display); font-size:clamp(24px,4vw,36px); font-weight:700; letter-spacing:-0.5px; color:var(--text); margin-bottom:10px; }
+  .iph-title span { color:var(--red); }
+  .iph-sub { font-size:13.5px; color:var(--text2); line-height:1.75; max-width:560px; margin-bottom:18px; }
+  .iph-badges { display:flex; gap:7px; flex-wrap:wrap; }
+  .iph-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; padding:3px 10px; border-radius:var(--r-full); border:1px solid; }
+  .int-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:28px; }
+  .is-box { background:var(--card); padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:3px; text-align:center; }
+  .is-val { font-family:var(--font-mono); font-size:20px; font-weight:700; }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text2); }
+  .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text2); cursor:pointer; transition:all .15s; }
+  .ftab.active { background:rgba(248,113,113,.09); border-color:rgba(248,113,113,.3); color:var(--red); }
+  .qna-list { border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; margin-bottom:32px; }
+  .qna-item { border-bottom:1px solid var(--border); }
+  .qna-item:last-child { border-bottom:none; }
+  .qna-item.open { background:rgba(248,113,113,.04); }
+  .qna-q { padding:18px 20px; cursor:pointer; display:flex; align-items:center; gap:14px; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); min-width:24px; }
+  .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
+  .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
+  .tag-os { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .tag-net { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
+  .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
+  .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+  .diff-h { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+  .qna-chevron { font-size:12px; color:var(--text2); flex-shrink:0; transition:transform .2s; }
+  .qna-item.open .qna-chevron { transform:rotate(180deg); }
+  .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
+  .qna-item.open .qna-a { display:block; }
+  .qna-a pre { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-md); padding:12px; font-family:var(--font-mono); font-size:11px; overflow-x:auto; margin:10px 0; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text2); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--red),transparent); }
+  .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(248,113,113,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--green); }
+  .no-results { display:none; text-align:center; padding:40px; color:var(--text2); font-family:var(--font-mono); font-size:13px; }
+  .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
+  .anim-in.visible { opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce) { .anim-in { opacity:1; transform:none; transition:none; } .iph-dot { animation:none; } }
+  @media(max-width:900px){ .int-stats{grid-template-columns:repeat(4,1fr);} }
+</style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="iv/networking-interview" data-section="interview">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link current" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="search-wrap"><input class="search-input" id="qna-search" type="text" placeholder="Search questions…" autocomplete="off"></div>
+  <div class="sidebar-label">Interview Categories</div>
+  <a class="sb-link" href="index.html"><span class="sb-num"><i class="ti ti-home"></i></span>All Categories</a>
+  <a class="sb-link" href="dsa-interview.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>DSA</a>
+    <a class="sb-link" href="system-design-interview.html"><span class="sb-num"><i class="ti ti-building"></i></span>System Design</a>
+    <a class="sb-link" href="devops-interview.html"><span class="sb-num"><i class="ti ti-server-2"></i></span>DevOps</a>
+    <a class="sb-link" href="os-interview.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Operating Systems</a>
+    <a class="sb-link active" href="networking-interview.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
+    <a class="sb-link" href="python-interview.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python</a>
+    <a class="sb-link" href="sql-interview.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>SQL</a>
+  <div class="sidebar-label" style="margin-top:20px">Learn First</div>
+  <a class="sb-link" href="../systems/networking/index.html"><span class="sb-num">→</span>Networking Guides (8)</a>
+</aside>
+<main class="main" id="mainContent">
+  <div class="int-page-hero anim-in">
+    <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — Networking Track</div>
+    <h1 class="iph-title">Networking <span>Interview Questions</span></h1>
+    <p class="iph-sub">30 questions on the TCP/IP stack, DNS, HTTP and HTTPS, sockets, subnets and real-time — including the URL-journey classic.</p>
+    <div class="iph-badges"><span class="iph-badge" style="color:var(--red);border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.07)">TCP/IP</span><span class="iph-badge" style="color:var(--cyan);border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.07)">DNS</span><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07)">HTTP/S</span><span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07)">Sockets</span></div>
+  </div>
+  <div class="int-stats anim-in"><div class="is-box"><span class="is-val" style="color:var(--red)">30</span><span class="is-label">Total Qs</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--green)">9</span><span class="is-label">Beginner</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--amber)">14</span><span class="is-label">Intermediate</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--red)">5</span><span class="is-label">Advanced</span></div>
+      <div class="is-box"><span class="is-val" style="color:var(--cyan)">2</span><span class="is-label">FAANG</span></div></div>
+  <div class="progress-banner anim-in">
+    <div style="flex:1;font-size:12.5px;color:var(--text2)"><strong style="color:var(--text)">Progress saved locally.</strong> Expand answers and check off questions as you study.</div>
+    <div style="text-align:center"><div class="pb-count" id="doneCount">0</div><div style="font-family:var(--font-mono);font-size:8.5px;color:var(--text2)">/ 30 Done</div></div>
+  </div>
+  <div class="filter-row anim-in">
+    <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button>
+      <button class="ftab" onclick="filterQna('beginner',this)">Beginner</button>
+      <button class="ftab" onclick="filterQna('intermediate',this)">Intermediate</button>
+      <button class="ftab" onclick="filterQna('advanced',this)">Advanced</button>
+      <button class="ftab" onclick="filterQna('faang',this)">FAANG</button>
+  </div>
+  <div class="section-label anim-in">Questions</div>
+  <div class="qna-list anim-in" id="qnaList"><div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">01</span>
+<span class="qna-text">OSI vs TCP/IP model — how do they map?</span>
+<span class="qna-tag tag-net">Stack</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">OSI’s 7 layers are the textbook; TCP/IP’s 4 run the internet. Application+presentation+session ≈ application; transport = transport; network = internet; data-link+physical ≈ link. Interviewers accept either — know the mapping.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">02</span>
+<span class="qna-text">TCP vs UDP in one sentence each.</span>
+<span class="qna-tag tag-net">TCP/UDP</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">TCP: connection-based reliable ordered byte stream — handshake, ACKs, retransmission, congestion control. UDP: connectionless datagrams with no guarantees — minimal latency, used where speed beats completeness (DNS, voice, gaming, QUIC).</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">03</span>
+<span class="qna-text">What is DNS? A record vs CNAME.</span>
+<span class="qna-tag tag-net">DNS</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The distributed hierarchy mapping names to records. A: name → IPv4 address directly. CNAME: name → another name (alias), resolution restarts at the target — and it can’t coexist with other records on the same name.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">04</span>
+<span class="qna-text">What do HTTP status code classes mean?</span>
+<span class="qna-tag tag-net">HTTP</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">2xx success (200, 201, 204), 3xx redirect (301 permanent, 302 temporary, 304 not modified), 4xx client error (400, 401, 403, 404, 429), 5xx server error (500, 502, 503, 504).</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">05</span>
+<span class="qna-text">GET vs POST.</span>
+<span class="qna-tag tag-net">HTTP</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">GET reads — parameters in the URL, safe, idempotent, cacheable. POST submits — body payload, may create or trigger side effects, not idempotent, not cached by default.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">06</span>
+<span class="qna-text">Public vs private IP addresses.</span>
+<span class="qna-tag tag-net">Routing</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Private ranges (10/8, 172.16/12, 192.168/16) are never routed on the public internet — reused in every home and office behind NAT. Public addresses are globally unique and routable.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">07</span>
+<span class="qna-text">What is a port? Well-known vs ephemeral.</span>
+<span class="qna-tag tag-net">Sockets</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">A 16-bit number identifying a process endpoint on a host. 0-1023 well-known (80 HTTP, 443 HTTPS, 22 SSH — root to bind), 49152+ ephemeral — auto-assigned to outgoing client connections.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">08</span>
+<span class="qna-text">HTTP vs HTTPS.</span>
+<span class="qna-tag tag-net">TLS</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">HTTPS is HTTP inside a TLS tunnel: confidentiality (encrypted), integrity (tamper-evident), authentication (certificate proves the server’s identity via a trusted CA). Same methods, same status codes.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="beginner">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">09</span>
+<span class="qna-text">What is a MAC address, and what does ARP do?</span>
+<span class="qna-tag tag-net">Stack</span>
+<span class="diff-badge diff-e">Beginner</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">MAC: the link-layer hardware address, meaningful only within one network segment. ARP resolves “who has IP x?” to a MAC by broadcasting on the LAN — the glue between L3 and L2 for local delivery.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">10</span>
+<span class="qna-text">Why is the TCP handshake three-way, not two?</span>
+<span class="qna-tag tag-net">TCP/UDP</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Both sides must prove they can send and receive, and exchange initial sequence numbers. Two messages confirm only one direction; the third proves the client received the server’s SYN — without it, delayed duplicate SYNs could open ghost connections.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">11</span>
+<span class="qna-text">What is TIME_WAIT and why does it exist?</span>
+<span class="qna-tag tag-net">TCP/UDP</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The closer’s socket lingers (~60s) after the final FIN/ACK so that stray delayed segments die before the 4-tuple is reused, and so the final ACK can be retransmitted if lost. Floods of TIME_WAIT on clients making rapid short connections are normal — pool connections instead.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">12</span>
+<span class="qna-text">Recursive vs iterative DNS queries.</span>
+<span class="qna-tag tag-net">DNS</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Recursive: “give me the final answer” — what your stub asks the resolver. Iterative: “tell me who to ask next” — how the resolver walks root → TLD → authoritative, following referrals and caching each step.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">13</span>
+<span class="qna-text">DNS TTL vs IP TTL — same name, different jobs.</span>
+<span class="qna-tag tag-net">DNS</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">DNS TTL: how long resolvers may cache a record (seconds to days) — controls migration speed. IP TTL: hop counter decremented by each router, killing looping packets — and the mechanism traceroute exploits.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">14</span>
+<span class="qna-text">Which HTTP methods are idempotent, and why does it matter?</span>
+<span class="qna-tag tag-net">HTTP</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">GET, PUT, DELETE (and HEAD) — same effect once or five times. POST isn’t. It matters because idempotency decides what clients, proxies and retry middleware may safely re-send after a timeout without risking double side effects.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">15</span>
+<span class="qna-text">Cookie sessions vs token (JWT) auth.</span>
+<span class="qna-tag tag-net">HTTP</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Cookie session: server stores state, browser carries an opaque ID — easy revocation, but needs a session store shared across instances. JWT: state lives in a signed token — stateless and scalable, but revocation before expiry requires a denylist, reintroducing state.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">16</span>
+<span class="qna-text">One server port — how do thousands of clients connect?</span>
+<span class="qna-tag tag-net">Sockets</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Connections are keyed by the full 4-tuple (src IP, src port, dst IP, dst port). Each client arrives from a distinct IP:port, so every connection is a distinct socket even though all are “on” port 443.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">17</span>
+<span class="qna-text">You see thousands of sockets in CLOSE_WAIT. Diagnosis?</span>
+<span class="qna-tag tag-net">Sockets</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The peers closed their side; our application never called close() — a descriptor leak in our code, usually a missed close in an error path. Not a network problem. (Contrast TIME_WAIT, which is normal protocol behavior.)</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">18</span>
+<span class="qna-text">How many usable hosts in a /26?</span>
+<span class="qna-tag tag-net">Routing</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">32−26 = 6 host bits → 2⁶ = 64 addresses − 2 (network + broadcast) = 62 usable. A /24 splits into four /26s.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">19</span>
+<span class="qna-text">Longest prefix match — routes 10.0.0.0/8→A, 10.1.0.0/16→B; packet to 10.1.2.3?</span>
+<span class="qna-tag tag-net">Routing</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Goes to B. More prefix bits = more specific knowledge of the destination; specific beats general. This is also how a /0 default route coexists with precise internal routes.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">20</span>
+<span class="qna-text">How does NAT work?</span>
+<span class="qna-tag tag-net">Routing</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">The router rewrites outgoing packets’ private source IP:port to its public IP and a tracked port, records the mapping, and reverses it for replies. Consequence: inbound connections fail without a mapping — why servers need port-forwarding and P2P needs STUN/TURN.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">21</span>
+<span class="qna-text">HTTP/1.1 vs HTTP/2 vs HTTP/3 — the arc.</span>
+<span class="qna-tag tag-net">HTTP</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">1.1: keep-alive but one request at a time per connection (browsers open 6). 2: multiplexed streams + header compression on one TCP connection — but TCP loss stalls all streams. 3: streams over QUIC/UDP retransmit independently, killing transport head-of-line blocking, plus 0-RTT resumption.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">22</span>
+<span class="qna-text">What does a TLS certificate actually prove?</span>
+<span class="qna-tag tag-net">TLS</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">That a CA the client trusts vouches the server controls the domain, and the handshake proves the server holds the matching private key. That chain of signatures is the entire defense against man-in-the-middle.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="intermediate">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">23</span>
+<span class="qna-text">Polling vs long polling vs SSE vs WebSocket — when each?</span>
+<span class="qna-tag tag-net">Real-Time</span>
+<span class="diff-badge diff-m">Intermediate</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Polling: simplest, fine for slow-changing data. Long polling: server holds the request until data — low latency on legacy infra. SSE: one open HTTP response streaming server→client — perfect one-way push. WebSocket: full duplex upgraded connection — chat, games, collaboration. One-way need = prefer SSE.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">24</span>
+<span class="qna-text">How exactly does QUIC fix head-of-line blocking?</span>
+<span class="qna-tag tag-net">TCP/UDP</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">TCP presents one ordered byte stream, so a lost segment blocks everything behind it — even other HTTP/2 streams. QUIC (on UDP) makes each stream independently ordered and retransmitted: loss in stream A never stalls stream B. It also moves TLS and transport state into userspace, enabling faster evolution.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">25</span>
+<span class="qna-text">Sketch TCP congestion control.</span>
+<span class="qna-tag tag-net">TCP/UDP</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Slow start: cwnd doubles per RTT from a small start until loss or threshold. Then AIMD: +1 MSS per RTT, halve on loss. Modern variants (CUBIC, BBR) reshape the growth curve — BBR models bandwidth×RTT instead of reacting to loss. Flow control (receiver window) is separate; effective window = min of both.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">26</span>
+<span class="qna-text">User A on server 1, user B on server 2, one chat room. Deliver the message.</span>
+<span class="qna-tag tag-net">Real-Time</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Sockets pin users to servers, so servers share a pub/sub backbone (Redis, Kafka, NATS): server 1 publishes to the room channel; server 2, subscribed, pushes down B’s socket. Add presence tracking, heartbeats to reap dead sockets, and client reconnect-with-backoff — the socket layer and fan-out layer are separate systems.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">27</span>
+<span class="qna-text">TLS 1.3 — what got faster and what’s the 0-RTT risk?</span>
+<span class="qna-tag tag-net">TLS</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Handshake dropped from 2 round trips to 1 (key share rides in the first flight); resumption can be 0-RTT. Risk: 0-RTT “early data” can be replayed by an attacker — so it must carry only idempotent requests; servers reject non-idempotent early data.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="advanced">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">28</span>
+<span class="qna-text">What does BGP do, and why do single-AS mistakes take down half the internet?</span>
+<span class="qna-tag tag-net">Routing</span>
+<span class="diff-badge diff-h">Advanced</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">BGP is how ~70k autonomous systems advertise “these prefixes live behind me”. Routers believe advertisements largely on trust; a wrong announcement (route leak/hijack) redirects traffic globally — see the Facebook 2021 outage: withdrawn routes made their own DNS unreachable.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">29</span>
+<span class="qna-text">You type a URL and press Enter. Go.</span>
+<span class="qna-tag tag-net">Stack</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Parse URL → HSTS/cache checks → DNS (browser/OS cache → resolver → root/TLD/authoritative) → TCP 3-way handshake to :443 → TLS 1.3 handshake, cert verified → HTTP request → server side (CDN? LB → app → cache → DB) → response → parse HTML, fetch subresources over the warm connection, build DOM/CSSOM, layout, paint. Then offer to zoom into any stage.</div>
+</div>
+<div class="qna-item" data-cat="tag-net" data-diff="faang">
+<div class="qna-q" onclick="toggleQ(this)">
+<span class="qna-num">30</span>
+<span class="qna-text">A user reports “the site is slow”. Walk your network-layer diagnosis.</span>
+<span class="qna-tag tag-net">Stack</span>
+<span class="diff-badge diff-h">FAANG</span>
+<span class="qna-chevron">▾</span>
+</div>
+<div class="qna-a">Reproduce and segment: devtools waterfall splits DNS / connect / TLS / TTFB / download. Slow DNS → resolver or TTL churn. Slow connect/TLS → RTT distance, missing keep-alive, no CDN. High TTFB → server/DB, not network. Slow download → payload size or bandwidth. Confirm with curl -w timing fields and mtr for path loss; fix the stage the numbers indict.</div>
+</div></div>
+  <div class="no-results" id="no-results">No questions match your filter.</div>
+</main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+<script src="../assets/js/site-index.js?v=2"></script>
+<script src="../assets/js/search-modal.js?v=1" defer></script>
+<script src="../assets/js/utils.js?v=8"></script>
+<script src="../assets/js/platform.js?v=4"></script>
+<script>
+const STORAGE_KEY='tf_networking_interview_progress';
+function toggleQ(el){el.closest('.qna-item').classList.toggle('open');}
+function getProgress(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');}catch(e){return {};}}
+function setChecked(n,on){const p=getProgress();if(on)p[n]=1;else delete p[n];localStorage.setItem(STORAGE_KEY,JSON.stringify(p));}
+function renderProgress(){const p=getProgress();const n=Object.keys(p).length;const el=document.getElementById('doneCount');if(el)el.textContent=n;}
+function filterQna(diff,btn){
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const show=diff==='all'||item.dataset.diff===diff;
+    item.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+function searchQna(val){
+  const q=val.trim().toLowerCase();let visible=0;
+  document.querySelectorAll('.qna-item').forEach(item=>{
+    const text=item.querySelector('.qna-text')?.textContent.toLowerCase()||'';
+    const ans=item.querySelector('.qna-a')?.textContent.toLowerCase()||'';
+    const match=!q||text.includes(q)||ans.includes(q);
+    item.style.display=match?'':'none';
+    if(match)visible++;
+    if(q)item.classList.remove('open');
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{
+  const n=String(i+1).padStart(2,'0');item.dataset.n=n;
+  const qEl=item.querySelector('.qna-q');
+  if(qEl&&!qEl.querySelector('.qna-cb')){
+    const cb=document.createElement('div');cb.className='qna-cb';cb.style.cssText='width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;cursor:pointer';
+    cb.addEventListener('click',e=>{e.stopPropagation();const on=!cb.classList.contains('checked');cb.classList.toggle('checked',on);if(on){cb.style.background='var(--green)';cb.textContent='✓';}else{cb.style.background='';cb.textContent='';}setChecked(n,on);renderProgress();});
+    qEl.insertBefore(cb,qEl.firstChild);
+  }
+});
+const animObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');animObs.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';animObs.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>
