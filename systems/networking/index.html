@@ -19,12 +19,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../../assets/css/forge_base.css?v=17" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-  <link href="../../assets/css/hub.css?v=2" rel="stylesheet"/>
+  <link href="../../assets/css/hub.css?v=3" rel="stylesheet"/>
   <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
   <style>
-    :root { --accent: var(--blue); }
+    :root { --accent: var(--red); }
     .rm-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
     .rm-item {
       display: flex; align-items: center; gap: 14px;
@@ -36,7 +36,23 @@
     .rm-body { flex: 1; min-width: 0; }
     .rm-title { font-size: 14.5px; font-weight: 700; }
     .rm-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.55; }
-    .rm-badge { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; flex-shrink: 0; color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .sub-h2 { font-family: var(--display); font-size: clamp(19px,2.6vw,25px); font-weight: 700; letter-spacing: -.3px; margin: 4px 0 14px; }
+    .os-intro { max-width: 720px; margin-bottom: 6px; }
+    .os-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; margin: 0 0 14px; }
+    .os-intro strong { color: var(--text); }
+    .os-def { display: flex; gap: 13px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 15px 17px; margin: 4px 0 16px; }
+    .os-def i { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .os-def p { font-size: 13px; color: var(--text2); line-height: 1.7; margin: 0; }
+    .lp-track { position: relative; margin: 8px 0 30px; padding-left: 44px; }
+    .lp-track::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
+    .lp-step { position: relative; margin-bottom: 12px; }
+    .lp-node { position: absolute; left: -44px; top: 13px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono,monospace); font-size: 12px; font-weight: 700; color: var(--accent); z-index: 1; }
+    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 14px 18px; color: var(--text); }
+    .lp-body { flex: 1; min-width: 0; }
+    .lp-title { font-size: 14.5px; font-weight: 700; }
+    .lp-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+    .lp-badge { font-family: var(--font-mono,monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; flex-shrink: 0; color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .lp-note { font-size: 12.5px; color: var(--text3); margin: 2px 0 16px; }
   </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
@@ -82,16 +98,25 @@
     <p class="tf-hub-sub">How machines talk to each other. Eight guides are being written in the full TechForge style — diagrams, quizzes, interview questions — and land here topic by topic.</p>
   </div>
 
-  <div class="sec-label anim-in">The roadmap</div>
-  <div class="rm-list anim-in">
-    <div class="rm-item rm-soon"><span class="rm-num">01</span><div class="rm-body"><div class="rm-title">The TCP/IP Stack</div><div class="rm-desc">Four layers, what each one adds, and how a packet is wrapped and unwrapped end to end.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">02</span><div class="rm-body"><div class="rm-title">TCP vs UDP</div><div class="rm-desc">Handshakes, reliability, ordering, and when you deliberately choose the unreliable one.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">03</span><div class="rm-body"><div class="rm-title">DNS</div><div class="rm-desc">Recursive vs authoritative resolution, record types, caching and TTLs — the internet's phonebook.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">04</span><div class="rm-body"><div class="rm-title">HTTP &amp; HTTPS</div><div class="rm-desc">Methods, status codes, headers, HTTP/1.1 vs 2 vs 3, and what TLS actually encrypts.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">05</span><div class="rm-body"><div class="rm-title">What Happens When You Type a URL</div><div class="rm-desc">The evergreen interview question, answered layer by layer with a full diagram.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">06</span><div class="rm-body"><div class="rm-title">Sockets &amp; Ports</div><div class="rm-desc">What a socket is, the accept loop, ephemeral ports, and reading netstat like a pro.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">07</span><div class="rm-body"><div class="rm-title">IP, Subnets &amp; Routing</div><div class="rm-desc">CIDR notation, public vs private ranges, NAT, and how routers pick a path.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">08</span><div class="rm-body"><div class="rm-title">WebSockets &amp; Real-Time</div><div class="rm-desc">Upgrading past request/response — long polling, SSE, WebSockets, and when each wins.</div></div><span class="rm-badge">Writing</span></div>
+  <div class="sec-label anim-in">Start here</div>
+  <h2 class="sub-h2 anim-in">What is computer networking?</h2>
+  <div class="os-intro anim-in">
+    <p><strong>Networking</strong> is how independent machines exchange data reliably over unreliable wires and radio. Your browser, your API calls, every message app — all of it is one computer handing bytes to another through a stack of agreed-upon protocols, each layer solving one problem and trusting the layer below.</p>
+    <div class="os-def"><i class="ti ti-network"></i><p>The internet is built in <strong>layers</strong>: the link moves bits between neighbours, <strong>IP</strong> routes packets across networks, <strong>TCP/UDP</strong> turn packets into reliable (or fast) streams, and <strong>HTTP/DNS/TLS</strong> give applications something useful to say. Learn the stack once and every "why is it slow / why did it fail" becomes answerable.</p></div>
+    <p>This is the layer under system design (load balancers, CDNs), under DevOps (ports, firewalls, DNS), and behind the most-asked interview question of all: <em>what happens when you type a URL and hit enter?</em></p>
+  </div>
+
+  <div class="sec-label anim-in">Learning path</div>
+  <p class="lp-note anim-in">Eight guides, in the works — same TechForge style as the OS pillar. Order shown; content lands soon.</p>
+  <div class="lp-track anim-in">
+    <div class="lp-step"><span class="lp-node">1</span><div class="lp-card"><div class="lp-body"><div class="lp-title">The TCP/IP Stack</div><div class="lp-desc">Four layers, what each one adds, and how a packet is wrapped and unwrapped end to end.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">2</span><div class="lp-card"><div class="lp-body"><div class="lp-title">TCP vs UDP</div><div class="lp-desc">Handshakes, reliability, ordering, and when you deliberately choose the unreliable one.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">3</span><div class="lp-card"><div class="lp-body"><div class="lp-title">DNS</div><div class="lp-desc">Recursive vs authoritative resolution, record types, caching and TTLs — the internet’s phonebook.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">4</span><div class="lp-card"><div class="lp-body"><div class="lp-title">HTTP &amp; HTTPS</div><div class="lp-desc">Methods, status codes, headers, HTTP/1.1 vs 2 vs 3, and what TLS actually encrypts.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">5</span><div class="lp-card"><div class="lp-body"><div class="lp-title">What Happens When You Type a URL</div><div class="lp-desc">The evergreen interview question, answered layer by layer with a full diagram.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">6</span><div class="lp-card"><div class="lp-body"><div class="lp-title">Sockets &amp; Ports</div><div class="lp-desc">What a socket is, the accept loop, ephemeral ports, and reading netstat like a pro.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">7</span><div class="lp-card"><div class="lp-body"><div class="lp-title">IP, Subnets &amp; Routing</div><div class="lp-desc">CIDR notation, public vs private ranges, NAT, and how routers pick a path.</div></div><span class="lp-badge">Soon</span></div></div>
+    <div class="lp-step"><span class="lp-node">8</span><div class="lp-card"><div class="lp-body"><div class="lp-title">WebSockets &amp; Real-Time</div><div class="lp-desc">Upgrading past request/response — long polling, SSE, WebSockets, and when each wins.</div></div><span class="lp-badge">Soon</span></div></div>
   </div>
 
     </div>

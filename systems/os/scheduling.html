@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>CPU Scheduling — Operating Systems | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/os/scheduling.html"/>
+  <meta property="og:title" content="CPU Scheduling — Operating Systems | TechForge"/>
+  <meta property="og:description" content="CPU Scheduling — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/os-scheduling" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> OS Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Operating Systems</div>
+      <a class="sb-link" href="processes.html"><span class="sb-num">01</span> Processes & Threads</a>
+      <a class="sb-link active" href="scheduling.html"><span class="sb-num">02</span> CPU Scheduling</a>
+      <a class="sb-link" href="memory.html"><span class="sb-num">03</span> Memory Management</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">04</span> Concurrency</a>
+      <a class="sb-link" href="deadlocks.html"><span class="sb-num">05</span> Deadlocks</a>
+      <a class="sb-link" href="filesystems.html"><span class="sb-num">06</span> Filesystems</a>
+      <a class="sb-link" href="io.html"><span class="sb-num">07</span> I/O & Interrupts</a>
+      <a class="sb-link" href="boot.html"><span class="sb-num">08</span> Boot to Shell</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">OS · CPU Scheduling</div>
+        <h1 class="pg-title">CPU <span>Scheduling</span></h1>
+        <p class="pg-sub">How the OS shares one CPU across many processes — FCFS, round-robin, priority, and the metrics that judge them.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-arrows-shuffle"></i> Operating Systems</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-why">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-arrows-shuffle"></i></span><h2 class="sec-title">Why Schedule?</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">There are always more runnable processes than CPU cores. The <strong>scheduler</strong> decides who runs next and for how long, aiming to balance conflicting goals: high <strong>throughput</strong>, low <strong>latency/response time</strong>, low <strong>turnaround</strong>, and fairness. A <strong>context switch</strong> saves the current process and loads the next.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><strong>Preemptive</strong> scheduling can interrupt a running process (timer interrupt) to run another. <strong>Non-preemptive</strong> lets it run until it blocks or exits.</span></div>
+      </section>
+      <section class="py-section" id="sec-algos">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-list-numbers"></i></span><h2 class="sec-title">Core Algorithms</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap"><table class="py-table"><thead><tr><th>Algorithm</th><th>Idea</th><th>Watch out for</th></tr></thead><tbody><tr><td><strong>FCFS</strong></td><td>First come, first served (a queue)</td><td>Convoy effect — one long job stalls everyone</td></tr><tr><td><strong>SJF</strong></td><td>Shortest job first</td><td>Optimal average wait, but starves long jobs; needs burst prediction</td></tr><tr><td><strong>Round Robin</strong></td><td>Each gets a fixed time quantum, then rotates</td><td>Quantum too big → FCFS; too small → switch overhead</td></tr><tr><td><strong>Priority</strong></td><td>Highest priority runs</td><td>Starvation — fix with aging</td></tr><tr><td><strong>MLFQ</strong></td><td>Multiple queues, jobs move by behavior</td><td>The practical default in real OSes</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-metrics">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-clock"></i></span><h2 class="sec-title">The Metrics</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap"><table class="py-table"><thead><tr><th>Metric</th><th>Definition</th></tr></thead><tbody><tr><td>Arrival time</td><td>When the process enters Ready</td></tr><tr><td>Burst time</td><td>CPU time it needs</td></tr><tr><td>Completion time</td><td>When it finishes</td></tr><tr><td><strong>Turnaround</strong></td><td>Completion − Arrival</td></tr><tr><td><strong>Waiting</strong></td><td>Turnaround − Burst</td></tr><tr><td><strong>Response</strong></td><td>First-run time − Arrival</td></tr></tbody></table></div>        <p class="prose">Interviewers hand you a table of arrival + burst times and ask for average waiting/turnaround under FCFS or Round Robin. Draw the <strong>Gantt chart</strong> first, then read the numbers off it.</p>
+      </section>
+      <section class="py-section" id="sec-rr">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-chart-bar"></i></span><h2 class="sec-title">Round Robin — Worked Example</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Three processes, all arrive at t=0, quantum = 2:</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Gantt chart — RR, q=2</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">Processes:  P1 burst 5,  P2 burst 3,  P3 burst 1
+
+| P1 | P2 | P3 | P1 | P2 | P1 |
+0    2    4    5    7    8    9
+
+Completion:  P1=9, P2=8, P3=5
+Turnaround:  P1=9, P2=8, P3=5   (arrival 0)
+Waiting:     P1=4, P2=5, P3=4
+Avg waiting = (4+5+4)/3 = 4.33</pre>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Round Robin gives good <em>response time</em> (everyone runs quickly) but not the best <em>turnaround</em>. SJF wins turnaround but can starve.</span></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Preemptive vs non-preemptive?</q><p>Preemptive can forcibly pause a running process (via a timer interrupt) to schedule another — needed for responsiveness and fairness. Non-preemptive only switches when the process blocks or exits.</p></div>        <div class="iq"><q>What is the convoy effect?</q><p>Under FCFS, one long CPU-bound job at the front makes many short jobs wait behind it, tanking average waiting time.</p></div>        <div class="iq"><q>How do you prevent starvation in priority scheduling?</q><p>Aging — gradually raise the priority of processes that have waited a long time, so they eventually run.</p></div>        <div class="iq"><q>Why is choosing the Round-Robin quantum hard?</q><p>Too large and it degenerates to FCFS (poor response); too small and context-switch overhead dominates. Typical values are 10–100 ms.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which algorithm gives the minimum average waiting time (ideal)?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">FCFS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Round Robin</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Shortest Job First</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Priority</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. The "convoy effect" is a problem in…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">SJF</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">FCFS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Round Robin</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">MLFQ</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Waiting time = ?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Completion − Arrival</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Turnaround − Burst</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Burst − Arrival</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">First run − Arrival</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Aging is used to prevent…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Deadlock</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Starvation</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Thrashing</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fragmentation</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. A Round-Robin quantum that is too small causes…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Starvation</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Convoy effect</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">High context-switch overhead</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">FCFS behavior</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="processes.html">← Processes & Threads</a>
+        <a class="nav-link" href="memory.html">Memory Management →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

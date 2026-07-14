@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-<link href="assets/css/forge_base.css?v=17" rel="stylesheet"/><style>
+<link href="assets/css/forge_base.css?v=18" rel="stylesheet"/><style>
 
 /* --------------------------------------
    TECHFORGE HOME — v4
@@ -604,15 +604,24 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
     html.light .csmap-node circle { fill: #fffdf7; }
     html.light .csmap-edge { stroke: var(--text3, #6b6355); opacity: .45; }
     html.light .csmap-node .csmap-sub { fill: var(--text2); }
-    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.12); }
-    .csmap-node:focus-visible { outline: 2.4px solid var(--blue, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
+    .csmap-node circle, .csmap-node text { transition: transform .25s ease, opacity .25s ease; }
+    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.14); }
+    .csmap-node:focus-visible { outline: 2.4px solid var(--accent, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
     .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
     @keyframes csmapPulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
     @keyframes csmapDash { to { stroke-dashoffset: -95; } }
     .csmap-flow { animation: csmapDash 3.8s linear infinite; }
+    /* hover-to-focus: dim everything but the active track + hub */
+    .csmap-svg.is-focused .csmap-node:not(.is-active):not(.csmap-core) circle,
+    .csmap-svg.is-focused .csmap-node:not(.is-active):not(.csmap-core) text { opacity: .28; }
+    .csmap-svg.is-focused .csmap-edge, .csmap-svg.is-focused .csmap-flow { opacity: .12; }
+    .csmap-node.is-active circle { filter: drop-shadow(0 0 10px currentColor); }
+    /* orbiting pulse traveling the track ring */
+    .csmap-orbit { fill: var(--accent, #4d9ef7); filter: drop-shadow(0 0 6px var(--accent, #4d9ef7)); }
     @media (prefers-reduced-motion: reduce) {
       .csmap-flow, .csmap-core circle { animation: none; }
-      .csmap-node circle { transition: none; }
+      .csmap-node circle, .csmap-node text { transition: none; }
+      .csmap-orbit { display: none; }
     }
 </style>
 </head>
@@ -818,20 +827,23 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           <line class="csmap-edge" x1="128" y1="405" x2="128" y2="195" opacity=".4"/>
           <line class="csmap-edge" x1="128" y1="195" x2="310" y2="90"  opacity=".4"/>
           <!-- animated pulses flowing toward the core -->
-          <line class="csmap-flow" x1="310" y1="90"  x2="310" y2="300" stroke="var(--green,#34d399)"/>
-          <line class="csmap-flow" x1="492" y1="195" x2="310" y2="300" stroke="var(--blue,#4d9ef7)"  style="animation-delay:-0.8s"/>
+          <line class="csmap-flow" x1="310" y1="90"  x2="310" y2="300" stroke="var(--blue,#4d9ef7)"/>
+          <line class="csmap-flow" x1="492" y1="195" x2="310" y2="300" stroke="var(--green,#34d399)"  style="animation-delay:-0.8s"/>
           <line class="csmap-flow" x1="492" y1="405" x2="310" y2="300" stroke="var(--cyan,#22d3ee)"  style="animation-delay:-1.6s"/>
-          <line class="csmap-flow" x1="310" y1="510" x2="310" y2="300" stroke="var(--red,#f87171)"   style="animation-delay:-2.4s"/>
-          <line class="csmap-flow" x1="128" y1="405" x2="310" y2="300" stroke="var(--purple,#a78bfa)" style="animation-delay:-3.2s"/>
+          <line class="csmap-flow" x1="310" y1="510" x2="310" y2="300" stroke="var(--purple,#a78bfa)"   style="animation-delay:-2.4s"/>
+          <line class="csmap-flow" x1="128" y1="405" x2="310" y2="300" stroke="var(--red,#f87171)" style="animation-delay:-3.2s"/>
           <line class="csmap-flow" x1="128" y1="195" x2="310" y2="300" stroke="var(--amber,#fbbf24)"  style="animation-delay:-1.2s"/>
+          <!-- pulse orbiting the track ring -->
+          <path id="csmapRing" d="M310 90 L492 195 L492 405 L310 510 L128 405 L128 195 Z" fill="none"/>
+          <circle class="csmap-orbit" r="4.5"><animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#csmapRing"/></animateMotion></circle>
         </g>
         <a class="csmap-node" href="dsa/index.html" aria-label="DSA track — algorithms and data structures">
-          <circle cx="310" cy="90" r="54" stroke="var(--green,#34d399)"/>
+          <circle cx="310" cy="90" r="54" stroke="var(--blue,#4d9ef7)"/>
           <text x="310" y="87" text-anchor="middle">DSA</text>
           <text x="310" y="107" text-anchor="middle" class="csmap-sub">30 topics</text>
         </a>
         <a class="csmap-node" href="system-design/index.html" aria-label="System Design track — 26 architecture topics">
-          <circle cx="492" cy="195" r="54" stroke="var(--blue,#4d9ef7)"/>
+          <circle cx="492" cy="195" r="54" stroke="var(--green,#34d399)"/>
           <text x="492" y="192" text-anchor="middle">Sys Design</text>
           <text x="492" y="212" text-anchor="middle" class="csmap-sub">26 topics</text>
         </a>
@@ -841,12 +853,12 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           <text x="492" y="422" text-anchor="middle" class="csmap-sub">DB + DevOps</text>
         </a>
         <a class="csmap-node" href="aiml/index.html" aria-label="AI and machine learning track">
-          <circle cx="310" cy="510" r="54" stroke="var(--red,#f87171)"/>
+          <circle cx="310" cy="510" r="54" stroke="var(--purple,#a78bfa)"/>
           <text x="310" y="507" text-anchor="middle">AI / ML</text>
           <text x="310" y="527" text-anchor="middle" class="csmap-sub">8 modules</text>
         </a>
         <a class="csmap-node" href="systems/index.html" aria-label="OS and Networks track — operating systems and networking">
-          <circle cx="128" cy="405" r="54" stroke="var(--purple,#a78bfa)"/>
+          <circle cx="128" cy="405" r="54" stroke="var(--red,#f87171)"/>
           <text x="128" y="402" text-anchor="middle">OS &amp; Net</text>
           <text x="128" y="422" text-anchor="middle" class="csmap-sub">systems layer</text>
         </a>
@@ -856,7 +868,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           <text x="128" y="212" text-anchor="middle" class="csmap-sub">Python live</text>
         </a>
         <a class="csmap-node csmap-core" href="interview/index.html" aria-label="Interview Prep — where every track leads. 200 plus questions">
-          <circle cx="310" cy="300" r="62" stroke="var(--text)" stroke-width="2"/>
+          <circle cx="310" cy="300" r="62" stroke="var(--teal,#2dd4bf)" stroke-width="2"/>
           <text x="310" y="296" text-anchor="middle">Interview</text>
           <text x="310" y="317" text-anchor="middle" class="csmap-sub">200+ Qs</text>
         </a>
@@ -1499,6 +1511,27 @@ document.addEventListener('visibilitychange',()=>{
     });
   }, { threshold: 0.4 });
   els.forEach(function (el) { io.observe(el); });
+})();
+
+/* CS-map: hover/focus a track → dim the rest, spotlight that track + hub */
+(function () {
+  var svg = document.querySelector('.csmap-svg');
+  if (!svg) return;
+  var nodes = svg.querySelectorAll('.csmap-node');
+  function focus(node) {
+    svg.classList.add('is-focused');
+    nodes.forEach(function (n) { n.classList.toggle('is-active', n === node); });
+  }
+  function clear() {
+    svg.classList.remove('is-focused');
+    nodes.forEach(function (n) { n.classList.remove('is-active'); });
+  }
+  nodes.forEach(function (n) {
+    n.addEventListener('mouseenter', function () { focus(n); });
+    n.addEventListener('focusin', function () { focus(n); });
+    n.addEventListener('mouseleave', clear);
+    n.addEventListener('focusout', clear);
+  });
 })();
 </script>
 </body>

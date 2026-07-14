@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>I/O & Interrupts — Operating Systems | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/os/io.html"/>
+  <meta property="og:title" content="I/O & Interrupts — Operating Systems | TechForge"/>
+  <meta property="og:description" content="I/O & Interrupts — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/os-io" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> OS Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Operating Systems</div>
+      <a class="sb-link" href="processes.html"><span class="sb-num">01</span> Processes & Threads</a>
+      <a class="sb-link" href="scheduling.html"><span class="sb-num">02</span> CPU Scheduling</a>
+      <a class="sb-link" href="memory.html"><span class="sb-num">03</span> Memory Management</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">04</span> Concurrency</a>
+      <a class="sb-link" href="deadlocks.html"><span class="sb-num">05</span> Deadlocks</a>
+      <a class="sb-link" href="filesystems.html"><span class="sb-num">06</span> Filesystems</a>
+      <a class="sb-link active" href="io.html"><span class="sb-num">07</span> I/O & Interrupts</a>
+      <a class="sb-link" href="boot.html"><span class="sb-num">08</span> Boot to Shell</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">OS · I/O & Interrupts</div>
+        <h1 class="pg-title">I/O &amp; <span>Interrupts</span></h1>
+        <p class="pg-sub">Polling vs interrupts vs DMA, blocking vs non-blocking, and where epoll fits.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-plug"></i> Operating Systems</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-devices">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-plug"></i></span><h2 class="sec-title">Talking to Devices</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The CPU is far faster than disks and networks, so the OS must move data to/from devices without wasting cycles. Three techniques, in order of efficiency:</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Method</th><th>How</th><th>Cost</th></tr></thead><tbody><tr><td><strong>Polling</strong></td><td>CPU repeatedly checks "ready yet?"</td><td>Burns CPU busy-waiting</td></tr><tr><td><strong>Interrupts</strong></td><td>Device signals the CPU when done</td><td>CPU works meanwhile; one interrupt per event</td></tr><tr><td><strong>DMA</strong></td><td>A controller moves data to RAM directly, then one interrupt</td><td>Frees the CPU during the transfer</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-interrupts">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-bell"></i></span><h2 class="sec-title">Interrupts</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">An <strong>interrupt</strong> is a hardware signal that makes the CPU pause, save state, jump to an <strong>interrupt service routine (ISR)</strong>, then resume. It’s how a keypress, a completed disk read, or a timer tick gets the OS’s attention without polling.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>The <strong>timer interrupt</strong> is what makes preemptive scheduling possible — it periodically hands control back to the scheduler no matter what the running process does.</span></div>
+      </section>
+      <section class="py-section" id="sec-blocking">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-arrows-transfer-down"></i></span><h2 class="sec-title">Blocking vs Non-Blocking I/O</h2></div>
+        <div class="section-divider"></div>
+        <div class="compare-strip">
+          <div class="cs-item"><div class="cs-head cs-ok">Blocking I/O</div><ul class="cs-list"><li>Thread sleeps until data is ready — simple</li></ul></div>
+          <div class="cs-item"><div class="cs-head cs-red">Non-blocking I/O</div><ul class="cs-list"><li>Call returns immediately; you poll or get notified — scalable</li></ul></div>
+        </div>        <p class="prose">A blocking read is easy but ties up a thread per connection. To handle thousands of connections, servers use <strong>non-blocking I/O + an event loop</strong>: ask the OS to watch many file descriptors and tell you which are ready.</p>
+      </section>
+      <section class="py-section" id="sec-epoll">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-stack"></i></span><h2 class="sec-title">epoll and the C10k Problem</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The old <code>select()</code>/<code>poll()</code> scan every descriptor each call — O(n). Linux’s <strong>epoll</strong> (BSD’s <code>kqueue</code>) registers descriptors once and returns only the ready ones — O(ready) — enabling a single thread to serve tens of thousands of sockets. This is the engine under Nginx, Node.js and Redis.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">epoll (sketch)</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">ep = <span class="fn">epoll_create1</span>(<span class="nm">0</span>)
+<span class="fn">epoll_ctl</span>(ep, ADD, sock, EPOLLIN)   <span class="cm"># register once</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+    events = <span class="fn">epoll_wait</span>(ep)      <span class="cm"># only ready fds</span>
+    <span class="kw">for</span> e <span class="kw">in</span> events:
+        <span class="fn">handle</span>(e)</pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Polling vs interrupts?</q><p>Polling has the CPU repeatedly check a device, wasting cycles. Interrupts let the device notify the CPU when ready, so the CPU does other work in the meantime.</p></div>        <div class="iq"><q>What is DMA and why does it help?</q><p>Direct Memory Access lets a dedicated controller transfer data between a device and RAM without the CPU copying each byte; the CPU is interrupted only once when the whole transfer completes.</p></div>        <div class="iq"><q>Why is epoll better than select for many connections?</q><p>select/poll are O(n) — they rescan all descriptors every call. epoll registers interest once and returns only the descriptors that became ready, scaling to tens of thousands of connections in one thread.</p></div>        <div class="iq"><q>How does preemptive scheduling actually preempt?</q><p>A hardware timer interrupt periodically transfers control to the kernel, which runs the scheduler and can switch to another process regardless of what was running.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which method frees the CPU during a bulk transfer?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Polling</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Interrupts</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">DMA</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Busy-wait</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Preemptive scheduling depends on the…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Disk interrupt</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Timer interrupt</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Page fault</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">System call</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. select()/poll() scale as…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">O(1)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">O(log n)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">O(ready)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A single-threaded server handling 10k connections likely uses…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Blocking I/O</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">One thread per client</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">epoll / an event loop</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Polling</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. An interrupt makes the CPU jump to a(n)…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">New process</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">ISR (interrupt service routine)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Page table</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Scheduler queue</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="filesystems.html">← Filesystems</a>
+        <a class="nav-link" href="boot.html">Boot to Shell →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Processes & Threads — Operating Systems | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/os/processes.html"/>
+  <meta property="og:title" content="Processes & Threads — Operating Systems | TechForge"/>
+  <meta property="og:description" content="Processes & Threads — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--red); --accent-dim: var(--red-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/os-processes" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> OS Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Operating Systems</div>
+      <a class="sb-link active" href="processes.html"><span class="sb-num">01</span> Processes & Threads</a>
+      <a class="sb-link" href="scheduling.html"><span class="sb-num">02</span> CPU Scheduling</a>
+      <a class="sb-link" href="memory.html"><span class="sb-num">03</span> Memory Management</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">04</span> Concurrency</a>
+      <a class="sb-link" href="deadlocks.html"><span class="sb-num">05</span> Deadlocks</a>
+      <a class="sb-link" href="filesystems.html"><span class="sb-num">06</span> Filesystems</a>
+      <a class="sb-link" href="io.html"><span class="sb-num">07</span> I/O & Interrupts</a>
+      <a class="sb-link" href="boot.html"><span class="sb-num">08</span> Boot to Shell</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">OS · Processes & Threads</div>
+        <h1 class="pg-title">Processes &amp; <span>Threads</span></h1>
+        <p class="pg-sub">What a running program actually is — address space, the process lifecycle, and why threads are lighter.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-box"></i> Operating Systems</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-what">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-box"></i></span><h2 class="sec-title">What is a Process?</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>process</strong> is a program in execution — an instance with its own <strong>address space</strong> (code, data, heap, stack), a set of registers, a program counter, and OS bookkeeping in a <strong>Process Control Block (PCB)</strong>. A program on disk is passive; a process is the active, running thing.</p>        <div class="lesson-diagram"><svg viewBox="0 0 420 260" width="100%" role="img" aria-label="Process address space from high to low addresses: stack grows down, heap grows up, then uninitialized and initialized data, then the code text segment" style="max-width:420px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+        <rect x="120" y="20"  width="180" height="42" rx="6" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="210" y="46" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Stack ↓</text>
+        <rect x="120" y="86"  width="180" height="42" rx="6" fill="var(--surface2)" stroke="var(--amber,#fbbf24)" stroke-width="1.5"/><text x="210" y="112" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Heap ↑</text>
+        <rect x="120" y="130" width="180" height="42" rx="6" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="210" y="156" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Data (globals)</text>
+        <rect x="120" y="174" width="180" height="42" rx="6" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="210" y="200" text-anchor="middle" fill="var(--text)" font-size="12" font-weight="700">Text (code)</text>
+        <text x="105" y="45"  text-anchor="end" fill="var(--text3)" font-size="9">high addr</text>
+        <text x="105" y="199" text-anchor="end" fill="var(--text3)" font-size="9">low addr</text>
+      </svg></div>
+      </section>
+      <section class="py-section" id="sec-states">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-refresh"></i></span><h2 class="sec-title">Process States</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The OS moves a process through states as it runs, waits and is scheduled. The classic five-state model:</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td><code>New</code></td><td>Being created</td></tr><tr><td><code>Ready</code></td><td>Loaded, waiting for the CPU</td></tr><tr><td><code>Running</code></td><td>Executing on the CPU right now</td></tr><tr><td><code>Waiting</code></td><td>Blocked on I/O or an event</td></tr><tr><td><code>Terminated</code></td><td>Finished; PCB about to be reclaimed</td></tr></tbody></table></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Only one process per CPU core is <code>Running</code> at a time. The scheduler cycles Ready ⇄ Running; I/O bounces Running → Waiting → Ready.</span></div>
+      </section>
+      <section class="py-section" id="sec-vs">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-git-branch"></i></span><h2 class="sec-title">Process vs Thread</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>thread</strong> is a unit of execution <em>inside</em> a process. Threads of one process share its address space (heap, globals, open files) but each has its own <strong>stack, registers and program counter</strong>. That sharing makes threads cheap to create and switch — and dangerous, because they can stomp on shared memory.</p>        <div class="compare-strip">
+          <div class="cs-item"><div class="cs-head cs-ok">Threads share</div><ul class="cs-list"><li>Heap &amp; globals</li></ul></div>
+          <div class="cs-item"><div class="cs-head cs-red">Threads have their own</div><ul class="cs-list"><li>Stack</li></ul></div>
+        </div>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Aspect</th><th>Process</th><th>Thread</th></tr></thead><tbody><tr><td>Address space</td><td>Private</td><td>Shared with siblings</td></tr><tr><td>Creation cost</td><td>High (fork)</td><td>Low</td></tr><tr><td>Context switch</td><td>Expensive (TLB flush)</td><td>Cheap</td></tr><tr><td>Crash blast radius</td><td>Isolated</td><td>Can take down the process</td></tr><tr><td>Communication</td><td>IPC (pipes, sockets)</td><td>Shared memory directly</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-fork">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-code"></i></span><h2 class="sec-title">Creating a Process — fork()</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">On Unix, <code>fork()</code> clones the calling process. It returns <strong>twice</strong>: <code>0</code> in the child, the child’s PID in the parent. <code>exec()</code> then replaces the child’s image with a new program — the <em>fork-exec</em> pattern behind every shell command.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C — fork / exec</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">#include &lt;unistd.h&gt;
+
+pid_t pid = <span class="fn">fork</span>();
+<span class="kw">if</span> (pid == <span class="nm">0</span>) {
+    <span class="cm">// child: replace image with /bin/ls</span>
+    <span class="fn">execlp</span>(<span class="st">"ls"</span>, <span class="st">"ls"</span>, <span class="st">"-l"</span>, <span class="kw">NULL</span>);
+} <span class="kw">else</span> {
+    <span class="fn">wait</span>(<span class="kw">NULL</span>);   <span class="cm">// parent reaps the child</span>
+}</pre>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>A child whose parent never <code>wait()</code>s becomes a <strong>zombie</strong> (dead but still in the table). A child whose parent dies first becomes an <strong>orphan</strong>, re-parented to <code>init</code>/<code>systemd</code>.</span></div>
+      </section>
+      <section class="py-section" id="sec-ipc">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-messages"></i></span><h2 class="sec-title">Inter-Process Communication (IPC)</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Because processes don’t share memory, they need explicit channels to talk. Common IPC mechanisms, from simplest to most flexible:</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Mechanism</th><th>Use it for</th></tr></thead><tbody><tr><td><strong>Pipes</strong></td><td>One-way byte stream between related processes (<code>ls | grep</code>)</td></tr><tr><td><strong>Named pipes (FIFO)</strong></td><td>Same, but between unrelated processes</td></tr><tr><td><strong>Shared memory</strong></td><td>Fastest — a common memory region, but you must synchronize</td></tr><tr><td><strong>Message queues</strong></td><td>Structured, ordered messages</td></tr><tr><td><strong>Sockets</strong></td><td>Across machines, or local (Unix domain sockets)</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Process vs thread — one sentence.</q><p>A process is an isolated program with its own address space; a thread is a lighter execution unit inside a process that shares that address space but keeps its own stack and registers.</p></div>        <div class="iq"><q>Why does fork() return twice?</q><p>It creates a near-identical copy of the process; execution continues in both the parent and the new child from the same point, so the single call yields a return in each — 0 in the child, the child PID in the parent.</p></div>        <div class="iq"><q>What is a zombie process and how do you avoid it?</q><p>A terminated child whose exit status hasn’t been reaped. The parent must call wait()/waitpid(); otherwise the entry lingers. In practice, handle SIGCHLD or double-fork.</p></div>        <div class="iq"><q>Context switch — what makes it expensive?</q><p>Saving/restoring registers and PC, switching the memory map, and (for processes) flushing the TLB and cache locality. Thread switches within a process skip the address-space swap, so they’re cheaper.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. What do threads of the same process NOT share?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The heap</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Global variables</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Their own stack</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Open file descriptors</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. fork() returns ___ in the child process.</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the parent PID</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">0</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">-1</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the child PID</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A process blocked on disk I/O is in which state?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Running</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Ready</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Waiting</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Terminated</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A terminated child not yet reaped by its parent is a…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Orphan</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Daemon</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Zombie</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fork bomb</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Fastest IPC mechanism (but needs synchronization)?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Pipes</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Shared memory</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Message queues</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Sockets</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="index.html">← OS Roadmap</a>
+        <a class="nav-link" href="scheduling.html">CPU Scheduling →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

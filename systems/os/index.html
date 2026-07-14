@@ -19,12 +19,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../../assets/css/forge_base.css?v=17" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-  <link href="../../assets/css/hub.css?v=2" rel="stylesheet"/>
+  <link href="../../assets/css/hub.css?v=3" rel="stylesheet"/>
   <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
   <style>
-    :root { --accent: var(--blue); }
+    :root { --accent: var(--red); }
     .rm-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
     .rm-item {
       display: flex; align-items: center; gap: 14px;
@@ -32,11 +32,33 @@
       border-radius: 12px; padding: 15px 18px; color: var(--text);
     }
     .rm-item.rm-soon { border-style: dashed; }
+    a.rm-item { text-decoration:none; color:var(--text); transition:border-color .15s, transform .15s; }
+    a.rm-item:hover, a.rm-item:focus-visible { border-color:var(--accent); transform:translateY(-2px); }
     .rm-num { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--text3); width: 24px; flex-shrink: 0; }
     .rm-body { flex: 1; min-width: 0; }
     .rm-title { font-size: 14.5px; font-weight: 700; }
     .rm-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.55; }
-    .rm-badge { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; flex-shrink: 0; color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    .sub-h2 { font-family: var(--display); font-size: clamp(19px,2.6vw,25px); font-weight: 700; letter-spacing: -.3px; margin: 4px 0 14px; }
+    .os-intro { max-width: 720px; margin-bottom: 6px; }
+    .os-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; margin: 0 0 14px; }
+    .os-intro strong { color: var(--text); }
+    .os-def { display: flex; gap: 13px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 15px 17px; margin: 4px 0 16px; }
+    .os-def i { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .os-def p { font-size: 13px; color: var(--text2); line-height: 1.7; margin: 0; }
+    /* interactive learning path — a connected spine */
+    .lp-track { position: relative; margin: 8px 0 30px; padding-left: 44px; }
+    .lp-track::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
+    .lp-step { position: relative; margin-bottom: 12px; }
+    .lp-node { position: absolute; left: -44px; top: 13px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono,monospace); font-size: 12px; font-weight: 700; color: var(--accent); z-index: 1; transition: background .2s, color .2s, box-shadow .2s; }
+    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .lp-card:hover, .lp-card:focus-visible { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent); }
+    .lp-step:hover .lp-node { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .lp-body { flex: 1; min-width: 0; }
+    .lp-title { font-size: 14.5px; font-weight: 700; }
+    .lp-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+    .lp-go { font-family: var(--font-mono,monospace); font-size: 15px; color: var(--accent); flex-shrink: 0; transition: transform .2s; }
+    .lp-card:hover .lp-go { transform: translateX(3px); }
+    .lp-note { font-size: 12.5px; color: var(--text3); margin: 2px 0 16px; }
   </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
@@ -69,8 +91,17 @@
       <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
     </div>
     <a class="sb-link" href="../index.html"><span class="sb-num">⬡</span>OS &amp; Networks hub</a>
-    <div class="sidebar-label">Pillars</div>
-    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Operating Systems</a>
+    <div class="sidebar-label">Operating Systems</div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Roadmap</a>
+    <a class="sb-link" href="processes.html"><span class="sb-num">01</span> Processes &amp; Threads</a>
+    <a class="sb-link" href="scheduling.html"><span class="sb-num">02</span> CPU Scheduling</a>
+    <a class="sb-link" href="memory.html"><span class="sb-num">03</span> Memory Management</a>
+    <a class="sb-link" href="concurrency.html"><span class="sb-num">04</span> Concurrency</a>
+    <a class="sb-link" href="deadlocks.html"><span class="sb-num">05</span> Deadlocks</a>
+    <a class="sb-link" href="filesystems.html"><span class="sb-num">06</span> Filesystems</a>
+    <a class="sb-link" href="io.html"><span class="sb-num">07</span> I/O &amp; Interrupts</a>
+    <a class="sb-link" href="boot.html"><span class="sb-num">08</span> Boot to Shell</a>
+    <div class="sidebar-label" style="margin-top:20px">Other pillar</div>
     <a class="sb-link" href="../networking/index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
   </aside>
   <main class="main">
@@ -79,19 +110,28 @@
   <div class="tf-hub-hero anim-in">
     <div class="tf-hub-eyebrow"><i class="ti ti-settings"></i> Pillar 1 · Operating Systems</div>
     <h1 class="tf-hub-title">Operating <span>Systems</span></h1>
-    <p class="tf-hub-sub">How one machine runs your program. Eight guides are being written in the full TechForge style — diagrams, quizzes, interview questions — and land here topic by topic.</p>
+    <p class="tf-hub-sub">How one machine runs your program. Eight guides in the full TechForge style — theory, diagrams, code, interview questions and a quiz each. All live now.</p>
   </div>
 
-  <div class="sec-label anim-in">The roadmap</div>
-  <div class="rm-list anim-in">
-    <div class="rm-item rm-soon"><span class="rm-num">01</span><div class="rm-body"><div class="rm-title">Processes &amp; Threads</div><div class="rm-desc">What a process really is, threads vs processes, context switching, and the cost of each.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">02</span><div class="rm-body"><div class="rm-title">CPU Scheduling</div><div class="rm-desc">FCFS, round-robin, priority and multilevel queues — how the OS decides who runs next.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">03</span><div class="rm-body"><div class="rm-title">Memory Management</div><div class="rm-desc">Virtual memory, paging, page faults, TLBs — the illusion every process lives alone.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">04</span><div class="rm-body"><div class="rm-title">Concurrency &amp; Synchronization</div><div class="rm-desc">Race conditions, mutexes, semaphores, and why your tests pass but prod deadlocks.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">05</span><div class="rm-body"><div class="rm-title">Deadlocks</div><div class="rm-desc">The four conditions, prevention vs avoidance vs detection, and the banker's algorithm.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">06</span><div class="rm-body"><div class="rm-title">Filesystems</div><div class="rm-desc">Inodes, journaling, and what actually happens on open(), write(), fsync().</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">07</span><div class="rm-body"><div class="rm-title">I/O &amp; Interrupts</div><div class="rm-desc">Polling vs interrupts vs DMA, blocking vs non-blocking I/O, and where epoll fits.</div></div><span class="rm-badge">Writing</span></div>
-    <div class="rm-item rm-soon"><span class="rm-num">08</span><div class="rm-body"><div class="rm-title">Boot to Shell</div><div class="rm-desc">From power button to prompt — BIOS/UEFI, kernel init, and the process tree.</div></div><span class="rm-badge">Writing</span></div>
+  <div class="sec-label anim-in">Start here</div>
+  <h2 class="sub-h2 anim-in">What is an operating system?</h2>
+  <div class="os-intro anim-in">
+    <p>An <strong>operating system (OS)</strong> is the software layer between your programs and the raw hardware. Your code never talks to the CPU, RAM or disk directly — it asks the OS, which arbitrates those resources among every running program and hands each one a clean, safe abstraction to work with.</p>
+    <div class="os-def"><i class="ti ti-cpu"></i><p>An OS manages four things: the <strong>CPU</strong> (deciding who runs, when), <strong>memory</strong> (allocation and protection), <strong>storage</strong> (files and directories), and <strong>I/O devices</strong> — all while giving each program the illusion that it owns the whole machine.</p></div>
+    <p>That illusion is the whole trick. Processes think they have all of memory (<strong>virtual memory</strong>), all of the CPU (<strong>scheduling</strong>), and private files (<strong>the filesystem</strong>). Master how the OS creates those illusions and the rest of computer science — databases, containers, networking, system design — stops feeling like magic. It’s also the single richest source of interview questions.</p>
+  </div>
+
+  <div class="sec-label anim-in">Learning path</div>
+  <p class="lp-note anim-in">Eight guides, built to be read top to bottom — each one assumes the last. Click any step to jump in.</p>
+  <div class="lp-track anim-in">
+    <div class="lp-step"><span class="lp-node">1</span><a class="lp-card" href="processes.html"><div class="lp-body"><div class="lp-title">Processes &amp; Threads</div><div class="lp-desc">What a process is, threads vs processes, fork/exec, IPC, and the states in between.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">2</span><a class="lp-card" href="scheduling.html"><div class="lp-body"><div class="lp-title">CPU Scheduling</div><div class="lp-desc">FCFS, SJF, round-robin, priority and MLFQ — plus the metrics and Gantt charts interviewers love.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">3</span><a class="lp-card" href="memory.html"><div class="lp-body"><div class="lp-title">Memory Management</div><div class="lp-desc">Virtual memory, paging, the TLB, page faults, thrashing and replacement policies.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">4</span><a class="lp-card" href="concurrency.html"><div class="lp-body"><div class="lp-title">Concurrency &amp; Synchronization</div><div class="lp-desc">Race conditions, critical sections, mutexes, semaphores and producer/consumer.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">5</span><a class="lp-card" href="deadlocks.html"><div class="lp-body"><div class="lp-title">Deadlocks</div><div class="lp-desc">The four Coffman conditions, prevention vs avoidance, and the Banker’s algorithm.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">6</span><a class="lp-card" href="filesystems.html"><div class="lp-body"><div class="lp-title">Filesystems</div><div class="lp-desc">Inodes, hard vs symbolic links, journaling, and what open/write/fsync really do.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">7</span><a class="lp-card" href="io.html"><div class="lp-body"><div class="lp-title">I/O &amp; Interrupts</div><div class="lp-desc">Polling vs interrupts vs DMA, blocking vs non-blocking, epoll and the C10k problem.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">8</span><a class="lp-card" href="boot.html"><div class="lp-body"><div class="lp-title">Boot to Shell</div><div class="lp-desc">Firmware to shell — BIOS/UEFI, GRUB, kernel init, PID 1, and user vs kernel mode.</div></div><span class="lp-go">→</span></a></div>
   </div>
 
     </div>
