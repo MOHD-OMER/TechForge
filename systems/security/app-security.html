@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Secure Development — Security | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/app-security.html"/>
+  <meta property="og:title" content="Secure Development — Security | TechForge"/>
+  <meta property="og:description" content="Secure Development — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/sec-appsec" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Security Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Security</div>
+      <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+      <a class="sb-link" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+      <a class="sb-link" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+      <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+      <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+      <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+      <a class="sb-link active" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+      <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Security · Secure Development</div>
+        <h1 class="pg-title">Secure <span>Development</span></h1>
+        <p class="pg-sub">Secrets, dependencies, and the supply chain — where modern breaches actually start, and how teams shift left.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-shield-lock"></i> Security</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-key-off"></i></span><h2 class="sec-title">Secrets Management</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Hardcoded secrets are the breach that never stops giving: committed once, they live in git history forever, and public-repo scanners find them in minutes. Rule: <strong>secrets never touch source code.</strong> They come from environment variables, a secrets manager (Vault, cloud KMS/Secrets Manager), or mounted files — injected at runtime, never baked in.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">bash — the mistake and the guardrails</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># NEVER: committed to git, lives in history forever</span>
+DB_PASSWORD = <span class="st">"hunter2"</span>
+
+<span class="cm"># runtime injection instead</span>
+export DB_PASSWORD="$(vault kv get -field=pw secret/db)"
+
+<span class="cm"># guardrails</span>
+echo ".env" &gt;&gt; .gitignore
+git secrets --scan        <span class="cm"># pre-commit hook blocks known patterns</span></pre>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>If a secret ever hit a commit, <strong>rotate it</strong> — deleting the line doesn’t help, it’s in the history and probably already scraped. Rotation, not redaction, is the fix.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-packages"></i></span><h2 class="sec-title">Dependency & Supply-Chain Security</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Your code is a sliver of what ships — the rest is dependencies, and their dependencies, hundreds deep. Attackers noticed: <strong>supply-chain attacks</strong> compromise a popular package (typosquatting, hijacked maintainer accounts, malicious updates) so your build pulls in their code with full application privileges.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Threat</th><th>Example</th><th>Defense</th></tr></thead><tbody><tr><td>Known CVE in a dep</td><td>Log4Shell (log4j RCE, 2021)</td><td><code>npm/pip audit</code>, Dependabot, patch cadence</td></tr><tr><td>Typosquatting</td><td><code>reqeusts</code> vs <code>requests</code></td><td>Pin names + versions; review adds</td></tr><tr><td>Hijacked package</td><td>event-stream (2018)</td><td>Lockfiles, integrity hashes, provenance</td></tr><tr><td>Build-system compromise</td><td>SolarWinds (2020)</td><td>Signed builds, reproducible builds, SBOM</td></tr></tbody></table></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>A <strong>lockfile</strong> (package-lock.json, poetry.lock) pins exact versions <em>and</em> integrity hashes, so a tampered re-publish under the same version number fails the install. Commit it — it’s a security control, not just reproducibility.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-arrow-left-bar"></i></span><h2 class="sec-title">Shift Left — Security in the Pipeline</h2></div>
+        <div class="section-divider"></div>        <p class="prose">The earlier a flaw is caught, the cheaper it is — fixing in design costs a fraction of fixing in production. “<strong>Shift left</strong>” bakes automated security checks into the pipeline so problems surface at commit time, not incident time.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Check</th><th>What it catches</th><th>When it runs</th></tr></thead><tbody><tr><td><strong>SAST</strong></td><td>Static analysis of your source (injection, bad crypto)</td><td>On commit / PR</td></tr><tr><td><strong>SCA</strong></td><td>Vulnerable/again-licensed dependencies</td><td>On commit + continuously</td></tr><tr><td><strong>Secret scanning</strong></td><td>Committed keys and tokens</td><td>Pre-commit + CI</td></tr><tr><td><strong>DAST</strong></td><td>Runtime flaws against a live build</td><td>Staging / nightly</td></tr><tr><td><strong>IaC scanning</strong></td><td>Misconfigured cloud/Terraform</td><td>On commit</td></tr></tbody></table></div>        <p class="prose">None replace human review or threat modeling — they catch the known and the mechanical, freeing humans for the logic flaws tools can’t see (like an IDOR that’s syntactically perfect code).</p>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-checklist"></i></span><h2 class="sec-title">Baseline Hardening Checklist</h2></div>
+        <div class="section-divider"></div>        <div class="compare-strip">
+          <div class="cs-item"><div class="cs-head cs-ok">Do</div><ul class="cs-list"><li>Validate input at trust boundaries (allowlist)</li><li>Encode output for its context</li><li>Parameterize every query</li><li>Least-privilege every credential + service</li><li>Log security events; alert on anomalies</li><li>Patch on a cadence; watch your SBOM</li></ul></div>
+          <div class="cs-item"><div class="cs-head cs-red">Avoid</div><ul class="cs-list"><li>Trusting client-side validation alone</li><li>Detailed error messages/stack traces to users</li><li>Default credentials and debug mode in prod</li><li>One god-credential shared across services</li><li>Rolling your own crypto or auth</li><li>“We’ll add security later”</li></ul></div>
+        </div>      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>A secret was committed to git and pushed. What now?</q><p>Rotate it immediately — assume it’s compromised. Removing the line or rewriting history doesn’t help; it was public, and automated scrapers hit public repos within minutes. Then add secret scanning so it can’t recur.</p></div><div class="iq"><q>What is a software supply-chain attack?</q><p>Compromising something upstream of you — a dependency, a maintainer account, the build system — so malicious code ships inside a trusted artifact with your app’s privileges. Log4Shell, event-stream, and SolarWinds are the canonical cases.</p></div><div class="iq"><q>Why commit a lockfile?</q><p>It pins exact versions and integrity hashes, so builds are reproducible AND a tampered re-publish under the same version fails verification. It’s a supply-chain control, not just a convenience.</p></div><div class="iq"><q>What does “shift left” mean and why?</q><p>Move security checks earlier — commit/PR time rather than post-deploy. Flaws cost far less to fix before release, and automated SAST/SCA/secret scanning catch the mechanical issues so human review can focus on logic flaws.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. A secret accidentally committed to git should be…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">deleted from the file</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">removed via history rewrite only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">rotated immediately</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">left if the repo is private</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Log4Shell is an example of…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">XSS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a vulnerable-dependency (CVE) risk</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CSRF</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a DDoS</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A lockfile provides…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">faster installs only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">pinned versions + integrity hashes</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">encryption of packages</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">license compliance only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. SAST analyzes…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a running application</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">your source code statically</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">network traffic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">dependencies at runtime</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. “Shift left” means catching issues…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">in production faster</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">earlier in the pipeline</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only in code review</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">after deployment</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="network-security.html">← Network Security</a>
+        <a class="nav-link" href="incident-response.html">Attacks &amp; Response →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

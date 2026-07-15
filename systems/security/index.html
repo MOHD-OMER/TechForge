@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Security roadmap — fundamentals and threat modeling, cryptography, authentication, OWASP web attacks, TLS/PKI, network security, secure development and incident response. Eight full guides with diagrams, interview questions and quizzes."/>
+  <meta property="og:title" content="Security — TechForge"/>
+  <meta property="og:description" content="How systems get attacked and defended — the security pillar of the Systems track."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Security — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../../assets/css/hub.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); }
+    .rm-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    .rm-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 15px 18px; color: var(--text);
+    }
+    .rm-item.rm-soon { border-style: dashed; }
+    .rm-num { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--text3); width: 24px; flex-shrink: 0; }
+    .rm-body { flex: 1; min-width: 0; }
+    .rm-title { font-size: 14.5px; font-weight: 700; }
+    .rm-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.55; }
+    .sub-h2 { font-family: var(--display); font-size: clamp(19px,2.6vw,25px); font-weight: 700; letter-spacing: -.3px; margin: 4px 0 14px; }
+    .os-intro { max-width: 720px; margin-bottom: 6px; }
+    .os-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; margin: 0 0 14px; }
+    .os-intro strong { color: var(--text); }
+    .os-def { display: flex; gap: 13px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 15px 17px; margin: 4px 0 16px; }
+    .os-def i { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .os-def p { font-size: 13px; color: var(--text2); line-height: 1.7; margin: 0; }
+    .lp-track { position: relative; margin: 8px 0 30px; padding-left: 44px; }
+    .lp-track::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
+    .lp-step { position: relative; margin-bottom: 12px; }
+    .lp-node { position: absolute; left: -44px; top: 13px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono,monospace); font-size: 12px; font-weight: 700; color: var(--accent); z-index: 1; }
+    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .lp-card:hover, .lp-card:focus-visible { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent); }
+    .lp-step:hover .lp-node { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .lp-body { flex: 1; min-width: 0; }
+    .lp-title { font-size: 14.5px; font-weight: 700; }
+    .lp-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+    .lp-go { color: var(--text3); flex-shrink: 0; transition: transform .2s, color .2s; }
+    .lp-card:hover .lp-go { transform: translateX(3px); color: var(--accent); }
+    .lp-note { font-size: 12.5px; color: var(--text3); margin: 2px 0 16px; }
+    @media (prefers-reduced-motion: reduce) { .lp-card, .lp-go { transition: none; } .lp-card:hover { transform: none; } }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body class="tf-hub-page">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../../index.html"><div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="../index.html"><span class="sb-num">⬡</span>OS &amp; Networks hub</a>
+    <div class="sidebar-label">Security</div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Roadmap</a>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+    <a class="sb-link" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+    <a class="sb-link" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+    <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+    <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+    <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+    <a class="sb-link" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+    <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+    <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+    <a class="sb-link" href="../os/index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Operating Systems</a>
+    <a class="sb-link" href="../networking/index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
+  </aside>
+  <main class="main">
+    <div class="page page-wide">
+
+  <div class="tf-hub-hero anim-in">
+    <div class="tf-hub-eyebrow"><i class="ti ti-shield-lock"></i> Pillar 3 · Security</div>
+    <h1 class="tf-hub-title">Secur<span>ity</span></h1>
+    <p class="tf-hub-sub">How systems get attacked and defended. Eight guides in the full TechForge style — diagrams, quizzes, interview questions — from threat modeling to incident response.</p>
+  </div>
+
+  <div class="sec-label anim-in">Start here</div>
+  <h2 class="sub-h2 anim-in">What is security, really?</h2>
+  <div class="os-intro anim-in">
+    <p><strong>Security</strong> is not a feature you bolt on — it’s a property you design for. Every control defends one of three things: that data stays <strong>secret</strong>, stays <strong>unaltered</strong>, and stays <strong>available</strong>. Attackers look for the one place you forgot.</p>
+    <div class="os-def"><i class="ti ti-shield-lock"></i><p>The goal isn’t perfection — it’s <strong>raising the cost</strong> of attack above its reward and <strong>shrinking the blast radius</strong> when a control fails. Threat modeling, least privilege, and defense in depth are the three ideas everything else hangs off.</p></div>
+    <p>These guides are strictly <strong>defensive and educational</strong>: understand how attacks work so you can stop them. Practice only on systems you own or are explicitly authorized to test — your own lab, CTFs, or a signed engagement.</p>
+  </div>
+
+  <div class="sec-label anim-in">Learning path</div>
+  <p class="lp-note anim-in">Eight guides, in order — diagrams, real examples, interview questions and a quiz in each.</p>
+  <div class="lp-track anim-in">
+    <div class="lp-step"><span class="lp-node">1</span><a class="lp-card" href="fundamentals.html"><div class="lp-body"><div class="lp-title">Security Fundamentals</div><div class="lp-desc">The CIA triad, threat modeling with STRIDE, defense in depth and least privilege.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">2</span><a class="lp-card" href="crypto.html"><div class="lp-body"><div class="lp-title">Cryptography Basics</div><div class="lp-desc">Symmetric vs asymmetric, hashing, signatures, key exchange — and the golden rules.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">3</span><a class="lp-card" href="authentication.html"><div class="lp-body"><div class="lp-title">AuthN &amp; AuthZ</div><div class="lp-desc">Password hashing done right, sessions vs JWT, OAuth 2.0 and OIDC without hand-waving.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">4</span><a class="lp-card" href="web-security.html"><div class="lp-body"><div class="lp-title">Web Attacks (OWASP)</div><div class="lp-desc">SQL injection, XSS, CSRF, SSRF and IDOR — how each works and its one correct fix.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">5</span><a class="lp-card" href="tls-pki.html"><div class="lp-body"><div class="lp-title">TLS &amp; PKI</div><div class="lp-desc">The padlock explained — certificates, the chain of trust, the handshake and forward secrecy.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">6</span><a class="lp-card" href="network-security.html"><div class="lp-body"><div class="lp-title">Network Security</div><div class="lp-desc">Firewalls, segmentation, DMZs, DDoS defense and the zero-trust model.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">7</span><a class="lp-card" href="app-security.html"><div class="lp-body"><div class="lp-title">Secure Development</div><div class="lp-desc">Secrets management, dependency and supply-chain risk, and shifting security left.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">8</span><a class="lp-card" href="incident-response.html"><div class="lp-body"><div class="lp-title">Attacks &amp; Incident Response</div><div class="lp-desc">The kill chain, why phishing wins, the PICERL playbook and blameless postmortems.</div></div><span class="lp-go">→</span></a></div>
+  </div>
+
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../../assets/js/topics-manifest.js?v=2"></script>
+<script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+<script src="../../assets/js/utils.js?v=8"></script>
+<script src="../../assets/js/platform.js?v=4"></script>
+</body>
+</html>

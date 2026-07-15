@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Authentication & Authorization — Security | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/authentication.html"/>
+  <meta property="og:title" content="Authentication & Authorization — Security | TechForge"/>
+  <meta property="og:description" content="Authentication & Authorization — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/sec-auth" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Security Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Security</div>
+      <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+      <a class="sb-link" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+      <a class="sb-link active" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+      <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+      <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+      <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+      <a class="sb-link" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+      <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Security · AuthN & AuthZ</div>
+        <h1 class="pg-title">AuthN <span>&amp;</span> AuthZ</h1>
+        <p class="pg-sub">Who are you, and what may you do — passwords done right, sessions vs tokens, OAuth without the hand-waving.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-shield-lock"></i> Security</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-user-check"></i></span><h2 class="sec-title">Two Different Questions</h2></div>
+        <div class="section-divider"></div>        <p class="prose"><strong>Authentication</strong> (authn) verifies identity: <em>who are you?</em> <strong>Authorization</strong> (authz) verifies permission: <em>may you do this?</em> They fail differently — a broken login is authn; reading someone else’s invoice by changing an ID in the URL is authz (and it’s the more common bug). HTTP even splits the status codes: <code>401</code> unauthenticated, <code>403</code> unauthorized.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Factors of authentication: something you <strong>know</strong> (password), <strong>have</strong> (phone, hardware key), <strong>are</strong> (biometrics). <strong>MFA</strong> = two different factors — two passwords is not MFA.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-lock-password"></i></span><h2 class="sec-title">Storing Passwords — the Only Right Way</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Never store passwords, encrypted or otherwise — store a <strong>slow, salted hash</strong>. The <strong>salt</strong> (random, per-user, stored beside the hash) kills rainbow tables and makes identical passwords hash differently. The <strong>slowness</strong> (bcrypt, scrypt, argon2 — tunable cost) turns a billion-guesses-per-second GPU into thousands.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — argon2 / bcrypt pattern</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">from</span> argon2 <span class="kw">import</span> PasswordHasher
+
+ph = <span class="fn">PasswordHasher</span>()            <span class="cm"># sane defaults: memory-hard, salted</span>
+digest = ph.<span class="fn">hash</span>(<span class="st">"correct horse battery staple"</span>)
+<span class="cm"># store digest; salt & params live inside the string</span>
+
+ph.<span class="fn">verify</span>(digest, attempt)       <span class="cm"># raises on mismatch</span></pre>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>MD5/SHA-256 for passwords is the classic breach headline: they’re <em>designed to be fast</em>, which is exactly what a cracker wants. Add rate limiting and breach-password denylists; consider pepper (server-side secret) for depth.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-cookie"></i></span><h2 class="sec-title">Sessions vs JWT</h2></div>
+        <div class="section-divider"></div>        <div class="compare-strip">
+          <div class="cs-item"><div class="cs-head cs-ok">Server sessions</div><ul class="cs-list"><li>Opaque ID in an httpOnly cookie</li><li>State server-side — instant revocation</li><li>Needs shared session store to scale (Redis)</li><li>Default choice for first-party web apps</li></ul></div>
+          <div class="cs-item"><div class="cs-head cs-red">JWT tokens</div><ul class="cs-list"><li>Signed claims live in the token itself</li><li>Stateless — any instance verifies locally</li><li>Revocation before expiry needs a denylist</li><li>Fits APIs, microservices, mobile clients</li></ul></div>
+        </div>        <p class="prose">Cookie flags are non-negotiable either way: <code>httpOnly</code> (JS can’t read it — blunts XSS token theft), <code>Secure</code> (HTTPS only), <code>SameSite=Lax/Strict</code> (blunts CSRF). For JWTs: short expiry + refresh tokens, verify the algorithm server-side (reject <code>alg: none</code>), and never put secrets in the payload — it’s only <em>signed</em>, not encrypted.</p>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-brand-oauth"></i></span><h2 class="sec-title">OAuth 2.0 & OIDC — Delegated Access</h2></div>
+        <div class="section-divider"></div>        <p class="prose">OAuth answers: how does app A get limited access to your data in service B <em>without ever seeing your B password?</em> The <strong>authorization-code flow</strong>: app redirects you to the provider → you log in and consent <em>there</em> → provider redirects back with a one-time code → app’s backend exchanges code + client secret for an <strong>access token</strong>, scoped and expiring.</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 190" width="100%" role="img" aria-label="OAuth authorization code flow between user, app, and identity provider" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <rect x="15" y="20" width="100" height="34" rx="7" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="65" y="41" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Browser</text>
+      <rect x="180" y="20" width="100" height="34" rx="7" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="230" y="41" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Your App</text>
+      <rect x="345" y="20" width="100" height="34" rx="7" fill="var(--surface2)" stroke="var(--amber,#fbbf24)" stroke-width="1.5"/><text x="395" y="36" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Provider</text><text x="395" y="48" text-anchor="middle" fill="var(--text3)" font-size="8">(Google, GitHub)</text>
+      <line x1="65" y1="54" x2="65" y2="170" stroke="var(--border2,#263449)" stroke-width="1.2"/>
+      <line x1="230" y1="54" x2="230" y2="170" stroke="var(--border2,#263449)" stroke-width="1.2"/>
+      <line x1="395" y1="54" x2="395" y2="170" stroke="var(--border2,#263449)" stroke-width="1.2"/>
+      <line x1="65" y1="72" x2="393" y2="72" stroke="var(--cyan,#22d3ee)" stroke-width="1.3" marker-end="url(#oa)"/><text x="228" y="66" text-anchor="middle" fill="var(--cyan,#22d3ee)" font-size="9">1 · redirect: login + consent at provider</text>
+      <line x1="395" y1="100" x2="67" y2="100" stroke="var(--amber,#fbbf24)" stroke-width="1.3" marker-end="url(#oa)"/><text x="228" y="94" text-anchor="middle" fill="var(--amber,#fbbf24)" font-size="9">2 · redirect back with one-time code</text>
+      <line x1="230" y1="128" x2="393" y2="128" stroke="var(--green,#34d399)" stroke-width="1.3" marker-end="url(#oa)"/><text x="310" y="122" text-anchor="middle" fill="var(--green,#34d399)" font-size="9">3 · backend: code + secret</text>
+      <line x1="395" y1="156" x2="232" y2="156" stroke="var(--red,#f87171)" stroke-width="1.3" marker-end="url(#oa)"/><text x="310" y="150" text-anchor="middle" fill="var(--red,#f87171)" font-size="9">4 · scoped access token</text>
+      <defs><marker id="oa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--text2)"/></marker></defs>
+    </svg></div>        <p class="prose"><strong>OIDC</strong> is a thin identity layer on top: an <code>id_token</code> (JWT) asserting who logged in — OAuth is for <em>access</em>, OIDC is for <em>login</em>. For authorization inside your app, start with <strong>RBAC</strong> (roles → permissions) and check permissions <em>server-side on every request</em> — never trust the client’s word for its role.</p>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>401 vs 403 — and which layer failed?</q><p>401: we don’t know who you are — authentication failed, retry with credentials. 403: we know exactly who you are and the answer is no — authorization denied. Different bugs, different fixes.</p></div><div class="iq"><q>Why bcrypt/argon2 over SHA-256 for passwords?</q><p>SHA-256 is built for speed — GPUs try billions per second. bcrypt/scrypt/argon2 are deliberately slow and (argon2/scrypt) memory-hard, with tunable cost, collapsing offline cracking rates. Plus built-in per-user salts.</p></div><div class="iq"><q>How would you revoke a JWT before it expires?</q><p>You can’t un-sign it — so keep expiry short with refresh tokens, and maintain a server-side denylist of revoked token IDs (jti) checked on each request. Note that this reintroduces state — the honest trade-off interviewers want acknowledged.</p></div><div class="iq"><q>Walk through the OAuth authorization-code flow — why the code step?</q><p>Redirect → consent at provider → code back via browser → backend exchanges code + client secret for tokens. The code exists because the browser redirect is observable: the code alone is useless without the client secret (or PKCE verifier for public clients), so an intercepted redirect leaks nothing usable.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Changing /invoice/17 to /invoice/18 and seeing another user’s data is broken…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">authentication</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">authorization</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">encryption</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">availability</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. A salt primarily defeats…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">brute force on one account</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">precomputed rainbow tables</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">phishing</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">keyloggers</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Which cookie flag stops JavaScript from reading the session cookie?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Secure</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">SameSite</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">httpOnly</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Path</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. JWT payloads are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">encrypted</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">signed but readable by anyone</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">hashed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">visible only to the issuer</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. In OAuth, your app exchanges the authorization code for tokens using…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the user’s password</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">its client secret (or PKCE verifier)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the id_token</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a refresh token</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="crypto.html">← Cryptography Basics</a>
+        <a class="nav-link" href="web-security.html">Web Attacks (OWASP) →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

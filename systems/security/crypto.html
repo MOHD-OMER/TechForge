@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Cryptography Basics — Security | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/crypto.html"/>
+  <meta property="og:title" content="Cryptography Basics — Security | TechForge"/>
+  <meta property="og:description" content="Cryptography Basics — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/sec-crypto" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Security Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Security</div>
+      <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+      <a class="sb-link active" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+      <a class="sb-link" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+      <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+      <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+      <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+      <a class="sb-link" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+      <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Security · Cryptography</div>
+        <h1 class="pg-title">Cryptography <span>Basics</span></h1>
+        <p class="pg-sub">Symmetric, asymmetric, hashing, signatures — the four primitives everything else is built from.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-shield-lock"></i> Security</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-key"></i></span><h2 class="sec-title">Symmetric vs Asymmetric</h2></div>
+        <div class="section-divider"></div>        <p class="prose"><strong>Symmetric</strong> crypto (AES): one shared key encrypts and decrypts — fast, but both sides must already share the secret. <strong>Asymmetric</strong> crypto (RSA, elliptic curves): a public/private key pair — anyone encrypts with the public key, only the private key decrypts. Slow, but solves key distribution.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th></th><th>Symmetric (AES-256)</th><th>Asymmetric (RSA/ECC)</th></tr></thead><tbody><tr><td>Keys</td><td>One shared secret</td><td>Public + private pair</td></tr><tr><td>Speed</td><td>Fast — bulk data</td><td>~1000× slower — small payloads</td></tr><tr><td>Solves</td><td>Confidentiality at speed</td><td>Key exchange, signatures, identity</td></tr><tr><td>Real use</td><td>Disk/DB/TLS session data</td><td>TLS handshake, SSH, JWT signing</td></tr></tbody></table></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Real systems are <strong>hybrid</strong>: TLS uses asymmetric crypto once to agree on a symmetric session key, then AES for everything after. Best of both — this exact sentence is a favourite interview answer.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-hash"></i></span><h2 class="sec-title">Hashing — Fingerprints, Not Encryption</h2></div>
+        <div class="section-divider"></div>        <p class="prose">A <strong>hash function</strong> (SHA-256) maps any input to a fixed-size digest. Three properties make it cryptographic: <strong>one-way</strong> (can’t reverse), <strong>deterministic</strong> (same input → same digest), <strong>collision-resistant</strong> (can’t find two inputs with the same digest). Change one bit of input and the digest changes completely.</p>        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">bash — hashes in the wild</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># verify a download wasn't corrupted or tampered</span>
+sha256sum ubuntu-24.04.iso
+
+<span class="cm"># git commit IDs are hashes of content + history</span>
+git log --format=%H -1</pre>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>Hashing is not encryption</strong> — nothing is hidden and there’s no key; it’s a fingerprint. And fast hashes (SHA-256) are the <em>wrong</em> tool for passwords — that needs deliberately slow ones (bcrypt, argon2), covered in the next guide.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-signature"></i></span><h2 class="sec-title">Signatures & Key Exchange</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Flip asymmetric crypto around and you get <strong>digital signatures</strong>: sign a message’s hash with your <em>private</em> key; anyone verifies with your <em>public</em> key. That yields integrity (any change breaks the signature), authenticity (only the key holder could sign), and non-repudiation (they can’t deny signing).</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 200" width="100%" role="img" aria-label="Digital signature flow: sender hashes the message and signs the hash with the private key; receiver verifies with the public key and compares hashes" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <rect x="15" y="30" width="120" height="34" rx="7" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="75" y="51" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">message</text>
+      <rect x="15" y="90" width="120" height="34" rx="7" fill="var(--surface2)" stroke="var(--amber,#fbbf24)" stroke-width="1.5"/><text x="75" y="111" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">SHA-256 hash</text>
+      <rect x="15" y="150" width="120" height="34" rx="7" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="75" y="166" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">signature</text><text x="75" y="178" text-anchor="middle" fill="var(--text3)" font-size="8">sign w/ private key</text>
+      <line x1="75" y1="64" x2="75" y2="90" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#ga)"/>
+      <line x1="75" y1="124" x2="75" y2="150" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#ga)"/>
+      <line x1="135" y1="167" x2="300" y2="167" stroke="var(--text3)" stroke-width="1.4" stroke-dasharray="5 3" marker-end="url(#ga)"/>
+      <text x="217" y="160" text-anchor="middle" fill="var(--text3)" font-size="9">sent with message</text>
+      <rect x="300" y="90" width="145" height="34" rx="7" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="372" y="106" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">verify w/ public key</text><text x="372" y="118" text-anchor="middle" fill="var(--text3)" font-size="8">recompute hash, compare</text>
+      <line x1="372" y1="150" x2="372" y2="124" stroke="var(--text3)" stroke-width="1.4" marker-end="url(#ga)"/>
+      <text x="372" y="170" text-anchor="middle" fill="var(--green,#34d399)" font-size="9">match ✓ = authentic + untampered</text>
+      <defs><marker id="ga" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--text2)"/></marker></defs>
+    </svg></div>        <p class="prose"><strong>Diffie-Hellman key exchange</strong> solves the bootstrap problem: two parties each combine their private value with the other’s public value and arrive at the same shared secret — an eavesdropper seeing both public values still can’t compute it. This runs inside every TLS handshake (as ECDHE).</p>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-alert-octagon"></i></span><h2 class="sec-title">The Golden Rules</h2></div>
+        <div class="section-divider"></div>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Rule</th><th>Why</th></tr></thead><tbody><tr><td><strong>Never roll your own crypto</strong></td><td>Decades of cryptanalysis beat any clever homebrew; use vetted libraries (libsodium, your platform’s TLS)</td></tr><tr><td><strong>Never reuse a nonce/IV</strong></td><td>Nonce reuse in AES-GCM catastrophically breaks confidentiality and integrity</td></tr><tr><td><strong>Keys are the secret, not the algorithm</strong></td><td>Kerckhoffs’s principle: assume the attacker knows everything except the key</td></tr><tr><td><strong>Use authenticated encryption</strong></td><td>AES-GCM / ChaCha20-Poly1305 — encryption without integrity invites tampering (padding-oracle attacks)</td></tr><tr><td><strong>Plan for rotation</strong></td><td>Keys leak; design so rotating them is routine, not a crisis</td></tr></tbody></table></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Why does TLS use both asymmetric and symmetric crypto?</q><p>Asymmetric solves the meeting-of-strangers problem (key exchange + server identity) but is ~1000× too slow for data. So the handshake uses ECDHE + certificates once, derives a symmetric session key, and AES/ChaCha20 carries the actual traffic.</p></div><div class="iq"><q>Encryption vs hashing vs encoding.</q><p>Encryption: reversible with a key — confidentiality. Hashing: one-way fingerprint, no key — integrity. Encoding (base64): reversible with no key at all — a data format, and zero security. Calling base64 “encryption” is an instant red flag.</p></div><div class="iq"><q>What does a digital signature prove?</q><p>That the holder of the private key produced this exact content: verify the signature over the message hash with the public key. Any modification breaks it (integrity), only the key holder could create it (authenticity, non-repudiation).</p></div><div class="iq"><q>How does Diffie-Hellman work at a high level?</q><p>Each side combines its private value with the other’s public value; the math (discrete log / elliptic curves) makes both arrive at the same secret while an observer of the public values can’t compute it. Ephemeral DH (the E in ECDHE) gives forward secrecy — session keys die with the session.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Bulk data in TLS is encrypted with…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">RSA</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the certificate</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a symmetric session key (AES/ChaCha20)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">SHA-256</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Which is NOT a property of a cryptographic hash?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">one-way</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">deterministic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">reversible with the key</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">collision-resistant</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. You sign with your ___ key; others verify with your ___ key.</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">public / private</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">private / public</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">session / master</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">symmetric / asymmetric</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Base64 provides…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">confidentiality</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">integrity</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">no security — it’s an encoding</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">authentication</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Reusing a nonce in AES-GCM…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">is fine</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">slightly weakens it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">catastrophically breaks it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only affects speed</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="fundamentals.html">← Security Fundamentals</a>
+        <a class="nav-link" href="authentication.html">AuthN &amp; AuthZ →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>
