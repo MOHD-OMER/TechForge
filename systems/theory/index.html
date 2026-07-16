@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Theory of computation roadmap — finite automata, regular languages and regex, grammars and parsing, Turing machines, decidability and the halting problem, time complexity, P vs NP and NP-completeness. Eight full guides with diagrams, interview questions and quizzes."/>
+  <meta property="og:title" content="Theory of Computation — TechForge"/>
+  <meta property="og:description" content="What can be computed, and how fast — the theory pillar of the Systems track."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Theory of Computation — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/theory/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../../assets/css/hub.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--purple); }
+    .rm-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    .rm-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 15px 18px; color: var(--text);
+    }
+    .rm-item.rm-soon { border-style: dashed; }
+    .rm-num { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--text3); width: 24px; flex-shrink: 0; }
+    .rm-body { flex: 1; min-width: 0; }
+    .rm-title { font-size: 14.5px; font-weight: 700; }
+    .rm-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.55; }
+    .sub-h2 { font-family: var(--display); font-size: clamp(19px,2.6vw,25px); font-weight: 700; letter-spacing: -.3px; margin: 4px 0 14px; }
+    .os-intro { max-width: 720px; margin-bottom: 6px; }
+    .os-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; margin: 0 0 14px; }
+    .os-intro strong { color: var(--text); }
+    .os-def { display: flex; gap: 13px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 15px 17px; margin: 4px 0 16px; }
+    .os-def i { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .os-def p { font-size: 13px; color: var(--text2); line-height: 1.7; margin: 0; }
+    .lp-track { position: relative; margin: 8px 0 30px; padding-left: 44px; }
+    .lp-track::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: linear-gradient(var(--accent), var(--border)); }
+    .lp-step { position: relative; margin-bottom: 12px; }
+    .lp-node { position: absolute; left: -44px; top: 13px; width: 32px; height: 32px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono,monospace); font-size: 12px; font-weight: 700; color: var(--accent); z-index: 1; }
+    .lp-card { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .lp-card:hover, .lp-card:focus-visible { border-color: var(--accent); transform: translateX(4px); box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent); }
+    .lp-step:hover .lp-node { background: var(--accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
+    .lp-body { flex: 1; min-width: 0; }
+    .lp-title { font-size: 14.5px; font-weight: 700; }
+    .lp-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+    .lp-go { color: var(--text3); flex-shrink: 0; transition: transform .2s, color .2s; }
+    .lp-card:hover .lp-go { transform: translateX(3px); color: var(--accent); }
+    .lp-note { font-size: 12.5px; color: var(--text3); margin: 2px 0 16px; }
+    @media (prefers-reduced-motion: reduce) { .lp-card, .lp-go { transition: none; } .lp-card:hover { transform: none; } }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body class="tf-hub-page">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../../index.html"><div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="../index.html"><span class="sb-num">⬡</span>OS &amp; Networks hub</a>
+    <div class="sidebar-label">Theory of Computation</div>
+    <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-math-function"></i></span>Roadmap</a>
+    <a class="sb-link" href="automata.html"><span class="sb-num">01</span> Finite Automata</a>
+    <a class="sb-link" href="regular-languages.html"><span class="sb-num">02</span> Regular Languages</a>
+    <a class="sb-link" href="grammars.html"><span class="sb-num">03</span> Grammars &amp; Parsing</a>
+    <a class="sb-link" href="turing-machines.html"><span class="sb-num">04</span> Turing Machines</a>
+    <a class="sb-link" href="decidability.html"><span class="sb-num">05</span> Decidability</a>
+    <a class="sb-link" href="complexity.html"><span class="sb-num">06</span> Time Complexity</a>
+    <a class="sb-link" href="p-vs-np.html"><span class="sb-num">07</span> P vs NP</a>
+    <a class="sb-link" href="reductions.html"><span class="sb-num">08</span> Hardness in the Wild</a>
+    <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+    <a class="sb-link" href="../os/index.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Operating Systems</a>
+    <a class="sb-link" href="../networking/index.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking</a>
+    <a class="sb-link" href="../security/index.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Security</a>
+  </aside>
+  <main class="main">
+    <div class="page page-wide">
+
+  <div class="tf-hub-hero anim-in">
+    <div class="tf-hub-eyebrow"><i class="ti ti-math-function"></i> Pillar 4 · Theory of Computation</div>
+    <h1 class="tf-hub-title">Theory of <span>Computation</span></h1>
+    <p class="tf-hub-sub">What can be computed, and how fast. Eight guides in the full TechForge style — diagrams, quizzes, interview questions — from finite automata to P vs NP.</p>
+  </div>
+
+  <div class="sec-label anim-in">Start here</div>
+  <h2 class="sub-h2 anim-in">Why does theory matter?</h2>
+  <div class="os-intro anim-in">
+    <p>Theory of computation is the study of a single question with two halves: <strong>what can a computer solve at all</strong>, and <strong>which of those can it solve fast enough to matter</strong>. It draws the map of every problem you will ever face — and tells you which corner yours sits in.</p>
+    <div class="os-def"><i class="ti ti-math-function"></i><p>The payoff is not abstract. It’s knowing when to <strong>stop</strong>: some problems are provably unsolvable (the halting problem), others provably slow (NP-complete). Recognizing which one you’ve hit saves you from hunting for an algorithm that cannot exist.</p></div>
+    <p>The thread runs from the simplest machine (finite automata, no memory) up the ladder of power to Turing machines (everything computable), then pivots to speed — Big-O, complexity classes, and the million-dollar P vs NP question.</p>
+  </div>
+
+  <div class="sec-label anim-in">Learning path</div>
+  <p class="lp-note anim-in">Eight guides, in order — diagrams, worked examples, interview questions and a quiz in each.</p>
+  <div class="lp-track anim-in">
+    <div class="lp-step"><span class="lp-node">1</span><a class="lp-card" href="automata.html"><div class="lp-body"><div class="lp-title">Finite Automata</div><div class="lp-desc">The simplest computer — states, DFA vs NFA, and the limits of no memory.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">2</span><a class="lp-card" href="regular-languages.html"><div class="lp-body"><div class="lp-title">Regular Languages &amp; Regex</div><div class="lp-desc">The regex you use daily is a state machine — its powers, its limits, and ReDoS.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">3</span><a class="lp-card" href="grammars.html"><div class="lp-body"><div class="lp-title">Grammars &amp; Parsing</div><div class="lp-desc">Add a stack and you get nesting — context-free grammars, PDAs, and how compilers parse.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">4</span><a class="lp-card" href="turing-machines.html"><div class="lp-body"><div class="lp-title">Turing Machines</div><div class="lp-desc">Add an infinite tape and you get the definition of computable itself.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">5</span><a class="lp-card" href="decidability.html"><div class="lp-body"><div class="lp-title">Decidability &amp; Halting</div><div class="lp-desc">Some problems no computer can ever solve — the halting problem, proven.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">6</span><a class="lp-card" href="complexity.html"><div class="lp-body"><div class="lp-title">Time Complexity</div><div class="lp-desc">Solvable isn’t enough — Big-O, the growth hierarchy, and complexity classes.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">7</span><a class="lp-card" href="p-vs-np.html"><div class="lp-body"><div class="lp-title">P vs NP</div><div class="lp-desc">The million-dollar question, NP-completeness, and reductions — explained plainly.</div></div><span class="lp-go">→</span></a></div>
+    <div class="lp-step"><span class="lp-node">8</span><a class="lp-card" href="reductions.html"><div class="lp-body"><div class="lp-title">Hardness in the Wild</div><div class="lp-desc">Spotting hard problems in real work, and what the theory tells you to do next.</div></div><span class="lp-go">→</span></a></div>
+  </div>
+
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../../assets/js/topics-manifest.js?v=2"></script>
+<script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+<script src="../../assets/js/utils.js?v=8"></script>
+<script src="../../assets/js/platform.js?v=4"></script>
+</body>
+</html>

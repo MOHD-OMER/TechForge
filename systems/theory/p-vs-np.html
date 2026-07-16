@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>P vs NP — Theory of Computation | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/theory/p-vs-np.html"/>
+  <meta property="og:title" content="P vs NP — Theory of Computation | TechForge"/>
+  <meta property="og:description" content="P vs NP — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=18" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/toc-pnp" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link current" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Theory Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Theory of Computation</div>
+      <a class="sb-link" href="automata.html"><span class="sb-num">01</span> Finite Automata</a>
+      <a class="sb-link" href="regular-languages.html"><span class="sb-num">02</span> Regular Languages</a>
+      <a class="sb-link" href="grammars.html"><span class="sb-num">03</span> Grammars &amp; Parsing</a>
+      <a class="sb-link" href="turing-machines.html"><span class="sb-num">04</span> Turing Machines</a>
+      <a class="sb-link" href="decidability.html"><span class="sb-num">05</span> Decidability</a>
+      <a class="sb-link" href="complexity.html"><span class="sb-num">06</span> Time Complexity</a>
+      <a class="sb-link active" href="p-vs-np.html"><span class="sb-num">07</span> P vs NP</a>
+      <a class="sb-link" href="reductions.html"><span class="sb-num">08</span> Hardness in the Wild</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+      <a class="sb-link" href="../security/index.html"><span class="sb-num">→</span> Security</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Theory · P vs NP</div>
+        <h1 class="pg-title">P <span>vs</span> NP</h1>
+        <p class="pg-sub">The most important open question in computer science — a million-dollar problem you can explain to anyone in one line.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-math-function"></i> Theory of Computation</span>
+          <span class="badge b-green">Basics → Interview</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">The Question</h2></div>
+        <div class="section-divider"></div>        <p class="prose"><strong>P</strong> = problems we can <em>solve</em> quickly (polynomial time). <strong>NP</strong> = problems whose answers we can <em>check</em> quickly. The question: <strong>if a solution is easy to verify, is it also easy to find?</strong> That is, does P = NP?</p>        <p class="prose">The intuition it captures: a sudoku is trivial to <em>check</em> once filled in, but hard to <em>solve</em> from blank. Recognizing a great symphony vs composing one. Nearly everyone believes <strong>P ≠ NP</strong> (finding is genuinely harder than checking) — but after 50 years, nobody has proved it either way.</p>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>It’s one of the seven <strong>Clay Millennium Problems</strong> — $1,000,000 for a proof. More importantly, a constructive proof that P = NP would break most modern cryptography overnight.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-affiliate"></i></span><h2 class="sec-title">NP-Completeness</h2></div>
+        <div class="section-divider"></div>        <p class="prose">Some NP problems are <strong>NP-complete</strong>: the <em>hardest</em> in NP, and all equivalent — a polynomial-time algorithm for <em>one</em> would solve <em>every</em> NP problem, proving P = NP. <strong>SAT</strong> (is this boolean formula satisfiable?) was the first, via the Cook-Levin theorem. Thousands followed:</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>NP-complete problem</th><th>The question</th></tr></thead><tbody><tr><td><strong>SAT</strong></td><td>Can this boolean formula be made true?</td></tr><tr><td><strong>Travelling Salesman (decision)</strong></td><td>Route visiting all cities under length k?</td></tr><tr><td><strong>Graph coloring</strong></td><td>Color the graph with k colors, no clash?</td></tr><tr><td><strong>Knapsack</strong></td><td>Fit value ≥ V into the weight limit?</td></tr><tr><td><strong>Subset sum</strong></td><td>Does some subset add up to exactly T?</td></tr></tbody></table></div>        <p class="prose">They look unrelated but are secretly the same problem in disguise — each reducible to the others in polynomial time. Crack one efficiently and the whole edifice falls.</p>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-transform"></i></span><h2 class="sec-title">Reductions — the Core Tool</h2></div>
+        <div class="section-divider"></div>        <p class="prose">You prove a new problem is NP-complete by <strong>reduction</strong>: show a known NP-complete problem can be transformed into yours in polynomial time. If yours were easy, so would the known-hard one be — contradiction. Reduction is how hardness spreads, and it’s a practical skill: recognizing that <em>your</em> scheduling problem is really graph coloring tells you to stop hunting for a fast exact algorithm.</p>        <div class="lesson-diagram"><svg viewBox="0 0 420 130" width="100%" role="img" aria-label="Complexity class containment: P inside NP inside PSPACE, with NP-complete problems on the outer edge of NP" style="max-width:420px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
+      <ellipse cx="210" cy="65" rx="200" ry="55" fill="none" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="210" y="30" text-anchor="middle" fill="var(--cyan,#22d3ee)" font-size="11" font-weight="700">NP</text>
+      <ellipse cx="150" cy="65" rx="90" ry="38" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="150" y="70" text-anchor="middle" fill="var(--green,#34d399)" font-size="11" font-weight="700">P</text>
+      <circle cx="355" cy="65" r="30" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="355" y="62" text-anchor="middle" fill="var(--red,#f87171)" font-size="8" font-weight="700">NP-</text><text x="355" y="74" text-anchor="middle" fill="var(--red,#f87171)" font-size="8" font-weight="700">complete</text>
+      <text x="210" y="112" text-anchor="middle" fill="var(--text3)" font-size="9">if P = NP, all three collapse into one</text>
+    </svg></div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-briefcase"></i></span><h2 class="sec-title">What Engineers Actually Do About It</h2></div>
+        <div class="section-divider"></div>        <p class="prose">“It’s NP-complete” is not the end — it means stop seeking a fast <em>exact, general</em> solution and pick a strategy:</p>        <div class="compare-strip">
+          <div class="cs-item"><div class="cs-head cs-ok">Practical escapes</div><ul class="cs-list"><li>Approximation algorithms (provably near-optimal)</li><li>Heuristics (greedy, simulated annealing, genetic)</li><li>Exploit structure — real inputs aren’t worst-case</li><li>SAT/ILP solvers — brutally optimized, fast in practice</li></ul></div>
+          <div class="cs-item"><div class="cs-head cs-red">What NOT to do</div><ul class="cs-list"><li>Hunt for a polynomial exact algorithm (you won’t find one)</li><li>Assume small inputs stay small</li><li>Ignore that your problem IS one of these in disguise</li></ul></div>
+        </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Modern <strong>SAT solvers</strong> routinely crack instances with millions of variables despite SAT being NP-complete — because real-world instances have structure worst-case theory ignores. NP-complete means “no fast algorithm for <em>all</em> inputs”, not “hopeless for <em>your</em> input”.</span></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>Explain P vs NP to a non-expert.</q><p>P = problems you can solve quickly. NP = problems where you can check a proposed answer quickly. The question: if an answer is easy to verify, is it also easy to find? Like: checking a filled sudoku is easy, solving a blank one seems hard. Nobody has proved whether they’re actually the same.</p></div><div class="iq"><q>What is NP-completeness and why does it matter?</q><p>NP-complete problems are the hardest in NP and all inter-reducible: a polynomial algorithm for any one solves all of NP (proving P=NP). So proving your problem NP-complete means a fast exact general solution almost certainly doesn’t exist — redirect to approximation/heuristics.</p></div><div class="iq"><q>How do you prove a problem is NP-complete?</q><p>Show it’s in NP (solutions checkable in poly time), then reduce a known NP-complete problem (SAT, 3-SAT) to it in polynomial time. The reduction proves that solving yours efficiently would solve the known-hard one.</p></div><div class="iq"><q>If a problem is NP-complete, what do you do in practice?</q><p>Don’t seek a fast exact general algorithm. Use approximation algorithms with quality bounds, heuristics (greedy, annealing), exploit that real inputs have structure, or throw a mature SAT/ILP solver at it — they handle huge real instances despite worst-case hardness.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. P is problems solvable quickly; NP is problems whose answers are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">unsolvable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">verifiable quickly</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">exponential to check</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">always hard</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. A polynomial algorithm for ONE NP-complete problem would…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">do nothing special</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">prove P = NP</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only solve that problem</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">break decidability</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. The first proven NP-complete problem was…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Travelling Salesman</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">SAT</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Knapsack</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Graph coloring</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. You prove NP-completeness via…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">induction</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a polynomial-time reduction</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">diagonalization</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the pumping lemma</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. NP-complete means for practical inputs you should…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">give up</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">use approximation/heuristics/solvers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">seek an exact poly algorithm</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">use more RAM</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="complexity.html">← Time Complexity</a>
+        <a class="nav-link" href="reductions.html">Hardness in the Wild →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=8"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>
