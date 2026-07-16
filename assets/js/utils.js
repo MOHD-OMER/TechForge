@@ -479,16 +479,22 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-/* ── Animated next-page button (uiverse-adapted, see forge_base .pn-anim) ──
-   Progressive enhancement: rebuild .page-nav links that end in "→" into the
-   arrow-swap / circle-fill structure. No-op if markup is absent. */
+/* ── Animated page-nav buttons (uiverse-adapted, see forge_base .pn-anim) ──
+   Progressive enhancement: rebuild .page-nav links ending in "→" (next) or
+   starting with "←" (prev, mirrored) into the arrow-swap / circle-fill
+   structure. No-op if markup is absent. */
 document.addEventListener('DOMContentLoaded', function () {
-  var ARROW = 'M16.17 11 10.8 5.64l1.42-1.42L20 12l-7.78 7.78-1.41-1.42L16.17 13H4v-2z';
+  var ARROW_R = 'M16.17 11 10.8 5.64l1.42-1.42L20 12l-7.78 7.78-1.41-1.42L16.17 13H4v-2z';
+  var ARROW_L = 'M7.83 11 13.2 5.64l-1.42-1.42L4 12l7.78 7.78 1.41-1.42L7.83 13H20v-2z';
   document.querySelectorAll('.page-nav .nav-link').forEach(function (a) {
     var t = (a.textContent || '').trim();
-    if (!/→$/.test(t)) return;
-    var label = t.replace(/→$/, '').trim();
+    var isNext = /→$/.test(t);
+    var isPrev = /^←/.test(t);
+    if (!isNext && !isPrev) return;
+    var ARROW = isNext ? ARROW_R : ARROW_L;
+    var label = t.replace(/→$/, '').replace(/^←/, '').trim();
     a.classList.add('pn-anim');
+    if (isPrev) a.classList.add('pn-prev');
     a.textContent = '';
     function svg(cls) {
       var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -511,4 +517,229 @@ document.addEventListener('DOMContentLoaded', function () {
     a.appendChild(circle);
     a.appendChild(svg('pn-arr1'));
   });
+});
+
+/* ── Timed MCQ quiz (interview question banks) ────────────────────────────
+   Injected on pages with .qna-item + .filter-row: 10 random questions, each
+   rendered as a 4-option MCQ. The correct option is the question's own
+   answer; distractors are answers to other questions in the same bank.
+   30s per question, streak tracking, segmented progress, keyboard 1-4.
+   Progressive enhancement — no markup changes on the bank pages. */
+document.addEventListener('DOMContentLoaded', function () {
+  var filterRow = document.querySelector('.filter-row');
+  var items = [].slice.call(document.querySelectorAll('.qna-item'));
+  if (!filterRow || items.length < 6) return;
+
+  var QUIZ_N = Math.min(10, items.length);
+  var PER_Q_SECS = 30;
+  var bestKey = 'tf_timedquiz_' + (document.body.dataset.topicId || location.pathname);
+
+  function snippet(html) {
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    var t = (d.textContent || '').replace(/\s+/g, ' ').trim();
+    /* first sentence, capped: options must be scannable */
+    var m = t.match(/^.{40,}?[.!?](?=\s|$)/);
+    var s = m ? m[0] : t;
+    return s.length > 150 ? s.slice(0, 147).replace(/\s+\S*$/, '') + '…' : s;
+  }
+
+  var pool = items.map(function (it) {
+    return {
+      q: ((it.querySelector('.qna-text') || {}).textContent || '').trim(),
+      full: (it.querySelector('.qna-a') || {}).innerHTML || '',
+      opt: snippet((it.querySelector('.qna-a') || {}).innerHTML || ''),
+      diff: it.dataset.diff || ''
+    };
+  }).filter(function (x) { return x.q && x.opt; });
+  if (pool.length < 6) return;
+
+  var launch = document.createElement('button');
+  launch.type = 'button';
+  launch.className = 'tq-launch';
+  launch.innerHTML = '&#9201; Timed Quiz';
+  filterRow.appendChild(launch);
+
+  var state = null, timerId = null, lastFocus = null, qStart = 0;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function close() {
+    clearInterval(timerId);
+    var o = document.querySelector('.tq-overlay');
+    if (o) o.remove();
+    document.removeEventListener('keydown', keys);
+    state = null;
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function newState() {
+    var qs = shuffle(pool).slice(0, QUIZ_N).map(function (cur) {
+      var others = shuffle(pool.filter(function (p) { return p !== cur; })).slice(0, 3);
+      var options = shuffle([cur].concat(others));
+      return { q: cur.q, full: cur.full, diff: cur.diff, options: options, correct: options.indexOf(cur) };
+    });
+    return { qs: qs, i: 0, right: 0, streak: 0, bestStreak: 0, times: [], missed: [], answered: [], started: Date.now(), locked: false };
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    state = newState();
+    var o = document.createElement('div');
+    o.className = 'tq-overlay';
+    o.innerHTML = '<div class="tq-modal" role="dialog" aria-modal="true" aria-label="Timed quiz"></div>';
+    o.addEventListener('click', function (e) { if (e.target === o) close(); });
+    document.body.appendChild(o);
+    document.addEventListener('keydown', keys);
+    renderQ();
+  }
+
+  function keys(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (!state || state.locked) return;
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 4) {
+      var btn = document.querySelectorAll('.tq-opt')[n - 1];
+      if (btn) btn.click();
+    }
+  }
+
+  function modal() { return document.querySelector('.tq-modal'); }
+
+  function progressHtml() {
+    var segs = '';
+    for (var k = 0; k < state.qs.length; k++) {
+      var cls = 'tq-seg';
+      if (k < state.answered.length) cls += state.answered[k] ? ' tq-seg-ok' : ' tq-seg-no';
+      else if (k === state.i) cls += ' tq-seg-cur';
+      segs += '<span class="' + cls + '"></span>';
+    }
+    return '<div class="tq-progress" aria-hidden="true">' + segs + '</div>';
+  }
+
+  function startTimer(onExpire) {
+    clearInterval(timerId);
+    qStart = Date.now();
+    var fill = modal().querySelector('.tq-timer-fill');
+    var left = PER_Q_SECS;
+    requestAnimationFrame(function () {
+      fill.classList.add('tq-running');
+      fill.style.transitionDuration = PER_Q_SECS + 's';
+      fill.style.transform = 'scaleX(0)';
+    });
+    timerId = setInterval(function () {
+      left--;
+      if (left === 10) fill.classList.add('tq-low');
+      if (left <= 0) { clearInterval(timerId); onExpire(); }
+    }, 1000);
+  }
+
+  function renderQ() {
+    state.locked = false;
+    var cur = state.qs[state.i];
+    var optsHtml = cur.options.map(function (o, idx) {
+      return '<button type="button" class="tq-opt" data-i="' + idx + '">' +
+        '<span class="tq-key">' + (idx + 1) + '</span><span class="tq-opt-text"></span></button>';
+    }).join('');
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">' + (state.i + 1) + ' / ' + state.qs.length + '</span>' +
+      (state.streak >= 2 ? '<span class="tq-streak">streak ' + state.streak + '</span>' : '') +
+      '<button type="button" class="tq-close" aria-label="Close quiz">✕</button></div>' +
+      progressHtml() +
+      '<div class="tq-timer"><div class="tq-timer-fill"></div></div>' +
+      '<div class="tq-q"></div>' +
+      '<div class="tq-diff"></div>' +
+      '<div class="tq-opts">' + optsHtml + '</div>';
+    modal().querySelector('.tq-q').textContent = cur.q;
+    modal().querySelector('.tq-diff').textContent = 'pick the answer · keys 1-4';
+    var optEls = modal().querySelectorAll('.tq-opt');
+    optEls.forEach(function (b, idx) {
+      b.querySelector('.tq-opt-text').textContent = cur.options[idx].opt;
+      b.addEventListener('click', function () { if (!state.locked) resolve(idx); });
+    });
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    optEls[0].focus();
+    startTimer(function () { resolve(-1); });
+  }
+
+  function resolve(idx) {
+    state.locked = true;
+    clearInterval(timerId);
+    var cur = state.qs[state.i];
+    var ok = idx === cur.correct;
+    state.times.push((Date.now() - qStart) / 1000);
+    state.answered.push(ok);
+    if (ok) { state.right++; state.streak++; if (state.streak > state.bestStreak) state.bestStreak = state.streak; }
+    else { state.streak = 0; state.missed.push(cur); }
+    var opts = modal().querySelectorAll('.tq-opt');
+    opts.forEach(function (b, k) {
+      b.disabled = true;
+      if (k === cur.correct) b.classList.add('tq-ok');
+      else if (k === idx) b.classList.add('tq-no');
+      else b.classList.add('tq-dim');
+    });
+    var fill = modal().querySelector('.tq-timer-fill');
+    fill.style.transitionDuration = '0s';
+    setTimeout(function () {
+      state.i++;
+      if (state.i < state.qs.length) renderQ();
+      else summary();
+    }, ok ? 700 : 1400);
+  }
+
+  function summary() {
+    clearInterval(timerId);
+    var n = state.qs.length;
+    var pct = Math.round((state.right / n) * 100);
+    var avg = state.times.length ? Math.round(state.times.reduce(function (a, b) { return a + b; }, 0) / state.times.length * 10) / 10 : 0;
+    var best = 0;
+    try { best = parseInt(localStorage.getItem(bestKey) || '0', 10); } catch (e) {}
+    var isBest = state.right > best;
+    if (isBest) { try { localStorage.setItem(bestKey, String(state.right)); } catch (e) {} }
+    var verdict = pct === 100 ? 'Flawless.' : pct >= 80 ? 'Interview-ready.' : pct >= 60 ? 'Solid — review the misses.' : 'Keep drilling — the full bank is right behind this dialog.';
+    var html =
+      '<div class="tq-head"><span class="tq-count">QUIZ COMPLETE</span>' +
+      '<button type="button" class="tq-close" aria-label="Close quiz">✕</button></div>' +
+      progressHtml() +
+      '<div class="tq-score">' + state.right + '<span class="tq-score-of">/ ' + n + '</span></div>' +
+      '<div class="tq-sub">' + verdict + '</div>' +
+      '<div class="tq-stats">' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + pct + '%</span><span class="tq-stat-label">accuracy</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + avg + 's</span><span class="tq-stat-label">avg / question</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + state.bestStreak + '</span><span class="tq-stat-label">best streak</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + (isBest ? state.right : best) + '</span><span class="tq-stat-label">' + (isBest ? 'new best' : 'personal best') + '</span></div>' +
+      '</div>';
+    if (state.missed.length) {
+      html += '<div class="tq-sub" style="margin-top:14px"><strong>Review these:</strong></div><ul class="tq-missed"></ul>';
+    }
+    html += '<div class="tq-actions"><button type="button" class="tq-btn tq-primary tq-again">Run it again</button>' +
+      '<button type="button" class="tq-btn tq-done">Done</button></div>';
+    modal().innerHTML = html;
+    var ul = modal().querySelector('.tq-missed');
+    if (ul) state.missed.forEach(function (q) {
+      var li = document.createElement('li');
+      var qEl = document.createElement('div');
+      qEl.className = 'tq-missed-q';
+      qEl.textContent = q.q;
+      var aEl = document.createElement('div');
+      aEl.className = 'tq-missed-a';
+      aEl.innerHTML = q.full; /* answer markup comes from this same page */
+      li.appendChild(qEl);
+      li.appendChild(aEl);
+      ul.appendChild(li);
+    });
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    modal().querySelector('.tq-done').addEventListener('click', close);
+    modal().querySelector('.tq-again').addEventListener('click', function () { state = newState(); renderQ(); });
+    modal().querySelector('.tq-again').focus();
+  }
+
+  launch.addEventListener('click', open);
 });

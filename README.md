@@ -339,7 +339,7 @@ Example:
 
 ### v2.1.0 (Q3 2026)
 - [x] Cross-track progress dashboard (`/dashboard.html`)
-- [ ] Interview timed quiz mode
+- [x] Interview timed quiz mode (10 random Qs, 60s timer, self-graded, best-score tracking — on all 10 banks)
 - [x] Accessibility audit & WCAG 2.1 AA compliance (axe-core over every page × both themes, enforced in CI)
 - [x] Automated test suite (HTML validation + link checking + a11y audit via Playwright, all in CI)
 
