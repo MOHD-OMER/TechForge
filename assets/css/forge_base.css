@@ -781,6 +781,65 @@ button.badge {
 .nav-link:hover { border-color: var(--accent); color: var(--accent); }
 .nav-link.next { margin-left: auto; }
 
+/* Next-page animated button (adapted from Uiverse.io by gharsh11032000, MIT).
+   Applied by utils.js to .page-nav links ending in "→": arrows swap sides
+   while a circle of the section accent floods the pill. Theme-safe via
+   var(--accent); label flips to ink-on-accent when the fill lands. */
+.nav-link.pn-anim {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 12px 46px 12px 22px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  box-shadow: 0 0 0 1.5px var(--accent, var(--blue));
+  color: var(--accent, var(--blue));
+  font-weight: 600;
+  overflow: hidden;
+  transition: all .6s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-arr {
+  position: absolute; width: 17px; height: 17px;
+  fill: var(--accent, var(--blue)); z-index: 1;
+  transition: all .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-arr1 { right: 16px; }
+.nav-link.pn-anim .pn-arr2 { left: -25%; }
+.nav-link.pn-anim .pn-circle {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 16px; height: 16px;
+  background: var(--accent, var(--blue));
+  border-radius: 50%; opacity: 0;
+  transition: transform .8s cubic-bezier(.23, 1, .32, 1), opacity .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-text {
+  position: relative; z-index: 1;
+  transform: translateX(-8px);
+  transition: all .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim:hover {
+  border-color: transparent;
+  box-shadow: 0 0 0 10px transparent;
+  color: #04070d;
+  border-radius: 10px;
+}
+.nav-link.pn-anim:hover .pn-arr1 { right: -25%; }
+.nav-link.pn-anim:hover .pn-arr2 { left: 16px; }
+.nav-link.pn-anim:hover .pn-text { transform: translateX(10px); }
+.nav-link.pn-anim:hover .pn-arr { fill: #04070d; }
+.nav-link.pn-anim:hover .pn-circle { transform: translate(-50%, -50%) scale(22); opacity: 1; }
+.nav-link.pn-anim:active { scale: .96; box-shadow: 0 0 0 3px var(--accent, var(--blue)); }
+/* Light theme: accents are dark ink, so the flooded pill needs a light label */
+html.light .nav-link.pn-anim:hover { color: #fff; }
+html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .nav-link.pn-anim, .nav-link.pn-anim .pn-arr, .nav-link.pn-anim .pn-text, .nav-link.pn-anim .pn-circle { transition: none; }
+  .nav-link.pn-anim:hover .pn-circle { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  .nav-link.pn-anim:hover { background: var(--accent, var(--blue)); border-radius: 100px; }
+  .nav-link.pn-anim:active { scale: 1; }
+}
+
 /* ══════════════════════════════════════════
    MOBILE & TOOLS
 ══════════════════════════════════════════ */
@@ -2343,6 +2402,27 @@ html.light .btn-sh-primary,
 html.light .btn-dh-primary,
 html.light .btn-ih-primary,
 html.light .btn-ph-primary,
+html.light .btn-aim-primary,
+html.light .cta-primary,
+html.light .icta-btn,
 html.light .pq-done-toggle.done {
   color: #fff;
 }
+/* Light theme: hover lightens toward white which would wash out dark-ink
+   slabs — lighten far less so the fill stays clearly darker than the label. */
+html.light .btn-primary:hover,
+html.light .btn-cta-primary:hover,
+html.light .btn-sh-primary:hover,
+html.light .btn-dh-primary:hover,
+html.light .btn-ih-primary:hover,
+html.light .btn-ph-primary:hover,
+html.light .btn-aim-primary:hover,
+html.light .cta-primary:hover,
+html.light .icta-btn:hover {
+  color: #fff;
+  filter: brightness(1.25);
+  background: var(--blue);
+}
+html.light .btn-ih-primary:hover { background: var(--amber); }
+html.light .btn-ph-primary:hover { background: var(--green); }
+html.light .btn-aim-primary:hover, html.light .cta-primary:hover { background: var(--purple); }

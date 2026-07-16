@@ -23,7 +23,7 @@ Programming Languages · DSA · System Design · Data & Cloud · OS & Networks �
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 200+ curated interview problems, and eight complete learning tracks — complete computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 290+ curated interview problems, and eight complete learning tracks — complete computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero npm dependencies, and zero backend infrastructure. A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -46,8 +46,8 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
 | Data & Cloud | 14 DB engines + 23 DevOps guides (databases + DevOps combined) | [/data-cloud](https://techforge-dev.vercel.app/data-cloud/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
-| Interview Prep | 200+ problems · 7 question banks | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
-| OS & Networks | Operating systems + networking roadmaps · Security & Theory soon | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
+| Interview Prep | 290+ problems · 10 question banks | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
+| OS & Networks | 4 complete pillars — OS, Networking, Security, Theory of Computation (32 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
 
 ---
 
@@ -83,7 +83,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Interactive visualizations
 
 ### Interview Preparation
-- **200+ curated problems** across 7 question banks
+- **290+ curated problems** across 10 question banks
 - Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design (OS & Networks banks coming)
 - FAANG and startup tagged · Difficulty rated · Progress tracked in browser
 
@@ -163,9 +163,9 @@ TechForge/
 ├── system-design/                # System Design (26 guides)
 ├── databases/                    # Databases (14 deep-dives)  ┐ Data & Cloud
 ├── aiml/                         # AI/ML Hub (8 modules)
-├── interview/                    # Interview Prep (7 banks, 200+ problems)
+├── interview/                    # Interview Prep (10 banks, 290+ problems)
 ├── devops/                       # DevOps (23 guides)         ┘ (data-cloud/ hub)
-├── systems/                      # OS & Networks (os/ + networking/ roadmaps)
+├── systems/                      # OS & Networks (os/ networking/ security/ theory/ — 32 guides)
 │
 ├── tools/                        # Build & utility scripts
 │   ├── build-site-index.mjs      # Generate site-index.js
@@ -338,15 +338,15 @@ Example:
 ## 📈 Roadmap
 
 ### v2.1.0 (Q3 2026)
-- [ ] Cross-track progress dashboard
+- [x] Cross-track progress dashboard (`/dashboard.html`)
 - [ ] Interview timed quiz mode
-- [ ] Accessibility audit & WCAG 2.1 AA compliance
-- [ ] Unit & E2E test suite (Jest + Playwright)
+- [x] Accessibility audit & WCAG 2.1 AA compliance (axe-core over every page × both themes, enforced in CI)
+- [x] Automated test suite (HTML validation + link checking + a11y audit via Playwright, all in CI)
 
 ### v2.2.0 (Q4 2026)
 - [ ] Code implementations (JavaScript, Java, C++ per DSA topic)
-- [ ] Interview company tagging & company-specific guides
-- [ ] Difficulty-based problem filtering
+- [x] Interview company tagging (FAANG / startup track filters) — company-specific guides pending
+- [x] Difficulty-based problem filtering (beginner → FAANG filters on all 10 banks)
 - [ ] Performance monitoring & analytics
 
 ### v2.3.0 (Q1 2027)

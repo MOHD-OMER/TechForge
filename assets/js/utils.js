@@ -478,3 +478,37 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+/* ── Animated next-page button (uiverse-adapted, see forge_base .pn-anim) ──
+   Progressive enhancement: rebuild .page-nav links that end in "→" into the
+   arrow-swap / circle-fill structure. No-op if markup is absent. */
+document.addEventListener('DOMContentLoaded', function () {
+  var ARROW = 'M16.17 11 10.8 5.64l1.42-1.42L20 12l-7.78 7.78-1.41-1.42L16.17 13H4v-2z';
+  document.querySelectorAll('.page-nav .nav-link').forEach(function (a) {
+    var t = (a.textContent || '').trim();
+    if (!/→$/.test(t)) return;
+    var label = t.replace(/→$/, '').trim();
+    a.classList.add('pn-anim');
+    a.textContent = '';
+    function svg(cls) {
+      var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      s.setAttribute('viewBox', '0 0 24 24');
+      s.setAttribute('aria-hidden', 'true');
+      s.setAttribute('class', 'pn-arr ' + cls);
+      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', ARROW);
+      s.appendChild(p);
+      return s;
+    }
+    var text = document.createElement('span');
+    text.className = 'pn-text';
+    text.textContent = label;
+    var circle = document.createElement('span');
+    circle.className = 'pn-circle';
+    circle.setAttribute('aria-hidden', 'true');
+    a.appendChild(svg('pn-arr2'));
+    a.appendChild(text);
+    a.appendChild(circle);
+    a.appendChild(svg('pn-arr1'));
+  });
+});
