@@ -272,6 +272,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -323,6 +324,20 @@
         mx = Math.max(mx, ws);
     }
     return mx;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">int</span> <span class="fn">max_subarray_sum</span>(<span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> k) {
+    <span class="kw">int</span> n = (<span class="kw">int</span>)arr.<span class="fn">size</span>();
+    <span class="kw">int</span> ws = std::<span class="fn">accumulate</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">begin</span>() + k, <span class="nm">0</span>);
+    <span class="kw">int</span> mx = ws;
+    <span class="kw">for</span> (<span class="kw">int</span> i = k; i &lt; n; i++) {
+        ws += arr[i] - arr[i - k];   <span class="cm">// slide: add new, drop old</span>
+        mx = std::<span class="fn">max</span>(mx, ws);
+    }
+    <span class="kw">return</span> mx;
 }</pre>
     </div>
     </div>

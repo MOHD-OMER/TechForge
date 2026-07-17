@@ -376,6 +376,7 @@
             <button type="button" class="lt-btn active" data-lang="python">Python</button>
             <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
             <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
           </div>
           <div class="lang-pane" data-lang="python">
           <div class="code-block">
@@ -443,6 +444,29 @@ dq.offerFirst(<span class="nm">5</span>);   <span class="cm">// insert at front<
 dq.offerLast(<span class="nm">10</span>);   <span class="cm">// insert at rear</span>
 dq.pollFirst();     <span class="cm">// remove front</span>
 dq.pollLast();      <span class="cm">// remove rear</span></pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">C++ — Queue &amp; Deque (ArrayDeque)</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">#<span class="kw">include</span> &lt;deque&gt;
+
+std::deque&lt;<span class="kw">int</span>&gt; q;
+q.<span class="fn">push_back</span>(<span class="nm">10</span>);        <span class="cm">// enqueue rear  — O(1)</span>
+q.<span class="fn">push_back</span>(<span class="nm">20</span>);
+q.<span class="fn">push_back</span>(<span class="nm">30</span>);
+<span class="kw">int</span> front = q.<span class="fn">front</span>();  <span class="cm">// peek front    — O(1)</span>
+q.<span class="fn">pop_front</span>();          <span class="cm">// dequeue front — O(1)</span>
+
+<span class="cm">// Deque is double-ended by nature</span>
+q.<span class="fn">push_front</span>(<span class="nm">5</span>);        <span class="cm">// insert at front</span>
+q.<span class="fn">push_back</span>(<span class="nm">10</span>);        <span class="cm">// insert at rear</span>
+q.<span class="fn">pop_front</span>();          <span class="cm">// remove front</span>
+q.<span class="fn">pop_back</span>();           <span class="cm">// remove rear</span>
+<span class="cm">// std::queue&lt;int&gt; is the adapter when you only need FIFO</span></pre>
           </div>
           </div>
         </div>
@@ -556,9 +580,9 @@ dq.pollLast();      <span class="cm">// remove rear</span></pre>
   <script src="../assets/js/utils.js?v=10"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-    const pbar = document.getElementById('pbar');
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
-      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
       document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
     });
 

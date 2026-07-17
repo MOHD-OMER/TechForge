@@ -386,6 +386,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -434,6 +435,22 @@
     while (cur.next != head) cur = cur.next;
     cur.next = node;
     node.next = head;        // circular!
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">void</span> <span class="fn">append</span>(<span class="kw">int</span> val) {
+    Node* node = <span class="kw">new</span> <span class="fn">Node</span>(val);
+    <span class="kw">if</span> (!head) {
+        head = node;
+        node-&gt;next = head;      <span class="cm">// self-loop</span>
+        <span class="kw">return</span>;
+    }
+    Node* cur = head;
+    <span class="kw">while</span> (cur-&gt;next != head) cur = cur-&gt;next;
+    cur-&gt;next = node;
+    node-&gt;next = head;          <span class="cm">// circular!</span>
 }</pre>
     </div>
     </div>
@@ -556,9 +573,9 @@
   <script src="../assets/js/utils.js?v=10"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-    const pbar = document.getElementById('pbar');
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
-      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
       document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
     });
 

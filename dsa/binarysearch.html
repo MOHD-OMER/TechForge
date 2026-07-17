@@ -212,6 +212,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -250,6 +251,20 @@
         else hi = mid - 1;
     }
     return -1;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">int</span> <span class="fn">binary_search</span>(<span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> target) {
+    <span class="kw">int</span> lo = <span class="nm">0</span>, hi = (<span class="kw">int</span>)arr.<span class="fn">size</span>() - <span class="nm">1</span>;
+    <span class="kw">while</span> (lo &lt;= hi) {
+        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="nm">2</span>;   <span class="cm">// avoids overflow</span>
+        <span class="kw">if</span>      (arr[mid] == target) <span class="kw">return</span> mid;
+        <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; target)  lo = mid + <span class="nm">1</span>;
+        <span class="kw">else</span>                         hi = mid - <span class="nm">1</span>;
+    }
+    <span class="kw">return</span> -<span class="nm">1</span>;
 }</pre>
     </div>
     </div>

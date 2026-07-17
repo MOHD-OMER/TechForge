@@ -264,6 +264,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -341,6 +342,32 @@
         }
     }
     return dist;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">#<span class="kw">include</span> &lt;queue&gt;
+
+std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">dijkstra</span>(<span class="kw">const</span> AdjList&amp; graph, <span class="kw">int</span> src) {
+    <span class="kw">const</span> <span class="kw">int</span> INF = std::numeric_limits&lt;<span class="kw">int</span>&gt;::<span class="fn">max</span>();
+    std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">dist</span>(graph.<span class="fn">size</span>(), INF);
+    dist[src] = <span class="nm">0</span>;
+    <span class="cm">// min-heap of (dist, node)</span>
+    std::priority_queue&lt;std::pair&lt;<span class="kw">int</span>,<span class="kw">int</span>&gt;,
+        std::vector&lt;std::pair&lt;<span class="kw">int</span>,<span class="kw">int</span>&gt;&gt;, std::greater&lt;&gt;&gt; heap;
+    heap.<span class="fn">push</span>({<span class="nm">0</span>, src});
+    <span class="kw">while</span> (!heap.<span class="fn">empty</span>()) {
+        <span class="kw">auto</span> [d, u] = heap.<span class="fn">top</span>(); heap.<span class="fn">pop</span>();
+        <span class="kw">if</span> (d &gt; dist[u]) <span class="kw">continue</span>;          <span class="cm">// stale entry</span>
+        <span class="kw">for</span> (<span class="kw">auto</span> [v, w] : graph[u]) {
+            <span class="kw">if</span> (dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                heap.<span class="fn">push</span>({dist[v], v});
+            }
+        }
+    }
+    <span class="kw">return</span> dist;
 }</pre>
     </div>
     </div>

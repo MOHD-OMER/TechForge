@@ -3291,9 +3291,9 @@ c = <span class="fn">Circle</span>(<span class="nm">4.44</span>)
   <script src="../../assets/js/utils.js?v=10"></script>
   <script src="../../assets/js/platform.js?v=4"></script>
 <script>
-    const pbar = document.getElementById('pbar');
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
-      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
       document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
     });
     const sections = document.querySelectorAll('.prog-section');

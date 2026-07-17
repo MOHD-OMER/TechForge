@@ -215,6 +215,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -276,6 +277,29 @@
         for (int i = nbrs.size() - 1; i &gt;= 0; i--) {
             if (!visited.contains(nbrs.get(i))) stack.push(nbrs.get(i));
         }
+    }
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">#<span class="kw">include</span> &lt;stack&gt;
+#<span class="kw">include</span> &lt;unordered_set&gt;
+
+<span class="kw">void</span> <span class="fn">dfs</span>(<span class="kw">const</span> Graph&amp; graph, <span class="kw">int</span> start) {
+    std::unordered_set&lt;<span class="kw">int</span>&gt; visited;
+    std::stack&lt;<span class="kw">int</span>&gt; st;
+    st.<span class="fn">push</span>(start);
+
+    <span class="kw">while</span> (!st.<span class="fn">empty</span>()) {
+        <span class="kw">int</span> node = st.<span class="fn">top</span>(); st.<span class="fn">pop</span>();
+        <span class="kw">if</span> (visited.<span class="fn">count</span>(node)) <span class="kw">continue</span>;
+        visited.<span class="fn">insert</span>(node);
+        std::cout &lt;&lt; node &lt;&lt; <span class="st">" "</span>;
+
+        <span class="kw">auto</span>&amp; nbrs = graph.<span class="fn">at</span>(node);
+        <span class="kw">for</span> (<span class="kw">auto</span> it = nbrs.<span class="fn">rbegin</span>(); it != nbrs.<span class="fn">rend</span>(); ++it)
+            <span class="kw">if</span> (!visited.<span class="fn">count</span>(*it)) st.<span class="fn">push</span>(*it);
     }
 }</pre>
     </div>

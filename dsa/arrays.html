@@ -435,6 +435,7 @@
               <button type="button" class="lt-btn active" data-lang="python">Python</button>
               <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
               <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
             </div>
             <div class="lang-pane" data-lang="python">
             <div class="code-block">
@@ -556,6 +557,40 @@ Set&lt;Integer&gt; set = <span class="kw">new</span> <span class="fn">HashSet</s
 <span class="cm">// ── Streams ──────────────────────────────────</span>
 <span class="kw">int</span>[] squares = Arrays.stream(arr).map(v -&gt; v * v).toArray();
 <span class="kw">int</span>[] evens = Arrays.stream(arr).filter(v -&gt; v % <span class="nm">2</span> == <span class="nm">0</span>).toArray();</pre>
+            </div>
+            </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+            <div class="code-block">
+              <div class="code-hdr">
+                <span class="code-lang">C++</span>
+                <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+              </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm">// ── Creating arrays ──────────────────────────</span>
+std::vector&lt;<span class="kw">int</span>&gt; arr = {<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>};
+std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">zeros</span>(<span class="nm">5</span>, <span class="nm">0</span>);            <span class="cm">// {0,0,0,0,0}</span>
+std::vector&lt;std::vector&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">matrix</span>(<span class="nm">3</span>, std::vector&lt;<span class="kw">int</span>&gt;(<span class="nm">3</span>, <span class="nm">0</span>)); <span class="cm">// 3×3</span>
+
+<span class="cm">// ── Access ───────────────────────────────────</span>
+<span class="kw">int</span> x    = arr[<span class="nm">2</span>];          <span class="cm">// O(1) → 30 (no bounds check)</span>
+<span class="kw">int</span> safe = arr.<span class="fn">at</span>(<span class="nm">2</span>);       <span class="cm">// O(1) → 30 (throws if out of range)</span>
+<span class="kw">int</span> last = arr.<span class="fn">back</span>();      <span class="cm">// O(1) → 50</span>
+
+<span class="cm">// ── Mutations ────────────────────────────────</span>
+arr.<span class="fn">push_back</span>(<span class="nm">60</span>);              <span class="cm">// O(1) amortized</span>
+arr.<span class="fn">insert</span>(arr.<span class="fn">begin</span>(), <span class="nm">5</span>);     <span class="cm">// O(n) — prepend shifts all!</span>
+arr.<span class="fn">pop_back</span>();                 <span class="cm">// O(1) — remove last</span>
+arr.<span class="fn">erase</span>(arr.<span class="fn">begin</span>() + <span class="nm">2</span>);     <span class="cm">// O(n) — remove at index</span>
+
+<span class="cm">// ── Searching &amp; sorting ──────────────────────</span>
+<span class="kw">auto</span> it = std::<span class="fn">find</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), <span class="nm">40</span>);   <span class="cm">// O(n)</span>
+std::<span class="fn">sort</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>());                 <span class="cm">// O(n log n) introsort</span>
+std::<span class="fn">sort</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), std::greater&lt;&gt;()); <span class="cm">// descending</span>
+
+<span class="cm">// ── Useful ───────────────────────────────────</span>
+<span class="kw">size_t</span> n = arr.<span class="fn">size</span>();                              <span class="cm">// O(1)</span>
+<span class="kw">bool</span> present = std::<span class="fn">count</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), <span class="nm">30</span>) &gt; <span class="nm">0</span>; <span class="cm">// O(n)</span>
+std::unordered_set&lt;<span class="kw">int</span>&gt; <span class="fn">s</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>());  <span class="cm">// O(n) build, O(1) lookup</span></pre>
             </div>
             </div>
           </div>

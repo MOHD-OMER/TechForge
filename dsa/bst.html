@@ -372,6 +372,7 @@
             <button type="button" class="lt-btn active" data-lang="python">Python</button>
             <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
             <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
           </div>
           <div class="lang-pane" data-lang="python">
           <div class="code-block">
@@ -438,6 +439,26 @@ Node <span class="fn">search</span>(Node root, <span class="kw">int</span> val) 
     <span class="kw">if</span> (root == <span class="nm">null</span> || root.val == val) <span class="kw">return</span> root;
     <span class="kw">if</span> (val &lt; root.val) <span class="kw">return</span> <span class="fn">search</span>(root.left, val);
     <span class="kw">return</span> <span class="fn">search</span>(root.right, val);
+}</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">C++ — BST Insert &amp; Search</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">Node* <span class="fn">insert</span>(Node* root, <span class="kw">int</span> val) {
+    <span class="kw">if</span> (!root) <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Node</span>(val);
+    <span class="kw">if</span>      (val &lt; root-&gt;val) root-&gt;left  = <span class="fn">insert</span>(root-&gt;left,  val);
+    <span class="kw">else</span> <span class="kw">if</span> (val &gt; root-&gt;val) root-&gt;right = <span class="fn">insert</span>(root-&gt;right, val);
+    <span class="kw">return</span> root;
+}
+
+Node* <span class="fn">search</span>(Node* root, <span class="kw">int</span> val) {
+    <span class="kw">if</span> (!root || root-&gt;val == val) <span class="kw">return</span> root;
+    <span class="kw">if</span> (val &lt; root-&gt;val) <span class="kw">return</span> <span class="fn">search</span>(root-&gt;left, val);
+    <span class="kw">return</span>                      <span class="fn">search</span>(root-&gt;right, val);
 }</pre>
           </div>
           </div>

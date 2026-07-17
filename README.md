@@ -344,7 +344,7 @@ Example:
 - [x] Automated test suite (HTML validation + link checking + a11y audit via Playwright, all in CI)
 
 ### v2.2.0 (Q4 2026)
-- [ ] Code implementations (JavaScript, Java, C++ per DSA topic)
+- [x] Code implementations (Python, JavaScript, Java, C++ toggles on all DSA topics)
 - [x] Interview company tagging (FAANG / startup track filters) — company-specific guides pending
 - [x] Difficulty-based problem filtering (beginner → FAANG filters on all 10 banks)
 - [ ] Performance monitoring & analytics

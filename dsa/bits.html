@@ -293,6 +293,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -372,6 +373,29 @@ int countBits(int n) {
     }
     return count;
     // or: Integer.bitCount(n)
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="cm">// Common bit tricks</span>
+<span class="kw">int</span> n = <span class="nm">12</span>;   <span class="cm">// 1100 in binary</span>
+
+n &amp; <span class="nm">1</span>;        <span class="cm">// check if odd → 0 (even)</span>
+n &amp; (n - <span class="nm">1</span>);  <span class="cm">// clear lowest set bit → 8</span>
+n | (n - <span class="nm">1</span>);  <span class="cm">// set all bits below MSB</span>
+n ^ n;        <span class="cm">// XOR with self → 0</span>
+n &gt;&gt; <span class="nm">1</span>;       <span class="cm">// divide by 2 → 6</span>
+n &lt;&lt; <span class="nm">1</span>;       <span class="cm">// multiply by 2 → 24</span>
+
+<span class="cm">// Count set bits (Brian Kernighan)</span>
+<span class="kw">int</span> <span class="fn">count_bits</span>(<span class="kw">unsigned</span> n) {
+    <span class="kw">int</span> count = <span class="nm">0</span>;
+    <span class="kw">while</span> (n) {
+        n &amp;= n - <span class="nm">1</span>;   <span class="cm">// clears lowest set bit</span>
+        count++;
+    }
+    <span class="kw">return</span> count;     <span class="cm">// or: std::popcount(n) in C++20</span>
 }</pre>
     </div>
     </div>

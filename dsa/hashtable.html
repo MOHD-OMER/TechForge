@@ -258,6 +258,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -333,6 +334,26 @@ class HashTable {
         table.get(idx).add(Map.entry(key, val));
     }
 }</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="cm">// std::unordered_map is a hash table</span>
+std::unordered_map&lt;std::string, std::string&gt; d;
+d[<span class="st">"name"</span>] = <span class="st">"Alice"</span>;        <span class="cm">// O(1) average insert</span>
+<span class="kw">auto</span> val = d[<span class="st">"name"</span>];       <span class="cm">// O(1) average lookup</span>
+d.<span class="fn">erase</span>(<span class="st">"name"</span>);            <span class="cm">// O(1) average delete</span>
+
+<span class="cm">// Custom hash table with chaining</span>
+<span class="kw">class</span> HashTable {
+    std::vector&lt;std::vector&lt;std::pair&lt;std::string,<span class="kw">int</span>&gt;&gt;&gt; table;
+<span class="kw">public</span>:
+    <span class="fn">HashTable</span>(<span class="kw">size_t</span> size = <span class="nm">10</span>) : <span class="fn">table</span>(size) {}
+    <span class="kw">void</span> <span class="fn">put</span>(<span class="kw">const</span> std::string&amp; key, <span class="kw">int</span> val) {
+        <span class="kw">size_t</span> idx = std::hash&lt;std::string&gt;{}(key) % table.<span class="fn">size</span>();
+        table[idx].<span class="fn">push_back</span>({key, val});
+    }
+};</pre>
     </div>
     </div>
 </div>

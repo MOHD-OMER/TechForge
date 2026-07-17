@@ -288,6 +288,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -358,6 +359,29 @@ int[] merge(int[] L, int[] R) {
     while (i &lt; L.length) res[k++] = L[i++];
     while (j &lt; R.length) res[k++] = R[j++];
     return res;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">merge</span>(<span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; L, <span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; R) {
+    std::vector&lt;<span class="kw">int</span>&gt; res;
+    <span class="kw">size_t</span> i = <span class="nm">0</span>, j = <span class="nm">0</span>;
+    <span class="kw">while</span> (i &lt; L.<span class="fn">size</span>() &amp;&amp; j &lt; R.<span class="fn">size</span>()) {
+        <span class="kw">if</span> (L[i] &lt;= R[j]) res.<span class="fn">push_back</span>(L[i++]);
+        <span class="kw">else</span>              res.<span class="fn">push_back</span>(R[j++]);
+    }
+    res.<span class="fn">insert</span>(res.<span class="fn">end</span>(), L.<span class="fn">begin</span>() + i, L.<span class="fn">end</span>());
+    res.<span class="fn">insert</span>(res.<span class="fn">end</span>(), R.<span class="fn">begin</span>() + j, R.<span class="fn">end</span>());
+    <span class="kw">return</span> res;
+}
+
+std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">merge_sort</span>(std::vector&lt;<span class="kw">int</span>&gt; arr) {
+    <span class="kw">if</span> (arr.<span class="fn">size</span>() &lt;= <span class="nm">1</span>) <span class="kw">return</span> arr;
+    <span class="kw">size_t</span> mid = arr.<span class="fn">size</span>() / <span class="nm">2</span>;
+    <span class="kw">auto</span> L = <span class="fn">merge_sort</span>({arr.<span class="fn">begin</span>(), arr.<span class="fn">begin</span>() + mid});
+    <span class="kw">auto</span> R = <span class="fn">merge_sort</span>({arr.<span class="fn">begin</span>() + mid, arr.<span class="fn">end</span>()});
+    <span class="kw">return</span> <span class="fn">merge</span>(L, R);
 }</pre>
     </div>
     </div>

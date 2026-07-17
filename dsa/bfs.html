@@ -215,6 +215,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -275,6 +276,30 @@
         for (int neighbor : graph.get(node)) {
             if (visited.add(neighbor)) {  // true if newly added
                 queue.offer(neighbor);
+            }
+        }
+    }
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">#<span class="kw">include</span> &lt;queue&gt;
+#<span class="kw">include</span> &lt;unordered_set&gt;
+
+<span class="kw">void</span> <span class="fn">bfs</span>(<span class="kw">const</span> Graph&amp; graph, <span class="kw">int</span> start) {
+    std::unordered_set&lt;<span class="kw">int</span>&gt; visited{start};
+    std::queue&lt;<span class="kw">int</span>&gt; q;
+    q.<span class="fn">push</span>(start);
+
+    <span class="kw">while</span> (!q.<span class="fn">empty</span>()) {
+        <span class="kw">int</span> node = q.<span class="fn">front</span>(); q.<span class="fn">pop</span>();
+        std::cout &lt;&lt; node &lt;&lt; <span class="st">" "</span>;
+
+        <span class="kw">for</span> (<span class="kw">int</span> neighbor : graph.<span class="fn">at</span>(node)) {
+            <span class="kw">if</span> (!visited.<span class="fn">count</span>(neighbor)) {
+                visited.<span class="fn">insert</span>(neighbor);
+                q.<span class="fn">push</span>(neighbor);
             }
         }
     }

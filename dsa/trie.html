@@ -258,6 +258,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -357,6 +358,37 @@ class Trie {
         return node.isEnd;
     }
 }</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">struct</span> TrieNode {
+    std::unordered_map&lt;<span class="kw">char</span>, TrieNode*&gt; children;
+    <span class="kw">bool</span> is_end = <span class="kw">false</span>;
+};
+
+<span class="kw">class</span> Trie {
+    TrieNode* root = <span class="kw">new</span> <span class="fn">TrieNode</span>();
+<span class="kw">public</span>:
+    <span class="kw">void</span> <span class="fn">insert</span>(<span class="kw">const</span> std::string&amp; word) {
+        TrieNode* node = root;
+        <span class="kw">for</span> (<span class="kw">char</span> ch : word) {
+            <span class="kw">if</span> (!node-&gt;children.<span class="fn">count</span>(ch))
+                node-&gt;children[ch] = <span class="kw">new</span> <span class="fn">TrieNode</span>();
+            node = node-&gt;children[ch];
+        }
+        node-&gt;is_end = <span class="kw">true</span>;
+    }
+
+    <span class="kw">bool</span> <span class="fn">search</span>(<span class="kw">const</span> std::string&amp; word) <span class="kw">const</span> {
+        TrieNode* node = root;
+        <span class="kw">for</span> (<span class="kw">char</span> ch : word) {
+            <span class="kw">if</span> (!node-&gt;children.<span class="fn">count</span>(ch)) <span class="kw">return</span> <span class="kw">false</span>;
+            node = node-&gt;children.<span class="fn">at</span>(ch);
+        }
+        <span class="kw">return</span> node-&gt;is_end;
+    }
+};</pre>
     </div>
     </div>
 </div>

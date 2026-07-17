@@ -286,6 +286,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -359,6 +360,28 @@ void heapify(int[] arr, int n, int i) {
     if (largest != i) {
         int t = arr[i]; arr[i] = arr[largest]; arr[largest] = t;
         heapify(arr, n, largest);
+    }
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">void</span> <span class="fn">heapify</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> n, <span class="kw">int</span> i) {
+    <span class="kw">int</span> largest = i, l = <span class="nm">2</span>*i + <span class="nm">1</span>, r = <span class="nm">2</span>*i + <span class="nm">2</span>;
+    <span class="kw">if</span> (l &lt; n &amp;&amp; arr[l] &gt; arr[largest]) largest = l;
+    <span class="kw">if</span> (r &lt; n &amp;&amp; arr[r] &gt; arr[largest]) largest = r;
+    <span class="kw">if</span> (largest != i) {
+        std::<span class="fn">swap</span>(arr[i], arr[largest]);
+        <span class="fn">heapify</span>(arr, n, largest);
+    }
+}
+
+<span class="kw">void</span> <span class="fn">heap_sort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; arr) {
+    <span class="kw">int</span> n = (<span class="kw">int</span>)arr.<span class="fn">size</span>();
+    <span class="kw">for</span> (<span class="kw">int</span> i = n/<span class="nm">2</span> - <span class="nm">1</span>; i &gt;= <span class="nm">0</span>; i--) <span class="fn">heapify</span>(arr, n, i);
+    <span class="kw">for</span> (<span class="kw">int</span> i = n - <span class="nm">1</span>; i &gt; <span class="nm">0</span>; i--) {
+        std::<span class="fn">swap</span>(arr[<span class="nm">0</span>], arr[i]);
+        <span class="fn">heapify</span>(arr, i, <span class="nm">0</span>);
     }
 }</pre>
     </div>

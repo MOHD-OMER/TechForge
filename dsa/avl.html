@@ -262,6 +262,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -326,6 +327,24 @@ Node rotateRight(Node y) {
     x.right = y;
     y.left = T2;
     return x;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">int</span> <span class="fn">get_height</span>(Node* node) {
+    <span class="kw">if</span> (!node) <span class="kw">return</span> <span class="nm">0</span>;
+    <span class="kw">return</span> <span class="nm">1</span> + std::<span class="fn">max</span>(<span class="fn">get_height</span>(node-&gt;left), <span class="fn">get_height</span>(node-&gt;right));
+}
+
+<span class="kw">int</span> <span class="fn">balance_factor</span>(Node* node) {
+    <span class="kw">return</span> <span class="fn">get_height</span>(node-&gt;left) - <span class="fn">get_height</span>(node-&gt;right);
+}
+
+Node* <span class="fn">rotate_right</span>(Node* y) {
+    Node* x = y-&gt;left; Node* T2 = x-&gt;right;
+    x-&gt;right = y; y-&gt;left = T2;
+    <span class="kw">return</span> x;   <span class="cm">// new subtree root</span>
 }</pre>
     </div>
     </div>

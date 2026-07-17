@@ -264,6 +264,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -350,6 +351,24 @@ int maxV = maxHeap.poll(); // → 5
 // Build heap from array: O(n)
 PriorityQueue&lt;Integer&gt; fromArr =
     new PriorityQueue&lt;&gt;(List.of(5, 1, 3));</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">#<span class="kw">include</span> &lt;queue&gt;
+
+<span class="cm">// Max-heap (C++ default!)</span>
+std::priority_queue&lt;<span class="kw">int</span>&gt; maxh;
+maxh.<span class="fn">push</span>(<span class="nm">5</span>); maxh.<span class="fn">push</span>(<span class="nm">1</span>); maxh.<span class="fn">push</span>(<span class="nm">3</span>);
+<span class="kw">int</span> mx = maxh.<span class="fn">top</span>(); maxh.<span class="fn">pop</span>();   <span class="cm">// → 5</span>
+
+<span class="cm">// Min-heap: std::greater comparator</span>
+std::priority_queue&lt;<span class="kw">int</span>, std::vector&lt;<span class="kw">int</span>&gt;, std::greater&lt;&gt;&gt; minh;
+minh.<span class="fn">push</span>(<span class="nm">5</span>); minh.<span class="fn">push</span>(<span class="nm">1</span>); minh.<span class="fn">push</span>(<span class="nm">3</span>);
+<span class="kw">int</span> mn = minh.<span class="fn">top</span>();               <span class="cm">// → 1</span>
+
+<span class="cm">// Build heap in O(n) from a vector</span>
+std::<span class="fn">make_heap</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>());</pre>
     </div>
     </div>
 </div>

@@ -274,6 +274,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -350,6 +351,25 @@ int fibMemo(int n) {
     memo.put(n, result);
     return result;
 }</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="cm">// Naive recursion — O(2^n)</span>
+<span class="kw">long</span> <span class="fn">fib</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="nm">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">fib</span>(n - <span class="nm">1</span>) + <span class="fn">fib</span>(n - <span class="nm">2</span>);
+}
+
+<span class="cm">// Memoized recursion — O(n)</span>
+<span class="kw">long</span> <span class="fn">fib_memo</span>(<span class="kw">int</span> n, std::unordered_map&lt;<span class="kw">int</span>, <span class="kw">long</span>&gt;&amp; memo) {
+    <span class="kw">if</span> (n &lt;= <span class="nm">1</span>) <span class="kw">return</span> n;
+    <span class="kw">if</span> (memo.<span class="fn">count</span>(n)) <span class="kw">return</span> memo[n];
+    memo[n] = <span class="fn">fib_memo</span>(n - <span class="nm">1</span>, memo) + <span class="fn">fib_memo</span>(n - <span class="nm">2</span>, memo);
+    <span class="kw">return</span> memo[n];
+}
+
+<span class="cm">// General template: base case → shrink → combine</span></pre>
     </div>
     </div>
 </div>

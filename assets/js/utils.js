@@ -743,3 +743,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   launch.addEventListener('click', open);
 });
+
+/* ── Copy button on every code block ─────────────────────────────────────
+   Some older pages only gave certain panes a copy button. Inject one into
+   any .code-block missing it, self-contained (no global copyCode needed). */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.code-block').forEach(function (blk) {
+    if (blk.querySelector('.copy-btn')) return;
+    var pre = blk.querySelector('pre');
+    if (!pre) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = 'COPY';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(pre.textContent).then(function () {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    });
+    blk.insertBefore(btn, pre);
+  });
+});

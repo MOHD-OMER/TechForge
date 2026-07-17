@@ -278,6 +278,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -342,6 +343,24 @@ int lcs(String s1, String s2) {
         }
     }
     return dp[m][n];
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="cm">// LCS — Longest Common Subsequence</span>
+<span class="kw">int</span> <span class="fn">lcs</span>(<span class="kw">const</span> std::string&amp; s1, <span class="kw">const</span> std::string&amp; s2) {
+    <span class="kw">int</span> m = (<span class="kw">int</span>)s1.<span class="fn">size</span>(), n = (<span class="kw">int</span>)s2.<span class="fn">size</span>();
+    std::vector&lt;std::vector&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">dp</span>(m + <span class="nm">1</span>, std::vector&lt;<span class="kw">int</span>&gt;(n + <span class="nm">1</span>, <span class="nm">0</span>));
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">1</span>; i &lt;= m; i++) {
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="nm">1</span>; j &lt;= n; j++) {
+            <span class="kw">if</span> (s1[i-<span class="nm">1</span>] == s2[j-<span class="nm">1</span>])
+                dp[i][j] = dp[i-<span class="nm">1</span>][j-<span class="nm">1</span>] + <span class="nm">1</span>;
+            <span class="kw">else</span>
+                dp[i][j] = std::<span class="fn">max</span>(dp[i-<span class="nm">1</span>][j], dp[i][j-<span class="nm">1</span>]);
+        }
+    }
+    <span class="kw">return</span> dp[m][n];
 }</pre>
     </div>
     </div>

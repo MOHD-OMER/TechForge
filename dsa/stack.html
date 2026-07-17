@@ -379,6 +379,7 @@
             <button type="button" class="lt-btn active" data-lang="python">Python</button>
             <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
             <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
           </div>
           <div class="lang-pane" data-lang="python">
           <div class="code-block">
@@ -453,6 +454,33 @@ stack.push(<span class="nm">30</span>);
         <span class="kw">else return false</span>;
     }
     <span class="kw">return</span> st.isEmpty();
+}</pre>
+          </div>
+          </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">C++ — Stack &amp; Balanced Parens</span>
+              <div class="code-dots"><div class="cd" style="background:#ff5f56"></div><div class="cd" style="background:#ffbd2e"></div><div class="cd" style="background:#27c93f"></div></div>
+            </div>
+            <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+            <pre class="code-pre">#<span class="kw">include</span> &lt;stack&gt;
+
+std::stack&lt;<span class="kw">int</span>&gt; st;
+st.<span class="fn">push</span>(<span class="nm">10</span>);          <span class="cm">// push — O(1)</span>
+st.<span class="fn">push</span>(<span class="nm">20</span>);
+st.<span class="fn">push</span>(<span class="nm">30</span>);
+<span class="kw">int</span> top = st.<span class="fn">top</span>();   <span class="cm">// peek — O(1) → 30</span>
+st.<span class="fn">pop</span>();             <span class="cm">// pop  — O(1)</span>
+
+<span class="cm">// Balanced parentheses</span>
+<span class="kw">bool</span> <span class="fn">is_valid</span>(<span class="kw">const</span> std::string&amp; s) {
+    std::stack&lt;<span class="kw">char</span>&gt; st;
+    <span class="kw">for</span> (<span class="kw">char</span> c : s) {
+        <span class="kw">if</span> (c == <span class="st">'('</span>) st.<span class="fn">push</span>(c);
+        <span class="kw">else</span> <span class="kw">if</span> (!st.<span class="fn">empty</span>()) st.<span class="fn">pop</span>();
+        <span class="kw">else</span> <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">return</span> st.<span class="fn">empty</span>();
 }</pre>
           </div>
           </div>
@@ -607,9 +635,9 @@ stack.push(<span class="nm">30</span>);
   <script src="../assets/js/utils.js?v=10"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-    const pbar = document.getElementById('pbar');
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
-      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
       document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
     });
 

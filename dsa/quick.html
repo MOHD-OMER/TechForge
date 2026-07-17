@@ -290,6 +290,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -367,6 +368,29 @@ int partition(int[] arr, int lo, int hi) {
     }
     int t = arr[i + 1]; arr[i + 1] = arr[hi]; arr[hi] = t;
     return i + 1;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">int</span> <span class="fn">partition</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {
+    <span class="kw">int</span> pivot = arr[hi], i = lo - <span class="nm">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> j = lo; j &lt; hi; j++) {
+        <span class="kw">if</span> (arr[j] &lt;= pivot) {
+            i++;
+            std::<span class="fn">swap</span>(arr[i], arr[j]);
+        }
+    }
+    std::<span class="fn">swap</span>(arr[i + <span class="nm">1</span>], arr[hi]);
+    <span class="kw">return</span> i + <span class="nm">1</span>;
+}
+
+<span class="kw">void</span> <span class="fn">quicksort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {
+    <span class="kw">if</span> (lo &lt; hi) {
+        <span class="kw">int</span> pi = <span class="fn">partition</span>(arr, lo, hi);
+        <span class="fn">quicksort</span>(arr, lo, pi - <span class="nm">1</span>);
+        <span class="fn">quicksort</span>(arr, pi + <span class="nm">1</span>, hi);
+    }
 }</pre>
     </div>
     </div>

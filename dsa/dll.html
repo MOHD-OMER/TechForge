@@ -390,6 +390,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -421,6 +422,16 @@
         if (node.next != null) node.next.prev = node.prev;
     }
 }</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">void</span> <span class="fn">erase</span>(Node* node) {   <span class="cm">// O(1) with a pointer to the node</span>
+    <span class="kw">if</span> (node-&gt;prev) node-&gt;prev-&gt;next = node-&gt;next;
+    <span class="kw">if</span> (node-&gt;next) node-&gt;next-&gt;prev = node-&gt;prev;
+    <span class="kw">delete</span> node;
+}
+<span class="cm">// std::list&lt;T&gt; is the STL doubly linked list</span></pre>
     </div>
     </div>
         </div>
@@ -550,9 +561,9 @@
   <script src="../assets/js/utils.js?v=10"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-    const pbar = document.getElementById('pbar');
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
-      pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
       document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
     });
 
