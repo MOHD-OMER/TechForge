@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="assets/css/forge_base.css?v=20" rel="stylesheet">
+  <link href="assets/css/forge_base.css?v=21" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="assets/css/platform.css?v=4" rel="stylesheet"/>
 <style>
@@ -39,6 +39,30 @@
   .track-bar { flex: 1; height: 8px; background: var(--surface, rgba(0,0,0,.3)); border-radius: 99px; overflow: hidden; }
   .track-fill { height: 100%; border-radius: 99px; background: var(--tc, var(--blue, #4d9ef7)); transition: width .5s ease; }
   .track-pct { width: 76px; text-align: right; font-family: var(--font-mono, monospace); font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  /* Focus next — ranked weak-area recommendations */
+  .fx-list { display: flex; flex-direction: column; gap: 8px; }
+  .fx-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 16px; border-radius: 10px; text-decoration: none; color: var(--text);
+    background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .fx-item:hover { border-color: var(--fx-c, var(--blue, #4d9ef7)); transform: translateX(3px); }
+  .fx-rank {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700;
+    color: var(--fx-c, var(--blue, #4d9ef7));
+    background: color-mix(in srgb, var(--fx-c, #4d9ef7) 12%, transparent);
+  }
+  .fx-body { flex: 1; min-width: 0; }
+  .fx-label { display: block; font-size: 13.5px; font-weight: 600; }
+  .fx-why { display: block; font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+  .fx-go { flex-shrink: 0; font-family: var(--font-mono, monospace); font-size: 11px; color: var(--text3); }
+  .fx-item:hover .fx-go { color: var(--fx-c, var(--blue, #4d9ef7)); }
+  .fx-empty { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  @media (prefers-reduced-motion: reduce) { .fx-item { transition: none; } .fx-item:hover { transform: none; } }
+  @media (max-width: 600px) { .fx-item { padding: 12px 14px; } .fx-go { display: none; } }
   .bk-list, .rc-list { display: flex; flex-direction: column; gap: 6px; }
   .bk-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 13.5px; transition: border-color .15s; }
   .bk-item:hover { border-color: var(--blue, #4d9ef7); }
@@ -93,6 +117,11 @@
   </div>
 
   <section class="dash-sec">
+    <h2><i class="ti ti-target-arrow"></i> Focus next</h2>
+    <div class="fx-list" id="focusList"></div>
+  </section>
+
+  <section class="dash-sec">
     <h2><i class="ti ti-chart-bar"></i> Track progress</h2>
     <div id="trackRows"></div>
   </section>
@@ -121,7 +150,7 @@
 
 <script src="assets/js/topics-manifest.js?v=2"></script>
 <script src="assets/js/site-index.js?v=2"></script>
-<script src="assets/js/utils.js?v=10"></script>
+<script src="assets/js/utils.js?v=11"></script>
 <script src="assets/js/platform.js?v=4"></script>
 <script src="assets/js/search-modal.js?v=1" defer></script>
 <script>
@@ -165,6 +194,115 @@
   document.getElementById('stBookmarks').textContent = bookmarks.length;
   document.getElementById('stTracks').textContent = started + '/' + tracks.length;
   document.getElementById('trackRows').innerHTML = rowsHtml;
+
+  /* ── Focus next: rank weak areas from the progress data already stored ──
+     Signals, strongest first:
+       1. flashcards sitting in Leitner box 1-2  → actively forgetting
+       2. cards due for review today             → scheduled work
+       3. timed-quiz best score under 70%        → shaky bank
+       4. a track started but under 40% complete → stalled
+     Everything is derived; nothing new is written to storage. */
+  (function () {
+    var host = document.getElementById('focusList');
+    if (!host) return;
+
+    var BANKS = {
+      'iv/dsa-interview':          { label: 'DSA interview', total: 47, href: 'interview/dsa-interview.html',           c: '#22d3ee' },
+      'iv/python-interview':       { label: 'Python interview', total: 35, href: 'interview/python-interview.html',     c: '#4d9ef7' },
+      'iv/oop-interview':          { label: 'OOP interview', total: 15, href: 'interview/oop-interview.html',           c: '#34d399' },
+      'iv/aiml-interview':         { label: 'AI/ML interview', total: 25, href: 'interview/aiml-interview.html',        c: '#a78bfa' },
+      'iv/sql-interview':          { label: 'SQL interview', total: 40, href: 'interview/sql-interview.html',           c: '#fbbf24' },
+      'iv/system-design-interview':{ label: 'System Design interview', total: 38, href: 'interview/system-design-interview.html', c: '#34d399' },
+      'iv/devops-interview':       { label: 'DevOps interview', total: 29, href: 'interview/devops-interview.html',     c: '#f97316' },
+      'iv/os-interview':           { label: 'OS interview', total: 30, href: 'interview/os-interview.html',             c: '#f87171' },
+      'iv/networking-interview':   { label: 'Networking interview', total: 30, href: 'interview/networking-interview.html', c: '#f87171' },
+      'iv/security-interview':     { label: 'Security interview', total: 30, href: 'interview/security-interview.html', c: '#fbbf24' }
+    };
+
+    var today = Math.floor(Date.now() / 86400000);
+    var recs = [];
+
+    Object.keys(BANKS).forEach(function (id) {
+      var bank = BANKS[id];
+
+      /* flashcard state for this bank */
+      var flash = get('tf_flash_' + id, '{}');
+      var ids = Object.keys(flash);
+      if (ids.length) {
+        var weak = 0, due = 0;
+        ids.forEach(function (cid) {
+          var rec = flash[cid] || {};
+          if (rec.b <= 2) weak++;
+          if (rec.d <= today) due++;
+        });
+        if (weak >= 3) {
+          recs.push({ score: 100 + weak, label: bank.label + ' flashcards', c: bank.c, href: bank.href,
+            why: weak + ' card' + (weak === 1 ? '' : 's') + ' stuck in the early boxes — these are the ones slipping away.' });
+        }
+        if (due >= 3) {
+          recs.push({ score: 60 + due, label: bank.label + ' review', c: bank.c, href: bank.href,
+            why: due + ' card' + (due === 1 ? '' : 's') + ' due for review today.' });
+        }
+      }
+
+      /* timed-quiz best score */
+      var best = parseInt(localStorage.getItem('tf_timedquiz_' + id) || '-1', 10);
+      if (best >= 0) {
+        var pct = Math.round(best / 10 * 100);
+        if (pct < 70) {
+          recs.push({ score: 80 + (70 - pct), label: bank.label + ' quiz', c: bank.c, href: bank.href,
+            why: 'Best timed run so far: ' + best + '/10. Worth another pass before an interview.' });
+        }
+      }
+
+      /* questions checked off in this bank */
+      var prog = get('tf_' + id.replace('iv/', '').replace('-interview', '') + '_interview_progress', '{}');
+      var checked = Object.keys(prog).length;
+      if (checked > 0 && checked < bank.total * 0.4) {
+        recs.push({ score: 30 + (bank.total - checked) / bank.total * 10, label: bank.label, c: bank.c, href: bank.href,
+          why: 'Started but only ' + checked + ' of ' + bank.total + ' questions checked off.' });
+      }
+    });
+
+    /* stalled tracks — started, under 40% */
+    tracks.forEach(function (t) {
+      if (!t.total) return;
+      var done = completed.filter(t.match).length;
+      var pct = Math.round(done / t.total * 100);
+      if (done > 0 && pct < 40) {
+        recs.push({ score: 20 + (40 - pct) / 4, label: t.label, c: t.color, href: t.hub,
+          why: 'Only ' + done + ' of ' + t.total + ' topics done (' + pct + '%). Pick up where you left off.' });
+      }
+    });
+
+    recs.sort(function (a, b) { return b.score - a.score; });
+
+    /* one recommendation per destination, top 5 */
+    var seen = {}, top = [];
+    recs.forEach(function (r) {
+      if (seen[r.href] || top.length >= 5) return;
+      seen[r.href] = 1;
+      top.push(r);
+    });
+
+    if (!top.length) {
+      host.innerHTML = '<p class="fx-empty">Nothing flagged yet. Work through a question bank, run a timed quiz or a flashcard session, and this turns into a ranked list of what to review — built from what you actually got wrong.</p>';
+      return;
+    }
+
+    host.innerHTML = top.map(function (r, i) {
+      return '<a class="fx-item" style="--fx-c:' + r.c + '" href="' + r.href + '">' +
+        '<span class="fx-rank">' + (i + 1) + '</span>' +
+        '<span class="fx-body"><span class="fx-label"></span><span class="fx-why"></span></span>' +
+        '<span class="fx-go">Open →</span></a>';
+    }).join('');
+    /* text set via textContent so stored values can never inject markup */
+    host.querySelectorAll('.fx-item').forEach(function (el, i) {
+      el.querySelector('.fx-label').textContent = top[i].label;
+      el.querySelector('.fx-why').textContent = top[i].why;
+    });
+  })();
+
 
   function ago(ts) {
     if (!ts) return '';

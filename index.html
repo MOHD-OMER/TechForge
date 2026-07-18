@@ -240,6 +240,26 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   display: flex; align-items: baseline; justify-content: space-between;
   margin-bottom: 32px; padding-top: clamp(48px, 6vw, 64px);
 }
+/* Stacked variant: eyebrow → title → lede in one column. The flex/
+   space-between default above only works with two children; sections with a
+   title AND a description need them stacked, not spread across the row. */
+.section-header.sh-stack {
+  display: block;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+.sh-stack .sh-title {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(21px, 3vw, 30px);
+  font-weight: 700; letter-spacing: -0.4px;
+  color: var(--text);
+  margin: 10px 0 8px;
+  text-wrap: balance;
+}
+.sh-stack .sh-lede {
+  font-size: 14px; color: var(--text2); line-height: 1.7;
+  max-width: 52ch; margin: 0;
+}
 .section-eyebrow {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
   color: var(--text3); text-transform: uppercase;
@@ -595,6 +615,13 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
     .csmap-section { padding: 56px 0 40px; }
     /* Square-ish radial map that scales to fit ANY width — no scroll. */
     .csmap-svg { display: block; max-width: 560px; margin: 0 auto; width: 100%; height: auto; font-family: var(--font-mono, monospace); }
+    /* Desktop: copy and map share the row so the diagram isn't stranded in
+       the middle with dead space beside it. Stacks back under 960px. */
+    @media (min-width: 960px) {
+      .csmap-layout { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 620px); gap: 56px; align-items: center; }
+      .csmap-layout .section-header.sh-stack { padding-top: 0; margin-bottom: 0; }
+      .csmap-layout .csmap-svg { margin: 0; max-width: 620px; }
+    }
     .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
     .csmap-flow { stroke-width: 1.6; stroke-dasharray: 5 88; stroke-linecap: round; opacity: .9; }
     .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 2; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
@@ -804,10 +831,11 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   <!-- ---- CS UNIVERSE MAP ---- -->
   <section class="csmap-section anim-in" aria-labelledby="csmapTitle">
     <div class="section-wrap">
-      <div class="section-header">
+      <div class="csmap-layout">
+      <div class="section-header sh-stack">
         <div class="section-eyebrow">The Map</div>
-        <h2 id="csmapTitle" style="font-family:var(--font-display,inherit);font-size:clamp(20px,3vw,28px);font-weight:700;margin:6px 0 4px">One connected body of knowledge</h2>
-        <p style="font-size:13.5px;color:var(--text2);max-width:560px">Every track feeds the same goal. Click any node to jump in.</p>
+        <h2 id="csmapTitle" class="sh-title">One connected body of knowledge</h2>
+        <p class="sh-lede">Every track feeds the same goal. Click any node to jump in.</p>
       </div>
       <svg class="csmap-svg" viewBox="0 0 620 600" aria-labelledby="csmapSvgTitle">
         <title id="csmapSvgTitle">Map of TechForge learning tracks. Six tracks — DSA, System Design, Databases, AI/ML, DevOps and Programming Languages — all connect to Interview Prep at the centre.</title>
@@ -860,7 +888,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
         <a class="csmap-node" href="systems/index.html" aria-label="OS and Networks track — operating systems and networking">
           <circle cx="128" cy="405" r="54" stroke="var(--red,#f87171)"/>
           <text x="128" y="402" text-anchor="middle">OS &amp; Net</text>
-          <text x="128" y="422" text-anchor="middle" class="csmap-sub">systems layer</text>
+          <text x="128" y="422" text-anchor="middle" class="csmap-sub">32 guides</text>
         </a>
         <a class="csmap-node" href="programming/index.html" aria-label="Programming Languages track — Python live plus more coming">
           <circle cx="128" cy="195" r="54" stroke="var(--amber,#fbbf24)"/>
@@ -870,9 +898,10 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
         <a class="csmap-node csmap-core" href="interview/index.html" aria-label="Interview Prep — where every track leads. 200 plus questions">
           <circle cx="310" cy="300" r="62" stroke="var(--teal,#2dd4bf)" stroke-width="2"/>
           <text x="310" y="296" text-anchor="middle">Interview</text>
-          <text x="310" y="317" text-anchor="middle" class="csmap-sub">200+ Qs</text>
+          <text x="310" y="317" text-anchor="middle" class="csmap-sub">290+ Qs</text>
         </a>
       </svg>
+      </div>
     </div>
   </section>
 
@@ -971,7 +1000,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           <div class="tc-sublist">
             <span class="tc-chip">Processes</span><span class="tc-chip">Memory</span><span class="tc-chip">TCP/IP</span><span class="tc-chip">DNS</span>
           </div>
-          <div class="tc-desc">The systems layer every other track depends on ◆ how one machine runs your program and how millions talk to each other. OS + Networking live, Security + Theory soon.</div>
+          <div class="tc-desc">The systems layer every other track depends on ◆ how one machine runs your program and how millions talk to each other. All four pillars complete: OS, Networking, Security and Theory of Computation.</div>
           <div class="tc-meta">
             <div class="tc-count"><span class="tc-dot"></span>2 pillars building</div>
             <div class="tc-arrow">Go deeper ?</div>

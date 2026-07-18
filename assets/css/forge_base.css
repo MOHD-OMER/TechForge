@@ -945,6 +945,59 @@ html.light .tq-btn.tq-primary, html.light .tq-btn.tq-primary:hover { color: #fff
 .tq-stat-val { font-family: var(--font-mono, monospace); font-size: 16px; font-weight: 700; color: var(--text); }
 .tq-stat-label { font-family: var(--font-mono, monospace); font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); }
 @media (max-width: 600px) { .tq-stats { grid-template-columns: repeat(2, 1fr); } .tq-opt { min-height: 44px; } }
+
+/* ══════════════════════════════════════════
+   FLASHCARDS — spaced repetition (Leitner)
+   Injected by utils.js on interview bank pages
+══════════════════════════════════════════ */
+.fc-launch {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 13px; border-radius: 100px;
+  font-family: var(--font-mono, monospace); font-size: 10px; font-weight: 700;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.fc-launch:hover { border-color: var(--accent, var(--amber)); color: var(--accent, var(--amber)); }
+.fc-launch .fc-due {
+  font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700;
+  padding: 1px 7px; border-radius: 100px;
+  background: rgba(52,211,153,.12); color: var(--green, #34d399);
+}
+.fc-card {
+  perspective: 1200px; margin-top: 16px; cursor: pointer;
+}
+.fc-inner {
+  position: relative; width: 100%; min-height: 220px;
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+}
+.fc-card.fc-flipped .fc-inner { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 26px 24px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border2);
+  overflow-y: auto;
+}
+.fc-back { transform: rotateY(180deg); justify-content: flex-start; }
+.fc-face-label {
+  font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;
+}
+.fc-q { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.6; }
+.fc-a { font-size: 13px; color: var(--text2); line-height: 1.75; }
+.fc-hint { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); margin-top: 16px; }
+.fc-grade { display: flex; gap: 8px; margin-top: 18px; }
+.fc-box-info { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); margin-top: 12px; text-align: center; }
+@media (prefers-reduced-motion: reduce) {
+  .fc-inner { transition: none; }
+}
+@media (max-width: 600px) {
+  .fc-face { padding: 18px 16px; }
+  .fc-grade { flex-direction: column; }
+  .fc-grade .tq-btn { justify-content: center; min-height: 44px; }
+}
 @media (prefers-reduced-motion: reduce) { .tq-timer-fill.tq-running { transition: none; } }
 @media (max-width: 600px) { .tq-modal { padding: 20px 16px; } .tq-actions { flex-direction: column; } .tq-btn { justify-content: center; min-height: 44px; } }
 /* Light theme: accents are dark ink, so the flooded pill needs a light label */

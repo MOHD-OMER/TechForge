@@ -350,10 +350,10 @@ Example:
 - [ ] Performance monitoring & analytics
 
 ### v2.3.0 (Q1 2027)
-- [ ] Spaced repetition / flashcard system
+- [x] Spaced repetition / flashcard system (Leitner boxes on all 10 interview banks, due-card resurfacing, localStorage-only)
 - [ ] Interactive coding challenges with code editor
 - [ ] Customizable learning paths
-- [ ] "Review weak areas" recommendations
+- [x] "Review weak areas" recommendations (dashboard ranks weak spots from flashcard boxes, quiz scores and track progress)
 
 ### v3.0.0 (Q2 2027)
 - [ ] Community discussions (GitHub-backed comments)

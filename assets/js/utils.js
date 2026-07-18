@@ -766,3 +766,161 @@ document.addEventListener('DOMContentLoaded', function () {
     blk.insertBefore(btn, pre);
   });
 });
+
+/* ── Flashcards: spaced repetition (Leitner boxes) ────────────────────────
+   Injected on interview bank pages (.qna-item + .filter-row). Each Q&A is a
+   card. Boxes 0-5 with intervals [0,1,2,4,7,15] days; "Good" moves a card up
+   a box, "Again" resets it to box 1. Due cards resurface first; new cards
+   fill the rest, capped per session. State in localStorage only. */
+document.addEventListener('DOMContentLoaded', function () {
+  var filterRow = document.querySelector('.filter-row');
+  var items = [].slice.call(document.querySelectorAll('.qna-item'));
+  if (!filterRow || items.length < 6) return;
+
+  var SESSION_CAP = 20;
+  var INTERVALS = [0, 1, 2, 4, 7, 15]; /* days per box */
+  var storeKey = 'tf_flash_' + (document.body.dataset.topicId || location.pathname);
+
+  function hash(s) {
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  }
+  function today() { return Math.floor(Date.now() / 86400000); }
+  function load() { try { return JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch (e) { return {}; } }
+  function save(st) { try { localStorage.setItem(storeKey, JSON.stringify(st)); } catch (e) {} }
+
+  var pool = items.map(function (it) {
+    var q = ((it.querySelector('.qna-text') || {}).textContent || '').trim();
+    return { id: hash(q), q: q, a: (it.querySelector('.qna-a') || {}).innerHTML || '' };
+  }).filter(function (x) { return x.q && x.a; });
+  if (pool.length < 6) return;
+
+  function buildQueue() {
+    var st = load(), t = today();
+    var due = [], fresh = [];
+    pool.forEach(function (c) {
+      var rec = st[c.id];
+      if (!rec) fresh.push(c);
+      else if (rec.d <= t) due.push(c);
+    });
+    return due.concat(fresh).slice(0, SESSION_CAP);
+  }
+
+  var launch = document.createElement('button');
+  launch.type = 'button';
+  launch.className = 'fc-launch';
+  function refreshLaunch() {
+    var n = buildQueue().length;
+    launch.innerHTML = '&#9634; Flashcards' + (n ? ' <span class="fc-due">' + n + ' due</span>' : '');
+  }
+  refreshLaunch();
+  filterRow.appendChild(launch);
+
+  var state = null, lastFocus = null;
+
+  function close() {
+    var o = document.querySelector('.fc-overlay');
+    if (o) o.remove();
+    document.removeEventListener('keydown', keys);
+    state = null;
+    refreshLaunch();
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function keys(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (!state) return;
+    if (e.key === ' ' || e.key === 'Enter') {
+      var card = document.querySelector('.fc-card');
+      if (card && !card.classList.contains('fc-flipped')) { e.preventDefault(); card.click(); }
+    }
+    if (e.key === '1') { var b = document.querySelector('.fc-again'); if (b) b.click(); }
+    if (e.key === '2') { var g = document.querySelector('.fc-good'); if (g) g.click(); }
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    state = { queue: buildQueue(), i: 0, reviewed: 0, again: 0 };
+    if (!state.queue.length) { state = null; return; }
+    var o = document.createElement('div');
+    o.className = 'tq-overlay fc-overlay';
+    o.innerHTML = '<div class="tq-modal" role="dialog" aria-modal="true" aria-label="Flashcards"></div>';
+    o.addEventListener('click', function (e) { if (e.target === o) close(); });
+    document.body.appendChild(o);
+    document.addEventListener('keydown', keys);
+    render();
+  }
+
+  function modal() { return document.querySelector('.fc-overlay .tq-modal'); }
+
+  function render() {
+    var cur = state.queue[state.i];
+    var st = load();
+    var box = (st[cur.id] || { b: 0 }).b;
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">CARD ' + (state.i + 1) + ' / ' + state.queue.length + '</span>' +
+      '<button type="button" class="tq-close" aria-label="Close flashcards">✕</button></div>' +
+      '<div class="fc-card" tabindex="0" role="button" aria-label="Reveal answer">' +
+      '<div class="fc-inner">' +
+      '<div class="fc-face fc-front"><div class="fc-face-label">Question</div><div class="fc-q"></div><div class="fc-hint">click / space to reveal</div></div>' +
+      '<div class="fc-face fc-back"><div class="fc-face-label">Answer</div><div class="fc-a"></div></div>' +
+      '</div></div>' +
+      '<div class="fc-grade" hidden>' +
+      '<button type="button" class="tq-btn tq-wrong fc-again">1 · Again <span style="opacity:.6;font-weight:500">(tomorrow)</span></button>' +
+      '<button type="button" class="tq-btn tq-right fc-good">2 · Good <span style="opacity:.6;font-weight:500">(+' + INTERVALS[Math.min(box + 1, 5)] + 'd)</span></button>' +
+      '</div>' +
+      '<div class="fc-box-info">box ' + box + ' of 5</div>';
+    modal().querySelector('.fc-q').textContent = cur.q;
+    modal().querySelector('.fc-a').innerHTML = cur.a; /* markup from this same page */
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    var card = modal().querySelector('.fc-card');
+    card.addEventListener('click', function () {
+      if (card.classList.contains('fc-flipped')) return;
+      card.classList.add('fc-flipped');
+      var g = modal().querySelector('.fc-grade');
+      g.hidden = false;
+      modal().querySelector('.fc-good').focus();
+    });
+    modal().querySelector('.fc-again').addEventListener('click', function () { grade(cur, false); });
+    modal().querySelector('.fc-good').addEventListener('click', function () { grade(cur, true); });
+    card.focus();
+  }
+
+  function grade(cur, good) {
+    var st = load(), t = today();
+    var box = (st[cur.id] || { b: 0 }).b;
+    var nb = good ? Math.min(box + 1, 5) : 1;
+    st[cur.id] = { b: nb, d: t + INTERVALS[nb] };
+    save(st);
+    state.reviewed++;
+    if (!good) state.again++;
+    state.i++;
+    if (state.i < state.queue.length) render();
+    else summary();
+  }
+
+  function summary() {
+    var nextDue = buildQueue().length;
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">SESSION DONE</span>' +
+      '<button type="button" class="tq-close" aria-label="Close flashcards">✕</button></div>' +
+      '<div class="tq-score">' + state.reviewed + '<span class="tq-score-of">cards</span></div>' +
+      '<div class="tq-sub">' + (state.again === 0 ? 'Every card graded Good — the intervals stretch out from here.'
+        : state.again + ' back to box 1; they return tomorrow.') + '</div>' +
+      '<div class="tq-sub">' + (nextDue ? nextDue + ' more available now.' : 'Nothing else due — come back tomorrow.') + '</div>' +
+      '<div class="tq-actions">' +
+      (nextDue ? '<button type="button" class="tq-btn tq-primary fc-more">Keep going</button>' : '') +
+      '<button type="button" class="tq-btn fc-close2">Done</button></div>';
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    modal().querySelector('.fc-close2').addEventListener('click', close);
+    var more = modal().querySelector('.fc-more');
+    if (more) more.addEventListener('click', function () {
+      state = { queue: buildQueue(), i: 0, reviewed: 0, again: 0 };
+      render();
+    });
+    (more || modal().querySelector('.fc-close2')).focus();
+  }
+
+  launch.addEventListener('click', open);
+});
