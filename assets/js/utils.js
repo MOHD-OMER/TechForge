@@ -103,7 +103,8 @@ document.addEventListener('DOMContentLoaded', function () {
     '.lang-toggle{display:inline-flex;gap:2px;background:var(--surface,rgba(0,0,0,.25));border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:12px}' +
     '.lt-btn{border:none;background:transparent;color:var(--text2);font-family:var(--mono,monospace);font-size:11px;font-weight:600;padding:6px 14px;border-radius:7px;cursor:pointer;transition:all .15s}' +
     '.lt-btn:hover{color:var(--text)}' +
-    '.lt-btn.active{background:var(--accent-dim,rgba(77,158,247,.15));color:var(--accent,var(--blue))}';
+    '.lt-btn.active{background:var(--accent-dim,rgba(77,158,247,.15));color:var(--accent,var(--blue))}' +
+    '@media (max-width:640px){.lt-btn{min-height:38px;padding:9px 14px}}';
   document.head.appendChild(st);
   /* Wire up proper ARIA tabs relationships: .lang-toggle already has
    * role="tablist" in markup, but the buttons/panes never got role="tab" /
