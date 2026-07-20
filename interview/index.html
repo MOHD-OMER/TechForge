@@ -172,6 +172,9 @@
   background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
   padding:24px 22px 20px; text-decoration:none; display:flex; flex-direction:column;
   position:relative; overflow:hidden; transition:all .25s; min-height:210px;
+  /* the card is an <a>: without this, anything not explicitly coloured
+     (the icon) falls back to the browser's default link blue */
+  color:var(--text);
 }
 .icat-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--ic-a,var(--amber)),transparent); opacity:0; transition:opacity .2s; }
 .icat-card::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 80% 10%,var(--ic-glow,rgba(251,191,36,.06)),transparent 55%); opacity:0; transition:opacity .3s; }
@@ -179,22 +182,26 @@
 .icat-card:hover::before { opacity:1; }
 .icat-card:hover::after  { opacity:1; }
 .icat-card:focus-visible { outline:2px solid var(--ic-a,var(--amber)); outline-offset:2px; }
-.ic-dsa { grid-column:span 4; --ic-a:var(--cyan);   --ic-glow:rgba(34,211,238,.06); }
-.ic-py  { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(79,142,247,.07); }
-.ic-oop { grid-column:span 4; --ic-a:var(--green);  --ic-glow:rgba(52,211,153,.06); }
+/* Each bank card wears the accent of the section it drills — DSA blue,
+   Programming amber, Data & Cloud cyan, and so on — so the colour tells you
+   which track you're heading into before you read the title. The hub's own
+   chrome stays teal. */
+.ic-dsa { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(77,158,247,.07); }
+.ic-py  { grid-column:span 4; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
+.ic-oop { grid-column:span 4; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
 .ic-ai  { grid-column:span 6; --ic-a:var(--purple); --ic-glow:rgba(167,139,250,.07); }
-.ic-sql { grid-column:span 6; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
-.ic-icon { font-size:26px; margin-bottom:12px; }
+.ic-sql { grid-column:span 6; --ic-a:var(--cyan);   --ic-glow:rgba(34,211,238,.06); }
+.ic-icon { font-size:26px; margin-bottom:12px; color:var(--ic-a, var(--teal)); }
 .ic-label {
   font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px;
   text-transform:uppercase; padding:3px 10px; border-radius:var(--r-full);
   display:inline-block; margin-bottom:9px; width:fit-content;
 }
-.ic-dsa .ic-label { background:rgba(34,211,238,.07);  color:var(--cyan);   border:1px solid rgba(34,211,238,.18); }
-.ic-py  .ic-label { background:rgba(79,142,247,.1);   color:var(--blue);   border:1px solid rgba(79,142,247,.22); }
-.ic-oop .ic-label { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+.ic-dsa .ic-label { background:rgba(77,158,247,.1);   color:var(--blue);   border:1px solid rgba(77,158,247,.22); }
+.ic-py  .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-oop .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
 .ic-ai  .ic-label { background:rgba(167,139,250,.09); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
-.ic-sql .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-sql .ic-label { background:rgba(34,211,238,.07);  color:var(--cyan);   border:1px solid rgba(34,211,238,.18); }
 .ic-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; letter-spacing:-.3px; }
 .ic-desc  { font-size:11.5px; color:var(--text3); line-height:1.65; flex:1; margin-bottom:14px; }
 .ic-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
@@ -209,23 +216,23 @@
 .ic-count { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
 .ic-dot   { width:5px; height:5px; border-radius:50%; background:var(--ic-a,var(--amber)); }
 .ic-arrow { font-family:var(--font-mono); font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; transition:gap .15s; }
-.ic-dsa .ic-arrow { color:var(--cyan); }
-.ic-py  .ic-arrow { color:var(--blue); }
-.ic-oop .ic-arrow { color:var(--green); }
+.ic-dsa .ic-arrow { color:var(--blue); }
+.ic-py  .ic-arrow { color:var(--amber); }
+.ic-oop .ic-arrow { color:var(--amber); }
 .ic-ai  .ic-arrow { color:var(--purple); }
-.ic-sql .ic-arrow { color:var(--amber); }
+.ic-sql .ic-arrow { color:var(--cyan); }
 .ic-sd  { grid-column:span 4; --ic-a:var(--green);  --ic-glow:rgba(52,211,153,.06); }
-.ic-devops { grid-column:span 4; --ic-a:var(--orange); --ic-glow:rgba(249,115,22,.06); }
+.ic-devops { grid-column:span 4; --ic-a:var(--cyan); --ic-glow:rgba(34,211,238,.06); }
 .ic-os  { grid-column:span 4; --ic-a:var(--red);    --ic-glow:rgba(248,113,113,.06); }
 .ic-net { grid-column:span 6; --ic-a:var(--red);    --ic-glow:rgba(248,113,113,.06); }
 .ic-sec { grid-column:span 6; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
 .ic-sd  .ic-label { background:rgba(52,211,153,.08); color:var(--green);  border:1px solid rgba(52,211,153,.2); }
-.ic-devops .ic-label { background:rgba(249,115,22,.08); color:var(--orange); border:1px solid rgba(249,115,22,.2); }
+.ic-devops .ic-label { background:rgba(34,211,238,.07); color:var(--cyan); border:1px solid rgba(34,211,238,.18); }
 .ic-os  .ic-label { background:rgba(248,113,113,.08); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
 .ic-net .ic-label { background:rgba(248,113,113,.08); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
 .ic-sec .ic-label { background:rgba(251,191,36,.08); color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
 .ic-sd  .ic-arrow { color:var(--green); }
-.ic-devops .ic-arrow { color:var(--orange); }
+.ic-devops .ic-arrow { color:var(--cyan); }
 .ic-os  .ic-arrow { color:var(--red); }
 .ic-net .ic-arrow { color:var(--red); }
 .ic-sec .ic-arrow { color:var(--amber); }
@@ -316,7 +323,8 @@
 .pb-btn-secondary:hover { border-color:var(--border2); color:var(--text2); }
 
 /* Resources */
-.resources-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+/* Four resource cards: 2×2 rather than 3+1, which leaves an orphan. */
+.resources-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
 .res-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px; text-decoration:none; display:flex; align-items:flex-start; gap:14px; transition:all .2s; }
 .res-card:hover { border-color:var(--border2); transform:translateY(-2px); }
 .res-icon { font-size:22px; flex-shrink:0; }

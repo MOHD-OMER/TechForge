@@ -25,7 +25,10 @@
   <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <style>
     :root { --accent: var(--red); }
+    /* Four pillars: auto-fill would make 3+1 at mid widths, orphaning the
+       last card — cap at two columns so it always lands 2×2. */
     .sysp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 12px; }
+    @media (min-width: 700px) { .sysp-grid { grid-template-columns: repeat(2, 1fr); } }
     .sysp-card {
       display: flex; flex-direction: column; gap: 9px;
       background: var(--surface); border: 1px solid var(--border);

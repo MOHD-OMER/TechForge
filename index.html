@@ -5,11 +5,11 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
-<meta name="description" content="TechForge — Free, interactive CS learning. Master DSA, Python, Backend, SQL & AI/ML with live canvas animations and 200+ interview problems."/>
+<meta name="description" content="TechForge — Free, interactive CS learning. Master DSA, Python, Backend, SQL & AI/ML with live canvas animations and 290+ interview problems."/>
 <meta name="keywords" content="DSA, Python, Backend, SQL, AI/ML, interview prep, free coding tutorials, canvas animations"/>
 <meta name="author" content="TechForge"/>
 <meta property="og:title" content="TechForge — Master CS Fundamentals"/>
-<meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 200+ interview questions."/>
+<meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 290+ interview questions."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://techforge-dev.vercel.app"/>
 <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
@@ -297,26 +297,32 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
 .topic-card:hover::before { opacity: 1; }
 .topic-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
-.tc-dsa { grid-column: span 4; --tc-a: var(--blue);  --tc-glow: rgba(79,142,247,.08); }
-.tc-py  { grid-column: span 4; --tc-a: var(--green); --tc-glow: rgba(52,211,153,.07); }
-.tc-bk  { grid-column: span 4; --tc-a: #10b981;      --tc-glow: rgba(16,185,129,.07); }
-.tc-sql { grid-column: span 4; --tc-a: #818cf8;      --tc-glow: rgba(129,140,248,.07);}
-.tc-devops { grid-column: span 4; --tc-a: #f97316; --tc-glow: rgba(249,115,22,.07); }
-.tc-ai  { grid-column: span 4; --tc-a: var(--cyan);  --tc-glow: rgba(0,212,255,.07);  }
-.tc-int { grid-column: span 4; --tc-a: var(--amber); --tc-glow: rgba(251,191,36,.07); }
+/* Each card carries its own section's accent — the same colour that page
+   uses for its hub, sidebar and nav. Vars, not hex, so the light theme's
+   dark-ink versions resolve automatically. */
+.tc-dsa { grid-column: span 4; --tc-a: var(--blue);   --tc-glow: rgba(77,158,247,.08); }
+.tc-py  { grid-column: span 4; --tc-a: var(--amber);  --tc-glow: rgba(251,191,36,.07); }
+.tc-bk  { grid-column: span 4; --tc-a: var(--green);  --tc-glow: rgba(52,211,153,.07); }
+.tc-sql { grid-column: span 4; --tc-a: var(--cyan);   --tc-glow: rgba(34,211,238,.07); }
+.tc-devops { grid-column: span 4; --tc-a: var(--red); --tc-glow: rgba(248,113,113,.07); }
+.tc-ai  { grid-column: span 4; --tc-a: var(--purple); --tc-glow: rgba(167,139,250,.07); }
+/* Seven cards in a 3-across grid leaves the last one orphaned, so the
+   Interview hub — the track everything else feeds into — takes the full
+   width instead of sitting alone beside 700px of dead space. */
+.tc-int { grid-column: span 12; --tc-a: var(--teal); --tc-glow: rgba(45,212,191,.07); }
 
 .tc-icon-box {
   width: 40px; height: 40px; border-radius: var(--r-md);
   display: grid; place-items: center; font-size: 22px;
   margin-bottom: 14px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.05);
 }
-.tc-dsa .tc-icon-box { background: rgba(79,142,247,.1); color: #4d9ef7; }
-.tc-py  .tc-icon-box { background: rgba(52,211,153,.08); color: #34d399; }
-.tc-bk  .tc-icon-box { background: rgba(16,185,129,.08); color: #10b981; }
-.tc-sql .tc-icon-box { background: rgba(129,140,248,.08); color: #818cf8; }
-.tc-devops .tc-icon-box { background: rgba(249,115,22,.08); color: #f97316; }
-.tc-ai  .tc-icon-box { background: rgba(0,212,255,.07); color: #00d4ff; }
-.tc-int .tc-icon-box { background: rgba(251,191,36,.08); color: #fbbf24; }
+.tc-dsa .tc-icon-box { background: rgba(77,158,247,.1);  color: var(--blue); }
+.tc-py  .tc-icon-box { background: rgba(251,191,36,.08); color: var(--amber); }
+.tc-bk  .tc-icon-box { background: rgba(52,211,153,.08); color: var(--green); }
+.tc-sql .tc-icon-box { background: rgba(34,211,238,.08); color: var(--cyan); }
+.tc-devops .tc-icon-box { background: rgba(248,113,113,.08); color: var(--red); }
+.tc-ai  .tc-icon-box { background: rgba(167,139,250,.08); color: var(--purple); }
+.tc-int .tc-icon-box { background: rgba(45,212,191,.08);  color: var(--teal); }
 
 .tc-label {
   font-family: var(--font-mono); font-size: 9px; font-weight: 700;
@@ -324,13 +330,13 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   padding: 3px 9px; border-radius: var(--r-full);
   display: inline-block; margin-bottom: 10px; width: fit-content;
 }
-.tc-dsa .tc-label { background:rgba(79,142,247,.1);   color:var(--blue);  border:1px solid rgba(79,142,247,.22); }
-.tc-py  .tc-label { background:rgba(52,211,153,.08);  color:var(--green); border:1px solid rgba(52,211,153,.2);  }
-.tc-bk  .tc-label { background:rgba(16,185,129,.08);  color:#10b981;      border:1px solid rgba(16,185,129,.2);  }
-.tc-sql .tc-label { background:rgba(129,140,248,.08); color:#818cf8;      border:1px solid rgba(129,140,248,.2); }
-.tc-devops .tc-label { background:rgba(249,115,22,.08); color:#f97316; border:1px solid rgba(249,115,22,.2); }
-.tc-ai  .tc-label { background:rgba(0,212,255,.07);   color:var(--cyan);  border:1px solid rgba(0,212,255,.18);  }
-.tc-int .tc-label { background:rgba(251,191,36,.08);  color:var(--amber); border:1px solid rgba(251,191,36,.2);  }
+.tc-dsa .tc-label { background:rgba(77,158,247,.1);   color:var(--blue);   border:1px solid rgba(77,158,247,.22); }
+.tc-py  .tc-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2);  }
+.tc-bk  .tc-label { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2);  }
+.tc-sql .tc-label { background:rgba(34,211,238,.08);  color:var(--cyan);   border:1px solid rgba(34,211,238,.2);  }
+.tc-devops .tc-label { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+.tc-ai  .tc-label { background:rgba(167,139,250,.08); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+.tc-int .tc-label { background:rgba(45,212,191,.08);  color:var(--teal);   border:1px solid rgba(45,212,191,.2);  }
 
 .tc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 7px; letter-spacing: -.3px; }
 .tc-desc  { font-size: 12px; color: var(--text3); line-height: 1.65; flex: 1; margin-bottom: 14px; }
@@ -344,13 +350,13 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
 .tc-count { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
 .tc-dot   { width: 5px; height: 5px; border-radius: 50%; background: var(--tc-a,var(--cyan)); }
 .tc-arrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
-.tc-dsa .tc-arrow { color: var(--blue);  }
-.tc-py  .tc-arrow { color: var(--green); }
-.tc-bk  .tc-arrow { color: #10b981;     }
-.tc-sql .tc-arrow { color: #818cf8;     }
-.tc-devops .tc-arrow { color: #f97316; }
-.tc-ai  .tc-arrow { color: var(--cyan); }
-.tc-int .tc-arrow { color: var(--amber);}
+.tc-dsa .tc-arrow { color: var(--blue);   }
+.tc-py  .tc-arrow { color: var(--amber);  }
+.tc-bk  .tc-arrow { color: var(--green);  }
+.tc-sql .tc-arrow { color: var(--cyan);   }
+.tc-devops .tc-arrow { color: var(--red); }
+.tc-ai  .tc-arrow { color: var(--purple); }
+.tc-int .tc-arrow { color: var(--teal);   }
 .topic-card:hover .tc-arrow { gap: 9px; }
 
 /* -- HOW IT WORKS -- */
@@ -469,7 +475,8 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   .tc-py  { grid-column:span 5; }
   .tc-bk  { grid-column:span 4; }
   .tc-sql { grid-column:span 4; }
-  .tc-ai  { grid-column:span 4; }
+  .tc-devops { grid-column:span 4; }
+  .tc-ai  { grid-column:span 6; }
   .tc-int { grid-column:span 6; }
   .hiw-grid { grid-template-columns:repeat(2,1fr); }
   .footer-top { grid-template-columns:1fr; }
@@ -764,7 +771,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
       </h1>
       <p class="hero-sub">
         The interactive CS platform built for engineers who want to <strong style="color:var(--text)">understand, not just memorize</strong>.
-        Live canvas visualizations, clean code, and 200+ interview problems — from first principles to interview-ready.
+        Live canvas visualizations, clean code, and 290+ interview problems — from first principles to interview-ready.
       </p>
       <div class="hero-cta">
         <a class="btn-primary" href="dsa/index.html"><i class="ti ti-rocket" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Start with DSA</a>
@@ -772,8 +779,8 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
       </div>
       <div class="stat-row">
         <div class="stat-item"><span class="stat-val" data-count="7">7</span><span class="stat-key">Tracks</span></div>
-        <div class="stat-item"><span class="stat-val" data-count="125" data-suffix="+">125+</span><span class="stat-key">Pages</span></div>
-        <div class="stat-item"><span class="stat-val" data-count="200" data-suffix="+">200+</span><span class="stat-key">Questions</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="165" data-suffix="+">165+</span><span class="stat-key">Pages</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="290" data-suffix="+">290+</span><span class="stat-key">Questions</span></div>
         <div class="stat-item"><span class="stat-val" data-count="137">137</span><span class="stat-key">Programs</span></div>
       </div>
     </div>
@@ -974,7 +981,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           </div>
           <div class="tc-desc">Load balancing, caching, microservices, and distributed systems — plus Django, Flask, and FastAPI framework guides for building production backends.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>6 concepts + 3 frameworks</div>
+            <div class="tc-count"><span class="tc-dot"></span>26 guides + 3 frameworks</div>
             <div class="tc-arrow">Design ?</div>
           </div>
         </a>
@@ -1002,7 +1009,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           </div>
           <div class="tc-desc">The systems layer every other track depends on ◆ how one machine runs your program and how millions talk to each other. All four pillars complete: OS, Networking, Security and Theory of Computation.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>2 pillars building</div>
+            <div class="tc-count"><span class="tc-dot"></span>4 pillars · 32 guides</div>
             <div class="tc-arrow">Go deeper ?</div>
           </div>
         </a>
@@ -1030,9 +1037,9 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
             <span class="tc-chip">FAANG</span><span class="tc-chip">Startup</span>
             <span class="tc-chip">DSA</span><span class="tc-chip">SQL</span><span class="tc-chip">OOP</span>
           </div>
-          <div class="tc-desc">200+ curated questions across DSA, Python, OOP, SQL, and AI/ML ◆ tagged for FAANG and startups. Progress tracked in your browser.</div>
+          <div class="tc-desc">290+ curated questions across DSA, Python, OOP, SQL, and AI/ML ◆ tagged for FAANG and startups. Progress tracked in your browser.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>200+ questions ◆ 5 tracks</div>
+            <div class="tc-count"><span class="tc-dot"></span>290+ questions ◆ 10 tracks</div>
             <div class="tc-arrow">Prepare ?</div>
           </div>
         </a>
@@ -1072,7 +1079,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
           <div class="hiw-num">04</div>
           <div class="hiw-icon"><i class="ti ti-checklist"></i></div>
           <div class="hiw-title">Practice &amp; Track</div>
-          <div class="hiw-desc">Solve 200+ curated problems tagged for FAANG and startups. Check them off ◆ progress saves to your browser automatically.</div>
+          <div class="hiw-desc">Solve 290+ curated problems tagged for FAANG and startups. Check them off ◆ progress saves to your browser automatically.</div>
         </div>
       </div>
     </div>
