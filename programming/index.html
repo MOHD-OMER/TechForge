@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Programming Languages hub — learn how languages turn ideas into instructions. Python is live with 7 modules and 137 programs; JavaScript, Java, C++ and HTML/CSS tracks are coming soon."/>
+  <meta name="description" content="Programming Languages hub — learn how languages turn ideas into instructions. Python is live with 7 modules and 137 programs; JavaScript, Java and C++ tracks are coming soon. Includes a language atlas mapping 20+ languages to what they are used to build."/>
   <meta property="og:title" content="Programming Languages — TechForge"/>
   <meta property="og:description" content="Learn programming languages from the ground up. Python live today; more languages on the way."/>
   <meta property="og:type" content="website"/>
@@ -51,6 +51,117 @@
     .pl-arrow { transition: transform .2s; }
     .pl-live:hover .pl-arrow { transform: translateX(4px); }
     .pl-note { font-size: 12px; color: var(--text3); margin: 4px 0 34px; }
+
+    /* ── Track cards as books ──────────────────────────────────────────
+       The cover carries the logo and name; hovering (or focusing) swings
+       it open on its spine to reveal what the track contains. The content
+       is always in the DOM and the cover is aria-hidden, so screen readers
+       never meet a closed book. Gated to hover-capable pointers — on touch
+       there is no hover, so the cover is removed and the card reads flat. */
+    .bk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 12px; }
+    .bk { position: relative; border-radius: 14px; min-height: 250px; display: block; text-decoration: none; color: var(--text); }
+    .bk-inner {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 22px; min-height: 250px;
+      display: flex; flex-direction: column; gap: 9px;
+    }
+    .bk-cover { display: none; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .bk { perspective: 1600px; }
+      .bk-cover {
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+        position: absolute; inset: 0; border-radius: 14px;
+        background: var(--bg2, #0d1117); border: 1px solid var(--border2);
+        transform-origin: left center; transform: rotateY(0deg);
+        transition: transform .55s cubic-bezier(.2,.7,.3,1), box-shadow .55s ease;
+        backface-visibility: hidden;
+      }
+      .bk:hover .bk-cover, .bk:focus-visible .bk-cover { transform: rotateY(-105deg); box-shadow: 8px 0 24px rgba(0,0,0,.35); }
+      /* the spine: a hairline in the track's colour, not a slab */
+      .bk-cover::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; border-radius: 14px 0 0 14px; background: var(--bk-c, var(--accent)); opacity: .8; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bk-cover { transition: none; }
+      .bk:hover .bk-cover, .bk:focus-visible .bk-cover { transform: none; opacity: 0; visibility: hidden; }
+    }
+    .bk-logo { font-size: 44px; color: var(--bk-c, var(--accent)); line-height: 1; }
+    .bk-cover-name { font-family: var(--font-display, inherit); font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+    .bk-cover-meta { font-family: var(--font-mono, monospace); font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+    .bk-status { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; }
+    .bk-status-live { color: var(--green); background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.28); }
+    .bk-status-soon { color: var(--amber); background: rgba(251,191,36,.1); border: 1px solid rgba(251,191,36,.25); }
+    /* ── Intro + concept axes ── */
+    .pg-intro { max-width: 720px; margin-bottom: 8px; }
+    .pg-intro p { font-size: 14px; color: var(--text2); line-height: 1.8; margin: 0 0 14px; }
+    .pg-intro strong { color: var(--text); }
+    .pg-def { display: flex; gap: 13px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 15px 17px; margin: 4px 0 16px; }
+    .pg-def i { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .pg-def p { font-size: 13px; color: var(--text2); line-height: 1.7; margin: 0; }
+    .sub-h2 { font-family: var(--font-display, inherit); font-size: clamp(19px,2.6vw,25px); font-weight: 700; letter-spacing: -.3px; margin: 4px 0 14px; }
+
+    .axis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 34px; }
+    .axis-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+    .axis-name { font-family: var(--font-mono, monospace); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+    .axis-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+    .axis-k { font-size: 13.5px; font-weight: 700; color: var(--text); }
+    .axis-vs { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); }
+    .axis-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
+    .axis-eg { font-family: var(--font-mono, monospace); font-size: 10.5px; color: var(--text3); margin-top: 8px; }
+
+    /* ── Language atlas ── */
+    .la-domain { margin-bottom: 30px; }
+    .la-dhead { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .la-dicon { font-size: 18px; color: var(--la-c, var(--accent)); }
+    .la-dname { font-family: var(--font-display, inherit); font-size: 16.5px; font-weight: 700; letter-spacing: -.2px; }
+    .la-dsub { font-size: 12.5px; color: var(--text3); margin: 0 0 14px 28px; line-height: 1.6; }
+    .la-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+    .la-card {
+      display: flex; flex-direction: column; gap: 7px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 15px 17px; color: var(--text); text-decoration: none;
+    }
+    a.la-card { transition: border-color .15s ease, transform .15s ease; }
+    a.la-card:hover, a.la-card:focus-visible { border-color: var(--la-c, var(--accent)); transform: translateX(3px); }
+    .la-top { display: flex; align-items: center; gap: 9px; }
+    .la-logo {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--la-c, var(--text2));
+      background: color-mix(in srgb, var(--la-c, var(--text3)) 10%, transparent);
+    }
+    /* letter mark for the few languages with no brand glyph */
+    .la-logo.la-mark { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; letter-spacing: -.3px; }
+    .la-name { font-size: 14.5px; font-weight: 700; letter-spacing: -.2px; }
+    .la-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .la-tag { font-family: var(--font-mono, monospace); font-size: 8.5px; font-weight: 600; letter-spacing: .5px; padding: 2px 7px; border-radius: 100px; background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text3); }
+    .la-desc { font-size: 12px; color: var(--text2); line-height: 1.6; flex: 1; }
+    .la-go { font-family: var(--font-mono, monospace); font-size: 10.5px; font-weight: 700; color: var(--la-c, var(--accent)); display: inline-flex; align-items: center; gap: 5px; }
+    a.la-card:hover .la-go { gap: 8px; }
+    .la-none { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); }
+
+    /* ── Cross-section bridges ── */
+    .br-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 12px; }
+    .br-card {
+      display: flex; flex-direction: column; gap: 9px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 22px; text-decoration: none; color: var(--text);
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .br-card:hover, .br-card:focus-visible { border-color: var(--br-c, var(--accent)); transform: translateY(-2px); }
+    .br-icon { font-size: 24px; color: var(--br-c, var(--accent)); }
+    .br-name { font-size: 15px; font-weight: 700; }
+    .br-desc { font-size: 12.5px; color: var(--text2); line-height: 1.65; flex: 1; }
+    .br-go { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--br-c, var(--accent)); display: inline-flex; align-items: center; gap: 6px; }
+    .br-card:hover .br-go { gap: 9px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      a.la-card, .br-card { transition: none; }
+      a.la-card:hover, .br-card:hover { transform: none; }
+    }
+    @media (max-width: 600px) {
+      .la-dsub { margin-left: 0; }
+    }
   </style>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
@@ -97,18 +208,18 @@
       <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
     </div>
     <a class="sb-link active" href="index.html"><span class="sb-num"><i class="ti ti-code"></i></span>Overview</a>
-    <div class="sidebar-label">Python</div>
-    <a class="sb-link" href="python/index.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python Guide</a>
-    <a class="sb-link" href="python/basics.html"><span class="sb-num">01</span>Basics</a>
-    <a class="sb-link" href="python/collections.html"><span class="sb-num">02</span>Collections</a>
-    <a class="sb-link" href="python/control.html"><span class="sb-num">03</span>Control Flow</a>
-    <a class="sb-link" href="python/functions.html"><span class="sb-num">04</span>Functions</a>
-    <a class="sb-link" href="python/oop.html"><span class="sb-num">05</span>OOP</a>
-    <a class="sb-link" href="python/libraries.html"><span class="sb-num">06</span>Libraries</a>
-    <a class="sb-link" href="python/programs.html"><span class="sb-num">07</span>137 Programs</a>
-    <a class="sb-link" href="python/async.html"><span class="sb-num">08</span>Async / Await</a>
-    <div class="sidebar-label">More Languages</div>
-    <a class="sb-link" href="#languages"><span class="sb-num"><i class="ti ti-clock"></i></span>More languages soon</a>
+    <div class="sidebar-label">Languages</div>
+    <a class="sb-link" href="python/index.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python</a>
+    <a class="sb-link" href="#languages"><span class="sb-num"><i class="ti ti-brand-javascript"></i></span>JavaScript — soon</a>
+    <a class="sb-link" href="#languages"><span class="sb-num"><i class="ti ti-coffee"></i></span>Java — soon</a>
+    <a class="sb-link" href="#languages"><span class="sb-num"><i class="ti ti-brand-cpp"></i></span>C++ — soon</a>
+    <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+    <a class="sb-link" href="#what"><span class="sb-num">01</span>What is programming</a>
+    <a class="sb-link" href="#differ"><span class="sb-num">02</span>How they differ</a>
+    <a class="sb-link" href="#sidebyside"><span class="sb-num">03</span>Side by side</a>
+    <a class="sb-link" href="#atlas"><span class="sb-num">04</span>The atlas</a>
+    <a class="sb-link" href="#languages"><span class="sb-num">05</span>Our tracks</a>
+    <a class="sb-link" href="#beyond"><span class="sb-num">06</span>Beyond syntax</a>
   </aside>
   <main class="main">
     <div class="page page-wide">
@@ -123,47 +234,424 @@
     <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--accent)">1</span><span class="tf-stat-label">Live now</span></div>
     <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--green)">137</span><span class="tf-stat-label">Programs</span></div>
     <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--blue)">7</span><span class="tf-stat-label">Modules</span></div>
-    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--amber)">4</span><span class="tf-stat-label">Coming soon</span></div>
+    <div class="tf-stat-box"><span class="tf-stat-val" style="color:var(--amber)">3</span><span class="tf-stat-label">Coming soon</span></div>
   </div>
+
+    <div class="sec-label anim-in" id="what">Start here</div>
+  <h2 class="sub-h2 anim-in">What is programming, really?</h2>
+  <div class="pg-intro anim-in">
+    <p>A computer only understands one thing: numbers that mean "add these", "store that", "jump there". Writing those numbers by hand is how it was done in the 1940s, and it was miserable. A <strong>programming language</strong> is the fix — you write something a human can read, and a translator turns it into those numbers for you.</p>
+    <div class="pg-def"><i class="ti ti-language"></i><p>Two kinds of translator, and it's the single biggest split between languages. A <strong>compiler</strong> translates the whole program up front, then you run the result — fast, but you wait to build. An <strong>interpreter</strong> translates line by line as it runs — instant feedback, slower execution.</p></div>
+    <p>So why hundreds of languages instead of one? Because every language is a <strong>set of trade-offs</strong>: run faster or write faster, catch mistakes early or stay flexible, control memory yourself or let the machine handle it. A language that's perfect for a game engine is a poor fit for a data analysis script. Pick by what you're building — that's what this page is for.</p>
+  </div>
+
+  <div class="sec-label anim-in" id="differ">The three questions</div>
+  <h2 class="sub-h2 anim-in">How languages actually differ</h2>
+  <p class="pl-note anim-in">Almost every language decision comes down to these three. The tags on each language below use this vocabulary.</p>
+  <div class="axis-grid anim-in">
+    <div class="axis-card">
+      <div class="axis-name">When is it translated?</div>
+      <div class="axis-row"><span class="axis-k">Compiled</span><span class="axis-vs">vs</span><span class="axis-k">Interpreted</span></div>
+      <div class="axis-desc">Compiled languages translate ahead of time and run at full machine speed. Interpreted ones translate as they go — you skip the build step and get instant feedback, at a runtime cost.</div>
+      <div class="axis-eg">C++, Java, Go &nbsp;·&nbsp; Python, JavaScript, Ruby</div>
+    </div>
+    <div class="axis-card">
+      <div class="axis-name">When are type errors caught?</div>
+      <div class="axis-row"><span class="axis-k">Static</span><span class="axis-vs">vs</span><span class="axis-k">Dynamic</span></div>
+      <div class="axis-desc">Static typing checks that you never put a string where a number belongs <em>before</em> the program runs — more upfront ceremony, fewer 3am surprises. Dynamic typing checks while running: faster to write, easier to break.</div>
+      <div class="axis-eg">Java, C++, Rust, TypeScript &nbsp;·&nbsp; Python, JavaScript, Ruby</div>
+    </div>
+    <div class="axis-card">
+      <div class="axis-name">Who cleans up memory?</div>
+      <div class="axis-row"><span class="axis-k">Manual</span><span class="axis-vs">vs</span><span class="axis-k">Garbage-collected</span></div>
+      <div class="axis-desc">Manual memory means you decide exactly when every byte is freed — maximum control, and the origin of most famous security bugs. A garbage collector reclaims memory for you, costing unpredictable pauses.</div>
+      <div class="axis-eg">C, C++ &nbsp;·&nbsp; Java, Python, Go, JavaScript</div>
+    </div>
+  </div>
+
+  <div class="sec-label anim-in" id="sidebyside">Side by side</div>
+  <h2 class="sub-h2 anim-in">The same program in four languages</h2>
+  <p class="pl-note anim-in">A counter class, a loop, and a print — the same logic in each. Watch what changes: how types are declared, how blocks are marked, how much ceremony wraps the idea.</p>
+  <div class="lang-toggle anim-in" role="tablist" aria-label="Choose a language">
+    <button type="button" class="lt-btn active" data-lang="python">Python</button>
+    <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+    <button type="button" class="lt-btn" data-lang="java">Java</button>
+    <button type="button" class="lt-btn" data-lang="cpp">C++</button>
+  </div>
+  <div class="lang-pane anim-in" data-lang="python">
+    <div class="code-block">
+      <div class="code-hdr"><span class="code-lang">Python — indentation marks blocks, no type declarations</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+      <pre class="code-pre"><span class="kw">class</span> <span class="fn">Counter</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self):
+        self.count = <span class="nm">0</span>
+
+    <span class="kw">def</span> <span class="fn">bump</span>(self):
+        self.count += <span class="nm">1</span>
+        <span class="kw">return</span> self.count
+
+c = <span class="fn">Counter</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nm">3</span>):
+    <span class="fn">print</span>(c.<span class="fn">bump</span>())</pre>
+    </div>
+  </div>
+  <div class="lang-pane anim-in" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <div class="code-hdr"><span class="code-lang">JavaScript — braces mark blocks, still no types</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+      <pre class="code-pre"><span class="kw">class</span> <span class="fn">Counter</span> {
+  <span class="fn">constructor</span>() {
+    <span class="kw">this</span>.count = <span class="nm">0</span>;
+  }
+
+  <span class="fn">bump</span>() {
+    <span class="kw">return</span> ++<span class="kw">this</span>.count;
+  }
+}
+
+<span class="kw">const</span> c = <span class="kw">new</span> <span class="fn">Counter</span>();
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">0</span>; i &lt; <span class="nm">3</span>; i++) {
+  console.<span class="fn">log</span>(c.<span class="fn">bump</span>());
+}</pre>
+    </div>
+  </div>
+  <div class="lang-pane anim-in" data-lang="java" style="display:none">
+    <div class="code-block">
+      <div class="code-hdr"><span class="code-lang">Java — every type declared, everything inside a class</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+      <pre class="code-pre"><span class="kw">class</span> <span class="fn">Counter</span> {
+    <span class="kw">private int</span> count = <span class="nm">0</span>;
+
+    <span class="kw">public int</span> <span class="fn">bump</span>() {
+        <span class="kw">return</span> ++count;
+    }
+}
+
+<span class="kw">public class</span> <span class="fn">Main</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        Counter c = <span class="kw">new</span> <span class="fn">Counter</span>();
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">3</span>; i++) {
+            System.out.<span class="fn">println</span>(c.<span class="fn">bump</span>());
+        }
+    }
+}</pre>
+    </div>
+  </div>
+  <div class="lang-pane anim-in" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <div class="code-hdr"><span class="code-lang">C++ — types declared, plus an explicit include and entry point</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+      <pre class="code-pre"><span class="kw">#include</span> &lt;iostream&gt;
+
+<span class="kw">class</span> <span class="fn">Counter</span> {
+    <span class="kw">int</span> count = <span class="nm">0</span>;
+<span class="kw">public</span>:
+    <span class="kw">int</span> <span class="fn">bump</span>() { <span class="kw">return</span> ++count; }
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+    Counter c;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">3</span>; i++) {
+        std::cout &lt;&lt; c.<span class="fn">bump</span>() &lt;&lt; std::endl;
+    }
+}</pre>
+    </div>
+  </div>
+  <p class="pl-note anim-in" style="margin-top:14px">Same idea, four dialects. Python says it in 11 lines with no type names; Java needs a class wrapper and a declared type on everything. Neither is "better" — the ceremony Java charges you buys errors caught before the program ever runs.</p>
+
+  <div class="sec-label anim-in" id="atlas">The atlas</div>
+  <h2 class="sub-h2 anim-in">Which language for which job</h2>
+  <p class="pl-note anim-in">Grouped by what you want to build, not by family tree. Where TechForge teaches it, there's a link — where another section covers it, that link goes there instead.</p>
+
+  <div class="la-domain anim-in" style="--la-c:var(--cyan)">
+    <div class="la-dhead"><i class="ti ti-browser la-dicon"></i><span class="la-dname">Web frontend</span></div>
+    <p class="la-dsub">Everything that runs inside the browser tab. One real language, plus the markup and styling it manipulates.</p>
+    <div class="la-grid">
+      <div class="la-card" style="--la-c:var(--cyan)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-javascript"></i></span><span class="la-name">JavaScript</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">The only language browsers run natively. Also runs servers via Node, so one language can cover a whole product.</div>
+        <span class="la-none">Track coming soon</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--cyan)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-typescript"></i></span><span class="la-name">TypeScript</span></div>
+        <div class="la-tags"><span class="la-tag">compiles to JS</span><span class="la-tag">static</span></div>
+        <div class="la-desc">JavaScript with type checking bolted on. Compiles down to plain JS; the default for large frontend codebases.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--cyan)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-html5"></i></span><span class="la-name">HTML &amp; CSS</span></div>
+        <div class="la-tags"><span class="la-tag">markup</span><span class="la-tag">styling</span></div>
+        <div class="la-desc">Not programming languages — no logic, no loops. HTML structures content, CSS styles it. You still need both to build anything for the web.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--green)">
+    <div class="la-dhead"><i class="ti ti-server la-dicon"></i><span class="la-dname">Web backend</span></div>
+    <p class="la-dsub">The server side — APIs, business logic, talking to databases. The most crowded category, because almost anything works here.</p>
+    <div class="la-grid">
+      <a class="la-card" style="--la-c:var(--green)" href="python/index.html">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-python"></i></span><span class="la-name">Python</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Django and FastAPI make it a first-class backend language, and it doubles as the standard tongue of data and ML.</div>
+        <span class="la-go">Start learning →</span>
+      </a>
+      <div class="la-card" style="--la-c:var(--green)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-coffee"></i></span><span class="la-name">Java</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span><span class="la-tag">JVM</span></div>
+        <div class="la-desc">The enterprise default for two decades. Verbose, extremely stable, and everywhere in banking and large systems.</div>
+        <span class="la-none">Track coming soon</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--green)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-golang"></i></span><span class="la-name">Go</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span></div>
+        <div class="la-desc">Built at Google for networked services. Tiny language, fast builds, concurrency built in — Docker and Kubernetes are written in it.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--green)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-c-sharp"></i></span><span class="la-name">C#</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span><span class="la-tag">.NET</span></div>
+        <div class="la-desc">Microsoft's answer to Java. Strong on Windows and enterprise, and the language of the Unity game engine.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--green)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-php"></i></span><span class="la-name">PHP</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Mocked constantly, still runs a large share of the web including WordPress. Modern PHP is far better than its reputation.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--green)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-diamond"></i></span><span class="la-name">Ruby</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Optimised for developer happiness. Rails made "ship a startup in a weekend" a real claim, and still powers plenty of them.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--blue)">
+    <div class="la-dhead"><i class="ti ti-cpu la-dicon"></i><span class="la-dname">Systems &amp; low-level</span></div>
+    <p class="la-dsub">Operating systems, browsers, databases, embedded devices — anywhere you need to control exactly what the machine does.</p>
+    <div class="la-grid">
+      <div class="la-card" style="--la-c:var(--blue)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-letter-c"></i></span><span class="la-name">C</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">manual memory</span></div>
+        <div class="la-desc">1972, and still the substrate of computing. Linux, most databases, and the runtimes of Python and Java are written in it.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--blue)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-cpp"></i></span><span class="la-name">C++</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">manual memory</span></div>
+        <div class="la-desc">C plus objects, templates and a vast standard library. Game engines, browsers and high-frequency trading live here.</div>
+        <span class="la-none">Track coming soon</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--blue)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-rust"></i></span><span class="la-name">Rust</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span><span class="la-tag">no GC</span></div>
+        <div class="la-desc">C++ speed with the memory bugs designed out — the compiler refuses to build code that could corrupt memory. Steep to learn, increasingly in Linux and Windows.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--purple)">
+    <div class="la-dhead"><i class="ti ti-device-mobile la-dicon"></i><span class="la-dname">Mobile</span></div>
+    <p class="la-dsub">Phone apps. Largely decided by which platform you're shipping to.</p>
+    <div class="la-grid">
+      <div class="la-card" style="--la-c:var(--purple)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-kotlin"></i></span><span class="la-name">Kotlin</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span><span class="la-tag">JVM</span></div>
+        <div class="la-desc">Google's official language for Android. Everything Java does, far less typing, and fully interoperable with it.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--purple)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-swift"></i></span><span class="la-name">Swift</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span></div>
+        <div class="la-desc">Apple's language for iOS and macOS. Modern, safe by default, and the only first-class route to the App Store.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--purple)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-flutter"></i></span><span class="la-name">Dart</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span></div>
+        <div class="la-desc">The language behind Flutter — one codebase that ships to Android, iOS and the web. The main cross-platform contender.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--amber)">
+    <div class="la-dhead"><i class="ti ti-chart-histogram la-dicon"></i><span class="la-dname">Data &amp; machine learning</span></div>
+    <p class="la-dsub">Analysis, models, pipelines. One language dominates, with specialists around the edges.</p>
+    <div class="la-grid">
+      <a class="la-card" style="--la-c:var(--amber)" href="python/libraries.html">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-python"></i></span><span class="la-name">Python</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Effectively the default. NumPy, pandas, PyTorch and TensorFlow mean nearly every ML paper ships Python.</div>
+        <span class="la-go">Libraries guide →</span>
+      </a>
+      <a class="la-card" style="--la-c:var(--amber)" href="../databases/sql.html">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-database"></i></span><span class="la-name">SQL</span></div>
+        <div class="la-tags"><span class="la-tag">declarative</span><span class="la-tag">query</span></div>
+        <div class="la-desc">You describe what you want, not how to get it. Fifty years old, unavoidable, and asked about in almost every backend interview.</div>
+        <span class="la-go">Learn in Data &amp; Cloud →</span>
+      </a>
+      <div class="la-card" style="--la-c:var(--amber)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-letter-r"></i></span><span class="la-name">R</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Built by statisticians for statistics. Still preferred in academia and research for heavy statistical work and plotting.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--amber)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-math-function"></i></span><span class="la-name">Scala</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span><span class="la-tag">JVM</span></div>
+        <div class="la-desc">Functional programming on the JVM. The native language of Apache Spark, so it shows up in big-data pipelines.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--red)">
+    <div class="la-dhead"><i class="ti ti-terminal-2 la-dicon"></i><span class="la-dname">DevOps &amp; scripting</span></div>
+    <p class="la-dsub">Automating the machine itself — builds, deploys, servers, glue code.</p>
+    <div class="la-grid">
+      <a class="la-card" style="--la-c:var(--red)" href="../devops/bash-scripting.html">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-terminal-2"></i></span><span class="la-name">Bash</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">shell</span></div>
+        <div class="la-desc">The shell you already type in, used as a language. Ugly for big programs, unbeatable for wiring commands together.</div>
+        <span class="la-go">Learn in DevOps →</span>
+      </a>
+      <div class="la-card" style="--la-c:var(--red)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-python"></i></span><span class="la-name">Python</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Where a Bash script stops being readable, this is what it becomes. Installed on essentially every Linux box.</div>
+        <span class="la-none">See the Python track above</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--red)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-file-code"></i></span><span class="la-name">YAML</span></div>
+        <div class="la-tags"><span class="la-tag">config</span><span class="la-tag">not a language</span></div>
+        <div class="la-desc">Configuration, not code — but you will write mountains of it for Kubernetes, CI pipelines and Ansible, so it's worth naming.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="la-domain anim-in" style="--la-c:var(--teal)">
+    <div class="la-dhead"><i class="ti ti-device-gamepad-2 la-dicon"></i><span class="la-dname">Games</span></div>
+    <p class="la-dsub">Real-time rendering and physics, where a dropped frame is a bug. Performance rules every choice.</p>
+    <div class="la-grid">
+      <div class="la-card" style="--la-c:var(--teal)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-cpp"></i></span><span class="la-name">C++</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">manual memory</span></div>
+        <div class="la-desc">Unreal Engine and most AAA studios. When you need every millisecond, you need this level of control.</div>
+        <span class="la-none">Track coming soon</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--teal)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-brand-c-sharp"></i></span><span class="la-name">C#</span></div>
+        <div class="la-tags"><span class="la-tag">compiled</span><span class="la-tag">static</span></div>
+        <div class="la-desc">The Unity language, and the most common on-ramp into game development — far gentler than C++.</div>
+        <span class="la-none">Context only</span>
+      </div>
+      <div class="la-card" style="--la-c:var(--teal)">
+        <div class="la-top"><span class="la-logo" aria-hidden="true"><i class="ti ti-braces"></i></span><span class="la-name">Lua</span></div>
+        <div class="la-tags"><span class="la-tag">interpreted</span><span class="la-tag">dynamic</span></div>
+        <div class="la-desc">Tiny and embeddable — engines use it for gameplay scripting on top of a C++ core. Also Roblox and Neovim.</div>
+        <span class="la-none">Context only</span>
+      </div>
+    </div>
+  </div>
+
 
   <div class="sec-label anim-in" id="languages">Pick your language</div>
   <p class="pl-note anim-in">Compiled or interpreted, static or dynamic — every language is a different set of trade-offs. Deep tracks for each are in the works; Python is live today.</p>
-  <div class="pl-grid anim-in">
-    <a class="pl-card pl-live" href="python/index.html">
-      <div class="pl-head"><i class="ti ti-brand-python pl-icon" style="color:var(--green)"></i><span class="pl-badge pl-badge-live">Live</span></div>
-      <div class="pl-name">Python</div>
-      <div class="pl-meta">interpreted · dynamic</div>
-      <div class="pl-desc">Batteries included and beginner-friendly. 7 modules, 137 runnable programs, OOP through async — the best first language and a DSA-interview staple.</div>
-      <div class="pl-foot">Start learning <span class="pl-arrow">→</span></div>
+  <div class="bk-grid anim-in">
+    <a class="bk" style="--bk-c:var(--green)" href="python/index.html">
+      <div class="bk-inner">
+        <div class="pl-head"><i class="ti ti-brand-python pl-icon" style="color:var(--green)"></i><span class="bk-status bk-status-live">Live</span></div>
+        <div class="pl-name">Python</div>
+        <div class="pl-meta">interpreted · dynamic</div>
+        <div class="pl-desc">Batteries included and beginner-friendly. 7 modules, 137 runnable programs, OOP through async — the best first language and a DSA-interview staple.</div>
+        <div class="pl-foot">Start learning <span class="pl-arrow">→</span></div>
+      </div>
+      <div class="bk-cover" aria-hidden="true">
+        <i class="ti ti-brand-python bk-logo"></i>
+        <span class="bk-cover-name">Python</span>
+        <span class="bk-cover-meta">interpreted · dynamic</span>
+        <span class="bk-status bk-status-live">Live</span>
+      </div>
     </a>
-    <div class="pl-card pl-soon" aria-label="JavaScript track — coming soon">
-      <div class="pl-head"><i class="ti ti-brand-javascript pl-icon" style="color:var(--amber)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
-      <div class="pl-name">JavaScript</div>
-      <div class="pl-meta">interpreted · dynamic</div>
-      <div class="pl-desc">The language of the browser — closures, the event loop, async/await, and the runtime that also powers Node on the server.</div>
-      <div class="pl-foot">In the works</div>
+    <div class="bk" style="--bk-c:var(--amber)" aria-label="JavaScript track — coming soon">
+      <div class="bk-inner">
+        <div class="pl-head"><i class="ti ti-brand-javascript pl-icon" style="color:var(--amber)"></i><span class="bk-status bk-status-soon">Coming soon</span></div>
+        <div class="pl-name">JavaScript</div>
+        <div class="pl-meta">interpreted · dynamic</div>
+        <div class="pl-desc">The language of the browser — closures, the event loop, async/await, and the runtime that also powers Node on the server.</div>
+        <div class="pl-foot">In the works</div>
+      </div>
+      <div class="bk-cover" aria-hidden="true">
+        <i class="ti ti-brand-javascript bk-logo"></i>
+        <span class="bk-cover-name">JavaScript</span>
+        <span class="bk-cover-meta">interpreted · dynamic</span>
+        <span class="bk-status bk-status-soon">Coming soon</span>
+      </div>
     </div>
-    <div class="pl-card pl-soon" aria-label="Java track — coming soon">
-      <div class="pl-head"><i class="ti ti-coffee pl-icon" style="color:var(--red)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
-      <div class="pl-name">Java</div>
-      <div class="pl-meta">compiled · static · JVM</div>
-      <div class="pl-desc">Bytecode on the JVM with static types — the enterprise workhorse and a classic choice for data-structures interviews.</div>
-      <div class="pl-foot">In the works</div>
+    <div class="bk" style="--bk-c:var(--red)" aria-label="Java track — coming soon">
+      <div class="bk-inner">
+        <div class="pl-head"><i class="ti ti-coffee pl-icon" style="color:var(--red)"></i><span class="bk-status bk-status-soon">Coming soon</span></div>
+        <div class="pl-name">Java</div>
+        <div class="pl-meta">compiled · static · JVM</div>
+        <div class="pl-desc">Bytecode on the JVM with static types — the enterprise workhorse and a classic choice for data-structures interviews.</div>
+        <div class="pl-foot">In the works</div>
+      </div>
+      <div class="bk-cover" aria-hidden="true">
+        <i class="ti ti-coffee bk-logo"></i>
+        <span class="bk-cover-name">Java</span>
+        <span class="bk-cover-meta">compiled · static · JVM</span>
+        <span class="bk-status bk-status-soon">Coming soon</span>
+      </div>
     </div>
-    <div class="pl-card pl-soon" aria-label="C++ track — coming soon">
-      <div class="pl-head"><i class="ti ti-binary pl-icon" style="color:var(--blue)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
-      <div class="pl-name">C++</div>
-      <div class="pl-meta">compiled · manual memory</div>
-      <div class="pl-desc">Zero-cost abstractions and direct memory control — where performance ceilings live, from game engines to competitive programming.</div>
-      <div class="pl-foot">In the works</div>
+    <div class="bk" style="--bk-c:var(--blue)" aria-label="C++ track — coming soon">
+      <div class="bk-inner">
+        <div class="pl-head"><i class="ti ti-brand-cpp pl-icon" style="color:var(--blue)"></i><span class="bk-status bk-status-soon">Coming soon</span></div>
+        <div class="pl-name">C++</div>
+        <div class="pl-meta">compiled · manual memory</div>
+        <div class="pl-desc">Zero-cost abstractions and direct memory control — where performance ceilings live, from game engines to competitive programming.</div>
+        <div class="pl-foot">In the works</div>
+      </div>
+      <div class="bk-cover" aria-hidden="true">
+        <i class="ti ti-brand-cpp bk-logo"></i>
+        <span class="bk-cover-name">C++</span>
+        <span class="bk-cover-meta">compiled · manual memory</span>
+        <span class="bk-status bk-status-soon">Coming soon</span>
+      </div>
     </div>
-    <div class="pl-card pl-soon" aria-label="HTML and CSS track — coming soon">
-      <div class="pl-head"><i class="ti ti-brand-html5 pl-icon" style="color:var(--cyan)"></i><span class="pl-badge pl-badge-soon">Coming soon</span></div>
-      <div class="pl-name">HTML &amp; CSS</div>
-      <div class="pl-meta">markup · styling</div>
-      <div class="pl-desc">The structure and style of the web — semantic markup, layout systems (flex/grid), and responsive, accessible design.</div>
-      <div class="pl-foot">In the works</div>
-    </div>
+  </div>
+
+    <div class="sec-label anim-in" id="beyond">Beyond syntax</div>
+  <h2 class="sub-h2 anim-in">What else you'll need</h2>
+  <p class="pl-note anim-in">Knowing a language is one piece. These live in other sections of TechForge, and every one of them outlives whichever language you pick first.</p>
+  <div class="br-grid anim-in">
+    <a class="br-card" style="--br-c:var(--blue)" href="../dsa/index.html">
+      <i class="ti ti-chart-bar br-icon"></i>
+      <div class="br-name">Algorithms &amp; data structures</div>
+      <div class="br-desc">Language-agnostic by design. A hash map is a hash map in all four languages above — this is the part interviews actually test, and it transfers everywhere.</div>
+      <span class="br-go">30 topics, live animations →</span>
+    </a>
+    <a class="br-card" style="--br-c:var(--cyan)" href="../databases/sql.html">
+      <i class="ti ti-database br-icon"></i>
+      <div class="br-name">SQL &amp; databases</div>
+      <div class="br-desc">Whatever you write the app in, the data lands in a database. SQL is the one language on this page you're almost guaranteed to need.</div>
+      <span class="br-go">Learn SQL in Data &amp; Cloud →</span>
+    </a>
+    <a class="br-card" style="--br-c:var(--red)" href="../devops/git.html">
+      <i class="ti ti-git-branch br-icon"></i>
+      <div class="br-name">Git &amp; version control</div>
+      <div class="br-desc">Not a language — a tool, and the first one every team expects you to know. Branches, merges, and undoing the commit you regret.</div>
+      <span class="br-go">Git guide in DevOps →</span>
+    </a>
+    <a class="br-card" style="--br-c:var(--amber)" href="../systems/index.html">
+      <i class="ti ti-cpu br-icon"></i>
+      <div class="br-name">How the machine runs it</div>
+      <div class="br-desc">Processes, memory, the network underneath. Why your interpreted script is slower, and what "garbage collected" actually costs at runtime.</div>
+      <span class="br-go">OS &amp; Networks →</span>
+    </a>
   </div>
 
   <div class="tf-learning-path anim-in">
