@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Collections — Arrays, Objects, Map & Set | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/javascript/collections.html"/>
+  <meta property="og:title" content="JavaScript Collections — Arrays, Objects, Map &amp; Set | TechForge"/>
+  <meta property="og:description" content="JavaScript collections — arrays, objects, destructuring, spread/rest, Map and Set, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim, rgba(34,211,238,.15)); }
+    .b-js { background: rgba(240, 219, 79, .12); color: var(--js); border: 1px solid rgba(240, 219, 79, .25); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="js/collections" data-section="javascript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other JS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <div class="sidebar-label" style="margin-top:14px;">Collections</div>
+      <a class="sb-link active" href="#sec-arrays"><span class="sb-num">01</span> Arrays</a>
+      <a class="sb-link" href="#sec-objects"><span class="sb-num">02</span> Objects</a>
+      <a class="sb-link" href="#sec-destr"><span class="sb-num">03</span> Destructuring &amp; Spread</a>
+      <a class="sb-link" href="#sec-mapset"><span class="sb-num">04</span> Map &amp; Set</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="dom.html"><span class="sb-num">→</span> DOM &amp; Browser</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">→</span> Async / Await</a>
+      <a class="sb-link" href="modules.html"><span class="sb-num">→</span> Modules &amp; Ecosystem</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">JavaScript Collections</div>
+        <h1 class="pg-title">Arrays, Objects &amp; <span>Map / Set</span></h1>
+        <p class="pg-sub">JavaScript's built-in data structures — the ones you'll reach for in nearly every function you write.</p>
+        <div class="pg-badges">
+          <span class="badge b-js"><i class="ti ti-brand-javascript"></i> ES2023</span>
+          <span class="badge b-green">✓ Core Concepts</span>
+          <span class="badge b-blue">4 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-arrays">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-checklist"></i></span><h2 class="sec-title">Arrays</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Arrays are ordered, resizable, and can hold mixed types. The methods you use most — <code>map</code>, <code>filter</code>, <code>reduce</code> — never mutate the original array; they return a new one.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Array Methods</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> nums = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>];
+
+nums.<span class="fn">push</span>(<span class="nm">6</span>);              <span class="cm">// mutates — adds to end</span>
+nums.<span class="fn">pop</span>();                 <span class="cm">// mutates — removes last</span>
+
+<span class="kw">const</span> doubled = nums.<span class="fn">map</span>(n => n * <span class="nm">2</span>);          <span class="cm">// [2,4,6,8,10] — new array</span>
+<span class="kw">const</span> evens   = nums.<span class="fn">filter</span>(n => n % <span class="nm">2</span> === <span class="nm">0</span>);  <span class="cm">// [2,4] — new array</span>
+<span class="kw">const</span> total   = nums.<span class="fn">reduce</span>((sum, n) => sum + n, <span class="nm">0</span>);  <span class="cm">// 15</span>
+
+nums.<span class="fn">find</span>(n => n > <span class="nm">3</span>);      <span class="cm">// 4 — first match</span>
+nums.<span class="fn">includes</span>(<span class="nm">3</span>);        <span class="cm">// true</span>
+nums.<span class="fn">some</span>(n => n > <span class="nm">4</span>);     <span class="cm">// true — at least one</span>
+nums.<span class="fn">every</span>(n => n > <span class="nm">0</span>);    <span class="cm">// true — all match</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>Array.isArray(x)</strong> is the reliable check — <code>typeof [1,2,3]</code> returns <code>"object"</code>, not <code>"array"</code>.</span></div>
+      </section>
+      <section class="py-section" id="sec-objects">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-folders"></i></span><h2 class="sec-title">Objects</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Objects are key-value pairs, JavaScript's version of a dictionary/hash map. Keys are always strings or Symbols internally, even when they look like numbers.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Object Basics</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> user = { name: <span class="st">"Ada"</span>, age: <span class="nm">36</span> };
+
+user.email = <span class="st">"ada@x.com"</span>;      <span class="cm">// add a property</span>
+<span class="kw">delete</span> user.age;                <span class="cm">// remove a property</span>
+
+<span class="bi">Object</span>.<span class="fn">keys</span>(user);      <span class="cm">// ["name", "email"]</span>
+<span class="bi">Object</span>.<span class="fn">values</span>(user);    <span class="cm">// ["Ada", "ada@x.com"]</span>
+<span class="bi">Object</span>.<span class="fn">entries</span>(user);   <span class="cm">// [["name","Ada"], ["email","ada@x.com"]]</span>
+
+<span class="cm">// shallow clone / merge</span>
+<span class="kw">const</span> merged = { ...user, role: <span class="st">"admin"</span> };
+<span class="bi">Object</span>.<span class="fn">freeze</span>(user);      <span class="cm">// now truly immutable</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-destr">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-transform"></i></span><h2 class="sec-title">Destructuring &amp; Spread</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Destructuring unpacks values out of arrays or objects in one line. Spread does the reverse — expands an iterable into individual elements.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Destructuring &amp; Spread/Rest</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// Array destructuring</span>
+<span class="kw">const</span> [first, second, ...rest] = [<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>];
+<span class="cm">// first=10  second=20  rest=[30,40]</span>
+
+<span class="cm">// Object destructuring — with rename &amp; default</span>
+<span class="kw">const</span> { name, age: years = <span class="nm">18</span> } = { name: <span class="st">"Ada"</span> };
+<span class="cm">// name="Ada"  years=18 (default, key was missing)</span>
+
+<span class="cm">// Spread — merge arrays / clone / function args</span>
+<span class="kw">const</span> combined = [...[<span class="nm">1</span>,<span class="nm">2</span>], ...[<span class="nm">3</span>,<span class="nm">4</span>]];   <span class="cm">// [1,2,3,4]</span>
+<span class="kw">function</span> <span class="fn">sum</span>(...nums) { <span class="kw">return</span> nums.<span class="fn">reduce</span>((a,b) => a+b); }
+<span class="fn">sum</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>);   <span class="cm">// rest params — gathers args into an array</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>Same <code>...</code> syntax, opposite jobs:</strong> on the left of an assignment it's <em>rest</em> (gathers); on the right or in a call it's <em>spread</em> (expands).</span></div>
+      </section>
+      <section class="py-section" id="sec-mapset">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-hierarchy"></i></span><h2 class="sec-title">Map &amp; Set</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A plain object works fine for string keys, but <strong>Map</strong> allows any key type and preserves insertion order reliably. <strong>Set</strong> stores unique values only — the standard tool for de-duplication.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Map &amp; Set</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> scores = <span class="kw">new</span> <span class="bi">Map</span>();
+scores.<span class="fn">set</span>(<span class="st">"ada"</span>, <span class="nm">95</span>);
+scores.<span class="fn">set</span>(<span class="st">"grace"</span>, <span class="nm">88</span>);
+scores.<span class="fn">get</span>(<span class="st">"ada"</span>);      <span class="cm">// 95</span>
+scores.<span class="fn">has</span>(<span class="st">"linus"</span>);   <span class="cm">// false</span>
+scores.size;              <span class="cm">// 2</span>
+
+<span class="kw">const</span> unique = <span class="kw">new</span> <span class="bi">Set</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">3</span>]);
+[...unique];              <span class="cm">// [1, 2, 3] — duplicates gone</span>
+unique.<span class="fn">add</span>(<span class="nm">4</span>);
+unique.<span class="fn">has</span>(<span class="nm">2</span>);          <span class="cm">// true</span></pre>
+        </div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which array method never mutates the original?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">push</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">sort</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">map</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">splice</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. typeof [1,2,3] returns…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"array"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">"object"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"list"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"collection"</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. const [a, ...b] = [1,2,3] — what is b?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">[2, 3]</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">[1, 2, 3]</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">undefined</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Set is best for…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">ordered key-value pairs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">storing unique values</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">sorting numbers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">async iteration</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Object.freeze(obj) prevents…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">adding, removing, or changing properties</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">reading properties</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">deleting the variable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nothing — it's a no-op</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="control.html">← Control Flow</a>
+        <a class="nav-link" href="functions.html">Functions →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

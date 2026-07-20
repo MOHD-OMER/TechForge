@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Basics — Variables & Data Types | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/javascript/basics.html"/>
+  <meta property="og:title" content="JavaScript Basics — Variables &amp; Data Types | TechForge"/>
+  <meta property="og:description" content="JavaScript Basics — var/let/const, primitive types, coercion, and template literals, with interview prep and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim, rgba(34,211,238,.15)); }
+    .b-js { background: rgba(240, 219, 79, .12); color: var(--js); border: 1px solid rgba(240, 219, 79, .25); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-js { background: rgba(240, 219, 79, .08); color: var(--js); }
+    .cs-red { background: rgba(248, 113, 113, .08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="js/basics" data-section="javascript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">JavaScript Basics</div>
+      <a class="sb-link active" href="#sec-vars"><span class="sb-num">01</span> Variables</a>
+      <a class="sb-link" href="#sec-dtypes"><span class="sb-num">02</span> Data Types</a>
+      <div class="sidebar-label" style="margin-top: 20px;">Other JS Topics</div>
+      <a class="sb-link" href="control.html"><span class="sb-num">→</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">→</span> Collections</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="dom.html"><span class="sb-num">→</span> DOM &amp; Browser</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">→</span> Async / Await</a>
+      <a class="sb-link" href="modules.html"><span class="sb-num">→</span> Modules &amp; Ecosystem</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">JavaScript Basics</div>
+        <h1 class="pg-title">Variables &amp; <span>Data Types</span></h1>
+        <p class="pg-sub">Foundation concepts of JavaScript — how the language stores values, and the rules that decide what a variable is allowed to hold.</p>
+        <div class="pg-badges">
+          <span class="badge b-js"><i class="ti ti-brand-javascript"></i> ES2023</span>
+          <span class="badge b-green">✓ Beginner Friendly</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-vars">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">var, let &amp; const</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">JavaScript has three ways to declare a variable, and they don't behave the same way. <strong>var</strong> is function-scoped and hoisted with an <code>undefined</code> placeholder. <strong>let</strong> and <strong>const</strong> are block-scoped and live in a "temporal dead zone" until their line runs — reference them earlier and JS throws instead of silently returning <code>undefined</code>.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Declarations</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// var — function-scoped, hoisted, can be redeclared</span>
+<span class="kw">var</span> x = <span class="nm">10</span>;
+<span class="kw">var</span> x = <span class="nm">20</span>;   <span class="cm">// no error</span>
+
+<span class="cm">// let — block-scoped, reassignable, no redeclare in same scope</span>
+<span class="kw">let</span> age = <span class="nm">25</span>;
+age = <span class="nm">26</span>;        <span class="cm">// OK</span>
+
+<span class="cm">// const — block-scoped, cannot be reassigned</span>
+<span class="kw">const</span> name = <span class="st">"Ada"</span>;
+<span class="cm">// name = "Grace";  // TypeError: Assignment to constant variable</span>
+
+<span class="cm">// Block scope demo — var leaks, let/const don't</span>
+{
+  <span class="kw">var</span> a = <span class="nm">1</span>;
+  <span class="kw">let</span> b = <span class="nm">2</span>;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(a);   <span class="cm">// 1 — leaked out of the block</span>
+<span class="cm">// console.log(b);   // ReferenceError: b is not defined</span></pre>
+        </div>
+        <div class="sub-title">Which One to Use</div>
+        <div class="compare-strip">
+          <div class="cs-item">
+            <div class="cs-head cs-js">✓ Default choice</div>
+            <ul class="cs-list">
+              <li><code>const</code> — for anything not reassigned</li>
+              <li><code>let</code> — when the value will change</li>
+              <li>Both are block-scoped, no surprises</li>
+            </ul>
+          </div>
+          <div class="cs-item">
+            <div class="cs-head cs-red">✗ Avoid in new code</div>
+            <ul class="cs-list">
+              <li><code>var</code> — function-scoped leaks bugs</li>
+              <li>Hoisting makes <code>var</code> read before assign</li>
+              <li>Silently redeclarable — easy to shadow by accident</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>const doesn't mean immutable:</strong> <code>const arr = [1,2]; arr.push(3);</code> works fine — <code>const</code> only locks the <em>binding</em>, not the object's contents. Use <code>Object.freeze()</code> for real immutability.</span></div>
+      </section>
+      <section class="py-section" id="sec-dtypes">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-microscope"></i></span><h2 class="sec-title">Data Types &amp; Coercion</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead>
+              <tr><th>Type</th><th>typeof</th><th>Example</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Number</td><td><code>"number"</code></td><td><code>let n = 25;</code></td><td>No separate int/float — all one 64-bit float</td></tr>
+              <tr><td>String</td><td><code>"string"</code></td><td><code>let s = "Ada";</code></td><td>Immutable, use template literals for interpolation</td></tr>
+              <tr><td>Boolean</td><td><code>"boolean"</code></td><td><code>let ok = true;</code></td><td><code>true</code> / <code>false</code></td></tr>
+              <tr><td>undefined</td><td><code>"undefined"</code></td><td><code>let x;</code></td><td>Declared, never assigned</td></tr>
+              <tr><td>null</td><td><code>"object"</code></td><td><code>let x = null;</code></td><td>Intentional "no value" — <code>typeof</code> is a famous quirk</td></tr>
+              <tr><td>BigInt</td><td><code>"bigint"</code></td><td><code>10n</code></td><td>Integers beyond 2^53 safely</td></tr>
+              <tr><td>Symbol</td><td><code>"symbol"</code></td><td><code>Symbol("id")</code></td><td>Unique, mostly for object keys</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Template Literals &amp; Coercion</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> name = <span class="st">"Ada"</span>, age = <span class="nm">36</span>;
+
+<span class="cm">// Template literals — backticks, ${} interpolation, multi-line</span>
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="st">`</span><span class="op">${</span>name<span class="op">}</span><span class="st"> is </span><span class="op">${</span>age<span class="op">}</span><span class="st"> years old`</span>);
+
+<span class="cm">// == does type coercion, === does not — always prefer ===</span>
+<span class="nm">1</span> == <span class="st">"1"</span>     <span class="cm">// true  — string coerced to number</span>
+<span class="nm">1</span> === <span class="st">"1"</span>    <span class="cm">// false — different types</span>
+<span class="nm">0</span> == <span class="kw">false</span>  <span class="cm">// true</span>
+<span class="kw">null</span> == <span class="kw">undefined</span>  <span class="cm">// true  — special-cased</span>
+<span class="kw">null</span> === <span class="kw">undefined</span> <span class="cm">// false</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>Falsy values (only 6):</strong> <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else — including <code>"0"</code>, <code>[]</code>, and <code>{}</code> — is truthy.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which declaration is block-scoped and reassignable?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">var</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">let</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">const</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">function</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. typeof null returns…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"null"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">"object"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"undefined"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"none"</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Which value is falsy?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"0"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">[]</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">NaN</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">{}</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. 1 === "1" evaluates to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">false</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">true</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">NaN</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TypeError</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. const arr = [1]; arr.push(2); — result?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">TypeError — const is immutable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Works — arr is now [1, 2]</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">SyntaxError</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">arr stays [1]</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link disabled" href="#">← Previous</a>
+        <a class="nav-link" href="control.html">Control Flow →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      if (pbar) pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

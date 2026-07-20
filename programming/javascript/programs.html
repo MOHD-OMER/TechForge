@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Programs — Practice Code Examples | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/javascript/programs.html"/>
+  <meta property="og:title" content="JavaScript Programs — Practice Code Examples | TechForge"/>
+  <meta property="og:description" content="JavaScript Programs — 40 hands-on practice programs from basic to advanced, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim, rgba(34,211,238,.15)); }
+    .b-js { background: rgba(240, 219, 79, .12); color: var(--js); border: 1px solid rgba(240, 219, 79, .25); }
+    .prog-section { margin-bottom: 48px; scroll-margin-top: calc(var(--topbar-h) + 20px); }
+    .prog-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 16px; }
+    .prog-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+    .prog-num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--text3); }
+    .prog-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .prog-diff { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 2px 8px; border-radius: 100px; margin-left: auto; }
+    .diff-basic { color: var(--green); background: rgba(52, 211, 153, .1); border: 1px solid rgba(52, 211, 153, .2); }
+    .diff-inter { color: var(--amber); background: rgba(251, 191, 36, .1); border: 1px solid rgba(251, 191, 36, .2); }
+    .diff-adv { color: var(--red); background: rgba(248, 113, 113, .1); border: 1px solid rgba(248, 113, 113, .2); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="js/programs" data-section="javascript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other JS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="dom.html"><span class="sb-num">←</span> DOM &amp; Browser</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">←</span> Async / Await</a>
+      <a class="sb-link" href="modules.html"><span class="sb-num">←</span> Modules &amp; Ecosystem</a>
+      <div class="sidebar-label" style="margin-top:14px;">Programs</div>
+      <a class="sb-link active" href="#prog-basic"><span class="sb-num">01</span> Basic Programs</a>
+      <a class="sb-link" href="#prog-inter"><span class="sb-num">02</span> Intermediate</a>
+      <a class="sb-link" href="#prog-adv"><span class="sb-num">03</span> Advanced</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">JavaScript Programs</div>
+        <h1 class="pg-title">Practice <span>Code Examples</span></h1>
+        <p class="pg-sub">Hands-on JavaScript programs to practice and master the language. From basic to advanced level.</p>
+        <div class="pg-badges">
+          <span class="badge b-js"><i class="ti ti-brand-javascript"></i> ES2023</span>
+          <span class="badge b-green">✓ Practice</span>
+          <span class="badge b-blue">40 Programs</span>
+        </div>
+      </header>
+
+      <section class="prog-section" id="prog-basic">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-circle-filled"></i></span><h2 class="sec-title">Basic Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#1</span><span class="prog-title">Check Prime Number</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">isPrime</span>(n) {
+  <span class="kw">if</span> (n &lt; <span class="nm">2</span>) <span class="kw">return</span> <span class="kw">false</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">2</span>; i &lt;= <span class="bi">Math</span>.<span class="fn">sqrt</span>(n); i++) {
+    <span class="kw">if</span> (n % i === <span class="nm">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+  }
+  <span class="kw">return</span> <span class="kw">true</span>;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">isPrime</span>(<span class="nm">17</span>));  <span class="cm">// true</span>
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">isPrime</span>(<span class="nm">4</span>));   <span class="cm">// false</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#2</span><span class="prog-title">Factorial of a Number</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">factorial</span>(n) {
+  <span class="kw">return</span> n &lt;= <span class="nm">1</span> ? <span class="nm">1</span> : n * <span class="fn">factorial</span>(n - <span class="nm">1</span>);
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">factorial</span>(<span class="nm">5</span>));   <span class="cm">// 120</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#3</span><span class="prog-title">Fibonacci Sequence</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">fibonacci</span>(count) {
+  <span class="kw">const</span> seq = [<span class="nm">0</span>, <span class="nm">1</span>];
+  <span class="kw">while</span> (seq.length &lt; count) seq.<span class="fn">push</span>(seq[seq.length - <span class="nm">1</span>] + seq[seq.length - <span class="nm">2</span>]);
+  <span class="kw">return</span> seq.<span class="fn">slice</span>(<span class="nm">0</span>, count);
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">fibonacci</span>(<span class="nm">8</span>));   <span class="cm">// [0,1,1,2,3,5,8,13]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#4</span><span class="prog-title">Reverse a String</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">reverseString</span>(s) {
+  <span class="kw">return</span> s.<span class="fn">split</span>(<span class="st">""</span>).<span class="fn">reverse</span>().<span class="fn">join</span>(<span class="st">""</span>);
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">reverseString</span>(<span class="st">"hello"</span>));   <span class="cm">// "olleh"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#5</span><span class="prog-title">Check Palindrome</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">isPalindrome</span>(s) {
+  <span class="kw">const</span> clean = s.<span class="fn">toLowerCase</span>().<span class="fn">replace</span>(<span class="op">/[^a-z0-9]/g</span>, <span class="st">""</span>);
+  <span class="kw">return</span> clean === clean.<span class="fn">split</span>(<span class="st">""</span>).<span class="fn">reverse</span>().<span class="fn">join</span>(<span class="st">""</span>);
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">isPalindrome</span>(<span class="st">"Race car"</span>));   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#6</span><span class="prog-title">Swap Two Variables (No Temp)</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">let</span> a = <span class="nm">5</span>, b = <span class="nm">10</span>;
+[a, b] = [b, a];        <span class="cm">// destructuring assignment — no temp variable</span>
+<span class="bi">console</span>.<span class="fn">log</span>(a, b);   <span class="cm">// 10 5</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#7</span><span class="prog-title">Celsius to Fahrenheit Converter</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> <span class="fn">toFahrenheit</span> = c => (c * <span class="nm">9</span>) / <span class="nm">5</span> + <span class="nm">32</span>;
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">toFahrenheit</span>(<span class="nm">100</span>));   <span class="cm">// 212</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#8</span><span class="prog-title">Check Positive, Negative or Zero</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">sign</span>(n) {
+  <span class="kw">return</span> n > <span class="nm">0</span> ? <span class="st">"positive"</span> : n &lt; <span class="nm">0</span> ? <span class="st">"negative"</span> : <span class="st">"zero"</span>;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">sign</span>(-<span class="nm">4</span>));   <span class="cm">// "negative"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#9</span><span class="prog-title">Check Odd or Even</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> <span class="fn">isEven</span> = n => n % <span class="nm">2</span> === <span class="nm">0</span>;
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">isEven</span>(<span class="nm">7</span>));   <span class="cm">// false</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#10</span><span class="prog-title">Check Leap Year</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">isLeapYear</span>(y) {
+  <span class="kw">return</span> (y % <span class="nm">4</span> === <span class="nm">0</span> &amp;&amp; y % <span class="nm">100</span> !== <span class="nm">0</span>) || y % <span class="nm">400</span> === <span class="nm">0</span>;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">isLeapYear</span>(<span class="nm">2024</span>));   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#11</span><span class="prog-title">Print Primes in a Range</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">primesInRange</span>(start, end) {
+  <span class="kw">const</span> <span class="fn">isPrime</span> = n => {
+    <span class="kw">if</span> (n &lt; <span class="nm">2</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">2</span>; i &lt;= <span class="bi">Math</span>.<span class="fn">sqrt</span>(n); i++) <span class="kw">if</span> (n % i === <span class="nm">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">return</span> <span class="kw">true</span>;
+  };
+  <span class="kw">const</span> result = [];
+  <span class="kw">for</span> (<span class="kw">let</span> n = start; n &lt;= end; n++) <span class="kw">if</span> (<span class="fn">isPrime</span>(n)) result.<span class="fn">push</span>(n);
+  <span class="kw">return</span> result;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">primesInRange</span>(<span class="nm">10</span>, <span class="nm">30</span>));   <span class="cm">// [11,13,17,19,23,29]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#12</span><span class="prog-title">Multiplication Table</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">table</span>(n, upTo = <span class="nm">10</span>) {
+  <span class="kw">return</span> <span class="bi">Array</span>.<span class="fn">from</span>({ length: upTo }, (_, i) => <span class="st">`</span><span class="op">${</span>n<span class="op">}</span><span class="st"> x </span><span class="op">${</span>i + <span class="nm">1</span><span class="op">}</span><span class="st"> = </span><span class="op">${</span>n * (i + <span class="nm">1</span>)<span class="op">}</span><span class="st">`</span>);
+}
+<span class="fn">table</span>(<span class="nm">5</span>, <span class="nm">3</span>);   <span class="cm">// ["5 x 1 = 5", "5 x 2 = 10", "5 x 3 = 15"]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#13</span><span class="prog-title">Sum of Natural Numbers</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> <span class="fn">sumUpTo</span> = n => (n * (n + <span class="nm">1</span>)) / <span class="nm">2</span>;
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">sumUpTo</span>(<span class="nm">100</span>));   <span class="cm">// 5050</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#14</span><span class="prog-title">Find LCM and HCF of Two Numbers</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">hcf</span>(a, b) { <span class="kw">return</span> b === <span class="nm">0</span> ? a : <span class="fn">hcf</span>(b, a % b); }
+<span class="kw">function</span> <span class="fn">lcm</span>(a, b) { <span class="kw">return</span> (a * b) / <span class="fn">hcf</span>(a, b); }
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">hcf</span>(<span class="nm">36</span>, <span class="nm">60</span>), <span class="fn">lcm</span>(<span class="nm">36</span>, <span class="nm">60</span>));   <span class="cm">// 12 180</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#15</span><span class="prog-title">Decimal to Binary, Octal, Hex</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> n = <span class="nm">42</span>;
+n.<span class="fn">toString</span>(<span class="nm">2</span>);    <span class="cm">// "101010" — binary</span>
+n.<span class="fn">toString</span>(<span class="nm">8</span>);    <span class="cm">// "52"     — octal</span>
+n.<span class="fn">toString</span>(<span class="nm">16</span>);   <span class="cm">// "2a"     — hex</span>
+<span class="bi">parseInt</span>(<span class="st">"2a"</span>, <span class="nm">16</span>);   <span class="cm">// 42 — back to decimal</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#16</span><span class="prog-title">ASCII Value of a Character</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="st">"A"</span>.<span class="fn">charCodeAt</span>(<span class="nm">0</span>);        <span class="cm">// 65</span>
+<span class="bi">String</span>.<span class="fn">fromCharCode</span>(<span class="nm">97</span>);   <span class="cm">// "a"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#17</span><span class="prog-title">Simple Calculator</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">calculate</span>(a, op, b) {
+  <span class="kw">const</span> ops = { <span class="st">"+"</span>: (a,b)=>a+b, <span class="st">"-"</span>: (a,b)=>a-b, <span class="st">"*"</span>: (a,b)=>a*b, <span class="st">"/"</span>: (a,b)=>a/b };
+  <span class="kw">if</span> (!ops[op]) <span class="kw">throw new</span> <span class="bi">Error</span>(<span class="st">"Unknown operator"</span>);
+  <span class="kw">return</span> ops[op](a, b);
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">calculate</span>(<span class="nm">6</span>, <span class="st">"*"</span>, <span class="nm">7</span>));   <span class="cm">// 42</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#18</span><span class="prog-title">FizzBuzz</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">1</span>; i &lt;= <span class="nm">15</span>; i++) {
+  <span class="kw">if</span> (i % <span class="nm">15</span> === <span class="nm">0</span>) <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"FizzBuzz"</span>);
+  <span class="kw">else if</span> (i % <span class="nm">3</span> === <span class="nm">0</span>) <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"Fizz"</span>);
+  <span class="kw">else if</span> (i % <span class="nm">5</span> === <span class="nm">0</span>) <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"Buzz"</span>);
+  <span class="kw">else</span> <span class="bi">console</span>.<span class="fn">log</span>(i);
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#19</span><span class="prog-title">Count Vowels in a String</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">countVowels</span>(s) {
+  <span class="kw">return</span> (s.<span class="fn">match</span>(<span class="op">/[aeiou]/gi</span>) || []).length;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">countVowels</span>(<span class="st">"JavaScript"</span>));   <span class="cm">// 3</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#20</span><span class="prog-title">Find the Largest of Three Numbers</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> largest = <span class="bi">Math</span>.<span class="fn">max</span>(<span class="nm">4</span>, <span class="nm">19</span>, <span class="nm">7</span>);
+<span class="bi">console</span>.<span class="fn">log</span>(largest);   <span class="cm">// 19</span></pre></div></div>
+
+      </section>
+
+      <section class="prog-section" id="prog-inter">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-circle-filled"></i></span><h2 class="sec-title">Intermediate Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#21</span><span class="prog-title">Binary Search</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">binarySearch</span>(arr, target) {
+  <span class="kw">let</span> lo = <span class="nm">0</span>, hi = arr.length - <span class="nm">1</span>;
+  <span class="kw">while</span> (lo &lt;= hi) {
+    <span class="kw">const</span> mid = <span class="bi">Math</span>.<span class="fn">floor</span>((lo + hi) / <span class="nm">2</span>);
+    <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (arr[mid] &lt; target) lo = mid + <span class="nm">1</span>;
+    <span class="kw">else</span> hi = mid - <span class="nm">1</span>;
+  }
+  <span class="kw">return</span> -<span class="nm">1</span>;
+}
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="fn">binarySearch</span>([<span class="nm">1</span>,<span class="nm">3</span>,<span class="nm">5</span>,<span class="nm">7</span>,<span class="nm">9</span>], <span class="nm">7</span>));   <span class="cm">// 3</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#22</span><span class="prog-title">Bubble Sort</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">bubbleSort</span>(arr) {
+  <span class="kw">const</span> a = [...arr];
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">0</span>; i &lt; a.length; i++) {
+    <span class="kw">for</span> (<span class="kw">let</span> j = <span class="nm">0</span>; j &lt; a.length - i - <span class="nm">1</span>; j++) {
+      <span class="kw">if</span> (a[j] > a[j + <span class="nm">1</span>]) [a[j], a[j+<span class="nm">1</span>]] = [a[j+<span class="nm">1</span>], a[j]];
+    }
+  }
+  <span class="kw">return</span> a;
+}
+<span class="fn">bubbleSort</span>([<span class="nm">5</span>,<span class="nm">2</span>,<span class="nm">8</span>,<span class="nm">1</span>]);   <span class="cm">// [1,2,5,8]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#23</span><span class="prog-title">Count Word Frequency</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">wordFrequency</span>(text) {
+  <span class="kw">const</span> counts = {};
+  <span class="kw">for</span> (<span class="kw">const</span> w <span class="kw">of</span> text.<span class="fn">toLowerCase</span>().<span class="fn">split</span>(<span class="op">/\s+/</span>)) counts[w] = (counts[w] || <span class="nm">0</span>) + <span class="nm">1</span>;
+  <span class="kw">return</span> counts;
+}
+<span class="fn">wordFrequency</span>(<span class="st">"the cat and the dog"</span>);   <span class="cm">// { the:2, cat:1, and:1, dog:1 }</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#24</span><span class="prog-title">Sum &amp; Largest Element of an Array</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> nums = [<span class="nm">4</span>, <span class="nm">9</span>, <span class="nm">2</span>, <span class="nm">7</span>];
+nums.<span class="fn">reduce</span>((a,b) => a+b, <span class="nm">0</span>);   <span class="cm">// 22</span>
+<span class="bi">Math</span>.<span class="fn">max</span>(...nums);            <span class="cm">// 9</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#25</span><span class="prog-title">Rotate an Array by K Positions</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">rotate</span>(arr, k) {
+  <span class="kw">const</span> n = arr.length;
+  k = k % n;
+  <span class="kw">return</span> [...arr.<span class="fn">slice</span>(n - k), ...arr.<span class="fn">slice</span>(<span class="nm">0</span>, n - k)];
+}
+<span class="fn">rotate</span>([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>,<span class="nm">5</span>], <span class="nm">2</span>);   <span class="cm">// [4,5,1,2,3]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#26</span><span class="prog-title">Remove Duplicates from an Array</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> unique = [...<span class="kw">new</span> <span class="bi">Set</span>([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">3</span>,<span class="nm">4</span>])];
+<span class="bi">console</span>.<span class="fn">log</span>(unique);   <span class="cm">// [1,2,3,4]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#27</span><span class="prog-title">Second Largest Number in an Array</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">secondLargest</span>(arr) {
+  <span class="kw">return</span> [...<span class="kw">new</span> <span class="bi">Set</span>(arr)].<span class="fn">sort</span>((a,b) => b-a)[<span class="nm">1</span>];
+}
+<span class="fn">secondLargest</span>([<span class="nm">5</span>, <span class="nm">9</span>, <span class="nm">9</span>, <span class="nm">3</span>]);   <span class="cm">// 5</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#28</span><span class="prog-title">Flatten a Nested Array</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> nested = [<span class="nm">1</span>, [<span class="nm">2</span>, [<span class="nm">3</span>, [<span class="nm">4</span>]], <span class="nm">5</span>]];
+nested.<span class="fn">flat</span>(<span class="bi">Infinity</span>);   <span class="cm">// [1,2,3,4,5] — Infinity flattens any depth</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#29</span><span class="prog-title">Check if a String is an Anagram</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">isAnagram</span>(a, b) {
+  <span class="kw">const</span> <span class="fn">norm</span> = s => s.<span class="fn">toLowerCase</span>().<span class="fn">split</span>(<span class="st">""</span>).<span class="fn">sort</span>().<span class="fn">join</span>(<span class="st">""</span>);
+  <span class="kw">return</span> <span class="fn">norm</span>(a) === <span class="fn">norm</span>(b);
+}
+<span class="fn">isAnagram</span>(<span class="st">"listen"</span>, <span class="st">"silent"</span>);   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#30</span><span class="prog-title">Capitalize Each Word in a Sentence</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">titleCase</span>(s) {
+  <span class="kw">return</span> s.<span class="fn">split</span>(<span class="st">" "</span>).<span class="fn">map</span>(w => w[<span class="nm">0</span>].<span class="fn">toUpperCase</span>() + w.<span class="fn">slice</span>(<span class="nm">1</span>)).<span class="fn">join</span>(<span class="st">" "</span>);
+}
+<span class="fn">titleCase</span>(<span class="st">"the quick brown fox"</span>);   <span class="cm">// "The Quick Brown Fox"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#31</span><span class="prog-title">Group Array of Objects by Key</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> people = [{name:<span class="st">"A"</span>,team:<span class="st">"red"</span>}, {name:<span class="st">"B"</span>,team:<span class="st">"blue"</span>}, {name:<span class="st">"C"</span>,team:<span class="st">"red"</span>}];
+
+<span class="kw">const</span> grouped = people.<span class="fn">reduce</span>((acc, p) => {
+  (acc[p.team] ??= []).<span class="fn">push</span>(p.name);
+  <span class="kw">return</span> acc;
+}, {});
+<span class="cm">// { red: ["A","C"], blue: ["B"] }</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#32</span><span class="prog-title">Debounce Function</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">debounce</span>(fn, delay) {
+  <span class="kw">let</span> timer;
+  <span class="kw">return function</span>(...args) {
+    <span class="fn">clearTimeout</span>(timer);
+    timer = <span class="fn">setTimeout</span>(() => fn.<span class="fn">apply</span>(<span class="kw">this</span>, args), delay);
+  };
+}
+<span class="cm">// searchInput.addEventListener("input", debounce(runSearch, 300));</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#33</span><span class="prog-title">Deep Clone an Object</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> original = { a: <span class="nm">1</span>, nested: { b: <span class="nm">2</span> } };
+<span class="kw">const</span> deep = structuredClone(original);   <span class="cm">// native deep clone, no library needed</span>
+deep.nested.b = <span class="nm">99</span>;
+<span class="bi">console</span>.<span class="fn">log</span>(original.nested.b);   <span class="cm">// 2 — untouched</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#34</span><span class="prog-title">Merge Two Sorted Arrays</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">mergeSorted</span>(a, b) {
+  <span class="kw">const</span> result = [];
+  <span class="kw">let</span> i = <span class="nm">0</span>, j = <span class="nm">0</span>;
+  <span class="kw">while</span> (i &lt; a.length &amp;&amp; j &lt; b.length) result.<span class="fn">push</span>(a[i] &lt; b[j] ? a[i++] : b[j++]);
+  <span class="kw">return</span> [...result, ...a.<span class="fn">slice</span>(i), ...b.<span class="fn">slice</span>(j)];
+}
+<span class="fn">mergeSorted</span>([<span class="nm">1</span>,<span class="nm">3</span>,<span class="nm">5</span>], [<span class="nm">2</span>,<span class="nm">4</span>,<span class="nm">6</span>]);   <span class="cm">// [1,2,3,4,5,6]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#35</span><span class="prog-title">Find Missing Number in a Sequence</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">findMissing</span>(arr, n) {
+  <span class="kw">const</span> expected = (n * (n + <span class="nm">1</span>)) / <span class="nm">2</span>;
+  <span class="kw">const</span> actual = arr.<span class="fn">reduce</span>((a,b) => a+b, <span class="nm">0</span>);
+  <span class="kw">return</span> expected - actual;
+}
+<span class="fn">findMissing</span>([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">4</span>,<span class="nm">5</span>], <span class="nm">5</span>);   <span class="cm">// 3</span></pre></div></div>
+
+      </section>
+
+      <section class="prog-section" id="prog-adv">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-brand-google"></i></span><h2 class="sec-title">Advanced Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#36</span><span class="prog-title">Merge Sort</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">mergeSort</span>(arr) {
+  <span class="kw">if</span> (arr.length &lt;= <span class="nm">1</span>) <span class="kw">return</span> arr;
+  <span class="kw">const</span> mid = <span class="bi">Math</span>.<span class="fn">floor</span>(arr.length / <span class="nm">2</span>);
+  <span class="kw">const</span> left = <span class="fn">mergeSort</span>(arr.<span class="fn">slice</span>(<span class="nm">0</span>, mid));
+  <span class="kw">const</span> right = <span class="fn">mergeSort</span>(arr.<span class="fn">slice</span>(mid));
+  <span class="kw">const</span> merged = [];
+  <span class="kw">let</span> i = <span class="nm">0</span>, j = <span class="nm">0</span>;
+  <span class="kw">while</span> (i &lt; left.length &amp;&amp; j &lt; right.length) {
+    merged.<span class="fn">push</span>(left[i] &lt; right[j] ? left[i++] : right[j++]);
+  }
+  <span class="kw">return</span> [...merged, ...left.<span class="fn">slice</span>(i), ...right.<span class="fn">slice</span>(j)];
+}
+<span class="fn">mergeSort</span>([<span class="nm">5</span>,<span class="nm">3</span>,<span class="nm">8</span>,<span class="nm">1</span>,<span class="nm">9</span>]);   <span class="cm">// [1,3,5,8,9]</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#37</span><span class="prog-title">Custom EventEmitter (OOP)</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">EventEmitter</span> {
+  <span class="op">#</span>listeners = <span class="kw">new</span> <span class="bi">Map</span>();
+
+  on(event, fn) {
+    <span class="kw">if</span> (!<span class="kw">this</span>.<span class="op">#</span>listeners.has(event)) <span class="kw">this</span>.<span class="op">#</span>listeners.set(event, []);
+    <span class="kw">this</span>.<span class="op">#</span>listeners.get(event).<span class="fn">push</span>(fn);
+  }
+  emit(event, ...args) {
+    (<span class="kw">this</span>.<span class="op">#</span>listeners.get(event) || []).<span class="fn">forEach</span>(fn => fn(...args));
+  }
+}
+
+<span class="kw">const</span> bus = <span class="kw">new</span> <span class="cl">EventEmitter</span>();
+bus.on(<span class="st">"greet"</span>, name => <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">`Hi, </span><span class="op">${</span>name<span class="op">}</span><span class="st">`</span>));
+bus.emit(<span class="st">"greet"</span>, <span class="st">"Ada"</span>);   <span class="cm">// "Hi, Ada"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#38</span><span class="prog-title">Memoize a Function (Closures)</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">memoize</span>(fn) {
+  <span class="kw">const</span> cache = <span class="kw">new</span> <span class="bi">Map</span>();
+  <span class="kw">return function</span>(...args) {
+    <span class="kw">const</span> key = <span class="bi">JSON</span>.<span class="fn">stringify</span>(args);
+    <span class="kw">if</span> (cache.has(key)) <span class="kw">return</span> cache.get(key);   <span class="cm">// skip recomputation</span>
+    <span class="kw">const</span> result = fn(...args);
+    cache.set(key, result);
+    <span class="kw">return</span> result;
+  };
+}
+<span class="kw">const</span> slowSquare = n => { <span class="kw">for</span> (<span class="kw">let</span> i=<span class="nm">0</span>;i&lt;<span class="nm">1e6</span>;i++); <span class="kw">return</span> n*n; };
+<span class="kw">const</span> fastSquare = <span class="fn">memoize</span>(slowSquare);   <span class="cm">// second call with same input is instant</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#39</span><span class="prog-title">Promise-Based Retry</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">async function</span> <span class="fn">retry</span>(fn, attempts = <span class="nm">3</span>, delay = <span class="nm">500</span>) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nm">0</span>; i &lt; attempts; i++) {
+    <span class="kw">try</span> {
+      <span class="kw">return</span> <span class="kw">await</span> fn();
+    } <span class="kw">catch</span> (err) {
+      <span class="kw">if</span> (i === attempts - <span class="nm">1</span>) <span class="kw">throw</span> err;
+      <span class="kw">await new</span> <span class="bi">Promise</span>(r => <span class="fn">setTimeout</span>(r, delay));
+    }
+  }
+}
+<span class="cm">// retry(() => fetch("/flaky-api"), 3, 1000)</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#40</span><span class="prog-title">LRU Cache (Map-Based)</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">JavaScript</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">LRUCache</span> {
+  <span class="fn">constructor</span>(capacity) { <span class="kw">this</span>.capacity = capacity; <span class="kw">this</span>.map = <span class="kw">new</span> <span class="bi">Map</span>(); }
+
+  get(key) {
+    <span class="kw">if</span> (!<span class="kw">this</span>.map.has(key)) <span class="kw">return</span> -<span class="nm">1</span>;
+    <span class="kw">const</span> val = <span class="kw">this</span>.map.get(key);
+    <span class="kw">this</span>.map.delete(key);
+    <span class="kw">this</span>.map.set(key, val);   <span class="cm">// re-insert — Map preserves insertion order</span>
+    <span class="kw">return</span> val;
+  }
+  put(key, value) {
+    <span class="kw">if</span> (<span class="kw">this</span>.map.has(key)) <span class="kw">this</span>.map.delete(key);
+    <span class="kw">else if</span> (<span class="kw">this</span>.map.size >= <span class="kw">this</span>.capacity) {
+      <span class="kw">this</span>.map.delete(<span class="kw">this</span>.map.keys().next().value);   <span class="cm">// evict least recently used</span>
+    }
+    <span class="kw">this</span>.map.set(key, value);
+  }
+}</pre></div></div>
+
+      </section>
+
+      <div class="page-nav">
+        <a class="nav-link" href="modules.html">← Modules &amp; Ecosystem</a>
+        <a class="nav-link" href="../index.html">Back to Programming →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.prog-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Async / Await — Promises, Event Loop & Concurrency | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/javascript/async.html"/>
+  <meta property="og:title" content="JavaScript Async / Await — Promises, Event Loop &amp; Concurrency | TechForge"/>
+  <meta property="og:description" content="JavaScript async — callbacks, Promises, async/await, Promise.all, the event loop, microtasks vs macrotasks, and common pitfalls, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim, rgba(34,211,238,.15)); }
+    .b-js { background: rgba(240, 219, 79, .12); color: var(--js); border: 1px solid rgba(240, 219, 79, .25); }
+    .b-purple { background: rgba(167, 139, 250, .1); color: var(--purple); border: 1px solid rgba(167, 139, 250, .2); }
+    .b-amber { background: rgba(251, 191, 36, .1); color: var(--amber); border: 1px solid rgba(251, 191, 36, .2); }
+    .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .cmp-card { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px 18px; background: rgba(0,0,0,.2); }
+    .cmp-card h4 { font-family: var(--display); font-size: 14px; margin-bottom: 8px; }
+    .cmp-sync h4 { color: var(--red, #f87171); }
+    .cmp-async h4 { color: var(--green); }
+    .cmp-card p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    @media (max-width: 640px) { .cmp-grid { grid-template-columns: 1fr; } }
+    .pitfall { border-left: 3px solid var(--red, #f87171); background: rgba(248,113,113,.05); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; padding: 14px 18px; margin-bottom: 14px; }
+    .pitfall .pf-bad { color: var(--red, #f87171); font-weight: 600; }
+    .pitfall .pf-fix { color: var(--green); font-weight: 600; }
+    .pitfall p { font-size: 13px; color: var(--text2); line-height: 1.6; margin-top: 4px; }
+    .memory-trick { background: linear-gradient(135deg, rgba(240, 219, 79, .08), rgba(34, 211, 238, .04)); border: 1px solid rgba(240, 219, 79, .2); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; }
+    .memory-trick h3 { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--js); margin-bottom: 12px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="js/async" data-section="javascript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other JS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="dom.html"><span class="sb-num">←</span> DOM &amp; Browser</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <div class="sidebar-label" style="margin-top:14px;">Async / Await — Complete</div>
+      <a class="sb-link active" href="#sec-callbacks"><span class="sb-num">01</span> Callbacks &amp; Callback Hell</a>
+      <a class="sb-link" href="#sec-promises"><span class="sb-num">02</span> Promises</a>
+      <a class="sb-link" href="#sec-asyncawait"><span class="sb-num">03</span> async / await</a>
+      <a class="sb-link" href="#sec-combinators"><span class="sb-num">04</span> Promise Combinators</a>
+      <a class="sb-link" href="#sec-eventloop"><span class="sb-num">05</span> The Event Loop</a>
+      <a class="sb-link" href="#sec-errors"><span class="sb-num">06</span> Error Handling</a>
+      <a class="sb-link" href="#sec-pitfalls"><span class="sb-num">07</span> Common Pitfalls</a>
+      <a class="sb-link" href="modules.html"><span class="sb-num">→</span> Modules &amp; Ecosystem</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">JavaScript Async / Await Complete</div>
+        <h1 class="pg-title">Asynchronous <span>JavaScript</span></h1>
+        <p class="pg-sub">JavaScript runs on a single thread yet handles thousands of concurrent network calls. Master callbacks, Promises, <code>async</code>/<code>await</code>, and the event loop that makes it all work.</p>
+        <div class="pg-badges">
+          <span class="badge b-js"><i class="ti ti-brand-javascript"></i> ES2023</span>
+          <span class="badge b-purple"><i class="ti ti-bolt"></i> Concurrency</span>
+          <span class="badge b-blue">7 Topics</span>
+          <span class="badge b-amber"><i class="ti ti-flame"></i> Interview Key</span>
+        </div>
+      </header>
+
+      <section class="py-section" id="sec-callbacks">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-arrow-back-up"></i></span><h2 class="sec-title">Callbacks &amp; Callback Hell</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">The original async pattern: pass a function to run later, when the result is ready. It works, but nesting several of them produces the "pyramid of doom" that Promises and <code>async</code>/<code>await</code> were built to fix.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Callback Hell</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="fn">getUser</span>(id, (user) => {
+  <span class="fn">getPosts</span>(user.id, (posts) => {
+    <span class="fn">getComments</span>(posts[<span class="nm">0</span>].id, (comments) => {
+      <span class="bi">console</span>.<span class="fn">log</span>(comments);     <span class="cm">// three levels deep, and error handling repeats at each level</span>
+    }, onError);
+  }, onError);
+}, onError);</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Every callback needs its own error path, and the nesting only grows with each dependent step. This exact shape is what Promises were designed to flatten.</span></div>
+      </section>
+
+      <section class="py-section" id="sec-promises">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-checkbox"></i></span><h2 class="sec-title">Promises</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>Promise</strong> represents a value that isn't ready yet. It's always in one of three states: <strong>pending</strong>, <strong>fulfilled</strong>, or <strong>rejected</strong> — and once settled, it never changes state again.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Creating &amp; Chaining Promises</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">delay</span>(ms) {
+  <span class="kw">return</span> <span class="kw">new</span> <span class="bi">Promise</span>((resolve, reject) => {
+    <span class="fn">setTimeout</span>(() => resolve(<span class="st">"done"</span>), ms);
+  });
+}
+
+<span class="fn">delay</span>(<span class="nm">1000</span>)
+  .<span class="fn">then</span>(result => { <span class="bi">console</span>.<span class="fn">log</span>(result); <span class="kw">return</span> <span class="fn">delay</span>(<span class="nm">500</span>); })   <span class="cm">// chain flattens nesting</span>
+  .<span class="fn">then</span>(() => <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"second delay done"</span>))
+  .<span class="fn">catch</span>(err => <span class="bi">console</span>.error(err))                        <span class="cm">// one handler, not one per step</span>
+  .<span class="fn">finally</span>(() => <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"cleanup, runs either way"</span>));</pre>
+        </div>
+        <div class="kv-grid">
+          <div class="kv-card"><div class="kv-label">Pending</div><div class="kv-val">Initial state, outcome not yet known.</div></div>
+          <div class="kv-card"><div class="kv-label">Fulfilled</div><div class="kv-val">Resolved with a value — triggers <code>.then()</code>.</div></div>
+          <div class="kv-card"><div class="kv-label">Rejected</div><div class="kv-val">Failed with a reason — triggers <code>.catch()</code>.</div></div>
+          <div class="kv-card"><div class="kv-label">Settled</div><div class="kv-val">Fulfilled or rejected — permanent, cannot change again.</div></div>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-asyncawait">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-hourglass"></i></span><h2 class="sec-title">async / await</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>async</code>/<code>await</code> is syntax sugar over Promises — it lets asynchronous code read top-to-bottom like synchronous code, without giving up any of the non-blocking behavior underneath.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Same Logic, Readable Order</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">async function</span> <span class="fn">loadFeed</span>(userId) {
+  <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">getUser</span>(userId);        <span class="cm">// pauses here, doesn't block the thread</span>
+  <span class="kw">const</span> posts = <span class="kw">await</span> <span class="fn">getPosts</span>(user.id);
+  <span class="kw">const</span> comments = <span class="kw">await</span> <span class="fn">getComments</span>(posts[<span class="nm">0</span>].id);
+  <span class="kw">return</span> comments;             <span class="cm">// same three calls as callback hell, flat and readable</span>
+}
+
+<span class="cm">// calling an async function always returns a Promise</span>
+<span class="fn">loadFeed</span>(<span class="nm">1</span>).<span class="fn">then</span>(comments => <span class="bi">console</span>.<span class="fn">log</span>(comments));</pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><code>await</code> is only legal inside an <code>async</code> function (or at the top level of a module). It suspends that function only — the rest of the program keeps running.</span></div>
+      </section>
+
+      <section class="py-section" id="sec-combinators">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-puzzle"></i></span><h2 class="sec-title">Promise Combinators</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — all, allSettled, race, any</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> urls = [<span class="st">"/a"</span>, <span class="st">"/b"</span>, <span class="st">"/c"</span>];
+
+<span class="cm">// all — fails fast: one rejection rejects everything</span>
+<span class="kw">const</span> results = <span class="kw">await</span> <span class="bi">Promise</span>.<span class="fn">all</span>(urls.<span class="fn">map</span>(fetch));
+
+<span class="cm">// allSettled — always resolves, gives you each outcome</span>
+<span class="kw">const</span> outcomes = <span class="kw">await</span> <span class="bi">Promise</span>.<span class="fn">allSettled</span>(urls.<span class="fn">map</span>(fetch));
+<span class="cm">// [{status:"fulfilled", value:...}, {status:"rejected", reason:...}, ...]</span>
+
+<span class="cm">// race — settles as soon as the FIRST one settles (win or lose)</span>
+<span class="kw">const</span> fastest = <span class="kw">await</span> <span class="bi">Promise</span>.<span class="fn">race</span>([fetch(<span class="st">"/a"</span>), <span class="fn">delay</span>(<span class="nm">3000</span>)]);
+
+<span class="cm">// any — settles on the first FULFILLED result, ignores rejections</span>
+<span class="kw">const</span> firstOk = <span class="kw">await</span> <span class="bi">Promise</span>.any(urls.<span class="fn">map</span>(fetch));</pre>
+        </div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Method</th><th>Resolves when</th><th>Rejects when</th></tr></thead>
+            <tbody>
+              <tr><td><code>Promise.all</code></td><td>Every promise fulfills</td><td>Any single one rejects</td></tr>
+              <tr><td><code>Promise.allSettled</code></td><td>All promises settle</td><td>Never — always resolves</td></tr>
+              <tr><td><code>Promise.race</code></td><td>First one settles (either way)</td><td>If that first one rejects</td></tr>
+              <tr><td><code>Promise.any</code></td><td>First one fulfills</td><td>All of them reject</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-eventloop">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-repeat"></i></span><h2 class="sec-title">The Event Loop — Microtasks vs Macrotasks</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">JavaScript is single-threaded, so it needs a scheduler to interleave "waiting" work with running code — that's the <strong>event loop</strong>. It runs all synchronous code first, then drains the <strong>microtask queue</strong> completely, then processes exactly one <strong>macrotask</strong>, and repeats.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — Guess the Order</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"1: sync"</span>);
+
+<span class="fn">setTimeout</span>(() => <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"4: macrotask (setTimeout)"</span>), <span class="nm">0</span>);
+
+<span class="bi">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() => <span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"3: microtask (promise)"</span>));
+
+<span class="bi">console</span>.<span class="fn">log</span>(<span class="st">"2: sync"</span>);
+
+<span class="cm">// Output order: 1, 2, 3, 4</span>
+<span class="cm">// All sync code runs first, THEN all microtasks, THEN the next macrotask.</span></pre>
+        </div>
+        <div class="memory-trick">
+          <h3><i class="ti ti-brain"></i> Microtasks always cut in line</h3>
+          <p class="prose">Promise callbacks (microtasks) always run before the next <code>setTimeout</code>/<code>setInterval</code>/I/O callback (macrotasks), even if the timeout was scheduled first with a delay of <code>0</code>.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-errors">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-shield"></i></span><h2 class="sec-title">Error Handling</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — try/catch with await</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">async function</span> <span class="fn">safeLoad</span>(id) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`/api/users/</span><span class="op">${</span>id<span class="op">}</span><span class="st">`</span>);
+    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="bi">Error</span>(<span class="st">`HTTP </span><span class="op">${</span>res.status<span class="op">}</span><span class="st">`</span>);
+    <span class="kw">return</span> <span class="kw">await</span> res.<span class="fn">json</span>();
+  } <span class="kw">catch</span> (err) {
+    <span class="bi">console</span>.error(<span class="st">"Load failed:"</span>, err.message);
+    <span class="kw">return</span> <span class="kw">null</span>;              <span class="cm">// caller gets a safe fallback instead of a crash</span>
+  }
+}</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>A rejected Promise with no <code>.catch()</code> or surrounding <code>try/catch</code> fires an <strong>unhandledrejection</strong> event and, in Node, can crash the process.</span></div>
+      </section>
+
+      <section class="py-section" id="sec-pitfalls">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span><h2 class="sec-title">Common Pitfalls</h2></div>
+        <div class="section-divider"></div>
+        <div class="pitfall">
+          <span class="pf-bad">await in a loop = sequential</span>
+          <p><code>for (const u of urls) await fetch(u)</code> runs one at a time. Build an array of promises and <code>Promise.all</code> them for real concurrency.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">Forgetting to return inside .then()</span>
+          <p>If a <code>.then()</code> callback doesn't return the next promise, the chain doesn't wait for it — it moves on immediately with the wrong value.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">Mixing async with forEach</span>
+          <p><code>arr.forEach(async x => await work(x))</code> doesn't wait for anything — <code>forEach</code> ignores the returned promises. Use a <code>for...of</code> loop or <code>Promise.all(arr.map(...))</code>.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-fix">async isn't parallel, it's concurrent</span>
+          <p>Still single-threaded. For real CPU parallelism, JavaScript needs Web Workers (browser) or worker_threads (Node) — async only overlaps I/O waits.</p>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. Calling an async function directly returns…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">its resolved value</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">a Promise</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">undefined always</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">a callback</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. Which settles as soon as any promise rejects?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Promise.all</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Promise.allSettled</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Promise.any</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">none of these</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. Microtasks (Promises) run relative to macrotasks (setTimeout) how?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">always after</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">always before the next macrotask</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">at the same time</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">order is random</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. arr.forEach(async x => await work(x)) — does forEach wait?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">yes, always sequentially</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">no — forEach ignores the returned promises</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">yes, in parallel</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">it throws a SyntaxError</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. A Promise, once settled…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">can still change state later</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">is locked in permanently</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">resets to pending</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">must be re-awaited</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </section>
+
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← OOP</a>
+        <a class="nav-link" href="modules.html">Modules &amp; Ecosystem →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

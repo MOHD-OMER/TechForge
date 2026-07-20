@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Modules & Ecosystem — npm, Bundlers, Libraries | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/javascript/modules.html"/>
+  <meta property="og:title" content="JavaScript Modules &amp; Ecosystem — npm, Bundlers, Libraries | TechForge"/>
+  <meta property="og:description" content="JavaScript modules and ecosystem — ES modules, npm and package.json, CommonJS interop, bundlers, and the libraries every JS developer reaches for, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim, rgba(34,211,238,.15)); }
+    .b-js { background: rgba(240, 219, 79, .12); color: var(--js); border: 1px solid rgba(240, 219, 79, .25); }
+    .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+    .lib-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+    .lib-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .lib-desc { font-size: 11.5px; color: var(--text2); line-height: 1.55; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="js/modules" data-section="javascript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other JS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="dom.html"><span class="sb-num">←</span> DOM &amp; Browser</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">←</span> Async / Await</a>
+      <div class="sidebar-label" style="margin-top:14px;">Modules &amp; Ecosystem</div>
+      <a class="sb-link active" href="#sec-esm"><span class="sb-num">01</span> ES Modules</a>
+      <a class="sb-link" href="#sec-npm"><span class="sb-num">02</span> npm &amp; package.json</a>
+      <a class="sb-link" href="#sec-cjs"><span class="sb-num">03</span> CommonJS vs ESM</a>
+      <a class="sb-link" href="#sec-bundlers"><span class="sb-num">04</span> Bundlers &amp; Transpilers</a>
+      <a class="sb-link" href="#sec-libs"><span class="sb-num">05</span> Popular Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Practice Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">JavaScript Modules &amp; Ecosystem</div>
+        <h1 class="pg-title">Modules, npm &amp; the <span>Ecosystem</span></h1>
+        <p class="pg-sub">JavaScript's real power is its package ecosystem. This module covers how code is organized, shared, installed, and bundled for production.</p>
+        <div class="pg-badges">
+          <span class="badge b-js"><i class="ti ti-brand-javascript"></i> Tooling</span>
+          <span class="badge b-blue">5 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-esm">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-puzzle"></i></span><h2 class="sec-title">ES Modules — import / export</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Before ES2015, JavaScript had no built-in module system — every script shared one global scope. ES Modules give each file its own scope, with explicit exports and imports.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — math.js</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// math.js</span>
+<span class="kw">export function</span> <span class="fn">square</span>(n) { <span class="kw">return</span> n * n; }
+<span class="kw">export const</span> PI = <span class="nm">3.14159</span>;
+<span class="kw">export default function</span> <span class="fn">add</span>(a, b) { <span class="kw">return</span> a + b; }  <span class="cm">// one default export per file</span>
+
+<span class="cm">// app.js</span>
+<span class="kw">import</span> add, { square, PI } <span class="kw">from</span> <span class="st">"./math.js"</span>;
+<span class="kw">import</span> * <span class="kw">as</span> math <span class="kw">from</span> <span class="st">"./math.js"</span>;   <span class="cm">// grab everything as a namespace</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>In the browser, load an ES module with <code>&lt;script type="module" src="app.js"&gt;</code> — modules are deferred and strict-mode by default.</span></div>
+      </section>
+      <section class="py-section" id="sec-npm">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">npm &amp; package.json</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>npm</strong> is JavaScript's package manager and registry, the world's largest — over 3 million packages. <code>package.json</code> declares what your project needs and how to run it.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JavaScript — package.json</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">{
+  <span class="st">"name"</span>: <span class="st">"my-app"</span>,
+  <span class="st">"version"</span>: <span class="st">"1.0.0"</span>,
+  <span class="st">"type"</span>: <span class="st">"module"</span>,
+  <span class="st">"scripts"</span>: { <span class="st">"start"</span>: <span class="st">"node index.js"</span>, <span class="st">"test"</span>: <span class="st">"vitest"</span> },
+  <span class="st">"dependencies"</span>: { <span class="st">"express"</span>: <span class="st">"^4.19.0"</span> },
+  <span class="st">"devDependencies"</span>: { <span class="st">"vitest"</span>: <span class="st">"^2.0.0"</span> }
+}
+
+<span class="cm"># npm install express      — adds to dependencies, downloads into node_modules/</span>
+<span class="cm"># npm install -D vitest    — adds to devDependencies (dev/test tools only)</span>
+<span class="cm"># npm run start            — runs the "start" script</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>package-lock.json</strong> pins the exact resolved versions of every dependency, direct and transitive. Commit it — without it, two installs of the same <code>package.json</code> can silently pull different sub-versions.</span></div>
+      </section>
+      <section class="py-section" id="sec-cjs">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-arrows-left-right"></i></span><h2 class="sec-title">CommonJS vs ES Modules</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Node.js predates ES Modules and used its own system, <strong>CommonJS</strong>, for years. Both are still common in the wild, and mixing them incorrectly is a frequent source of "unexpected token" errors.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th></th><th>CommonJS</th><th>ES Modules</th></tr></thead>
+            <tbody>
+              <tr><td>Export</td><td><code>module.exports = x</code></td><td><code>export default x</code></td></tr>
+              <tr><td>Import</td><td><code>const x = require("x")</code></td><td><code>import x from "x"</code></td></tr>
+              <tr><td>Loading</td><td>Synchronous</td><td>Supports async, statically analyzable</td></tr>
+              <tr><td>File signal</td><td><code>.cjs</code>, or default in Node</td><td><code>.mjs</code>, or <code>"type": "module"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-bundlers">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-box-multiple"></i></span><h2 class="sec-title">Bundlers &amp; Transpilers</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Browsers can't efficiently load thousands of separate module files, and not every browser supports every new syntax feature. Bundlers and transpilers solve those two problems.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Vite</strong></td><td>Fast dev server + bundler, the modern default for new projects</td></tr>
+              <tr><td><strong>webpack</strong></td><td>Older, highly configurable bundler — still common in large existing apps</td></tr>
+              <tr><td><strong>esbuild</strong></td><td>Extremely fast bundler/minifier written in Go, often used under other tools</td></tr>
+              <tr><td><strong>Babel</strong></td><td>Transpiles modern JS syntax down to a version older browsers understand</td></tr>
+              <tr><td><strong>TypeScript</strong></td><td>Adds static types on top of JS, compiles (transpiles) back down to plain JS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-libs">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-stack-2"></i></span><h2 class="sec-title">Popular Libraries</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A handful of packages show up in almost every real-world JavaScript codebase.</p>
+        <div class="lib-grid">
+          <div class="lib-card"><div class="lib-name">Express</div><div class="lib-desc">Minimal backend web framework for Node — routes, middleware, REST APIs.</div></div>
+          <div class="lib-card"><div class="lib-name">React</div><div class="lib-desc">UI library built around components and a virtual DOM — the most-used frontend tool.</div></div>
+          <div class="lib-card"><div class="lib-name">Axios</div><div class="lib-desc">HTTP client with a friendlier API than raw fetch — request/response interceptors.</div></div>
+          <div class="lib-card"><div class="lib-name">Lodash</div><div class="lib-desc">Utility functions for arrays, objects, and strings that predate many native equivalents.</div></div>
+          <div class="lib-card"><div class="lib-name">Zod</div><div class="lib-desc">Runtime schema validation with TypeScript type inference built in.</div></div>
+          <div class="lib-card"><div class="lib-name">Jest / Vitest</div><div class="lib-desc">Test runners for unit and integration tests, with built-in assertions and mocking.</div></div>
+        </div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. How many default exports can one ES module file have?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">One</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Unlimited</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Zero — not allowed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Exactly two</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. package-lock.json exists to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">list only devDependencies</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">pin exact resolved versions of every dependency</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">store your source code</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">replace package.json entirely</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. CommonJS uses which syntax to import?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">import x from "x"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">const x = require("x")</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">using x</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">include "x"</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A bundler's main job is to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">combine many module files into fewer files for the browser</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">run your tests</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">manage your git history</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">install npm globally</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. npm install -D vitest adds vitest to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">dependencies</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">devDependencies</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">peerDependencies</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nowhere — it just runs it once</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="async.html">← Async / Await</a>
+        <a class="nav-link" href="programs.html">Practice Programs →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
