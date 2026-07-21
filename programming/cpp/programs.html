@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>C++ Programs — Practice Code Examples | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/cpp/programs.html"/>
+  <meta property="og:title" content="C++ Programs — Practice Code Examples | TechForge"/>
+  <meta property="og:description" content="C++ Programs — 40 hands-on practice programs from basic to advanced, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .b-cpp { background: rgba(77, 158, 247, .12); color: var(--blue); border: 1px solid rgba(77, 158, 247, .25); }
+    .code-pre .pp { color: #89ddff; }
+    .prog-section { margin-bottom: 48px; scroll-margin-top: calc(var(--topbar-h) + 20px); }
+    .prog-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 16px; }
+    .prog-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+    .prog-num { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--text3); }
+    .prog-title { font-size: 14px; font-weight: 600; color: var(--text); }
+    .prog-diff { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 2px 8px; border-radius: 100px; margin-left: auto; }
+    .diff-basic { color: var(--green); background: rgba(52, 211, 153, .1); border: 1px solid rgba(52, 211, 153, .2); }
+    .diff-inter { color: var(--amber); background: rgba(251, 191, 36, .1); border: 1px solid rgba(251, 191, 36, .2); }
+    .diff-adv { color: var(--red); background: rgba(248, 113, 113, .1); border: 1px solid rgba(248, 113, 113, .2); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="cpp/programs" data-section="cpp">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other C++ Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="containers.html"><span class="sb-num">←</span> STL Containers</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="pointers.html"><span class="sb-num">←</span> Pointers &amp; Memory</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <a class="sb-link" href="templates.html"><span class="sb-num">←</span> Templates &amp; STL</a>
+      <a class="sb-link" href="modern.html"><span class="sb-num">←</span> Modern C++</a>
+      <div class="sidebar-label" style="margin-top:14px;">Programs</div>
+      <a class="sb-link active" href="#prog-basic"><span class="sb-num">01</span> Basic Programs</a>
+      <a class="sb-link" href="#prog-inter"><span class="sb-num">02</span> Intermediate</a>
+      <a class="sb-link" href="#prog-adv"><span class="sb-num">03</span> Advanced</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">C++ Programs</div>
+        <h1 class="pg-title">Practice <span>Code Examples</span></h1>
+        <p class="pg-sub">Hands-on C++ programs to practice and master the language. From basic to advanced level.</p>
+        <div class="pg-badges">
+          <span class="badge b-cpp"><i class="ti ti-brand-cpp"></i> C++20</span>
+          <span class="badge b-green">✓ Practice</span>
+          <span class="badge b-blue">40 Programs</span>
+        </div>
+      </header>
+
+      <section class="prog-section" id="prog-basic">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-circle-filled"></i></span><h2 class="sec-title">Basic Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#1</span><span class="prog-title">Check Prime Number</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;cmath&gt;</span>
+<span class="kw">bool</span> <span class="fn">isPrime</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">2</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">2</span>; i &lt;= std::<span class="fn">sqrt</span>(n); i++)
+        <span class="kw">if</span> (n % i == <span class="nm">0</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+<span class="fn">isPrime</span>(<span class="nm">17</span>);   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#2</span><span class="prog-title">Factorial (Recursive)</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">long</span> <span class="fn">factorial</span>(<span class="kw">int</span> n) {
+    <span class="kw">return</span> n &lt;= <span class="nm">1</span> ? <span class="nm">1</span> : n * <span class="fn">factorial</span>(n - <span class="nm">1</span>);
+}
+<span class="fn">factorial</span>(<span class="nm">5</span>);   <span class="cm">// 120</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#3</span><span class="prog-title">Fibonacci Sequence</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> a = <span class="nm">0</span>, b = <span class="nm">1</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">8</span>; i++) {
+    std::cout &lt;&lt; a &lt;&lt; <span class="st">' '</span>;   <span class="cm">// 0 1 1 2 3 5 8 13</span>
+    <span class="kw">int</span> next = a + b; a = b; b = next;
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#4</span><span class="prog-title">Reverse a String</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+std::string s = <span class="st">"hello"</span>;
+std::<span class="fn">reverse</span>(s.<span class="fn">begin</span>(), s.<span class="fn">end</span>());   <span class="cm">// "olleh"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#5</span><span class="prog-title">Check Palindrome</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+<span class="kw">bool</span> <span class="fn">isPalindrome</span>(std::string s) {
+    std::string r = s;
+    std::<span class="fn">reverse</span>(r.<span class="fn">begin</span>(), r.<span class="fn">end</span>());
+    <span class="kw">return</span> s == r;
+}
+<span class="fn">isPalindrome</span>(<span class="st">"racecar"</span>);   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#6</span><span class="prog-title">Swap Two Variables</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> a = <span class="nm">5</span>, b = <span class="nm">10</span>;
+std::<span class="fn">swap</span>(a, b);   <span class="cm">// a=10, b=5 — STL swap</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#7</span><span class="prog-title">Celsius to Fahrenheit</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">double</span> <span class="fn">toFahrenheit</span>(<span class="kw">double</span> c) { <span class="kw">return</span> c * <span class="nm">9</span> / <span class="nm">5</span> + <span class="nm">32</span>; }
+<span class="fn">toFahrenheit</span>(<span class="nm">100</span>);   <span class="cm">// 212</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#8</span><span class="prog-title">Check Odd or Even</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">bool</span> <span class="fn">isEven</span>(<span class="kw">int</span> n) { <span class="kw">return</span> n % <span class="nm">2</span> == <span class="nm">0</span>; }
+<span class="fn">isEven</span>(<span class="nm">7</span>);   <span class="cm">// false</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#9</span><span class="prog-title">Check Leap Year</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">bool</span> <span class="fn">isLeap</span>(<span class="kw">int</span> y) {
+    <span class="kw">return</span> (y % <span class="nm">4</span> == <span class="nm">0</span> &amp;&amp; y % <span class="nm">100</span> != <span class="nm">0</span>) || y % <span class="nm">400</span> == <span class="nm">0</span>;
+}
+<span class="fn">isLeap</span>(<span class="nm">2024</span>);   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#10</span><span class="prog-title">Sum of Natural Numbers</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">sumUpTo</span>(<span class="kw">int</span> n) { <span class="kw">return</span> n * (n + <span class="nm">1</span>) / <span class="nm">2</span>; }
+<span class="fn">sumUpTo</span>(<span class="nm">100</span>);   <span class="cm">// 5050</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#11</span><span class="prog-title">GCD (Euclid) and LCM</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">gcd</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> b == <span class="nm">0</span> ? a : <span class="fn">gcd</span>(b, a % b); }
+<span class="kw">int</span> <span class="fn">lcm</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a / <span class="fn">gcd</span>(a, b) * b; }
+<span class="fn">gcd</span>(<span class="nm">36</span>, <span class="nm">60</span>);   <span class="cm">// 12</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#12</span><span class="prog-title">Multiplication Table</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> n = <span class="nm">5</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">1</span>; i &lt;= <span class="nm">10</span>; i++)
+    std::cout &lt;&lt; n &lt;&lt; <span class="st">" x "</span> &lt;&lt; i &lt;&lt; <span class="st">" = "</span> &lt;&lt; n * i &lt;&lt; <span class="st">'\n'</span>;</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#13</span><span class="prog-title">Sum of Digits</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">digitSum</span>(<span class="kw">int</span> n) {
+    <span class="kw">int</span> sum = <span class="nm">0</span>;
+    <span class="kw">while</span> (n &gt; <span class="nm">0</span>) { sum += n % <span class="nm">10</span>; n /= <span class="nm">10</span>; }
+    <span class="kw">return</span> sum;
+}
+<span class="fn">digitSum</span>(<span class="nm">1234</span>);   <span class="cm">// 10</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#14</span><span class="prog-title">Power (fast exponentiation)</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">long</span> <span class="fn">power</span>(<span class="kw">int</span> base, <span class="kw">int</span> exp) {
+    <span class="kw">long</span> r = <span class="nm">1</span>;
+    <span class="kw">while</span> (exp &gt; <span class="nm">0</span>) {
+        <span class="kw">if</span> (exp &amp; <span class="nm">1</span>) r *= base;
+        base *= base; exp &gt;&gt;= <span class="nm">1</span>;
+    }
+    <span class="kw">return</span> r;
+}
+<span class="fn">power</span>(<span class="nm">2</span>, <span class="nm">10</span>);   <span class="cm">// 1024</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#15</span><span class="prog-title">Count Vowels</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">countVowels</span>(std::string s) {
+    <span class="kw">int</span> c = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="kw">char</span> ch : s)
+        <span class="kw">if</span> (std::string(<span class="st">"aeiouAEIOU"</span>).<span class="fn">find</span>(ch) != std::string::npos) c++;
+    <span class="kw">return</span> c;
+}
+<span class="fn">countVowels</span>(<span class="st">"CppLang"</span>);   <span class="cm">// 1</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#16</span><span class="prog-title">Largest of Three</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+<span class="kw">int</span> largest = std::<span class="fn">max</span>({<span class="nm">4</span>, <span class="nm">19</span>, <span class="nm">7</span>});   <span class="cm">// 19 (initializer_list max)</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#17</span><span class="prog-title">Decimal to Binary</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;bitset&gt;</span>
+std::string bin = std::bitset&lt;<span class="nm">8</span>&gt;(<span class="nm">42</span>).<span class="fn">to_string</span>();   <span class="cm">// "00101010"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#18</span><span class="prog-title">FizzBuzz</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">1</span>; i &lt;= <span class="nm">15</span>; i++) {
+    <span class="kw">if</span> (i % <span class="nm">15</span> == <span class="nm">0</span>) std::cout &lt;&lt; <span class="st">"FizzBuzz\n"</span>;
+    <span class="kw">else if</span> (i % <span class="nm">3</span> == <span class="nm">0</span>) std::cout &lt;&lt; <span class="st">"Fizz\n"</span>;
+    <span class="kw">else if</span> (i % <span class="nm">5</span> == <span class="nm">0</span>) std::cout &lt;&lt; <span class="st">"Buzz\n"</span>;
+    <span class="kw">else</span> std::cout &lt;&lt; i &lt;&lt; <span class="st">'\n'</span>;
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#19</span><span class="prog-title">Read Numbers into a vector</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;vector&gt;</span>
+<span class="kw">int</span> n; std::cin &gt;&gt; n;
+std::vector&lt;<span class="kw">int</span>&gt; v(n);
+<span class="kw">for</span> (<span class="kw">auto</span>&amp; x : v) std::cin &gt;&gt; x;   <span class="cm">// read n numbers</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#20</span><span class="prog-title">Armstrong Number</span><span class="prog-diff diff-basic">Basic</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">bool</span> <span class="fn">isArmstrong</span>(<span class="kw">int</span> n) {
+    <span class="kw">int</span> sum = <span class="nm">0</span>, t = n;
+    <span class="kw">while</span> (t) { <span class="kw">int</span> d = t % <span class="nm">10</span>; sum += d * d * d; t /= <span class="nm">10</span>; }
+    <span class="kw">return</span> sum == n;
+}
+<span class="fn">isArmstrong</span>(<span class="nm">153</span>);   <span class="cm">// true</span></pre></div></div>
+
+      </section>
+
+      <section class="prog-section" id="prog-inter">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-circle-filled"></i></span><h2 class="sec-title">Intermediate Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#21</span><span class="prog-title">Binary Search</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">binarySearch</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a, <span class="kw">int</span> target) {
+    <span class="kw">int</span> lo = <span class="nm">0</span>, hi = a.<span class="fn">size</span>() - <span class="nm">1</span>;
+    <span class="kw">while</span> (lo &lt;= hi) {
+        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="nm">2</span>;
+        <span class="kw">if</span> (a[mid] == target) <span class="kw">return</span> mid;
+        <span class="kw">if</span> (a[mid] &lt; target) lo = mid + <span class="nm">1</span>; <span class="kw">else</span> hi = mid - <span class="nm">1</span>;
+    }
+    <span class="kw">return</span> -<span class="nm">1</span>;
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#22</span><span class="prog-title">Bubble Sort</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">void</span> <span class="fn">bubbleSort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a) {
+    <span class="kw">for</span> (<span class="kw">size_t</span> i = <span class="nm">0</span>; i &lt; a.<span class="fn">size</span>(); i++)
+        <span class="kw">for</span> (<span class="kw">size_t</span> j = <span class="nm">0</span>; j + i + <span class="nm">1</span> &lt; a.<span class="fn">size</span>(); j++)
+            <span class="kw">if</span> (a[j] &gt; a[j + <span class="nm">1</span>]) std::<span class="fn">swap</span>(a[j], a[j + <span class="nm">1</span>]);
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#23</span><span class="prog-title">Count Word Frequency</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;unordered_map&gt;</span>
+<span class="pp">#include &lt;sstream&gt;</span>
+std::unordered_map&lt;std::string, <span class="kw">int</span>&gt; freq;
+std::istringstream iss(<span class="st">"the cat and the dog"</span>);
+std::string w;
+<span class="kw">while</span> (iss &gt;&gt; w) freq[w]++;   <span class="cm">// {the:2, cat:1, and:1, dog:1}</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#24</span><span class="prog-title">Sum &amp; Max of a vector</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;numeric&gt;</span>
+<span class="pp">#include &lt;algorithm&gt;</span>
+std::vector&lt;<span class="kw">int</span>&gt; v = {<span class="nm">4</span>, <span class="nm">9</span>, <span class="nm">2</span>, <span class="nm">7</span>};
+<span class="kw">int</span> sum = std::<span class="fn">accumulate</span>(v.<span class="fn">begin</span>(), v.<span class="fn">end</span>(), <span class="nm">0</span>);   <span class="cm">// 22</span>
+<span class="kw">int</span> mx = *std::<span class="fn">max_element</span>(v.<span class="fn">begin</span>(), v.<span class="fn">end</span>());   <span class="cm">// 9</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#25</span><span class="prog-title">Reverse an Integer</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> <span class="fn">reverse</span>(<span class="kw">int</span> n) {
+    <span class="kw">int</span> r = <span class="nm">0</span>;
+    <span class="kw">while</span> (n) { r = r * <span class="nm">10</span> + n % <span class="nm">10</span>; n /= <span class="nm">10</span>; }
+    <span class="kw">return</span> r;
+}
+<span class="fn">reverse</span>(<span class="nm">1234</span>);   <span class="cm">// 4321</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#26</span><span class="prog-title">Remove Duplicates (set)</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;set&gt;</span>
+std::vector&lt;<span class="kw">int</span>&gt; v = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">4</span>};
+std::set&lt;<span class="kw">int</span>&gt; s(v.<span class="fn">begin</span>(), v.<span class="fn">end</span>());   <span class="cm">// {1,2,3,4}</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#27</span><span class="prog-title">Second Largest</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;set&gt;</span>
+std::set&lt;<span class="kw">int</span>, std::greater&lt;&gt;&gt; s = {<span class="nm">5</span>, <span class="nm">9</span>, <span class="nm">9</span>, <span class="nm">3</span>};   <span class="cm">// {9,5,3}</span>
+<span class="kw">auto</span> it = ++s.<span class="fn">begin</span>();
+<span class="kw">int</span> second = *it;   <span class="cm">// 5</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#28</span><span class="prog-title">Check Anagram</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+<span class="kw">bool</span> <span class="fn">isAnagram</span>(std::string a, std::string b) {
+    std::<span class="fn">sort</span>(a.<span class="fn">begin</span>(), a.<span class="fn">end</span>());
+    std::<span class="fn">sort</span>(b.<span class="fn">begin</span>(), b.<span class="fn">end</span>());
+    <span class="kw">return</span> a == b;
+}
+<span class="fn">isAnagram</span>(<span class="st">"listen"</span>, <span class="st">"silent"</span>);   <span class="cm">// true</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#29</span><span class="prog-title">Rotate a vector by K</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+std::vector&lt;<span class="kw">int</span>&gt; v = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>};
+<span class="kw">int</span> k = <span class="nm">2</span>;
+std::<span class="fn">rotate</span>(v.<span class="fn">begin</span>(), v.<span class="fn">begin</span>() + k, v.<span class="fn">end</span>());   <span class="cm">// {3,4,5,1,2}</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#30</span><span class="prog-title">Two Sum (unordered_map)</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;unordered_map&gt;</span>
+std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">twoSum</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a, <span class="kw">int</span> target) {
+    std::unordered_map&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt; seen;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; (<span class="kw">int</span>)a.<span class="fn">size</span>(); i++) {
+        <span class="kw">int</span> need = target - a[i];
+        <span class="kw">if</span> (seen.<span class="fn">count</span>(need)) <span class="kw">return</span> {seen[need], i};
+        seen[a[i]] = i;
+    }
+    <span class="kw">return</span> {};
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#31</span><span class="prog-title">Find Missing Number</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;numeric&gt;</span>
+<span class="kw">int</span> <span class="fn">missing</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a, <span class="kw">int</span> n) {
+    <span class="kw">int</span> expected = n * (n + <span class="nm">1</span>) / <span class="nm">2</span>;
+    <span class="kw">return</span> expected - std::<span class="fn">accumulate</span>(a.<span class="fn">begin</span>(), a.<span class="fn">end</span>(), <span class="nm">0</span>);
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#32</span><span class="prog-title">Merge Two Sorted vectors</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+std::vector&lt;<span class="kw">int</span>&gt; a = {<span class="nm">1</span>, <span class="nm">3</span>, <span class="nm">5</span>}, b = {<span class="nm">2</span>, <span class="nm">4</span>, <span class="nm">6</span>}, r(<span class="nm">6</span>);
+std::<span class="fn">merge</span>(a.<span class="fn">begin</span>(), a.<span class="fn">end</span>(), b.<span class="fn">begin</span>(), b.<span class="fn">end</span>(), r.<span class="fn">begin</span>());
+<span class="cm">// r = {1,2,3,4,5,6}</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#33</span><span class="prog-title">Title-Case a Sentence</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;cctype&gt;</span>
+std::string s = <span class="st">"the quick fox"</span>;
+<span class="kw">bool</span> newWord = <span class="kw">true</span>;
+<span class="kw">for</span> (<span class="kw">char</span>&amp; c : s) {
+    <span class="kw">if</span> (newWord &amp;&amp; std::<span class="fn">isalpha</span>(c)) c = std::<span class="fn">toupper</span>(c);
+    newWord = (c == <span class="st">' '</span>);
+}   <span class="cm">// "The Quick Fox"</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#34</span><span class="prog-title">Sort by Custom Comparator</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+std::vector&lt;std::string&gt; words = {<span class="st">"bb"</span>, <span class="st">"a"</span>, <span class="st">"ccc"</span>};
+std::<span class="fn">sort</span>(words.<span class="fn">begin</span>(), words.<span class="fn">end</span>(),
+    [](<span class="kw">const</span> <span class="kw">auto</span>&amp; x, <span class="kw">const</span> <span class="kw">auto</span>&amp; y){ <span class="kw">return</span> x.<span class="fn">size</span>() &lt; y.<span class="fn">size</span>(); });
+<span class="cm">// {"a", "bb", "ccc"}</span></pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#35</span><span class="prog-title">Fibonacci with Memoization</span><span class="prog-diff diff-inter">Intermediate</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;unordered_map&gt;</span>
+std::unordered_map&lt;<span class="kw">int</span>, <span class="kw">long</span>&gt; memo;
+<span class="kw">long</span> <span class="fn">fib</span>(<span class="kw">int</span> n) {
+    <span class="kw">if</span> (n &lt;= <span class="nm">1</span>) <span class="kw">return</span> n;
+    <span class="kw">if</span> (memo.<span class="fn">count</span>(n)) <span class="kw">return</span> memo[n];
+    <span class="kw">return</span> memo[n] = <span class="fn">fib</span>(n - <span class="nm">1</span>) + <span class="fn">fib</span>(n - <span class="nm">2</span>);
+}</pre></div></div>
+
+      </section>
+
+      <section class="prog-section" id="prog-adv">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-brand-google"></i></span><h2 class="sec-title">Advanced Programs</h2></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#36</span><span class="prog-title">Merge Sort</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">void</span> <span class="fn">mergeSort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {
+    <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;
+    <span class="kw">int</span> mid = lo + (hi - lo) / <span class="nm">2</span>;
+    <span class="fn">mergeSort</span>(a, lo, mid);
+    <span class="fn">mergeSort</span>(a, mid + <span class="nm">1</span>, hi);
+    std::vector&lt;<span class="kw">int</span>&gt; tmp;
+    <span class="kw">int</span> i = lo, j = mid + <span class="nm">1</span>;
+    <span class="kw">while</span> (i &lt;= mid &amp;&amp; j &lt;= hi) tmp.<span class="fn">push_back</span>(a[i] &lt;= a[j] ? a[i++] : a[j++]);
+    <span class="kw">while</span> (i &lt;= mid) tmp.<span class="fn">push_back</span>(a[i++]);
+    <span class="kw">while</span> (j &lt;= hi) tmp.<span class="fn">push_back</span>(a[j++]);
+    std::<span class="fn">copy</span>(tmp.<span class="fn">begin</span>(), tmp.<span class="fn">end</span>(), a.<span class="fn">begin</span>() + lo);
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#37</span><span class="prog-title">Quick Sort</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">void</span> <span class="fn">quickSort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; a, <span class="kw">int</span> lo, <span class="kw">int</span> hi) {
+    <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;
+    <span class="kw">int</span> pivot = a[hi], i = lo - <span class="nm">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> j = lo; j &lt; hi; j++)
+        <span class="kw">if</span> (a[j] &lt; pivot) std::<span class="fn">swap</span>(a[++i], a[j]);
+    std::<span class="fn">swap</span>(a[i + <span class="nm">1</span>], a[hi]);
+    <span class="fn">quickSort</span>(a, lo, i);
+    <span class="fn">quickSort</span>(a, i + <span class="nm">2</span>, hi);
+}</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#38</span><span class="prog-title">Generic Stack (Template)</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">template</span>&lt;<span class="kw">typename</span> T&gt;
+<span class="kw">class</span> <span class="cl">Stack</span> {
+    std::vector&lt;T&gt; data;
+<span class="kw">public</span>:
+    <span class="kw">void</span> <span class="fn">push</span>(<span class="kw">const</span> T&amp; x) { data.<span class="fn">push_back</span>(x); }
+    T <span class="fn">pop</span>() { T t = data.<span class="fn">back</span>(); data.<span class="fn">pop_back</span>(); <span class="kw">return</span> t; }
+    <span class="kw">bool</span> <span class="fn">empty</span>() <span class="kw">const</span> { <span class="kw">return</span> data.<span class="fn">empty</span>(); }
+};</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#39</span><span class="prog-title">Bank Account (RAII / OOP)</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Account</span> {
+    <span class="kw">double</span> balance = <span class="nm">0</span>;
+<span class="kw">public</span>:
+    <span class="kw">void</span> <span class="fn">deposit</span>(<span class="kw">double</span> amt) {
+        <span class="kw">if</span> (amt &lt;= <span class="nm">0</span>) <span class="kw">throw</span> std::<span class="fn">invalid_argument</span>(<span class="st">"bad amount"</span>);
+        balance += amt;
+    }
+    <span class="kw">void</span> <span class="fn">withdraw</span>(<span class="kw">double</span> amt) {
+        <span class="kw">if</span> (amt &gt; balance) <span class="kw">throw</span> std::<span class="fn">runtime_error</span>(<span class="st">"insufficient"</span>);
+        balance -= amt;
+    }
+    <span class="kw">double</span> <span class="fn">getBalance</span>() <span class="kw">const</span> { <span class="kw">return</span> balance; }
+};</pre></div></div>
+
+        <div class="prog-card"><div class="prog-header"><span class="prog-num">#40</span><span class="prog-title">unique_ptr Linked List</span><span class="prog-diff diff-adv">Advanced</span></div>
+          <div class="code-block"><div class="code-hdr"><span class="code-lang">C++</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;memory&gt;</span>
+<span class="kw">struct</span> <span class="cl">Node</span> {
+    <span class="kw">int</span> value;
+    std::unique_ptr&lt;<span class="cl">Node</span>&gt; next;   <span class="cm">// owns the rest of the list</span>
+    <span class="cl">Node</span>(<span class="kw">int</span> v) : value(v), next(<span class="kw">nullptr</span>) {}
+};
+
+<span class="kw">auto</span> head = std::<span class="fn">make_unique</span>&lt;<span class="cl">Node</span>&gt;(<span class="nm">1</span>);
+head-&gt;next = std::<span class="fn">make_unique</span>&lt;<span class="cl">Node</span>&gt;(<span class="nm">2</span>);
+<span class="cm">// entire list freed automatically when head goes out of scope</span></pre></div></div>
+
+      </section>
+
+      <div class="page-nav">
+        <a class="nav-link" href="modern.html">← Modern C++</a>
+        <a class="nav-link" href="../index.html">Back to Programming →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.prog-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

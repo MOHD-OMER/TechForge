@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>C++ Pointers & Memory — Stack, Heap, new/delete | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/cpp/pointers.html"/>
+  <meta property="og:title" content="C++ Pointers &amp; Memory — Stack, Heap, new/delete | TechForge"/>
+  <meta property="og:description" content="C++ pointers and memory — pointers vs references, stack vs heap, new/delete, nullptr, and the leaks and dangling pointers to avoid, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .b-cpp { background: rgba(77, 158, 247, .12); color: var(--blue); border: 1px solid rgba(77, 158, 247, .25); }
+    .code-pre .pp { color: #89ddff; }
+    .memory-trick { background: linear-gradient(135deg, rgba(77, 158, 247, .08), rgba(34, 211, 238, .04)); border: 1px solid rgba(77, 158, 247, .2); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; }
+    .memory-trick h3 { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 12px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="cpp/pointers" data-section="cpp">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other C++ Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="containers.html"><span class="sb-num">←</span> STL Containers</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <div class="sidebar-label" style="margin-top:14px;">Pointers &amp; Memory</div>
+      <a class="sb-link active" href="#sec-pointers"><span class="sb-num">01</span> Pointers</a>
+      <a class="sb-link" href="#sec-stackheap"><span class="sb-num">02</span> Stack vs Heap</a>
+      <a class="sb-link" href="#sec-newdelete"><span class="sb-num">03</span> new &amp; delete</a>
+      <a class="sb-link" href="#sec-dangers"><span class="sb-num">04</span> Leaks &amp; Dangling Pointers</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="templates.html"><span class="sb-num">→</span> Templates &amp; STL</a>
+      <a class="sb-link" href="modern.html"><span class="sb-num">→</span> Modern C++</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">C++ Pointers &amp; Memory</div>
+        <h1 class="pg-title">Pointers &amp; <span>Memory</span></h1>
+        <p class="pg-sub">The module that defines C++. No garbage collector stands between you and memory, so you get direct control and, if you're careless, direct responsibility for every leak and dangling pointer.</p>
+        <div class="pg-badges">
+          <span class="badge b-cpp"><i class="ti ti-brand-cpp"></i> C++20</span>
+          <span class="badge b-amber"><i class="ti ti-flame"></i> Interview Key</span>
+          <span class="badge b-blue">4 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-pointers">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-pointer"></i></span><h2 class="sec-title">Pointers</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>pointer</strong> is a variable that holds a memory address. <code>&amp;x</code> takes the address of <code>x</code>; <code>*p</code> dereferences the pointer to reach the value it points at. A pointer can be reassigned or set to <code>nullptr</code> — the ways it differs from a reference.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — Pointers</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> x = <span class="nm">10</span>;
+<span class="kw">int</span>* p = &amp;x;      <span class="cm">// p holds the ADDRESS of x</span>
+*p;               <span class="cm">// 10 — dereference: the value at that address</span>
+*p = <span class="nm">20</span>;          <span class="cm">// writes through the pointer</span>
+std::cout &lt;&lt; x;   <span class="cm">// 20 — x changed</span>
+
+p = <span class="kw">nullptr</span>;      <span class="cm">// points at nothing (use nullptr, not NULL or 0)</span>
+<span class="kw">if</span> (p) *p;        <span class="cm">// guard before dereferencing</span>
+
+<span class="cm">// pointer to a struct — arrow syntax</span>
+std::string s = <span class="st">"hi"</span>;
+std::string* sp = &amp;s;
+sp-&gt;<span class="fn">length</span>();     <span class="cm">// 2 — (*sp).length() shorthand</span></pre>
+        </div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th></th><th>Pointer <code>int*</code></th><th>Reference <code>int&amp;</code></th></tr></thead>
+            <tbody>
+              <tr><td>Can be null?</td><td>Yes (<code>nullptr</code>)</td><td>No — must bind to something</td></tr>
+              <tr><td>Can be reassigned?</td><td>Yes, points elsewhere</td><td>No — bound for life</td></tr>
+              <tr><td>Syntax to read</td><td><code>*p</code></td><td><code>ref</code> (just use it)</td></tr>
+              <tr><td>Use when</td><td>Optional / rebindable</td><td>Always-valid alias</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-stackheap">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-stack-2"></i></span><h2 class="sec-title">Stack vs Heap</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Local variables live on the <strong>stack</strong>: automatically created and destroyed as functions enter and exit, and fast. The <strong>heap</strong> is memory you request explicitly and must return yourself — bigger, flexible, but manual.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — Stack vs Heap</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">void</span> <span class="fn">demo</span>() {
+    <span class="kw">int</span> stackVar = <span class="nm">42</span>;       <span class="cm">// STACK — destroyed when demo() returns</span>
+    std::vector&lt;<span class="kw">int</span>&gt; v(<span class="nm">100</span>);   <span class="cm">// v is on the stack, but its 100 ints live on the heap</span>
+
+    <span class="kw">int</span>* heapVar = <span class="kw">new</span> <span class="kw">int</span>(<span class="nm">42</span>);   <span class="cm">// HEAP — survives until you delete it</span>
+    <span class="cm">// ... use *heapVar ...</span>
+    <span class="kw">delete</span> heapVar;              <span class="cm">// YOU must free it — no GC</span>
+}   <span class="cm">// stackVar and v are cleaned up automatically here</span></pre>
+        </div>
+        <div class="memory-trick">
+          <h3><i class="ti ti-brain"></i> Prefer the stack</h3>
+          <p class="prose">Stack allocation is automatic, fast, and leak-proof. Reach for the heap (<code>new</code>) only when an object must outlive the scope that created it or is too large for the stack. In modern C++, even then you'd use a smart pointer, not raw <code>new</code>.</p>
+        </div>
+      </section>
+      <section class="py-section" id="sec-newdelete">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-box"></i></span><h2 class="sec-title">new &amp; delete</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>new</code> allocates on the heap and returns a pointer; <code>delete</code> frees it. Every <code>new</code> needs exactly one matching <code>delete</code>, and array allocations use the <code>new[]</code> / <code>delete[]</code> pair.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — new / delete</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// single object</span>
+<span class="kw">int</span>* p = <span class="kw">new</span> <span class="kw">int</span>(<span class="nm">5</span>);
+<span class="kw">delete</span> p;              <span class="cm">// free it</span>
+p = <span class="kw">nullptr</span>;           <span class="cm">// avoid a dangling pointer</span>
+
+<span class="cm">// array — note the [] on both sides</span>
+<span class="kw">int</span>* arr = <span class="kw">new</span> <span class="kw">int</span>[<span class="nm">100</span>];
+arr[<span class="nm">0</span>] = <span class="nm">1</span>;
+<span class="kw">delete</span>[] arr;          <span class="cm">// delete[] for arrays — mismatch is undefined behavior</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Mixing them is undefined behavior: <code>delete</code> on a <code>new[]</code> allocation, or <code>delete[]</code> on a single <code>new</code>, corrupts the heap. In modern C++ you avoid the problem entirely by not writing raw <code>new</code> at all.</span></div>
+      </section>
+      <section class="py-section" id="sec-dangers">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span><h2 class="sec-title">Leaks &amp; Dangling Pointers</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">These two bugs are the price of manual memory, and the reason smart pointers exist.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — The Two Classic Bugs</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// MEMORY LEAK — new without delete, memory never returned</span>
+<span class="kw">void</span> <span class="fn">leak</span>() {
+    <span class="kw">int</span>* p = <span class="kw">new</span> <span class="kw">int</span>(<span class="nm">5</span>);
+    <span class="kw">return</span>;   <span class="cm">// p is lost, its heap memory is leaked forever</span>
+}
+
+<span class="cm">// DANGLING POINTER — using memory after it's freed</span>
+<span class="kw">int</span>* p = <span class="kw">new</span> <span class="kw">int</span>(<span class="nm">5</span>);
+<span class="kw">delete</span> p;
+*p = <span class="nm">10</span>;    <span class="cm">// UNDEFINED BEHAVIOR — p points at freed memory</span>
+
+<span class="cm">// DOUBLE FREE — deleting twice, also undefined behavior</span>
+<span class="kw">delete</span> p;   <span class="cm">// already deleted above</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Every one of these disappears with <strong>smart pointers</strong> (<code>unique_ptr</code>, <code>shared_ptr</code>), covered in the Modern C++ module. They free memory automatically when they go out of scope — RAII doing the work the garbage collector does in other languages.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. *p (dereference) gives you…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the value stored at the address p holds</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the address of p</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a copy of p</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nullptr</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Unlike a pointer, a reference…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">cannot be null and cannot be reassigned</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">can be null</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">needs delete to free</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">lives on the heap</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A local int variable lives on the…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">stack — freed automatically</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">heap — freed manually</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">disk</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CPU register only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A memory leak happens when…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">you new without a matching delete</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">you use a reference</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">you pass by value</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">you call a function twice</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Using *p after delete p is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a dangling pointer — undefined behavior</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">perfectly safe</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a compile error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">automatically re-allocated</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="functions.html">← Functions</a>
+        <a class="nav-link" href="oop.html">OOP →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

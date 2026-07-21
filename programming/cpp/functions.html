@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>C++ Functions — Overloading, Default Args & Lambdas | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/cpp/functions.html"/>
+  <meta property="og:title" content="C++ Functions — Overloading, Default Args &amp; Lambdas | TechForge"/>
+  <meta property="og:description" content="C++ functions — overloading, default arguments, pass by value vs reference, and lambdas, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .b-cpp { background: rgba(77, 158, 247, .12); color: var(--blue); border: 1px solid rgba(77, 158, 247, .25); }
+    .code-pre .pp { color: #89ddff; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="cpp/functions" data-section="cpp">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other C++ Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="containers.html"><span class="sb-num">←</span> STL Containers</a>
+      <div class="sidebar-label" style="margin-top:14px;">Functions</div>
+      <a class="sb-link active" href="#sec-basics"><span class="sb-num">01</span> Functions &amp; Overloading</a>
+      <a class="sb-link" href="#sec-passing"><span class="sb-num">02</span> Pass by Value vs Reference</a>
+      <a class="sb-link" href="#sec-lambda"><span class="sb-num">03</span> Lambdas</a>
+      <a class="sb-link" href="pointers.html"><span class="sb-num">→</span> Pointers &amp; Memory</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="templates.html"><span class="sb-num">→</span> Templates &amp; STL</a>
+      <a class="sb-link" href="modern.html"><span class="sb-num">→</span> Modern C++</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">C++ Functions</div>
+        <h1 class="pg-title">Functions &amp; <span>Lambdas</span></h1>
+        <p class="pg-sub">Functions, overloading, and the crucial choice C++ forces on you that managed languages hide: pass by value or by reference.</p>
+        <div class="pg-badges">
+          <span class="badge b-cpp"><i class="ti ti-brand-cpp"></i> C++20</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-basics">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-settings"></i></span><h2 class="sec-title">Functions &amp; Overloading</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">C++ functions declare a return type and typed parameters. <strong>Overloading</strong> allows many functions with one name but different parameter lists, and <strong>default arguments</strong> let callers omit trailing parameters.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — Overloading &amp; Defaults</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// returnType name(params) { body }</span>
+<span class="kw">int</span> <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a + b; }
+
+<span class="cm">// Overloading — same name, different parameter types</span>
+<span class="kw">double</span> <span class="fn">add</span>(<span class="kw">double</span> a, <span class="kw">double</span> b) { <span class="kw">return</span> a + b; }
+
+<span class="cm">// Default arguments — greet() or greet("Hi")</span>
+<span class="kw">void</span> <span class="fn">greet</span>(std::string msg = <span class="st">"Hello"</span>) {
+    std::cout &lt;&lt; msg;
+}
+<span class="fn">greet</span>();            <span class="cm">// "Hello"</span>
+<span class="fn">greet</span>(<span class="st">"Hi there"</span>);  <span class="cm">// "Hi there"</span>
+
+<span class="cm">// Declare before use, or provide a forward declaration:</span>
+<span class="kw">int</span> <span class="fn">square</span>(<span class="kw">int</span> n);   <span class="cm">// prototype — defined later</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Default arguments go in the <strong>declaration</strong>, not the definition, and only trailing parameters may have them. Unlike Python, they're evaluated per call, so a default like <code>vector&lt;int&gt;()</code> is fresh each time.</span></div>
+      </section>
+      <section class="py-section" id="sec-passing">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-arrows-exchange"></i></span><h2 class="sec-title">Pass by Value vs Reference</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">This is the choice that defines C++ performance. <strong>By value</strong> copies the argument. <strong>By reference</strong> (<code>&amp;</code>) passes an alias, so no copy is made and the function can modify the original.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — The Three Passing Styles</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// by value — copies, caller's variable unchanged</span>
+<span class="kw">void</span> <span class="fn">byValue</span>(<span class="kw">int</span> x) { x = <span class="nm">99</span>; }
+
+<span class="cm">// by reference — no copy, MODIFIES the caller's variable</span>
+<span class="kw">void</span> <span class="fn">byRef</span>(<span class="kw">int</span>&amp; x) { x = <span class="nm">99</span>; }
+
+<span class="cm">// by const reference — no copy, cannot modify (the default for big objects)</span>
+<span class="kw">void</span> <span class="fn">byConstRef</span>(<span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; v) {
+    std::cout &lt;&lt; v.<span class="fn">size</span>();   <span class="cm">// reads, never copies</span>
+}
+
+<span class="kw">int</span> n = <span class="nm">5</span>;
+<span class="fn">byValue</span>(n);   std::cout &lt;&lt; n;   <span class="cm">// 5 — unchanged</span>
+<span class="fn">byRef</span>(n);     std::cout &lt;&lt; n;   <span class="cm">// 99 — modified</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>Rule of thumb:</strong> pass small types (<code>int</code>, <code>double</code>) by value; pass big objects (<code>vector</code>, <code>string</code>, classes) by <code>const T&amp;</code>; use non-const <code>T&amp;</code> only when you deliberately want to mutate the caller's object.</span></div>
+      </section>
+      <section class="py-section" id="sec-lambda">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-arrow-right"></i></span><h2 class="sec-title">Lambdas</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>lambda</strong> (C++11) is an anonymous function you can define inline and pass to STL algorithms. The <code>[]</code> capture list controls which surrounding variables it can access.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">C++ — Lambdas &amp; Captures</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="pp">#include &lt;algorithm&gt;</span>
+
+<span class="cm">// [capture](params) { body }</span>
+<span class="kw">auto</span> square = [](<span class="kw">int</span> x) { <span class="kw">return</span> x * x; };
+square(<span class="nm">5</span>);        <span class="cm">// 25</span>
+
+<span class="cm">// capture by value [=] or by reference [&amp;]</span>
+<span class="kw">int</span> factor = <span class="nm">3</span>;
+<span class="kw">auto</span> scale = [factor](<span class="kw">int</span> x) { <span class="kw">return</span> x * factor; };   <span class="cm">// copies factor</span>
+scale(<span class="nm">10</span>);       <span class="cm">// 30</span>
+
+<span class="cm">// pass a lambda to an STL algorithm</span>
+std::vector&lt;<span class="kw">int</span>&gt; nums = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>};
+<span class="kw">int</span> evens = std::<span class="fn">count_if</span>(nums.<span class="fn">begin</span>(), nums.<span class="fn">end</span>(),
+    [](<span class="kw">int</span> x) { <span class="kw">return</span> x % <span class="nm">2</span> == <span class="nm">0</span>; });   <span class="cm">// 2</span>
+
+<span class="cm">// sort by a custom comparator</span>
+std::<span class="fn">sort</span>(nums.<span class="fn">begin</span>(), nums.<span class="fn">end</span>(),
+    [](<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a &gt; b; });   <span class="cm">// descending</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Capturing by reference <code>[&amp;]</code> is a dangling-reference trap: if the lambda outlives the captured variable (stored and called later), it references freed memory. Capture by value <code>[=]</code> when the lambda may escape the current scope.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Passing by value does what to the argument?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">copies it — caller's variable is unchanged</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">modifies the caller's variable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">passes a pointer</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">deletes it</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Big objects should typically be passed as…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">const T&amp;</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">by value</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a raw pointer always</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a global variable</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Overloaded functions must differ in…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">parameter types or count</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">return type only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">their name</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the file they live in</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. In a lambda, [&amp;] captures surrounding variables…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">by reference (risk of dangling if it escapes)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">by value</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">not at all</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">as globals</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Default arguments may be given to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">trailing parameters only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any parameter in any order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only the first parameter</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">no parameters — not supported</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="containers.html">← STL Containers</a>
+        <a class="nav-link" href="pointers.html">Pointers &amp; Memory →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
