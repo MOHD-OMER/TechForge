@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Concurrency — Threads, Executors & synchronized | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/concurrency.html"/>
+  <meta property="og:title" content="Java Concurrency — Threads, Executors &amp; synchronized | TechForge"/>
+  <meta property="og:description" content="Java concurrency — threads, Runnable, ExecutorService, synchronized, and concurrent collections, with pitfalls and interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+    .pitfall { border-left: 3px solid var(--red, #f87171); background: rgba(248,113,113,.05); border-radius: 0 var(--radius-lg) var(--radius-lg) 0; padding: 14px 18px; margin-bottom: 14px; }
+    .pitfall .pf-bad { color: var(--red, #f87171); font-weight: 600; }
+    .pitfall .pf-fix { color: var(--green); font-weight: 600; }
+    .pitfall p { font-size: 13px; color: var(--text2); line-height: 1.6; margin-top: 4px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/concurrency" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Java Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="methods.html"><span class="sb-num">←</span> Methods &amp; Classes</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <a class="sb-link" href="exceptions.html"><span class="sb-num">←</span> Exceptions &amp; I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">←</span> Streams &amp; Lambdas</a>
+      <div class="sidebar-label" style="margin-top:14px;">Concurrency — Complete</div>
+      <a class="sb-link active" href="#sec-threads"><span class="sb-num">01</span> Threads &amp; Runnable</a>
+      <a class="sb-link" href="#sec-executors"><span class="sb-num">02</span> ExecutorService</a>
+      <a class="sb-link" href="#sec-sync"><span class="sb-num">03</span> synchronized &amp; Shared State</a>
+      <a class="sb-link" href="#sec-concurrent"><span class="sb-num">04</span> Concurrent Collections</a>
+      <a class="sb-link" href="#sec-pitfalls"><span class="sb-num">05</span> Common Pitfalls</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Concurrency Complete</div>
+        <h1 class="pg-title">Threads &amp; <span>Concurrency</span></h1>
+        <p class="pg-sub">Unlike single-threaded JavaScript, Java has real OS threads and true parallelism. That power comes with the classic hazards: race conditions, deadlocks, and shared mutable state.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-amber"><i class="ti ti-flame"></i> Interview Key</span>
+          <span class="badge b-blue">5 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-threads">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-bolt"></i></span><h2 class="sec-title">Threads &amp; Runnable</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>thread</strong> is an independent path of execution. The idiomatic way to define work is a <code>Runnable</code> (a functional interface), which you hand to a <code>Thread</code> to run in parallel with the rest of the program.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Threads</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// Runnable as a lambda — the preferred style</span>
+<span class="cl">Runnable</span> task = () -&gt; System.out.<span class="fn">println</span>(<span class="st">"running on " + Thread.currentThread().getName()</span>);
+
+<span class="cl">Thread</span> t = <span class="kw">new</span> <span class="cl">Thread</span>(task);
+t.<span class="fn">start</span>();          <span class="cm">// starts a NEW thread — do not call run() directly</span>
+t.<span class="fn">join</span>();           <span class="cm">// wait for t to finish before continuing</span>
+
+<span class="cm">// Multiple threads run concurrently</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">3</span>; i++) {
+    <span class="kw">int</span> id = i;
+    <span class="kw">new</span> <span class="cl">Thread</span>(() -&gt; System.out.<span class="fn">println</span>(<span class="st">"worker " + id</span>)).<span class="fn">start</span>();
+}</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Call <code>start()</code>, never <code>run()</code> — <code>run()</code> just executes the body on the <em>current</em> thread with no parallelism. Only <code>start()</code> spins up a new thread.</span></div>
+      </section>
+      <section class="py-section" id="sec-executors">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-building-factory-2"></i></span><h2 class="sec-title">ExecutorService — Thread Pools</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Creating a raw <code>Thread</code> per task is wasteful. An <strong>ExecutorService</strong> manages a reusable pool of threads and a queue of work — the standard way to run many tasks concurrently.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — ExecutorService &amp; Future</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> java.util.concurrent.*;
+
+<span class="cl">ExecutorService</span> pool = <span class="cl">Executors</span>.<span class="fn">newFixedThreadPool</span>(<span class="nm">4</span>);
+
+<span class="cm">// submit returns a Future — a handle to the eventual result</span>
+<span class="cl">Future</span>&lt;<span class="cl">Integer</span>&gt; future = pool.<span class="fn">submit</span>(() -&gt; {
+    <span class="kw">return</span> <span class="nm">2</span> + <span class="nm">2</span>;
+});
+
+<span class="kw">int</span> result = future.<span class="fn">get</span>();     <span class="cm">// blocks until the task finishes: 4</span>
+
+<span class="cm">// run many tasks, wait for all</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">10</span>; i++) {
+    <span class="kw">int</span> id = i;
+    pool.<span class="fn">submit</span>(() -&gt; System.out.<span class="fn">println</span>(<span class="st">"job " + id</span>));
+}
+pool.<span class="fn">shutdown</span>();          <span class="cm">// stop accepting new work, finish queued tasks</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Java 21 added <strong>virtual threads</strong> (<code>Executors.newVirtualThreadPerTaskExecutor()</code>) — lightweight threads where millions can run at once, making blocking I/O cheap without the async/await style JavaScript needs.</span></div>
+      </section>
+      <section class="py-section" id="sec-sync">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-lock"></i></span><h2 class="sec-title">synchronized &amp; Shared State</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">When two threads write the same variable, the result is a <strong>race condition</strong>. <code>synchronized</code> makes a method or block run one-thread-at-a-time on a given lock, so updates don't interleave.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Race Condition &amp; the Fix</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Counter</span> {
+    <span class="kw">private</span> <span class="kw">int</span> count = <span class="nm">0</span>;
+
+    <span class="cm">// WITHOUT synchronized, count++ from two threads loses updates</span>
+    <span class="kw">public</span> <span class="kw">synchronized</span> <span class="kw">void</span> <span class="fn">increment</span>() {
+        count++;              <span class="cm">// now atomic per lock — no lost updates</span>
+    }
+    <span class="kw">public</span> <span class="kw">synchronized</span> <span class="kw">int</span> <span class="fn">get</span>() { <span class="kw">return</span> count; }
+}
+
+<span class="cm">// Or use an atomic — lock-free, often faster</span>
+<span class="kw">import</span> java.util.concurrent.atomic.*;
+<span class="cl">AtomicInteger</span> safe = <span class="kw">new</span> <span class="cl">AtomicInteger</span>(<span class="nm">0</span>);
+safe.<span class="fn">incrementAndGet</span>();      <span class="cm">// thread-safe, no synchronized needed</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-concurrent">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-stack-2"></i></span><h2 class="sec-title">Concurrent Collections</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A plain <code>HashMap</code> shared across threads can corrupt itself. The <code>java.util.concurrent</code> package provides thread-safe collections built for exactly this.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Use instead of</th><th>Thread-safe version</th></tr></thead>
+            <tbody>
+              <tr><td><code>HashMap</code></td><td><code>ConcurrentHashMap</code></td></tr>
+              <tr><td><code>ArrayList</code></td><td><code>CopyOnWriteArrayList</code></td></tr>
+              <tr><td>a shared queue</td><td><code>BlockingQueue</code> (e.g. <code>LinkedBlockingQueue</code>)</td></tr>
+              <tr><td>a counter</td><td><code>AtomicInteger</code> / <code>AtomicLong</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>The old <code>Collections.synchronizedMap()</code> wraps every method in one big lock, so only one thread touches the map at a time. <code>ConcurrentHashMap</code> locks smaller segments, so many threads can work in parallel — prefer it.</span></div>
+      </section>
+      <section class="py-section" id="sec-pitfalls">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span><h2 class="sec-title">Common Pitfalls</h2></div>
+        <div class="section-divider"></div>
+        <div class="pitfall">
+          <span class="pf-bad">Calling run() instead of start()</span>
+          <p><code>thread.run()</code> executes on the current thread with no concurrency at all. Only <code>start()</code> creates a new thread.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">Race conditions on shared state</span>
+          <p>Two threads doing <code>count++</code> without synchronization lose updates, because <code>++</code> is read-modify-write, not atomic. Use <code>synchronized</code> or an <code>Atomic</code> type.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-bad">Deadlock</span>
+          <p>Thread A holds lock 1 and waits for lock 2 while thread B holds lock 2 and waits for lock 1 — both block forever. Always acquire multiple locks in the same order.</p>
+        </div>
+        <div class="pitfall">
+          <span class="pf-fix">Prefer higher-level tools</span>
+          <p>Reach for <code>ExecutorService</code>, <code>ConcurrentHashMap</code>, and <code>Atomic</code> types over raw threads and manual locks. They're correct by construction and far easier to reason about.</p>
+        </div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. To run code on a new thread you call…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">thread.run()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">thread.start()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">thread.exec()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">thread.go()</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. An ExecutorService gives you…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">a reusable pool of threads plus a work queue</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">a single thread only</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">a database connection</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">automatic garbage collection</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. count++ from two unsynchronized threads can…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">lose updates (read-modify-write isn't atomic)</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">never go wrong</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">crash the JVM instantly</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">double the count safely</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. The thread-safe replacement for HashMap is…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">ConcurrentHashMap</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">FastHashMap</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">TreeMap</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">LinkedList</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. Deadlock is avoided by…</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">acquiring multiple locks in a consistent order</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">never using threads</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">calling System.gc()</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">making every field public</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="streams.html">← Streams &amp; Lambdas</a>
+        <a class="nav-link" href="programs.html">Practice Programs →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

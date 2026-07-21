@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Basics — Primitives, var & Strings | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/basics.html"/>
+  <meta property="og:title" content="Java Basics — Primitives, var &amp; Strings | TechForge"/>
+  <meta property="og:description" content="Java Basics — primitive types, var, wrapper classes, autoboxing, and Strings, with interview prep and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-java { background: rgba(251, 146, 60, .08); color: var(--orange); }
+    .cs-red { background: rgba(248, 113, 113, .08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/basics" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">Java Basics</div>
+      <a class="sb-link active" href="#sec-vars"><span class="sb-num">01</span> Types &amp; Variables</a>
+      <a class="sb-link" href="#sec-strings"><span class="sb-num">02</span> Strings &amp; Wrappers</a>
+      <div class="sidebar-label" style="margin-top: 20px;">Other Java Topics</div>
+      <a class="sb-link" href="control.html"><span class="sb-num">→</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">→</span> Collections</a>
+      <a class="sb-link" href="methods.html"><span class="sb-num">→</span> Methods &amp; Classes</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="exceptions.html"><span class="sb-num">→</span> Exceptions &amp; I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">→</span> Streams &amp; Lambdas</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">→</span> Concurrency</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Basics</div>
+        <h1 class="pg-title">Types &amp; <span>Variables</span></h1>
+        <p class="pg-sub">Java is statically typed and compiled — every variable's type is fixed at compile time, and the compiler catches mismatches before the program ever runs.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-green">✓ Beginner Friendly</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-vars">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">Primitives &amp; var</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Java has <strong>eight primitive types</strong> that hold raw values directly, plus <strong>reference types</strong> (objects) that hold a pointer to data on the heap. Every variable must declare its type — or use <code>var</code>, which infers it at compile time but is still fully static.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Declarations</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// Explicit types — the classic style</span>
+<span class="kw">int</span> age = <span class="nm">25</span>;
+<span class="kw">double</span> price = <span class="nm">3.14</span>;
+<span class="kw">boolean</span> active = <span class="kw">true</span>;
+<span class="kw">char</span> grade = <span class="st">'A'</span>;
+<span class="kw">long</span> big = <span class="nm">9_000_000_000L</span>;   <span class="cm">// underscores for readability, L suffix</span>
+
+<span class="cm">// var — type inferred, but still static (Java 10+)</span>
+<span class="kw">var</span> name = <span class="st">"Alice"</span>;      <span class="cm">// inferred as String</span>
+<span class="kw">var</span> count = <span class="nm">10</span>;          <span class="cm">// inferred as int</span>
+<span class="cm">// var x;               // ERROR — needs an initializer to infer from</span>
+
+<span class="cm">// final — a constant, cannot be reassigned</span>
+<span class="kw">final</span> <span class="kw">double</span> PI = <span class="nm">3.14159</span>;</pre>
+        </div>
+        <div class="sub-title">The Eight Primitives</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Type</th><th>Size</th><th>Example</th><th>Used For</th></tr></thead>
+            <tbody>
+              <tr><td><code>byte</code></td><td>8-bit</td><td><code>byte b = 100;</code></td><td>Raw bytes, tight memory</td></tr>
+              <tr><td><code>short</code></td><td>16-bit</td><td><code>short s = 1000;</code></td><td>Rarely used directly</td></tr>
+              <tr><td><code>int</code></td><td>32-bit</td><td><code>int i = 42;</code></td><td>Default whole number</td></tr>
+              <tr><td><code>long</code></td><td>64-bit</td><td><code>long l = 9L;</code></td><td>Large counts, timestamps</td></tr>
+              <tr><td><code>float</code></td><td>32-bit</td><td><code>float f = 1.5f;</code></td><td>Rarely — precision loss</td></tr>
+              <tr><td><code>double</code></td><td>64-bit</td><td><code>double d = 1.5;</code></td><td>Default decimal number</td></tr>
+              <tr><td><code>boolean</code></td><td>1-bit</td><td><code>boolean ok = true;</code></td><td>Conditions</td></tr>
+              <tr><td><code>char</code></td><td>16-bit</td><td><code>char c = 'A';</code></td><td>Single Unicode character</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>var is not dynamic:</strong> unlike JavaScript, <code>var name = "Alice"</code> locks the type to <code>String</code> forever. Reassigning <code>name = 42</code> is a compile error. It's inference, not flexibility.</span></div>
+      </section>
+      <section class="py-section" id="sec-strings">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-quote"></i></span><h2 class="sec-title">Strings &amp; Wrapper Classes</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>String</code> is a class, not a primitive, and it's <strong>immutable</strong> — every "modification" creates a new object. Each primitive also has a <strong>wrapper class</strong> (<code>Integer</code>, <code>Double</code>, ...) so it can live in collections and be null.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Strings &amp; Autoboxing</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cl">String</span> name = <span class="st">"Alice"</span>;
+<span class="kw">int</span> len = name.<span class="fn">length</span>();           <span class="cm">// 5</span>
+<span class="cl">String</span> up = name.<span class="fn">toUpperCase</span>();     <span class="cm">// "ALICE" — new String, original untouched</span>
+
+<span class="cm">// Text blocks (Java 15+) — multi-line strings</span>
+<span class="cl">String</span> json = <span class="st">"""
+    { "name": "Alice" }
+    """</span>;
+
+<span class="cm">// == compares references, .equals() compares content — ALWAYS use equals for Strings</span>
+<span class="cl">String</span> a = <span class="kw">new</span> <span class="cl">String</span>(<span class="st">"hi"</span>), b = <span class="kw">new</span> <span class="cl">String</span>(<span class="st">"hi"</span>);
+a == b;              <span class="cm">// false — different objects</span>
+a.<span class="fn">equals</span>(b);         <span class="cm">// true  — same content</span>
+
+<span class="cm">// Autoboxing — primitive &lt;-&gt; wrapper, done automatically</span>
+<span class="cl">Integer</span> boxed = <span class="nm">42</span>;      <span class="cm">// int -> Integer</span>
+<span class="kw">int</span> unboxed = boxed;      <span class="cm">// Integer -> int</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>== vs .equals() is the #1 Java beginner bug.</strong> <code>==</code> checks if two references point to the same object; <code>.equals()</code> checks if their contents match. For Strings and objects, almost always use <code>.equals()</code>.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. How many primitive types does Java have?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">6</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">8</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">10</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">unlimited</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. var name = "Alice"; — can you later assign name = 42?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">yes, var is dynamic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">no, type is locked to String at compile time</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only with a cast</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">yes, but it warns</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. To compare String contents you should use…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">==</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">.equals()</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">===</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">.compareRef()</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Java Strings are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">immutable — every change makes a new object</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">mutable in place</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a primitive type</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">char arrays you edit directly</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Integer boxed = 42; is an example of…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">autoboxing (int to wrapper)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a syntax error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a narrowing cast</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">string interpolation</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link disabled" href="#">← Previous</a>
+        <a class="nav-link" href="control.html">Control Flow →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      if (pbar) pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

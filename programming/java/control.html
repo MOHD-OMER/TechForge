@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Control Flow — Conditionals, Loops & switch | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/control.html"/>
+  <meta property="og:title" content="Java Control Flow — Conditionals, Loops &amp; switch | TechForge"/>
+  <meta property="og:description" content="Java control flow — if/else, modern switch expressions, for/while/for-each loops and operators, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/control" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Java Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <div class="sidebar-label" style="margin-top:14px;">Control &amp; Logic</div>
+      <a class="sb-link active" href="#sec-cond"><span class="sb-num">01</span> Conditionals &amp; switch</a>
+      <a class="sb-link" href="#sec-loops"><span class="sb-num">02</span> Loops</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">→</span> Collections</a>
+      <a class="sb-link" href="methods.html"><span class="sb-num">→</span> Methods &amp; Classes</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="exceptions.html"><span class="sb-num">→</span> Exceptions &amp; I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">→</span> Streams &amp; Lambdas</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">→</span> Concurrency</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Control Flow</div>
+        <h1 class="pg-title">Conditionals &amp; <span>Loops</span></h1>
+        <p class="pg-sub">Decision-making and iteration — if/else, the modern switch expression, and every loop form Java offers.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-green">✓ Core Concepts</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-cond">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-arrows-shuffle"></i></span><h2 class="sec-title">Conditionals &amp; switch</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Modern Java (14+) added the <strong>switch expression</strong> with arrow syntax — it returns a value, needs no <code>break</code>, and the compiler forces you to cover every case.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — if, ternary &amp; switch expression</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span> age = <span class="nm">20</span>;
+
+<span class="cm">// if / else if / else</span>
+<span class="kw">if</span> (age &gt;= <span class="nm">18</span>) System.out.<span class="fn">println</span>(<span class="st">"adult"</span>);
+<span class="kw">else</span> System.out.<span class="fn">println</span>(<span class="st">"minor"</span>);
+
+<span class="cm">// Ternary — compact if/else expression</span>
+<span class="cl">String</span> status = age &gt;= <span class="nm">18</span> ? <span class="st">"adult"</span> : <span class="st">"minor"</span>;
+
+<span class="cm">// Modern switch expression (Java 14+) — returns a value, no break, no fall-through</span>
+<span class="kw">int</span> day = <span class="nm">3</span>;
+<span class="cl">String</span> name = <span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="nm">1</span>, <span class="nm">7</span> -&gt; <span class="st">"weekend-ish"</span>;   <span class="cm">// multiple labels per case</span>
+    <span class="kw">case</span> <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span> -&gt; <span class="st">"weekday"</span>;
+    <span class="kw">default</span> -&gt; <span class="st">"invalid"</span>;
+};</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>The old <code>switch</code> statement with <code>:</code> and <code>break</code> still works and still falls through if you forget a <code>break</code>. The arrow form <code>-&gt;</code> never falls through — prefer it in new code.</span></div>
+      </section>
+      <section class="py-section" id="sec-loops">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-repeat"></i></span><h2 class="sec-title">Loops in Java</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — for, while, for-each</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// classic for — index-based</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">5</span>; i++) System.out.<span class="fn">println</span>(i);   <span class="cm">// 0 1 2 3 4</span>
+
+<span class="cm">// while — condition checked first</span>
+<span class="kw">int</span> n = <span class="nm">3</span>;
+<span class="kw">while</span> (n &gt; <span class="nm">0</span>) { System.out.<span class="fn">println</span>(n); n--; }
+
+<span class="cm">// do-while — body runs at least once</span>
+<span class="kw">do</span> { System.out.<span class="fn">println</span>(<span class="st">"runs once minimum"</span>); } <span class="kw">while</span> (<span class="kw">false</span>);
+
+<span class="cm">// for-each — iterate any array or Iterable</span>
+<span class="kw">int</span>[] nums = {<span class="nm">3</span>, <span class="nm">7</span>, <span class="nm">2</span>, <span class="nm">9</span>};
+<span class="kw">int</span> max = nums[<span class="nm">0</span>];
+<span class="kw">for</span> (<span class="kw">int</span> x : nums) {          <span class="cm">// "for each x in nums"</span>
+    <span class="kw">if</span> (x &gt; max) max = x;
+}
+System.out.<span class="fn">println</span>(max);          <span class="cm">// 9</span>
+
+<span class="cm">// break exits, continue skips to next iteration</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">5</span>; i++) {
+    <span class="kw">if</span> (i == <span class="nm">2</span>) <span class="kw">continue</span>;    <span class="cm">// skip 2</span>
+    <span class="kw">if</span> (i == <span class="nm">4</span>) <span class="kw">break</span>;       <span class="cm">// stop at 4</span>
+    System.out.<span class="fn">println</span>(i);      <span class="cm">// 0 1 3</span>
+}</pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Use <strong>for-each</strong> when you just need the values and never touch the index — it's cleaner and avoids off-by-one bugs. Use the classic <code>for</code> when you need the index itself or must iterate backwards.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The modern switch expression (arrow form) …</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">returns a value and never falls through</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">still needs break statements</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only works on Strings</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">was removed in Java 17</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Which loop always runs its body at least once?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">for</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">while</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">do-while</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">for-each</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. continue does what?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">exits the loop entirely</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">skips to the next iteration</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">restarts the program</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">returns from the method</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. for (int x : nums) is called a…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">for-each (enhanced for) loop</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">while loop</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">stream</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">recursion</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. In the old switch statement, forgetting break causes…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">fall-through into the next case</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a compile error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the default case to run</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nothing — break is optional and ignored</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="basics.html">← Basics</a>
+        <a class="nav-link" href="collections.html">Collections →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

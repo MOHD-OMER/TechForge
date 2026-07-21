@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Exceptions & File I/O — try/catch, Checked vs Unchecked | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/exceptions.html"/>
+  <meta property="og:title" content="Java Exceptions &amp; File I/O — try/catch, Checked vs Unchecked | TechForge"/>
+  <meta property="og:description" content="Java exceptions and file I/O — checked vs unchecked, try-catch-finally, try-with-resources and reading/writing files, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/exceptions" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Java Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="methods.html"><span class="sb-num">←</span> Methods &amp; Classes</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <div class="sidebar-label" style="margin-top:14px;">Exceptions &amp; I/O</div>
+      <a class="sb-link active" href="#sec-try"><span class="sb-num">01</span> try / catch / finally</a>
+      <a class="sb-link" href="#sec-checked"><span class="sb-num">02</span> Checked vs Unchecked</a>
+      <a class="sb-link" href="#sec-io"><span class="sb-num">03</span> File I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">→</span> Streams &amp; Lambdas</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">→</span> Concurrency</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Exceptions &amp; I/O</div>
+        <h1 class="pg-title">Exceptions &amp; <span>File I/O</span></h1>
+        <p class="pg-sub">How Java handles the things that go wrong — a typed exception hierarchy the compiler helps you respect, plus reading and writing files safely.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-try">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-shield"></i></span><h2 class="sec-title">try / catch / finally</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Wrap risky code in <code>try</code>, handle failures in <code>catch</code>, and put cleanup that must always run in <code>finally</code>. You can catch multiple exception types, most specific first.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — try / catch / finally</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">try</span> {
+    <span class="kw">int</span> result = <span class="nm">10</span> / <span class="nm">0</span>;      <span class="cm">// throws ArithmeticException</span>
+} <span class="kw">catch</span> (<span class="cl">ArithmeticException</span> e) {
+    System.out.<span class="fn">println</span>(<span class="st">"Cannot divide by zero: " + e.getMessage()</span>);
+} <span class="kw">catch</span> (<span class="cl">Exception</span> e) {   <span class="cm">// broader fallback — must come AFTER specific ones</span>
+    System.out.<span class="fn">println</span>(<span class="st">"Something else failed"</span>);
+} <span class="kw">finally</span> {
+    System.out.<span class="fn">println</span>(<span class="st">"Always runs — cleanup goes here"</span>);
+}
+
+<span class="cm">// throw your own exception</span>
+<span class="kw">if</span> (age &lt; <span class="nm">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="cl">IllegalArgumentException</span>(<span class="st">"age cannot be negative"</span>);</pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-checked">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-git-fork"></i></span><h2 class="sec-title">Checked vs Unchecked</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">This is Java's signature exception feature. <strong>Checked</strong> exceptions must be declared or handled — the compiler enforces it. <strong>Unchecked</strong> exceptions (subclasses of <code>RuntimeException</code>) are programming bugs that don't need declaring.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th></th><th>Checked</th><th>Unchecked (RuntimeException)</th></tr></thead>
+            <tbody>
+              <tr><td>Compiler enforces?</td><td>Yes — declare or handle</td><td>No</td></tr>
+              <tr><td>Represents</td><td>Recoverable external problems</td><td>Programming bugs</td></tr>
+              <tr><td>Examples</td><td><code>IOException</code>, <code>SQLException</code></td><td><code>NullPointerException</code>, <code>ArrayIndexOutOfBounds</code></td></tr>
+              <tr><td>Handling</td><td><code>throws</code> in signature or try/catch</td><td>Fix the bug instead of catching</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — throws &amp; custom exception</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// checked — the throws clause is mandatory</span>
+<span class="kw">void</span> <span class="fn">readFile</span>(<span class="cl">String</span> path) <span class="kw">throws</span> <span class="cl">IOException</span> {
+    <span class="cl">Files</span>.<span class="fn">readString</span>(<span class="cl">Path</span>.<span class="fn">of</span>(path));
+}
+
+<span class="cm">// custom exception</span>
+<span class="kw">class</span> <span class="cl">InsufficientFundsException</span> <span class="kw">extends</span> <span class="cl">Exception</span> {
+    <span class="cl">InsufficientFundsException</span>(<span class="cl">String</span> msg) { <span class="kw">super</span>(msg); }
+}</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Checked exceptions are unique to Java — most languages (Python, JavaScript, C++) have only the unchecked kind. They force you to acknowledge failures at compile time, which some love and some find noisy.</span></div>
+      </section>
+      <section class="py-section" id="sec-io">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-folder"></i></span><h2 class="sec-title">File I/O with try-with-resources</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>try-with-resources</strong> auto-closes anything that implements <code>AutoCloseable</code> (files, streams, sockets) — no matter how the block exits. It's the safe, modern way to do I/O without leaking resources.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Reading &amp; Writing Files</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> java.nio.file.*;
+<span class="kw">import</span> java.io.*;
+
+<span class="cm">// Simplest — read/write whole file (Java 11+)</span>
+<span class="cl">String</span> text = <span class="cl">Files</span>.<span class="fn">readString</span>(<span class="cl">Path</span>.<span class="fn">of</span>(<span class="st">"data.txt"</span>));
+<span class="cl">Files</span>.<span class="fn">writeString</span>(<span class="cl">Path</span>.<span class="fn">of</span>(<span class="st">"out.txt"</span>), <span class="st">"Hello"</span>);
+
+<span class="cm">// try-with-resources — reader auto-closes even on exception</span>
+<span class="kw">try</span> (<span class="cl">BufferedReader</span> br = <span class="cl">Files</span>.<span class="fn">newBufferedReader</span>(<span class="cl">Path</span>.<span class="fn">of</span>(<span class="st">"data.txt"</span>))) {
+    <span class="cl">String</span> line;
+    <span class="kw">while</span> ((line = br.<span class="fn">readLine</span>()) != <span class="kw">null</span>) {
+        System.out.<span class="fn">println</span>(line);
+    }
+} <span class="kw">catch</span> (<span class="cl">IOException</span> e) {
+    System.err.<span class="fn">println</span>(<span class="st">"Read failed: " + e.getMessage()</span>);
+}
+<span class="cm">// no finally needed — br.close() is called automatically</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Before try-with-resources (Java 7), you closed resources in a <code>finally</code> block — and forgetting one, or the close itself throwing, was a common leak. The resource declared in <code>try(...)</code> is always closed for you.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The finally block runs…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">always, whether or not an exception was thrown</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only when an exception is thrown</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only when no exception is thrown</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never — it's deprecated</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Checked exceptions are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">enforced by the compiler — declare or handle</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">always ignored</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only thrown by the JVM</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">subclasses of RuntimeException</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. NullPointerException is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">unchecked (a RuntimeException)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">checked</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a compile error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">not a real exception</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. try-with-resources is used for…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">auto-closing resources like files and streams</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">looping over collections</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">declaring generics</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">starting threads</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. When catching multiple exceptions, you list…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">most specific first, broader ones after</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">broadest first</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">in any order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">alphabetically</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← OOP</a>
+        <a class="nav-link" href="streams.html">Streams &amp; Lambdas →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

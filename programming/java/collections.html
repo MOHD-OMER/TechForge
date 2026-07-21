@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Collections — List, Map, Set & Generics | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/collections.html"/>
+  <meta property="og:title" content="Java Collections — List, Map, Set &amp; Generics | TechForge"/>
+  <meta property="og:description" content="Java collections — arrays, ArrayList, HashMap, HashSet and generics, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/collections" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Java Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <div class="sidebar-label" style="margin-top:14px;">Collections</div>
+      <a class="sb-link active" href="#sec-arrays"><span class="sb-num">01</span> Arrays</a>
+      <a class="sb-link" href="#sec-list"><span class="sb-num">02</span> List &amp; ArrayList</a>
+      <a class="sb-link" href="#sec-mapset"><span class="sb-num">03</span> Map &amp; Set</a>
+      <a class="sb-link" href="#sec-generics"><span class="sb-num">04</span> Generics</a>
+      <a class="sb-link" href="methods.html"><span class="sb-num">→</span> Methods &amp; Classes</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="exceptions.html"><span class="sb-num">→</span> Exceptions &amp; I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">→</span> Streams &amp; Lambdas</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">→</span> Concurrency</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Collections</div>
+        <h1 class="pg-title">List, Map, Set &amp; <span>Generics</span></h1>
+        <p class="pg-sub">The Java Collections Framework — the type-safe, resizable data structures you'll reach for in nearly every program.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-green">✓ Core Concepts</span>
+          <span class="badge b-blue">4 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-arrays">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-checklist"></i></span><h2 class="sec-title">Arrays</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Arrays are <strong>fixed-size</strong> and hold a single type. Their length is set at creation and never changes — for a resizable list, you use <code>ArrayList</code> instead.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Arrays</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">int</span>[] nums = {<span class="nm">5</span>, <span class="nm">2</span>, <span class="nm">8</span>, <span class="nm">1</span>};
+nums.length;              <span class="cm">// 4 — a field, not a method</span>
+nums[<span class="nm">0</span>];                 <span class="cm">// 5</span>
+
+<span class="cl">String</span>[] names = <span class="kw">new</span> <span class="cl">String</span>[<span class="nm">3</span>];   <span class="cm">// [null, null, null]</span>
+names[<span class="nm">0</span>] = <span class="st">"Alice"</span>;
+
+<span class="cm">// Arrays utility class</span>
+<span class="cl">Arrays</span>.<span class="fn">sort</span>(nums);          <span class="cm">// [1, 2, 5, 8] — sorts in place</span>
+<span class="cl">Arrays</span>.<span class="fn">toString</span>(nums);      <span class="cm">// "[1, 2, 5, 8]"</span>
+
+<span class="cm">// 2D array</span>
+<span class="kw">int</span>[][] grid = {{<span class="nm">1</span>, <span class="nm">2</span>}, {<span class="nm">3</span>, <span class="nm">4</span>}};
+grid[<span class="nm">1</span>][<span class="nm">0</span>];             <span class="cm">// 3</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-list">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-list"></i></span><h2 class="sec-title">List &amp; ArrayList</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>List</code> is the interface; <code>ArrayList</code> is the everyday implementation — a resizable array. Program to the interface (<code>List&lt;String&gt; x = new ArrayList&lt;&gt;()</code>) so you can swap the implementation later.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — ArrayList</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cl">List</span>&lt;<span class="cl">String</span>&gt; names = <span class="kw">new</span> <span class="cl">ArrayList</span>&lt;&gt;();
+names.<span class="fn">add</span>(<span class="st">"Alice"</span>);
+names.<span class="fn">add</span>(<span class="st">"Bob"</span>);
+names.<span class="fn">get</span>(<span class="nm">0</span>);            <span class="cm">// "Alice"</span>
+names.<span class="fn">size</span>();             <span class="cm">// 2</span>
+names.<span class="fn">contains</span>(<span class="st">"Bob"</span>);   <span class="cm">// true</span>
+names.<span class="fn">remove</span>(<span class="st">"Alice"</span>);  <span class="cm">// removes by value</span>
+
+<span class="cm">// iterate</span>
+<span class="kw">for</span> (<span class="cl">String</span> n : names) System.out.<span class="fn">println</span>(n);
+
+<span class="cm">// immutable list literal (Java 9+)</span>
+<span class="cl">List</span>&lt;<span class="cl">Integer</span>&gt; fixed = <span class="cl">List</span>.<span class="fn">of</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>);   <span class="cm">// cannot be modified</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Collections hold <strong>objects, not primitives</strong> — <code>List&lt;int&gt;</code> is illegal. Use the wrapper type: <code>List&lt;Integer&gt;</code>. Java autoboxes the primitives for you.</span></div>
+      </section>
+      <section class="py-section" id="sec-mapset">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-folders"></i></span><h2 class="sec-title">Map &amp; Set</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>HashMap</code> stores key-value pairs with O(1) average lookup; <code>HashSet</code> stores unique values only. Both are unordered — use <code>LinkedHashMap</code>/<code>TreeMap</code> when order matters.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — HashMap &amp; HashSet</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cl">Map</span>&lt;<span class="cl">String</span>, <span class="cl">Integer</span>&gt; scores = <span class="kw">new</span> <span class="cl">HashMap</span>&lt;&gt;();
+scores.<span class="fn">put</span>(<span class="st">"alice"</span>, <span class="nm">95</span>);
+scores.<span class="fn">put</span>(<span class="st">"bob"</span>, <span class="nm">88</span>);
+scores.<span class="fn">get</span>(<span class="st">"alice"</span>);           <span class="cm">// 95</span>
+scores.<span class="fn">getOrDefault</span>(<span class="st">"x"</span>, <span class="nm">0</span>);  <span class="cm">// 0 — no crash on missing key</span>
+scores.<span class="fn">containsKey</span>(<span class="st">"bob"</span>);     <span class="cm">// true</span>
+
+<span class="cm">// count occurrences — the classic merge idiom</span>
+scores.<span class="fn">merge</span>(<span class="st">"alice"</span>, <span class="nm">1</span>, <span class="cl">Integer</span>::sum);
+
+<span class="cl">Set</span>&lt;<span class="cl">Integer</span>&gt; unique = <span class="kw">new</span> <span class="cl">HashSet</span>&lt;&gt;();
+unique.<span class="fn">add</span>(<span class="nm">1</span>); unique.<span class="fn">add</span>(<span class="nm">1</span>); unique.<span class="fn">add</span>(<span class="nm">2</span>);
+unique.<span class="fn">size</span>();                <span class="cm">// 2 — duplicate ignored</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-generics">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-braces"></i></span><h2 class="sec-title">Generics</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Generics</strong> let a class or method work with any type while keeping full compile-time type safety. The <code>&lt;String&gt;</code> in <code>List&lt;String&gt;</code> means the compiler rejects anything but Strings — no casts, no runtime surprises.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Generic Method &amp; Class</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// Generic method — &lt;T&gt; means "works for any type T"</span>
+<span class="kw">static</span> &lt;T&gt; T <span class="fn">firstOf</span>(<span class="cl">List</span>&lt;T&gt; list) {
+    <span class="kw">return</span> list.<span class="fn">get</span>(<span class="nm">0</span>);
+}
+<span class="cl">String</span> s = <span class="fn">firstOf</span>(<span class="cl">List</span>.<span class="fn">of</span>(<span class="st">"a"</span>, <span class="st">"b"</span>));   <span class="cm">// T inferred as String</span>
+
+<span class="cm">// Generic class — a type-safe box</span>
+<span class="kw">class</span> <span class="cl">Box</span>&lt;T&gt; {
+    <span class="kw">private</span> T value;
+    <span class="kw">void</span> <span class="fn">set</span>(T v) { value = v; }
+    T <span class="fn">get</span>() { <span class="kw">return</span> value; }
+}
+<span class="cl">Box</span>&lt;<span class="cl">Integer</span>&gt; box = <span class="kw">new</span> <span class="cl">Box</span>&lt;&gt;();
+box.<span class="fn">set</span>(<span class="nm">42</span>);
+<span class="kw">int</span> n = box.<span class="fn">get</span>();       <span class="cm">// no cast needed — compiler knows it's Integer</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Before generics (Java 5), collections held raw <code>Object</code> and you cast on every read — one wrong cast blew up at runtime. Generics move that check to compile time, so the whole class of <code>ClassCastException</code> bugs disappears.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Java arrays are…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">fixed-size once created</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">automatically resizable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">able to hold mixed types freely</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the same as ArrayList</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Why is List&lt;int&gt; illegal?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">collections hold objects, so you need Integer</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">int is a reserved word</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">lists can't hold numbers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">it's actually legal</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. scores.getOrDefault("x", 0) on a missing key returns…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">null</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">0</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">throws an exception</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">-1</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A HashSet guarantees…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">unique values, no duplicates</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">sorted order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">insertion order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">key-value pairs</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Generics move type checking to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">compile time, before the program runs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">runtime only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never — they're cosmetic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the JVM garbage collector</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="control.html">← Control Flow</a>
+        <a class="nav-link" href="methods.html">Methods &amp; Classes →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

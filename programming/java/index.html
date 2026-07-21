@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Complete Java guide from basics to concurrency — types, collections, OOP with all four pillars, generics, streams and lambdas, and threads. Free, with 60+ code examples."/>
+  <meta property="og:title" content="Java Guide — TechForge"/>
+  <meta property="og:description" content="Complete Java from basics to concurrency. 8 modules, 60+ examples, interview ready."/>
+  <meta property="og:type" content="website"/>
+  <title>Java Guide — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/index.html"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+<style>
+
+/* ════════════════════════════════
+   JAVA INDEX
+   ════════════════════════════════ */
+
+.py-hero { position: relative; padding: 52px 0 42px; margin-bottom: 44px; border-bottom: 1px solid var(--border); overflow: hidden; }
+.ph-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--orange); background: rgba(251,146,60,.08); border: 1px solid rgba(251,146,60,.2); padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 18px; }
+.ph-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 6px var(--orange); animation: phdot 2s ease infinite; }
+@keyframes phdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+
+.ph-title { font-family: var(--font-display); font-size: clamp(28px,5.5vw,46px); font-weight: 700; letter-spacing: -0.75px; line-height: 1.02; color: var(--text); margin-bottom: 14px; }
+.ph-title span { background: linear-gradient(135deg, var(--orange) 0%, var(--amber) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.ph-sub { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 500px; margin-bottom: 24px; }
+.ph-cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-ph-primary { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: var(--r-md); font-size: 13px; font-weight: 700; text-decoration: none; background: var(--orange); color: #000; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
+.btn-ph-primary:hover { background: color-mix(in srgb, var(--orange) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.btn-ph-primary:active { transform: translateY(0); box-shadow: none; }
+.btn-ph-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: var(--r-md); font-size: 13px; font-weight: 600; text-decoration: none; background: var(--card); color: var(--text2); border: 1px solid var(--border2); transition: all .2s; }
+.btn-ph-ghost:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+
+.py-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 40px; }
+.pys-box { background: var(--card); padding: 20px 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: background .2s; text-align: center; position: relative; }
+.pys-box::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: var(--pys-c,var(--orange)); opacity:0; transition:opacity .2s; }
+.pys-box:hover { background: rgba(251,146,60,.03); }
+.pys-box:hover::after { opacity: 1; }
+.pys-val   { font-family: var(--font-mono); font-size: 24px; font-weight: 700; line-height: 1; }
+.pys-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text2); text-transform: uppercase; }
+.pys-sub   { font-size: 10.5px; color: var(--text2); margin-top: 2px; }
+
+.path-strip { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 20px 22px; margin-bottom: 40px; position: relative; overflow: hidden; }
+.path-strip::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--orange), var(--amber), var(--red)); opacity:.5; }
+.path-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.path-step { display: flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: var(--r-md); background: var(--bg2); border: 1px solid var(--border); text-decoration: none; transition: all .2s; flex-shrink: 0; }
+.path-step:hover { border-color: var(--orange); background: rgba(251,146,60,.06); }
+.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--orange); font-weight: 700; }
+.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
+.ps-diff { font-family: var(--font-mono); font-size: 8px; font-weight: 700; padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px; }
+.diff-starter { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.2); }
+.diff-mid     { background:rgba(251,191,36,.09); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
+.diff-adv     { background:rgba(248,113,113,.1); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
+.path-arrow   { font-size: 12px; color: var(--text2); flex-shrink: 0; }
+
+.sec-label { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; color: var(--text2); text-transform: uppercase; margin-bottom: 6px; }
+.sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--orange),transparent); }
+.sec-h2 { font-family: var(--font-display); font-size: clamp(17px,3vw,22px); font-weight: 700; letter-spacing: -.5px; color: var(--text); margin-bottom: 4px; }
+.sec-sub { font-size: 12.5px; color: var(--text2); margin-bottom: 20px; }
+.sec-block { margin-bottom: 48px; }
+
+.py-bento { display: grid; grid-template-columns: repeat(12,1fr); gap: 12px; }
+.py-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 22px 20px 18px; text-decoration: none; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all .25s; min-height: 195px; }
+.py-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--pc-a,var(--orange)), transparent); opacity:0; transition:opacity .2s; }
+.py-card::after { content:''; position:absolute; inset:0; background: radial-gradient(circle at 80% 10%, var(--pc-glow,rgba(251,146,60,.06)), transparent 55%); opacity:0; transition:opacity .3s; }
+.py-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+.py-card:hover::before { opacity:1; }
+.py-card:hover::after  { opacity:1; }
+.py-card:focus-visible { outline: 2px solid var(--pc-a,var(--orange)); outline-offset: 2px; }
+
+.pc-basics  { grid-column: span 5; --pc-a:var(--orange); --pc-glow:rgba(251,146,60,.07); }
+.pc-control { grid-column: span 4; --pc-a:var(--amber);  --pc-glow:rgba(251,191,36,.06); }
+.pc-coll    { grid-column: span 3; --pc-a:var(--green);  --pc-glow:rgba(52,211,153,.06); }
+.pc-methods { grid-column: span 4; --pc-a:var(--blue);   --pc-glow:rgba(77,158,247,.07); }
+.pc-oop     { grid-column: span 4; --pc-a:#f97316;       --pc-glow:rgba(249,115,22,.06); }
+.pc-exc     { grid-column: span 4; --pc-a:var(--red);    --pc-glow:rgba(248,113,113,.06); }
+.pc-streams { grid-column: span 6; --pc-a:var(--purple); --pc-glow:rgba(167,139,250,.07); }
+.pc-conc    { grid-column: span 6; --pc-a:var(--cyan);   --pc-glow:rgba(34,211,238,.06); }
+.pc-programs{ grid-column: span 3; --pc-a:var(--green);  --pc-glow:rgba(52,211,153,.06); }
+
+.pc-icon { font-size: 22px; margin-bottom: 11px; }
+.pc-num { font-family: var(--font-mono); font-size: 9px; font-weight: 700; color: var(--pc-a,var(--orange)); letter-spacing: 1.5px; margin-bottom: 7px; display: flex; align-items: center; gap: 8px; }
+.pc-num::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(255,255,255,.07),transparent); }
+.pc-title { font-size: 14.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -.3px; }
+.pc-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.65; flex: 1; margin-bottom: 12px; }
+.pc-chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.pc-chip  { font-family: var(--font-mono); font-size: 8.5px; font-weight: 600; padding: 2px 7px; border-radius: var(--r-full); background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text2); }
+.pc-foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.pc-count { font-family: var(--font-mono); font-size: 10px; color: var(--text2); display: flex; align-items: center; gap: 6px; }
+.pc-dot   { width: 5px; height: 5px; border-radius: 50%; background: var(--pc-a,var(--orange)); }
+.pc-arrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--pc-a,var(--orange)); display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
+.py-card:hover .pc-arrow { gap: 9px; }
+
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.why-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 18px; position: relative; overflow: hidden; transition: border-color .2s; }
+.why-card:hover { border-color: var(--border2); }
+.why-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background: var(--wc,var(--orange)); opacity:.6; }
+.why-icon  { font-size: 18px; margin-bottom: 10px; }
+.why-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.why-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
+
+.code-preview { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 0; }
+.cp-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,.25); }
+.cpb-dot { width: 9px; height: 9px; border-radius: 50%; }
+.cpb-dot:nth-child(1){background:#ff5f57} .cpb-dot:nth-child(2){background:#febc2e} .cpb-dot:nth-child(3){background:#28c840}
+.cp-file { font-family: var(--font-mono); font-size: 10px; color: var(--text2); margin-left: 4px; }
+.cp-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); }
+.cp-tab { font-family: var(--font-mono); font-size: 10px; color: var(--text2); padding: 8px 16px; border-right: 1px solid var(--border); cursor: pointer; transition: all .15s; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.cp-tab.active { color: var(--orange); border-bottom-color: var(--orange); background: rgba(251,146,60,.04); }
+.cp-tab:hover:not(.active) { color: var(--text2); background: rgba(255,255,255,.02); }
+.cp-pane { display: none; }
+.cp-pane.active { display: block; }
+.cp-pane pre { margin: 0; padding: 20px 22px; font-family: var(--font-mono); font-size: 12px; line-height: 1.75; color: #8da0bb; overflow-x: auto; }
+.kw{color:#c792ea} .fn{color:#82aaff} .st{color:#c3e88d} .cm{color:#7e93b5;font-style:italic} .nm{color:#f78c6c} .bi{color:#89ddff} .cl{color:#34d399} .op{color:#8da0bb}
+
+.interview-cta { background: linear-gradient(135deg, rgba(251,146,60,.06) 0%, rgba(251,191,36,.04) 100%); border: 1px solid rgba(251,146,60,.18); border-radius: var(--r-xl); padding: 24px 26px; display: flex; align-items: center; gap: 20px; position: relative; overflow: hidden; }
+.interview-cta::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background: linear-gradient(90deg,transparent 10%,var(--orange) 50%,transparent 90%); opacity:.35; }
+.icta-icon  { font-size: 28px; flex-shrink: 0; }
+.icta-body  { flex: 1; }
+.icta-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.icta-desc  { font-size: 12px; color: var(--text2); line-height: 1.6; }
+.icta-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 20px; border-radius: var(--r-md); font-size: 12.5px; font-weight: 700; text-decoration: none; background: var(--orange); color: #000; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; flex-shrink: 0; }
+.icta-btn:hover { background: color-mix(in srgb, var(--orange) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.icta-btn:active { transform: translateY(0); box-shadow: none; }
+
+.anim-in { opacity:0; transform:translateY(14px); transition:opacity .5s ease,transform .5s ease; }
+.anim-in.visible { opacity:1; transform:none; }
+
+@media (max-width:900px) {
+  .pc-basics,.pc-control,.pc-coll,.pc-methods,.pc-oop,.pc-exc,.pc-programs { grid-column: span 6; }
+  .pc-streams,.pc-conc { grid-column: span 12; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .py-stats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width:640px) {
+  .pc-basics,.pc-control,.pc-coll,.pc-methods,.pc-oop,.pc-exc,.pc-streams,.pc-conc,.pc-programs { grid-column: span 12; }
+  .why-grid { grid-template-columns: 1fr; }
+  .ph-cta { flex-direction: column; }
+  .btn-ph-primary,.btn-ph-ghost { width: 100%; justify-content: center; min-height: 44px; }
+  .interview-cta { flex-direction: column; text-align: center; }
+  .icta-btn { width: 100%; justify-content: center; }
+  .path-arrow { display: none; }
+}
+@media (max-width:600px) {
+  .ph-title { font-size: 22px !important; letter-spacing: -0.5px; }
+  .py-stats { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body>
+<a href="#mainContent" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a class="tb-logo" href="../../index.html">
+    <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
+    <div class="sidebar-label">Java Modules</div>
+    <a class="sb-link" href="./"><span class="sb-num">00</span>Overview</a>
+    <a class="sb-link" href="basics.html"><span class="sb-num">01</span>Basics</a>
+    <a class="sb-link" href="control.html"><span class="sb-num">02</span>Control Flow</a>
+    <a class="sb-link" href="collections.html"><span class="sb-num">03</span>Collections</a>
+    <a class="sb-link" href="methods.html"><span class="sb-num">04</span>Methods &amp; Classes</a>
+    <a class="sb-link" href="oop.html"><span class="sb-num">05</span>OOP</a>
+    <a class="sb-link" href="exceptions.html"><span class="sb-num">06</span>Exceptions &amp; I/O</a>
+    <a class="sb-link" href="streams.html"><span class="sb-num">07</span>Streams &amp; Lambdas</a>
+    <a class="sb-link" href="concurrency.html"><span class="sb-num">08</span>Concurrency</a>
+    <a class="sb-link" href="programs.html"><span class="sb-num">09</span>Practice Programs</a>
+
+    <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
+    <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
+    <a class="sb-link" href="#path"><span class="sb-num">01</span>Learning Path</a>
+    <a class="sb-link" href="#modules"><span class="sb-num">02</span>All Modules</a>
+    <a class="sb-link" href="#why"><span class="sb-num">03</span>Why Java?</a>
+    <a class="sb-link" href="#gotchas"><span class="sb-num">04</span>Java Gotchas</a>
+    <a class="sb-link" href="#preview"><span class="sb-num">05</span>Code Preview</a>
+  </aside>
+
+  <main class="main" id="mainContent">
+
+    <div class="py-hero">
+      <div class="ph-eyebrow"><span class="ph-dot"></span>Java 21 — 8 Modules · 60+ Examples</div>
+      <h1 class="ph-title">Java from <span>Basics to Threads.</span></h1>
+      <p class="ph-sub">
+        The workhorse of enterprise software — statically typed, compiled to run anywhere on the JVM.
+        Types and collections, OOP with all four pillars, generics, streams and lambdas,
+        and real multi-threaded concurrency. Powers Android, backend services, and big data.
+      </p>
+      <div class="ph-cta">
+        <a class="btn-ph-primary" href="basics.html"><i class="ti ti-coffee"></i> Start with Basics</a>
+        <a class="btn-ph-ghost" href="../../interview/oop-interview.html"><i class="ti ti-target"></i> OOP Interview →</a>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:20px;">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:6px;"><span style="color:var(--orange)">⬡</span>Java 21 LTS</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:6px;"><span style="color:var(--blue)">⬡</span>60+ runnable examples</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:6px;"><span style="color:var(--amber)">⬡</span>OOP fully covered</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:6px;"><span style="color:var(--cyan)">⬡</span>Real threads</span>
+      </div>
+    </div>
+
+    <div id="stats" class="py-stats anim-in">
+      <div class="pys-box" style="--pys-c:var(--orange)">
+        <span class="pys-val" style="color:var(--orange)">8</span>
+        <span class="pys-label">Modules</span>
+        <span class="pys-sub">Basics → Practice</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--blue)">
+        <span class="pys-val" style="color:var(--blue)">60+</span>
+        <span class="pys-label">Examples</span>
+        <span class="pys-sub">Runnable code snippets</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--amber)">
+        <span class="pys-val" style="color:var(--amber)">4</span>
+        <span class="pys-label">OOP Pillars</span>
+        <span class="pys-sub">All fully covered</span>
+      </div>
+      <div class="pys-box" style="--pys-c:var(--purple)">
+        <span class="pys-val" style="color:var(--purple)">40</span>
+        <span class="pys-label">Practice Programs</span>
+        <span class="pys-sub">Basic → Advanced</span>
+      </div>
+    </div>
+
+    <div id="path" class="path-strip anim-in">
+      <div class="path-label">Recommended Learning Path</div>
+      <div class="path-steps">
+        <a class="path-step" href="basics.html"><span class="ps-num">01</span><span class="ps-name">Basics</span><span class="ps-diff diff-starter">Starter</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="control.html"><span class="ps-num">02</span><span class="ps-name">Control Flow</span><span class="ps-diff diff-starter">Starter</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="collections.html"><span class="ps-num">03</span><span class="ps-name">Collections</span><span class="ps-diff diff-starter">Starter</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="methods.html"><span class="ps-num">04</span><span class="ps-name">Methods</span><span class="ps-diff diff-mid">Mid</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="oop.html"><span class="ps-num">05</span><span class="ps-name">OOP</span><span class="ps-diff diff-mid">Mid</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="exceptions.html"><span class="ps-num">06</span><span class="ps-name">Exceptions</span><span class="ps-diff diff-mid">Mid</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="streams.html"><span class="ps-num">07</span><span class="ps-name">Streams</span><span class="ps-diff diff-adv">Advanced</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="concurrency.html"><span class="ps-num">08</span><span class="ps-name">Concurrency</span><span class="ps-diff diff-adv">Advanced</span></a>
+        <span class="path-arrow">→</span>
+        <a class="path-step" href="programs.html"><span class="ps-num">09</span><span class="ps-name">Practice</span><span class="ps-diff diff-adv">Advanced</span></a>
+      </div>
+    </div>
+
+    <div id="modules" class="sec-block anim-in">
+      <div class="sec-label">Curriculum</div>
+      <h2 class="sec-h2">All 8 Java modules</h2>
+      <p class="sec-sub">Follow the path top-to-bottom or jump to the module you need.</p>
+
+      <div class="py-bento">
+
+        <a class="py-card pc-basics" href="basics.html">
+          <div class="pc-icon"><i class="ti ti-package"></i></div>
+          <div class="pc-num">Module 01</div>
+          <div class="pc-title">Java Basics</div>
+          <div class="pc-chips"><span class="pc-chip">Primitives</span><span class="pc-chip">var</span><span class="pc-chip">Strings</span></div>
+          <div class="pc-desc">Where every Java journey starts. The eight primitive types, var inference, wrapper classes, and immutable Strings.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Starter level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-control" href="control.html">
+          <div class="pc-icon"><i class="ti ti-arrows-shuffle"></i></div>
+          <div class="pc-num">Module 02</div>
+          <div class="pc-title">Control Flow</div>
+          <div class="pc-chips"><span class="pc-chip">if/switch</span><span class="pc-chip">Loops</span><span class="pc-chip">Arrow switch</span></div>
+          <div class="pc-desc">Conditionals, the modern switch expression, and every loop form including the for-each.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Starter level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-coll" href="collections.html">
+          <div class="pc-icon"><i class="ti ti-checklist"></i></div>
+          <div class="pc-num">Module 03</div>
+          <div class="pc-title">Collections</div>
+          <div class="pc-chips"><span class="pc-chip">List</span><span class="pc-chip">Map</span><span class="pc-chip">Generics</span></div>
+          <div class="pc-desc">Arrays, ArrayList, HashMap, HashSet, and the generics that make the whole framework type-safe.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Starter level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-methods" href="methods.html">
+          <div class="pc-icon"><i class="ti ti-settings"></i></div>
+          <div class="pc-num">Module 04</div>
+          <div class="pc-title">Methods &amp; Classes</div>
+          <div class="pc-chips"><span class="pc-chip">Overloading</span><span class="pc-chip">static</span><span class="pc-chip">Constructors</span></div>
+          <div class="pc-desc">Typed methods, overloading, varargs, the static/instance split, and the constructors that build objects.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Mid level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-oop" href="oop.html">
+          <div class="pc-icon"><i class="ti ti-building-bank"></i></div>
+          <div class="pc-num">Module 05</div>
+          <div class="pc-title">Object-Oriented Programming</div>
+          <div class="pc-chips"><span class="pc-chip">4 Pillars</span><span class="pc-chip">Interfaces</span><span class="pc-chip">Records</span></div>
+          <div class="pc-desc">The heart of Java. All four pillars, interfaces vs abstract classes, and modern records and enums.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Mid level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-exc" href="exceptions.html">
+          <div class="pc-icon"><i class="ti ti-shield"></i></div>
+          <div class="pc-num">Module 06</div>
+          <div class="pc-title">Exceptions &amp; File I/O</div>
+          <div class="pc-chips"><span class="pc-chip">try/catch</span><span class="pc-chip">Checked</span><span class="pc-chip">Files</span></div>
+          <div class="pc-desc">Java's signature checked/unchecked exception model, try-with-resources, and reading and writing files safely.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Mid level</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-streams" href="streams.html">
+          <div class="pc-icon"><i class="ti ti-filter"></i></div>
+          <div class="pc-num">Module 07</div>
+          <div class="pc-title">Streams &amp; Lambdas</div>
+          <div class="pc-chips"><span class="pc-chip">Lambdas</span><span class="pc-chip">Stream API</span><span class="pc-chip">Optional</span></div>
+          <div class="pc-desc">Functional Java — lambdas, method references, the Stream pipeline, and Optional to design out null bugs.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Advanced</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-conc" href="concurrency.html">
+          <div class="pc-icon"><i class="ti ti-bolt"></i></div>
+          <div class="pc-num">Module 08</div>
+          <div class="pc-title">Concurrency</div>
+          <div class="pc-chips"><span class="pc-chip">Threads</span><span class="pc-chip">Executors</span><span class="pc-chip">synchronized</span></div>
+          <div class="pc-desc">Real OS threads and true parallelism — ExecutorService, synchronized state, concurrent collections, and the classic pitfalls.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Advanced</div><div class="pc-arrow">Learn →</div></div>
+        </a>
+
+        <a class="py-card pc-programs" href="programs.html">
+          <div class="pc-icon"><i class="ti ti-code"></i></div>
+          <div class="pc-num">Module 09</div>
+          <div class="pc-title">Practice Programs</div>
+          <div class="pc-chips"><span class="pc-chip">Algorithms</span><span class="pc-chip">OOP</span><span class="pc-chip">Threads</span></div>
+          <div class="pc-desc">40 hands-on programs from basic to advanced — sorting, a generic stack, a bank account system, and a concurrent counter.</div>
+          <div class="pc-foot"><div class="pc-count"><span class="pc-dot"></span>Advanced</div><div class="pc-arrow">Practice →</div></div>
+        </a>
+
+      </div>
+    </div>
+
+    <div id="why" class="sec-block anim-in">
+      <div class="sec-label">Why Java?</div>
+      <h2 class="sec-h2">The language enterprise runs on</h2>
+      <p class="sec-sub">For Android, backend services, and big-data systems — Java is the safe, scalable, and hireable choice.</p>
+
+      <div class="why-grid">
+        <div class="why-card" style="--wc:var(--orange)">
+          <div class="why-icon"><i class="ti ti-building-skyscraper"></i></div>
+          <div class="why-title">Enterprise Standard</div>
+          <div class="why-desc">Banks, insurers, and Fortune 500 backends run on Java. Decades of stability and a huge hiring market make it a safe career bet.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--blue)">
+          <div class="why-icon"><i class="ti ti-brand-android"></i></div>
+          <div class="why-title">Android &amp; Mobile</div>
+          <div class="why-desc">Java (alongside Kotlin, which runs on the same JVM) is the foundation of Android development — billions of devices.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--green)">
+          <div class="why-icon"><i class="ti ti-shield-check"></i></div>
+          <div class="why-title">Type-Safe &amp; Robust</div>
+          <div class="why-desc">Static typing and checked exceptions catch whole classes of bugs at compile time — a big reason large teams trust Java at scale.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--amber)">
+          <div class="why-icon"><i class="ti ti-world"></i></div>
+          <div class="why-title">Write Once, Run Anywhere</div>
+          <div class="why-desc">Compile to JVM bytecode and it runs on any platform with a JVM — the promise that made Java ubiquitous.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--cyan)">
+          <div class="why-icon"><i class="ti ti-topology-star"></i></div>
+          <div class="why-title">Big Data &amp; Backend</div>
+          <div class="why-desc">Spring, Hadoop, Kafka, and Elasticsearch are all Java. If you work with large-scale data or services, you'll meet it.</div>
+        </div>
+        <div class="why-card" style="--wc:var(--purple)">
+          <div class="why-icon"><i class="ti ti-bolt"></i></div>
+          <div class="why-title">True Multithreading</div>
+          <div class="why-desc">Real OS threads and, since Java 21, lightweight virtual threads — genuine parallelism that single-threaded languages can't match.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="gotchas" class="sec-block anim-in">
+      <div class="sec-label">Watch Out</div>
+      <h2 class="sec-h2">Java gotchas that trip up interviews</h2>
+      <p class="sec-sub">Common surprises — know these cold before your next interview.</p>
+
+      <div class="faang-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--amber);letter-spacing:1.5px;margin-bottom:8px;">== VS .equals()</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:#8da0bb;"><span style="color:#34d399">String</span> a <span style="color:#8da0bb">=</span> <span style="color:#c792ea">new</span> <span style="color:#34d399">String</span>(<span style="color:#c3e88d">"hi"</span>);
+<span style="color:#34d399">String</span> b <span style="color:#8da0bb">=</span> <span style="color:#c792ea">new</span> <span style="color:#34d399">String</span>(<span style="color:#c3e88d">"hi"</span>);
+a <span style="color:#8da0bb">==</span> b        <span style="color:#7e93b5;font-style:italic">// false — different objects</span>
+a.equals(b)   <span style="color:#7e93b5;font-style:italic">// true  — same content</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.6;"><code style="font-family:var(--font-mono);color:var(--amber)">==</code> compares references; <code style="font-family:var(--font-mono)">.equals()</code> compares content. Always use <code style="font-family:var(--font-mono)">.equals()</code> for objects.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--blue);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--blue);letter-spacing:1.5px;margin-bottom:8px;">INTEGER CACHE</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:#8da0bb;"><span style="color:#34d399">Integer</span> a <span style="color:#8da0bb">=</span> <span style="color:#f78c6c">127</span>, b <span style="color:#8da0bb">=</span> <span style="color:#f78c6c">127</span>;
+a <span style="color:#8da0bb">==</span> b    <span style="color:#7e93b5;font-style:italic">// true  — cached (-128..127)</span>
+
+<span style="color:#34d399">Integer</span> c <span style="color:#8da0bb">=</span> <span style="color:#f78c6c">200</span>, d <span style="color:#8da0bb">=</span> <span style="color:#f78c6c">200</span>;
+c <span style="color:#8da0bb">==</span> d    <span style="color:#7e93b5;font-style:italic">// false — outside cache!</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.6;">Java caches small <code style="font-family:var(--font-mono)">Integer</code> objects. <code style="font-family:var(--font-mono)">==</code> on autoboxed values is a trap — use <code style="font-family:var(--font-mono)">.equals()</code>.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--purple);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--purple);letter-spacing:1.5px;margin-bottom:8px;">start() VS run()</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:#8da0bb;">thread.run();     <span style="color:#7e93b5;font-style:italic">// runs on CURRENT thread</span>
+thread.start();   <span style="color:#7e93b5;font-style:italic">// creates a NEW thread ✓</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.6;">Calling <code style="font-family:var(--font-mono)">run()</code> gives you no concurrency at all. Only <code style="font-family:var(--font-mono)">start()</code> spins up a real thread.</div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 18px;position:relative;overflow:hidden;">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--cyan);opacity:.7;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;margin-bottom:8px;">int / int DIVISION</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 14px;margin-bottom:10px;overflow-x:auto;">
+<pre style="margin:0;font-family:var(--font-mono);font-size:11px;line-height:1.7;color:#8da0bb;"><span style="color:#f78c6c">5</span> <span style="color:#8da0bb">/</span> <span style="color:#f78c6c">2</span>       <span style="color:#7e93b5;font-style:italic">// 2   — integer division!</span>
+<span style="color:#f78c6c">5.0</span> <span style="color:#8da0bb">/</span> <span style="color:#f78c6c">2</span>     <span style="color:#7e93b5;font-style:italic">// 2.5 — one double is enough</span>
+(<span style="color:#c792ea">double</span>) <span style="color:#f78c6c">5</span> <span style="color:#8da0bb">/</span> <span style="color:#f78c6c">2</span>   <span style="color:#7e93b5;font-style:italic">// 2.5 ✓</span></pre>
+          </div>
+          <div style="font-size:11.5px;color:var(--text2);line-height:1.6;"><code style="font-family:var(--font-mono)">int / int</code> truncates toward zero. Make one operand a <code style="font-family:var(--font-mono)">double</code> for real division.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="preview" class="sec-block anim-in">
+      <div class="sec-label">Code Preview</div>
+      <h2 class="sec-h2">Taste the content</h2>
+      <p class="sec-sub">Three patterns from across the curriculum — click to switch.</p>
+
+      <div class="code-preview">
+        <div class="cp-bar">
+          <span class="cpb-dot"></span><span class="cpb-dot"></span><span class="cpb-dot"></span>
+          <span class="cp-file">JavaExamples.java</span>
+        </div>
+        <div class="cp-tabs">
+          <div class="cp-tab active" onclick="switchTab(this,'tab-record')">Records</div>
+          <div class="cp-tab" onclick="switchTab(this,'tab-stream')">Streams</div>
+          <div class="cp-tab" onclick="switchTab(this,'tab-oop')">Inheritance</div>
+        </div>
+        <div class="cp-body">
+          <div class="cp-pane active" id="tab-record">
+            <pre tabindex="0"><span class="cm">// A record — one line replaces a whole boilerplate class</span>
+<span class="kw">record</span> <span class="cl">Point</span>(<span class="kw">int</span> x, <span class="kw">int</span> y) {}
+
+<span class="cl">Point</span> a = <span class="kw">new</span> <span class="cl">Point</span>(<span class="nm">3</span>, <span class="nm">4</span>);
+<span class="cl">Point</span> b = <span class="kw">new</span> <span class="cl">Point</span>(<span class="nm">3</span>, <span class="nm">4</span>);
+
+a.<span class="fn">x</span>();            <span class="cm">// 3 — accessor generated</span>
+a.<span class="fn">equals</span>(b);      <span class="cm">// true — value equality, free</span>
+System.out.<span class="fn">println</span>(a);   <span class="cm">// Point[x=3, y=4] — toString, free</span></pre>
+          </div>
+          <div class="cp-pane" id="tab-stream">
+            <pre tabindex="0"><span class="cm">// Stream pipeline — filter, map, collect</span>
+<span class="cl">List</span>&lt;<span class="cl">Integer</span>&gt; nums = <span class="cl">List</span>.<span class="fn">of</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>);
+
+<span class="cl">List</span>&lt;<span class="cl">Integer</span>&gt; evenSquares = nums.<span class="fn">stream</span>()
+    .<span class="fn">filter</span>(n -&gt; n % <span class="nm">2</span> == <span class="nm">0</span>)   <span class="cm">// [2, 4, 6]</span>
+    .<span class="fn">map</span>(n -&gt; n * n)           <span class="cm">// [4, 16, 36]</span>
+    .<span class="fn">collect</span>(<span class="cl">Collectors</span>.<span class="fn">toList</span>());
+
+<span class="kw">int</span> sum = nums.<span class="fn">stream</span>().<span class="fn">mapToInt</span>(<span class="cl">Integer</span>::intValue).<span class="fn">sum</span>();   <span class="cm">// 21</span></pre>
+          </div>
+          <div class="cp-pane" id="tab-oop">
+            <pre tabindex="0"><span class="cm">// Inheritance with @Override and polymorphism</span>
+<span class="kw">class</span> <span class="cl">Animal</span> {
+    <span class="cl">String</span> <span class="fn">speak</span>() { <span class="kw">return</span> <span class="st">"..."</span>; }
+}
+
+<span class="kw">class</span> <span class="cl">Dog</span> <span class="kw">extends</span> <span class="cl">Animal</span> {
+    <span class="kw">@Override</span>
+    <span class="cl">String</span> <span class="fn">speak</span>() { <span class="kw">return</span> <span class="st">"Woof"</span>; }
+}
+
+<span class="cl">Animal</span> a = <span class="kw">new</span> <span class="cl">Dog</span>();   <span class="cm">// parent-typed reference</span>
+a.<span class="fn">speak</span>();             <span class="cm">// "Woof" — runtime dispatch to Dog</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="interview-cta anim-in" style="margin-bottom:48px;">
+      <div class="icta-icon"><i class="ti ti-target"></i></div>
+      <div class="icta-body">
+        <div class="icta-title">Ready to test your knowledge?</div>
+        <div class="icta-desc">Java interviews lean hard on OOP — the four pillars, interfaces vs abstract classes, and collections. Practice them in our OOP Interview bank alongside DSA and system design.</div>
+      </div>
+      <a class="icta-btn" href="../../interview/oop-interview.html">OOP Interview Prep →</a>
+    </div>
+
+    <div class="page-nav">
+      <a class="nav-link" href="../index.html">← Programming</a>
+      <a class="nav-link next" href="basics.html">Java Basics →</a>
+    </div>
+
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var progressFill = document.getElementById('progressFill');
+  var backTop      = document.getElementById('backTop');
+  var searchInput  = document.getElementById('searchInput');
+  var navLinks     = document.querySelectorAll('.sb-link');
+
+  window.addEventListener('scroll', function () {
+    var ws = document.body.scrollTop || document.documentElement.scrollTop;
+    var h  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (progressFill) progressFill.style.width = (h > 0 ? (ws / h) * 100 : 0) + '%';
+    if (backTop) backTop.classList.toggle('visible', ws > 400);
+  }, { passive: true });
+
+  if (backTop) backTop.addEventListener('click', function () { window.scrollTo({ top:0, behavior:'smooth' }); });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      var term = e.target.value.toLowerCase().trim();
+      navLinks.forEach(function (l) {
+        l.classList.toggle('no-match', term !== '' && !l.textContent.toLowerCase().includes(term));
+      });
+    });
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { searchInput.value = ''; navLinks.forEach(function (l) { l.classList.remove('no-match'); }); }
+    });
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.anim-in').forEach(function (el, i) {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    obs.observe(el);
+  });
+});
+
+function switchTab(btn, paneId) {
+  document.querySelectorAll('.cp-tab').forEach(function (t) { t.classList.remove('active'); });
+  document.querySelectorAll('.cp-pane').forEach(function (p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  var pane = document.getElementById(paneId);
+  if (pane) pane.classList.add('active');
+}
+</script>
+</body>
+</html>

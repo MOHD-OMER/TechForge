@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Java Methods & Classes — Overloading, static & Constructors | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/java/methods.html"/>
+  <meta property="og:title" content="Java Methods &amp; Classes — Overloading, static &amp; Constructors | TechForge"/>
+  <meta property="og:description" content="Java methods and classes — parameters, overloading, varargs, static members, constructors and packages, with interview prep on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=22" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--orange); --accent-dim: var(--orange-dim); }
+    .b-java { background: rgba(251, 146, 60, .12); color: var(--orange); border: 1px solid rgba(251, 146, 60, .25); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="java/methods" data-section="java">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Java Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <div class="sidebar-label" style="margin-top:14px;">Methods &amp; Classes</div>
+      <a class="sb-link active" href="#sec-methods"><span class="sb-num">01</span> Methods &amp; Overloading</a>
+      <a class="sb-link" href="#sec-static"><span class="sb-num">02</span> static vs Instance</a>
+      <a class="sb-link" href="#sec-constructors"><span class="sb-num">03</span> Classes &amp; Constructors</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="exceptions.html"><span class="sb-num">→</span> Exceptions &amp; I/O</a>
+      <a class="sb-link" href="streams.html"><span class="sb-num">→</span> Streams &amp; Lambdas</a>
+      <a class="sb-link" href="concurrency.html"><span class="sb-num">→</span> Concurrency</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Java Methods &amp; Classes</div>
+        <h1 class="pg-title">Methods, static &amp; <span>Constructors</span></h1>
+        <p class="pg-sub">How Java packages behavior — typed methods, overloading, the static/instance split, and the constructors that build objects.</p>
+        <div class="pg-badges">
+          <span class="badge b-java"><i class="ti ti-coffee"></i> Java 21</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-methods">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-settings"></i></span><h2 class="sec-title">Methods &amp; Overloading</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Every Java method declares a <strong>return type</strong> and typed parameters. <strong>Overloading</strong> lets several methods share one name as long as their parameter lists differ — the compiler picks the right one by the arguments you pass.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Methods, Overloading, varargs</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// returnType name(params) { body }</span>
+<span class="kw">int</span> <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+
+<span class="cm">// Overloading — same name, different parameter types</span>
+<span class="kw">double</span> <span class="fn">add</span>(<span class="kw">double</span> a, <span class="kw">double</span> b) { <span class="kw">return</span> a + b; }
+<span class="cl">String</span> <span class="fn">add</span>(<span class="cl">String</span> a, <span class="cl">String</span> b) { <span class="kw">return</span> a + b; }
+
+<span class="cm">// varargs — accept any number of arguments</span>
+<span class="kw">int</span> <span class="fn">sum</span>(<span class="kw">int</span>... nums) {         <span class="cm">// nums is an int[]</span>
+    <span class="kw">int</span> total = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> n : nums) total += n;
+    <span class="kw">return</span> total;
+}
+<span class="fn">sum</span>(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>);           <span class="cm">// 10</span>
+<span class="fn">sum</span>();                       <span class="cm">// 0 — zero args is fine</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Overloads must differ in <strong>parameter types or count</strong>, not just return type. <code>int f()</code> and <code>double f()</code> is a compile error — the compiler can't choose based on return type alone.</span></div>
+      </section>
+      <section class="py-section" id="sec-static">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-box"></i></span><h2 class="sec-title">static vs Instance</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>static</strong> member belongs to the class itself — one copy, shared by everyone. An <strong>instance</strong> member belongs to each object, with its own separate value per instance.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — static vs instance</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Counter</span> {
+    <span class="kw">static</span> <span class="kw">int</span> total = <span class="nm">0</span>;      <span class="cm">// shared across ALL Counter objects</span>
+    <span class="kw">int</span> id;                     <span class="cm">// unique to each object</span>
+
+    <span class="cl">Counter</span>() {
+        total++;                <span class="cm">// increments the shared count</span>
+        id = total;             <span class="cm">// this object's own id</span>
+    }
+
+    <span class="kw">static</span> <span class="kw">int</span> <span class="fn">getTotal</span>() { <span class="kw">return</span> total; }   <span class="cm">// called on the class</span>
+}
+
+<span class="kw">new</span> <span class="cl">Counter</span>(); <span class="kw">new</span> <span class="cl">Counter</span>(); <span class="kw">new</span> <span class="cl">Counter</span>();
+<span class="cl">Counter</span>.<span class="fn">getTotal</span>();       <span class="cm">// 3 — no object needed to call a static method</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><code>main</code> is <code>static</code> because the JVM calls it before any object exists. Utility methods like <code>Math.sqrt()</code> are static for the same reason — they don't need an instance to do their job.</span></div>
+      </section>
+      <section class="py-section" id="sec-constructors">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-tools"></i></span><h2 class="sec-title">Classes &amp; Constructors</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>constructor</strong> is a special method with the class's name and no return type. It runs when you write <code>new</code>, and its job is to initialize the object's fields. <code>this</code> refers to the object being built.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Java — Constructors &amp; this</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Point</span> {
+    <span class="kw">int</span> x, y;
+
+    <span class="cl">Point</span>(<span class="kw">int</span> x, <span class="kw">int</span> y) {   <span class="cm">// constructor — same name as class</span>
+        <span class="kw">this</span>.x = x;             <span class="cm">// this.x = the field, x = the parameter</span>
+        <span class="kw">this</span>.y = y;
+    }
+
+    <span class="cl">Point</span>() {                <span class="cm">// overloaded constructor — origin</span>
+        <span class="kw">this</span>(<span class="nm">0</span>, <span class="nm">0</span>);            <span class="cm">// calls the other constructor</span>
+    }
+
+    <span class="kw">public</span> <span class="cl">String</span> <span class="fn">toString</span>() {
+        <span class="kw">return</span> <span class="st">"(" + x + ", " + y + ")"</span>;
+    }
+}
+
+<span class="cl">Point</span> p = <span class="kw">new</span> <span class="cl">Point</span>(<span class="nm">3</span>, <span class="nm">4</span>);
+System.out.<span class="fn">println</span>(p);      <span class="cm">// (3, 4) — toString() auto-called</span></pre>
+        </div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Overloaded methods must differ in…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">parameter types or count</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">return type only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">method name</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">access modifier</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. A static member belongs to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the class itself, shared by all instances</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">each object separately</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the JVM only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the garbage collector</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Why is main declared static?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the JVM calls it before any object exists</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">it makes it run faster</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">static is required for all methods</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">so it can be overloaded</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A constructor's return type is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">none — constructors have no return type</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">void</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the class type</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Object</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Inside a constructor, this(0, 0) does what?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">calls another constructor of the same class</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">creates a new object</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">returns (0, 0)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">throws an exception</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="collections.html">← Collections</a>
+        <a class="nav-link" href="oop.html">OOP →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
