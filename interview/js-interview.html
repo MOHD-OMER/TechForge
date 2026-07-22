@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>JavaScript Interview Q&amp;A — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/interview/js-interview.html"/>
+  <meta property="og:title" content="JavaScript Interview Q&amp;amp;A — TechForge"/>
+  <meta property="og:description" content="JavaScript interview questions — closures, the event loop, this binding, prototypes, promises and async/await. Tagged for FAANG and startups."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=22">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+  :root { --accent: var(--teal); --surface: var(--card); --surface2: rgba(52,211,153,0.05); --display: var(--font-display); --mono: var(--font-mono); --orange: #f97316; --bg2: rgba(0,0,0,.25); }
+  .int-page-hero{position:relative;padding:40px 0 32px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .iph-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
+  .iph-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:iphdot 2s ease infinite;}
+  @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .iph-title{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:10px;}
+  .iph-title span{background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .iph-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:560px;margin-bottom:18px;}
+  .iph-badges{display:flex;gap:7px;flex-wrap:wrap;}
+  .iph-badge{font-family:var(--font-mono);font-size:9px;font-weight:700;padding:3px 10px;border-radius:var(--r-full);border:1px solid;}
+  .int-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:28px;}
+  .is-box{background:var(--card);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;position:relative;transition:background .2s;}
+  .is-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--is-c,var(--green));opacity:0;transition:opacity .2s;}
+  .is-box:hover{background:rgba(255,255,255,.02);}.is-box:hover::after{opacity:1;}
+  .is-val{font-family:var(--font-mono);font-size:20px;font-weight:700;line-height:1;}
+  .is-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2);}
+  .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+  .ftab{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:var(--r-full);font-family:var(--font-mono);font-size:10px;font-weight:600;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;transition:all .15s;user-select:none;}
+  .ftab:hover{border-color:var(--border2);color:var(--text2);}
+  .ftab.active{background:rgba(52,211,153,.09);border-color:rgba(52,211,153,.3);color:var(--green);}
+  .ftab-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+  .filter-sep{width:1px;height:20px;background:var(--border);}
+  .qna-list{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:32px;}
+  .qna-item{border-bottom:1px solid var(--border);transition:background .2s;}
+  .qna-item:last-child{border-bottom:none;}
+  .qna-item.open{background:rgba(52,211,153,.04);}
+  .qna-q{padding:18px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;}
+  .qna-q:hover{background:rgba(255,255,255,.02);}
+  .qna-cb{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all .2s;}
+  .qna-cb.checked{background:var(--green);border-color:var(--green);}
+  .qna-cb.checked::after{content:'✓';font-size:10px;font-weight:700;color:#000;}
+  .qna-num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--text2);min-width:24px;flex-shrink:0;}
+  .qna-text{font-weight:500;color:var(--text);flex:1;line-height:1.5;font-size:14px;}
+  .qna-tag{font-family:var(--font-mono);font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:var(--r-full);flex-shrink:0;}
+  .tag-js{background:rgba(240,219,79,.1);color:var(--js);border:1px solid rgba(240,219,79,.25);}
+  .qna-chevron{font-size:12px;color:var(--text2);flex-shrink:0;transition:transform .2s;}
+  .qna-item.open .qna-chevron{transform:rotate(180deg);}
+  .qna-a{padding:0 20px 20px 56px;display:none;color:var(--text2);line-height:1.75;font-size:13.5px;}
+  .qna-item.open .qna-a{display:block;}
+  .qna-a ul,.qna-a ol{padding-left:20px;margin:8px 0;}
+  .qna-a li{margin-bottom:4px;}
+  .qna-a strong{color:var(--text);}
+  .qna-a code{font-family:var(--font-mono);font-size:11.5px;background:rgba(52,211,153,.07);color:var(--green);padding:1px 5px;border-radius:3px;}
+  .qna-a table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px;}
+  .qna-a th,.qna-a td{border:1px solid var(--border);padding:7px 10px;text-align:left;}
+  .qna-a th{background:rgba(255,255,255,.03);color:var(--text);font-weight:600;}
+  .ans-code{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:12px 0;}
+  .ans-code-hdr{display:flex;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);}
+  .ans-code-lang{font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);}
+  .ans-code pre{margin:0;padding:14px 16px;font-family:var(--font-mono);font-size:11.5px;line-height:1.72;color:var(--text2);overflow-x:auto;}
+  .kw{color:#c792ea;}.fn{color:#82aaff;}.cm{color:#7e93b5;font-style:italic;}.nm{color:#f78c6c;}.st{color:#c3e88d;}.op{color:#89ddff;}
+  .callout{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-lg);margin:10px 0;font-size:13px;line-height:1.65;}
+  .callout-cyan{background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.18);color:var(--text2);}
+  .callout-amber{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);color:var(--text2);}
+  .callout-green{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:var(--text2);}
+  .section-label{display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--text2);text-transform:uppercase;margin:36px 0 14px;}
+  .section-label::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--green),transparent);}
+  .progress-banner{background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(52,211,153,.04));border:1px solid rgba(52,211,153,.15);border-radius:var(--r-xl);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+  .pb-icon{font-size:22px;flex-shrink:0;}
+  .pb-text{flex:1;font-size:12.5px;color:var(--text2);line-height:1.6;}
+  .pb-text strong{color:var(--text);}
+  .pb-count{font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--green);flex-shrink:0;text-align:center;}
+  .pb-lbl{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);}
+  .no-results{display:none;text-align:center;padding:40px;color:var(--text2);font-family:var(--font-mono);font-size:13px;}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:900px){.int-stats{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.int-stats{grid-template-columns:repeat(2,1fr);}.qna-a{padding-left:20px;}}
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="iv/js-interview" data-section="interview">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link current" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap">
+        <input class="search-input" id="qna-search" type="search" placeholder="Search questions…" autocomplete="off" aria-label="Search questions">
+      </div>
+
+      <div class="sidebar-label">Interview Topics</div>
+      <a class="sb-link" href="dsa-interview.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span> DSA</a>
+      <a class="sb-link" href="python-interview.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span> Python</a>
+      <a class="sb-link active" href="js-interview.html"><span class="sb-num"><i class="ti ti-brand-javascript"></i></span> JavaScript</a>
+      <a class="sb-link" href="java-interview.html"><span class="sb-num"><i class="ti ti-coffee"></i></span> Java</a>
+      <a class="sb-link" href="cpp-interview.html"><span class="sb-num"><i class="ti ti-brand-cpp"></i></span> C++</a>
+      <a class="sb-link" href="oop-interview.html"><span class="sb-num"><i class="ti ti-wall"></i></span> OOP</a>
+      <a class="sb-link" href="sql-interview.html"><span class="sb-num"><i class="ti ti-database"></i></span> SQL</a>
+      <a class="sb-link" href="aiml-interview.html"><span class="sb-num"><i class="ti ti-robot"></i></span> AI/ML</a>
+      <a class="sb-link" href="system-design-interview.html"><span class="sb-num"><i class="ti ti-building"></i></span> System Design</a>
+    </aside>
+
+    <main class="main" id="mainContent">
+
+    <div class="int-page-hero anim-in">
+      <div class="iph-eyebrow"><span class="iph-dot"></span>Interview Prep — JavaScript Track</div>
+      <h1 class="iph-title">JavaScript <span>Interview Questions</span></h1>
+      <p class="iph-sub">15 JavaScript questions — closures, the event loop, <code>this</code> binding, prototypal inheritance, and async/await. The concepts frontend and full-stack interviewers probe hardest. Tagged for FAANG and startups.</p>
+      <div class="iph-badges"><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Core</span><span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Async</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Advanced</span></div>
+    </div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">15</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">6</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">4</span><span class="is-label">Async</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
+    <div class="progress-banner anim-in">
+      <div class="pb-icon"><i class="ti ti-pin"></i></div>
+      <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
+      <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
+    </div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('async',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Async</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
+
+      <!-- ══ CORE ══ -->
+      <div class="section-label" id="sec-core"><i class="ti ti-brand-javascript"></i> Core JavaScript</div>
+      <div class="qna-list anim-in">
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">01</span><span class="qna-text">What is the difference between <code>var</code>, <code>let</code>, and <code>const</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <table><thead><tr><th></th><th>var</th><th>let</th><th>const</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Scope</strong></td><td>Function</td><td>Block</td><td>Block</td></tr>
+              <tr><td><strong>Hoisting</strong></td><td>Hoisted, init <code>undefined</code></td><td>Hoisted to TDZ</td><td>Hoisted to TDZ</td></tr>
+              <tr><td><strong>Reassign</strong></td><td>Yes</td><td>Yes</td><td>No</td></tr>
+              <tr><td><strong>Redeclare</strong></td><td>Yes</td><td>No</td><td>No</td></tr>
+            </tbody></table>
+            <div class="callout callout-amber"><strong>TDZ (Temporal Dead Zone):</strong> <code>let</code>/<code>const</code> are hoisted but not initialised. Accessing them before their declaration throws <code>ReferenceError</code> rather than returning <code>undefined</code>. Default to <code>const</code>, use <code>let</code> when reassigning, avoid <code>var</code>.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">02</span><span class="qna-text">What is the difference between <code>==</code> and <code>===</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <code>==</code> (loose) coerces both operands to the same type before comparing. <code>===</code> (strict) compares value <em>and</em> type with no coercion.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="nm">1</span> == <span class="st">"1"</span>        <span class="cm">// true  — string coerced to number</span>
+<span class="nm">1</span> === <span class="st">"1"</span>       <span class="cm">// false — different types</span>
+<span class="nm">0</span> == <span class="kw">false</span>      <span class="cm">// true</span>
+<span class="kw">null</span> == <span class="kw">undefined</span>   <span class="cm">// true  — special-cased</span>
+<span class="kw">null</span> === <span class="kw">undefined</span>  <span class="cm">// false</span>
+<span class="nm">NaN</span> === <span class="nm">NaN</span>      <span class="cm">// false — NaN is never equal to anything</span></pre></div>
+            <div class="callout callout-green"><strong>Rule:</strong> always use <code>===</code> unless you have a specific reason to want coercion. It avoids a whole class of subtle bugs.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">03</span><span class="qna-text">What is a closure? Give a practical use.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            A <strong>closure</strong> is a function that retains access to variables from the scope where it was created, even after that outer function has returned. It's how JavaScript gives you private state without classes.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">function</span> <span class="fn">makeCounter</span>() {
+  <span class="kw">let</span> count = <span class="nm">0</span>;            <span class="cm">// private — no outside access</span>
+  <span class="kw">return</span> () => ++count;
+}
+<span class="kw">const</span> c = <span class="fn">makeCounter</span>();
+c(); <span class="cm">// 1</span>
+c(); <span class="cm">// 2 — count persists between calls</span></pre></div>
+            <strong>Uses:</strong> data privacy, function factories, memoization, event handlers that remember state, and the module pattern.
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">04</span><span class="qna-text">How does <code>this</code> work? How do arrow functions change it?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <code>this</code> is determined by <strong>how a function is called</strong>, not where it's defined:
+            <ul>
+              <li><code>obj.method()</code> → <code>this</code> is <code>obj</code></li>
+              <li>Plain call <code>fn()</code> → <code>undefined</code> in strict mode (global object otherwise)</li>
+              <li><code>fn.call(x)</code> / <code>apply</code> / <code>bind</code> → explicitly whatever you pass</li>
+              <li><code>new Fn()</code> → the newly created object</li>
+            </ul>
+            <strong>Arrow functions</strong> have no <code>this</code> of their own — they capture it lexically from the enclosing scope. That makes them ideal for callbacks but wrong for object methods that need their own <code>this</code>.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">const</span> obj = {
+  name: <span class="st">"Ada"</span>,
+  greet() { <span class="kw">return</span> <span class="st">`Hi, ${this.name}`</span>; }
+};
+<span class="kw">const</span> fn = obj.greet;
+fn();          <span class="cm">// "Hi, undefined" — lost its receiver</span>
+obj.greet.<span class="fn">bind</span>(obj)();  <span class="cm">// "Hi, Ada"</span></pre></div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">05</span><span class="qna-text">What are the falsy values in JavaScript?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            There are exactly <strong>six</strong> (plus <code>document.all</code> historically): <code>false</code>, <code>0</code>, <code>""</code> (empty string), <code>null</code>, <code>undefined</code>, and <code>NaN</code>.
+            <div class="callout callout-amber"><strong>Common trap:</strong> <code>[]</code>, <code>{}</code>, <code>"0"</code>, and <code>"false"</code> are all <em>truthy</em>. An empty array in a boolean context is <code>true</code>. Also note <code>0 == false</code> is <code>true</code> but <code>[] == false</code> is also <code>true</code> due to coercion.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">06</span><span class="qna-text">Explain pass-by-value vs pass-by-reference in JavaScript.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            JavaScript is <strong>always pass-by-value</strong> — but for objects, the "value" being passed is a reference (a pointer). So primitives are copied, while objects share the same underlying data.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">function</span> <span class="fn">mutate</span>(x, obj) {
+  x = <span class="nm">99</span>;              <span class="cm">// local copy — caller unaffected</span>
+  obj.val = <span class="nm">99</span>;        <span class="cm">// same object — caller sees it</span>
+  obj = {};             <span class="cm">// reassigns local ref only</span>
+}
+<span class="kw">let</span> n = <span class="nm">1</span>, o = { val: <span class="nm">1</span> };
+<span class="fn">mutate</span>(n, o);
+n;      <span class="cm">// 1</span>
+o.val;  <span class="cm">// 99</span></pre></div>
+            To copy an object instead of sharing it: spread <code>{...obj}</code> (shallow) or <code>structuredClone(obj)</code> (deep).
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ ASYNC ══ -->
+      <div class="section-label" id="sec-async"><i class="ti ti-bolt"></i> Async JavaScript</div>
+      <div class="qna-list anim-in">
+
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">Explain the event loop. What are microtasks vs macrotasks?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            JavaScript is single-threaded. The <strong>event loop</strong> lets it stay non-blocking: it runs all synchronous code, then <strong>drains the entire microtask queue</strong>, then runs <strong>one macrotask</strong>, and repeats.
+            <ul>
+              <li><strong>Microtasks:</strong> Promise callbacks (<code>.then</code>), <code>queueMicrotask</code>, <code>MutationObserver</code></li>
+              <li><strong>Macrotasks:</strong> <code>setTimeout</code>, <code>setInterval</code>, I/O, UI rendering</li>
+            </ul>
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"1"</span>);
+<span class="fn">setTimeout</span>(() => <span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"4"</span>), <span class="nm">0</span>);   <span class="cm">// macrotask</span>
+<span class="fn">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() => <span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"3"</span>)); <span class="cm">// microtask</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"2"</span>);
+<span class="cm">// Output: 1, 2, 3, 4</span></pre></div>
+            <div class="callout callout-cyan"><strong>Key insight:</strong> a microtask always runs before the next macrotask, even a <code>setTimeout(fn, 0)</code> queued earlier.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">What is a Promise? What are its states?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            A <strong>Promise</strong> represents a value that may not be ready yet. It is always in one of three states, and once <em>settled</em> it never changes again:
+            <ul>
+              <li><strong>Pending</strong> — initial, outcome unknown</li>
+              <li><strong>Fulfilled</strong> — resolved with a value, triggers <code>.then()</code></li>
+              <li><strong>Rejected</strong> — failed with a reason, triggers <code>.catch()</code></li>
+            </ul>
+            Promises flatten the "callback hell" of nested callbacks into a chain, with a single <code>.catch()</code> for the whole chain.
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text">What is <code>async</code>/<code>await</code> and how does it relate to Promises?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <code>async</code>/<code>await</code> is syntactic sugar over Promises. An <code>async</code> function always returns a Promise; <code>await</code> pauses the function until a Promise settles, without blocking the thread.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">async function</span> <span class="fn">load</span>(id) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`/api/${id}`</span>);
+    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="fn">Error</span>(res.status);
+    <span class="kw">return</span> <span class="kw">await</span> res.<span class="fn">json</span>();
+  } <span class="kw">catch</span> (err) {
+    <span class="fn">console</span>.<span class="fn">error</span>(err);
+    <span class="kw">return</span> <span class="kw">null</span>;
+  }
+}</pre></div>
+            <div class="callout callout-amber"><strong>Trap:</strong> <code>await</code> inside a loop runs sequentially. For concurrency, collect Promises and <code>await Promise.all(...)</code>.</div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">Compare <code>Promise.all</code>, <code>allSettled</code>, <code>race</code>, and <code>any</code>.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <table><thead><tr><th>Method</th><th>Resolves when</th><th>Rejects when</th></tr></thead>
+            <tbody>
+              <tr><td><code>all</code></td><td>Every promise fulfills</td><td>Any single one rejects (fail-fast)</td></tr>
+              <tr><td><code>allSettled</code></td><td>All settle</td><td>Never — always resolves</td></tr>
+              <tr><td><code>race</code></td><td>First settles (either way)</td><td>If the first to settle rejects</td></tr>
+              <tr><td><code>any</code></td><td>First fulfills</td><td>All reject (<code>AggregateError</code>)</td></tr>
+            </tbody></table>
+            Use <code>all</code> when you need every result, <code>allSettled</code> when partial failure is acceptable, <code>race</code> for timeouts, and <code>any</code> for "first success wins".
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ ADVANCED ══ -->
+      <div class="section-label" id="sec-advanced"><i class="ti ti-flame"></i> Advanced JavaScript</div>
+      <div class="qna-list anim-in">
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">Explain prototypal inheritance and the prototype chain.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            Every object has an internal link (<code>[[Prototype]]</code>) to another object. When you access a property JS can't find on the object, it walks up this <strong>prototype chain</strong> until it finds the property or reaches <code>null</code>. This is how methods are shared without copying them onto every instance.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">class</span> <span class="fn">Animal</span> { <span class="fn">speak</span>() { <span class="kw">return</span> <span class="st">"..."</span>; } }
+<span class="kw">const</span> dog = <span class="kw">new</span> <span class="fn">Animal</span>();
+dog.<span class="fn">speak</span>();        <span class="cm">// found on Animal.prototype</span>
+<span class="fn">Object</span>.<span class="fn">getPrototypeOf</span>(dog) === <span class="fn">Animal</span>.prototype; <span class="cm">// true</span></pre></div>
+            <code>class</code> syntax is sugar over this same mechanism — JS has no separate class-based system underneath.
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">Implement <code>debounce</code>. How does it differ from throttle?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <strong>Debounce</strong> delays running a function until a pause in calls (e.g. search-as-you-type). <strong>Throttle</strong> runs at most once per interval regardless of call frequency (e.g. scroll handlers).
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">function</span> <span class="fn">debounce</span>(fn, delay) {
+  <span class="kw">let</span> timer;
+  <span class="kw">return function</span> (...args) {
+    <span class="fn">clearTimeout</span>(timer);
+    timer = <span class="fn">setTimeout</span>(() => fn.<span class="fn">apply</span>(<span class="kw">this</span>, args), delay);
+  };
+}
+<span class="cm">// input.addEventListener("input", debounce(search, 300));</span></pre></div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">What is event delegation and why is it useful?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <strong>Event delegation</strong> attaches a single listener to a parent element and uses event bubbling to handle events from its children — including children added later. It's more memory-efficient than one listener per child.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre>list.<span class="fn">addEventListener</span>(<span class="st">"click"</span>, (e) => {
+  <span class="kw">if</span> (e.target.<span class="fn">matches</span>(<span class="st">".item"</span>)) {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"clicked"</span>, e.target.textContent);
+  }
+});</pre></div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">What are the nullish coalescing (<code>??</code>) and optional chaining (<code>?.</code>) operators?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <ul>
+              <li><code>a ?? b</code> — returns <code>b</code> only when <code>a</code> is <code>null</code> or <code>undefined</code> (not for other falsy values like <code>0</code> or <code>""</code>, unlike <code>||</code>).</li>
+              <li><code>obj?.a?.b</code> — short-circuits to <code>undefined</code> if any link is <code>null</code>/<code>undefined</code>, instead of throwing.</li>
+            </ul>
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="nm">0</span> || <span class="st">"default"</span>   <span class="cm">// "default" — 0 is falsy</span>
+<span class="nm">0</span> ?? <span class="st">"default"</span>   <span class="cm">// 0 — only null/undefined trigger fallback</span>
+user?.address?.city  <span class="cm">// undefined instead of TypeError</span></pre></div>
+          </div>
+        </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">What is currying? Show a simple implementation.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <strong>Currying</strong> transforms a function of many arguments into a chain of functions each taking one argument. It enables partial application and reusable, specialised functions.
+            <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
+<pre><span class="kw">const</span> <span class="fn">add</span> = (a) => (b) => (c) => a + b + c;
+<span class="fn">add</span>(<span class="nm">1</span>)(<span class="nm">2</span>)(<span class="nm">3</span>);   <span class="cm">// 6</span>
+
+<span class="kw">const</span> add5 = <span class="fn">add</span>(<span class="nm">5</span>);   <span class="cm">// partial application</span>
+add5(<span class="nm">10</span>)(<span class="nm">20</span>);     <span class="cm">// 35</span></pre></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="no-results" id="no-results">
+        <div class="nr-text">No questions match your search.</div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="page-nav">
+    <a class="nav-link" href="python-interview.html">← Python</a>
+    <a class="nav-link" href="java-interview.html">Java →</a>
+  </div>
+
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../assets/js/site-index.js?v=2"></script>
+<script src="../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../assets/js/utils.js?v=12"></script>
+  <script src="../assets/js/platform.js?v=4"></script>
+<script>
+const TRACK='js',TOTAL=15;
+function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
+function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
+function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}
+function renderProgress(){let done=0;document.querySelectorAll('.qna-cb').forEach(cb=>{if(isChecked(cb.dataset.n)){cb.classList.add('checked');done++;}else cb.classList.remove('checked');});const el=document.getElementById('doneCount');if(el)el.textContent=done;}
+function resetProgress(){if(!confirm('Reset all JavaScript Track progress?'))return;document.querySelectorAll('.qna-cb').forEach(cb=>setChecked(cb.dataset.n,false));renderProgress();}
+function toggleQ(qEl){const item=qEl.closest('.qna-item');const isOpen=item.classList.contains('open');document.querySelectorAll('.qna-item.open').forEach(el=>el.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+function filterQna(sub,btn){document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const show=sub==='all'||item.dataset.subtopic===sub;item.style.display=show?'':'none';if(show)v++;});document.getElementById('no-results').style.display=v===0?'block':'none';const inp=document.getElementById('qna-search');if(inp)inp.value='';}
+function searchQna(val){const q=val.trim().toLowerCase();let v=0;document.querySelectorAll('.qna-item').forEach(item=>{const t=item.querySelector('.qna-text'),a=item.querySelector('.qna-a');const m=!q||(t?.textContent.toLowerCase().includes(q)||a?.textContent.toLowerCase().includes(q));item.style.display=m?'':'none';if(m)v++;if(q)item.classList.remove('open');});document.getElementById('no-results').style.display=v===0?'block':'none';}
+const pf=document.getElementById('progressFill'),bt=document.getElementById('backTop');
+window.addEventListener('scroll',()=>{const s=window.scrollY,h=document.body.scrollHeight-window.innerHeight;if(pf)pf.style.width=(h>0?(s/h)*100:0)+'%';if(bt)bt.classList.toggle('visible',s>400);},{passive:true});
+if(bt)bt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();document.getElementById('qna-search')?.focus();}});
+document.getElementById('qna-search')?.addEventListener('input',function(){searchQna(this.value);});
+document.querySelectorAll('.qna-item').forEach((item,i)=>{const n=item.dataset.n||String(i+1).padStart(2,'0');item.dataset.n=n;const qEl=item.querySelector('.qna-q');if(qEl&&!qEl.querySelector('.qna-cb')){const cb=document.createElement('div');cb.className='qna-cb';cb.dataset.n=n;cb.addEventListener('click',e=>{e.stopPropagation();const c=!cb.classList.contains('checked');setChecked(n,c);renderProgress();});qEl.insertBefore(cb,qEl.firstChild);}});
+const ao=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ao.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';ao.observe(el);});
+renderProgress();
+</script>
+</body>
+</html>
