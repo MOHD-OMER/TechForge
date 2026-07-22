@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>TypeScript Functions & Narrowing | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/typescript/functions.html"/>
+  <meta property="og:title" content="TypeScript Functions &amp; Narrowing | TechForge"/>
+  <meta property="og:description" content="TypeScript functions — typed parameters, optional and default args, overloads, and type narrowing with type guards, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=23" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--ts); --accent-dim: var(--ts-dim); }
+    .b-ts { background: rgba(91, 155, 213, .12); color: var(--ts); border: 1px solid rgba(91, 155, 213, .28); }
+    .ty { color: #5b9bd5; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="ts/functions" data-section="typescript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other TS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <div class="sidebar-label" style="margin-top:14px;">Functions</div>
+      <a class="sb-link active" href="#sec-typed"><span class="sb-num">01</span> Typed Functions</a>
+      <a class="sb-link" href="#sec-overloads"><span class="sb-num">02</span> Overloads</a>
+      <a class="sb-link" href="#sec-narrowing"><span class="sb-num">03</span> Narrowing &amp; Type Guards</a>
+      <a class="sb-link" href="objects.html"><span class="sb-num">→</span> Objects &amp; Interfaces</a>
+      <a class="sb-link" href="unions.html"><span class="sb-num">→</span> Unions &amp; Enums</a>
+      <a class="sb-link" href="generics.html"><span class="sb-num">→</span> Generics</a>
+      <a class="sb-link" href="advanced-types.html"><span class="sb-num">→</span> Advanced Types</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> Classes &amp; OOP</a>
+      <a class="sb-link" href="tooling.html"><span class="sb-num">→</span> Tooling</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">TypeScript Functions</div>
+        <h1 class="pg-title">Functions &amp; <span>Narrowing</span></h1>
+        <p class="pg-sub">Typing function inputs and outputs is where TypeScript earns its keep. Narrowing then lets the compiler track a value's type as it flows through your code.</p>
+        <div class="pg-badges">
+          <span class="badge b-ts"><i class="ti ti-brand-typescript"></i> TypeScript 5</span>
+          <span class="badge b-amber">Interview Key</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-typed">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-settings"></i></span><h2 class="sec-title">Typed Functions</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Annotate each parameter's type; the return type is usually inferred. Parameters can be optional (<code>?</code>), have defaults, or gather the rest into a typed array.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Parameters &amp; Returns</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// typed params, inferred return (number)</span>
+<span class="kw">function</span> <span class="fn">add</span>(a: <span class="ty">number</span>, b: <span class="ty">number</span>) {
+  <span class="kw">return</span> a + b;
+}
+
+<span class="cm">// explicit return type</span>
+<span class="kw">function</span> <span class="fn">greet</span>(name: <span class="ty">string</span>): <span class="ty">string</span> {
+  <span class="kw">return</span> <span class="st">`Hi, ${name}`</span>;
+}
+
+<span class="cm">// optional (?), default, and rest params</span>
+<span class="kw">function</span> <span class="fn">log</span>(msg: <span class="ty">string</span>, level: <span class="ty">string</span> = <span class="st">"info"</span>, ...tags: <span class="ty">string</span>[]) {
+  <span class="fn">console</span>.<span class="fn">log</span>(level, msg, tags);
+}
+<span class="fn">log</span>(<span class="st">"started"</span>);                    <span class="cm">// level defaults to "info"</span>
+<span class="fn">log</span>(<span class="st">"failed"</span>, <span class="st">"error"</span>, <span class="st">"auth"</span>, <span class="st">"db"</span>);
+
+<span class="cm">// function type as a variable</span>
+<span class="kw">const</span> multiply: (a: <span class="ty">number</span>, b: <span class="ty">number</span>) =&gt; <span class="ty">number</span> = (a, b) =&gt; a * b;</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>An optional parameter <code>x?: number</code> has type <code>number | undefined</code>. It must come <strong>after</strong> all required parameters, and you must handle the <code>undefined</code> case inside the function.</span></div>
+      </section>
+      <section class="py-section" id="sec-overloads">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-stack-2"></i></span><h2 class="sec-title">Function Overloads</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Overload signatures</strong> let one function present different typed shapes to callers, so the return type depends on the arguments. You declare the signatures, then write one implementation that covers them all.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Overloads</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// overload signatures — what callers see</span>
+<span class="kw">function</span> <span class="fn">parse</span>(x: <span class="ty">string</span>): <span class="ty">string</span>[];
+<span class="kw">function</span> <span class="fn">parse</span>(x: <span class="ty">number</span>): <span class="ty">number</span>;
+<span class="cm">// implementation signature — not visible to callers</span>
+<span class="kw">function</span> <span class="fn">parse</span>(x: <span class="ty">string</span> | <span class="ty">number</span>): <span class="ty">string</span>[] | <span class="ty">number</span> {
+  <span class="kw">return</span> <span class="kw">typeof</span> x === <span class="st">"string"</span> ? x.<span class="fn">split</span>(<span class="st">""</span>) : x * <span class="nm">2</span>;
+}
+
+<span class="kw">const</span> a = <span class="fn">parse</span>(<span class="st">"hi"</span>);   <span class="cm">// typed as string[]</span>
+<span class="kw">const</span> b = <span class="fn">parse</span>(<span class="nm">10</span>);     <span class="cm">// typed as number</span></pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Often a <strong>union type</strong> or <strong>generics</strong> is cleaner than overloads. Reach for overloads when the return type genuinely changes shape based on the input type, as above.</span></div>
+      </section>
+      <section class="py-section" id="sec-narrowing">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-filter"></i></span><h2 class="sec-title">Narrowing &amp; Type Guards</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Narrowing</strong> is how TypeScript refines a broad type to a specific one inside a branch. The compiler tracks the checks you write and updates the type accordingly.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Narrowing</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">format</span>(x: <span class="ty">string</span> | <span class="ty">number</span>) {
+  <span class="cm">// typeof guard</span>
+  <span class="kw">if</span> (<span class="kw">typeof</span> x === <span class="st">"string"</span>) {
+    <span class="kw">return</span> x.<span class="fn">toUpperCase</span>();   <span class="cm">// x is string here</span>
+  }
+  <span class="kw">return</span> x.<span class="fn">toFixed</span>(<span class="nm">2</span>);       <span class="cm">// x is number here</span>
+}
+
+<span class="cm">// truthiness, instanceof, and 'in' also narrow</span>
+<span class="kw">if</span> (obj <span class="kw">instanceof</span> <span class="cl">Date</span>) obj.<span class="fn">getTime</span>();
+<span class="kw">if</span> (<span class="st">"name"</span> <span class="kw">in</span> user) user.name;
+
+<span class="cm">// custom type guard: `arg is Type`</span>
+<span class="kw">function</span> <span class="fn">isString</span>(v: <span class="ty">unknown</span>): v <span class="kw">is</span> <span class="ty">string</span> {
+  <span class="kw">return</span> <span class="kw">typeof</span> v === <span class="st">"string"</span>;
+}
+<span class="kw">if</span> (<span class="fn">isString</span>(input)) input.<span class="fn">trim</span>();   <span class="cm">// input narrowed to string</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>A <strong>custom type guard</strong> (return type <code>v is string</code>) teaches the compiler how to narrow a value. It's the key to safely working with <code>unknown</code> and discriminated unions.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. An optional parameter x?: number has type…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">number | undefined</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">number | null</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">number only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Optional parameters must appear…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">after all required parameters</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">before required parameters</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">anywhere</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only as the first parameter</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A custom type guard has return type…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">arg is Type</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">boolean only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Type</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Inside if (typeof x === "string"), x is narrowed to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">string</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">still the union</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">unknown</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Function overloads let the return type…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">depend on the argument types</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">always be any</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">be checked at runtime</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">be omitted entirely</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="basics.html">← Basics</a>
+        <a class="nav-link" href="objects.html">Objects &amp; Interfaces →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

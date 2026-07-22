@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>TypeScript Classes & OOP | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/typescript/oop.html"/>
+  <meta property="og:title" content="TypeScript Classes &amp; OOP | TechForge"/>
+  <meta property="og:description" content="TypeScript classes and OOP — access modifiers, abstract classes, implements, parameter properties, and getters/setters, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=23" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--ts); --accent-dim: var(--ts-dim); }
+    .b-ts { background: rgba(91, 155, 213, .12); color: var(--ts); border: 1px solid rgba(91, 155, 213, .28); }
+    .ty { color: #5b9bd5; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="ts/oop" data-section="typescript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other TS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="objects.html"><span class="sb-num">←</span> Objects</a>
+      <a class="sb-link" href="unions.html"><span class="sb-num">←</span> Unions &amp; Enums</a>
+      <a class="sb-link" href="generics.html"><span class="sb-num">←</span> Generics</a>
+      <a class="sb-link" href="advanced-types.html"><span class="sb-num">←</span> Advanced Types</a>
+      <div class="sidebar-label" style="margin-top:14px;">Classes &amp; OOP</div>
+      <a class="sb-link active" href="#sec-classes"><span class="sb-num">01</span> Classes &amp; Modifiers</a>
+      <a class="sb-link" href="#sec-abstract"><span class="sb-num">02</span> Abstract &amp; implements</a>
+      <a class="sb-link" href="#sec-accessors"><span class="sb-num">03</span> Accessors &amp; readonly</a>
+      <a class="sb-link" href="tooling.html"><span class="sb-num">→</span> Tooling</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">TypeScript OOP</div>
+        <h1 class="pg-title">Classes &amp; <span>OOP</span></h1>
+        <p class="pg-sub">TypeScript adds real access modifiers, abstract classes, and interface implementation to JavaScript's class syntax, giving you the OOP toolkit of a statically typed language.</p>
+        <div class="pg-badges">
+          <span class="badge b-ts"><i class="ti ti-brand-typescript"></i> TypeScript 5</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-classes">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-building-bank"></i></span><h2 class="sec-title">Classes &amp; Access Modifiers</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">TypeScript adds <code>public</code>, <code>private</code>, and <code>protected</code> modifiers the compiler enforces. <strong>Parameter properties</strong> declare and assign a field straight from the constructor signature.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Modifiers &amp; Parameter Properties</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Account</span> {
+  <span class="cm">// parameter properties: declare + assign in one line</span>
+  <span class="kw">constructor</span>(
+    <span class="kw">public</span> owner: <span class="ty">string</span>,
+    <span class="kw">private</span> balance: <span class="ty">number</span> = <span class="nm">0</span>
+  ) {}
+
+  <span class="fn">deposit</span>(amount: <span class="ty">number</span>): <span class="ty">void</span> {
+    <span class="kw">if</span> (amount &lt;= <span class="nm">0</span>) <span class="kw">throw new</span> <span class="cl">Error</span>(<span class="st">"invalid"</span>);
+    <span class="kw">this</span>.balance += amount;
+  }
+  <span class="fn">getBalance</span>(): <span class="ty">number</span> { <span class="kw">return</span> <span class="kw">this</span>.balance; }
+}
+
+<span class="kw">const</span> a = <span class="kw">new</span> <span class="cl">Account</span>(<span class="st">"Ada"</span>);
+a.owner;              <span class="cm">// "Ada" — public</span>
+<span class="cm">// a.balance;         // Error: 'balance' is private</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><code>private</code> is enforced by the <strong>compiler</strong>, not at runtime — it compiles to a normal JS property. For true runtime privacy, use JavaScript's <code>#field</code> syntax, which TypeScript also supports.</span></div>
+      </section>
+      <section class="py-section" id="sec-abstract">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-masks-theater"></i></span><h2 class="sec-title">Abstract Classes &amp; implements</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">An <strong>abstract class</strong> is a partial base that can't be instantiated and can declare abstract methods subclasses must fill in. <code>implements</code> makes a class promise to satisfy an interface's shape.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — abstract &amp; implements</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">interface</span> <span class="cl">Drawable</span> { draw(): <span class="ty">void</span>; }
+
+<span class="kw">abstract class</span> <span class="cl">Shape</span> <span class="kw">implements</span> <span class="cl">Drawable</span> {
+  <span class="kw">abstract</span> area(): <span class="ty">number</span>;      <span class="cm">// subclass must implement</span>
+  draw(): <span class="ty">void</span> { <span class="fn">console</span>.<span class="fn">log</span>(<span class="st">"drawing, area:"</span>, <span class="kw">this</span>.<span class="fn">area</span>()); }
+}
+
+<span class="kw">class</span> <span class="cl">Circle</span> <span class="kw">extends</span> <span class="cl">Shape</span> {
+  <span class="kw">constructor</span>(<span class="kw">private</span> r: <span class="ty">number</span>) { <span class="kw">super</span>(); }
+  area(): <span class="ty">number</span> { <span class="kw">return</span> <span class="cl">Math</span>.PI * <span class="kw">this</span>.r ** <span class="nm">2</span>; }
+}
+
+<span class="cm">// new Shape();        // Error: cannot instantiate an abstract class</span>
+<span class="kw">const</span> c = <span class="kw">new</span> <span class="cl">Circle</span>(<span class="nm">2</span>);
+c.<span class="fn">draw</span>();</pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><code>implements</code> only checks the shape; it adds no code. <code>extends</code> inherits real implementation. A class can <code>implements</code> many interfaces but <code>extends</code> only one class.</span></div>
+      </section>
+      <section class="py-section" id="sec-accessors">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-adjustments"></i></span><h2 class="sec-title">Accessors &amp; readonly</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — get/set &amp; readonly</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">class</span> <span class="cl">Temperature</span> {
+  <span class="kw">private</span> _celsius = <span class="nm">0</span>;
+
+  <span class="kw">get</span> celsius(): <span class="ty">number</span> { <span class="kw">return</span> <span class="kw">this</span>._celsius; }
+  <span class="kw">set</span> celsius(v: <span class="ty">number</span>) {
+    <span class="kw">if</span> (v &lt; -<span class="nm">273.15</span>) <span class="kw">throw new</span> <span class="cl">Error</span>(<span class="st">"below absolute zero"</span>);
+    <span class="kw">this</span>._celsius = v;
+  }
+  <span class="kw">get</span> fahrenheit(): <span class="ty">number</span> { <span class="kw">return</span> <span class="kw">this</span>._celsius * <span class="nm">9</span> / <span class="nm">5</span> + <span class="nm">32</span>; }
+
+  <span class="kw">static</span> <span class="kw">readonly</span> ABSOLUTE_ZERO = -<span class="nm">273.15</span>;   <span class="cm">// class-level constant</span>
+}
+
+<span class="kw">const</span> t = <span class="kw">new</span> <span class="cl">Temperature</span>();
+t.celsius = <span class="nm">25</span>;        <span class="cm">// runs the setter's validation</span>
+t.fahrenheit;         <span class="cm">// 77 — computed getter, reads like a field</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>Getters and setters let a computed or validated value be accessed like a plain property. Pair a <code>private</code> backing field with public accessors to enforce invariants (like the absolute-zero check) without changing how callers use the object.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. TypeScript's private modifier is enforced…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">at compile time (use #field for runtime)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">at runtime always</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only in strict mode</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. constructor(public owner: string) is called a…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">parameter property (declare + assign)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">generic constraint</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">default parameter</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">abstract method</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. An abstract class…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">cannot be instantiated directly</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">has no methods</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">is the same as an interface</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">runs at compile time only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A class can implements how many interfaces?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">as many as it needs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">exactly one</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">none</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">up to two</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. implements vs extends — implements…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">only checks the shape, adds no code</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">inherits real implementation</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">is for a single parent class</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">works only with abstract classes</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="advanced-types.html">← Advanced Types</a>
+        <a class="nav-link" href="tooling.html">Tooling →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

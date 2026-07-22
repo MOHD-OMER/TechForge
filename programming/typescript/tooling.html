@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>TypeScript Tooling — tsconfig, strict & Declaration Files | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/typescript/tooling.html"/>
+  <meta property="og:title" content="TypeScript Tooling — tsconfig, strict &amp; Declaration Files | TechForge"/>
+  <meta property="og:description" content="TypeScript tooling — tsconfig, strict mode, module resolution, declaration files (.d.ts), and the compile/bundle pipeline, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=23" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--ts); --accent-dim: var(--ts-dim); }
+    .b-ts { background: rgba(91, 155, 213, .12); color: var(--ts); border: 1px solid rgba(91, 155, 213, .28); }
+    .ty { color: #5b9bd5; }
+    .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+    .lib-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+    .lib-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .lib-desc { font-size: 11.5px; color: var(--text2); line-height: 1.55; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="ts/tooling" data-section="typescript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other TS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="objects.html"><span class="sb-num">←</span> Objects</a>
+      <a class="sb-link" href="unions.html"><span class="sb-num">←</span> Unions &amp; Enums</a>
+      <a class="sb-link" href="generics.html"><span class="sb-num">←</span> Generics</a>
+      <a class="sb-link" href="advanced-types.html"><span class="sb-num">←</span> Advanced Types</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> Classes &amp; OOP</a>
+      <div class="sidebar-label" style="margin-top:14px;">Tooling</div>
+      <a class="sb-link active" href="#sec-tsconfig"><span class="sb-num">01</span> tsconfig &amp; strict</a>
+      <a class="sb-link" href="#sec-modules"><span class="sb-num">02</span> Modules &amp; Compiling</a>
+      <a class="sb-link" href="#sec-dts"><span class="sb-num">03</span> Declaration Files</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Practice Programs</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">TypeScript Tooling</div>
+        <h1 class="pg-title">tsconfig, strict &amp; <span>Declarations</span></h1>
+        <p class="pg-sub">TypeScript is a compiler as much as a language. Its configuration, strictness flags, and declaration files determine how much safety you actually get.</p>
+        <div class="pg-badges">
+          <span class="badge b-ts"><i class="ti ti-brand-typescript"></i> TypeScript 5</span>
+          <span class="badge b-blue">3 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-tsconfig">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-settings"></i></span><h2 class="sec-title">tsconfig.json &amp; strict Mode</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>tsconfig.json</code> configures the compiler. The single most important setting is <code>"strict": true</code>, which turns on the full suite of type-safety checks. Without it, TypeScript is far more permissive than most people expect.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">tsconfig.json</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">{
+  <span class="st">"compilerOptions"</span>: {
+    <span class="st">"target"</span>: <span class="st">"ES2022"</span>,        <span class="cm">// JS version to emit</span>
+    <span class="st">"module"</span>: <span class="st">"ESNext"</span>,        <span class="cm">// module system</span>
+    <span class="st">"strict"</span>: <span class="kw">true</span>,            <span class="cm">// enable all strict checks (do this)</span>
+    <span class="st">"noUncheckedIndexedAccess"</span>: <span class="kw">true</span>,  <span class="cm">// arr[i] is T | undefined</span>
+    <span class="st">"esModuleInterop"</span>: <span class="kw">true</span>,
+    <span class="st">"outDir"</span>: <span class="st">"./dist"</span>,
+    <span class="st">"skipLibCheck"</span>: <span class="kw">true</span>
+  },
+  <span class="st">"include"</span>: [<span class="st">"src/**/*"</span>]
+}</pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><code>strict: true</code> bundles <code>strictNullChecks</code>, <code>noImplicitAny</code>, <code>strictFunctionTypes</code>, and more. It's the difference between "types as documentation" and "types that actually catch bugs". Always start a project with it on.</span></div>
+      </section>
+      <section class="py-section" id="sec-modules">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-puzzle"></i></span><h2 class="sec-title">Modules &amp; the Compile Pipeline</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">TypeScript uses ES module <code>import</code>/<code>export</code>, plus a <code>type</code>-only import form. The compiler (<code>tsc</code>) type-checks and emits JavaScript; in most projects a bundler (Vite, esbuild) handles the actual build for speed.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Imports &amp; Compiling</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// value + type imports</span>
+<span class="kw">import</span> { <span class="fn">createUser</span> } <span class="kw">from</span> <span class="st">"./users"</span>;
+<span class="kw">import</span> <span class="kw">type</span> { <span class="cl">User</span> } <span class="kw">from</span> <span class="st">"./types"</span>;   <span class="cm">// erased entirely at build</span>
+
+<span class="kw">export</span> <span class="kw">function</span> <span class="fn">greet</span>(u: <span class="cl">User</span>) { <span class="kw">return</span> <span class="st">`Hi ${u.name}`</span>; }
+
+<span class="cm"># compile the whole project per tsconfig.json</span>
+<span class="cm"># tsc</span>
+
+<span class="cm"># type-check only, emit nothing (great for CI)</span>
+<span class="cm"># tsc --noEmit</span></pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><code>import type</code> makes it explicit that an import is only a type and will be stripped from the output. It avoids accidental runtime dependencies and can speed up builds. Pair with <code>"verbatimModuleSyntax"</code> for strict enforcement.</span></div>
+      </section>
+      <section class="py-section" id="sec-dts">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-file-description"></i></span><h2 class="sec-title">Declaration Files (.d.ts)</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>declaration file</strong> (<code>.d.ts</code>) describes the types of JavaScript code without any implementation. It's how untyped JS libraries get TypeScript support, and how your compiled library ships its types to consumers.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">math.d.ts</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// describes the shape of a JS module — no implementation</span>
+<span class="kw">declare function</span> <span class="fn">add</span>(a: <span class="ty">number</span>, b: <span class="ty">number</span>): <span class="ty">number</span>;
+<span class="kw">declare const</span> PI: <span class="ty">number</span>;
+<span class="kw">export</span> { <span class="fn">add</span>, PI };</pre>
+        </div>
+        <p class="prose">Most popular libraries ship their own types or have community types on <strong>DefinitelyTyped</strong>, installed via <code>@types/*</code> packages.</p>
+        <div class="lib-grid">
+          <div class="lib-card"><div class="lib-name">Built-in types</div><div class="lib-desc">Modern libraries (Vite, Zod, Prisma) ship <code>.d.ts</code> files in the package itself.</div></div>
+          <div class="lib-card"><div class="lib-name">@types/* packages</div><div class="lib-desc">Community types from DefinitelyTyped, e.g. <code>npm i -D @types/node</code>.</div></div>
+          <div class="lib-card"><div class="lib-name">tsc --declaration</div><div class="lib-desc">Generates <code>.d.ts</code> for your own library so consumers get full typing.</div></div>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>If an import shows "Could not find a declaration file for module 'x'", install <code>@types/x</code>, or if none exists, add a <code>declare module "x";</code> stub. Never reach for <code>// @ts-ignore</code> as a first resort.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The most important tsconfig setting for safety is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">"strict": true</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"target": "ES5"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"outDir"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"skipLibCheck"</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. import type { User } is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">erased at build — a type-only import</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a runtime dependency</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">invalid syntax</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">slower than a normal import</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A .d.ts file contains…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">type declarations, no implementation</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">compiled JavaScript</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">test cases</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CSS styles</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. tsc --noEmit does what?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">type-checks without producing output files</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">emits JS but skips type checks</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">deletes the dist folder</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">installs @types packages</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Community types for untyped JS libs live on…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">DefinitelyTyped (@types/* packages)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the TypeScript playground</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">tsconfig.json</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the browser cache</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← Classes &amp; OOP</a>
+        <a class="nav-link" href="programs.html">Practice Programs →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

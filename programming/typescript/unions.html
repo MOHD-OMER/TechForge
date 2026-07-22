@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>TypeScript Unions, Enums & Discriminated Unions | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/typescript/unions.html"/>
+  <meta property="og:title" content="TypeScript Unions, Enums &amp; Discriminated Unions | TechForge"/>
+  <meta property="og:description" content="TypeScript unions and enums — union/intersection types, literal types, discriminated unions, enums, and exhaustiveness checks, on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=23" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--ts); --accent-dim: var(--ts-dim); }
+    .b-ts { background: rgba(91, 155, 213, .12); color: var(--ts); border: 1px solid rgba(91, 155, 213, .28); }
+    .ty { color: #5b9bd5; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="ts/unions" data-section="typescript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other TS Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions</a>
+      <a class="sb-link" href="objects.html"><span class="sb-num">←</span> Objects</a>
+      <div class="sidebar-label" style="margin-top:14px;">Unions &amp; Enums</div>
+      <a class="sb-link active" href="#sec-unions"><span class="sb-num">01</span> Union &amp; Intersection</a>
+      <a class="sb-link" href="#sec-literals"><span class="sb-num">02</span> Literal Types</a>
+      <a class="sb-link" href="#sec-discriminated"><span class="sb-num">03</span> Discriminated Unions</a>
+      <a class="sb-link" href="#sec-enums"><span class="sb-num">04</span> Enums</a>
+      <a class="sb-link" href="generics.html"><span class="sb-num">→</span> Generics</a>
+      <a class="sb-link" href="advanced-types.html"><span class="sb-num">→</span> Advanced Types</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> Classes &amp; OOP</a>
+      <a class="sb-link" href="tooling.html"><span class="sb-num">→</span> Tooling</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">TypeScript Unions</div>
+        <h1 class="pg-title">Unions, Enums &amp; <span>Discriminated Unions</span></h1>
+        <p class="pg-sub">Union types model "one of several shapes", the pattern at the heart of idiomatic TypeScript. Discriminated unions make them safe to work with.</p>
+        <div class="pg-badges">
+          <span class="badge b-ts"><i class="ti ti-brand-typescript"></i> TypeScript 5</span>
+          <span class="badge b-amber">Interview Key</span>
+          <span class="badge b-blue">4 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-unions">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-arrows-join"></i></span><h2 class="sec-title">Union &amp; Intersection Types</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>union</strong> (<code>A | B</code>) is a value that is either A or B. An <strong>intersection</strong> (<code>A &amp; B</code>) is a value that is A and B at once (has all properties of both).</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Union &amp; Intersection</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// union — one of several types</span>
+<span class="kw">type</span> <span class="cl">ID</span> = <span class="ty">string</span> | <span class="ty">number</span>;
+<span class="kw">let</span> id: <span class="cl">ID</span> = <span class="nm">42</span>;
+id = <span class="st">"a1"</span>;                 <span class="cm">// both allowed</span>
+
+<span class="cm">// on a union you can only use members COMMON to all types...</span>
+<span class="kw">function</span> <span class="fn">len</span>(x: <span class="ty">string</span> | <span class="ty">string</span>[]) {
+  <span class="kw">return</span> x.length;       <span class="cm">// OK — both have .length</span>
+  <span class="cm">// x.toUpperCase();     // Error — arrays don't have it, must narrow first</span>
+}
+
+<span class="cm">// intersection — combine into one shape with all props</span>
+<span class="kw">type</span> <span class="cl">Named</span> = { name: <span class="ty">string</span> };
+<span class="kw">type</span> <span class="cl">Aged</span>  = { age: <span class="ty">number</span> };
+<span class="kw">type</span> <span class="cl">Person</span> = <span class="cl">Named</span> &amp; <span class="cl">Aged</span>;   <span class="cm">// { name: string; age: number }</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-literals">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-quote"></i></span><h2 class="sec-title">Literal Types</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>literal type</strong> is a type whose only value is one specific string, number, or boolean. Unions of literals give you type-safe "enum-like" sets without a runtime enum.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Literal Unions</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// a set of allowed string values, checked at compile time</span>
+<span class="kw">type</span> <span class="cl">Direction</span> = <span class="st">"north"</span> | <span class="st">"south"</span> | <span class="st">"east"</span> | <span class="st">"west"</span>;
+
+<span class="kw">function</span> <span class="fn">move</span>(dir: <span class="cl">Direction</span>) { <span class="cm">/* ... */</span> }
+<span class="fn">move</span>(<span class="st">"north"</span>);          <span class="cm">// OK</span>
+<span class="cm">// move("up");           // Error: not assignable to Direction</span>
+
+<span class="cm">// combine with numbers</span>
+<span class="kw">type</span> <span class="cl">DiceRoll</span> = <span class="nm">1</span> | <span class="nm">2</span> | <span class="nm">3</span> | <span class="nm">4</span> | <span class="nm">5</span> | <span class="nm">6</span>;</pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Literal-union types are the lightweight, idiomatic alternative to enums for a fixed set of string options. They vanish at compile time (no runtime object) and autocomplete beautifully.</span></div>
+      </section>
+      <section class="py-section" id="sec-discriminated">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-git-branch"></i></span><h2 class="sec-title">Discriminated Unions</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>discriminated union</strong> gives each member a shared literal "tag" field. Switching on that tag lets TypeScript narrow to the exact member, so each branch knows precisely which properties exist. This is the single most powerful TS modelling pattern.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Discriminated Union + Exhaustiveness</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">type</span> <span class="cl">Shape</span> =
+  | { kind: <span class="st">"circle"</span>; radius: <span class="ty">number</span> }
+  | { kind: <span class="st">"square"</span>; side: <span class="ty">number</span> }
+  | { kind: <span class="st">"rect"</span>; w: <span class="ty">number</span>; h: <span class="ty">number</span> };
+
+<span class="kw">function</span> <span class="fn">area</span>(s: <span class="cl">Shape</span>): <span class="ty">number</span> {
+  <span class="kw">switch</span> (s.kind) {
+    <span class="kw">case</span> <span class="st">"circle"</span>: <span class="kw">return</span> <span class="cl">Math</span>.PI * s.radius ** <span class="nm">2</span>;   <span class="cm">// s.radius known here</span>
+    <span class="kw">case</span> <span class="st">"square"</span>: <span class="kw">return</span> s.side ** <span class="nm">2</span>;
+    <span class="kw">case</span> <span class="st">"rect"</span>:   <span class="kw">return</span> s.w * s.h;
+    <span class="kw">default</span>:
+      <span class="kw">const</span> _exhaustive: <span class="ty">never</span> = s;   <span class="cm">// compile error if a case is missed</span>
+      <span class="kw">return</span> _exhaustive;
+  }
+}</pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span>The <code>never</code> assignment in <code>default</code> is an <strong>exhaustiveness check</strong>: if you later add a new shape and forget to handle it, TypeScript errors here at compile time. This is how TS turns "did I cover every case?" into a guarantee.</span></div>
+      </section>
+      <section class="py-section" id="sec-enums">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-list-numbers"></i></span><h2 class="sec-title">Enums</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">An <code>enum</code> is a named set of constants that <em>does</em> exist at runtime (unlike literal unions). Useful when you need the values reflected at runtime, but often a literal union or <code>as const</code> object is preferred.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — enum</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">enum</span> <span class="cl">Status</span> { Active, Inactive, Pending }   <span class="cm">// 0, 1, 2</span>
+<span class="kw">let</span> s: <span class="cl">Status</span> = <span class="cl">Status</span>.Active;
+
+<span class="cm">// string enums — more readable at runtime</span>
+<span class="kw">enum</span> <span class="cl">Level</span> { Low = <span class="st">"LOW"</span>, High = <span class="st">"HIGH"</span> }
+
+<span class="cm">// modern alternative: 'as const' object + literal union</span>
+<span class="kw">const</span> <span class="cl">Roles</span> = { Admin: <span class="st">"admin"</span>, User: <span class="st">"user"</span> } <span class="kw">as const</span>;
+<span class="kw">type</span> <span class="cl">Role</span> = <span class="kw">typeof</span> <span class="cl">Roles</span>[<span class="kw">keyof</span> <span class="kw">typeof</span> <span class="cl">Roles</span>];   <span class="cm">// "admin" | "user"</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Numeric enums generate reverse mappings and can behave surprisingly. Many TS style guides prefer <strong>string literal unions</strong> or <code>as const</code> objects over enums, which produce a runtime object you might not want.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. On a value of type string | number, you can directly use…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">only members common to both types</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any string method</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any number method</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nothing at all</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. A & B (intersection) produces a type with…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">all properties of both A and B</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only shared properties</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">either A or B</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">no properties</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A discriminated union narrows via…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a shared literal tag field (e.g. kind)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">the property count</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">instanceof only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">runtime reflection</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Assigning to a never in a switch default gives you…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">a compile-time exhaustiveness check</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">a runtime error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">faster code</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nothing useful</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Unlike a literal union, an enum…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">exists as a real object at runtime</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">is fully erased at compile time</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">can't hold string values</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">is not type-safe</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="objects.html">← Objects</a>
+        <a class="nav-link" href="generics.html">Generics →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>

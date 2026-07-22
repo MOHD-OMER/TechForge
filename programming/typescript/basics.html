@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>TypeScript Basics — Types & Inference | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/typescript/basics.html"/>
+  <meta property="og:title" content="TypeScript Basics — Types &amp; Inference | TechForge"/>
+  <meta property="og:description" content="TypeScript Basics — type annotations, inference, primitive types, literal types, and any/unknown/never, with interview prep and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=23" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--ts); --accent-dim: var(--ts-dim); }
+    .b-ts { background: rgba(91, 155, 213, .12); color: var(--ts); border: 1px solid rgba(91, 155, 213, .28); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ts { background: rgba(91, 155, 213, .08); color: var(--ts); }
+    .cs-red { background: rgba(248, 113, 113, .08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .ty { color: #5b9bd5; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="ts/basics" data-section="typescript">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">TypeScript Basics</div>
+      <a class="sb-link active" href="#sec-types"><span class="sb-num">01</span> Types &amp; Inference</a>
+      <a class="sb-link" href="#sec-special"><span class="sb-num">02</span> any, unknown, never</a>
+      <div class="sidebar-label" style="margin-top: 20px;">Other TS Topics</div>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions &amp; Narrowing</a>
+      <a class="sb-link" href="objects.html"><span class="sb-num">→</span> Objects &amp; Interfaces</a>
+      <a class="sb-link" href="unions.html"><span class="sb-num">→</span> Unions &amp; Enums</a>
+      <a class="sb-link" href="generics.html"><span class="sb-num">→</span> Generics</a>
+      <a class="sb-link" href="advanced-types.html"><span class="sb-num">→</span> Advanced Types</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> Classes &amp; OOP</a>
+      <a class="sb-link" href="tooling.html"><span class="sb-num">→</span> Tooling</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">TypeScript Basics</div>
+        <h1 class="pg-title">Types &amp; <span>Inference</span></h1>
+        <p class="pg-sub">TypeScript is JavaScript with a static type system layered on top. It catches bugs at compile time, then erases entirely — the code that runs is plain JavaScript.</p>
+        <div class="pg-badges">
+          <span class="badge b-ts"><i class="ti ti-brand-typescript"></i> TypeScript 5</span>
+          <span class="badge b-green">✓ Beginner Friendly</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-types">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">Type Annotations &amp; Inference</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">You annotate a variable's type with <code>: type</code>. But most of the time you don't have to — TypeScript <strong>infers</strong> the type from the value. The compiler then rejects any assignment that violates it.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — Annotations &amp; Inference</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// explicit annotation</span>
+<span class="kw">let</span> age: <span class="ty">number</span> = <span class="nm">25</span>;
+<span class="kw">let</span> name: <span class="ty">string</span> = <span class="st">"Alice"</span>;
+<span class="kw">let</span> active: <span class="ty">boolean</span> = <span class="kw">true</span>;
+
+<span class="cm">// inference — TS deduces the type, no annotation needed</span>
+<span class="kw">let</span> count = <span class="nm">10</span>;          <span class="cm">// inferred: number</span>
+<span class="kw">let</span> title = <span class="st">"hi"</span>;        <span class="cm">// inferred: string</span>
+
+<span class="cm">// the compiler now enforces it</span>
+count = <span class="nm">20</span>;               <span class="cm">// OK</span>
+<span class="cm">// count = "twenty";      // Error: Type 'string' is not assignable to 'number'</span>
+
+<span class="cm">// arrays and objects</span>
+<span class="kw">let</span> nums: <span class="ty">number</span>[] = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>];
+<span class="kw">let</span> user: { name: <span class="ty">string</span>; age: <span class="ty">number</span> } = { name: <span class="st">"Ada"</span>, age: <span class="nm">36</span> };</pre>
+        </div>
+        <div class="sub-title">Annotate or Infer?</div>
+        <div class="compare-strip">
+          <div class="cs-item">
+            <div class="cs-head cs-ts">✓ Let TS infer</div>
+            <ul class="cs-list">
+              <li>Local variables with an initializer</li>
+              <li>Return types the compiler can see</li>
+              <li>Array/object literals</li>
+            </ul>
+          </div>
+          <div class="cs-item">
+            <div class="cs-head cs-red">✎ Annotate explicitly</div>
+            <ul class="cs-list">
+              <li>Function parameters (always)</li>
+              <li>Public API boundaries</li>
+              <li>Empty <code>[]</code> or <code>{}</code> you'll fill later</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span><strong>Types are erased at compile time.</strong> TypeScript compiles to plain JavaScript with all annotations stripped out. There is no runtime type checking — a <code>: number</code> does not stop a bad value arriving from an untyped API. Types are a compile-time contract, not a runtime guard.</span></div>
+      </section>
+      <section class="py-section" id="sec-special">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-microscope"></i></span><h2 class="sec-title">any, unknown &amp; never</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Three special types define the edges of the type system. Knowing when to use each — and when <strong>not</strong> to reach for <code>any</code> — is a core TypeScript skill.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Type</th><th>Means</th><th>Use For</th></tr></thead>
+            <tbody>
+              <tr><td><code>any</code></td><td>Disables type checking</td><td>Escape hatch — avoid; defeats the purpose</td></tr>
+              <tr><td><code>unknown</code></td><td>Any value, but must be narrowed before use</td><td>Safe alternative to <code>any</code> for untyped input</td></tr>
+              <tr><td><code>never</code></td><td>A value that never occurs</td><td>Exhaustiveness checks, functions that always throw</td></tr>
+              <tr><td><code>void</code></td><td>No return value</td><td>Functions that return nothing</td></tr>
+              <tr><td><code>null</code> / <code>undefined</code></td><td>Absence of a value</td><td>Handled by <code>strictNullChecks</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">TypeScript — unknown vs any</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">// any — anything goes, no safety (avoid)</span>
+<span class="kw">let</span> a: <span class="ty">any</span> = <span class="st">"hello"</span>;
+a.<span class="fn">toFixed</span>();           <span class="cm">// no error at compile time, CRASHES at runtime</span>
+
+<span class="cm">// unknown — safe: must narrow before you can use it</span>
+<span class="kw">let</span> u: <span class="ty">unknown</span> = <span class="fn">getInput</span>();
+<span class="cm">// u.toFixed();          // Error: 'u' is of type 'unknown'</span>
+<span class="kw">if</span> (<span class="kw">typeof</span> u === <span class="st">"number"</span>) {
+  u.<span class="fn">toFixed</span>();         <span class="cm">// OK — narrowed to number here</span>
+}
+
+<span class="cm">// never — the empty type; used for exhaustiveness</span>
+<span class="kw">function</span> <span class="fn">fail</span>(msg: <span class="ty">string</span>): <span class="ty">never</span> {
+  <span class="kw">throw new</span> <span class="cl">Error</span>(msg);   <span class="cm">// never returns normally</span>
+}</pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>Prefer <code>unknown</code> over <code>any</code></strong> for values of uncertain type (API responses, <code>JSON.parse</code>). <code>unknown</code> forces you to check the type before use; <code>any</code> silently turns off all safety and lets runtime crashes through.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. What happens to type annotations at runtime?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">erased — compiled output is plain JS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">checked on every value at runtime</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">converted to assertions</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">stored in a types registry</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. For an untyped API response, the safest type is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">unknown</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">void</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. let count = 10; infers count as…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">number</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">any</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">10 (literal)</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Number object</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A function that always throws has return type…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">void</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">never</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">undefined</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">null</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Where should you always annotate types?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">function parameters</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">local vars with an initializer</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">array literals</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">never — inference handles all</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link disabled" href="#">← Previous</a>
+        <a class="nav-link" href="functions.html">Functions &amp; Narrowing →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  <script src="../../assets/js/topics-manifest.js?v=2"></script>
+  <script src="../../assets/js/site-index.js?v=2"></script>
+<script src="../../assets/js/search-modal.js?v=1" defer></script>
+  <script src="../../assets/js/utils.js?v=12"></script>
+  <script src="../../assets/js/platform.js?v=4"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      if (pbar) pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+</body>
+</html>
