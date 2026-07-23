@@ -87,7 +87,9 @@ export function computeRanks(nodes, byId, errors = []) {
     if (!n) return 0;
     let r;
     if (n.bus) {
-      r = resolve(n.after[0], seen); // bus children stack under their parent
+      // bus children stack under their parent; a malformed bus node with no
+      // parent falls back to root rank (validateGraph reports the error).
+      r = (n.after || []).length ? resolve(n.after[0], seen) : 0;
     } else if ((n.after || []).length) {
       r = 1 + Math.max(...n.after.map((a) => resolve(a, seen)));
     } else {
@@ -101,8 +103,9 @@ export function computeRanks(nodes, byId, errors = []) {
   return rank;
 }
 
-const expected = `file://${path.resolve(process.argv[1]).replace(/\\/g, '/')}`;
-if (import.meta.url === expected || import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/'))) {
+const argv1 = process.argv[1];
+const expected = argv1 ? `file://${path.resolve(argv1).replace(/\\/g, '/')}` : null;
+if (argv1 && (import.meta.url === expected || import.meta.url.endsWith(argv1.replace(/\\/g, '/')))) {
   const targets = process.argv.slice(2);
   const files = targets.length ? targets : fs.readdirSync('roadmaps')
     .filter((f) => f.endsWith('.html')).map((f) => path.join('roadmaps', f));
