@@ -16,7 +16,17 @@
 (function (global) {
 'use strict';
 
-/** Bus children stack under their parent instead of entering the main grid. */
+/**
+ * Spine layout: one trunk down the middle, branches hanging left and right.
+ *
+ * Three columns only — left (0), spine (1), right (2) — so the graph stays as
+ * narrow as the content column and grows downward instead of sideways. A wide
+ * N-lane grid needed horizontal scrolling and overlapped the sidebar; depth is
+ * free on a page that already scrolls vertically.
+ *
+ * Rows are allocated sequentially: each spine node takes a row, and its branches
+ * take the rows beneath it, alternating sides.
+ */
 function computeLayout(graph) {
   const nodes = graph.nodes || [];
   const byId = new Map(nodes.map((n) => [n.id, n]));
@@ -31,54 +41,73 @@ function computeLayout(graph) {
     buses.get(parent).push(n.id);
   }
 
-  const rank = new Map();
+  // Dependency depth, used only to order the spine top to bottom.
+  const depth = new Map();
   const resolve = (id, seen = new Set()) => {
-    if (rank.has(id)) return rank.get(id);
+    if (depth.has(id)) return depth.get(id);
     if (seen.has(id)) return 0;
     seen.add(id);
     const n = byId.get(id);
     if (!n) return 0;
-    let r = (n.after || []).length
+    let d = (n.after || []).length
       ? 1 + Math.max(...n.after.map((a) => resolve(a, seen)))
       : 0;
-    if (n.rank !== undefined) r = Math.max(r, n.rank);
-    rank.set(id, r);
-    return r;
+    if (n.rank !== undefined) d = Math.max(d, n.rank);
+    depth.set(id, d);
+    return d;
+  };
+  for (const n of nodes) resolve(n.id);
+
+  const isBus = (n) => n.bus && (n.after || []).length;
+  const laid = nodes.filter((n) => !isBus(n));
+
+  /** Nearest spine ancestor — the trunk node a branch hangs off. */
+  const anchorOf = (n) => {
+    let cur = n, guard = 0;
+    while (cur && guard++ < 50) {
+      const parent = (cur.after || [])[0];
+      if (!parent) return null;
+      const p = byId.get(parent);
+      if (!p) return null;
+      if (p.tier === 'spine') return p.id;
+      cur = p;
+    }
+    return null;
   };
 
-  // A bus node with no parent falls back into the main grid rather than
-  // vanishing from the page entirely.
-  const main = nodes.filter((n) => !n.bus || !(n.after || []).length);
-  for (const n of main) resolve(n.id);
+  const spine = laid.filter((n) => n.tier === 'spine')
+    .sort((a, b) => depth.get(a.id) - depth.get(b.id));
 
-  // assign columns per rank, honouring explicit col pins first
-  const byRank = new Map();
-  for (const n of main) {
-    const r = rank.get(n.id);
-    if (!byRank.has(r)) byRank.set(r, []);
-    byRank.get(r).push(n);
+  const branchesBy = new Map();
+  const orphans = [];
+  for (const n of laid) {
+    if (n.tier === 'spine') continue;
+    const a = anchorOf(n);
+    if (a === null) { orphans.push(n); continue; }
+    if (!branchesBy.has(a)) branchesBy.set(a, []);
+    branchesBy.get(a).push(n);
   }
 
   const placed = new Map();
-  let cols = 0;
-  let maxRank = 0;
-  for (const [r, list] of byRank) {
-    const taken = new Set(list.filter((n) => n.col !== undefined).map((n) => n.col));
-    let next = 0;
-    for (const n of list) {
-      let col = n.col;
-      if (col === undefined) {
-        while (taken.has(next)) next++;
-        col = next++;
-      }
-      taken.add(col);
-      cols = Math.max(cols, col + 1);
-      maxRank = Math.max(maxRank, r);
-      placed.set(n.id, { rank: r, col, node: n });
-    }
+  let row = 0;
+
+  // Anything with no spine ancestor still gets a place rather than vanishing.
+  for (const n of orphans) placed.set(n.id, { rank: row++, col: 1, node: n });
+
+  for (const s of spine) {
+    placed.set(s.id, { rank: row, col: 1, node: s });
+    const kids = branchesBy.get(s.id) || [];
+    let left = row, right = row;
+    kids.forEach((k, i) => {
+      // An explicit col pin wins; otherwise alternate sides.
+      const side = k.col === 0 || k.col === 2 ? k.col : (i % 2 === 0 ? 0 : 2);
+      const at = side === 0 ? left++ : right++;
+      placed.set(k.id, { rank: at, col: side, node: k });
+    });
+    row = Math.max(row + 1, left, right);
   }
 
-  return { placed, buses, cols, ranks: placed.size ? maxRank + 1 : 0 };
+  return { placed, buses, cols: 3, ranks: row };
 }
 
 const key = (gid, nid) => `tf_rg_${gid}_${nid}`;
@@ -95,15 +124,14 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 function nodeHTML(n) {
   const icon = n.i ? `<i class="ti ${esc(n.i)}" aria-hidden="true"></i>` : '';
-  const desc = n.s ? `<span class="rg-desc">${esc(n.s)}</span>` : '';
-  const chips = (n.k || []).length
-    ? `<span class="rg-chips">${n.k.map((k) => `<span>${esc(k)}</span>`).join('')}</span>` : '';
-  const body = `<span class="rg-title">${icon}${esc(n.t)}</span>${desc}${chips}`;
+  // Compact by design: a roadmap is scanned, not read. The one-line description
+  // stays in the data and rides along as a tooltip rather than as body copy,
+  // which is what let 31 nodes sprawl across the page before.
+  const body = `<span class="rg-title">${icon}${esc(n.t)}</span>`;
   const cls = `rg-node rg-${n.tier}`;
-  // No href means a category with no page of its own: a label, not a link.
-  return n.href
-    ? `<a class="${cls}" href="${esc(n.href)}" data-id="${esc(n.id)}">${body}</a>`
-    : `<div class="${cls} rg-group" data-id="${esc(n.id)}">${body}</div>`;
+  const tip = n.s ? ` title="${esc(n.s)}"` : '';
+  if (n.href) return `<a class="${cls}" href="${esc(n.href)}" data-id="${esc(n.id)}"${tip}>${body}</a>`;
+  return `<div class="${cls} rg-group" data-id="${esc(n.id)}"${tip}>${body}</div>`;
 }
 
 function mount(container, graph) {
@@ -128,7 +156,7 @@ function mount(container, graph) {
       labelled.add(p.node.g);
       label = `<span class="rg-group-label">${esc(p.node.g)}</span>`;
     }
-    return `<li class="rg-cell" style="grid-row:${p.rank + 1};grid-column:${p.col + 1}">`
+    return `<li class="rg-cell rg-at-${p.col}" style="grid-row:${p.rank + 1};grid-column:${p.col + 1}">`
       + label + nodeHTML(p.node) + bus + '</li>';
   }).join('');
 
@@ -161,8 +189,10 @@ function mount(container, graph) {
       if (!el) return null;
       const r = el.getBoundingClientRect();
       return {
-        top:    { x: r.left - box.left + r.width / 2, y: r.top - box.top },
-        bottom: { x: r.left - box.left + r.width / 2, y: r.bottom - box.top },
+        x: r.left - box.left, y: r.top - box.top,
+        w: r.width, h: r.height,
+        cx: r.left - box.left + r.width / 2,
+        cy: r.top - box.top + r.height / 2,
       };
     };
 
@@ -172,14 +202,22 @@ function mount(container, graph) {
         const from = at(a), to = at(id);
         if (!from || !to) continue;
         const done = isDone(graph.id, a) && isDone(graph.id, id);
-        const straight = p.node.curve === false
-          || Math.abs(from.bottom.x - to.top.x) < 2;
-        const d = straight
-          ? `M${from.bottom.x},${from.bottom.y} L${to.top.x},${to.top.y}`
-          : `M${from.bottom.x},${from.bottom.y}`
-            + ` C${from.bottom.x},${(from.bottom.y + to.top.y) / 2}`
-            + ` ${to.top.x},${(from.bottom.y + to.top.y) / 2}`
-            + ` ${to.top.x},${to.top.y}`;
+        const fromCol = (placed.get(a) || {}).col;
+        let d;
+        if (fromCol === p.col) {
+          // Same column: straight drop from one pill to the next.
+          d = `M${from.cx},${from.y + from.h} L${to.cx},${to.y}`;
+        } else {
+          // Trunk to branch: leave the parent's side, run out, then in.
+          // Short elbows read as structure; long diagonals read as noise.
+          const goingRight = to.cx > from.cx;
+          const sx = goingRight ? from.x + from.w : from.x;
+          const sy = from.cy;
+          const ex = goingRight ? to.x : to.x + to.w;
+          const ey = to.cy;
+          const mid = sx + (ex - sx) / 2;
+          d = `M${sx},${sy} C${mid},${sy} ${mid},${ey} ${ex},${ey}`;
+        }
         parts.push(`<path d="${d}" class="rg-edge${done ? ' rg-edge-done' : ''}"/>`);
       }
     }

@@ -21,22 +21,17 @@ const { computeLayout } = loadRoadmapGraph();
 const graph = readGraph('roadmaps/dsa.html');
 const { placed, buses } = computeLayout(graph);
 
-// roots sit at rank 0
-assert.equal(placed.get('bigo').rank, 0, 'bigo should be rank 0');
-
-// a child ranks below every parent
-let parentChildChecks = 0;
+// spine nodes occupy the centre column
 for (const [id, p] of placed) {
-  const node = p.node;
-  for (const a of node.after || []) {
-    assert.ok(p.rank > placed.get(a).rank, `${id} must rank below ${a}`);
-    parentChildChecks++;
-  }
+  if (p.node.tier === 'spine') assert.equal(p.col, 1, id + ' is a spine node and belongs in the centre column');
+  else assert.ok(p.col === 0 || p.col === 2, id + ' is a branch and belongs to one side');
 }
-assert.ok(parentChildChecks > 0, 'parent/child rank checks should not be vacuous');
 
-// rank override respected
-assert.equal(placed.get('dp').rank, 6, 'dp override should hold');
+// the spine keeps dependency order top to bottom
+const spineRows = [...placed.values()].filter((p) => p.node.tier === 'spine')
+  .sort((a, b) => a.rank - b.rank).map((p) => p.node.id);
+assert.equal(spineRows[0], 'bigo', 'Big-O should head the spine');
+assert.ok(spineRows.indexOf('graph') > spineRows.indexOf('bst'), 'graphs come after trees');
 
 // bus children are grouped under their parent, not ranked into the main grid
 assert.deepEqual(buses.get('sorting'), ['bubble', 'selection', 'insertion', 'merge', 'quick', 'heapsort']);
@@ -52,13 +47,6 @@ for (const [id, p] of placed) {
 
 console.log(`layout ok: ${placed.size} placed, ${buses.size} bus groups`);
 
-// regression: rank override that skips intermediate ranks should give ranks = max + 1
-const skipGraph = {
-  nodes: [
-    { id: 'root' },
-    { id: 'child', after: ['root'] },
-    { id: 'deep', after: ['child'], rank: 10 },
-  ],
-};
-const { ranks: skipRanks } = computeLayout(skipGraph);
-assert.equal(skipRanks, 11, 'rank override at 10 should give ranks = 11, not count of distinct ranks');
+// only three columns, ever — that is what keeps the graph inside the content column
+const usedCols = new Set([...placed.values()].map((p) => p.col));
+assert.ok([...usedCols].every((c) => c >= 0 && c <= 2), 'columns must stay within 0..2');

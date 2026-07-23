@@ -6,44 +6,47 @@
    sideways. */
 .rg-scroll { overflow-x: auto; overflow-y: hidden; margin: 28px 0 40px; padding: 2px; }
 .rg-scroll:focus-visible { outline: 2px solid var(--accent, var(--blue)); outline-offset: 2px; }
-.rg-wrap { position: relative; width: max-content; min-width: 100%; }
+.rg-wrap { position: relative; min-width: 100%; }
+/* Left branches | spine | right branches. Three fixed tracks keep the graph
+   inside the content column no matter how many topics a roadmap has. */
 .rg-grid {
   display: grid;
-  gap: 28px 24px;
-  justify-content: start;
-  align-items: start;
+  grid-template-columns: 1fr minmax(190px, 220px) 1fr;
+  gap: 10px 20px;
+  align-items: center;
   position: relative;
   z-index: 1;
   list-style: none;
   margin: 0;
   padding: 0;
-  width: max-content;
 }
-.rg-cell { display: flex; flex-direction: column; gap: 8px; }
+.rg-cell { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+/* Branches point back at the trunk: left column hugs its right edge, and vice versa. */
+.rg-cell.rg-at-0 { align-items: flex-end; }
+.rg-cell.rg-at-2 { align-items: flex-start; }
+.rg-cell.rg-at-1 { align-items: stretch; }
 
+/* Compact pills, not cards. A roadmap is scanned at a glance; body copy on every
+   node is what made 31 topics sprawl over the page. */
 .rg-node {
-  display: block;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 12px 14px;
-  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  border-radius: var(--r-md);
+  padding: 8px 12px;
+  transition: border-color .18s ease, transform .18s ease, background-color .18s ease;
 }
-.rg-node:hover { border-color: var(--nc, var(--border2)); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-.rg-title { font-weight: 700; color: var(--text); letter-spacing: -.2px; display: flex; align-items: center; gap: 7px; }
-.rg-desc { font-size: 11.5px; color: var(--text2); line-height: 1.55; margin-top: 4px; }
-.rg-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.rg-chips span { font-family: var(--font-mono); font-size: 9.5px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 2px 7px; }
+.rg-node:hover { border-color: var(--nc, var(--blue)); transform: translateY(-1px); }
+.rg-title { font-weight: 600; color: var(--text); letter-spacing: -.1px; display: flex; align-items: center; gap: 6px; line-height: 1.25; }
 
-.rg-spine  { width: 260px; }
-.rg-spine  .rg-title { font-size: 15px; }
-.rg-branch { width: 200px; }
-.rg-branch .rg-title { font-size: 13.5px; }
-.rg-branch .rg-chips { display: none; }
-.rg-detail { width: auto; padding: 7px 11px; }
-.rg-detail .rg-title { font-size: 12px; font-weight: 600; }
-.rg-detail .rg-desc, .rg-detail .rg-chips { display: none; }
+/* The trunk carries the most weight; branches sit a step down; leaves are quietest. */
+.rg-spine { width: 100%; justify-content: center; text-align: center; background: var(--bg2); border-color: var(--border2); padding: 11px 14px; }
+.rg-spine .rg-title { font-size: 13.5px; font-weight: 700; }
+.rg-branch .rg-title { font-size: 12.5px; }
+.rg-detail { padding: 6px 10px; }
+.rg-detail .rg-title { font-size: 11.5px; font-weight: 500; color: var(--text2); }
 
 /* A grouping node has no page of its own — label, not link. */
 .rg-group { background: transparent; border-style: dashed; cursor: default; }
