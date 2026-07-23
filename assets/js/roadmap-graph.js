@@ -52,6 +52,7 @@ export function computeLayout(graph) {
 
   const placed = new Map();
   let cols = 0;
+  let maxRank = 0;
   for (const [r, list] of byRank) {
     const taken = new Set(list.filter((n) => n.col !== undefined).map((n) => n.col));
     let next = 0;
@@ -63,9 +64,10 @@ export function computeLayout(graph) {
       }
       taken.add(col);
       cols = Math.max(cols, col + 1);
+      maxRank = Math.max(maxRank, r);
       placed.set(n.id, { rank: r, col, node: n });
     }
   }
 
-  return { placed, buses, cols, ranks: byRank.size };
+  return { placed, buses, cols, ranks: placed.size ? maxRank + 1 : 0 };
 }

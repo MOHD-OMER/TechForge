@@ -9,13 +9,15 @@ const { placed, buses } = computeLayout(graph);
 assert.equal(placed.get('bigo').rank, 0, 'bigo should be rank 0');
 
 // a child ranks below every parent
+let parentChildChecks = 0;
 for (const [id, p] of placed) {
   const node = p.node;
-  if (node.bus) continue;
   for (const a of node.after || []) {
     assert.ok(p.rank > placed.get(a).rank, `${id} must rank below ${a}`);
+    parentChildChecks++;
   }
 }
+assert.ok(parentChildChecks > 0, 'parent/child rank checks should not be vacuous');
 
 // rank override respected
 assert.equal(placed.get('dp').rank, 6, 'dp override should hold');
@@ -33,3 +35,14 @@ for (const [id, p] of placed) {
 }
 
 console.log(`layout ok: ${placed.size} placed, ${buses.size} bus groups`);
+
+// regression: rank override that skips intermediate ranks should give ranks = max + 1
+const skipGraph = {
+  nodes: [
+    { id: 'root' },
+    { id: 'child', after: ['root'] },
+    { id: 'deep', after: ['child'], rank: 10 },
+  ],
+};
+const { ranks: skipRanks } = computeLayout(skipGraph);
+assert.equal(skipRanks, 11, 'rank override at 10 should give ranks = 11, not count of distinct ranks');
