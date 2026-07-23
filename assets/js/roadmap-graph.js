@@ -1,14 +1,23 @@
 /**
- * Roadmap flow-chart renderer. ES module, zero dependencies.
+ * Roadmap flow-chart renderer. Classic script, zero dependencies.
+ *
+ * Deliberately NOT an ES module: browsers block module loading over file://
+ * (origin "null"), and every other page on this site opens by double-clicking
+ * the HTML. A module here would make roadmap pages the only ones that need a
+ * server. Exposed on window instead, matching topics-manifest.js and
+ * site-index.js. Node tooling loads this file by reading and evaluating it —
+ * see scripts/test-layout.mjs.
  *
  * Layout is a layered DAG: rank = 1 + max(rank of predecessors). Nodes sharing
  * a rank share a row; columns are assigned in declaration order. There is no
  * automatic crossing minimisation on purpose — authors reorder the array to get
  * the arrangement they want, which is easier to reason about than a heuristic.
  */
+(function (global) {
+'use strict';
 
 /** Bus children stack under their parent instead of entering the main grid. */
-export function computeLayout(graph) {
+function computeLayout(graph) {
   const nodes = graph.nodes || [];
   const byId = new Map(nodes.map((n) => [n.id, n]));
 
@@ -73,10 +82,10 @@ export function computeLayout(graph) {
 }
 
 const key = (gid, nid) => `tf_rg_${gid}_${nid}`;
-export function isDone(gid, nid) {
+function isDone(gid, nid) {
   try { return localStorage.getItem(key(gid, nid)) === '1'; } catch (e) { return false; }
 }
-export function setDone(gid, nid, v) {
+function setDone(gid, nid, v) {
   try { v ? localStorage.setItem(key(gid, nid), '1') : localStorage.removeItem(key(gid, nid)); }
   catch (e) { /* private mode */ }
 }
@@ -97,7 +106,7 @@ function nodeHTML(n) {
     : `<div class="${cls} rg-group" data-id="${esc(n.id)}">${body}</div>`;
 }
 
-export function mount(container, graph) {
+function mount(container, graph) {
   const { placed, buses } = computeLayout(graph);
   const byId = new Map(graph.nodes.map((n) => [n.id, n]));
 
@@ -181,3 +190,6 @@ export function mount(container, graph) {
 
   return { refresh: schedule };
 }
+
+global.TFRoadmapGraph = { computeLayout: computeLayout, mount: mount, isDone: isDone, setDone: setDone };
+}(typeof window !== "undefined" ? window : globalThis));

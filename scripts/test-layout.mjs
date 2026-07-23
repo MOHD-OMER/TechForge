@@ -1,6 +1,22 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { readGraph } from './validate-graphs.mjs';
-import { computeLayout } from '../assets/js/roadmap-graph.js';
+
+/**
+ * roadmap-graph.js is a classic browser script, not an ES module — modules are
+ * blocked over file://, and roadmap pages must open by double-clicking like
+ * every other page on the site. So load it the way the browser would: evaluate
+ * it against a stand-in global and read what it exposes.
+ */
+function loadRoadmapGraph() {
+  const src = fs.readFileSync('assets/js/roadmap-graph.js', 'utf8');
+  const globalShim = {};
+  new Function('window', 'globalThis', `${src}\n;return window.TFRoadmapGraph;`)(globalShim, globalShim);
+  if (!globalShim.TFRoadmapGraph) throw new Error('roadmap-graph.js did not expose TFRoadmapGraph');
+  return globalShim.TFRoadmapGraph;
+}
+
+const { computeLayout } = loadRoadmapGraph();
 
 const graph = readGraph('roadmaps/dsa.html');
 const { placed, buses } = computeLayout(graph);
