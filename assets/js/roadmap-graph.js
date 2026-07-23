@@ -113,20 +113,34 @@ function mount(container, graph) {
   const cells = [...placed.entries()].sort((a, b) =>
     a[1].rank - b[1].rank || a[1].col - b[1].col);
 
+  // A group label marks where a band starts. Repeating it on every member of the
+  // band (Foundations, Foundations, ...) is noise, so only the first node in
+  // declaration order carries it.
+  const labelled = new Set();
+
   const items = cells.map(([id, p]) => {
     const kids = buses.get(id) || [];
     const bus = kids.length
       ? `<div class="rg-bus">${kids.map((k) => nodeHTML(byId.get(k))).join('')}</div>`
       : '';
-    const label = p.node.g ? `<span class="rg-group-label">${esc(p.node.g)}</span>` : '';
+    let label = '';
+    if (p.node.g && !labelled.has(p.node.g)) {
+      labelled.add(p.node.g);
+      label = `<span class="rg-group-label">${esc(p.node.g)}</span>`;
+    }
     return `<li class="rg-cell" style="grid-row:${p.rank + 1};grid-column:${p.col + 1}">`
       + label + nodeHTML(p.node) + bus + '</li>';
   }).join('');
 
+  // The scroller is what keeps a wide graph inside the content column instead of
+  // sprawling over the sidebar. tabindex makes it keyboard-reachable, which axe
+  // requires of any scrollable region.
   container.innerHTML =
-    `<div class="rg-wrap">
-       <svg class="rg-edges" aria-hidden="true" focusable="false"></svg>
-       <ol class="rg-grid">${items}</ol>
+    `<div class="rg-scroll" tabindex="0" role="group" aria-label="${esc(graph.title || 'Roadmap')} flow chart">
+       <div class="rg-wrap">
+         <svg class="rg-edges" aria-hidden="true" focusable="false"></svg>
+         <ol class="rg-grid">${items}</ol>
+       </div>
      </div>`;
 
   const svg = container.querySelector('.rg-edges');

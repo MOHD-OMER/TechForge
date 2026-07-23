@@ -1,17 +1,23 @@
 /* Roadmap flow chart. Tiers carry importance through size and weight — the
    previous single-lane layout gave every topic identical weight, which is what
    read as flat. */
-.rg-wrap { position: relative; margin: 28px 0 40px; }
+/* A branching graph is wider than a text column. Scroll it inside the content
+   area rather than letting it spill over the sidebar and drag the whole page
+   sideways. */
+.rg-scroll { overflow-x: auto; overflow-y: hidden; margin: 28px 0 40px; padding: 2px; }
+.rg-scroll:focus-visible { outline: 2px solid var(--accent, var(--blue)); outline-offset: 2px; }
+.rg-wrap { position: relative; width: max-content; min-width: 100%; }
 .rg-grid {
   display: grid;
   gap: 28px 24px;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   position: relative;
   z-index: 1;
   list-style: none;
   margin: 0;
   padding: 0;
+  width: max-content;
 }
 .rg-cell { display: flex; flex-direction: column; gap: 8px; }
 
@@ -47,6 +53,8 @@
 .rg-group-label { font-family: var(--font-mono); font-size: 10.5px; color: var(--text2); margin-bottom: 4px; }
 
 @media (max-width: 760px) {
+  .rg-scroll { overflow-x: visible; }
+  .rg-wrap, .rg-grid { width: auto; min-width: 0; }
   .rg-grid { display: flex; flex-direction: column; gap: 12px; }
   .rg-spine, .rg-branch, .rg-detail { width: 100%; }
   .rg-edges { display: none; }
