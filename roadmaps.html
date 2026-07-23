@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Guided learning paths — step-by-step roadmaps that thread TechForge's tracks into ordered journeys: Frontend, Backend, Full Stack, DSA, CS Fundamentals, DevOps, and AI/ML. Check off milestones and track progress locally."/>
+  <meta property="og:title" content="Learning Roadmaps — TechForge"/>
+  <meta property="og:description" content="Guided, ordered learning paths across Frontend, Backend, Full Stack, DSA, CS Fundamentals, DevOps and AI/ML — every milestone links to a TechForge lesson."/>
+  <meta property="og:type" content="website"/>
+  <title>Learning Roadmaps — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps.html"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="assets/css/forge_base.css?v=25" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="assets/css/platform.css?v=4" rel="stylesheet"/>
+<style>
+  :root { --accent: var(--blue); }
+  .rm-hero { position: relative; padding: 44px 0 30px; margin-bottom: 26px; border-bottom: 1px solid var(--border); }
+  .rm-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--blue); background:rgba(77,158,247,.08); border:1px solid rgba(77,158,247,.2); padding:5px 14px; border-radius:var(--r-full); margin-bottom:16px; }
+  .rm-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); box-shadow:0 0 6px var(--blue); animation:rmdot 2s ease infinite; }
+  @keyframes rmdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
+  .rm-title { font-family:var(--font-display); font-size:clamp(26px,5vw,42px); font-weight:700; letter-spacing:-.7px; line-height:1.04; color:var(--text); margin-bottom:12px; }
+  .rm-title span { color:var(--blue); }
+  .rm-sub { font-size:13.5px; color:var(--text2); line-height:1.75; max-width:66ch; text-wrap:pretty; }
+
+  /* path tab bar */
+  .rm-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:26px; }
+  .rm-tab { display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:var(--r-md); background:var(--card); border:1px solid var(--border); color:var(--text2); cursor:pointer; transition:all .18s; font-size:12.5px; font-weight:600; text-align:left; }
+  .rm-tab:hover { border-color:var(--border2); color:var(--text); }
+  .rm-tab.active { border-color:var(--rt-c,var(--blue)); background:color-mix(in srgb, var(--rt-c, var(--blue)) 10%, transparent); color:var(--text); }
+  .rm-tab i { font-size:16px; color:var(--rt-c,var(--blue)); }
+  .rm-tab-mini { display:block; font-family:var(--font-mono); font-size:9px; color:var(--text3); letter-spacing:.5px; margin-top:1px; }
+
+  /* Active path header. Hairline rules rather than a boxed panel — the spine
+     below is already the strong shape, and a card here competes with it. */
+  .rm-phead { display:flex; align-items:flex-start; gap:16px; padding:4px 0 18px; margin-bottom:0; border-bottom:1px solid var(--border); }
+  .rm-picon { font-size:26px; color:var(--pa-c,var(--blue)); flex-shrink:0; line-height:1; margin-top:2px; }
+  .rm-pbody { flex:1; min-width:0; }
+  .rm-pname { font-size:19px; font-weight:700; color:var(--text); letter-spacing:-.3px; margin-bottom:5px; text-wrap:balance; }
+  .rm-pblurb { font-size:12.5px; color:var(--text2); line-height:1.65; max-width:70ch; text-wrap:pretty; }
+  .rm-pstat { flex-shrink:0; text-align:right; }
+  .rm-pct { font-family:var(--font-mono); font-size:15px; font-weight:700; color:var(--text); line-height:1; }
+  .rm-pct-l { font-family:var(--font-mono); font-size:10px; color:var(--text3); margin-top:5px; }
+  .rm-pbar-wrap { height:3px; background:var(--bg2); overflow:hidden; margin:0 0 30px; }
+  .rm-pbar { height:100%; width:100%; background:var(--pa-c,var(--blue)); transform:scaleX(0); transform-origin:left center; transition:transform .25s cubic-bezier(.22,1,.36,1); }
+  .rm-reset { font-family:var(--font-mono); font-size:10px; padding:6px 13px; border-radius:var(--r-md); background:var(--card); border:1px solid var(--border); color:var(--text2); cursor:pointer; transition:all .2s; margin-top:10px; }
+  .rm-reset:hover { border-color:var(--border2); color:var(--text); }
+
+  /* node spine */
+  .rm-spine { position:relative; padding-left:34px; }
+  .rm-spine::before { content:''; position:absolute; left:11px; top:12px; bottom:12px; width:2px; background:linear-gradient(180deg,var(--border2),var(--border)); }
+  /* Fills to the deepest completed milestone — progress readable at a glance,
+     without hunting for the percentage. */
+  .rm-spine-fill { position:absolute; left:11px; top:12px; bottom:12px; width:2px; background:var(--pa-c,var(--blue)); transform:scaleY(0); transform-origin:top center; transition:transform .5s cubic-bezier(.22,1,.36,1); opacity:.85; }
+  .rm-node { position:relative; margin-bottom:14px; }
+  .rm-marker { position:absolute; left:-34px; top:18px; width:24px; height:24px; border-radius:50%; background:var(--bg); border:2px solid var(--border2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); cursor:pointer; transition:background-color .2s, border-color .2s, color .2s; z-index:1; }
+  .rm-marker:hover { border-color:var(--nc,var(--blue)); color:var(--text); }
+  .rm-node.done .rm-marker { background:var(--nc,var(--green)); border-color:var(--nc,var(--green)); color:#04070d; }
+  .rm-node.done .rm-marker .rm-mnum { display:none; }
+  /* The tick is drawn rather than swapped in: stroke-dashoffset animates on the
+     GPU, and the draw reads as "this just completed" instead of a glyph blink. */
+  .rm-tick { width:13px; height:13px; fill:none; stroke:#04070d; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; display:none; }
+  .rm-node.done .rm-tick { display:block; }
+  .rm-tick path { stroke-dasharray:24; stroke-dashoffset:0; }
+  /* "You are here": the first milestone still outstanding. A ring rather than a
+     fill, so it reads as a position marker and not as a second completed state. */
+  .rm-node.current .rm-marker { border-color:var(--nc,var(--blue)); color:var(--text); box-shadow:0 0 0 4px color-mix(in srgb,var(--nc,var(--blue)) 16%,transparent); }
+  .rm-card { display:flex; align-items:flex-start; gap:14px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:15px 18px; text-decoration:none; transition:border-color .2s, transform .2s, box-shadow .2s; }
+  .rm-card:hover { border-color:var(--nc,var(--border2)); transform:translateX(2px); box-shadow:0 8px 24px rgba(0,0,0,.25); }
+  .rm-node.current .rm-card { border-color:color-mix(in srgb,var(--nc,var(--blue)) 40%,var(--border)); }
+  /* Same reasoning as the locked state: a completed milestone settles back by
+     losing its fill, never by fading its text. The filled marker and the drawn
+     tick already carry "done" without touching legibility. */
+  .rm-node.done .rm-card { background:transparent; }
+  .rm-node.done .rm-cname { color:var(--text2); }
+  .rm-node.done:hover .rm-card { background:var(--card); }
+  /* What the milestone actually teaches — the reason to click, stated up front. */
+  .rm-kit { display:flex; flex-wrap:wrap; gap:5px; margin-top:9px; }
+  .rm-kit span { font-family:var(--font-mono); font-size:9.5px; color:var(--text2); background:var(--bg2); border:1px solid var(--border); border-radius:var(--r-sm); padding:2px 7px; white-space:nowrap; }
+  .rm-cbody { flex:1; min-width:0; }
+  .rm-ctop { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:3px; }
+  .rm-cname { font-size:14px; font-weight:700; color:var(--text); letter-spacing:-.2px; }
+  .rm-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:2px 7px; border-radius:var(--r-full); }
+  .rm-badge-req { color:var(--nc,var(--blue)); background:color-mix(in srgb,var(--nc,var(--blue)) 12%,transparent); border:1px solid color-mix(in srgb,var(--nc,var(--blue)) 28%,transparent); }
+  .rm-badge-opt { color:var(--text3); background:rgba(255,255,255,.03); border:1px dashed var(--border2); }
+  .rm-badge-now { color:var(--nc,var(--blue)); background:color-mix(in srgb,var(--nc,var(--blue)) 14%,transparent); border:1px solid color-mix(in srgb,var(--nc,var(--blue)) 34%,transparent); display:none; }
+  .rm-node.current .rm-badge-now { display:inline-block; }
+
+  /* Prerequisites. A milestone whose earlier steps are still open is dimmed and
+     says what comes first — but the link stays live, because refusing to let
+     someone read ahead is hostile, not helpful. */
+  .rm-needs { display:none; align-items:center; gap:6px; margin-top:9px; font-family:var(--font-mono); font-size:10.5px; color:var(--text2); }
+  .rm-needs i { font-size:12px; }
+  .rm-node.locked .rm-needs { display:flex; }
+  /* A pending milestone is marked by an unfilled card and a dashed marker, not
+     by fading it out: dropping opacity takes the body copy under 4.5:1 in both
+     themes, and "not yet" is a job for surface, not for legibility. */
+  .rm-node.locked .rm-card { background:transparent; border-style:dashed; }
+  .rm-node.locked:hover .rm-card, .rm-node.locked:focus-within .rm-card { background:var(--card); border-style:solid; }
+  .rm-node.locked .rm-marker { border-style:dashed; }
+  .rm-node.locked .rm-kit { display:none; }
+  .rm-cdesc { font-size:11.5px; color:var(--text2); line-height:1.55; }
+  .rm-carrow { font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--nc,var(--blue)); flex-shrink:0; display:inline-flex; align-items:center; gap:5px; transition:gap .15s; white-space:nowrap; margin-top:2px; }
+  .rm-card:hover .rm-carrow { gap:8px; }
+  .rm-stage { font-family:var(--font-mono); font-size:10.5px; color:var(--text2); margin:26px 0 12px; display:flex; align-items:center; gap:12px; }
+  .rm-stage::after { content:''; flex:1; height:1px; background:var(--border); }
+  .rm-done-msg { display:none; margin:18px 0 8px; padding:16px 20px; border-radius:var(--r-lg); background:color-mix(in srgb,var(--green) 8%,transparent); border:1px solid color-mix(in srgb,var(--green) 22%,transparent); font-size:13px; color:var(--text2); }
+  .rm-done-msg.show { display:block; }
+  .rm-done-msg strong { color:var(--text); }
+  /* Motion. Everything here is state feedback — a milestone completing, a
+     dependency releasing, a path arriving — so each one is tied to a change the
+     user just caused. All of it sits behind the reduced-motion guard. */
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes rmDraw { from { stroke-dashoffset:24; } to { stroke-dashoffset:0; } }
+    @keyframes rmPop { 0% { transform:scale(1); } 42% { transform:scale(1.16); } 100% { transform:scale(1); } }
+    @keyframes rmUnlock { 0% { box-shadow:0 0 0 0 color-mix(in srgb,var(--nc,var(--blue)) 45%,transparent); }
+                          100% { box-shadow:0 0 0 14px transparent; } }
+    /* Transform only, deliberately no opacity: fading text in means any audit
+       (or user) that catches a node mid-flight sees it below contrast. Sliding
+       into place reads the same and never touches legibility. */
+    @keyframes rmRise { from { transform:translateY(10px); } to { transform:none; } }
+
+    .rm-node.done .rm-tick path { animation:rmDraw .34s cubic-bezier(.22,1,.36,1) both; }
+    .rm-marker.pop { animation:rmPop .34s cubic-bezier(.22,1,.36,1); }
+    /* Releasing a dependency is the one moment worth a flourish: it is the
+       payoff for finishing the milestone above it. */
+    .rm-node.unlocked .rm-marker { animation:rmUnlock .85s cubic-bezier(.22,1,.36,1); }
+    .rm-node.unlocked .rm-card { animation:rmRise .4s cubic-bezier(.22,1,.36,1); }
+    /* Staggered arrival when a path is opened. Capped so long paths don't make
+       the last milestone wait on a queue of delays. */
+    .rm-spine .rm-node { animation:rmRise .42s cubic-bezier(.22,1,.36,1) backwards; animation-delay:calc(min(var(--i), 12) * 32ms); }
+    .rm-phead, .rm-pbar-wrap { animation:rmRise .36s cubic-bezier(.22,1,.36,1) backwards; }
+  }
+
+  @media (max-width:640px){ .rm-phead { flex-wrap:wrap; } .rm-carrow span { display:none; } }
+</style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-section="roadmaps">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a class="tb-logo" href="index.html">
+    <div class="tb-logo-icon"><img src="assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="index.html">Home</a>
+    <a class="tb-link current" href="roadmaps.html">Roadmaps</a>
+    <a class="tb-link" href="programming/index.html">Programming</a>
+    <a class="tb-link" href="aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="dsa/index.html">DSA</a>
+    <a class="tb-link" href="system-design/index.html">System Design</a>
+    <a class="tb-link" href="data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="interview/index.html">Interview</a>
+    <a class="tb-link" href="about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="roadmaps.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="data-cloud/index.html"><span class="tf-mhn-icon"><i class="ti ti-cloud-data-connection"></i></span><span class="tf-mhn-text">Data & Cloud</span></a>
+        <a class="tf-mhn-item" href="systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+    <div class="sidebar-label">Learning Paths</div>
+    <div id="rmSideNav"></div>
+    <div class="sidebar-label" style="margin-top:20px;">How it works</div>
+    <p style="font-size:11.5px;color:var(--text2);line-height:1.6;padding:0 2px;">Pick a path, then work down the milestones. Click the circle to mark one done — progress saves to your browser. Every step opens a real TechForge lesson.</p>
+  </aside>
+
+  <main class="main" id="mainContent">
+    <div class="rm-hero anim-in">
+      <div class="rm-eyebrow"><span class="rm-dot"></span>Guided Learning Paths</div>
+      <h1 class="rm-title">Roadmaps to <span>learn by goal.</span></h1>
+      <p class="rm-sub">Ordered journeys that thread TechForge's tracks into a plan. Pick where you want to end up — frontend, backend, full stack, interview-ready DSA, the fundamentals under it all, DevOps, or AI/ML — and follow the milestones. Every step links to a lesson you can start now, and your progress saves locally.</p>
+    </div>
+
+    <div class="rm-tabs anim-in" id="rmTabs"></div>
+
+    <div id="rmMount"></div>
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="assets/js/topics-manifest.js?v=2"></script>
+<script src="assets/js/site-index.js?v=3"></script>
+<script src="assets/js/search-modal.js?v=2" defer></script>
+<script src="assets/js/utils.js?v=12"></script>
+<script src="assets/js/platform.js?v=4"></script>
+<script>
+/* ── Learning-path data. Each node links to a real TechForge page. ── */
+const PATHS = [
+  {
+    id: "frontend", name: "Frontend Developer", icon: "ti-browser", color: "var(--cyan)",
+    blurb: "Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and system-design basics that frontend interviews still test.",
+    nodes: [
+      { stage: "The language", t: "JavaScript", s: "Closures, prototypes, classes, and the npm ecosystem — the language every browser runs.", href: "programming/javascript/index.html", req: true, c: "var(--js)", k: ["Closures", "Prototypes", "Modules"] },
+      { t: "The DOM & the Browser", s: "Selecting and changing the page, event handling, and fetching data.", href: "programming/javascript/dom.html", needs: ["programming/javascript/index.html"], req: true, c: "var(--js)", k: ["Selectors", "Events", "Fetch"] },
+      { t: "Asynchronous JavaScript", s: "Promises, async/await, and the event loop that orders it all.", href: "programming/javascript/async.html", needs: ["programming/javascript/index.html"], req: true, c: "var(--js)", k: ["Promises", "async/await", "Event loop"] },
+      { t: "TypeScript", s: "A static type system over the same language: inference, generics, and unions that catch bugs before runtime.", href: "programming/typescript/index.html", needs: ["programming/javascript/index.html"], req: true, c: "var(--ts)", k: ["Inference", "Generics", "Unions"] },
+      { stage: "What interviews still ask", t: "Big-O Notation", s: "Reason about time and space cost before you reach for an optimisation.", href: "dsa/bigo.html", req: true, c: "var(--blue)", k: ["Time", "Space", "Growth rates"] },
+      { t: "Arrays & Strings", s: "The most-tested structure, and the two-pointer and sliding-window patterns that go with it.", href: "dsa/arrays.html", req: false, c: "var(--blue)", k: ["Two pointers", "Sliding window"] },
+      { t: "System Design Fundamentals", s: "Functional vs non-functional requirements, and how a request actually flows through a system.", href: "system-design/fundamentals.html", req: false, c: "var(--green)", k: ["Requirements", "Trade-offs"] },
+      { t: "Caching Strategies", s: "Cache layers from memory to CDN edge, and the consistency cost of each.", href: "system-design/caching.html", req: false, c: "var(--green)", k: ["Cache layers", "Invalidation"] },
+      { stage: "Prove it", t: "JavaScript Interview", s: "15 questions on closures, `this`, the event loop, and prototypes.", href: "interview/js-interview.html", needs: ["programming/javascript/async.html"], req: true, c: "var(--teal)", k: ["15 questions"] },
+    ],
+  },
+  {
+    id: "backend", name: "Backend Developer", icon: "ti-server-2", color: "var(--green)",
+    blurb: "Build the server side. Pick a strong language, get fluent in objects and SQL, then layer on APIs, scale, and the operating system and network underneath it all.",
+    nodes: [
+      { stage: "The language", t: "Python", s: "Readable, batteries-included, and interview-friendly — a strong backend starting point.", href: "programming/python/index.html", req: true, c: "var(--amber)", k: ["Syntax", "Collections", "Idioms"] },
+      { t: "Object-Oriented Python", s: "Classes, inheritance, magic methods, and the four pillars in code you can run.", href: "programming/python/oop.html", needs: ["programming/python/index.html"], req: true, c: "var(--amber)", k: ["Classes", "Inheritance", "Dunder methods"] },
+      { stage: "The data layer", t: "SQL & Databases", s: "Queries, joins, window functions, indexes, and normalization — the one query language you are guaranteed to need.", href: "databases/sql.html", req: true, c: "var(--cyan)", k: ["Joins", "Indexes", "Normalization"] },
+      { t: "Database Systems", s: "Relational vs NoSQL, key-value vs document vs graph, and when each earns its place.", href: "databases/index.html", req: false, c: "var(--cyan)", k: ["RDBMS", "NoSQL", "Selection"] },
+      { stage: "Building services", t: "FastAPI", s: "Async Python endpoints with Pydantic validation, dependency injection, and generated docs.", href: "system-design/fastapi.html", needs: ["programming/python/index.html", "databases/sql.html"], req: true, c: "var(--green)", k: ["REST", "Pydantic", "Async"] },
+      { t: "System Design Fundamentals", s: "How the pieces of a backend fit together, and which requirements drive the shape.", href: "system-design/fundamentals.html", req: true, c: "var(--green)", k: ["Architecture", "Requirements"] },
+      { t: "Scalability", s: "Vertical vs horizontal scaling, load balancing, and why statelessness matters.", href: "system-design/scalability.html", needs: ["system-design/fundamentals.html"], req: true, c: "var(--green)", k: ["Horizontal", "Load balancing"] },
+      { stage: "Under the hood", t: "Operating Systems", s: "Processes, threads, scheduling, and virtual memory — what your service actually runs on.", href: "systems/os/index.html", req: false, c: "var(--red)", k: ["Processes", "Threads", "Memory"] },
+      { t: "Networking", s: "The TCP/IP stack, DNS, and HTTP — how your services reach each other.", href: "systems/networking/index.html", req: false, c: "var(--red)", k: ["TCP/IP", "DNS", "HTTP"] },
+      { stage: "Prove it", t: "OOP Interview", s: "The four pillars, SOLID, and the design patterns interviewers keep returning to.", href: "interview/oop-interview.html", needs: ["programming/python/oop.html"], req: true, c: "var(--teal)", k: ["SOLID", "Patterns"] },
+    ],
+  },
+  {
+    id: "fullstack", name: "Full Stack Developer", icon: "ti-stack-2", color: "var(--amber)",
+    blurb: "Both ends of the wire. Own the browser with JavaScript and TypeScript, serve it with Python and SQL, then package and ship the whole thing yourself.",
+    nodes: [
+      { stage: "The browser half", t: "JavaScript", s: "Closures, prototypes, and the event loop — the language every browser runs.", href: "programming/javascript/index.html", req: true, c: "var(--js)", k: ["Closures", "Prototypes"] },
+      { t: "The DOM & the Browser", s: "Selecting and changing the page, event handling, and fetching data.", href: "programming/javascript/dom.html", needs: ["programming/javascript/index.html"], req: true, c: "var(--js)", k: ["Selectors", "Events", "Fetch"] },
+      { t: "TypeScript", s: "One typed language on both sides of the wire, checked before it ships.", href: "programming/typescript/index.html", needs: ["programming/javascript/index.html"], req: true, c: "var(--ts)", k: ["Inference", "Generics", "Utility types"] },
+      { stage: "The server half", t: "Python", s: "A readable server language with a deep library ecosystem.", href: "programming/python/index.html", req: true, c: "var(--amber)", k: ["Syntax", "Collections"] },
+      { t: "FastAPI", s: "Async endpoints with validation and generated docs, ready for the frontend to call.", href: "system-design/fastapi.html", needs: ["programming/python/index.html"], req: true, c: "var(--green)", k: ["REST", "Pydantic", "Async"] },
+      { stage: "The data half", t: "SQL & Databases", s: "Queries, joins, indexes, and schema design.", href: "databases/sql.html", req: true, c: "var(--cyan)", k: ["Joins", "Indexes", "Schema"] },
+      { t: "PostgreSQL", s: "ACID, MVCC, and extensibility — why it is most teams' default relational database.", href: "databases/postgres.html", needs: ["databases/sql.html"], req: false, c: "var(--cyan)", k: ["ACID", "MVCC"] },
+      { stage: "Ship it", t: "Git Commands", s: "The twenty commands that do most of the work, plus branching and the team workflow.", href: "devops/git.html", req: true, c: "var(--red)", k: ["Branching", "Merging", "Rebase"] },
+      { t: "Docker", s: "Layered images built from a Dockerfile, so the app runs the same everywhere.", href: "devops/docker.html", needs: ["devops/git.html"], req: true, c: "var(--cyan)", k: ["Images", "Dockerfile", "Layers"] },
+      { t: "CI/CD Overview", s: "Automated build, test, and deploy on every commit.", href: "devops/cicd.html", needs: ["devops/docker.html"], req: false, c: "var(--amber)", k: ["Pipelines", "Automation"] },
+      { stage: "Prove it", t: "System Design Interview", s: "38 questions spanning scalability, caching, CAP, and microservices case studies.", href: "interview/system-design-interview.html", req: true, c: "var(--teal)", k: ["38 questions"] },
+    ],
+  },
+  {
+    id: "dsa", name: "DSA & Interview Prep", icon: "ti-chart-bar", color: "var(--blue)",
+    blurb: "The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to graphs and dynamic programming, then drill the question bank.",
+    nodes: [
+      { stage: "Fundamentals", t: "Big-O Notation", s: "The vocabulary of efficiency you will use in every other answer.", href: "dsa/bigo.html", req: true, c: "var(--blue)", k: ["Time", "Space", "Amortized"] },
+      { t: "Arrays & Strings", s: "Two pointers, sliding window, and prefix sums.", href: "dsa/arrays.html", req: true, c: "var(--blue)", k: ["Two pointers", "Sliding window"] },
+      { t: "Singly Linked Lists", s: "Pointer surgery, reversal, fast/slow traversal, and the classic off-by-one traps.", href: "dsa/sll.html", req: true, c: "var(--blue)", k: ["Reversal", "Fast/slow"] },
+      { t: "Hash Tables", s: "Hashing, collisions, and the O(1) lookup that half of all solutions lean on.", href: "dsa/hashtable.html", req: true, c: "var(--blue)", k: ["Hashing", "Collisions"] },
+      { stage: "Core structures", t: "Stacks", s: "LIFO, the call stack, and monotonic-stack problems.", href: "dsa/stack.html", req: true, c: "var(--blue)", k: ["LIFO", "Monotonic"] },
+      { t: "Queues", s: "FIFO, circular buffers, and the deque behind sliding-window maxima.", href: "dsa/queue.html", req: true, c: "var(--blue)", k: ["FIFO", "Deque"] },
+      { t: "Binary Search Trees", s: "Ordered insert and lookup, in-order traversal, and how a tree degenerates.", href: "dsa/bst.html", req: true, c: "var(--blue)", k: ["Traversal", "Insert", "Delete"] },
+      { t: "AVL Trees", s: "Rotations that keep a search tree balanced, and the cost of skipping them.", href: "dsa/avl.html", needs: ["dsa/bst.html"], req: false, c: "var(--blue)", k: ["Rotations", "Balance"] },
+      { stage: "Graphs", t: "Graphs", s: "Adjacency lists vs matrices, directed vs weighted, and the terminology interviews assume.", href: "dsa/graph.html", req: true, c: "var(--blue)", k: ["Adjacency", "Directed", "Weighted"] },
+      { t: "BFS", s: "Level-order traversal, and shortest paths on an unweighted graph.", href: "dsa/bfs.html", needs: ["dsa/graph.html"], req: true, c: "var(--blue)", k: ["Queue", "Shortest path"] },
+      { t: "DFS", s: "Depth-first traversal, cycle detection, and recursive backtracking.", href: "dsa/dfs.html", needs: ["dsa/graph.html"], req: true, c: "var(--blue)", k: ["Recursion", "Cycles"] },
+      { t: "Dijkstra's Algorithm", s: "Shortest paths once edges carry weight.", href: "dsa/dijkstra.html", needs: ["dsa/graph.html", "dsa/bfs.html"], req: false, c: "var(--blue)", k: ["Weighted", "Priority queue"] },
+      { stage: "Hard mode", t: "Recursion", s: "Base cases, the call stack, and the habit of thinking one level down.", href: "dsa/recursion.html", req: true, c: "var(--blue)", k: ["Base case", "Call stack"] },
+      { t: "Dynamic Programming", s: "Memoization, tabulation, and learning to recognise the pattern.", href: "dsa/dp.html", needs: ["dsa/recursion.html"], req: true, c: "var(--blue)", k: ["Memoization", "Tabulation"] },
+      { stage: "Prove it", t: "DSA Interview Bank", s: "47 questions across arrays, trees, graphs, DP and sorting, tagged for FAANG and startups.", href: "interview/dsa-interview.html", req: true, c: "var(--teal)", k: ["47 questions"] },
+    ],
+  },
+  {
+    id: "cs", name: "CS Fundamentals", icon: "ti-cpu", color: "var(--teal)",
+    blurb: "What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all.",
+    nodes: [
+      { stage: "The operating system", t: "Processes & Threads", s: "What a running program actually is, and how the kernel juggles many at once.", href: "systems/os/processes.html", req: true, c: "var(--red)", k: ["PCB", "Context switch"] },
+      { t: "Memory Management", s: "Virtual memory, paging, and why your pointer is not the address you think.", href: "systems/os/memory.html", req: true, c: "var(--red)", k: ["Virtual memory", "Paging"] },
+      { t: "CPU Scheduling", s: "How the OS picks what runs next, and the trade-off inside each policy.", href: "systems/os/scheduling.html", req: true, c: "var(--red)", k: ["Round robin", "Priority"] },
+      { t: "Concurrency & Synchronization", s: "Race conditions, locks, semaphores, and the bugs that only surface under load.", href: "systems/os/concurrency.html", req: true, c: "var(--red)", k: ["Races", "Mutex", "Semaphore"] },
+      { t: "Deadlocks", s: "The four necessary conditions, and which one to break.", href: "systems/os/deadlocks.html", needs: ["systems/os/concurrency.html"], req: false, c: "var(--red)", k: ["Coffman conditions"] },
+      { stage: "The network", t: "The TCP/IP Stack", s: "Layers, encapsulation, and which protocol lives where.", href: "systems/networking/stack.html", req: true, c: "var(--cyan)", k: ["Layers", "Encapsulation"] },
+      { t: "TCP vs UDP", s: "Reliable vs fast, the three-way handshake, and when each is the right call.", href: "systems/networking/tcp-udp.html", needs: ["systems/networking/stack.html"], req: true, c: "var(--cyan)", k: ["Handshake", "Reliability"] },
+      { t: "HTTP & HTTPS", s: "Methods, status codes, headers, TLS, and what HTTP/2 and /3 changed.", href: "systems/networking/http.html", needs: ["systems/networking/tcp-udp.html"], req: true, c: "var(--cyan)", k: ["Methods", "Status codes", "TLS"] },
+      { t: "DNS", s: "How a name becomes an address, and every cache in between.", href: "systems/networking/dns.html", needs: ["systems/networking/stack.html"], req: false, c: "var(--cyan)", k: ["Resolvers", "Records"] },
+      { stage: "Data & security", t: "SQL & Databases", s: "Relational modelling, transactions, joins, and indexes.", href: "databases/sql.html", req: true, c: "var(--cyan)", k: ["Transactions", "Joins", "Indexes"] },
+      { t: "Security Fundamentals", s: "The CIA triad, threat modelling, and the attack classes worth knowing by name.", href: "systems/security/fundamentals.html", req: false, c: "var(--purple)", k: ["CIA triad", "Threat models"] },
+      { stage: "Theory", t: "Big-O Notation", s: "The vocabulary of efficiency, used everywhere else on this list.", href: "dsa/bigo.html", req: true, c: "var(--blue)", k: ["Growth rates"] },
+      { t: "P vs NP", s: "Which problems are tractable, and which only look like they are.", href: "systems/theory/p-vs-np.html", req: false, c: "var(--purple)", k: ["Complexity classes", "NP-hard"] },
+      { stage: "Prove it", t: "OS Interview", s: "30 questions on processes, scheduling, memory, concurrency, deadlocks and I/O.", href: "interview/os-interview.html", needs: ["systems/os/concurrency.html"], req: true, c: "var(--teal)", k: ["30 questions"] },
+      { t: "Networking Interview", s: "30 questions on TCP/IP, DNS, HTTP, sockets, subnets and NAT.", href: "interview/networking-interview.html", needs: ["systems/networking/http.html"], req: false, c: "var(--teal)", k: ["30 questions"] },
+    ],
+  },
+  {
+    id: "devops", name: "DevOps & Cloud", icon: "ti-server-cog", color: "var(--red)",
+    blurb: "Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the whole thing to the cloud as code.",
+    nodes: [
+      { stage: "Foundations", t: "Linux Basics", s: "The shell, the filesystem, permissions, and processes — everything is a file.", href: "devops/linux-basics.html", req: true, c: "var(--red)", k: ["Shell", "Permissions", "Processes"] },
+      { t: "Git Commands", s: "The twenty commands that do most of the work, plus branching, merging, and rebase.", href: "devops/git.html", req: true, c: "var(--red)", k: ["Branching", "Merging", "Rebase"] },
+      { stage: "Containers", t: "Docker", s: "Layered images built from a Dockerfile, and reproducible environments.", href: "devops/docker.html", req: true, c: "var(--cyan)", k: ["Images", "Dockerfile", "Volumes"] },
+      { t: "Kubernetes", s: "The control plane, pods, services and deployments — containers at cluster scale.", href: "devops/kubernetes.html", needs: ["devops/docker.html"], req: true, c: "var(--cyan)", k: ["Pods", "Services", "Control plane"] },
+      { stage: "Automation", t: "CI/CD Overview", s: "Automated build, test, and deploy triggered by every commit.", href: "devops/cicd.html", needs: ["devops/git.html", "devops/docker.html"], req: true, c: "var(--amber)", k: ["Pipelines", "Stages"] },
+      { stage: "Cloud", t: "AWS Basics", s: "Regions and Availability Zones, compute, storage, and IAM.", href: "devops/aws-basics.html", req: true, c: "var(--green)", k: ["Regions", "EC2", "IAM"] },
+      { t: "Terraform", s: "Declarative HCL for infrastructure — declare it, version it, apply it.", href: "devops/terraform.html", needs: ["devops/aws-basics.html"], req: false, c: "var(--purple)", k: ["HCL", "State", "Plan/apply"] },
+      { stage: "Prove it", t: "DevOps Interview", s: "29 questions on Docker, Kubernetes, CI/CD, Linux, monitoring, IaC and SRE.", href: "interview/devops-interview.html", req: true, c: "var(--teal)", k: ["29 questions"] },
+    ],
+  },
+  {
+    id: "aiml", name: "AI / ML Engineer", icon: "ti-robot", color: "var(--purple)",
+    blurb: "Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through deep learning to the models behind today's LLMs.",
+    nodes: [
+      { stage: "Foundations", t: "Python", s: "The lingua franca of data science and machine learning.", href: "programming/python/index.html", req: true, c: "var(--amber)", k: ["Syntax", "Collections", "Libraries"] },
+      { t: "Data Science & AI Cheat Sheet", s: "A fast reference for the probability, linear algebra, and statistics the rest of this path assumes.", href: "aiml/ds-cheatsheet.html", req: true, c: "var(--purple)", k: ["Probability", "Linear algebra", "Stats"] },
+      { stage: "Core ML", t: "Machine Learning", s: "Supervised and unsupervised learning, and the full model lifecycle.", href: "aiml/ml.html", needs: ["programming/python/index.html", "aiml/ds-cheatsheet.html"], req: true, c: "var(--purple)", k: ["Supervised", "Unsupervised", "Evaluation"] },
+      { t: "Deep Learning", s: "Neural networks, backpropagation, and training at scale.", href: "aiml/dl.html", needs: ["aiml/ml.html"], req: true, c: "var(--purple)", k: ["Backprop", "Layers", "Training"] },
+      { stage: "Domains", t: "Natural Language Processing", s: "From embeddings through to transformers.", href: "aiml/nlp.html", needs: ["aiml/dl.html"], req: false, c: "var(--purple)", k: ["Embeddings", "Transformers"] },
+      { t: "Computer Vision", s: "Convolutions, detection, and image models.", href: "aiml/cv.html", needs: ["aiml/dl.html"], req: false, c: "var(--purple)", k: ["CNNs", "Detection"] },
+      { t: "Generative AI & LLMs", s: "How large language models work, and how to build on top of them.", href: "aiml/genai.html", needs: ["aiml/dl.html"], req: true, c: "var(--purple)", k: ["LLMs", "Prompting", "RAG"] },
+      { stage: "Prove it", t: "AI/ML Interview", s: "Questions across ML fundamentals, deep learning, and modern LLMs.", href: "interview/aiml-interview.html", req: true, c: "var(--teal)", k: ["ML", "DL", "LLMs"] },
+    ],
+  },
+];
+
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const keyFor = (pid, i) => "tf_rm_" + pid + "_" + i;
+function isDone(pid, i) { try { return localStorage.getItem(keyFor(pid, i)) === "1"; } catch (e) { return false; } }
+function setDone(pid, i, v) { try { v ? localStorage.setItem(keyFor(pid, i), "1") : localStorage.removeItem(keyFor(pid, i)); } catch (e) {} }
+
+let activePath = PATHS[0].id;
+
+function renderTabs() {
+  const tabs = document.getElementById("rmTabs");
+  const side = document.getElementById("rmSideNav");
+  tabs.innerHTML = "";
+  side.innerHTML = "";
+  PATHS.forEach((p) => {
+    const total = p.nodes.filter((n) => n.href).length;
+    let done = 0;
+    p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "rm-tab" + (p.id === activePath ? " active" : "");
+    btn.style.setProperty("--rt-c", p.color);
+    btn.innerHTML = '<i class="ti ' + p.icon + '"></i><span>' + esc(p.name) + '<span class="rm-tab-mini">' + done + " / " + total + " done</span></span>";
+    btn.addEventListener("click", () => { activePath = p.id; renderTabs(); renderPath(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    tabs.appendChild(btn);
+
+    const link = document.createElement("a");
+    link.href = "#";
+    link.className = "sb-link" + (p.id === activePath ? " active" : "");
+    link.innerHTML = '<span class="sb-num"><i class="ti ' + p.icon + '"></i></span>' + esc(p.name);
+    link.addEventListener("click", (e) => { e.preventDefault(); activePath = p.id; renderTabs(); renderPath(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    side.appendChild(link);
+  });
+}
+
+function renderPath() {
+  const p = PATHS.find((x) => x.id === activePath);
+  const mount = document.getElementById("rmMount");
+  const total = p.nodes.filter((n) => n.href).length;
+  let done = 0;
+  p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  let html = '<div class="rm-phead anim-in" style="--pa-c:' + p.color + '">' +
+    '<div class="rm-picon"><i class="ti ' + p.icon + '"></i></div>' +
+    '<div class="rm-pbody"><div class="rm-pname">' + esc(p.name) + '</div><div class="rm-pblurb">' + esc(p.blurb) + '</div>' +
+    '<button type="button" class="rm-reset" data-reset="' + p.id + '">↺ Reset this path</button></div>' +
+    '<div class="rm-pstat"><div class="rm-pct" id="rmPct">' + pct + '%</div><div class="rm-pct-l" id="rmCount">' + done + " / " + total + '</div></div></div>' +
+    '<div class="rm-pbar-wrap"><div class="rm-pbar" id="rmBar" style="transform:scaleX(' + (pct / 100) + ');background:' + p.color + '"></div></div>';
+
+  html += '<div class="rm-done-msg' + (done === total && total ? " show" : "") + '" id="rmDoneMsg"><strong>Path complete.</strong> You’ve worked through every milestone in ' + esc(p.name) + ". Nicely done.</div>";
+
+  // "You are here" = the first core milestone still outstanding. Optional ones
+  // never claim the marker, so skipping them doesn't strand the pointer.
+  let currentIdx = p.nodes.findIndex((node, i) => node.href && node.req && !isDone(p.id, i));
+  if (currentIdx === -1) currentIdx = p.nodes.findIndex((node, i) => node.href && !isDone(p.id, i));
+
+  html += '<div class="rm-spine" style="--pa-c:' + p.color + '"><div class="rm-spine-fill" id="rmSpineFill"></div>';
+  let n = 0;
+  p.nodes.forEach((node, i) => {
+    if (node.stage) html += '<div class="rm-stage">' + esc(node.stage) + "</div>";
+    if (!node.href) return;
+    const kit = (node.k || []).map((x) => "<span>" + esc(x) + "</span>").join("");
+    const needs = prereqsOf(p, i);
+    const needLabel = needs.map((j) => esc(p.nodes[j].t)).join(" · ");
+    html += '<div class="rm-node" data-i="' + i + '" style="--nc:' + (node.c || p.color) + ";--i:" + n + '">' +
+      '<button type="button" class="rm-marker" data-toggle="' + i + '"><span class="rm-mnum">' + (n + 1) + "</span>" +
+      '<svg class="rm-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>' +
+      '<a class="rm-card" href="' + node.href + '">' +
+      '<div class="rm-cbody"><div class="rm-ctop"><span class="rm-cname">' + esc(node.t) + "</span>" +
+      '<span class="rm-badge ' + (node.req ? "rm-badge-req" : "rm-badge-opt") + '">' + (node.req ? "Core" : "Optional") + "</span>" +
+      '<span class="rm-badge rm-badge-now">Start here</span></div>' +
+      '<div class="rm-cdesc">' + esc(node.s) + "</div>" +
+      (kit ? '<div class="rm-kit">' + kit + "</div>" : "") +
+      (needLabel ? '<div class="rm-needs"><i class="ti ti-lock" aria-hidden="true"></i>After ' + needLabel + "</div>" : "") +
+      "</div>" +
+      '<span class="rm-carrow">Open <span>lesson</span> →</span></a></div>';
+    n++;
+  });
+  html += "</div>";
+  mount.innerHTML = html;
+
+  // One listener on the spine rather than one per marker: the nodes are never
+  // rebuilt on toggle now, but this also keeps the handler count flat.
+  mount.querySelector(".rm-spine").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-toggle]");
+    if (!btn) return;
+    const i = +btn.getAttribute("data-toggle");
+    const now = !isDone(p.id, i);
+    setDone(p.id, i, now);
+    if (now) btn.classList.add("pop");
+    setTimeout(() => btn.classList.remove("pop"), 400);
+    syncStates(p);
+    renderTabs();
+  });
+
+  const rb = mount.querySelector("[data-reset]");
+  if (rb) rb.addEventListener("click", () => {
+    if (!confirm("Reset progress for " + p.name + "?")) return;
+    p.nodes.forEach((node, i) => { if (node.href) setDone(p.id, i, false); });
+    syncStates(p);
+    renderTabs();
+  });
+
+  syncStates(p, true);
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  mount.querySelectorAll(".anim-in").forEach(function (el) { obs.observe(el); });
+}
+
+/* Real prerequisites only — the ones where the later page genuinely assumes the
+   earlier one (Dijkstra assumes Graphs). Deliberately not the reading order: a
+   strict previous-step chain dims all but the first milestone, which turns the
+   path into a wall of grey and tells the reader nothing they can't already see. */
+function prereqsOf(p, i) {
+  const node = p.nodes[i];
+  if (!node.needs) return [];
+  return node.needs.map((h) => p.nodes.findIndex((x) => x.href === h)).filter((j) => j >= 0);
+}
+
+/* Reading order, used only to pick "Start here" so the pointer walks the path
+   top-down even where nothing is formally blocked. */
+function prevCore(p, i) {
+  for (let j = i - 1; j >= 0; j--) {
+    if (p.nodes[j].href && p.nodes[j].req) return j;
+  }
+  return -1;
+}
+
+/* Updates state on the existing DOM. Nothing is torn down, so every change is
+   something CSS can transition rather than a fresh element popping into place. */
+function syncStates(p, first) {
+  const mount = document.getElementById("rmMount");
+  const total = p.nodes.filter((n) => n.href).length;
+  let done = 0;
+  p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  // First core milestone that is unfinished, unblocked, and whose predecessor in
+  // reading order is already done — so the pointer walks the path in order.
+  const open = (i) => prereqsOf(p, i).every((j) => isDone(p.id, j));
+  let currentIdx = p.nodes.findIndex((n, i) => {
+    if (!n.href || !n.req || isDone(p.id, i) || !open(i)) return false;
+    const prev = prevCore(p, i);
+    return prev === -1 || isDone(p.id, prev);
+  });
+  if (currentIdx === -1) currentIdx = p.nodes.findIndex((n, i) => n.href && n.req && !isDone(p.id, i) && open(i));
+  if (currentIdx === -1) currentIdx = p.nodes.findIndex((n, i) => n.href && !isDone(p.id, i));
+
+  let lastDoneOrder = -1, order = 0;
+  mount.querySelectorAll(".rm-node").forEach((el) => {
+    const i = +el.getAttribute("data-i");
+    const d = isDone(p.id, i);
+    const locked = !d && !prereqsOf(p, i).every((j) => isDone(p.id, j));
+    const wasLocked = el.classList.contains("locked");
+    el.classList.toggle("done", d);
+    el.classList.toggle("current", i === currentIdx);
+    el.classList.toggle("locked", locked);
+    if (!first && wasLocked && !locked) {
+      el.classList.add("unlocked");
+      setTimeout(() => el.classList.remove("unlocked"), 900);
+    }
+    const btn = el.querySelector(".rm-marker");
+    btn.setAttribute("aria-pressed", d ? "true" : "false");
+    const name = el.querySelector(".rm-cname").textContent;
+    btn.setAttribute("aria-label", (d ? "Mark " + name + " not done" : "Mark " + name + " done") + (locked ? " (earlier milestones still open)" : ""));
+    if (d) lastDoneOrder = order;
+    order++;
+  });
+
+  // The spine fills to the deepest completed milestone: progress you can see
+  // without reading the percentage.
+  const fill = document.getElementById("rmSpineFill");
+  if (fill) fill.style.transform = "scaleY(" + (order ? Math.max(0, lastDoneOrder + 1) / order : 0) + ")";
+
+  const bar = document.getElementById("rmBar");
+  if (bar) bar.style.transform = "scaleX(" + pct / 100 + ")";
+  const pctEl = document.getElementById("rmPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  const cnt = document.getElementById("rmCount");
+  if (cnt) cnt.textContent = done + " / " + total;
+  const msg = document.getElementById("rmDoneMsg");
+  if (msg) msg.classList.toggle("show", done === total && total > 0);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  renderTabs();
+  renderPath();
+  var pf = document.getElementById("progressFill"), bt = document.getElementById("backTop");
+  window.addEventListener("scroll", function () {
+    var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight;
+    if (pf) pf.style.width = (h > 0 ? (s / h) * 100 : 0) + "%";
+    if (bt) bt.classList.toggle("visible", s > 400);
+  }, { passive: true });
+  if (bt) bt.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  var heroObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); heroObs.unobserve(e.target); } });
+  }, { threshold: 0.05 });
+  document.querySelectorAll(".rm-hero.anim-in, .rm-tabs.anim-in").forEach(function (el) { heroObs.observe(el); });
+});
+</script>
+</body>
+</html>

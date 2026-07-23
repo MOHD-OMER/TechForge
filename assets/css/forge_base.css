@@ -2497,6 +2497,23 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
    MOBILE NAV — safety override
    Ensures hamburger shows on ALL pages
 ══════════════════════════════════════════ */
+/* Between the mobile breakpoint and a roomy desktop the full nav has more
+   items than horizontal space, and the last links slide off the right edge.
+   Tighten the links instead of dropping them. */
+@media (min-width: 901px) and (max-width: 1300px) {
+  header.topbar .tb-logo, header.topbar .topbar-actions { flex-shrink: 0; }
+  header.topbar .tb-nav {
+    gap: 0;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  header.topbar .tb-nav::-webkit-scrollbar { display: none; }
+  header.topbar .tb-link { padding: 7px 7px; font-size: 12.5px; letter-spacing: 0; }
+  header.topbar .tb-link.current::after { left: 7px; right: 7px; }
+}
+
 @media (max-width: 900px) {
   header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
   header.topbar .topbar-actions { display: flex !important; align-items: center !important; margin-left: auto !important; gap: 6px !important; padding-left: 0 !important; border-left: 0 !important; }
