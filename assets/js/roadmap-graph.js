@@ -71,3 +71,45 @@ export function computeLayout(graph) {
 
   return { placed, buses, cols, ranks: placed.size ? maxRank + 1 : 0 };
 }
+
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+function nodeHTML(n) {
+  const icon = n.i ? `<i class="ti ${esc(n.i)}" aria-hidden="true"></i>` : '';
+  const desc = n.s ? `<span class="rg-desc">${esc(n.s)}</span>` : '';
+  const chips = (n.k || []).length
+    ? `<span class="rg-chips">${n.k.map((k) => `<span>${esc(k)}</span>`).join('')}</span>` : '';
+  const body = `<span class="rg-title">${icon}${esc(n.t)}</span>${desc}${chips}`;
+  const cls = `rg-node rg-${n.tier}`;
+  // No href means a category with no page of its own: a label, not a link.
+  return n.href
+    ? `<a class="${cls}" href="${esc(n.href)}" data-id="${esc(n.id)}">${body}</a>`
+    : `<div class="${cls} rg-group" data-id="${esc(n.id)}">${body}</div>`;
+}
+
+export function mount(container, graph) {
+  const { placed, buses } = computeLayout(graph);
+  const byId = new Map(graph.nodes.map((n) => [n.id, n]));
+
+  const cells = [...placed.entries()].sort((a, b) =>
+    a[1].rank - b[1].rank || a[1].col - b[1].col);
+
+  const items = cells.map(([id, p]) => {
+    const kids = buses.get(id) || [];
+    const bus = kids.length
+      ? `<div class="rg-bus">${kids.map((k) => nodeHTML(byId.get(k))).join('')}</div>`
+      : '';
+    const label = p.node.g ? `<span class="rg-group-label">${esc(p.node.g)}</span>` : '';
+    return `<li class="rg-cell" style="grid-row:${p.rank + 1};grid-column:${p.col + 1}">`
+      + label + nodeHTML(p.node) + bus + '</li>';
+  }).join('');
+
+  container.innerHTML =
+    `<div class="rg-wrap">
+       <svg class="rg-edges" aria-hidden="true" focusable="false"></svg>
+       <ol class="rg-grid">${items}</ol>
+     </div>`;
+
+  return { refresh() {} }; // replaced in Task 4
+}

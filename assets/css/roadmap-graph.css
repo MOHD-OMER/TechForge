@@ -1,0 +1,53 @@
+/* Roadmap flow chart. Tiers carry importance through size and weight — the
+   previous single-lane layout gave every topic identical weight, which is what
+   read as flat. */
+.rg-wrap { position: relative; margin: 28px 0 40px; }
+.rg-grid {
+  display: grid;
+  gap: 28px 24px;
+  justify-content: center;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.rg-cell { display: flex; flex-direction: column; gap: 8px; }
+
+.rg-node {
+  display: block;
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.rg-node:hover { border-color: var(--nc, var(--border2)); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.rg-title { font-weight: 700; color: var(--text); letter-spacing: -.2px; display: flex; align-items: center; gap: 7px; }
+.rg-desc { font-size: 11.5px; color: var(--text2); line-height: 1.55; margin-top: 4px; }
+.rg-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.rg-chips span { font-family: var(--font-mono); font-size: 9.5px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 2px 7px; }
+
+.rg-spine  { width: 260px; }
+.rg-spine  .rg-title { font-size: 15px; }
+.rg-branch { width: 200px; }
+.rg-branch .rg-title { font-size: 13.5px; }
+.rg-branch .rg-chips { display: none; }
+.rg-detail { width: auto; padding: 7px 11px; }
+.rg-detail .rg-title { font-size: 12px; font-weight: 600; }
+.rg-detail .rg-desc, .rg-detail .rg-chips { display: none; }
+
+/* A grouping node has no page of its own — label, not link. */
+.rg-group { background: transparent; border-style: dashed; cursor: default; }
+
+.rg-bus { display: flex; flex-direction: column; gap: 6px; padding-left: 14px; border-left: 1px solid var(--border); margin-left: 12px; }
+
+.rg-group-label { font-family: var(--font-mono); font-size: 10.5px; color: var(--text2); margin-bottom: 4px; }
+
+@media (max-width: 760px) {
+  .rg-grid { display: flex; flex-direction: column; gap: 12px; }
+  .rg-spine, .rg-branch, .rg-detail { width: 100%; }
+  .rg-edges { display: none; }
+}
