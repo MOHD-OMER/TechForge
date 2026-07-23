@@ -76,7 +76,18 @@
 
 .rg-bus { display: flex; flex-direction: column; gap: 6px; padding-left: 14px; border-left: 1px solid var(--border); margin-left: 12px; }
 
-.rg-group-label { font-family: var(--font-mono); font-size: 10.5px; color: var(--text2); margin-bottom: 4px; }
+/* Band labels belong to the trunk, so they centre over it. Left-aligned inside a
+   side cell they floated free of anything and read as stray text. */
+.rg-group-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 2px;
+  align-self: center;
+  text-align: center;
+}
 
 /* Motion. The trunk draws itself downward and branches settle in after it, so
    the eye is led along the main path on arrival. Transform and stroke only —

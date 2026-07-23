@@ -97,13 +97,34 @@ function computeLayout(graph) {
   for (const s of spine) {
     placed.set(s.id, { rank: row, col: 1, node: s });
     const kids = branchesBy.get(s.id) || [];
-    let left = row, right = row;
-    kids.forEach((k, i) => {
-      // An explicit col pin wins; otherwise alternate sides.
-      const side = k.col === 0 || k.col === 2 ? k.col : (i % 2 === 0 ? 0 : 2);
+
+    // Place parents before their own children so a child can inherit the side
+    // its parent landed on. Without this a sub-branch can alternate to the
+    // opposite column and its connector swings right across the whole graph.
+    const depthIn = (n) => {
+      let d = 0, cur = n, guard = 0;
+      while (cur && guard++ < 50) {
+        const p = byId.get((cur.after || [])[0]);
+        if (!p || p.tier === 'spine') break;
+        d++; cur = p;
+      }
+      return d;
+    };
+    const ordered = kids.slice().sort((a, b) => depthIn(a) - depthIn(b));
+
+    let left = row, right = row, alt = 0;
+    for (const k of ordered) {
+      let side;
+      if (k.col === 0 || k.col === 2) {
+        side = k.col;                                   // explicit pin wins
+      } else {
+        const parent = placed.get((k.after || [])[0]);
+        side = parent && parent.col !== 1 ? parent.col  // stay under the parent
+             : (alt++ % 2 === 0 ? 0 : 2);               // else alternate sides
+      }
       const at = side === 0 ? left++ : right++;
       placed.set(k.id, { rank: at, col: side, node: k });
-    });
+    }
     row = Math.max(row + 1, left, right);
   }
 
