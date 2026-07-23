@@ -72,6 +72,15 @@ export function computeLayout(graph) {
   return { placed, buses, cols, ranks: placed.size ? maxRank + 1 : 0 };
 }
 
+const key = (gid, nid) => `tf_rg_${gid}_${nid}`;
+export function isDone(gid, nid) {
+  try { return localStorage.getItem(key(gid, nid)) === '1'; } catch (e) { return false; }
+}
+export function setDone(gid, nid, v) {
+  try { v ? localStorage.setItem(key(gid, nid), '1') : localStorage.removeItem(key(gid, nid)); }
+  catch (e) { /* private mode */ }
+}
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
   .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -111,5 +120,64 @@ export function mount(container, graph) {
        <ol class="rg-grid">${items}</ol>
      </div>`;
 
-  return { refresh() {} }; // replaced in Task 4
+  const svg = container.querySelector('.rg-edges');
+  const wrap = container.querySelector('.rg-wrap');
+
+  function draw() {
+    // Below the collapse breakpoint the grid is a single column and the SVG is
+    // hidden by CSS; drawing would be wasted work.
+    if (window.innerWidth <= 760) { svg.innerHTML = ''; return; }
+
+    const box = wrap.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    svg.setAttribute('width', box.width);
+    svg.setAttribute('height', box.height);
+
+    const at = (id) => {
+      const el = container.querySelector(`[data-id="${id}"]`);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return {
+        top:    { x: r.left - box.left + r.width / 2, y: r.top - box.top },
+        bottom: { x: r.left - box.left + r.width / 2, y: r.bottom - box.top },
+      };
+    };
+
+    const parts = [];
+    for (const [id, p] of placed) {
+      for (const a of p.node.after || []) {
+        const from = at(a), to = at(id);
+        if (!from || !to) continue;
+        const done = isDone(graph.id, a) && isDone(graph.id, id);
+        const straight = p.node.curve === false
+          || Math.abs(from.bottom.x - to.top.x) < 2;
+        const d = straight
+          ? `M${from.bottom.x},${from.bottom.y} L${to.top.x},${to.top.y}`
+          : `M${from.bottom.x},${from.bottom.y}`
+            + ` C${from.bottom.x},${(from.bottom.y + to.top.y) / 2}`
+            + ` ${to.top.x},${(from.bottom.y + to.top.y) / 2}`
+            + ` ${to.top.x},${to.top.y}`;
+        parts.push(`<path d="${d}" class="rg-edge${done ? ' rg-edge-done' : ''}"/>`);
+      }
+    }
+    svg.innerHTML = parts.join('');
+  }
+
+  // Debounced + rAF. Writing layout synchronously inside a ResizeObserver
+  // callback triggers "ResizeObserver loop completed with undelivered
+  // notifications", which surfaces as a console error.
+  let pending = 0, timer = 0;
+  const schedule = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(draw);
+    }, 60);
+  };
+
+  new ResizeObserver(schedule).observe(wrap);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  schedule();
+
+  return { refresh: schedule };
 }
