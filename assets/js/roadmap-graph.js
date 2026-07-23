@@ -156,7 +156,10 @@ function mount(container, graph) {
       labelled.add(p.node.g);
       label = `<span class="rg-group-label">${esc(p.node.g)}</span>`;
     }
-    return `<li class="rg-cell rg-at-${p.col}" style="grid-row:${p.rank + 1};grid-column:${p.col + 1}">`
+    // Stagger by row so the graph assembles top-down; capped so a long roadmap
+    // does not leave its last nodes waiting behind a queue of delays.
+    const delay = Math.min(p.rank, 14) * 45;
+    return `<li class="rg-cell rg-at-${p.col}" style="grid-row:${p.rank + 1};grid-column:${p.col + 1};animation-delay:${delay}ms">`
       + label + nodeHTML(p.node) + bus + '</li>';
   }).join('');
 
@@ -164,7 +167,8 @@ function mount(container, graph) {
   // sprawling over the sidebar. tabindex makes it keyboard-reachable, which axe
   // requires of any scrollable region.
   container.innerHTML =
-    `<div class="rg-scroll" tabindex="0" role="group" aria-label="${esc(graph.title || 'Roadmap')} flow chart">
+    `<div class="rg-scroll" tabindex="0" role="group" aria-label="${esc(graph.title || 'Roadmap')} flow chart"
+          style="--rg-accent:${esc(graph.accent || 'var(--blue)')}">
        <div class="rg-wrap">
          <svg class="rg-edges" aria-hidden="true" focusable="false"></svg>
          <ol class="rg-grid">${items}</ol>
@@ -218,10 +222,18 @@ function mount(container, graph) {
           const mid = sx + (ex - sx) / 2;
           d = `M${sx},${sy} C${mid},${sy} ${mid},${ey} ${ex},${ey}`;
         }
-        parts.push(`<path d="${d}" class="rg-edge${done ? ' rg-edge-done' : ''}"/>`);
+        parts.push(`<path d="${d}" class="rg-edge${done ? ' rg-edge-done' : ''}" data-from="${esc(a)}" data-to="${esc(id)}"/>`);
       }
     }
     svg.innerHTML = parts.join('');
+
+    // Each path needs its own length for the draw animation; a shared constant
+    // makes short edges snap and long ones crawl.
+    svg.querySelectorAll('.rg-edge').forEach((p, i) => {
+      const len = Math.ceil(p.getTotalLength ? p.getTotalLength() : 400);
+      p.style.setProperty('--rg-len', len);
+      p.style.animationDelay = `${Math.min(i, 14) * 45 + 120}ms`;
+    });
   }
 
   // Debounced + rAF. Writing layout synchronously inside a ResizeObserver
@@ -239,6 +251,47 @@ function mount(container, graph) {
   new ResizeObserver(schedule).observe(wrap);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
+
+  // ---- ancestry highlighting -------------------------------------------------
+  // Walking `after` upward gives the full prerequisite chain for any node.
+  const chainOf = (id, acc = new Set(), guard = 0) => {
+    if (guard > 60 || acc.has(id)) return acc;
+    acc.add(id);
+    const n = byId.get(id);
+    for (const a of (n && n.after) || []) chainOf(a, acc, guard + 1);
+    return acc;
+  };
+
+  const clearLit = () => {
+    container.querySelectorAll('.rg-lit').forEach((e) => e.classList.remove('rg-lit'));
+    container.querySelectorAll('.rg-edge-lit').forEach((e) => e.classList.remove('rg-edge-lit'));
+  };
+
+  const light = (id) => {
+    clearLit();
+    const chain = chainOf(id);
+    chain.forEach((cid) => {
+      const el = container.querySelector(`[data-id="${cid}"]`);
+      if (el) el.classList.add('rg-lit');
+    });
+    container.querySelectorAll('.rg-edge').forEach((p) => {
+      if (chain.has(p.getAttribute('data-from')) && chain.has(p.getAttribute('data-to'))) {
+        p.classList.add('rg-edge-lit');
+      }
+    });
+  };
+
+  // Pointer and keyboard both drive it, so the affordance is not mouse-only.
+  container.addEventListener('mouseover', (e) => {
+    const el = e.target.closest('[data-id]');
+    if (el) light(el.getAttribute('data-id'));
+  });
+  container.addEventListener('mouseleave', clearLit, true);
+  container.addEventListener('focusin', (e) => {
+    const el = e.target.closest('[data-id]');
+    if (el) light(el.getAttribute('data-id'));
+  });
+  container.addEventListener('focusout', clearLit);
 
   return { refresh: schedule };
 }
