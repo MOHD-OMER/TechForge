@@ -21,10 +21,20 @@ const { computeLayout } = loadRoadmapGraph();
 const graph = readGraph('roadmaps/dsa.html');
 const { placed, buses } = computeLayout(graph);
 
-// spine nodes occupy the centre column
+// spine nodes occupy the centre column; branches take a side. Sub-items follow
+// whichever column their parent landed in, so a spine node's sub-items are
+// legitimately centre too.
 for (const [id, p] of placed) {
-  if (p.node.tier === 'spine') assert.equal(p.col, 1, id + ' is a spine node and belongs in the centre column');
-  else assert.ok(p.col === 0 || p.col === 2, id + ' is a branch and belongs to one side');
+  if (p.node.tier === 'spine') {
+    assert.equal(p.col, 1, id + ' is a spine node and belongs in the centre column');
+  } else if (p.inBus) {
+    const parent = placed.get((p.node.after || [])[0]);
+    assert.ok(parent, id + ' is a sub-item and must have a placed parent');
+    assert.equal(p.col, parent.col, id + ' must share its parent column');
+    assert.ok(p.rank > parent.rank, id + ' must sit below its parent');
+  } else {
+    assert.ok(p.col === 0 || p.col === 2, id + ' is a branch and belongs to one side');
+  }
 }
 
 // the spine keeps dependency order top to bottom
@@ -35,7 +45,14 @@ assert.ok(spineRows.indexOf('graph') > spineRows.indexOf('bst'), 'graphs come af
 
 // bus children are grouped under their parent, not ranked into the main grid
 assert.deepEqual(buses.get('sorting'), ['bubble', 'selection', 'insertion', 'merge', 'quick', 'heapsort']);
-assert.ok(!placed.has('bubble'), 'bus children are not placed in the main grid');
+// Sub-items now take their own grid rows rather than stacking inside one cell —
+// stacking made that cell six pills tall and blew a 214px hole in the row beside it.
+assert.ok(placed.has('bubble'), 'sub-items get their own row');
+assert.equal(placed.get('bubble').col, placed.get('sorting').col, 'sub-item shares its parent column');
+assert.ok(placed.get('bubble').rank > placed.get('sorting').rank, 'sub-item sits below its parent');
+const sortKids = ['bubble', 'selection', 'insertion', 'merge', 'quick', 'heapsort'].map((id) => placed.get(id).rank);
+assert.deepEqual(sortKids, sortKids.slice().sort((a, b) => a - b), 'sub-items keep declaration order downward');
+assert.equal(new Set(sortKids).size, sortKids.length, 'each sub-item gets a distinct row');
 
 // no two nodes share a cell
 const seen = new Set();

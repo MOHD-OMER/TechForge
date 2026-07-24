@@ -94,8 +94,21 @@ function computeLayout(graph) {
   // Anything with no spine ancestor still gets a place rather than vanishing.
   for (const n of orphans) placed.set(n.id, { rank: row++, col: 1, node: n });
 
+  // A bus stack rendered inside its parent's cell made that one cell six pills
+  // tall, which stretched the whole grid row and left a 214px hole beside it.
+  // Giving each child its own row keeps row heights uniform.
+  const placeWithBus = (node, r, col) => {
+    placed.set(node.id, { rank: r, col, node });
+    let next = r + 1;
+    for (const kid of buses.get(node.id) || []) {
+      const k = byId.get(kid);
+      if (k) placed.set(kid, { rank: next++, col, node: k, inBus: true });
+    }
+    return next;
+  };
+
   for (const s of spine) {
-    placed.set(s.id, { rank: row, col: 1, node: s });
+    const afterSpine = placeWithBus(s, row, 1);
     const kids = branchesBy.get(s.id) || [];
 
     // Place parents before their own children so a child can inherit the side
@@ -122,10 +135,10 @@ function computeLayout(graph) {
         side = parent && parent.col !== 1 ? parent.col  // stay under the parent
              : (alt++ % 2 === 0 ? 0 : 2);               // else alternate sides
       }
-      const at = side === 0 ? left++ : right++;
-      placed.set(k.id, { rank: at, col: side, node: k });
+      if (side === 0) left = placeWithBus(k, left, 0);
+      else right = placeWithBus(k, right, 2);
     }
-    row = Math.max(row + 1, left, right);
+    row = Math.max(afterSpine, left, right);
   }
 
   return { placed, buses, cols: 3, ranks: row };
@@ -168,10 +181,6 @@ function mount(container, graph) {
   const labelled = new Set();
 
   const items = cells.map(([id, p]) => {
-    const kids = buses.get(id) || [];
-    const bus = kids.length
-      ? `<div class="rg-bus">${kids.map((k) => nodeHTML(byId.get(k))).join('')}</div>`
-      : '';
     let label = '';
     if (p.node.g && !labelled.has(p.node.g)) {
       labelled.add(p.node.g);
@@ -180,8 +189,11 @@ function mount(container, graph) {
     // Stagger by row so the graph assembles top-down; capped so a long roadmap
     // does not leave its last nodes waiting behind a queue of delays.
     const delay = Math.min(p.rank, 14) * 45;
-    return `<li class="rg-cell rg-at-${p.col}" style="grid-row:${p.rank + 1};grid-column:${p.col + 1};animation-delay:${delay}ms">`
-      + label + nodeHTML(p.node) + bus + '</li>';
+    // Bus children are indented so a stack still reads as belonging to the node
+    // above it, now that they sit in their own rows rather than one cell.
+    const cls = `rg-cell rg-at-${p.col}${p.inBus ? ' rg-in-bus' : ''}`;
+    return `<li class="${cls}" style="grid-row:${p.rank + 1};grid-column:${p.col + 1};animation-delay:${delay}ms">`
+      + label + nodeHTML(p.node) + '</li>';
   }).join('');
 
   // The scroller is what keeps a wide graph inside the content column instead of
@@ -200,10 +212,9 @@ function mount(container, graph) {
   const wrap = container.querySelector('.rg-wrap');
 
   function draw() {
-    // Below the collapse breakpoint the grid is a single column and the SVG is
-    // hidden by CSS; drawing would be wasted work.
-    if (window.innerWidth <= 760) { svg.innerHTML = ''; return; }
-
+    // Connectors are drawn at every width. Mobile keeps the same chart, scaled
+    // down and horizontally scrollable, so the lines are what still make it read
+    // as a flow chart rather than a list of pills.
     const box = wrap.getBoundingClientRect();
     svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     svg.setAttribute('width', box.width);
