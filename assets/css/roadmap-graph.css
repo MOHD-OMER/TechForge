@@ -69,21 +69,39 @@
 /* Colour is wayfinding, not decoration: the trunk owns the section accent so the
    main path is unmistakable, and branches stay neutral so they read as detours.
    No per-category palette — that would be decoration. */
+/* The trunk is a solid block of the section accent, not a tint. A filled node
+   is what makes a roadmap readable at a glance from across the page — a 12%
+   wash just reads as another grey box.
+   --rg-ink is the text that sits ON the fill: the accent is bright in dark
+   theme and near-black in light theme, so the ink has to flip with it. */
+.rg-scroll { --rg-ink: #04070d; }
+:root.light .rg-scroll { --rg-ink: #ffffff; }
+
 .rg-spine {
   width: 100%;
   justify-content: center;
   text-align: center;
-  padding: 11px 14px;
-  background: color-mix(in srgb, var(--rg-accent, var(--blue)) 12%, var(--card));
-  border-color: color-mix(in srgb, var(--rg-accent, var(--blue)) 40%, var(--border));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--rg-accent, var(--blue)) 10%, transparent),
-              0 2px 10px rgba(0,0,0,.18);
+  padding: 13px 16px;
+  background: var(--rg-accent, var(--blue));
+  border-color: var(--rg-accent, var(--blue));
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--rg-accent, var(--blue)) 30%, transparent);
 }
-.rg-spine .rg-title { font-size: 14.5px; font-weight: 700; }
-.rg-spine:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px color-mix(in srgb, var(--rg-accent, var(--blue)) 30%, transparent), 0 6px 18px rgba(0,0,0,.28); }
-.rg-branch .rg-title { font-size: 13px; }
-.rg-detail { padding: 7px 11px; }
-.rg-detail .rg-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.rg-spine .rg-title { font-size: 16px; font-weight: 700; color: var(--rg-ink); }
+.rg-spine:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--rg-accent, var(--blue)) 45%, transparent);
+}
+
+/* Branches carry the accent on their edge, so they read as attached to the
+   trunk without competing with it. */
+.rg-branch {
+  padding: 10px 14px;
+  border-color: color-mix(in srgb, var(--rg-accent, var(--blue)) 45%, var(--border));
+  background: var(--card);
+}
+.rg-branch .rg-title { font-size: 14px; font-weight: 650; }
+.rg-detail { padding: 8px 12px; background: var(--bg2); }
+.rg-detail .rg-title { font-size: 13px; font-weight: 600; color: var(--text); }
 
 /* Hovering a node lights its whole chain back to the root — the fastest answer
    to "what do I need before this?". It brightens the path rather than dimming
@@ -108,11 +126,12 @@
    side cell they floated free of anything and read as stray text. */
 .rg-group-label {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: .08em;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 2px;
+  color: var(--rg-accent, var(--blue));
+  margin-bottom: 3px;
   align-self: center;
   text-align: center;
 }
@@ -153,5 +172,5 @@
 }
 
 .rg-edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: visible; }
-.rg-edge { fill: none; stroke: var(--border2); stroke-width: 1.5; }
-.rg-edge-done { stroke: var(--nc, var(--blue)); opacity: .9; }
+.rg-edge { fill: none; stroke: color-mix(in srgb, var(--rg-accent, var(--blue)) 45%, var(--border2)); stroke-width: 2; }
+.rg-edge-done { stroke: var(--rg-accent, var(--blue)); }
