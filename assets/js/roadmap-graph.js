@@ -233,7 +233,34 @@ function mount(container, graph) {
     };
 
     const parts = [];
+
+    // Bus edges: one trunk down past a parent's sub-items with a short stub into
+    // each, instead of N separate diagonals fanning out. Six sort algorithms
+    // under one node produced six near-parallel strokes that read as noise.
+    const busDrawn = new Set();
+    for (const [pid, kids] of buses) {
+      const parent = at(pid);
+      const pp = placed.get(pid);
+      if (!parent || !pp || !kids.length) continue;
+      const rows = kids.map((k) => at(k)).filter(Boolean);
+      if (!rows.length) continue;
+
+      const onLeft = pp.col === 0;
+      const trunkX = onLeft ? parent.x + parent.w - 14 : parent.x + 14;
+      const lastY = rows[rows.length - 1].cy;
+      const allDone = isDone(graph.id, pid) && kids.every((k) => isDone(graph.id, k));
+      const cls = `rg-edge rg-edge-bus${allDone ? ' rg-edge-done' : ''}`;
+
+      parts.push(`<path d="M${trunkX},${parent.y + parent.h} L${trunkX},${lastY}" class="${cls}" data-from="${esc(pid)}" data-to="${esc(pid)}"/>`);
+      rows.forEach((r, i) => {
+        const stubX = onLeft ? r.x + r.w : r.x;
+        parts.push(`<path d="M${trunkX},${r.cy} L${stubX},${r.cy}" class="${cls}" data-from="${esc(pid)}" data-to="${esc(kids[i])}"/>`);
+      });
+      kids.forEach((k) => busDrawn.add(k));
+    }
+
     for (const [id, p] of placed) {
+      if (busDrawn.has(id)) continue;   // already covered by its bus trunk
       for (const a of p.node.after || []) {
         const from = at(a), to = at(id);
         if (!from || !to) continue;
