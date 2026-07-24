@@ -93,40 +93,26 @@
 .ds-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
 .ds-sub   { font-size: 10.5px; color: var(--text3); margin-top: 3px; }
 
-/* ── LEARNING PATH ── */
-.path-strip {
+/* ── ROADMAP CTA ── */
+.rm-cta {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; margin-bottom: 40px;
   background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r-xl); padding: 20px 22px;
-  margin-bottom: 40px; position: relative; overflow: hidden;
+  border-radius: var(--r-xl); text-decoration: none;
+  transition: border-color .2s ease, transform .2s ease;
 }
-.path-strip::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple)); opacity: .5;
-}
-.path-label {
-  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px;
-  color: var(--text3); text-transform: uppercase; margin-bottom: 14px;
-  display: flex; align-items: center; gap: 8px;
-}
-.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
-.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.path-step {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 13px; border-radius: var(--r-md);
-  background: var(--bg2); border: 1px solid var(--border);
-  text-decoration: none; transition: all .2s; flex-shrink: 0;
-}
-.path-step:hover { border-color: var(--blue); background: rgba(77,158,247,.06); }
-.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--blue); font-weight: 700; }
-.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
-.ps-diff {
-  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
-  padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px;
-}
+.rm-cta:hover { border-color: var(--blue); transform: translateY(-2px); }
+.rm-cta-icon { font-size: 26px; color: var(--blue); flex-shrink: 0; line-height: 1; }
+.rm-cta-body { flex: 1; min-width: 0; }
+.rm-cta-title { display: block; font-size: 15px; font-weight: 700; color: var(--text); }
+.rm-cta-sub { display: block; font-size: 12.5px; color: var(--text2); line-height: 1.55; margin-top: 3px; }
+.rm-cta-go { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--blue); flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 560px) { .rm-cta-go { display: none; } }
+/* Difficulty badges — shared by the topic cards further down, kept when the
+   linear path strip was removed. */
 .diff-starter { background:rgba(52,211,153,.1);   color:var(--green); border:1px solid rgba(52,211,153,.2); }
 .diff-mid     { background:rgba(251,191,36,.09);  color:var(--amber); border:1px solid rgba(251,191,36,.2); }
 .diff-adv     { background:rgba(248,113,113,.1);  color:var(--red);   border:1px solid rgba(248,113,113,.2); }
-.path-arrow   { font-size: 12px; color: var(--text3); flex-shrink: 0; }
 
 /* ── SECTION LABELS ── */
 .sec-label {
@@ -289,7 +275,6 @@ html.light .bo-notation[style*="color:#ef4444"] { color: #710909 !important; }
 @media (max-width:640px) {
   .dsa-stats { grid-template-columns: 1fr 1fr !important; }
   .exp-grid  { grid-template-columns: 1fr; }
-  .path-arrow { display: none; }
   .dh-cta { flex-direction: column; }
   .btn-dh-primary,.btn-dh-ghost { justify-content: center; min-height:44px; }
   .bigo-strip { grid-template-columns: repeat(4,1fr); }
@@ -438,39 +423,15 @@ html.light .bo-notation[style*="color:#ef4444"] { color: #710909 !important; }
       <div class="ds-box"><span class="ds-val" style="color:var(--amber)">O(?)</span><span class="ds-label">Complexity</span><span class="ds-sub">Every topic analyzed</span></div>
     </div>
 
-    <!-- ════ LEARNING PATH ════ -->
-    <div class="path-strip anim-in">
-      <div class="path-label">Recommended Learning Path</div>
-      <div class="path-steps">
-        <a class="path-step" href="bigo.html">
-          <span class="ps-num">01</span><span class="ps-name">Big-O</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="arrays.html">
-          <span class="ps-num">02</span><span class="ps-name">Arrays</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="sll.html">
-          <span class="ps-num">03</span><span class="ps-name">Linked Lists</span><span class="ps-diff diff-mid">Mid</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="stack.html">
-          <span class="ps-num">04</span><span class="ps-name">Stack / Queue</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="bst.html">
-          <span class="ps-num">05</span><span class="ps-name">Trees</span><span class="ps-diff diff-mid">Mid</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="graph.html">
-          <span class="ps-num">06</span><span class="ps-name">Graphs</span><span class="ps-diff diff-adv">Advanced</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="dp.html">
-          <span class="ps-num">07</span><span class="ps-name">DP</span><span class="ps-diff diff-adv">Advanced</span>
-        </a>
-      </div>
-    </div>
+    <!-- ════ ROADMAP CTA ════ -->
+    <a class="rm-cta anim-in" href="../roadmaps/dsa.html">
+      <span class="rm-cta-icon"><i class="ti ti-sitemap" aria-hidden="true"></i></span>
+      <span class="rm-cta-body">
+        <span class="rm-cta-title">Open the DSA roadmap</span>
+        <span class="rm-cta-sub">All 29 topics as a connected flow chart, with prerequisites, branches, and your progress in one view.</span>
+      </span>
+      <span class="rm-cta-go">Explore →</span>
+    </a>
 
     <!-- ════ WHAT IS DSA ════ -->
     <div id="what-is-dsa" class="sec-block anim-in">

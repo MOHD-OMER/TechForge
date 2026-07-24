@@ -105,6 +105,45 @@ for (const theme of ['dark', 'light']) {
   }
 }
 
+// ---- topic roadmap flow chart: done nodes only render once progress is seeded,
+//      so the standard sweep never sees the .rg-done styling. ----
+const rgSrc = fs.readFileSync('roadmaps/dsa.html', 'utf8');
+const rgMatch = rgSrc.match(/<script type="application\/json" id="rgGraph">([\s\S]*?)<\/script>/);
+const rgGraph = rgMatch ? JSON.parse(rgMatch[1]) : { id: 'dsa', nodes: [] };
+const rgLinked = rgGraph.nodes.filter((n) => n.href).map((n) => n.id);
+
+for (const theme of ['dark', 'light']) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 1600 } });
+  const page = await context.newPage();
+  await page.goto(`${BASE}/roadmaps/dsa.html`);
+  await page.evaluate(([gid, themeName, ids]) => {
+    localStorage.clear();
+    localStorage.setItem('tf-theme', themeName);
+    ids.forEach((id) => localStorage.setItem(`tf_rg_${gid}_${id}`, '1'));
+  }, [rgGraph.id, theme, rgLinked.slice(0, Math.ceil(rgLinked.length / 2))]);
+  await page.goto(`${BASE}/roadmaps/dsa.html`, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1500);
+
+  const done = await page.evaluate(() => document.querySelectorAll('.rg-nodewrap.rg-done').length);
+  if (!done) failures.push(`${theme} dsa-roadmap: seeding produced no done nodes, so this run proves nothing`);
+
+  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  const serious = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
+  if (serious.length) {
+    for (const v of serious) {
+      for (const node of v.nodes) {
+        const d = (node.any && node.any[0] && node.any[0].data) || {};
+        const detail = d.contrastRatio ? `ratio=${d.contrastRatio} need=${d.expectedContrastRatio} fg=${d.fgColor} bg=${d.bgColor}` : (node.failureSummary || '').split('\n')[0];
+        failures.push(`${theme} dsa-roadmap [${v.id}] ${(node.target || []).join(' ')} ${detail}`);
+      }
+    }
+    console.log(`FAIL  ${theme} dsa-roadmap`);
+  } else {
+    console.log(`  ok  ${theme} dsa-roadmap: clean (${done} done nodes on screen)`);
+  }
+  await context.close();
+}
+
 await browser.close();
 server.close();
 

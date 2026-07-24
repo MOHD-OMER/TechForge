@@ -23,6 +23,34 @@
 }
 .rg-lede { font-size: 13px; color: var(--text2); line-height: 1.7; max-width: 68ch; text-wrap: pretty; }
 
+/* Progress. A compact row above the graph, since there is no sidebar to hold it. */
+.rg-progress { display: flex; align-items: center; gap: 12px; margin: 18px 0 8px; }
+.rg-progress-track { flex: 1; height: 4px; background: var(--bg2); border-radius: var(--r-full); overflow: hidden; max-width: 420px; }
+.rg-progress-fill { height: 100%; width: 100%; background: var(--rg-accent, var(--blue)); transform: scaleX(0); transform-origin: left center; transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.rg-progress-count { font-family: var(--font-mono); font-size: 11.5px; color: var(--text2); white-space: nowrap; }
+.rg-reset { font-family: var(--font-mono); font-size: 10.5px; color: var(--text3); background: transparent; border: 1px solid var(--border); border-radius: var(--r-md); padding: 4px 10px; cursor: pointer; transition: color .15s, border-color .15s; }
+.rg-reset:hover { color: var(--text); border-color: var(--border2); }
+
+/* The tick: a small button riding the corner of every real node. Marking a
+   topic done is progress-keeping, distinct from opening it, so it is its own
+   control rather than a click on the link. */
+.rg-nodewrap { position: relative; display: inline-flex; }
+.rg-check {
+  position: absolute; top: -7px; right: -7px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--bg); border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0; z-index: 2;
+  transition: background-color .15s, border-color .15s, transform .15s;
+}
+.rg-cell.rg-at-0 .rg-check { right: auto; left: -7px; }
+.rg-check svg { width: 12px; height: 12px; fill: none; stroke: transparent; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.rg-check:hover { border-color: var(--rg-accent, var(--blue)); }
+.rg-nodewrap.rg-done .rg-check { background: var(--rg-accent, var(--blue)); border-color: var(--rg-accent, var(--blue)); }
+.rg-nodewrap.rg-done .rg-check svg { stroke: var(--rg-ink, #04070d); }
+/* Done nodes settle back via a hairline accent ring, never by dimming text. */
+.rg-nodewrap.rg-done .rg-node { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--rg-accent, var(--blue)) 55%, transparent); }
+
 /* A branching graph is wider than a text column. Scroll it inside the content
    area rather than letting it spill over and drag the whole page sideways. */
 .rg-scroll { overflow-x: auto; overflow-y: hidden; margin: 28px 0 40px; padding: 2px; }
@@ -74,17 +102,20 @@
    wash just reads as another grey box.
    --rg-ink is the text that sits ON the fill: the accent is bright in dark
    theme and near-black in light theme, so the ink has to flip with it. */
-.rg-scroll { --rg-ink: #04070d; }
-:root.light .rg-scroll { --rg-ink: #ffffff; }
+/* --rg-fill is a calmer version of the raw accent for the trunk: the full-
+   saturation blue read as harsh over a large area. --rg-ink is the text on it,
+   flipped per theme. */
+.rg-scroll { --rg-ink: #04070d; --rg-fill: color-mix(in srgb, var(--rg-accent, var(--blue)) 78%, #0e1826); }
+:root.light .rg-scroll { --rg-ink: #ffffff; --rg-fill: color-mix(in srgb, var(--rg-accent, var(--blue)) 88%, #ffffff); }
 
 .rg-spine {
   width: 100%;
   justify-content: center;
   text-align: center;
   padding: 13px 16px;
-  background: var(--rg-accent, var(--blue));
-  border-color: var(--rg-accent, var(--blue));
-  box-shadow: 0 2px 14px color-mix(in srgb, var(--rg-accent, var(--blue)) 30%, transparent);
+  background: var(--rg-fill);
+  border-color: var(--rg-fill);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--rg-accent, var(--blue)) 22%, transparent);
 }
 .rg-spine .rg-title { font-size: 17px; font-weight: 700; color: var(--rg-ink); }
 .rg-spine:hover {
@@ -152,6 +183,8 @@
 
   .rg-node { transition: border-color .18s ease, background-color .18s ease, transform .18s ease, box-shadow .18s ease; }
   .rg-edge { transition: stroke .18s ease, stroke-width .18s ease; }
+  @keyframes rgPop { 0% { transform: scale(1); } 45% { transform: scale(1.25); } 100% { transform: scale(1); } }
+  .rg-check.rg-pop { animation: rgPop .36s cubic-bezier(.22,1,.36,1); }
 }
 
 /* Mobile keeps the flow chart — same spine, same branches, same connectors —
