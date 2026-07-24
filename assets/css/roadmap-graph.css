@@ -1,9 +1,30 @@
 /* Roadmap flow chart. Tiers carry importance through size and weight — the
    previous single-lane layout gave every topic identical weight, which is what
    read as flat. */
+/* Roadmap pages run without a sidebar: a flow chart wants the whole page, and
+   the graph is its own navigation. Section links stay in the topbar. */
+.rg-page { width: 100%; }
+.rg-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 22px max(20px, var(--safe-left, 0px)) 64px max(20px, var(--safe-right, 0px));
+}
+.rg-crumbs { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 18px; }
+.rg-crumbs a { display: inline-flex; align-items: center; gap: 6px; color: var(--text2); text-decoration: none; }
+.rg-crumbs a:hover { color: var(--text); }
+.rg-crumb-sep { color: var(--text3); }
+.rg-head { margin-bottom: 6px; }
+.rg-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4.5vw, 36px);
+  font-weight: 700; letter-spacing: -.6px;
+  color: var(--text); margin-bottom: 10px;
+  text-wrap: balance;
+}
+.rg-lede { font-size: 13px; color: var(--text2); line-height: 1.7; max-width: 68ch; text-wrap: pretty; }
+
 /* A branching graph is wider than a text column. Scroll it inside the content
-   area rather than letting it spill over the sidebar and drag the whole page
-   sideways. */
+   area rather than letting it spill over and drag the whole page sideways. */
 .rg-scroll { overflow-x: auto; overflow-y: hidden; margin: 28px 0 40px; padding: 2px; }
 .rg-scroll:focus-visible { outline: 2px solid var(--accent, var(--blue)); outline-offset: 2px; }
 .rg-wrap { position: relative; min-width: 100%; }
