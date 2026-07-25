@@ -154,7 +154,7 @@
             <div class="step-num">03</div>
             <div class="step-body">
               <div class="step-title">Reward &amp; Discounted Return</div>
-              <div class="step-desc"><strong>Reward rₜ:</strong> immediate scalar feedback from the environment at step t. <strong>Return Gₜ:</strong> sum of all future rewards from step t onwards. <strong>Discount factor γ∈[0,1]:</strong> weights near-future rewards more than distant ones. γ=1: care equally about all future rewards. γ=0: care only about immediate reward. γ=0.99 is typical in practice — values rewards near equally but discounts exponentially far-future ones.</div>
+              <div class="step-desc"><strong>Reward rₜ:</strong> immediate scalar feedback from the environment at step t. <strong>Return Gₜ:</strong> sum of all future rewards from step t onwards. <strong>Discount factor γ∈[0,1]:</strong> weights near-future rewards more than distant ones. γ=1: care equally about all future rewards. γ=0: care only about immediate reward. γ=0.99 is typical in practice: it values near rewards almost equally while discounting far-future ones exponentially.</div>
               <div class="step-code">Gₜ = rₜ + γrₜ₊₁ + γ²rₜ₊₂ + ... = Σₖ₌₀^∞ γᵏrₜ₊ₖ · γ=0.99 typical</div>
             </div>
           </div>
@@ -208,7 +208,7 @@
             <div class="step-num">02</div>
             <div class="step-body">
               <div class="step-title">Value Functions — V(s) and Q(s,a)</div>
-              <div class="step-desc"><strong>State value V^π(s):</strong> expected discounted return starting from state s, following policy π. Tells you "how good is it to be in state s?" <strong>Action value Q^π(s,a):</strong> expected return from state s, taking action a, then following π. More useful — directly tells you which action to take. <strong>Advantage A(s,a) = Q(s,a) − V(s):</strong> how much better is action a than average — used in actor-critic methods.</div>
+              <div class="step-desc"><strong>State value V^π(s):</strong> expected discounted return starting from state s, following policy π. Tells you "how good is it to be in state s?" <strong>Action value Q^π(s,a):</strong> expected return from state s, taking action a, then following π. More useful, since it tells you directly which action to take. <strong>Advantage A(s,a) = Q(s,a) − V(s):</strong> how much better is action a than average — used in actor-critic methods.</div>
               <div class="step-code">V^π(s) = E[Gₜ|sₜ=s] · Q^π(s,a) = E[Gₜ|sₜ=s,aₜ=a] · A(s,a) = Q(s,a)-V(s)</div>
             </div>
           </div>
@@ -216,7 +216,7 @@
             <div class="step-num">03</div>
             <div class="step-body">
               <div class="step-title">Bellman Equations</div>
-              <div class="step-desc">Recursive decomposition: the value of a state equals the immediate reward plus the discounted value of the next state. This bootstrapping relationship is the foundation for all value-based RL algorithms. <strong>Bellman optimality:</strong> optimal policy always takes the action that maximises Q*. If we know Q*, we're done — just act greedily.</div>
+              <div class="step-desc">Recursive decomposition: the value of a state equals the immediate reward plus the discounted value of the next state. This bootstrapping relationship is the foundation for all value-based RL algorithms. <strong>Bellman optimality:</strong> optimal policy always takes the action that maximises Q*. If we know Q*, we're done: just act greedily.</div>
               <div class="step-code">Q*(s,a) = R(s,a) + γ · Σ_{s'} P(s'|s,a) · max_{a'} Q*(s',a') · Bellman optimality</div>
             </div>
           </div>
@@ -224,7 +224,7 @@
             <div class="step-num">04</div>
             <div class="step-body">
               <div class="step-title">Partial Observability (POMDP)</div>
-              <div class="step-desc">In a Partially Observable MDP, the agent doesn't see the full state — only a noisy observation. Real-world examples: a robot can't see what's behind it; an Atari game shows only the current frame (is a ball moving left or right?). Solutions: frame stacking (use last 4 frames), recurrent policies (LSTM maintains memory), belief states (probability distribution over states).</div>
+              <div class="step-desc">In a Partially Observable MDP, the agent doesn't see the full state, only a noisy observation. Real-world examples: a robot can't see what's behind it; an Atari game shows only the current frame (is a ball moving left or right?). Solutions: frame stacking (use last 4 frames), recurrent policies (LSTM maintains memory), belief states (probability distribution over states).</div>
               <div class="step-code">POMDP: observe oₜ ≠ sₜ · fix: stack frames · LSTM · belief state b(s) = P(s|observations)</div>
             </div>
           </div>
@@ -305,7 +305,7 @@
             <div class="step-num">01</div>
             <div class="step-body">
               <div class="step-title">DQN — Deep Q-Network (DeepMind, 2013)</div>
-              <div class="step-desc">Replace the Q-table with a neural network: input = game screen pixels (84×84×4 grayscale frames stacked), output = Q(s,a) for all actions. Two critical tricks: <strong>Experience replay:</strong> store (s,a,r,s') in a buffer, sample random minibatches — breaks temporal correlation. <strong>Target network:</strong> separate frozen network θ⁻ for TD targets, updated every N steps — prevents oscillation. Achieved human-level performance on 49 Atari games from raw pixels.</div>
+              <div class="step-desc">Replace the Q-table with a neural network: input = game screen pixels (84×84×4 grayscale frames stacked), output = Q(s,a) for all actions. Two critical tricks: <strong>Experience replay:</strong> store (s,a,r,s') in a buffer, sample random minibatches — breaks temporal correlation. <strong>Target network:</strong> separate frozen network θ⁻ for TD targets, updated every N steps, which prevents oscillation. Achieved human-level performance on 49 Atari games from raw pixels.</div>
               <div class="step-code">Q(s,a;θ) ← r + γ·max_{a'} Q(s',a';θ⁻) · replay buffer · target network updated every 10k steps</div>
             </div>
           </div>
@@ -337,7 +337,7 @@
             <div class="step-num">05</div>
             <div class="step-body">
               <div class="step-title">AlphaGo / AlphaZero — The MCTS + Deep RL Combination</div>
-              <div class="step-desc">DeepMind combined Monte Carlo Tree Search with deep RL. <strong>Policy network:</strong> suggests promising moves (trained by RL). <strong>Value network:</strong> estimates win probability (trained by RL). MCTS uses both to guide simulated playouts. <strong>AlphaZero:</strong> starts from zero knowledge, trains purely through self-play — no human games, no handcrafted features. Mastered Chess, Shogi, and Go simultaneously to superhuman level in hours.</div>
+              <div class="step-desc">DeepMind combined Monte Carlo Tree Search with deep RL. <strong>Policy network:</strong> suggests promising moves (trained by RL). <strong>Value network:</strong> estimates win probability (trained by RL). MCTS uses both to guide simulated playouts. <strong>AlphaZero:</strong> starts from zero knowledge, trains purely through self-play: no human games, no handcrafted features. Mastered Chess, Shogi, and Go simultaneously to superhuman level in hours.</div>
               <div class="step-code">MCTS × policy_net(board) × value_net(board) → best move · self-play → superhuman in days</div>
             </div>
           </div>
@@ -351,7 +351,7 @@
             <div class="step-num">00</div>
             <div class="step-body">
               <div class="step-title">Why Policy Gradient?</div>
-              <div class="step-desc">Value-based methods (Q-learning) select actions greedily from Q-values — but this requires discrete action spaces and can't handle continuous actions (robot joint angles, steering). Policy gradient methods directly optimise the policy network using gradient ascent on expected return. Work naturally with <strong>continuous action spaces</strong>, <strong>stochastic policies</strong>, and <strong>partial observability</strong>. The backbone of modern deep RL and RLHF.</div>
+              <div class="step-desc">Value-based methods (Q-learning) select actions greedily from Q-values, but this requires discrete action spaces and can't handle continuous actions (robot joint angles, steering). Policy gradient methods directly optimise the policy network using gradient ascent on expected return. Work naturally with <strong>continuous action spaces</strong>, <strong>stochastic policies</strong>, and <strong>partial observability</strong>. The backbone of modern deep RL and RLHF.</div>
               <div class="step-code">Q-learning → discrete actions only · Policy gradient → continuous + stochastic actions</div>
             </div>
           </div>
