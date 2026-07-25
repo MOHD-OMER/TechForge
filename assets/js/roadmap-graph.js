@@ -144,15 +144,6 @@ function computeLayout(graph) {
   return { placed, buses, cols: 3, ranks: row };
 }
 
-const key = (gid, nid) => `tf_rg_${gid}_${nid}`;
-function isDone(gid, nid) {
-  try { return localStorage.getItem(key(gid, nid)) === '1'; } catch (e) { return false; }
-}
-function setDone(gid, nid, v) {
-  try { v ? localStorage.setItem(key(gid, nid), '1') : localStorage.removeItem(key(gid, nid)); }
-  catch (e) { /* private mode */ }
-}
-
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
   .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -164,15 +155,8 @@ function nodeHTML(n) {
   const body = `<span class="rg-title">${icon}${esc(n.t)}</span>`;
   const cls = `rg-node rg-${n.tier}`;
   const tip = n.s ? ` title="${esc(n.s)}"` : '';
-  if (!n.href) return `<div class="${cls} rg-group" data-id="${esc(n.id)}"${tip}>${body}</div>`;
-  // A grouping node is a label; every real topic gets a tick to mark it done.
-  // The tick is a sibling button, not inside the <a> — a button in a link is
-  // invalid and un-clickable.
-  return `<div class="rg-nodewrap">`
-    + `<a class="${cls}" href="${esc(n.href)}" data-id="${esc(n.id)}"${tip}>${body}</a>`
-    + `<button type="button" class="rg-check" data-toggle="${esc(n.id)}" aria-pressed="false"`
-    + ` aria-label="Mark ${esc(n.t)} done" title="Mark done">`
-    + `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>`;
+  if (n.href) return `<a class="${cls}" href="${esc(n.href)}" data-id="${esc(n.id)}"${tip}>${body}</a>`;
+  return `<div class="${cls} rg-group" data-id="${esc(n.id)}"${tip}>${body}</div>`;
 }
 
 function mount(container, graph) {
@@ -206,14 +190,8 @@ function mount(container, graph) {
   // The scroller is what keeps a wide graph inside the content column instead of
   // sprawling over the sidebar. tabindex makes it keyboard-reachable, which axe
   // requires of any scrollable region.
-  const total = graph.nodes.filter((n) => n.href).length;
   container.innerHTML =
     `<div class="rg-shell" style="--rg-accent:${esc(graph.accent || 'var(--blue)')}">
-       <div class="rg-progress">
-         <div class="rg-progress-track"><div class="rg-progress-fill" id="rgFill"></div></div>
-         <span class="rg-progress-count" id="rgCount">0 / ${total} done</span>
-         <button type="button" class="rg-reset" id="rgReset">Reset</button>
-       </div>
        <div class="rg-scroll" tabindex="0" role="group" aria-label="${esc(graph.title || 'Roadmap')} flow chart">
          <div class="rg-wrap">
            <svg class="rg-edges" aria-hidden="true" focusable="false"></svg>
@@ -262,8 +240,7 @@ function mount(container, graph) {
       const onLeft = pp.col === 0;
       const trunkX = onLeft ? parent.x + parent.w - 14 : parent.x + 14;
       const lastY = rows[rows.length - 1].cy;
-      const allDone = isDone(graph.id, pid) && kids.every((k) => isDone(graph.id, k));
-      const cls = `rg-edge rg-edge-bus${allDone ? ' rg-edge-done' : ''}`;
+      const cls = 'rg-edge rg-edge-bus';
 
       parts.push(`<path d="M${trunkX},${parent.y + parent.h} L${trunkX},${lastY}" class="${cls}" data-from="${esc(pid)}" data-to="${esc(pid)}"/>`);
       rows.forEach((r, i) => {
@@ -278,7 +255,6 @@ function mount(container, graph) {
       for (const a of p.node.after || []) {
         const from = at(a), to = at(id);
         if (!from || !to) continue;
-        const done = isDone(graph.id, a) && isDone(graph.id, id);
         const fromCol = (placed.get(a) || {}).col;
         let d;
         if (fromCol === p.col) {
@@ -295,7 +271,7 @@ function mount(container, graph) {
           const mid = sx + (ex - sx) / 2;
           d = `M${sx},${sy} C${mid},${sy} ${mid},${ey} ${ex},${ey}`;
         }
-        parts.push(`<path d="${d}" class="rg-edge${done ? ' rg-edge-done' : ''}" data-from="${esc(a)}" data-to="${esc(id)}"/>`);
+        parts.push(`<path d="${d}" class="rg-edge" data-from="${esc(a)}" data-to="${esc(id)}"/>`);
       }
     }
     svg.innerHTML = parts.join('');
@@ -324,47 +300,6 @@ function mount(container, graph) {
   new ResizeObserver(schedule).observe(wrap);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
-
-  // ---- progress --------------------------------------------------------------
-  // Reflect done state onto the existing DOM (never rebuild — that would restart
-  // the entrance animation and lose scroll position), then repaint the edges so
-  // completed links pick up the accent.
-  const counted = graph.nodes.filter((n) => n.href);
-  function syncProgress() {
-    let done = 0;
-    for (const n of counted) {
-      const on = isDone(graph.id, n.id);
-      if (on) done++;
-      const wrapEl = container.querySelector(`[data-id="${n.id}"]`);
-      if (wrapEl) wrapEl.closest('.rg-nodewrap').classList.toggle('rg-done', on);
-      const btn = container.querySelector(`[data-toggle="${n.id}"]`);
-      if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    }
-    const pct = total ? Math.round((done / total) * 100) : 0;
-    const fill = container.querySelector('#rgFill');
-    const label = container.querySelector('#rgCount');
-    if (fill) fill.style.transform = `scaleX(${pct / 100})`;
-    if (label) label.textContent = `${done} / ${total} done`;
-    schedule();
-  }
-
-  container.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-toggle]');
-    if (btn) {
-      const id = btn.getAttribute('data-toggle');
-      const now = !isDone(graph.id, id);
-      setDone(graph.id, id, now);
-      if (now) { btn.classList.add('rg-pop'); setTimeout(() => btn.classList.remove('rg-pop'), 360); }
-      syncProgress();
-      return;
-    }
-    if (e.target.closest('#rgReset')) {
-      if (!window.confirm('Reset your progress on this roadmap?')) return;
-      counted.forEach((n) => setDone(graph.id, n.id, false));
-      syncProgress();
-    }
-  });
-  syncProgress();
 
   // ---- ancestry highlighting -------------------------------------------------
   // Walking `after` upward gives the full prerequisite chain for any node.
@@ -410,5 +345,5 @@ function mount(container, graph) {
   return { refresh: schedule };
 }
 
-global.TFRoadmapGraph = { computeLayout: computeLayout, mount: mount, isDone: isDone, setDone: setDone };
+global.TFRoadmapGraph = { computeLayout: computeLayout, mount: mount };
 }(typeof window !== "undefined" ? window : globalThis));

@@ -3,7 +3,7 @@
  *
  * The layout maths are covered by test-layout.mjs (pure Node). This drives the
  * page in a real browser to catch what only shows up once it renders: node and
- * edge counts, the bus-edge bundling, progress toggles, the mobile collapse,
+ * edge counts, the bus-edge bundling, the hover chain, the mobile collapse,
  * reduced-motion, and horizontal-overflow regressions.
  *
  * Usage: npm run check:graph
@@ -52,7 +52,6 @@ const browser = await chromium.launch();
       diagToSort,
       cols: getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length,
       overflow: document.documentElement.scrollWidth - window.innerWidth,
-      checks: document.querySelectorAll('.rg-check').length,
     };
   });
   r.nodes === 32 ? ok(`${r.nodes} nodes rendered`) : bad(`expected 32 nodes, got ${r.nodes}`);
@@ -69,16 +68,18 @@ const browser = await chromium.launch();
   }
   ok(`${hrefs.length} node links all 200`);
 
-  // progress toggle round-trip
-  await page.evaluate(() => document.querySelector('[data-toggle="bigo"]').click());
-  await page.waitForTimeout(120);
-  const c = await page.evaluate(() => document.querySelector('#rgCount').textContent);
-  c.startsWith('1 / ') ? ok(`progress toggle updates count (${c})`) : bad(`toggle count wrong: ${c}`);
-  page.once('dialog', (d) => d.accept());
-  await page.evaluate(() => document.querySelector('#rgReset').click());
-  await page.waitForTimeout(150);
-  const c2 = await page.evaluate(() => document.querySelector('#rgCount').textContent);
-  c2.startsWith('0 / ') ? ok('reset clears progress') : bad(`reset failed: ${c2}`);
+  // hovering a node lights its whole prerequisite chain back to the root
+  const lit = await page.evaluate(async () => {
+    document.querySelector('[data-id="dijkstra"]').dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 120));
+    return {
+      nodes: [...document.querySelectorAll('.rg-lit')].map((e) => e.dataset.id).sort(),
+      edges: document.querySelectorAll('.rg-edge-lit').length,
+    };
+  });
+  lit.nodes.includes('bigo') && lit.nodes.includes('graph') && lit.edges > 0
+    ? ok(`hover lights the chain (${lit.nodes.length} nodes, ${lit.edges} edges)`)
+    : bad(`chain highlight broken: ${lit.nodes.join(',')} / ${lit.edges} edges`);
 
   errs.length === 0 ? ok('no console errors') : bad('console: ' + errs[0].slice(0, 100));
   await page.close();
