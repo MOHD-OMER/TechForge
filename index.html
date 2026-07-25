@@ -76,6 +76,55 @@
   padding-bottom: var(--safe-bottom);
 }
 
+/* ── MOTION TOKENS ──
+   One set of durations and curves so timings stay related instead of a dozen
+   ad-hoc values. Every animation below animates transform/opacity/filter only:
+   layout properties force reflow and are what makes hover states jitter. */
+:root {
+  --m-fast: .15s;
+  --m-base: .28s;
+  --m-slow: .5s;
+  --m-out: cubic-bezier(.22, 1, .36, 1);     /* settles, no overshoot */
+  --m-inout: cubic-bezier(.65, 0, .35, 1);
+}
+
+/* ── INTERACTIVE POLISH ──
+   Scoped to the homepage so the other 379 pages cannot regress from it. */
+
+/* The current-page underline wipes in rather than appearing, and hovering any
+   nav item previews where it would land. */
+header.topbar .tb-link { position: relative; }
+header.topbar .tb-link::after {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px; bottom: -1px;
+  height: 2px; border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--m-base) var(--m-out);
+}
+header.topbar .tb-link.current::after,
+header.topbar .tb-link:hover::after { transform: scaleX(1); }
+
+/* Clicking should feel like pressing something. Nothing on the page
+   acknowledged a click before this. */
+.btn-primary, .btn-secondary, .cmp, .topic-card {
+  transition: transform var(--m-fast) var(--m-out),
+              background-color var(--m-fast) ease,
+              border-color var(--m-fast) ease,
+              box-shadow var(--m-base) ease;
+}
+.btn-primary:active, .btn-secondary:active, .cmp:active { transform: scale(.97); }
+.topic-card:active { transform: translateY(-2px) scale(.995); }
+
+@media (prefers-reduced-motion: reduce) {
+  header.topbar .tb-link::after { transition: none; }
+  header.topbar .tb-link:hover::after { transform: scaleX(0); }
+  header.topbar .tb-link.current::after { transform: scaleX(1); }
+  .btn-primary:active, .btn-secondary:active, .cmp:active, .topic-card:active { transform: none; }
+}
+
 /* -- HERO split layout -- */
 .hero-section {
   max-width: 1200px; margin: 0 auto;
@@ -83,6 +132,41 @@
   display: grid;
   grid-template-columns: 1fr 440px;
   gap: 48px; align-items: center;
+  position: relative;
+  /* The aurora is deliberately larger than this box so its soft edges fall
+     outside; clip it here or it widens the page. */
+  overflow: hidden;
+}
+
+/* Aurora: two slow-drifting radial fields behind the hero. The first thing
+   anyone sees was completely static; this gives the page a pulse without
+   competing with the text. Composited on the GPU, never repaints. */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10% -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 46% at 22% 32%, color-mix(in srgb, var(--blue) 22%, transparent) 0%, transparent 70%),
+    radial-gradient(38% 42% at 78% 60%, color-mix(in srgb, var(--cyan) 16%, transparent) 0%, transparent 72%);
+  filter: blur(28px);
+  opacity: .75;
+  will-change: transform;
+}
+.hero-left, .hero-right { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes heroAurora {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(2.5%, -1.5%, 0) scale(1.08); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+  }
+  .hero-section::before { animation: heroAurora 24s var(--m-inout) infinite; }
+}
+/* No hover means a touch device: a 24s infinite animation is just battery. */
+@media (hover: none) {
+  .hero-section::before { animation: none; opacity: .5; }
 }
 .hero-left { display: flex; flex-direction: column; }
 
@@ -205,7 +289,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
   padding: 5px 12px; border-radius: var(--r-full); letter-spacing: .5px; cursor: pointer;
   border: 1px solid var(--border2); color: var(--text3); background: var(--card);
-  transition: all .15s;
+  transition: background-color var(--m-fast) ease, border-color var(--m-fast) ease, color var(--m-fast) ease;
 }
 .cmp:hover, .cmp.active { background: rgba(0,212,255,.08); border-color: rgba(0,212,255,.3); color: var(--cyan); }
 
@@ -279,13 +363,21 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--r-xl); padding: 24px 22px 20px;
   text-decoration: none; display: flex; flex-direction: column;
-  position: relative; overflow: hidden; transition: all .25s;
+  position: relative; overflow: hidden;
+  /* Explicit properties, not `all`: `all` animates layout properties too, which
+     forces reflow on every hover and is what makes cards jitter. */
+  transition: transform var(--m-base) var(--m-out),
+              border-color var(--m-base) ease,
+              box-shadow var(--m-base) ease;
   min-height: 220px;
 }
+/* The glow tracks the cursor across the grid instead of sitting in a fixed
+   corner. --mx/--my are written once per frame by one listener on the grid. */
 .topic-card::after {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 75% 15%, var(--tc-glow,rgba(0,212,255,.06)), transparent 60%);
-  opacity: 0; transition: opacity .35s;
+  background: radial-gradient(circle 260px at var(--mx, 75%) var(--my, 15%),
+              var(--tc-glow, rgba(0,212,255,.06)), transparent 65%);
+  opacity: 0; transition: opacity var(--m-slow) ease;
 }
 .topic-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
 .topic-card:hover::after { opacity: 1; }
@@ -420,7 +512,7 @@ html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
   font-family:var(--font-display); font-size:clamp(24px,4.5vw,40px);
   font-weight: 700; letter-spacing:-0.5px; color:var(--text); margin-bottom:14px; line-height:1.1;
 }
-.cta-title span { background:linear-gradient(135deg,var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.cta-title span { color: var(--cyan); }
 .cta-sub { font-size:14px; color:var(--text3); margin-bottom:32px; max-width:480px; line-height:1.7; }
 .cta-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
 .cta-trust {
@@ -1227,6 +1319,42 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
   el.style.transitionDelay = (i % 5) * 0.08 + 's';
   obs.observe(el);
 });
+
+/* Cursor-tracking card glow.
+   One listener on the grid rather than one per card, coordinates written inside
+   requestAnimationFrame so a fast mouse cannot queue more style writes than the
+   browser paints. Skipped entirely for reduced-motion and touch. */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.querySelectorAll('.bento-grid, .pillars-grid').forEach(function (grid) {
+    var queued = false, lastEvent = null;
+
+    grid.addEventListener('pointermove', function (e) {
+      lastEvent = e;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        queued = false;
+        var card = lastEvent.target.closest('.topic-card, .pillar');
+        if (!card) return;
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((lastEvent.clientX - r.left) / r.width * 100) + '%');
+        card.style.setProperty('--my', ((lastEvent.clientY - r.top) / r.height * 100) + '%');
+      });
+    }, { passive: true });
+
+    // Reset so the next hover starts from the card's own default, not wherever
+    // the pointer happened to leave.
+    grid.addEventListener('pointerleave', function () {
+      grid.querySelectorAll('.topic-card, .pillar').forEach(function (c) {
+        c.style.removeProperty('--mx');
+        c.style.removeProperty('--my');
+      });
+    }, { passive: true });
+  });
+}());
 
 // Ticker
 (function () {
