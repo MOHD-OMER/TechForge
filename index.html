@@ -133,41 +133,12 @@ header.topbar .tb-link:hover::after { transform: scaleX(1); }
   grid-template-columns: 1fr 440px;
   gap: 48px; align-items: center;
   position: relative;
-  /* The aurora is deliberately larger than this box so its soft edges fall
-     outside; clip it here or it widens the page. */
-  overflow: hidden;
 }
 
 /* Aurora: two slow-drifting radial fields behind the hero. The first thing
    anyone sees was completely static; this gives the page a pulse without
    competing with the text. Composited on the GPU, never repaints. */
-.hero-section::before {
-  content: '';
-  position: absolute;
-  inset: -20% -10% -30%;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(42% 46% at 22% 32%, color-mix(in srgb, var(--blue) 22%, transparent) 0%, transparent 70%),
-    radial-gradient(38% 42% at 78% 60%, color-mix(in srgb, var(--cyan) 16%, transparent) 0%, transparent 72%);
-  filter: blur(28px);
-  opacity: .75;
-  will-change: transform;
-}
 .hero-left, .hero-right { position: relative; z-index: 1; }
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes heroAurora {
-    0%   { transform: translate3d(0, 0, 0) scale(1); }
-    50%  { transform: translate3d(2.5%, -1.5%, 0) scale(1.08); }
-    100% { transform: translate3d(0, 0, 0) scale(1); }
-  }
-  .hero-section::before { animation: heroAurora 24s var(--m-inout) infinite; }
-}
-/* No hover means a touch device: a 24s infinite animation is just battery. */
-@media (hover: none) {
-  .hero-section::before { animation: none; opacity: .5; }
-}
 .hero-left { display: flex; flex-direction: column; }
 
 .hero-eyebrow {
