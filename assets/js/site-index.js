@@ -2784,13 +2784,23 @@
     "depth": "guide"
   },
   {
-    "id": "home/roadmaps",
+    "id": "roadmaps/dsa",
+    "title": "DSA Roadmap",
+    "desc": "The DSA roadmap as an interactive flow chart — work outward from Big-O through linear structures, trees, graphs, and tec",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/dsa.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/index",
     "title": "Learning Roadmaps",
     "desc": "Guided learning paths — step-by-step roadmaps that thread TechForge's tracks into ordered journeys: Frontend, Backend, F",
     "icon": "📄",
-    "section": "home",
-    "sectionKey": "home",
-    "href": "roadmaps.html",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/index.html",
     "depth": "guide"
   },
   {
