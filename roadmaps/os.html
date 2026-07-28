@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="What runs underneath your code: processes, memory, scheduling and concurrency. Every node opens a TechForge lesson."/>
+  <meta property="og:title" content="Operating Systems Roadmap — TechForge"/>
+  <meta property="og:description" content="What runs underneath your code: processes, memory, scheduling and concurrency."/>
+  <meta property="og:type" content="website"/>
+  <title>Operating Systems Roadmap — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/os.html"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=26" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
+  <link href="../assets/css/roadmap-graph.css?v=8" rel="stylesheet"/>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-section="roadmaps">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link current" href="index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../data-cloud/index.html">Data &amp; Cloud</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">☰</button>
+  </div>
+</header>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- No sidebar: a flow chart wants the whole page, and the graph is its own
+     navigation. Section links live in the topbar and the breadcrumb below. -->
+<div class="rg-page">
+  <main class="rg-main" id="mainContent">
+    <nav class="rg-crumbs" aria-label="Breadcrumb">
+      <a href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i>All Roadmaps</a>
+      <span class="rg-crumb-sep" aria-hidden="true">/</span>
+      <a href="../systems/os/index.html"><i class="ti ti-cpu" aria-hidden="true"></i>OS &amp; Networks</a>
+    </nav>
+
+    <div class="rg-head">
+      <h1 class="rg-h1">Operating Systems Roadmap</h1>
+      <p class="rg-lede">What runs underneath your code: processes, memory, scheduling and concurrency. Follow the trunk down; the pills beside each step are the sections inside that lesson.</p>
+    </div>
+
+    <div id="rgMount"></div>
+    <script type="application/json" id="rgGraph">
+{
+  "id": "os",
+  "title": "Operating Systems",
+  "accent": "var(--red)",
+  "nodes": [
+    {
+      "id": "processes",
+      "t": "Processes & Threads",
+      "href": "../systems/os/processes.html",
+      "tier": "spine",
+      "g": "Execution"
+    },
+    {
+      "id": "processes-sec-what",
+      "t": "What is a Process?",
+      "href": "../systems/os/processes.html#sec-what",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "processes-sec-states",
+      "t": "Process States",
+      "href": "../systems/os/processes.html#sec-states",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "processes-sec-vs",
+      "t": "Process vs Thread",
+      "href": "../systems/os/processes.html#sec-vs",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "processes-sec-fork",
+      "t": "Creating a Process — fork()",
+      "href": "../systems/os/processes.html#sec-fork",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "processes-sec-ipc",
+      "t": "Inter-Process Communication (IPC)",
+      "href": "../systems/os/processes.html#sec-ipc",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "processes-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/processes.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "processes"
+      ],
+      "bus": true
+    },
+    {
+      "id": "memory",
+      "t": "Memory Management",
+      "href": "../systems/os/memory.html",
+      "tier": "spine",
+      "after": [
+        "processes"
+      ]
+    },
+    {
+      "id": "memory-sec-virt",
+      "t": "Virtual Memory",
+      "href": "../systems/os/memory.html#sec-virt",
+      "tier": "detail",
+      "after": [
+        "memory"
+      ],
+      "bus": true
+    },
+    {
+      "id": "memory-sec-paging",
+      "t": "Paging",
+      "href": "../systems/os/memory.html#sec-paging",
+      "tier": "detail",
+      "after": [
+        "memory"
+      ],
+      "bus": true
+    },
+    {
+      "id": "memory-sec-tlb",
+      "t": "TLB & Page Faults",
+      "href": "../systems/os/memory.html#sec-tlb",
+      "tier": "detail",
+      "after": [
+        "memory"
+      ],
+      "bus": true
+    },
+    {
+      "id": "memory-sec-replace",
+      "t": "Page Replacement",
+      "href": "../systems/os/memory.html#sec-replace",
+      "tier": "detail",
+      "after": [
+        "memory"
+      ],
+      "bus": true
+    },
+    {
+      "id": "memory-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/memory.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "memory"
+      ],
+      "bus": true
+    },
+    {
+      "id": "scheduling",
+      "t": "CPU Scheduling",
+      "href": "../systems/os/scheduling.html",
+      "tier": "spine",
+      "after": [
+        "memory"
+      ]
+    },
+    {
+      "id": "scheduling-sec-why",
+      "t": "Why Schedule?",
+      "href": "../systems/os/scheduling.html#sec-why",
+      "tier": "detail",
+      "after": [
+        "scheduling"
+      ],
+      "bus": true
+    },
+    {
+      "id": "scheduling-sec-algos",
+      "t": "Core Algorithms",
+      "href": "../systems/os/scheduling.html#sec-algos",
+      "tier": "detail",
+      "after": [
+        "scheduling"
+      ],
+      "bus": true
+    },
+    {
+      "id": "scheduling-sec-metrics",
+      "t": "The Metrics",
+      "href": "../systems/os/scheduling.html#sec-metrics",
+      "tier": "detail",
+      "after": [
+        "scheduling"
+      ],
+      "bus": true
+    },
+    {
+      "id": "scheduling-sec-rr",
+      "t": "Round Robin — Worked Example",
+      "href": "../systems/os/scheduling.html#sec-rr",
+      "tier": "detail",
+      "after": [
+        "scheduling"
+      ],
+      "bus": true
+    },
+    {
+      "id": "scheduling-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/scheduling.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "scheduling"
+      ],
+      "bus": true
+    },
+    {
+      "id": "concurrency",
+      "t": "Concurrency & Synchronization",
+      "href": "../systems/os/concurrency.html",
+      "tier": "spine",
+      "g": "Sharing",
+      "after": [
+        "scheduling"
+      ]
+    },
+    {
+      "id": "concurrency-sec-problem",
+      "t": "The Core Problem",
+      "href": "../systems/os/concurrency.html#sec-problem",
+      "tier": "detail",
+      "after": [
+        "concurrency"
+      ],
+      "bus": true
+    },
+    {
+      "id": "concurrency-sec-primitives",
+      "t": "Mutexes & Semaphores",
+      "href": "../systems/os/concurrency.html#sec-primitives",
+      "tier": "detail",
+      "after": [
+        "concurrency"
+      ],
+      "bus": true
+    },
+    {
+      "id": "concurrency-sec-rules",
+      "t": "Rules of a Correct Solution",
+      "href": "../systems/os/concurrency.html#sec-rules",
+      "tier": "detail",
+      "after": [
+        "concurrency"
+      ],
+      "bus": true
+    },
+    {
+      "id": "concurrency-sec-prodcons",
+      "t": "Producer–Consumer",
+      "href": "../systems/os/concurrency.html#sec-prodcons",
+      "tier": "detail",
+      "after": [
+        "concurrency"
+      ],
+      "bus": true
+    },
+    {
+      "id": "concurrency-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/concurrency.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "concurrency"
+      ],
+      "bus": true
+    },
+    {
+      "id": "deadlocks",
+      "t": "Deadlocks",
+      "href": "../systems/os/deadlocks.html",
+      "tier": "spine",
+      "after": [
+        "concurrency"
+      ]
+    },
+    {
+      "id": "deadlocks-sec-what",
+      "t": "What is a Deadlock?",
+      "href": "../systems/os/deadlocks.html#sec-what",
+      "tier": "detail",
+      "after": [
+        "deadlocks"
+      ],
+      "bus": true
+    },
+    {
+      "id": "deadlocks-sec-conditions",
+      "t": "The Four Coffman Conditions",
+      "href": "../systems/os/deadlocks.html#sec-conditions",
+      "tier": "detail",
+      "after": [
+        "deadlocks"
+      ],
+      "bus": true
+    },
+    {
+      "id": "deadlocks-sec-strategies",
+      "t": "Handle It: Prevent / Avoid / Detect",
+      "href": "../systems/os/deadlocks.html#sec-strategies",
+      "tier": "detail",
+      "after": [
+        "deadlocks"
+      ],
+      "bus": true
+    },
+    {
+      "id": "deadlocks-sec-fix",
+      "t": "Practical Fix: Lock Ordering",
+      "href": "../systems/os/deadlocks.html#sec-fix",
+      "tier": "detail",
+      "after": [
+        "deadlocks"
+      ],
+      "bus": true
+    },
+    {
+      "id": "deadlocks-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/deadlocks.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "deadlocks"
+      ],
+      "bus": true
+    },
+    {
+      "id": "filesystems",
+      "t": "Filesystems",
+      "href": "../systems/os/filesystems.html",
+      "tier": "spine",
+      "g": "Storage",
+      "after": [
+        "deadlocks"
+      ]
+    },
+    {
+      "id": "filesystems-sec-what",
+      "t": "What a Filesystem Does",
+      "href": "../systems/os/filesystems.html#sec-what",
+      "tier": "detail",
+      "after": [
+        "filesystems"
+      ],
+      "bus": true
+    },
+    {
+      "id": "filesystems-sec-inode",
+      "t": "Inodes",
+      "href": "../systems/os/filesystems.html#sec-inode",
+      "tier": "detail",
+      "after": [
+        "filesystems"
+      ],
+      "bus": true
+    },
+    {
+      "id": "filesystems-sec-journal",
+      "t": "Journaling",
+      "href": "../systems/os/filesystems.html#sec-journal",
+      "tier": "detail",
+      "after": [
+        "filesystems"
+      ],
+      "bus": true
+    },
+    {
+      "id": "filesystems-sec-syscalls",
+      "t": "What open/write/fsync Really Do",
+      "href": "../systems/os/filesystems.html#sec-syscalls",
+      "tier": "detail",
+      "after": [
+        "filesystems"
+      ],
+      "bus": true
+    },
+    {
+      "id": "filesystems-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/filesystems.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "filesystems"
+      ],
+      "bus": true
+    },
+    {
+      "id": "io",
+      "t": "I/O & Interrupts",
+      "href": "../systems/os/io.html",
+      "tier": "spine",
+      "after": [
+        "filesystems"
+      ]
+    },
+    {
+      "id": "io-sec-devices",
+      "t": "Talking to Devices",
+      "href": "../systems/os/io.html#sec-devices",
+      "tier": "detail",
+      "after": [
+        "io"
+      ],
+      "bus": true
+    },
+    {
+      "id": "io-sec-interrupts",
+      "t": "Interrupts",
+      "href": "../systems/os/io.html#sec-interrupts",
+      "tier": "detail",
+      "after": [
+        "io"
+      ],
+      "bus": true
+    },
+    {
+      "id": "io-sec-blocking",
+      "t": "Blocking vs Non-Blocking I/O",
+      "href": "../systems/os/io.html#sec-blocking",
+      "tier": "detail",
+      "after": [
+        "io"
+      ],
+      "bus": true
+    },
+    {
+      "id": "io-sec-epoll",
+      "t": "epoll and the C10k Problem",
+      "href": "../systems/os/io.html#sec-epoll",
+      "tier": "detail",
+      "after": [
+        "io"
+      ],
+      "bus": true
+    },
+    {
+      "id": "io-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/io.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "io"
+      ],
+      "bus": true
+    },
+    {
+      "id": "boot",
+      "t": "Boot to Shell",
+      "href": "../systems/os/boot.html",
+      "tier": "spine",
+      "after": [
+        "io"
+      ]
+    },
+    {
+      "id": "boot-sec-flow",
+      "t": "From Power Button to Prompt",
+      "href": "../systems/os/boot.html#sec-flow",
+      "tier": "detail",
+      "after": [
+        "boot"
+      ],
+      "bus": true
+    },
+    {
+      "id": "boot-sec-firmware",
+      "t": "Firmware & Bootloader",
+      "href": "../systems/os/boot.html#sec-firmware",
+      "tier": "detail",
+      "after": [
+        "boot"
+      ],
+      "bus": true
+    },
+    {
+      "id": "boot-sec-kernel",
+      "t": "Kernel & init",
+      "href": "../systems/os/boot.html#sec-kernel",
+      "tier": "detail",
+      "after": [
+        "boot"
+      ],
+      "bus": true
+    },
+    {
+      "id": "boot-sec-modes",
+      "t": "User vs Kernel Mode",
+      "href": "../systems/os/boot.html#sec-modes",
+      "tier": "detail",
+      "after": [
+        "boot"
+      ],
+      "bus": true
+    },
+    {
+      "id": "boot-sec-iq",
+      "t": "Interview Questions",
+      "href": "../systems/os/boot.html#sec-iq",
+      "tier": "detail",
+      "after": [
+        "boot"
+      ],
+      "bus": true
+    },
+    {
+      "id": "interview",
+      "t": "Interview Questions",
+      "href": "../interview/os-interview.html",
+      "tier": "spine",
+      "g": "Prove it",
+      "after": [
+        "boot"
+      ]
+    }
+  ]
+}
+</script>
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../assets/js/topics-manifest.js?v=2"></script>
+<script src="../assets/js/site-index.js?v=4"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=12"></script>
+<script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/roadmap-graph.js?v=6"></script>
+<script>
+  (function () {
+    var graph = JSON.parse(document.getElementById('rgGraph').textContent);
+    window.TFRoadmapGraph.mount(document.getElementById('rgMount'), graph);
+  }());
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');
+  window.addEventListener('scroll', function () {
+    var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight;
+    if (pf) pf.style.width = (h > 0 ? (s / h) * 100 : 0) + '%';
+    if (bt) bt.classList.toggle('visible', s > 400);
+  }, { passive: true });
+  if (bt) bt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+});
+</script>
+</body>
+</html>

@@ -1624,6 +1624,16 @@
     "depth": "guide"
   },
   {
+    "id": "roadmaps/cpp",
+    "title": "C++ Roadmap",
+    "desc": "C++ from syntax to pointers, templates and the modern standard library. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/cpp.html",
+    "depth": "page"
+  },
+  {
     "id": "roadmaps/dsa",
     "title": "DSA Roadmap",
     "desc": "The DSA roadmap as an interactive flow chart — work outward from Big-O through linear structures, trees, graphs, and tec",
@@ -1644,6 +1654,46 @@
     "depth": "page"
   },
   {
+    "id": "roadmaps/java",
+    "title": "Java Roadmap",
+    "desc": "Java from syntax and collections through OOP, streams and concurrency. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/java.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/javascript",
+    "title": "JavaScript Roadmap",
+    "desc": "Every JavaScript topic on TechForge in the order the track teaches it. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/javascript.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/networking",
+    "title": "Networking Roadmap",
+    "desc": "How machines talk: the stack, the transport layer, and the protocols on top. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/networking.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/os",
+    "title": "Operating Systems Roadmap",
+    "desc": "What runs underneath your code: processes, memory, scheduling and concurrency. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/os.html",
+    "depth": "page"
+  },
+  {
     "id": "roadmaps/python",
     "title": "Python Roadmap",
     "desc": "The Python roadmap as a flow chart: variables and types through control flow, collections, functions, OOP, async and the",
@@ -1651,6 +1701,36 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/python.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/security",
+    "title": "Security Roadmap",
+    "desc": "Threat models, cryptography, and the attacks worth knowing by name. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/security.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/theory",
+    "title": "Theory of Computation Roadmap",
+    "desc": "What machines can compute, what they cannot, and how long it takes. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/theory.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/typescript",
+    "title": "TypeScript Roadmap",
+    "desc": "The TypeScript type system, from annotations through to type-level programming. Every node opens a TechForge lesson.",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/typescript.html",
     "depth": "page"
   },
   {
