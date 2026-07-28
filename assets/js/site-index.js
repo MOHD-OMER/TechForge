@@ -2534,6 +2534,76 @@
     "depth": "guide"
   },
   {
+    "id": "roadmaps/aiml",
+    "title": "AI / ML Engineer Roadmap",
+    "desc": "Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through d",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/aiml.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/backend",
+    "title": "Backend Developer Roadmap",
+    "desc": "Build the server side. Pick a strong language, get fluent in objects and SQL, then layer on APIs, scale, and the operati",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/backend.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/cs",
+    "title": "CS Fundamentals Roadmap",
+    "desc": "What every layer under your code is actually doing. The operating system, the network, the database, and the theory that",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/cs.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/devops",
+    "title": "DevOps &amp; Cloud Roadmap",
+    "desc": "Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the ",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/devops.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/dsa",
+    "title": "DSA &amp; Interview Prep Roadmap",
+    "desc": "The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/dsa.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/frontend",
+    "title": "Frontend Developer Roadmap",
+    "desc": "Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and s",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/frontend.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/fullstack",
+    "title": "Full Stack Developer Roadmap",
+    "desc": "Both ends of the wire. Own the browser with JavaScript and TypeScript, serve it with Python and SQL, then package and sh",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/fullstack.html",
+    "depth": "page"
+  },
+  {
     "id": ".claude/404",
     "title": "404 — Page Not Found | TechForge",
     "desc": "404 — Page Not Found | TechForge",
@@ -2795,13 +2865,13 @@
   },
   {
     "id": "roadmaps/index",
-    "title": "Learning Roadmaps",
-    "desc": "Guided learning paths — step-by-step roadmaps that thread TechForge's tracks into ordered journeys: Frontend, Backend, F",
+    "title": "Developer Roadmaps",
+    "desc": "Every TechForge roadmap in one place: seven career paths from Frontend to AI/ML, and topic-by-topic flow charts starting",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/index.html",
-    "depth": "guide"
+    "depth": "page"
   },
   {
     "id": ".claude/app-security",
