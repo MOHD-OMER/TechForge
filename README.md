@@ -8,14 +8,14 @@
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-techforge--dev.vercel.app-00d4ff?style=flat-square&logo=vercel)](https://techforge-dev.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-7c3aed?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.0.0-green?style=flat-square)](RELEASES.md)
+[![Version](https://img.shields.io/badge/Version-3.0.0-green?style=flat-square)](RELEASES.md)
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://techforge-dev.vercel.app)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
+[![Zero Runtime Dependencies](https://img.shields.io/badge/Runtime%20Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://techforge-dev.vercel.app)
 
 **100% Static · Zero Build Step · Zero Backend · Security Hardened · Production Ready**
 
-Programming Languages · DSA · System Design · Data & Cloud · OS & Networks · AI/ML · Interview Prep
+Roadmaps · Programming Languages · DSA · System Design · Data & Cloud · OS & Networks · AI/ML · Interview Prep
 
 </div>
 
@@ -23,9 +23,9 @@ Programming Languages · DSA · System Design · Data & Cloud · OS & Networks �
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 290+ curated interview problems, and eight complete learning tracks — complete computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 21 guided roadmaps, 334 curated interview questions, and eight complete learning tracks across 234 pages — computer science from fundamentals to interview-ready.
 
-Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero npm dependencies, and zero backend infrastructure. A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
+Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
 **Perfect for developers preparing for technical interviews, learning new topics, or reviewing fundamentals.**
 
@@ -41,30 +41,39 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 | Track | Topics | URL |
 |---|---|---|
-| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
-| Programming | Python live (8 modules · 137 programs) · JS/Java/C++/HTML coming | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
+| Roadmaps | 14 topic flow charts + 7 career paths | [/roadmaps](https://techforge-dev.vercel.app/roadmaps/index.html) |
+| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers · 4 language tabs | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
+| Programming | Python · JavaScript · TypeScript · Java · C++ (8 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
 | Data & Cloud | 14 DB engines + 23 DevOps guides (databases + DevOps combined) | [/data-cloud](https://techforge-dev.vercel.app/data-cloud/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
-| Interview Prep | 290+ problems · 10 question banks | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
+| Interview Prep | 334 questions · 13 banks · flashcards · timed quiz | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
 | OS & Networks | 4 complete pillars — OS, Networking, Security, Theory of Computation (32 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
 
 ---
 
 ## ✨ Key Features
 
+### Roadmaps
+- **21 roadmaps on one renderer** — 14 topic flow charts and 7 career paths
+- **Spine-and-branches layout** — the trunk is the order to learn in, branches are the optional detours, and every node opens a real lesson
+- **Prerequisites are real edges** — hover a step to light the whole chain leading to it
+- **Generated from the site itself** — `tools/build-roadmaps.mjs` derives each roadmap from the pages and section headings it points at, so it cannot drift from the lessons
+- **Statically validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
+
 ### Data Structures & Algorithms
 - **29 in-depth topics** across 6 categories
 - **28 interactive Canvas 2D visualizers** (every topic except Dynamic Programming)
+- **Four language tabs** on every topic — Python, JavaScript, Java and C++, with your choice remembered
 - Comprehensive coverage: arrays, linked lists, stacks, queues, trees, graphs, hashing, sorting, searching, bit manipulation, sliding window, two pointer
-- Big-O analysis and recommended learning paths
+- Big-O analysis and a full roadmap of the track
 - Step-by-step algorithm execution with visual state
 
-### Python Track
-- **8 complete modules** from basics through async/await
-- Covers: control flow, functions, OOP, collections, libraries, and concurrency patterns
-- 50+ annotated practice programs
-- Magic methods, decorators, comprehensions, asyncio patterns
+### Programming Tracks
+- **Five languages** — Python, JavaScript, TypeScript, Java and C++
+- **8 modules each**, from basics through the language's advanced ground: OOP, collections, error handling, concurrency, modules and tooling
+- **A practice-programs page per language** — 137 annotated Python programs, 35–40 for each of the others
+- Language-specific depth: Python decorators and asyncio, JS closures and the event loop, TS generics and type-level programming, Java streams and concurrency, C++ pointers and templates
 
 ### System Design
 - **26 production-grade deep-dive guides**
@@ -83,9 +92,11 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Interactive visualizations
 
 ### Interview Preparation
-- **290+ curated problems** across 10 question banks
-- Banks: DSA, Python, OOP, SQL, AI/ML, DevOps, System Design (OS & Networks banks coming)
+- **334 curated questions** across 13 question banks
+- Banks: DSA, Python, JavaScript, Java, C++, OOP, SQL, AI/ML, DevOps, System Design, OS, Networking, Security
 - FAANG and startup tagged · Difficulty rated · Progress tracked in browser
+- **Spaced repetition** — Leitner-box flashcards with due-card resurfacing on every bank
+- **Timed MCQ quiz** — distractors generated from the bank itself, 30s timer, streaks, and a stats summary with missed-answer review
 
 ### DevOps
 - **23 comprehensive guides** covering the entire DevOps landscape
@@ -97,6 +108,8 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
 - **Branded loading screen** — animated splash on load, so opening the app never shows a blank flash
 - **Progress tracking** — mark topics and interview questions complete, saved in the browser
+- **Cross-track dashboard** (`/dashboard.html`) — every track, bank and quiz in one view, with a "Focus next" panel that ranks weak areas from flashcard boxes, quiz scores and track progress
+- **Reduced-motion respected** — every animation is guarded, sitewide
 
 ### Progressive Web App
 - **Service Worker** (`sw.js`) with network-first HTML caching and cache-first asset strategy
@@ -118,7 +131,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | **Icons** | Tabler Icons webfont | Consistent line-icon system, no emoji rendering differences |
 | **Deployment** | Vercel (static) | Zero-config, global CDN, instant deploys, auto HTTPS, security headers |
 
-**Zero npm packages · Zero build toolchain · Zero runtime dependencies · 100% vanilla**
+**Zero build toolchain · Zero runtime dependencies · 100% vanilla**
+
+npm is used for verification only — Playwright and axe-core power the CI accessibility audit, and the generators under `tools/` are plain Node scripts. Nothing in `node_modules` reaches the browser, and the site opens straight from disk.
 
 ---
 
@@ -138,11 +153,13 @@ TechForge/
 │
 ├── assets/
 │   ├── css/
-│   │   ├── forge_base.css        # Global design system, CSS variables, typography
+│   │   ├── forge_base.css        # Global design system, CSS variables, typography, motion
 │   │   ├── lesson.css            # Unified lesson page styles
 │   │   ├── platform.css          # Progress tracking, bookmarks, scroll-spy
 │   │   ├── hub.css               # Section hub page styles
 │   │   ├── dsa.css               # DSA-specific visualizer styles
+│   │   ├── roadmap-graph.css     # Roadmap flow-chart renderer
+│   │   ├── roadmap-index.css     # Roadmap directory page
 │   │   ├── aiml-lesson.css       # AI/ML lesson styles
 │   │   └── aiml-overview.css     # AI/ML section overview
 │   ├── js/
@@ -151,27 +168,38 @@ TechForge/
 │   │   ├── search-modal.js       # Ctrl K / ⌘K instant search command palette
 │   │   ├── topics-manifest.js    # Canonical topic registry (single source of truth)
 │   │   ├── site-index.js         # Client-side full-site search index
+│   │   ├── roadmap-graph.js      # Layout engine + SVG connectors for roadmaps
 │   │   └── aiml-viz.js           # AI/ML interactive visualizations
 │   ├── favicon.svg               # SVG favicon (all formats)
 │   ├── icon-192.png / icon-512.png         # PWA home screen / splash icons
 │   ├── icon-192-maskable.png / icon-512-maskable.png  # Android adaptive icons
 │   └── og-image.png              # Open Graph social preview (1200×630)
 │
+├── roadmaps/                     # 14 topic flow charts + paths/ (7 career roadmaps)
 ├── dsa/                          # Data Structures & Algorithms (29 topics)
 ├── programming/                  # Programming Languages hub
-│   └── python/                   # Python (8 modules · 137 programs)
+│   ├── python/ javascript/ typescript/ java/ cpp/   # 8 modules + programs each
 ├── system-design/                # System Design (26 guides)
 ├── databases/                    # Databases (14 deep-dives)  ┐ Data & Cloud
 ├── aiml/                         # AI/ML Hub (8 modules)
-├── interview/                    # Interview Prep (10 banks, 290+ problems)
+├── interview/                    # Interview Prep (13 banks, 334 questions)
 ├── devops/                       # DevOps (23 guides)         ┘ (data-cloud/ hub)
 ├── systems/                      # OS & Networks (os/ networking/ security/ theory/ — 32 guides)
 │
 ├── tools/                        # Build & utility scripts
+│   ├── build-roadmaps.mjs        # Generate every roadmap from the site's own pages
+│   ├── roadmap-paths.js          # Career-path milestones (build-time data)
 │   ├── build-site-index.mjs      # Generate site-index.js
 │   ├── generate-sitemap.mjs      # Generate sitemap.xml
 │   ├── sync-all-pages.mjs        # Cross-page metadata sync
 │   └── topic-content.json        # Content registry
+│
+├── scripts/                      # Verification suite (npm run ...)
+│   ├── validate-graphs.mjs       # Roadmap graph validation — cycles, dead links, ranks
+│   ├── a11y-audit.mjs            # axe-core over every page × both themes
+│   ├── a11y-states.mjs           # Same, with progress state seeded
+│   ├── check-roadmap-graph.mjs   # Rendered-graph smoke test
+│   └── test-layout.mjs           # Layout-engine regression tests
 │
 ├── .github/
 │   └── workflows/
@@ -227,9 +255,16 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 126 files pass Nu validator)
+- **100% HTML validation** (all 234 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA accessibility** target (semantic HTML, ARIA labels, keyboard navigation)
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (234 × 2 = 468 audits, all clean); serious violations fail the build
+- **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
+
+Run the suite locally:
+
+```bash
+npm run validate:graphs && npm run a11y
+```
 
 ---
 
@@ -337,25 +372,33 @@ Example:
 
 ## 📈 Roadmap
 
-### v2.1.0 (Q3 2026)
+Full release notes: **[RELEASES.md](RELEASES.md)**
+
+### v3.0.0 — shipped 2026-07-28
+- [x] Guided roadmaps — 14 topic flow charts + 7 career paths, generated from the site's own pages
+- [x] Four more language tracks — JavaScript, TypeScript, Java, C++
+- [x] OS & Networks section complete — 4 pillars, 32 guides
+- [x] Six more interview banks (13 banks · 334 questions)
+- [x] C++ implementations across DSA (4 language tabs)
+- [x] Cross-track dashboard with weak-area recommendations
+
+### v2.x — shipped
 - [x] Cross-track progress dashboard (`/dashboard.html`)
-- [x] Interview timed quiz mode (10 random Qs, 60s timer, self-graded, best-score tracking — on all 10 banks)
+- [x] Interview timed quiz mode (MCQ with generated distractors, 30s timer, streaks, stats summary)
 - [x] Accessibility audit & WCAG 2.1 AA compliance (axe-core over every page × both themes, enforced in CI)
 - [x] Automated test suite (HTML validation + link checking + a11y audit via Playwright, all in CI)
-
-### v2.2.0 (Q4 2026)
 - [x] Code implementations (Python, JavaScript, Java, C++ toggles on all DSA topics)
-- [x] Interview company tagging (FAANG / startup track filters) — company-specific guides pending
-- [x] Difficulty-based problem filtering (beginner → FAANG filters on all 10 banks)
+- [x] Interview company tagging (FAANG / startup track filters)
+- [x] Difficulty-based problem filtering on every bank
+- [x] Spaced repetition / flashcard system (Leitner boxes, due-card resurfacing, localStorage-only)
+- [x] "Review weak areas" recommendations
+
+### v3.1.0 (Q3 2027)
+- [ ] Build your own roadmap — pick topics, get a saved flow chart of your own
+- [ ] Interactive coding challenges with an in-page editor
 - [ ] Performance monitoring & analytics
 
-### v2.3.0 (Q1 2027)
-- [x] Spaced repetition / flashcard system (Leitner boxes on all 10 interview banks, due-card resurfacing, localStorage-only)
-- [ ] Interactive coding challenges with code editor
-- [ ] Customizable learning paths
-- [x] "Review weak areas" recommendations (dashboard ranks weak spots from flashcard boxes, quiz scores and track progress)
-
-### v3.0.0 (Q2 2027)
+### v4.0.0 (Q4 2027)
 - [ ] Community discussions (GitHub-backed comments)
 - [ ] User contributions system (alternative explanations, examples)
 - [ ] Mobile app wrapper (React Native / Flutter)
