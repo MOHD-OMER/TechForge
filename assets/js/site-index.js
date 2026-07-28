@@ -1624,6 +1624,16 @@
     "depth": "guide"
   },
   {
+    "id": "roadmaps/aiml",
+    "title": "AI / ML Roadmap",
+    "desc": "From what machine learning is, through deep learning, to the specialisations built on it. Every node opens a TechForge l",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/aiml.html",
+    "depth": "page"
+  },
+  {
     "id": "roadmaps/cpp",
     "title": "C++ Roadmap",
     "desc": "C++ from syntax to pointers, templates and the modern standard library. Every node opens a TechForge lesson.",
@@ -1631,6 +1641,26 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/cpp.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/databases",
+    "title": "Databases &amp; SQL Roadmap",
+    "desc": "Relational foundations first, then the NoSQL and specialised stores built for other shapes of data. Every node opens a T",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/databases.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/devops",
+    "title": "DevOps Roadmap",
+    "desc": "Shipping and running software: version control, containers, pipelines and the cloud underneath. Every node opens a TechF",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/devops.html",
     "depth": "page"
   },
   {
@@ -1711,6 +1741,16 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/security.html",
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/system-design",
+    "title": "System Design Roadmap",
+    "desc": "How the pieces of a large system fit together, from a single request to data at scale. Every node opens a TechForge less",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "roadmaps/system-design.html",
     "depth": "page"
   },
   {
