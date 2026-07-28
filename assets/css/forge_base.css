@@ -2690,3 +2690,22 @@ html.light .icta-btn:hover {
 html.light .btn-ih-primary:hover { background: var(--amber); }
 html.light .btn-ph-primary:hover { background: var(--green); }
 html.light .btn-aim-primary:hover, html.light .cta-primary:hover { background: var(--purple); }
+
+/* ── Roadmap CTA ──────────────────────────────────────────────
+   Every section hub links out to its roadmap with the same slab.
+   Set --rm-c per hub to pick up that section's accent. */
+.rm-cta {
+  --rm-c: var(--blue);
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; margin-bottom: 40px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); text-decoration: none;
+  transition: border-color var(--m-base) var(--m-out), transform var(--m-base) var(--m-out);
+}
+.rm-cta:hover { border-color: var(--rm-c); transform: translateY(-2px); }
+.rm-cta-icon { font-size: 26px; color: var(--rm-c); flex-shrink: 0; line-height: 1; }
+.rm-cta-body { flex: 1; min-width: 0; }
+.rm-cta-title { display: block; font-size: 15px; font-weight: 700; color: var(--text); }
+.rm-cta-sub { display: block; font-size: 12.5px; color: var(--text2); line-height: 1.55; margin-top: 3px; }
+.rm-cta-go { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--rm-c); flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 560px) { .rm-cta-go { display: none; } }

@@ -52,20 +52,6 @@
 .pys-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text2); text-transform: uppercase; }
 .pys-sub   { font-size: 10.5px; color: var(--text2); margin-top: 2px; }
 
-.path-strip { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 20px 22px; margin-bottom: 40px; position: relative; overflow: hidden; }
-.path-strip::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--orange), var(--amber), var(--red)); opacity:.5; }
-.path-label { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px; color: var(--text2); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
-.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.path-step { display: flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: var(--r-md); background: var(--bg2); border: 1px solid var(--border); text-decoration: none; transition: all .2s; flex-shrink: 0; }
-.path-step:hover { border-color: var(--orange); background: rgba(251,146,60,.06); }
-.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--orange); font-weight: 700; }
-.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
-.ps-diff { font-family: var(--font-mono); font-size: 8px; font-weight: 700; padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px; }
-.diff-starter { background:rgba(52,211,153,.1);  color:var(--green); border:1px solid rgba(52,211,153,.2); }
-.diff-mid     { background:rgba(251,191,36,.09); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
-.diff-adv     { background:rgba(248,113,113,.1); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
-.path-arrow   { font-size: 12px; color: var(--text2); flex-shrink: 0; }
 
 .sec-label { display: flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; color: var(--text2); text-transform: uppercase; margin-bottom: 6px; }
 .sec-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--orange),transparent); }
@@ -153,7 +139,6 @@
   .btn-ph-primary,.btn-ph-ghost { width: 100%; justify-content: center; min-height: 44px; }
   .interview-cta { flex-direction: column; text-align: center; }
   .icta-btn { width: 100%; justify-content: center; }
-  .path-arrow { display: none; }
 }
 @media (max-width:600px) {
   .ph-title { font-size: 22px !important; letter-spacing: -0.5px; }
@@ -228,11 +213,10 @@
 
     <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
     <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
-    <a class="sb-link" href="#path"><span class="sb-num">01</span>Learning Path</a>
-    <a class="sb-link" href="#modules"><span class="sb-num">02</span>All Modules</a>
-    <a class="sb-link" href="#why"><span class="sb-num">03</span>Why Java?</a>
-    <a class="sb-link" href="#gotchas"><span class="sb-num">04</span>Java Gotchas</a>
-    <a class="sb-link" href="#preview"><span class="sb-num">05</span>Code Preview</a>
+    <a class="sb-link" href="#modules"><span class="sb-num">01</span>All Modules</a>
+    <a class="sb-link" href="#why"><span class="sb-num">02</span>Why Java?</a>
+    <a class="sb-link" href="#gotchas"><span class="sb-num">03</span>Java Gotchas</a>
+    <a class="sb-link" href="#preview"><span class="sb-num">04</span>Code Preview</a>
   </aside>
 
   <main class="main" id="mainContent">
@@ -280,28 +264,14 @@
       </div>
     </div>
 
-    <div id="path" class="path-strip anim-in">
-      <div class="path-label">Recommended Learning Path</div>
-      <div class="path-steps">
-        <a class="path-step" href="basics.html"><span class="ps-num">01</span><span class="ps-name">Basics</span><span class="ps-diff diff-starter">Starter</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="control.html"><span class="ps-num">02</span><span class="ps-name">Control Flow</span><span class="ps-diff diff-starter">Starter</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="collections.html"><span class="ps-num">03</span><span class="ps-name">Collections</span><span class="ps-diff diff-starter">Starter</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="methods.html"><span class="ps-num">04</span><span class="ps-name">Methods</span><span class="ps-diff diff-mid">Mid</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="oop.html"><span class="ps-num">05</span><span class="ps-name">OOP</span><span class="ps-diff diff-mid">Mid</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="exceptions.html"><span class="ps-num">06</span><span class="ps-name">Exceptions</span><span class="ps-diff diff-mid">Mid</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="streams.html"><span class="ps-num">07</span><span class="ps-name">Streams</span><span class="ps-diff diff-adv">Advanced</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="concurrency.html"><span class="ps-num">08</span><span class="ps-name">Concurrency</span><span class="ps-diff diff-adv">Advanced</span></a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="programs.html"><span class="ps-num">09</span><span class="ps-name">Practice</span><span class="ps-diff diff-adv">Advanced</span></a>
-      </div>
-    </div>
+    <a class="rm-cta anim-in" href="../../roadmaps/java.html" style="--rm-c:var(--orange)">
+      <span class="rm-cta-icon"><i class="ti ti-sitemap" aria-hidden="true"></i></span>
+      <span class="rm-cta-body">
+        <span class="rm-cta-title">Open the Java roadmap</span>
+        <span class="rm-cta-sub">Every module and the sections inside it as one connected flow chart, in the order this track teaches them.</span>
+      </span>
+      <span class="rm-cta-go">Explore &#8594;</span>
+    </a>
 
     <div id="modules" class="sec-block anim-in">
       <div class="sec-label">Curriculum</div>
