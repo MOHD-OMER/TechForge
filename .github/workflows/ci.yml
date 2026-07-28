@@ -58,6 +58,12 @@ jobs:
       - name: Install dev tooling
         run: npm ci
 
+      # A roadmap graph that cycles or points at a deleted page renders a
+      # picture that contradicts its own text. Cheap check, run it before the
+      # expensive browser one.
+      - name: Validate roadmap graphs
+        run: npm run validate:graphs
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
