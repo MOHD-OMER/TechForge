@@ -26,7 +26,9 @@ export function validateGraph(graph, htmlPath) {
     if (!['spine', 'branch', 'detail'].includes(n.tier)) {
       errors.push(`${n.id}: tier must be spine|branch|detail, got ${n.tier}`);
     }
-    if (n.href && !fs.existsSync(path.join(dir, n.href))) {
+    // A node may deep-link into a section (page.html#sec-x). Check the file, not
+    // the fragment — existsSync on "page.html#sec-x" is always false.
+    if (n.href && !fs.existsSync(path.join(dir, n.href.split('#')[0]))) {
       errors.push(`${n.id}: href does not exist -> ${n.href}`);
     }
   }
@@ -109,8 +111,11 @@ if (argv1 && (import.meta.url === expected || import.meta.url.endsWith(argv1.rep
   const targets = process.argv.slice(2);
   const files = targets.length ? targets : fs.readdirSync('roadmaps')
     .filter((f) => f.endsWith('.html')).map((f) => path.join('roadmaps', f));
-  let total = 0;
+  let total = 0, skipped = 0;
   for (const f of files) {
+    // roadmaps/ also holds the directory page and any tree-based roadmap, which
+    // carry no graph block. Those are not failures, just not graphs.
+    if (!fs.readFileSync(f, 'utf8').includes('id="rgGraph"')) { skipped++; continue; }
     const g = readGraph(f);
     const errs = validateGraph(g, f);
     total += errs.length;

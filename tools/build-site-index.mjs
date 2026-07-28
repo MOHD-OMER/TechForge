@@ -35,7 +35,9 @@ function walk(dir, list = []) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
     if (fs.statSync(full).isDirectory()) {
-      if (name === 'node_modules' || name === '.git') continue;
+      // .claude holds agent worktrees: full copies of the site that would
+      // otherwise land in the index as duplicate search results.
+      if (name === 'node_modules' || name === '.git' || name === '.claude') continue;
       walk(full, list);
     } else if (name.endsWith('.html')) {
       list.push(full);
