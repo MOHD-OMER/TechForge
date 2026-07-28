@@ -37,7 +37,12 @@
 .rg-grid {
   display: grid;
   grid-template-columns: max-content minmax(210px, 250px) max-content;
+  /* `center` alone centres the overflow too, putting the left branches at a
+     negative offset the scroller can never reach — the chart opened cut off on
+     both sides with no way to scroll back. `safe` falls back to start the
+     moment it overflows, so every node stays reachable. */
   justify-content: center;
+  justify-content: safe center;
   gap: 12px 22px;
   align-items: start;
   position: relative;
@@ -164,8 +169,22 @@
    just scaled down. Collapsing to a single column threw away the structure that
    makes it a roadmap in the first place; the scroller handles the width. */
 @media (max-width: 760px) {
-  .rg-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .rg-grid { grid-template-columns: max-content minmax(160px, 190px) max-content; gap: 9px 14px; }
+  /* Run the scroller to both screen edges. The page gutter is a third of a
+     branch pill, and every pixel here is a pixel the reader doesn't have to
+     swipe for. No vw units: with a classic scrollbar they overshoot the layout
+     viewport and drag the whole page sideways. */
+  .rg-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(-1 * max(20px, var(--safe-left, 0px)));
+    margin-right: calc(-1 * max(20px, var(--safe-right, 0px)));
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .rg-grid { grid-template-columns: max-content minmax(150px, 170px) max-content; gap: 9px 12px; }
+  /* Cap the branches so a long title wraps instead of pushing the chart wider
+     than the screen. The trunk keeps its width — it is what gets read. */
+  .rg-branch, .rg-detail { max-width: 125px; }
   .rg-node { padding: 8px 11px; border-radius: var(--r-md); }
   .rg-spine { padding: 10px 12px; }
   .rg-spine .rg-title { font-size: 14px; }
