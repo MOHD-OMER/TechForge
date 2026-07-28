@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all."/>
+  <meta name="description" content="What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all. Every milestone opens a TechForge lesson."/>
   <meta property="og:title" content="CS Fundamentals Roadmap — TechForge"/>
   <meta property="og:description" content="What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all."/>
   <meta property="og:type" content="website"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=26" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=4" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-path.css?v=1" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-graph.css?v=8" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -54,17 +54,184 @@
 
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
-<div class="rp-page">
-  <main class="rp-main" id="mainContent">
-    <nav class="rp-crumbs" aria-label="Breadcrumb">
+<!-- No sidebar: a flow chart wants the whole page, and the graph is its own
+     navigation. Section links live in the topbar and the breadcrumb below. -->
+<div class="rg-page">
+  <main class="rg-main" id="mainContent">
+    <nav class="rg-crumbs" aria-label="Breadcrumb">
       <a href="../index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i>All Roadmaps</a>
-    </nav>
-    <div class="rp-head">
-      <h1 class="rp-h1"><i class="ti ti-cpu" aria-hidden="true" style="color:var(--teal)"></i>CS Fundamentals</h1>
-      <p class="rp-lede">What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all.</p>
-      <p class="rp-count"><span id="rmPct">0%</span> · <span id="rmCount">0 / 15</span> milestones done</p>
+      </nav>
+
+    <div class="rg-head">
+      <h1 class="rg-h1">CS Fundamentals</h1>
+      <p class="rg-lede">What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
     </div>
-    <div id="rmMount" data-path="cs"></div>
+
+    <div id="rgMount"></div>
+    <script type="application/json" id="rgGraph">
+{
+  "id": "cs",
+  "title": "CS Fundamentals",
+  "accent": "var(--teal)",
+  "nodes": [
+    {
+      "id": "systems-os-processes",
+      "t": "Processes & Threads",
+      "href": "../../systems/os/processes.html",
+      "tier": "spine",
+      "g": "The operating system",
+      "s": "What a running program actually is, and how the kernel juggles many at once."
+    },
+    {
+      "id": "systems-os-memory",
+      "t": "Memory Management",
+      "href": "../../systems/os/memory.html",
+      "tier": "spine",
+      "s": "Virtual memory, paging, and why your pointer is not the address you think.",
+      "after": [
+        "systems-os-processes"
+      ]
+    },
+    {
+      "id": "systems-os-scheduling",
+      "t": "CPU Scheduling",
+      "href": "../../systems/os/scheduling.html",
+      "tier": "spine",
+      "s": "How the OS picks what runs next, and the trade-off inside each policy.",
+      "after": [
+        "systems-os-memory"
+      ]
+    },
+    {
+      "id": "systems-os-concurrency",
+      "t": "Concurrency & Synchronization",
+      "href": "../../systems/os/concurrency.html",
+      "tier": "spine",
+      "s": "Race conditions, locks, semaphores, and the bugs that only surface under load.",
+      "after": [
+        "systems-os-scheduling"
+      ]
+    },
+    {
+      "id": "systems-os-deadlocks",
+      "t": "Deadlocks",
+      "href": "../../systems/os/deadlocks.html",
+      "tier": "branch",
+      "s": "The four necessary conditions, and which one to break.",
+      "after": [
+        "systems-os-concurrency"
+      ]
+    },
+    {
+      "id": "systems-networking-stack",
+      "t": "The TCP/IP Stack",
+      "href": "../../systems/networking/stack.html",
+      "tier": "spine",
+      "g": "The network",
+      "s": "Layers, encapsulation, and which protocol lives where.",
+      "after": [
+        "systems-os-concurrency"
+      ]
+    },
+    {
+      "id": "systems-networking-tcp-udp",
+      "t": "TCP vs UDP",
+      "href": "../../systems/networking/tcp-udp.html",
+      "tier": "spine",
+      "s": "Reliable vs fast, the three-way handshake, and when each is the right call.",
+      "after": [
+        "systems-networking-stack"
+      ]
+    },
+    {
+      "id": "systems-networking-http",
+      "t": "HTTP & HTTPS",
+      "href": "../../systems/networking/http.html",
+      "tier": "spine",
+      "s": "Methods, status codes, headers, TLS, and what HTTP/2 and /3 changed.",
+      "after": [
+        "systems-networking-tcp-udp"
+      ]
+    },
+    {
+      "id": "systems-networking-dns",
+      "t": "DNS",
+      "href": "../../systems/networking/dns.html",
+      "tier": "branch",
+      "s": "How a name becomes an address, and every cache in between.",
+      "after": [
+        "systems-networking-stack",
+        "systems-networking-http"
+      ]
+    },
+    {
+      "id": "databases-sql",
+      "t": "SQL & Databases",
+      "href": "../../databases/sql.html",
+      "tier": "spine",
+      "g": "Data & security",
+      "s": "Relational modelling, transactions, joins, and indexes.",
+      "after": [
+        "systems-networking-http"
+      ]
+    },
+    {
+      "id": "systems-security-fundamentals",
+      "t": "Security Fundamentals",
+      "href": "../../systems/security/fundamentals.html",
+      "tier": "branch",
+      "s": "The CIA triad, threat modelling, and the attack classes worth knowing by name.",
+      "after": [
+        "databases-sql"
+      ]
+    },
+    {
+      "id": "dsa-bigo",
+      "t": "Big-O Notation",
+      "href": "../../dsa/bigo.html",
+      "tier": "spine",
+      "g": "Theory",
+      "s": "The vocabulary of efficiency, used everywhere else on this list.",
+      "after": [
+        "databases-sql"
+      ]
+    },
+    {
+      "id": "systems-theory-p-vs-np",
+      "t": "P vs NP",
+      "href": "../../systems/theory/p-vs-np.html",
+      "tier": "branch",
+      "s": "Which problems are tractable, and which only look like they are.",
+      "after": [
+        "dsa-bigo"
+      ]
+    },
+    {
+      "id": "interview-os-interview",
+      "t": "OS Interview",
+      "href": "../../interview/os-interview.html",
+      "tier": "spine",
+      "g": "Prove it",
+      "s": "30 questions on processes, scheduling, memory, concurrency, deadlocks and I/O.",
+      "after": [
+        "systems-os-concurrency",
+        "dsa-bigo"
+      ]
+    },
+    {
+      "id": "interview-networking-interview",
+      "t": "Networking Interview",
+      "href": "../../interview/networking-interview.html",
+      "tier": "branch",
+      "s": "30 questions on TCP/IP, DNS, HTTP, sockets, subnets and NAT.",
+      "after": [
+        "systems-networking-http",
+        "interview-os-interview"
+      ]
+    }
+  ]
+}
+</script>
   </main>
 </div>
 
@@ -75,199 +242,13 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=12"></script>
 <script src="../../assets/js/platform.js?v=4"></script>
-<script src="../../assets/js/roadmap-paths.js?v=1"></script>
+<script src="../../assets/js/roadmap-graph.js?v=6"></script>
 <script>
-const PATHS = window.TF_ROADMAP_PATHS;
-const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const keyFor = (pid, i) => "tf_rm_" + pid + "_" + i;
-function isDone(pid, i) { try { return localStorage.getItem(keyFor(pid, i)) === "1"; } catch (e) { return false; } }
-function setDone(pid, i, v) { try { v ? localStorage.setItem(keyFor(pid, i), "1") : localStorage.removeItem(keyFor(pid, i)); } catch (e) {} }
-
-let activePath = PATHS[0].id;
-
-function renderTabs() {
-  const tabs = document.getElementById("rmTabs");
-  const side = document.getElementById("rmSideNav");
-  tabs.innerHTML = "";
-  side.innerHTML = "";
-  PATHS.forEach((p) => {
-    const total = p.nodes.filter((n) => n.href).length;
-    let done = 0;
-    p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "rm-tab" + (p.id === activePath ? " active" : "");
-    btn.style.setProperty("--rt-c", p.color);
-    btn.innerHTML = '<i class="ti ' + p.icon + '"></i><span>' + esc(p.name) + '<span class="rm-tab-mini">' + done + " / " + total + " done</span></span>";
-    btn.addEventListener("click", () => { activePath = p.id; renderTabs(); renderPath(); window.scrollTo({ top: 0, behavior: "smooth" }); });
-    tabs.appendChild(btn);
-
-    const link = document.createElement("a");
-    link.href = "#";
-    link.className = "sb-link" + (p.id === activePath ? " active" : "");
-    link.innerHTML = '<span class="sb-num"><i class="ti ' + p.icon + '"></i></span>' + esc(p.name);
-    link.addEventListener("click", (e) => { e.preventDefault(); activePath = p.id; renderTabs(); renderPath(); window.scrollTo({ top: 0, behavior: "smooth" }); });
-    side.appendChild(link);
-  });
-}
-
-function renderPath() {
-  const p = PATHS.find((x) => x.id === activePath);
-  const mount = document.getElementById("rmMount");
-  const total = p.nodes.filter((n) => n.href).length;
-  let done = 0;
-  p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
-  const pct = total ? Math.round((done / total) * 100) : 0;
-
-  let html = '<div class="rm-phead anim-in" style="--pa-c:' + p.color + '">' +
-    '<div class="rm-picon"><i class="ti ' + p.icon + '"></i></div>' +
-    '<div class="rm-pbody"><div class="rm-pname">' + esc(p.name) + '</div><div class="rm-pblurb">' + esc(p.blurb) + '</div>' +
-    '<button type="button" class="rm-reset" data-reset="' + p.id + '">↺ Reset this path</button></div>' +
-    '<div class="rm-pstat"><div class="rm-pct" id="rmPct">' + pct + '%</div><div class="rm-pct-l" id="rmCount">' + done + " / " + total + '</div></div></div>' +
-    '<div class="rm-pbar-wrap"><div class="rm-pbar" id="rmBar" style="transform:scaleX(' + (pct / 100) + ');background:' + p.color + '"></div></div>';
-
-  html += '<div class="rm-done-msg' + (done === total && total ? " show" : "") + '" id="rmDoneMsg"><strong>Path complete.</strong> You’ve worked through every milestone in ' + esc(p.name) + ". Nicely done.</div>";
-
-  // "You are here" = the first core milestone still outstanding. Optional ones
-  // never claim the marker, so skipping them doesn't strand the pointer.
-  let currentIdx = p.nodes.findIndex((node, i) => node.href && node.req && !isDone(p.id, i));
-  if (currentIdx === -1) currentIdx = p.nodes.findIndex((node, i) => node.href && !isDone(p.id, i));
-
-  html += '<div class="rm-spine" style="--pa-c:' + p.color + '"><div class="rm-spine-fill" id="rmSpineFill"></div>';
-  let n = 0;
-  p.nodes.forEach((node, i) => {
-    if (node.stage) html += '<div class="rm-stage">' + esc(node.stage) + "</div>";
-    if (!node.href) return;
-    const kit = (node.k || []).map((x) => "<span>" + esc(x) + "</span>").join("");
-    const needs = prereqsOf(p, i);
-    const needLabel = needs.map((j) => esc(p.nodes[j].t)).join(" · ");
-    html += '<div class="rm-node" data-i="' + i + '" style="--nc:' + (node.c || p.color) + ";--i:" + n + '">' +
-      '<button type="button" class="rm-marker" data-toggle="' + i + '"><span class="rm-mnum">' + (n + 1) + "</span>" +
-      '<svg class="rm-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>' +
-      '<a class="rm-card" href="' + node.href + '">' +
-      '<div class="rm-cbody"><div class="rm-ctop"><span class="rm-cname">' + esc(node.t) + "</span>" +
-      '<span class="rm-badge ' + (node.req ? "rm-badge-req" : "rm-badge-opt") + '">' + (node.req ? "Core" : "Optional") + "</span>" +
-      '<span class="rm-badge rm-badge-now">Start here</span></div>' +
-      '<div class="rm-cdesc">' + esc(node.s) + "</div>" +
-      (kit ? '<div class="rm-kit">' + kit + "</div>" : "") +
-      (needLabel ? '<div class="rm-needs"><i class="ti ti-lock" aria-hidden="true"></i>After ' + needLabel + "</div>" : "") +
-      "</div>" +
-      '<span class="rm-carrow">Open <span>lesson</span> →</span></a></div>';
-    n++;
-  });
-  html += "</div>";
-  mount.innerHTML = html;
-
-  // One listener on the spine rather than one per marker: the nodes are never
-  // rebuilt on toggle now, but this also keeps the handler count flat.
-  mount.querySelector(".rm-spine").addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-toggle]");
-    if (!btn) return;
-    const i = +btn.getAttribute("data-toggle");
-    const now = !isDone(p.id, i);
-    setDone(p.id, i, now);
-    if (now) btn.classList.add("pop");
-    setTimeout(() => btn.classList.remove("pop"), 400);
-    syncStates(p);
-    renderTabs();
-  });
-
-  const rb = mount.querySelector("[data-reset]");
-  if (rb) rb.addEventListener("click", () => {
-    if (!confirm("Reset progress for " + p.name + "?")) return;
-    p.nodes.forEach((node, i) => { if (node.href) setDone(p.id, i, false); });
-    syncStates(p);
-    renderTabs();
-  });
-
-  syncStates(p, true);
-
-  var obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } });
-  }, { threshold: 0.05 });
-  mount.querySelectorAll(".anim-in").forEach(function (el) { obs.observe(el); });
-}
-
-/* Real prerequisites only — the ones where the later page genuinely assumes the
-   earlier one (Dijkstra assumes Graphs). Deliberately not the reading order: a
-   strict previous-step chain dims all but the first milestone, which turns the
-   path into a wall of grey and tells the reader nothing they can't already see. */
-function prereqsOf(p, i) {
-  const node = p.nodes[i];
-  if (!node.needs) return [];
-  return node.needs.map((h) => p.nodes.findIndex((x) => x.href === h)).filter((j) => j >= 0);
-}
-
-/* Reading order, used only to pick "Start here" so the pointer walks the path
-   top-down even where nothing is formally blocked. */
-function prevCore(p, i) {
-  for (let j = i - 1; j >= 0; j--) {
-    if (p.nodes[j].href && p.nodes[j].req) return j;
-  }
-  return -1;
-}
-
-/* Updates state on the existing DOM. Nothing is torn down, so every change is
-   something CSS can transition rather than a fresh element popping into place. */
-function syncStates(p, first) {
-  const mount = document.getElementById("rmMount");
-  const total = p.nodes.filter((n) => n.href).length;
-  let done = 0;
-  p.nodes.forEach((n, i) => { if (n.href && isDone(p.id, i)) done++; });
-  const pct = total ? Math.round((done / total) * 100) : 0;
-
-  // First core milestone that is unfinished, unblocked, and whose predecessor in
-  // reading order is already done — so the pointer walks the path in order.
-  const open = (i) => prereqsOf(p, i).every((j) => isDone(p.id, j));
-  let currentIdx = p.nodes.findIndex((n, i) => {
-    if (!n.href || !n.req || isDone(p.id, i) || !open(i)) return false;
-    const prev = prevCore(p, i);
-    return prev === -1 || isDone(p.id, prev);
-  });
-  if (currentIdx === -1) currentIdx = p.nodes.findIndex((n, i) => n.href && n.req && !isDone(p.id, i) && open(i));
-  if (currentIdx === -1) currentIdx = p.nodes.findIndex((n, i) => n.href && !isDone(p.id, i));
-
-  let lastDoneOrder = -1, order = 0;
-  mount.querySelectorAll(".rm-node").forEach((el) => {
-    const i = +el.getAttribute("data-i");
-    const d = isDone(p.id, i);
-    const locked = !d && !prereqsOf(p, i).every((j) => isDone(p.id, j));
-    const wasLocked = el.classList.contains("locked");
-    el.classList.toggle("done", d);
-    el.classList.toggle("current", i === currentIdx);
-    el.classList.toggle("locked", locked);
-    if (!first && wasLocked && !locked) {
-      el.classList.add("unlocked");
-      setTimeout(() => el.classList.remove("unlocked"), 900);
-    }
-    const btn = el.querySelector(".rm-marker");
-    btn.setAttribute("aria-pressed", d ? "true" : "false");
-    const name = el.querySelector(".rm-cname").textContent;
-    btn.setAttribute("aria-label", (d ? "Mark " + name + " not done" : "Mark " + name + " done") + (locked ? " (earlier milestones still open)" : ""));
-    if (d) lastDoneOrder = order;
-    order++;
-  });
-
-  // The spine fills to the deepest completed milestone: progress you can see
-  // without reading the percentage.
-  const fill = document.getElementById("rmSpineFill");
-  if (fill) fill.style.transform = "scaleY(" + (order ? Math.max(0, lastDoneOrder + 1) / order : 0) + ")";
-
-  const bar = document.getElementById("rmBar");
-  if (bar) bar.style.transform = "scaleX(" + pct / 100 + ")";
-  const pctEl = document.getElementById("rmPct");
-  if (pctEl) pctEl.textContent = pct + "%";
-  const cnt = document.getElementById("rmCount");
-  if (cnt) cnt.textContent = done + " / " + total;
-  const msg = document.getElementById("rmDoneMsg");
-  if (msg) msg.classList.toggle("show", done === total && total > 0);
-}
-
-activePath = "cs";
-renderTabs = function () {};
-document.addEventListener('DOMContentLoaded', function () { renderPath(); });
+  (function () {
+    var graph = JSON.parse(document.getElementById('rgGraph').textContent);
+    window.TFRoadmapGraph.mount(document.getElementById('rgMount'), graph);
+  }());
 </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

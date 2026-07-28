@@ -5,12 +5,12 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="The TypeScript type system, from annotations through to type-level programming. Every node opens a TechForge lesson."/>
-  <meta property="og:title" content="TypeScript Roadmap — TechForge"/>
-  <meta property="og:description" content="The TypeScript type system, from annotations through to type-level programming."/>
+  <meta name="description" content="How the pieces of a large system fit together, from a single request to data at scale. Every node opens a TechForge lesson."/>
+  <meta property="og:title" content="System Design Roadmap — TechForge"/>
+  <meta property="og:description" content="How the pieces of a large system fit together, from a single request to data at scale."/>
   <meta property="og:type" content="website"/>
-  <title>TypeScript Roadmap — TechForge</title>
-  <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/typescript.html"/>
+  <title>System Design Roadmap — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/system-design.html"/>
   <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
@@ -61,342 +61,286 @@
     <nav class="rg-crumbs" aria-label="Breadcrumb">
       <a href="index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i>All Roadmaps</a>
       <span class="rg-crumb-sep" aria-hidden="true">/</span>
-      <a href="../programming/typescript/index.html"><i class="ti ti-brand-typescript" aria-hidden="true"></i>Programming</a>
+      <a href="../system-design/index.html"><i class="ti ti-building" aria-hidden="true"></i>System Design</a>
     </nav>
 
     <div class="rg-head">
-      <h1 class="rg-h1">TypeScript Roadmap</h1>
-      <p class="rg-lede">The TypeScript type system, from annotations through to type-level programming. Follow the trunk down; the pills beside each step are the sections inside that lesson.</p>
+      <h1 class="rg-h1">System Design Roadmap</h1>
+      <p class="rg-lede">How the pieces of a large system fit together, from a single request to data at scale. Follow the trunk down; the pills beside each step belong to that group.</p>
     </div>
 
     <div id="rgMount"></div>
     <script type="application/json" id="rgGraph">
 {
-  "id": "typescript",
-  "title": "TypeScript",
-  "accent": "var(--ts)",
+  "id": "system-design",
+  "title": "System Design",
+  "accent": "var(--green)",
   "nodes": [
     {
-      "id": "basics",
-      "t": "Types & Inference",
-      "href": "../programming/typescript/basics.html",
+      "id": "fundamentals",
+      "t": "System Design Fundamentals",
+      "href": "../system-design/fundamentals.html",
       "tier": "spine",
-      "g": "Foundations"
+      "g": "Fundamentals"
     },
     {
-      "id": "basics-sec-types",
-      "t": "Type Annotations & Inference",
-      "href": "../programming/typescript/basics.html#sec-types",
+      "id": "scalability",
+      "t": "Scalability",
+      "href": "../system-design/scalability.html",
       "tier": "detail",
       "after": [
-        "basics"
+        "fundamentals"
       ],
       "bus": true
     },
     {
-      "id": "basics-sec-special",
-      "t": "any, unknown & never",
-      "href": "../programming/typescript/basics.html#sec-special",
+      "id": "cap-theorem",
+      "t": "CAP Theorem",
+      "href": "../system-design/cap-theorem.html",
       "tier": "detail",
       "after": [
-        "basics"
+        "fundamentals"
       ],
       "bus": true
     },
     {
-      "id": "functions",
-      "t": "Functions & Narrowing",
-      "href": "../programming/typescript/functions.html",
+      "id": "load-balancing",
+      "t": "Load Balancing",
+      "href": "../system-design/load-balancing.html",
       "tier": "spine",
+      "g": "Traffic & Performance",
       "after": [
-        "basics"
+        "fundamentals"
       ]
     },
     {
-      "id": "functions-sec-typed",
-      "t": "Typed Functions",
-      "href": "../programming/typescript/functions.html#sec-typed",
+      "id": "reverse-proxy",
+      "t": "Reverse Proxy",
+      "href": "../system-design/reverse-proxy.html",
       "tier": "detail",
       "after": [
-        "functions"
+        "load-balancing"
       ],
       "bus": true
     },
     {
-      "id": "functions-sec-overloads",
-      "t": "Function Overloads",
-      "href": "../programming/typescript/functions.html#sec-overloads",
+      "id": "caching",
+      "t": "Caching Strategies",
+      "href": "../system-design/caching.html",
       "tier": "detail",
       "after": [
-        "functions"
+        "load-balancing"
       ],
       "bus": true
     },
     {
-      "id": "functions-sec-narrowing",
-      "t": "Narrowing & Type Guards",
-      "href": "../programming/typescript/functions.html#sec-narrowing",
+      "id": "cdn",
+      "t": "CDN",
+      "href": "../system-design/cdn.html",
       "tier": "detail",
       "after": [
-        "functions"
+        "load-balancing"
       ],
       "bus": true
     },
     {
-      "id": "objects",
-      "t": "Objects & Interfaces",
-      "href": "../programming/typescript/objects.html",
+      "id": "rate-limiting",
+      "t": "Rate Limiting",
+      "href": "../system-design/rate-limiting.html",
+      "tier": "detail",
+      "after": [
+        "load-balancing"
+      ],
+      "bus": true
+    },
+    {
+      "id": "api-gateway",
+      "t": "API Gateway",
+      "href": "../system-design/api-gateway.html",
+      "tier": "detail",
+      "after": [
+        "load-balancing"
+      ],
+      "bus": true
+    },
+    {
+      "id": "queues",
+      "t": "Message Queues",
+      "href": "../system-design/queues.html",
       "tier": "spine",
+      "g": "Messaging & Events",
       "after": [
-        "functions"
+        "load-balancing"
       ]
     },
     {
-      "id": "objects-sec-iface",
-      "t": "interface vs type alias",
-      "href": "../programming/typescript/objects.html#sec-iface",
+      "id": "kafka",
+      "t": "Apache Kafka",
+      "href": "../system-design/kafka.html",
       "tier": "detail",
       "after": [
-        "objects"
+        "queues"
       ],
       "bus": true
     },
     {
-      "id": "objects-sec-modifiers",
-      "t": "Optional, readonly & Index Signatures",
-      "href": "../programming/typescript/objects.html#sec-modifiers",
+      "id": "rabbitmq",
+      "t": "RabbitMQ",
+      "href": "../system-design/rabbitmq.html",
       "tier": "detail",
       "after": [
-        "objects"
+        "queues"
       ],
       "bus": true
     },
     {
-      "id": "objects-sec-structural",
-      "t": "Structural Typing",
-      "href": "../programming/typescript/objects.html#sec-structural",
+      "id": "event-driven",
+      "t": "Event-Driven Systems",
+      "href": "../system-design/event-driven.html",
       "tier": "detail",
       "after": [
-        "objects"
+        "queues"
       ],
       "bus": true
     },
     {
-      "id": "unions",
-      "t": "Unions, Enums & Discriminated Unions",
-      "href": "../programming/typescript/unions.html",
+      "id": "microservices",
+      "t": "Microservices",
+      "href": "../system-design/microservices.html",
       "tier": "spine",
-      "g": "Composing types",
+      "g": "Architecture Patterns",
       "after": [
-        "objects"
+        "queues"
       ]
     },
     {
-      "id": "unions-sec-unions",
-      "t": "Union & Intersection Types",
-      "href": "../programming/typescript/unions.html#sec-unions",
+      "id": "monolith",
+      "t": "Monolith",
+      "href": "../system-design/monolith.html",
       "tier": "detail",
       "after": [
-        "unions"
+        "microservices"
       ],
       "bus": true
     },
     {
-      "id": "unions-sec-literals",
-      "t": "Literal Types",
-      "href": "../programming/typescript/unions.html#sec-literals",
+      "id": "distributed-systems",
+      "t": "Distributed Systems",
+      "href": "../system-design/distributed-systems.html",
       "tier": "detail",
       "after": [
-        "unions"
+        "microservices"
       ],
       "bus": true
     },
     {
-      "id": "unions-sec-discriminated",
-      "t": "Discriminated Unions",
-      "href": "../programming/typescript/unions.html#sec-discriminated",
-      "tier": "detail",
-      "after": [
-        "unions"
-      ],
-      "bus": true
-    },
-    {
-      "id": "unions-sec-enums",
-      "t": "Enums",
-      "href": "../programming/typescript/unions.html#sec-enums",
-      "tier": "detail",
-      "after": [
-        "unions"
-      ],
-      "bus": true
-    },
-    {
-      "id": "generics",
-      "t": "Generics & Constraints",
-      "href": "../programming/typescript/generics.html",
+      "id": "consistency-models",
+      "t": "Consistency Models",
+      "href": "../system-design/consistency-models.html",
       "tier": "spine",
-      "g": "Type-level",
+      "g": "Data at Scale",
       "after": [
-        "unions"
+        "microservices"
       ]
     },
     {
-      "id": "generics-sec-fns",
-      "t": "Generic Functions",
-      "href": "../programming/typescript/generics.html#sec-fns",
+      "id": "database-sharding",
+      "t": "Database Sharding",
+      "href": "../system-design/database-sharding.html",
       "tier": "detail",
       "after": [
-        "generics"
+        "consistency-models"
       ],
       "bus": true
     },
     {
-      "id": "generics-sec-constraints",
-      "t": "Constraints & Defaults",
-      "href": "../programming/typescript/generics.html#sec-constraints",
+      "id": "replication",
+      "t": "Replication",
+      "href": "../system-design/replication.html",
       "tier": "detail",
       "after": [
-        "generics"
+        "consistency-models"
       ],
       "bus": true
     },
     {
-      "id": "generics-sec-classes",
-      "t": "Generic Interfaces & Classes",
-      "href": "../programming/typescript/generics.html#sec-classes",
+      "id": "partitioning",
+      "t": "Partitioning",
+      "href": "../system-design/partitioning.html",
       "tier": "detail",
       "after": [
-        "generics"
+        "consistency-models"
       ],
       "bus": true
     },
     {
-      "id": "advanced-types",
-      "t": "Utility, Mapped & Conditional Types",
-      "href": "../programming/typescript/advanced-types.html",
+      "id": "service-discovery",
+      "t": "Service Discovery",
+      "href": "../system-design/service-discovery.html",
       "tier": "spine",
+      "g": "Reliability",
       "after": [
-        "generics"
+        "consistency-models"
       ]
     },
     {
-      "id": "advanced-types-sec-utility",
-      "t": "Built-in Utility Types",
-      "href": "../programming/typescript/advanced-types.html#sec-utility",
+      "id": "high-availability",
+      "t": "High Availability",
+      "href": "../system-design/high-availability.html",
       "tier": "detail",
       "after": [
-        "advanced-types"
+        "service-discovery"
       ],
       "bus": true
     },
     {
-      "id": "advanced-types-sec-mapped",
-      "t": "Mapped Types",
-      "href": "../programming/typescript/advanced-types.html#sec-mapped",
+      "id": "fault-tolerance",
+      "t": "Fault Tolerance",
+      "href": "../system-design/fault-tolerance.html",
       "tier": "detail",
       "after": [
-        "advanced-types"
+        "service-discovery"
       ],
       "bus": true
     },
     {
-      "id": "advanced-types-sec-conditional",
-      "t": "Conditional Types & infer",
-      "href": "../programming/typescript/advanced-types.html#sec-conditional",
-      "tier": "detail",
-      "after": [
-        "advanced-types"
-      ],
-      "bus": true
-    },
-    {
-      "id": "oop",
-      "t": "Classes & OOP",
-      "href": "../programming/typescript/oop.html",
+      "id": "django",
+      "t": "Django Framework",
+      "href": "../system-design/django.html",
       "tier": "spine",
+      "g": "Backend Frameworks",
       "after": [
-        "advanced-types"
+        "service-discovery"
       ]
     },
     {
-      "id": "oop-sec-classes",
-      "t": "Classes & Access Modifiers",
-      "href": "../programming/typescript/oop.html#sec-classes",
+      "id": "flask",
+      "t": "Flask Framework",
+      "href": "../system-design/flask.html",
       "tier": "detail",
       "after": [
-        "oop"
+        "django"
       ],
       "bus": true
     },
     {
-      "id": "oop-sec-abstract",
-      "t": "Abstract Classes & implements",
-      "href": "../programming/typescript/oop.html#sec-abstract",
+      "id": "fastapi",
+      "t": "FastAPI Framework",
+      "href": "../system-design/fastapi.html",
       "tier": "detail",
       "after": [
-        "oop"
+        "django"
       ],
       "bus": true
     },
     {
-      "id": "oop-sec-accessors",
-      "t": "Accessors & readonly",
-      "href": "../programming/typescript/oop.html#sec-accessors",
-      "tier": "detail",
-      "after": [
-        "oop"
-      ],
-      "bus": true
-    },
-    {
-      "id": "tooling",
-      "t": "tsconfig, strict & Declarations",
-      "href": "../programming/typescript/tooling.html",
+      "id": "interview",
+      "t": "Interview Questions",
+      "href": "../interview/system-design-interview.html",
       "tier": "spine",
-      "g": "Toolchain",
+      "g": "Prove it",
       "after": [
-        "oop"
-      ]
-    },
-    {
-      "id": "tooling-sec-tsconfig",
-      "t": "tsconfig.json & strict Mode",
-      "href": "../programming/typescript/tooling.html#sec-tsconfig",
-      "tier": "detail",
-      "after": [
-        "tooling"
-      ],
-      "bus": true
-    },
-    {
-      "id": "tooling-sec-modules",
-      "t": "Modules & the Compile Pipeline",
-      "href": "../programming/typescript/tooling.html#sec-modules",
-      "tier": "detail",
-      "after": [
-        "tooling"
-      ],
-      "bus": true
-    },
-    {
-      "id": "tooling-sec-dts",
-      "t": "Declaration Files (.d.ts)",
-      "href": "../programming/typescript/tooling.html#sec-dts",
-      "tier": "detail",
-      "after": [
-        "tooling"
-      ],
-      "bus": true
-    },
-    {
-      "id": "programs",
-      "t": "Practice Code Examples",
-      "href": "../programming/typescript/programs.html",
-      "tier": "spine",
-      "g": "Apply it",
-      "after": [
-        "tooling"
+        "django"
       ]
     }
   ]

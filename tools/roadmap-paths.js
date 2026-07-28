@@ -1,6 +1,7 @@
 /**
- * The seven career paths. One copy, shared by every path page and the index,
- * so a milestone can never drift between them.
+ * The seven career paths: the source of truth for their milestones, read at
+ * build time by tools/build-roadmaps.mjs. Not shipped to the browser — the
+ * path pages are generated flow charts like every other roadmap.
  * Hrefs are written relative to roadmaps/paths/.
  */
 (function (global) {

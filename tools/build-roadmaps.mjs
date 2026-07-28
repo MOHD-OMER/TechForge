@@ -149,3 +149,153 @@ for (const track of TRACKS) {
   built++;
 }
 console.log(`\nbuilt ${built} roadmaps`);
+
+/* ── Manifest-driven tracks ──
+   Some sections are not a single ordered track but a set of named groups the
+   site already defines in topics-manifest.js. Use that grouping as authored:
+   each category becomes a band, its first topic anchors the trunk, and the rest
+   of the category hangs off it. The order is the site's own, not invented here. */
+const MANIFEST_TRACKS = [
+  { key: 'system-design', id: 'system-design', title: 'System Design', accent: 'var(--green)',
+    icon: 'ti-building', dir: 'system-design', hub: 'System Design',
+    lede: 'How the pieces of a large system fit together, from a single request to data at scale.',
+    interview: '../interview/system-design-interview.html' },
+  { key: 'databases', id: 'databases', title: 'Databases & SQL', accent: 'var(--cyan)',
+    icon: 'ti-database', dir: 'databases', hub: 'Databases',
+    lede: 'Relational foundations first, then the NoSQL and specialised stores built for other shapes of data.',
+    interview: '../interview/sql-interview.html' },
+  { key: 'devops', id: 'devops', title: 'DevOps', accent: 'var(--red)',
+    icon: 'ti-server-cog', dir: 'devops', hub: 'DevOps',
+    lede: 'Shipping and running software: version control, containers, pipelines and the cloud underneath.',
+    interview: '../interview/devops-interview.html' },
+  { key: 'aiml', id: 'aiml', title: 'AI / ML', accent: 'var(--purple)',
+    icon: 'ti-robot', dir: 'aiml', hub: 'AI/ML',
+    lede: 'From what machine learning is, through deep learning, to the specialisations built on it.',
+    interview: '../interview/aiml-interview.html' },
+];
+
+const shim = {};
+new Function('window', fs.readFileSync('assets/js/topics-manifest.js', 'utf8') + ';return window.TF_TOPICS;')(shim);
+const MANIFEST = shim.TF_TOPICS || {};
+
+for (const track of MANIFEST_TRACKS) {
+  const section = MANIFEST[track.key];
+  if (!section) { console.log(`  skip ${track.id}: not in manifest`); continue; }
+
+  const nodes = [];
+  let prev = null;
+
+  for (const cat of section.categories || []) {
+    const topics = (cat.topics || []).filter((t) => fs.existsSync(path.join(track.dir, t.file)));
+    if (!topics.length) continue;
+
+    // first topic of the category carries the trunk and the band label
+    const [head, ...rest] = topics;
+    const headFile = path.join(track.dir, head.file);
+    const headSlug = head.file.replace('.html', '');
+    const headRel = path.relative('roadmaps', headFile).split(path.sep).join('/');
+
+    const node = { id: headSlug, t: pageTitle(headFile), href: headRel, tier: 'spine', g: cat.label };
+    if (prev) node.after = [prev];
+    nodes.push(node);
+
+    for (const t of rest) {
+      const f = path.join(track.dir, t.file);
+      nodes.push({
+        id: t.file.replace('.html', ''), t: pageTitle(f),
+        href: path.relative('roadmaps', f).split(path.sep).join('/'),
+        tier: 'detail', after: [headSlug], bus: true,
+      });
+    }
+    prev = headSlug;
+  }
+  if (!nodes.length) { console.log(`  skip ${track.id}: no pages`); continue; }
+
+  if (track.interview && fs.existsSync(track.interview.replace('../', ''))) {
+    nodes.push({ id: 'interview', t: 'Interview Questions', href: track.interview,
+      tier: 'spine', g: 'Prove it', after: [prev] });
+  }
+
+  const graph = { id: track.id, title: track.title, accent: track.accent, nodes };
+  let html = shell.replace(/<script type="application\/json" id="rgGraph">[\s\S]*?<\/script>/,
+    `<script type="application/json" id="rgGraph">\n${JSON.stringify(graph, null, 2)}\n</script>`);
+
+  const desc = `${track.lede} Every node opens a TechForge lesson.`;
+  const swaps = [
+    [/<title>[^<]*<\/title>/, `<title>${esc(track.title)} Roadmap — TechForge</title>`],
+    [/(<meta name="description" content=")[^"]*/, `$1${esc(desc)}`],
+    [/(<meta property="og:title" content=")[^"]*/, `$1${esc(track.title)} Roadmap — TechForge`],
+    [/(<meta property="og:description" content=")[^"]*/, `$1${esc(track.lede)}`],
+    [/(<link rel="canonical" href="https:\/\/techforge-dev\.vercel\.app\/)[^"]*/, `$1roadmaps/${track.id}.html`],
+    [/<h1 class="rg-h1">[^<]*<\/h1>/, `<h1 class="rg-h1">${esc(track.title)} Roadmap</h1>`],
+    [/<p class="rg-lede">[\s\S]*?<\/p>/, `<p class="rg-lede">${esc(track.lede)} Follow the trunk down; the pills beside each step belong to that group.</p>`],
+    [/<a href="\.\.\/dsa\/index\.html"><i class="ti ti-chart-bar" aria-hidden="true"><\/i>DSA Hub<\/a>/,
+     `<a href="../${track.dir}/index.html"><i class="ti ${track.icon}" aria-hidden="true"></i>${esc(track.hub)}</a>`],
+    [/<body data-section="dsa">/, '<body data-section="roadmaps">'],
+  ];
+  for (const [re, to] of swaps) html = html.replace(re, to);
+
+  fs.writeFileSync(`roadmaps/${track.id}.html`, html, 'utf8');
+  const spine = nodes.filter((n) => n.tier === 'spine').length;
+  console.log(`  ok  ${track.id}.html: ${nodes.length} nodes (${spine} steps, ${nodes.length - spine} topics)`);
+}
+
+/* ── Career paths ──
+   The seven role-based roadmaps, on the same flow chart as every topic one so
+   the whole directory reads alike. Milestones come from tools/roadmap-paths.js:
+   required ones form the trunk, optional ones branch off the step before them,
+   and a milestone's declared prerequisites become real edges. */
+const pathShim = {};
+new Function('window', fs.readFileSync('tools/roadmap-paths.js', 'utf8') + ';return window.TF_ROADMAP_PATHS;')(pathShim);
+const PATHS = pathShim.TF_ROADMAP_PATHS || [];
+
+/** Stable node id from a lesson href: the page path, minus depth and extension. */
+const nodeId = (href) => href.replace(/^(\.\.\/)+/, '').replace(/\.html$/, '').replace(/\//g, '-');
+
+const pathShell = fs.readFileSync('roadmaps/dsa.html', 'utf8')
+  // paths/ sits one level deeper than roadmaps/; only attribute values carry
+  // the depth, so the graph JSON injected afterwards is untouched.
+  .replace(/(\b(?:href|src)=")\.\.\//g, '$1../../')
+  // links to roadmaps/index.html were siblings in the shell, now one level up
+  .replace(/(\bhref=")index\.html"/g, '$1../index.html"');
+
+for (const p of PATHS) {
+  const nodes = [];
+  let prevSpine = null;
+
+  for (const m of p.nodes) {
+    const id = nodeId(m.href);
+    const after = (m.needs || []).map((n) => nodeId(n)).filter((n) => nodes.some((x) => x.id === n));
+    if (prevSpine && !after.includes(prevSpine)) after.push(prevSpine);
+
+    const node = { id, t: m.t, href: m.href, tier: m.req ? 'spine' : 'branch' };
+    if (m.stage) node.g = m.stage;
+    if (m.s) node.s = m.s;
+    if (after.length) node.after = after;
+    nodes.push(node);
+    if (m.req) prevSpine = id;
+  }
+
+  const graph = { id: p.id, title: p.name, accent: p.color, nodes };
+  let html = pathShell.replace(/<script type="application\/json" id="rgGraph">[\s\S]*?<\/script>/,
+    `<script type="application/json" id="rgGraph">\n${JSON.stringify(graph, null, 2)}\n</script>`);
+
+  const desc = `${p.blurb} Every milestone opens a TechForge lesson.`;
+  const swaps = [
+    [/<title>[^<]*<\/title>/, `<title>${esc(p.name)} Roadmap — TechForge</title>`],
+    [/(<meta name="description" content=")[^"]*/, `$1${esc(desc.slice(0, 300))}`],
+    [/(<meta property="og:title" content=")[^"]*/, `$1${esc(p.name)} Roadmap — TechForge`],
+    [/(<meta property="og:description" content=")[^"]*/, `$1${esc(p.blurb)}`],
+    [/(<link rel="canonical" href="https:\/\/techforge-dev\.vercel\.app\/)[^"]*/, `$1roadmaps/paths/${p.id}.html`],
+    [/<h1 class="rg-h1">[^<]*<\/h1>/, `<h1 class="rg-h1">${esc(p.name)}</h1>`],
+    [/<p class="rg-lede">[\s\S]*?<\/p>/, `<p class="rg-lede">${esc(p.blurb)} Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>`],
+    // a career path spans the whole site, so it has no single hub to link back to
+    [/<span class="rg-crumb-sep"[\s\S]*?<\/a>\n(\s*)<\/nav>/, '</nav>'],
+    [/<body data-section="dsa">/, '<body data-section="roadmaps">'],
+  ];
+  for (const [re, to] of swaps) html = html.replace(re, to);
+
+  fs.writeFileSync(`roadmaps/paths/${p.id}.html`, html, 'utf8');
+  const spine = nodes.filter((n) => n.tier === 'spine').length;
+  console.log(`  ok  paths/${p.id}.html: ${nodes.length} milestones (${spine} required, ${nodes.length - spine} optional)`);
+}

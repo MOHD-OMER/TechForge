@@ -109,8 +109,11 @@ const argv1 = process.argv[1];
 const expected = argv1 ? `file://${path.resolve(argv1).replace(/\\/g, '/')}` : null;
 if (argv1 && (import.meta.url === expected || import.meta.url.endsWith(argv1.replace(/\\/g, '/')))) {
   const targets = process.argv.slice(2);
-  const files = targets.length ? targets : fs.readdirSync('roadmaps')
-    .filter((f) => f.endsWith('.html')).map((f) => path.join('roadmaps', f));
+  // roadmaps/paths/ holds the career-path graphs, so walk instead of listing.
+  const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? walk(path.join(dir, e.name))
+      : e.name.endsWith('.html') ? [path.join(dir, e.name)] : []);
+  const files = targets.length ? targets : walk('roadmaps');
   let total = 0, skipped = 0;
   for (const f of files) {
     // roadmaps/ also holds the directory page and any tree-based roadmap, which
