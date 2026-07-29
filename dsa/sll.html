@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=26" rel="stylesheet">
+  <link href="../assets/css/forge_base.css?v=28" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
     <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
@@ -656,7 +656,13 @@ class SLL {
       let boxW = 64, boxH = 44, gap = 40, pad = 16;
       let n = sllD.length;
       let cssH = 120;
-      let cssW = n ? Math.max(cv.parentElement.clientWidth || 600, pad * 2 + n * boxW + (n - 1) * gap + 90) : (cv.parentElement.clientWidth || 600);
+      let cssW = cv.parentElement.clientWidth || 600;
+  // Shrink the cells to the space available rather than widening the canvas
+  // past its container, which is what forced a sideways scroll on a phone.
+  if (n) {
+    let need = pad * 2 + n * boxW + (n - 1) * gap + 90;
+    if (need > cssW) boxW = Math.max(15, boxW - (need - cssW) / n);
+  }
       cv.width = cssW * dpr; cv.height = cssH * dpr;
       cv.style.width = cssW + 'px';
       let ctx = cv.getContext('2d');

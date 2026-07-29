@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=26" rel="stylesheet">
+  <link href="../assets/css/forge_base.css?v=28" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
     <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
@@ -48,7 +48,8 @@
     .tip-box.tip-amber { border-left-color: var(--amber); }
     .tip-box.tip-red { border-left-color: var(--red); }
     .tip-box strong { color: var(--text); }
-    .mem-diagram { display: flex; gap: 0; margin: 20px 0 8px; overflow-x: auto; }
+    /* wraps to a second row rather than running off the screen */
+    .mem-diagram { display: flex; flex-wrap: wrap; gap: 0; margin: 20px 0 8px; }
     .mem-cell { min-width: 72px; text-align: center; }
     .mem-addr { font-family: var(--mono); font-size: 10px; color: var(--text3); padding: 4px 2px; border-right: 1px solid var(--border); }
     .mem-cell:last-child .mem-addr { border-right: none; }
@@ -146,7 +147,7 @@
     .pf-btn:hover { border-color: var(--accent); color: var(--accent); }
     .pf-btn.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
     .pq-list { display: flex; flex-direction: column; }
-    .pq-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all .15s; }
+    .pq-item { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all .15s; }
     .pq-item:hover { background: var(--surface); padding-left: 8px; border-radius: 6px; }
     .pq-item:last-child { border-bottom: none; }
     .pq-item.completed { opacity: .45; }
@@ -1152,7 +1153,13 @@ prefix = [0] * (len(arr) + 1)<br>
       var boxW = 48, gap = 6, pad = 4;
       var n = arD.length;
       var cssH = 80;
-      var cssW = n ? Math.max(cv.parentElement.clientWidth || 400, pad * 2 + n * boxW + (n - 1) * gap) : (cv.parentElement.clientWidth || 400);
+      var cssW = cv.parentElement.clientWidth || 400;
+  // Shrink the cells to the space available rather than widening the canvas
+  // past its container, which is what forced a sideways scroll on a phone.
+  if (n) {
+    var need = pad * 2 + n * boxW + (n - 1) * gap;
+    if (need > cssW) boxW = Math.max(15, boxW - (need - cssW) / n);
+  }
       cv.width = cssW * dpr; cv.height = cssH * dpr;
       cv.style.width = cssW + 'px';
       var ctx = cv.getContext('2d');

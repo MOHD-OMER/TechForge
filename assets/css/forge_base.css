@@ -698,6 +698,13 @@ button.badge {
   color: var(--text);
   margin: 0;
   tab-size: 4;
+  /* Wrap the few lines that outrun the box instead of hiding their tail behind
+     a sideways scroll. `pre-wrap` keeps every space and newline the author
+     wrote, so the code's own indentation still reads; only over-long lines
+     fold. (A hanging indent for folded lines is not available here: text-indent
+     applies to the first line of the block, not to each wrapped line.) */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 /* Syntax token colors */
@@ -737,7 +744,16 @@ button.badge {
   border-collapse: collapse;
   margin-bottom: 16px;
   font-size: 13.5px;
+  /* Divide the available width between the columns instead of letting the
+     longest cell decide. With `auto`, one long example pushed the table past
+     its container and the reader had to swipe sideways to finish a row. */
+  table-layout: fixed;
 }
+/* Fixed layout only helps if the content is allowed to wrap: a long unbroken
+   token (a URL, a code sample) would otherwise still overhang the cell.
+   `break-word` rather than `anywhere` so ordinary prose keeps breaking at
+   spaces — only a word with nowhere else to break is split. */
+.py-table th, .py-table td, table th, table td { overflow-wrap: break-word; }
 .py-table th, table th {
   font-family: var(--sans);
   font-weight: 600; font-size: 11.5px;
@@ -1240,9 +1256,8 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
   .kv-grid { grid-template-columns: 1fr; }
   .pillar-grid { grid-template-columns: 1fr; }
   .inherit-grid { grid-template-columns: 1fr; }
-  .magic-grid { grid-template-columns: repeat(2, 1fr); }
 
-  .code-pre, pre { padding: 10px 12px; font-size: 12px; overflow-x: auto; }
+  .code-pre, pre { padding: 10px 12px; font-size: 12px; }
   .code-block { border-radius: 8px; }
 
   .py-section { margin-bottom: 20px; }
@@ -1251,10 +1266,12 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
   .callout { padding: 9px 11px; font-size: 11px; }
   .callout-icon { font-size: 12px; }
 
-  .table-wrap { border-radius: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .py-table, table { min-width: 380px; }
-  .py-table th, table th { font-size: 12px; padding: 6px 8px; }
-  .py-table td, table td { font-size: 13px; padding: 6px 8px; }
+  .table-wrap { border-radius: 6px; }
+  /* No min-width: 380px on a 375px screen guaranteed a sideways swipe on every
+     table on the site. Tighter padding buys the columns their room instead. */
+  .py-table th, table th { font-size: 11.5px; padding: 6px 7px; }
+  .py-table td, table td { font-size: 12.5px; padding: 6px 7px; }
+  .py-table code, table code { font-size: 11px; padding: 1px 3px; }
 
   .page-nav { flex-direction: column; gap: 10px; }
   .nav-link { width: 100%; justify-content: center; font-size: 11px; padding: 9px 14px; }
@@ -1280,13 +1297,6 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
   html.light .nav-link.pn-anim:active { color: #fff; }
   html.light .nav-link.pn-anim:active .pn-arr { fill: #fff; }
 
-  .back-top {
-    bottom: max(16px, calc(10px + var(--safe-bottom)));
-    right: max(14px, calc(10px + var(--safe-right)));
-    width: 40px;
-    height: 40px;
-    font-size: 15px;
-  }
 
   .search-input { font-size: 14px; padding: 6px 9px 6px 26px; }
 
@@ -1300,13 +1310,6 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
   .step-code { font-size: 11px; padding: 5px 8px; }
 
   .info-tabs { gap: 0; -webkit-overflow-scrolling: touch; }
-  .info-tab {
-    padding: 9px 12px;
-    font-size: 10px;
-    min-height: 38px;
-    display: inline-flex;
-    align-items: center;
-  }
 
   .quiz-wrap { padding: 14px 12px; }
   .quiz-q { font-size: 12px; }
@@ -1466,14 +1469,16 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
   }
-  .ref-table,
-  .complexity-table {
-    min-width: 480px;
+  /* A 480px floor on a 375px screen is a guaranteed sideways swipe. These
+     tables wrap their cells and fit the screen instead. */
+  .ref-table th, .ref-table td,
+  .complexity-table th, .complexity-table td {
+    padding: 6px 6px;
+    font-size: 11.5px;
   }
 
   /* ── Code blocks ── */
   pre, .code-pre, .code-block pre, .code-block .code-pre {
-    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
   }
@@ -1516,7 +1521,6 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
   .pg-title { font-size: 22px; }
   .sec-title { font-size: 18px; }
   .cell { width: 34px; height: 34px; font-size: 10px; }
-  .magic-grid { grid-template-columns: 1fr; }
   .btn { padding: 6px 12px; font-size: 11px; }
   .inp { width: 55px; font-size: 11px; }
 }
@@ -1626,15 +1630,15 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
 ══════════════════════════════════════════ */
 .info-section { margin-top: 4px; }
 
+/* Tabs wrap onto a second row rather than scrolling. The strip used to scroll
+   with its scrollbar hidden, so a reader had no way to tell that six of the
+   nine tabs were off the right edge. */
 .info-tabs {
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
-.info-tabs::-webkit-scrollbar { display: none; }
 
 .info-tab {
   padding: 10px 20px;
@@ -2386,6 +2390,12 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
   gap: 10px;
   margin-bottom: 18px;
 }
+/* These live after the base rule on purpose: the unprefixed .magic-grid is
+   declared further down this file, so an override placed earlier loses on
+   source order no matter which media query matches. */
+@media (max-width: 600px) { .magic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 400px) { .magic-grid { grid-template-columns: 1fr; } }
+
 .magic-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2709,3 +2719,26 @@ html.light .btn-aim-primary:hover, html.light .cta-primary:hover { background: v
 .rm-cta-sub { display: block; font-size: 12.5px; color: var(--text2); line-height: 1.55; margin-top: 3px; }
 .rm-cta-go { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--rm-c); flex-shrink: 0; white-space: nowrap; }
 @media (max-width: 560px) { .rm-cta-go { display: none; } }
+
+/* ── Small-screen overrides that must sit last ──────────────────
+   These components declare their base rule late in this file, so an override
+   written earlier loses on source order however well its media query matches.
+   Keep them here, after every base rule, or they silently stop applying. */
+@media (max-width: 600px) {
+  .pq-item { flex-wrap: wrap; padding: 10px 14px; font-size: 12px; }
+  .pq-name { min-width: 0; }
+  .info-tab {
+    padding: 9px 12px;
+    font-size: 10px;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .back-top {
+    bottom: max(16px, calc(10px + var(--safe-bottom)));
+    right: max(14px, calc(10px + var(--safe-right)));
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+}

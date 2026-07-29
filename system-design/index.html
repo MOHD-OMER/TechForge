@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 
-    <link href="../assets/css/forge_base.css?v=26" rel="stylesheet"/>
+    <link href="../assets/css/forge_base.css?v=28" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
     <link href="../assets/css/platform.css?v=4" rel="stylesheet"/>
 
@@ -322,15 +322,22 @@
     }
     .compare-table tr:last-child td { border-bottom: none; }
     .compare-table tr:hover td { background: rgba(34,197,94,0.03); }
+    /* 20px of side padding inside an 81px column left ~41px for the text,
+       so the cell contents overhung the table on a phone. */
+    @media (max-width: 760px) {
+      .compare-table th, .compare-table td { padding: 8px 7px; font-size: 11.5px; }
+      .compare-table td:first-child { font-size: 11px; }
+      .td-best { font-size: 10px; padding: 2px 5px; }
+    }
     .compare-table td:first-child {
       font-family: var(--mono); font-size: 11.5px; font-weight: 700;
-      color: var(--text); white-space: nowrap;
+      color: var(--text); 
     }
     .td-best {
-      font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px;
+      font-size: 11px; max-width: 100%; overflow-wrap: anywhere; font-weight: 700; padding: 2px 8px; border-radius: 100px;
       background: rgba(34,197,94,0.1); color: var(--green);
       border: 1px solid rgba(34,197,94,0.2);
-      white-space: nowrap; display: inline-block; margin-top: 2px;
+      display: inline-block; margin-top: 2px;
     }
     .th-fw { display: flex; align-items: center; gap: 6px; }
 

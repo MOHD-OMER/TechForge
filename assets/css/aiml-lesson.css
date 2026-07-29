@@ -60,13 +60,14 @@
 }
 
 /* Tables & pipelines */
+/* `display: block` turned this into a scrolling box whose columns sized to
+   their content — the reason it slid sideways. As a real table it inherits the
+   fixed layout from forge_base and divides the width it is given. */
 .algo-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
   margin: 16px 0;
-  overflow-x: auto;
-  display: block;
 }
 .algo-table th {
   text-align: left;
@@ -78,7 +79,6 @@
   letter-spacing: 1px;
   padding: 10px;
   border-bottom: 1px solid var(--border);
-  white-space: nowrap;
 }
 .algo-table td {
   padding: 9px 10px;
@@ -91,7 +91,6 @@
   font-family: var(--mono);
   color: var(--accent);
   font-weight: 600;
-  white-space: nowrap;
 }
 
 .pipe-step { display: flex; gap: 0; position: relative; }
@@ -984,7 +983,6 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
-  min-width: 480px;
 }
 .cs-table th {
   text-align: left;
@@ -997,7 +995,6 @@
   padding: 10px 12px;
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
-  white-space: nowrap;
 }
 .cs-table td {
   padding: 9px 12px;
@@ -1010,7 +1007,6 @@
   font-family: var(--mono);
   color: var(--accent);
   font-weight: 600;
-  white-space: nowrap;
 }
 .t-pandas td:first-child { color: var(--cyan); }
 .t-numpy td:first-child { color: var(--blue); }
@@ -1043,6 +1039,11 @@
     -webkit-overflow-scrolling: touch;
   }
   .cs-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .cs-table { min-width: 480px; }
+  .cs-table th, .cs-table td { padding: 6px 7px; font-size: 11.5px; }
+  /* Equal thirds split `pd.read_parquet()` across two lines mid-name. The
+     first column holds identifiers that should stay whole, so give it the
+     room and take it from the prose column, which wraps at spaces anyway. */
+  .cs-table th:first-child, .cs-table td:first-child { width: 38%; }
+  .cs-table th:nth-child(2), .cs-table td:nth-child(2) { width: 30%; }
   .comp-table th { font-size: 12px; }
 }
