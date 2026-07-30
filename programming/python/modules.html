@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Modules &amp; Packaging — Imports, Packages, Project Layout | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/python/modules.html"/>
+  <meta property="og:title" content="Python Modules &amp; Packaging — Imports, Packages, Project Layout | TechForge"/>
+  <meta property="og:description" content="Python Modules &amp; Packaging — imports, packages, the import path, and how to lay out a project."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=28" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="py/modules" data-section="python">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../aiml/index.html">AI/ML</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../databases/index.html">Databases</a>
+    <a class="tb-link" href="../../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">←</span> Functions &amp; I/O</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">←</span> OOP</a>
+      <div class="sidebar-label" style="margin-top:14px;">Modules &amp; Packaging</div>
+      <a class="sb-link active" href="#sec-modules"><span class="sb-num">01</span> Modules &amp; import</a>
+      <a class="sb-link" href="#sec-packages"><span class="sb-num">02</span> Packages</a>
+      <a class="sb-link" href="#sec-import-path"><span class="sb-num">03</span> The import path</a>
+      <a class="sb-link" href="#sec-project"><span class="sb-num">04</span> Project layout</a>
+      <a class="sb-link" href="#sec-quiz"><span class="sb-num">05</span> Quick Quiz</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">→</span> Async / Await</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Modules &amp; Packaging</div>
+        <h1 class="pg-title">Modules, Packages &amp; <span>Project Layout</span></h1>
+        <p class="pg-sub">How import actually works, how packages are put together, and how to lay out a project other people can install.</p>
+        <div class="pg-badges">
+          <span class="badge b-py"><i class="ti ti-brand-python"></i> Python 3</span>
+          <span class="badge b-green">✓ Essential</span>
+          <span class="badge b-blue">4 Topics</span>
+          <span class="badge b-amber"><i class="ti ti-flame"></i> Interview Key</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-modules">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-file-code"></i></span><h2 class="sec-title">Modules &amp; the <code>import</code> Statement</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>module</strong> is just a <code>.py</code> file. Importing it runs the file once, top to bottom, and binds the resulting namespace to a name you can reach through.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — the four import forms</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> math                    <span class="cm"># math.pi</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> np             <span class="cm"># np.array — an alias</span>
+<span class="kw">from</span> math <span class="kw">import</span> pi, sqrt       <span class="cm"># pi, sqrt — bound directly</span>
+<span class="kw">from</span> math <span class="kw">import</span> sqrt <span class="kw">as</span> root  <span class="cm"># root</span>
+
+<span class="kw">from</span> math <span class="kw">import</span> *             <span class="cm"># avoid: hides where a name came from</span></pre>
+        </div>
+        <p class="prose">The import runs the module body <strong>once per process</strong>. Python caches it in <code>sys.modules</code>, so a second import of the same module is a dictionary lookup, not a re-execution. That is why a print statement at module level fires once however many files import it.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — imports are cached</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> sys
+<span class="kw">import</span> json
+<span class="kw">import</span> json                    <span class="cm"># no re-execution</span>
+
+sys.modules[<span class="st">'json'</span>]              <span class="cm"># the same module object both times</span>
+json.__file__                   <span class="cm"># where it was loaded from</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>Because module bodies execute on import, expensive work at module level — reading a file, opening a connection — runs at import time, for every consumer, whether they need it or not. Keep the body to definitions and put the work in a function.</div></div>
+      </section>
+
+      <section class="py-section" id="sec-packages">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-folders"></i></span><h2 class="sec-title">Packages &amp; <code>__init__.py</code></h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>package</strong> is a directory of modules. <code>__init__.py</code> marks it as one and runs when the package is first imported — which makes it the place to present a public API, and the place people accidentally put slow work.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Project layout</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">myapp/
+├── __init__.py         <span class="cm"># runs on: import myapp</span>
+├── config.py
+├── models/
+│   ├── __init__.py
+│   ├── user.py
+│   └── order.py
+└── services/
+    ├── __init__.py
+    └── billing.py</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — myapp/models/__init__.py</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Re-export so callers write the short form</span>
+<span class="kw">from</span> .user <span class="kw">import</span> User
+<span class="kw">from</span> .order <span class="kw">import</span> Order
+
+__all__ = [<span class="st">'User'</span>, <span class="st">'Order'</span>]     <span class="cm"># what 'from myapp.models import *' gives</span>
+
+<span class="cm"># now: from myapp.models import User</span>
+<span class="cm"># instead of: from myapp.models.user import User</span></pre>
+        </div>
+        <p class="prose"><strong>Absolute</strong> imports name the full path from the project root; <strong>relative</strong> imports use leading dots to mean "this package" and "the one above it".</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — absolute vs relative</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">from</span> myapp.models.user <span class="kw">import</span> User     <span class="cm"># absolute — clear, and PEP 8 prefers it</span>
+
+<span class="kw">from</span> .user <span class="kw">import</span> User                 <span class="cm"># same package</span>
+<span class="kw">from</span> ..config <span class="kw">import</span> SETTINGS          <span class="cm"># one package up</span>
+
+<span class="cm"># Relative imports only work inside a package — running the file</span>
+<span class="cm"># directly gives: ImportError: attempted relative import with no known parent package</span></pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div>Since Python 3.3 a directory without <code>__init__.py</code> still imports, as a <strong>namespace package</strong>. That is a feature for splitting one package across distributions — but as an accident it silently changes behaviour, so keep the <code>__init__.py</code> unless you specifically want the other thing.</div></div>
+      </section>
+
+      <section class="py-section" id="sec-import-path">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-route"></i></span><h2 class="sec-title">How Python Finds a Module</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">On <code>import x</code>, Python checks <code>sys.modules</code> first, then walks <code>sys.path</code> in order and takes the first match. <code>sys.path</code> starts with the script's own directory, then <code>PYTHONPATH</code>, then the installed site-packages.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — inspecting the path</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> sys
+<span class="kw">for</span> p <span class="kw">in</span> sys.path:
+    <span class="fn">print</span>(p)
+
+<span class="cm"># 1. the directory of the script you ran (or cwd for -m)</span>
+<span class="cm"># 2. anything in the PYTHONPATH environment variable</span>
+<span class="cm"># 3. the standard library</span>
+<span class="cm"># 4. site-packages — where pip installs</span></pre>
+        </div>
+        <div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-octagon"></i></span><div><strong>Shadowing:</strong> because your own directory comes first, a file named <code>random.py</code> or <code>json.py</code> next to your script wins over the standard library, and every later import of that name gets your file. The symptom is an <code>AttributeError</code> on a function that certainly exists. Rename the file and delete the stale <code>__pycache__</code>.</div></div>
+        <p class="prose">A <strong>circular import</strong> is two modules importing each other. The second import finds a half-executed module in <code>sys.modules</code> and gets a name that does not exist yet.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — the circular case and three fixes</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># a.py</span>
+<span class="kw">from</span> b <span class="kw">import</span> helper          <span class="cm"># b runs, and b imports a, which is half-built</span>
+
+<span class="cm"># 1. import the module, not the name — resolution is deferred</span>
+<span class="kw">import</span> b
+b.helper()
+
+<span class="cm"># 2. import inside the function that needs it</span>
+<span class="kw">def</span> <span class="fn">run</span>():
+    <span class="kw">from</span> b <span class="kw">import</span> helper
+    <span class="kw">return</span> <span class="fn">helper</span>()
+
+<span class="cm"># 3. the real fix: move the shared thing into a third module</span></pre>
+        </div>
+      </section>
+
+      <section class="py-section" id="sec-project">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">Structuring &amp; Packaging a Project</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Once a project outgrows one file, the layout below is the one the ecosystem expects. Keeping the package inside <code>src/</code> stops your working directory from shadowing the installed copy, so tests exercise what users actually get.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Project — the src layout</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">myproject/
+├── pyproject.toml      <span class="cm"># metadata, dependencies, build config</span>
+├── README.md
+├── src/
+│   └── myapp/
+│       ├── __init__.py
+│       └── main.py
+└── tests/
+    └── test_main.py</pre>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">pyproject.toml</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">[project]
+name = <span class="st">"myapp"</span>
+version = <span class="st">"0.1.0"</span>
+requires-python = <span class="st">"&gt;=3.10"</span>
+dependencies = [<span class="st">"requests&gt;=2.31"</span>, <span class="st">"pydantic&gt;=2"</span>]
+
+[project.scripts]
+myapp = <span class="st">"myapp.main:cli"</span>      <span class="cm"># installs a `myapp` command</span>
+
+[build-system]
+requires = [<span class="st">"hatchling"</span>]
+build-backend = <span class="st">"hatchling.build"</span></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Shell — install and build</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">pip install -e .        <span class="cm"># editable: your edits take effect without reinstalling</span>
+python -m build         <span class="cm"># produces dist/*.whl and dist/*.tar.gz</span>
+
+<span class="cm"># A wheel is the built, installable artefact; the .tar.gz is the source</span>
+<span class="cm"># distribution. pip prefers the wheel because it needs no build step.</span></pre>
+        </div>
+        <p class="prose">Run the package with <code>python -m myapp</code> rather than by path: <code>-m</code> puts the current directory on <code>sys.path</code> and executes the module as part of its package, so relative imports resolve. Running <code>python src/myapp/main.py</code> directly is what produces "attempted relative import with no known parent package".</p>
+        <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-circle-check"></i></span><div>Pin your dependencies for applications and keep them loose for libraries. An application wants a reproducible install; a library that pins exactly will eventually conflict with everything else in the user's environment.</div></div>
+      </section>
+
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Five questions on imports, packages and layout.</p>
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. You import the same module twice in one process. What happens the second time?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">The file is executed again</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Python returns the cached module from <code>sys.modules</code></button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">An <code>ImportError</code> is raised</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">The module is reloaded only if the file changed</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. A file named <code>random.py</code> sits next to your script. What breaks?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing — the standard library always wins</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Only that file</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Every import of <code>random</code> gets your file, because the script directory comes first on <code>sys.path</code></button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Python refuses to start</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. What does <code>__init__.py</code> do?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Marks the directory as a package and runs on first import</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Defines the class constructor</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Lists the package dependencies</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing — it is required to be empty</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. Two modules import each other and you get an <code>ImportError</code> on a name that exists. Best fix?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Reorder the import statements</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Move the shared code into a third module both can import</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Use <code>from x import *</code></button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Delete <code>__pycache__</code></button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. Why run a package with <code>python -m myapp</code> instead of <code>python src/myapp/main.py</code>?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">It executes the module as part of its package, so relative imports resolve</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">It skips the bytecode cache</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">There is no difference</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="oop.html">← OOP</a>
+        <a class="nav-link" href="libraries.html">Libraries →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../../assets/js/topics-manifest.js?v=3"></script>
+  <script src="../../assets/js/site-index.js?v=5"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../../assets/js/utils.js?v=13"></script>
+  <script src="../../assets/js/platform.js?v=5"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+<script src="/assets/js/pyrun.js?v=1" defer></script>
+</body>
+</html>

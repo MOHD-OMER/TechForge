@@ -20,7 +20,7 @@
     if (p.includes('/programming/') || p.includes('/dsa/') || p.includes('/devops/') ||
         p.includes('/system-design/') || p.includes('/databases/') ||
         p.includes('/aiml/') || p.includes('/interview/') ||
-        p.includes('/systems/') || p.includes('/data-cloud/')) {
+        p.includes('/systems/')) {
       return '../';
     }
     return '';

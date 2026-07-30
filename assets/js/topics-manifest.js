@@ -216,6 +216,7 @@ window.TF_TOPICS = {
         label: 'Advanced',
         topics: [
           { id: 'py/oop', file: 'oop.html', title: 'OOP', icon: '<i class="ti ti-building-bank"></i>', desc: 'Classes, inheritance, polymorphism, magic methods.', depth: 'full' },
+          { id: 'py/modules', file: 'modules.html', title: 'Modules & Packaging', icon: '<i class="ti ti-package"></i>', desc: 'Imports, packages, the import path, project layout.', depth: 'guide' },
           { id: 'py/async', file: 'async.html', title: 'Async / Await', icon: '<i class="ti ti-bolt"></i>', desc: 'Event loop, coroutines, asyncio, gather, aiohttp, patterns.', depth: 'full' }
         ]
       },
