@@ -128,8 +128,79 @@ square = <span class="kw">lambda</span> x: x**<span class="nm">2</span></pre>
         </div>
         <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>print() vs return:</strong> <code>print()</code> displays output but can't be reused. <code>return</code> sends value back to the caller. Always prefer <code>return</code> in DSA functions.</span></div>
       </section>
+
+      <section class="py-section" id="sec-scope">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-box-multiple"></i></span><h2 class="sec-title">Scope, Namespaces &amp; Docstrings</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>namespace</strong> is a mapping from names to objects. Python keeps several at once, and resolves a name by searching them in a fixed order known as <strong>LEGB</strong>: Local, then Enclosing, then Global, then Built-in.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — LEGB in action</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">x = <span class="st">'global'</span>          <span class="cm"># G</span>
+
+<span class="kw">def</span> <span class="fn">outer</span>():
+    x = <span class="st">'enclosing'</span>   <span class="cm"># E</span>
+    <span class="kw">def</span> <span class="fn">inner</span>():
+        x = <span class="st">'local'</span>   <span class="cm"># L</span>
+        <span class="fn">print</span>(x)      <span class="cm"># local wins</span>
+    <span class="fn">inner</span>()
+    <span class="fn">print</span>(x)          <span class="cm"># enclosing</span>
+
+<span class="fn">outer</span>()
+<span class="fn">print</span>(x)              <span class="cm"># global</span>
+<span class="fn">print</span>(<span class="fn">len</span>)            <span class="cm"># B — built-in, found last</span></pre>
+        </div>
+        <p class="prose">Assignment creates a local name, which is why reading a global then assigning to it raises <code>UnboundLocalError</code>. Two keywords opt out: <code>global</code> rebinds the module-level name, <code>nonlocal</code> rebinds the nearest enclosing one.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — global vs nonlocal</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">count = <span class="st">0</span>
+
+<span class="kw">def</span> <span class="fn">bump</span>():
+    <span class="kw">global</span> count       <span class="cm"># without this: UnboundLocalError</span>
+    count += <span class="st">1</span>
+
+<span class="kw">def</span> <span class="fn">counter</span>():
+    n = <span class="st">0</span>
+    <span class="kw">def</span> <span class="fn">step</span>():
+        <span class="kw">nonlocal</span> n     <span class="cm"># rebinds counter's n, not a new local</span>
+        n += <span class="st">1</span>
+        <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">step</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>Needing <code>global</code> is usually a design smell — it means a function is communicating through module state rather than arguments and return values. <code>nonlocal</code> is different: it is the ordinary way a closure keeps state.</div></div>
+        <p class="prose">A <strong>docstring</strong> is a string literal as the first statement of a module, class or function. Unlike a <code>#</code> comment it survives into the object as <code>__doc__</code>, which is what <code>help()</code>, IDE tooltips and documentation generators read.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — docstrings</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">area</span>(radius):
+    <span class="st">"""Return the area of a circle.</span>
+
+<span class="st">    Args:</span>
+<span class="st">        radius: Distance from centre to edge, in metres.</span>
+
+<span class="st">    Returns:</span>
+<span class="st">        The area in square metres.</span>
+
+<span class="st">    Raises:</span>
+<span class="st">        ValueError: If radius is negative.</span>
+<span class="st">    """</span>
+    <span class="kw">if</span> radius &lt; <span class="st">0</span>:
+        <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="st">'radius must be non-negative'</span>)
+    <span class="kw">return</span> <span class="st">3.14159</span> * radius ** <span class="st">2</span>
+
+<span class="fn">help</span>(area)        <span class="cm"># prints the docstring</span>
+area.__doc__      <span class="cm"># the same text, as a string</span></pre>
+        </div>
+      </section>
       <section class="py-section" id="sec-recursion">
-        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-spiral"></i></span><h2 class="sec-title">Recursion in Python</h2></div>
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-spiral"></i></span><h2 class="sec-title">Recursion in Python</h2></div>
         <div class="section-divider"></div>
         <p class="prose"><strong>Recursion</strong> — a function calls itself to solve a smaller version of the same problem. Every recursive function needs a <strong>Base Case</strong> and a <strong>Recursive Case</strong>.</p>
         <div class="callout callout-red"><span class="callout-icon">!</span><span><strong>Without a base case → infinite recursion → stack overflow error!</strong></span></div>
@@ -218,7 +289,7 @@ Reduces Fibonacci from O(2ⁿ) to O(n).
         <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-bulb"></i></span><span><strong>Optimization Tip:</strong> Use Memoization to avoid repeated calculations. Essential for Fibonacci, climbing stairs, and other overlapping subproblem scenarios.</span></div>
       </section>
       <section class="py-section" id="sec-exceptions">
-        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-shield"></i></span><h2 class="sec-title">Exception Handling</h2></div>
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-shield"></i></span><h2 class="sec-title">Exception Handling</h2></div>
         <div class="section-divider"></div>
         <p class="prose">Structure: <code>try → except → else → finally</code>. The <code>finally</code> block always runs — perfect for cleanup.</p>
         <div class="table-wrap">
@@ -237,7 +308,7 @@ Reduces Fibonacci from O(2ⁿ) to O(n).
         </div>
       </section>
       <section class="py-section" id="sec-files">
-        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-folder"></i></span><h2 class="sec-title">File Handling in Python</h2></div>
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-folder"></i></span><h2 class="sec-title">File Handling in Python</h2></div>
         <div class="section-divider"></div>
         <div class="code-block">
           <div class="code-hdr"><span class="code-lang">Python — File Handling</span>

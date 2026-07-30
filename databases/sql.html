@@ -521,8 +521,26 @@
       <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>After creating the database, use <code style="font-family:var(--font-mono);color:var(--amber)">USE database_name;</code> or set it as default schema in your SQL client before running table queries.</div></div>
     </section>
 
+
+    <section class="py-section" id="sublanguages">
+      <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-category"></i></span><h2 class="sec-title">DDL, DML, DCL &amp; TCL</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Every SQL statement belongs to one of four sub-languages. Interviewers ask this to check you know which statements can be rolled back and which cannot.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Family</th><th>Stands for</th><th>Statements</th><th>Rollback?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>DDL</strong></td><td>Data Definition</td><td><code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>TRUNCATE</code></td><td>No — auto-commits in MySQL and Oracle</td></tr>
+            <tr><td><strong>DML</strong></td><td>Data Manipulation</td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>SELECT</code></td><td>Yes</td></tr>
+            <tr><td><strong>DCL</strong></td><td>Data Control</td><td><code>GRANT</code>, <code>REVOKE</code></td><td>No</td></tr>
+            <tr><td><strong>TCL</strong></td><td>Transaction Control</td><td><code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><strong>Why it matters:</strong> <code>TRUNCATE</code> is DDL, so it cannot be rolled back and it resets identity counters. <code>DELETE</code> is DML — slower, logs every row, but recoverable inside a transaction.</div></div>
+    </section>
     <section class="py-section" id="data-types">
-      <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-checklist"></i></span><h2 class="sec-title">MySQL Data Types</h2></div>
+      <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-checklist"></i></span><h2 class="sec-title">MySQL Data Types</h2></div>
       <div class="section-divider"></div>
       <div class="table-wrap">
         <table class="py-table">
@@ -543,7 +561,7 @@
     </section>
 
     <section class="py-section" id="constraints">
-      <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-lock"></i></span><h2 class="sec-title">Constraints</h2></div>
+      <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-lock"></i></span><h2 class="sec-title">Constraints</h2></div>
       <div class="section-divider"></div>
       <p class="prose">Constraints enforce rules on column data — they protect <strong>data integrity</strong> at the database level, not just the application level.</p>
       <div class="table-wrap">
@@ -564,7 +582,7 @@
     </section>
 
     <section class="py-section" id="create-table">
-      <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-pencil"></i></span><h2 class="sec-title">Create Table</h2></div>
+      <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-pencil"></i></span><h2 class="sec-title">Create Table</h2></div>
       <div class="section-divider"></div>
       <div class="code-block">
         <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
@@ -589,7 +607,7 @@
     </section>
 
     <section class="py-section" id="alter-table">
-      <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-tool"></i></span><h2 class="sec-title">Alter Table</h2></div>
+      <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-tool"></i></span><h2 class="sec-title">Alter Table</h2></div>
       <div class="section-divider"></div>
       <div class="code-block">
         <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
@@ -612,7 +630,7 @@
     </section>
 
     <section class="py-section" id="insert-data">
-      <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-plus"></i></span><h2 class="sec-title">Insert Data</h2></div>
+      <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-plus"></i></span><h2 class="sec-title">Insert Data</h2></div>
       <div class="section-divider"></div>
       <div class="callout callout-green"><span class="callout-icon">✓</span><div><strong>Best practice:</strong> Always specify column names explicitly. It makes inserts resilient to future schema changes and easier to read.</div></div>
       <div class="code-block">
@@ -632,7 +650,7 @@
     </section>
 
     <section class="py-section" id="select-query">
-      <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-search"></i></span><h2 class="sec-title">SELECT Query</h2></div>
+      <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon"><i class="ti ti-search"></i></span><h2 class="sec-title">SELECT Query</h2></div>
       <div class="section-divider"></div>
       <div class="code-block">
         <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
@@ -661,7 +679,7 @@
     </section>
 
     <section class="py-section" id="update-delete">
-      <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon"><i class="ti ti-pencil"></i></span><h2 class="sec-title">UPDATE &amp; DELETE</h2></div>
+      <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon"><i class="ti ti-pencil"></i></span><h2 class="sec-title">UPDATE &amp; DELETE</h2></div>
       <div class="section-divider"></div>
       <div class="code-block">
         <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
@@ -681,7 +699,7 @@
     </section>
 
     <section class="py-section" id="sql-functions">
-      <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon"><i class="ti ti-calculator"></i></span><h2 class="sec-title">SQL Functions</h2></div>
+      <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon"><i class="ti ti-calculator"></i></span><h2 class="sec-title">SQL Functions</h2></div>
       <div class="section-divider"></div>
       <div class="sub-title">Aggregate Functions</div>
       <div class="code-block">
@@ -709,8 +727,48 @@
       </div>
     </section>
 
+
+    <section class="py-section" id="nulls">
+      <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon"><i class="ti ti-help-octagon"></i></span><h2 class="sec-title">NULLs &amp; the CASE Expression</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose"><code>NULL</code> is not a value — it is the absence of one. That is why it never equals anything, not even itself, and why comparisons against it need <code>IS NULL</code> rather than <code>=</code>.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">SELECT</span> <span class="num">NULL</span> = <span class="num">NULL</span>;       <span class="cm">-- NULL, not true</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> deleted_at <span class="kw">IS NULL</span>;   <span class="cm">-- correct</span>
+
+<span class="cm">-- Aggregates skip NULLs; COUNT(*) does not</span>
+<span class="kw">SELECT</span> <span class="kw">COUNT</span>(*), <span class="kw">COUNT</span>(phone), <span class="kw">AVG</span>(score) <span class="kw">FROM</span> users;</pre>
+      </div>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Function</th><th>Does</th><th>Portable?</th></tr></thead>
+          <tbody>
+            <tr><td><code>COALESCE(a, b, c)</code></td><td>Returns the first non-NULL argument</td><td>Standard SQL — use this</td></tr>
+            <tr><td><code>ISNULL(a, b)</code></td><td>Two arguments only</td><td>SQL Server</td></tr>
+            <tr><td><code>NVL(a, b)</code></td><td>Two arguments only</td><td>Oracle</td></tr>
+            <tr><td><code>NULLIF(a, b)</code></td><td>NULL when a equals b, else a</td><td>Standard — good for guarding division</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose"><strong><code>CASE</code></strong> is SQL's if/else, usable anywhere an expression is allowed — in <code>SELECT</code>, in <code>ORDER BY</code>, even inside an aggregate to count conditionally.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">SELECT</span> name,
+       <span class="kw">CASE</span> <span class="kw">WHEN</span> score >= <span class="num">90</span> <span class="kw">THEN</span> <span class="st">'A'</span>
+            <span class="kw">WHEN</span> score >= <span class="num">80</span> <span class="kw">THEN</span> <span class="st">'B'</span>
+            <span class="kw">ELSE</span> <span class="st">'C'</span>
+       <span class="kw">END</span> <span class="kw">AS</span> grade,
+       <span class="kw">COUNT</span>(<span class="kw">CASE WHEN</span> status = <span class="st">'paid'</span> <span class="kw">THEN</span> <span class="num">1</span> <span class="kw">END</span>) <span class="kw">AS</span> paid_orders
+<span class="kw">FROM</span> students <span class="kw">LEFT JOIN</span> orders <span class="kw">USING</span>(id)
+<span class="kw">GROUP BY</span> name, grade;</pre>
+      </div>
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>A <code>CASE</code> with no matching <code>WHEN</code> and no <code>ELSE</code> returns <code>NULL</code> — a common source of silently missing rows once that column is filtered on later.</div></div>
+    </section>
     <section class="py-section" id="window-functions">
-      <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon"><i class="ti ti-app-window"></i></span><h2 class="sec-title">Window Functions</h2></div>
+      <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon"><i class="ti ti-app-window"></i></span><h2 class="sec-title">Window Functions</h2></div>
       <div class="section-divider"></div>
       <p class="prose">Window functions perform calculations <strong>across rows related to the current row</strong> — without collapsing them into groups like GROUP BY does. They're one of the most-tested advanced SQL topics at FAANG companies.</p>
       <div class="wfn-strip">
@@ -751,7 +809,7 @@
     </section>
 
     <section class="py-section" id="transactions">
-      <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon"><i class="ti ti-refresh"></i></span><h2 class="sec-title">Transactions &amp; ACID</h2></div>
+      <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon"><i class="ti ti-refresh"></i></span><h2 class="sec-title">Transactions &amp; ACID</h2></div>
       <div class="section-divider"></div>
       <p class="prose">A <strong>transaction</strong> is a sequence of SQL statements treated as a single unit — either all succeed or all fail (atomicity).</p>
       <div class="table-wrap">
@@ -781,8 +839,39 @@
       </div>
     </section>
 
+
+    <section class="py-section" id="isolation">
+      <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon"><i class="ti ti-lock"></i></span><h2 class="sec-title">Isolation Levels &amp; Deadlocks</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">The <em>I</em> in ACID is a dial, not a switch. Weaker isolation lets more transactions run at once and admits specific anomalies; stronger isolation removes them at the cost of blocking.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Level</th><th>Dirty read</th><th>Non-repeatable read</th><th>Phantom read</th></tr></thead>
+          <tbody>
+            <tr><td><strong>READ UNCOMMITTED</strong></td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td><strong>READ COMMITTED</strong></td><td>Prevented</td><td>Possible</td><td>Possible</td></tr>
+            <tr><td><strong>REPEATABLE READ</strong></td><td>Prevented</td><td>Prevented</td><td>Possible*</td></tr>
+            <tr><td><strong>SERIALIZABLE</strong></td><td>Prevented</td><td>Prevented</td><td>Prevented</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose">A <strong>dirty read</strong> sees another transaction's uncommitted change. A <strong>non-repeatable read</strong> gets a different value when it reads the same row twice. A <strong>phantom read</strong> gets a different set of rows when it repeats the same query. (*InnoDB's REPEATABLE READ blocks phantoms too, via next-key locking — the standard does not require that.)</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">SET TRANSACTION ISOLATION LEVEL</span> READ COMMITTED;
+
+<span class="kw">START TRANSACTION</span>;
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance - <span class="num">100</span> <span class="kw">WHERE</span> id = <span class="num">1</span>;
+<span class="kw">SAVEPOINT</span> after_debit;              <span class="cm">-- a partial rollback point</span>
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance + <span class="num">100</span> <span class="kw">WHERE</span> id = <span class="num">2</span>;
+<span class="kw">ROLLBACK TO</span> after_debit;            <span class="cm">-- undo the credit, keep the debit</span>
+<span class="kw">COMMIT</span>;</pre>
+      </div>
+      <div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-octagon"></i></span><div><strong>Deadlock:</strong> two transactions each hold a lock the other needs, so neither can proceed. The database detects the cycle and kills one with an error. Avoid them by locking rows in a consistent order everywhere, keeping transactions short, and touching the smallest set of rows you can — then retry the loser, because under load a deadlock is normal rather than exceptional.</div></div>
+    </section>
     <section class="py-section" id="keys">
-      <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon"><i class="ti ti-key"></i></span><h2 class="sec-title">Primary &amp; Foreign Keys</h2></div>
+      <div class="sec-header"><span class="sec-num">15</span><span class="sec-icon"><i class="ti ti-key"></i></span><h2 class="sec-title">Primary &amp; Foreign Keys</h2></div>
       <div class="section-divider"></div>
       <div class="compare-strip">
         <div class="cs-item">
@@ -817,10 +906,28 @@
 <span class="cm">-- ON DELETE CASCADE: deleting a user also deletes their orders</span>
 <span class="cm">-- ON DELETE SET NULL: sets user_id to NULL when user is deleted</span></pre>
       </div>
+      <p class="prose">A <strong>natural key</strong> is data that is already unique and meaningful — an ISBN, an email. A <strong>surrogate key</strong> is a meaningless identifier the database generates, usually an auto-increment or identity column. Surrogates win in practice because business meaning changes: people change email addresses, and a key that changes has to be updated everywhere it was referenced.</p>
+${table(['Term', 'Meaning'], [
+  ['<strong>Composite key</strong>', 'A primary key made of two or more columns together'],
+  ['<strong>Candidate key</strong>', 'Any column set that could serve as the primary key'],
+  ['<strong>Surrogate key</strong>', 'A generated identifier with no business meaning'],
+  ['<strong>Orphan record</strong>', 'A row whose foreign key points at something that no longer exists'],
+])}
+      <p class="prose">Referential integrity is what prevents orphans, and <code>ON DELETE</code> decides what happens when a parent goes away.</p>
+${codeBlock(`${kw('CREATE TABLE')} orders (
+  id       ${kw('INT')} ${kw('PRIMARY KEY')} ${kw('AUTO_INCREMENT')},   ${cm('-- surrogate key')}
+  user_id  ${kw('INT')} ${kw('NOT NULL')},
+  ${kw('FOREIGN KEY')} (user_id) ${kw('REFERENCES')} users(id)
+    ${kw('ON DELETE CASCADE')}      ${cm('-- delete the orders too')}
+    ${kw('ON UPDATE CASCADE')}      ${cm('-- follow a changed parent id')}
+);
+
+${cm('-- Alternatives: RESTRICT (refuse), SET NULL (orphan it deliberately)')}`)}
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><code>ON DELETE CASCADE</code> is convenient and dangerous: one delete can silently remove rows several tables away. Use it where the child genuinely cannot exist without the parent, and <code>RESTRICT</code> everywhere else so the deletion has to be deliberate.</div></div>
     </section>
 
     <section class="py-section" id="joins">
-      <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon"><i class="ti ti-arrows-shuffle"></i></span><h2 class="sec-title">SQL JOINs</h2></div>
+      <div class="sec-header"><span class="sec-num">16</span><span class="sec-icon"><i class="ti ti-arrows-shuffle"></i></span><h2 class="sec-title">SQL JOINs</h2></div>
       <div class="section-divider"></div>
       <p class="prose">JOINs combine rows from two or more tables based on a related column. The most tested SQL concept in interviews.</p>
 
@@ -874,7 +981,7 @@
     </section>
 
     <section class="py-section" id="union">
-      <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon"><i class="ti ti-plus"></i></span><h2 class="sec-title">UNION &amp; Subqueries</h2></div>
+      <div class="sec-header"><span class="sec-num">17</span><span class="sec-icon"><i class="ti ti-plus"></i></span><h2 class="sec-title">UNION &amp; Subqueries</h2></div>
       <div class="section-divider"></div>
       <div class="code-block">
         <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
@@ -903,8 +1010,54 @@
       </div>
     </section>
 
+
+    <section class="py-section" id="query-patterns">
+      <div class="sec-header"><span class="sec-num">18</span><span class="sec-icon"><i class="ti ti-binary-tree"></i></span><h2 class="sec-title">Advanced Query Patterns</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Four shapes that come up constantly once the basics are behind you.</p>
+      <p class="prose"><strong>Correlated subquery</strong> — an inner query that references the outer row, so it re-evaluates per row. Readable, but often slower than the join or window function that replaces it.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Correlated: runs once per employee</span>
+<span class="kw">SELECT</span> name, salary <span class="kw">FROM</span> employees e
+<span class="kw">WHERE</span> salary > (<span class="kw">SELECT</span> <span class="kw">AVG</span>(salary) <span class="kw">FROM</span> employees <span class="kw">WHERE</span> dept = e.dept);
+
+<span class="cm">-- Same answer with a window function, one pass</span>
+<span class="kw">SELECT</span> name, salary <span class="kw">FROM</span> (
+  <span class="kw">SELECT</span> name, salary, <span class="kw">AVG</span>(salary) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> dept) <span class="kw">AS</span> dept_avg
+  <span class="kw">FROM</span> employees
+) t <span class="kw">WHERE</span> salary > dept_avg;</pre>
+      </div>
+      <p class="prose"><strong>Recursive CTE</strong> — a query that refers to itself, which is how you walk hierarchical data (org charts, category trees, bills of materials) to arbitrary depth.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">WITH RECURSIVE</span> chain <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> id, name, manager_id, <span class="num">1</span> <span class="kw">AS</span> depth
+  <span class="kw">FROM</span> employees <span class="kw">WHERE</span> manager_id <span class="kw">IS NULL</span>      <span class="cm">-- anchor: the root</span>
+  <span class="kw">UNION ALL</span>
+  <span class="kw">SELECT</span> e.id, e.name, e.manager_id, c.depth + <span class="num">1</span>
+  <span class="kw">FROM</span> employees e <span class="kw">JOIN</span> chain c <span class="kw">ON</span> e.manager_id = c.id  <span class="cm">-- recursive step</span>
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> chain <span class="kw">ORDER BY</span> depth;</pre>
+      </div>
+      <p class="prose"><strong>Lateral join</strong> (<code>LATERAL</code>, or <code>CROSS APPLY</code> in SQL Server) lets the right-hand subquery see columns from the left — the standard way to fetch "the top N rows per group".</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">SELECT</span> c.name, o.total, o.placed_at
+<span class="kw">FROM</span> customers c
+<span class="kw">CROSS JOIN LATERAL</span> (
+  <span class="kw">SELECT</span> total, placed_at <span class="kw">FROM</span> orders
+  <span class="kw">WHERE</span> customer_id = c.id <span class="kw">ORDER BY</span> placed_at <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="num">3</span>
+) o;</pre>
+      </div>
+      <p class="prose"><strong>Pivot and unpivot</strong> rotate rows into columns and back. <code>PIVOT</code> exists in SQL Server and Oracle; elsewhere the portable form is conditional aggregation, which is the <code>CASE</code>-inside-<code>SUM</code> pattern above.</p>
+      <div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-octagon"></i></span><div><strong>Dynamic SQL</strong> — building statement text at runtime — is what you need when the pivot columns are not known in advance. It is also the fastest route to an injection hole: never concatenate user input into it. Bind values as parameters, and allow-list any identifier that has to be interpolated.</div></div>
+    </section>
     <section class="py-section" id="indexes">
-      <div class="sec-header"><span class="sec-num">15</span><span class="sec-icon"><i class="ti ti-address-book"></i></span><h2 class="sec-title">Indexes &amp; Performance</h2></div>
+      <div class="sec-header"><span class="sec-num">19</span><span class="sec-icon"><i class="ti ti-address-book"></i></span><h2 class="sec-title">Indexes &amp; Performance</h2></div>
       <div class="section-divider"></div>
       <p class="prose">An <strong>index</strong> is a data structure (typically a B-Tree) that speeds up data retrieval at the cost of extra storage and slower writes. Think of it like a book's index — you find the page number without reading the whole book.</p>
       <div class="code-block">
@@ -925,8 +1078,39 @@
       <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><strong>Don't over-index.</strong> Each index slows down INSERT/UPDATE/DELETE because the index must be updated too. Index columns that appear in WHERE, JOIN ON, and ORDER BY clauses.</div></div>
     </section>
 
+
+    <section class="py-section" id="execution-plan">
+      <div class="sec-header"><span class="sec-num">20</span><span class="sec-icon"><i class="ti ti-route-2"></i></span><h2 class="sec-title">Reading the Execution Plan</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">The optimiser turns your SQL into a plan: which indexes to use, which join algorithm, in what order. <code>EXPLAIN</code> shows the plan it chose, and <code>EXPLAIN ANALYZE</code> runs the query and shows what actually happened alongside the estimate.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span> u.name, <span class="kw">COUNT</span>(o.id)
+<span class="kw">FROM</span> users u <span class="kw">JOIN</span> orders o <span class="kw">ON</span> o.user_id = u.id
+<span class="kw">WHERE</span> u.created_at > <span class="st">'2026-01-01'</span>
+<span class="kw">GROUP BY</span> u.name;</pre>
+      </div>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>What you see</th><th>Means</th><th>Usually fine when</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Seq / full table scan</strong></td><td>Every row was read</td><td>The table is small, or you really do want most of it</td></tr>
+            <tr><td><strong>Index scan</strong></td><td>The index was walked</td><td>A range query</td></tr>
+            <tr><td><strong>Index seek / unique scan</strong></td><td>Straight to the rows</td><td>Almost always what you want</td></tr>
+            <tr><td><strong>Nested loop join</strong></td><td>For each left row, look up the right</td><td>The left side is small and the right is indexed</td></tr>
+            <tr><td><strong>Hash join</strong></td><td>Build a hash of one side, probe with the other</td><td>Both sides are large, no useful index</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose">Two numbers matter most. <strong>Cost</strong> is the optimiser's estimate in arbitrary units — useful for comparing two plans for the same query, meaningless across queries. The gap between <strong>estimated and actual rows</strong> is the real signal: when they differ by orders of magnitude, statistics are stale and every choice downstream was made on bad information. Refreshing statistics fixes more "slow query" tickets than rewriting the SQL does.</p>
+      <p class="prose">A tuning pass, in order: confirm the query is the problem, read the plan for the biggest actual-time node, check whether an index would turn a scan into a seek, and only then consider rewriting. Databases <strong>cache plans</strong> so repeated statements skip planning — one reason parameterised queries are faster as well as safer, since a literal baked into the text produces a new plan every time.</p>
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><strong>Optimizer hints</strong> force a particular index or join. They are a last resort: a hint that is right today locks the plan against a future where the data has grown or the statistics have changed. Fix the statistics or the index first.</div></div>
+      <p class="prose">An <strong>indexing strategy</strong> follows from all this: index the columns you filter and join on, put the most selective column first in a composite index, cover the query where you can so the index alone answers it, and drop indexes nothing uses — each one is paid for on every insert and update.</p>
+    </section>
     <section class="py-section" id="group-by">
-      <div class="sec-header"><span class="sec-num">16</span><span class="sec-icon"><i class="ti ti-chart-bar"></i></span><h2 class="sec-title">GROUP BY &amp; HAVING</h2></div>
+      <div class="sec-header"><span class="sec-num">21</span><span class="sec-icon"><i class="ti ti-chart-bar"></i></span><h2 class="sec-title">GROUP BY &amp; HAVING</h2></div>
       <div class="section-divider"></div>
       <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>WHERE vs HAVING:</strong> WHERE filters <em>rows before</em> grouping. HAVING filters <em>groups after</em> aggregation. You cannot use aggregate functions in WHERE.</div></div>
       <div class="code-block">
@@ -956,7 +1140,7 @@
     </section>
 
     <section class="py-section" id="normalization">
-      <div class="sec-header"><span class="sec-num">17</span><span class="sec-icon"><i class="ti ti-building"></i></span><h2 class="sec-title">Normalization</h2></div>
+      <div class="sec-header"><span class="sec-num">22</span><span class="sec-icon"><i class="ti ti-building"></i></span><h2 class="sec-title">Normalization</h2></div>
       <div class="section-divider"></div>
       <p class="prose">Normalization is the process of organizing a database to <strong>reduce redundancy</strong> and improve data integrity by dividing data into related tables.</p>
       <div class="norm-grid">
@@ -979,8 +1163,135 @@
       <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>Interview tip:</strong> Most production schemas target 3NF. Sometimes denormalization is intentional for read-performance — know when to justify it.</div></div>
     </section>
 
+
+    <section class="py-section" id="views">
+      <div class="sec-header"><span class="sec-num">23</span><span class="sec-icon"><i class="ti ti-eye"></i></span><h2 class="sec-title">Views &amp; Materialized Views</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">A <strong>view</strong> is a stored query that behaves like a table. It holds no data of its own — every read re-runs the underlying query — so it is a way to name a complicated join once and hide columns a caller should not see.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">CREATE VIEW</span> active_customers <span class="kw">AS</span>
+<span class="kw">SELECT</span> id, name, email <span class="kw">FROM</span> customers <span class="kw">WHERE</span> status = <span class="st">'active'</span>;
+
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> active_customers;   <span class="cm">-- queried like a table</span>
+
+<span class="cm">-- Materialized: stores the result, must be refreshed</span>
+<span class="kw">CREATE MATERIALIZED VIEW</span> sales_by_month <span class="kw">AS</span>
+<span class="kw">SELECT</span> date_trunc(<span class="st">'month'</span>, sold_at) <span class="kw">AS</span> m, <span class="kw">SUM</span>(total) <span class="kw">FROM</span> orders <span class="kw">GROUP BY</span> <span class="num">1</span>;
+
+<span class="kw">REFRESH MATERIALIZED VIEW</span> sales_by_month;</pre>
+      </div>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th></th><th>View</th><th>Materialized view</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Storage</strong></td><td>None — query re-runs each time</td><td>Result is stored on disk</td></tr>
+            <tr><td><strong>Freshness</strong></td><td>Always current</td><td>Stale until refreshed</td></tr>
+            <tr><td><strong>Read cost</strong></td><td>Cost of the underlying query</td><td>Cost of reading a table</td></tr>
+            <tr><td><strong>Use when</strong></td><td>Simplifying access, hiding columns</td><td>Expensive aggregate read far more often than it changes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>Schema binding</strong> ties a view to the tables it reads, so the database refuses a <code>DROP</code> or <code>ALTER</code> that would break it. Worth turning on for views other systems depend on.</div></div>
+    </section>
+
+    <section class="py-section" id="procedural">
+      <div class="sec-header"><span class="sec-num">24</span><span class="sec-icon"><i class="ti ti-code-dots"></i></span><h2 class="sec-title">Stored Procedures, Functions &amp; Triggers</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">SQL can hold logic as well as data. The three forms differ in what invokes them and what they are allowed to do.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th></th><th>Called by</th><th>Returns</th><th>Can modify data</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stored procedure</strong></td><td>Explicitly, with <code>CALL</code></td><td>Nothing, or output params</td><td>Yes</td></tr>
+            <tr><td><strong>Function (UDF)</strong></td><td>Inside an expression</td><td>A single value, or a table</td><td>Usually no</td></tr>
+            <tr><td><strong>Trigger</strong></td><td>The database, on an event</td><td>Nothing</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Procedure: called explicitly</span>
+<span class="kw">CREATE PROCEDURE</span> give_raise(<span class="kw">IN</span> emp_id <span class="kw">INT</span>, <span class="kw">IN</span> pct <span class="kw">DECIMAL</span>(<span class="num">4</span>,<span class="num">2</span>))
+<span class="kw">BEGIN</span>
+  <span class="kw">UPDATE</span> employees <span class="kw">SET</span> salary = salary * (<span class="num">1</span> + pct) <span class="kw">WHERE</span> id = emp_id;
+<span class="kw">END</span>;
+
+<span class="kw">CALL</span> give_raise(<span class="num">42</span>, <span class="num">0.10</span>);
+
+<span class="cm">-- Trigger: the database calls it for you</span>
+<span class="kw">CREATE TRIGGER</span> audit_salary <span class="kw">AFTER UPDATE</span> <span class="kw">ON</span> employees
+<span class="kw">FOR EACH ROW</span>
+  <span class="kw">INSERT INTO</span> salary_audit(emp_id, old_val, new_val, changed_at)
+  <span class="kw">VALUES</span>(OLD.id, OLD.salary, NEW.salary, <span class="kw">NOW</span>());</pre>
+      </div>
+      <p class="prose">A <strong>scalar function</strong> returns one value per call (<code>UPPER</code>, <code>ROUND</code>); a <strong>table-valued function</strong> returns a result set you can join against. A <strong>cursor</strong> walks a result set one row at a time — occasionally necessary for row-by-row procedural work, but almost always slower than the set-based statement that would replace it.</p>
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div><strong>Triggers are invisible logic.</strong> They fire without appearing at the call site, which makes them hard to debug and easy to forget during a migration. Reach for them for audit trails and integrity that the schema cannot express — not for business rules.</div></div>
+    </section>
+
+    <section class="py-section" id="injection">
+      <div class="sec-header"><span class="sec-num">25</span><span class="sec-icon"><i class="ti ti-shield-lock"></i></span><h2 class="sec-title">SQL Injection</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">If user input is concatenated into a query string, the user can end your statement and start their own. It remains one of the most exploited web vulnerabilities, and the fix has been known for decades.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="cm">-- Vulnerable: input becomes part of the statement</span>
+query = <span class="st">"SELECT * FROM users WHERE email = '"</span> + input + <span class="st">"'"</span>;
+
+<span class="cm">-- input:  ' OR '1'='1</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="st">''</span> <span class="kw">OR</span> <span class="st">'1'</span>=<span class="st">'1'</span>;   <span class="cm">-- returns every row</span>
+
+<span class="cm">-- Safe: the value is sent separately from the statement</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = ?;</pre>
+      </div>
+      <p class="prose">The defence is <strong>parameterised queries</strong> (prepared statements): the SQL text is parsed once, and the value can never be read as syntax however it is spelled. Escaping input by hand is not equivalent — it is a blocklist, and blocklists lose. Add least-privilege database accounts so an application that only reads cannot <code>DROP</code>, and validate input for shape as a second layer, not the first.</p>
+      <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-circle-check"></i></span><div>An ORM parameterises for you — but only while you use its query builder. The moment you drop to raw SQL with string interpolation, the protection is gone.</div></div>
+    </section>
+
+    <section class="py-section" id="scaling-ops">
+      <div class="sec-header"><span class="sec-num">26</span><span class="sec-icon"><i class="ti ti-server-cog"></i></span><h2 class="sec-title">Partitioning, Sharding &amp; Replication</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">When one table or one machine stops being enough, these are the four moves — and the vocabulary interviewers expect you to keep straight.</p>
+      <div class="table-wrap">
+        <table class="py-table">
+          <thead><tr><th>Technique</th><th>What it splits</th><th>Across</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Partitioning</strong></td><td>One table into segments by key or range</td><td>One database</td></tr>
+            <tr><td><strong>Sharding</strong></td><td>The dataset into independent databases</td><td>Many servers</td></tr>
+            <tr><td><strong>Replication</strong></td><td>Nothing — it copies</td><td>A primary and its replicas</td></tr>
+            <tr><td><strong>Clustering</strong></td><td>Nothing — it groups servers</td><td>Nodes behind one endpoint</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose"><strong>Partitioning</strong> lets the planner skip whole segments that cannot match — <em>partition pruning</em> — so a query filtered by date reads one month rather than ten years. <strong>Sharding</strong> buys write throughput but costs you cross-shard joins and transactions. <strong>Replication</strong> gives read scale-out and a failover target, at the price of replica lag: a read straight after a write may not see it.</p>
+      <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>OLTP vs OLAP:</strong> OLTP systems serve many small, concurrent reads and writes and are normalised for integrity. OLAP systems answer few, large aggregate queries and are denormalised (star schemas, columnar storage) for scan speed. <strong>ETL</strong> is the pipeline between them — extract from the OLTP source, transform to the analytical shape, load into the warehouse. <strong>CDC</strong> streams the changes instead of re-copying, so the warehouse tracks the source continuously.</div></div>
+    </section>
+
+    <section class="py-section" id="modern-types">
+      <div class="sec-header"><span class="sec-num">27</span><span class="sec-icon"><i class="ti ti-braces"></i></span><h2 class="sec-title">JSON, Text Search &amp; Collation</h2></div>
+      <div class="section-divider"></div>
+      <p class="prose">Relational databases stopped being purely relational some time ago. Three capabilities come up often enough to know by name.</p>
+      <p class="prose"><strong>JSON columns</strong> store a document in a single field and let you query inside it. Postgres has <code>json</code> and <code>jsonb</code> (binary, indexable — use this one); MySQL has <code>JSON</code>. The older <code>XML</code> type does the same job with XPath, and survives mostly in enterprise systems.</p>
+      <div class="code-block">
+        <div class="code-hdr"><span class="code-lang">SQL</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+        <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+        <pre class="code-pre"><span class="kw">ALTER TABLE</span> events <span class="kw">ADD COLUMN</span> payload <span class="kw">JSONB</span>;
+
+<span class="cm">-- query inside the document</span>
+<span class="kw">SELECT</span> id <span class="kw">FROM</span> events <span class="kw">WHERE</span> payload-&gt;&gt;<span class="st">'type'</span> = <span class="st">'signup'</span>;
+
+<span class="cm">-- and index it, or every read is a full scan</span>
+<span class="kw">CREATE INDEX</span> idx_events_type <span class="kw">ON</span> events ((payload-&gt;&gt;<span class="st">'type'</span>));</pre>
+      </div>
+      <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>A JSON column is the right home for genuinely variable data — a webhook payload, per-tenant settings. It is the wrong home for fields you filter and join on every day: those want real columns, with real types and real constraints behind them.</div></div>
+      <p class="prose"><strong>Full-text search</strong> indexes words rather than whole strings, so it can rank by relevance and handle stemming — <code>LIKE '%term%'</code> can do neither, and cannot use a normal index at all. Postgres has <code>tsvector</code> and <code>tsquery</code>; MySQL has <code>FULLTEXT</code> indexes with <code>MATCH ... AGAINST</code>.</p>
+      <p class="prose"><strong>Collation</strong> decides how text sorts and compares: whether <code>'a'</code> equals <code>'A'</code>, where accented characters fall, which language's alphabet order applies. It is set per database, table or column, and a mismatch between two columns is a classic cause of a join that refuses to use its index.</p>
+    </section>
     <section class="py-section" id="quiz">
-      <div class="sec-header"><span class="sec-num">18</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+      <div class="sec-header"><span class="sec-num">28</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
       <p class="prose">Five questions on the parts interviewers reach for first: joins, filtering, indexes and normal forms.</p>
 
       <div class="quiz-wrap">

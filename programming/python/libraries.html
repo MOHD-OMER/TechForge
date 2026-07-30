@@ -420,8 +420,61 @@ data = {<span class="st">"name"</span>: <span class="st">"Deepak"</span>, <span 
         </div>
       </section>
 
+
+      <section class="py-section" id="sec-pickle">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">pickle — Saving Python Objects</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><code>pickle</code> serialises almost any Python object graph to bytes and restores it, keeping types that JSON cannot represent — sets, tuples, custom classes, nested references.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — pickle</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> pickle
+
+data = {<span class="st">'model'</span>: clf, <span class="st">'scores'</span>: (<span class="st">0.91</span>, <span class="st">0.88</span>), <span class="st">'tags'</span>: {<span class="st">'v2'</span>, <span class="st">'prod'</span>}}
+
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">'run.pkl'</span>, <span class="st">'wb'</span>) <span class="kw">as</span> fh:   <span class="cm"># binary mode</span>
+    pickle.<span class="fn">dump</span>(data, fh)
+
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">'run.pkl'</span>, <span class="st">'rb'</span>) <span class="kw">as</span> fh:
+    restored = pickle.<span class="fn">load</span>(fh)
+
+pickle.<span class="fn">dumps</span>(data)      <span class="cm"># to bytes instead of a file</span></pre>
+        </div>
+        <div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-octagon"></i></span><div><strong>Never unpickle data you did not create.</strong> The format can execute arbitrary code while loading, so an untrusted pickle is remote code execution, not just a parsing risk. For anything crossing a network or a trust boundary, use JSON.</div></div>
+        <p class="prose">It is also Python-specific and tied to your class definitions: rename a class or move a module and old pickles stop loading. Good for a cache or a checkpoint you control; wrong for long-term storage or for data another language has to read.</p>
+      </section>
+
+      <section class="py-section" id="sec-sqlite">
+        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon"><i class="ti ti-database"></i></span><h2 class="sec-title">sqlite3 — Talking to a Database</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Python ships with <code>sqlite3</code>, and every database driver follows the same DB-API shape: connect, get a cursor, execute, fetch, commit. Learn it once and <code>psycopg</code> for PostgreSQL or <code>mysql-connector</code> for MySQL read the same way.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — DB-API</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">import</span> sqlite3
+
+<span class="kw">with</span> sqlite3.<span class="fn">connect</span>(<span class="st">'app.db'</span>) <span class="kw">as</span> conn:   <span class="cm"># commits on clean exit</span>
+    cur = conn.<span class="fn">cursor</span>()
+
+    cur.<span class="fn">execute</span>(<span class="st">"""CREATE TABLE IF NOT EXISTS users (</span>
+<span class="st">                     id INTEGER PRIMARY KEY, email TEXT UNIQUE)"""</span>)
+
+    <span class="cm"># Parameters, never string formatting — this is the injection defence</span>
+    cur.<span class="fn">execute</span>(<span class="st">"INSERT INTO users (email) VALUES (?)"</span>, (email,))
+    cur.<span class="fn">executemany</span>(<span class="st">"INSERT INTO users (email) VALUES (?)"</span>, rows)
+
+    cur.<span class="fn">execute</span>(<span class="st">"SELECT id, email FROM users WHERE email = ?"</span>, (email,))
+    row = cur.<span class="fn">fetchone</span>()      <span class="cm"># or fetchall() / iterate the cursor</span></pre>
+        </div>
+        <div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-octagon"></i></span><div>Pass values as parameters, never with f-strings or <code>%</code>. <code>f"... WHERE email = '{email}'"</code> is a SQL injection hole; the <code>?</code> placeholder sends the value separately, so it can never be read as SQL however it is spelled.</div></div>
+        <p class="prose">Iterating the cursor streams rows rather than loading them all, which matters on a large result. For anything bigger than a script, an ORM such as SQLAlchemy gives you the same safety with models instead of tuples.</p>
+      </section>
       <section class="py-section" id="sec-numpy">
-        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-list-numbers"></i></span><h2 class="sec-title">NumPy — Numerical Computing</h2></div>
+        <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon"><i class="ti ti-list-numbers"></i></span><h2 class="sec-title">NumPy — Numerical Computing</h2></div>
         <div class="section-divider"></div>
         <div class="lib-card">
           <h3>What is NumPy?</h3>
@@ -516,7 +569,7 @@ matrix = np.array([
       </section>
 
       <section class="py-section" id="sec-pandas">
-        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon"><i class="ti ti-chart-bar"></i></span><h2 class="sec-title">Pandas — Data Analysis</h2></div>
+        <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon"><i class="ti ti-chart-bar"></i></span><h2 class="sec-title">Pandas — Data Analysis</h2></div>
         <div class="section-divider"></div>
         <div class="lib-card">
           <h3>What is Pandas?</h3>
@@ -616,7 +669,7 @@ df = pd.DataFrame(data)
       </section>
 
       <section class="py-section" id="sec-matplotlib">
-        <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon"><i class="ti ti-trending-up"></i></span><h2 class="sec-title">Matplotlib — Data Visualization</h2></div>
+        <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon"><i class="ti ti-trending-up"></i></span><h2 class="sec-title">Matplotlib — Data Visualization</h2></div>
         <div class="section-divider"></div>
         <div class="lib-card">
           <h3>What is Matplotlib?</h3>
@@ -670,7 +723,7 @@ plt.show()</pre>
       </section>
 
       <section class="py-section" id="sec-sklearn">
-        <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon"><i class="ti ti-robot"></i></span><h2 class="sec-title">Scikit-Learn — Machine Learning</h2></div>
+        <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon"><i class="ti ti-robot"></i></span><h2 class="sec-title">Scikit-Learn — Machine Learning</h2></div>
         <div class="section-divider"></div>
         <div class="lib-card">
           <h3>What is Scikit-Learn?</h3>
@@ -719,7 +772,7 @@ y_pred = model.predict(X_test)
       </section>
 
       <section class="py-section" id="sec-requests">
-        <div class="sec-header"><span class="sec-num">11</span><span class="sec-icon"><i class="ti ti-world"></i></span><h2 class="sec-title">Requests — HTTP Library & API Calls</h2></div>
+        <div class="sec-header"><span class="sec-num">13</span><span class="sec-icon"><i class="ti ti-world"></i></span><h2 class="sec-title">Requests — HTTP Library & API Calls</h2></div>
         <div class="section-divider"></div>
         <div class="lib-card">
           <h3>What is Requests?</h3>
@@ -798,7 +851,7 @@ data = response.json()
       </section>
 
       <section class="py-section" id="quiz">
-        <div class="sec-header"><span class="sec-num">12</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="sec-header"><span class="sec-num">14</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
         <div class="section-divider"></div>
         <p class="prose">Five questions across the standard library and the data stack on this page.</p>
 
