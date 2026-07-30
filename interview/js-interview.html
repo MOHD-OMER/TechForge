@@ -166,14 +166,14 @@
       <p class="iph-sub">15 JavaScript questions — closures, the event loop, <code>this</code> binding, prototypal inheritance, and async/await. The concepts frontend and full-stack interviewers probe hardest. Tagged for FAANG and startups.</p>
       <div class="iph-badges"><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Core</span><span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Async</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Advanced</span></div>
     </div>
-    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">15</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">6</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">4</span><span class="is-label">Async</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">30</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">6</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">4</span><span class="is-label">Async</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
     <div class="progress-banner anim-in">
       <div class="pb-icon"><i class="ti ti-pin"></i></div>
       <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
       <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
       <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
     </div>
-    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('async',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Async</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('async',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Async</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
 
       <!-- ══ CORE ══ -->
       <div class="section-label" id="sec-core"><i class="ti ti-brand-javascript"></i> Core JavaScript</div>
@@ -275,11 +275,59 @@ o.val;  <span class="cm">// 99</span></pre></div>
       </div>
 
       <!-- ══ ASYNC ══ -->
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">What is hoisting, and why is <code>let</code> different from <code>var</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Declarations are processed before any code runs. A <code>var</code> is created and initialised to <code>undefined</code>, so reading it early gives <code>undefined</code>. A <code>let</code> or <code>const</code> is created but left uninitialised &mdash; the temporal dead zone &mdash; and reading it early throws.</p>
+            <pre class="code-pre">console.log(a); var a = 1;    // undefined
+console.log(b); let b = 1;    // ReferenceError: Cannot access 'b' before initialization</pre>
+            <p>Function declarations are hoisted whole and callable before their line; function <em>expressions</em> assigned to a variable follow that variable’s rules.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">What is the difference between <code>null</code> and <code>undefined</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>undefined</code> is the absence the language produces: an unassigned variable, a missing parameter, a property that is not there, a function with no return. <code>null</code> is the absence a programmer writes deliberately.</p>
+            <pre class="code-pre">typeof undefined  // "undefined"
+typeof null       // "object"  — a bug kept for compatibility
+null == undefined   // true  (loose)
+null === undefined  // false (strict)</pre>
+            <p>Default parameters and <code>??</code> treat only <code>null</code> and <code>undefined</code> as missing, which is what makes them safer than <code>||</code> when <code>0</code> or <code>&quot;&quot;</code> is a legitimate value.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text">Explain shallow vs deep copy of an object, and how you make each.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Spread and <code>Object.assign</code> copy one level: nested objects are still shared references, so mutating a nested value shows up in both copies.</p>
+            <pre class="code-pre">const shallow = { ...original };
+const deep    = structuredClone(original);   // modern, handles Dates, Maps, cycles
+const crude   = JSON.parse(JSON.stringify(original)); // loses Dates, undefined, functions</pre>
+            <p><code>structuredClone</code> is the right default now. The JSON round-trip is still common but silently mangles anything that is not plain JSON.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">What does <code>Array.prototype.map</code> give you that <code>forEach</code> does not?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>map</code> returns a new array of the results, so it composes: <code>xs.map(f).filter(g)</code>. <code>forEach</code> returns <code>undefined</code> and exists only for side effects.</p>
+            <div class="callout callout-amber">Using <code>map</code> for side effects and ignoring the result allocates an array nobody reads &mdash; a reviewer reads it as a mistake. Using <code>forEach</code> to build an array by pushing is the same mistake in reverse.</div>
+            <p>Neither can be broken out of early. When you need that, use a <code>for...of</code>, or <code>some</code>/<code>find</code> which short-circuit by design.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">What is the difference between <code>slice</code> and <code>splice</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>slice(start, end)</code> returns a copy of a section and leaves the original alone. <code>splice(start, count, ...items)</code> mutates the array in place, removing and inserting, and returns what it removed.</p>
+            <pre class="code-pre">const xs = [1, 2, 3, 4];
+xs.slice(1, 3);     // [2, 3]      xs unchanged
+xs.splice(1, 2);    // [2, 3]      xs is now [1, 4]</pre>
+            <p>Same story across the array methods: <code>sort</code>, <code>reverse</code> and <code>fill</code> mutate; <code>concat</code>, <code>flat</code> and the newer <code>toSorted</code>/<code>toReversed</code> do not.</p>
+          </div>
+        </div>
       <div class="section-label" id="sec-async"><i class="ti ti-bolt"></i> Async JavaScript</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="async">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">Explain the event loop. What are microtasks vs macrotasks?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">Explain the event loop. What are microtasks vs macrotasks?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             JavaScript is single-threaded. The <strong>event loop</strong> lets it stay non-blocking: it runs all synchronous code, then <strong>drains the entire microtask queue</strong>, then runs <strong>one macrotask</strong>, and repeats.
             <ul>
@@ -297,7 +345,7 @@ o.val;  <span class="cm">// 99</span></pre></div>
         </div>
 
         <div class="qna-item" data-subtopic="async">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">What is a Promise? What are its states?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">What is a Promise? What are its states?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <strong>Promise</strong> represents a value that may not be ready yet. It is always in one of three states, and once <em>settled</em> it never changes again:
             <ul>
@@ -310,7 +358,7 @@ o.val;  <span class="cm">// 99</span></pre></div>
         </div>
 
         <div class="qna-item" data-subtopic="async">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text">What is <code>async</code>/<code>await</code> and how does it relate to Promises?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">What is <code>async</code>/<code>await</code> and how does it relate to Promises?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <code>async</code>/<code>await</code> is syntactic sugar over Promises. An <code>async</code> function always returns a Promise; <code>await</code> pauses the function until a Promise settles, without blocking the thread.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
@@ -329,7 +377,7 @@ o.val;  <span class="cm">// 99</span></pre></div>
         </div>
 
         <div class="qna-item" data-subtopic="async">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">Compare <code>Promise.all</code>, <code>allSettled</code>, <code>race</code>, and <code>any</code>.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">Compare <code>Promise.all</code>, <code>allSettled</code>, <code>race</code>, and <code>any</code>.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <table><thead><tr><th>Method</th><th>Resolves when</th><th>Rejects when</th></tr></thead>
             <tbody>
@@ -345,11 +393,71 @@ o.val;  <span class="cm">// 99</span></pre></div>
       </div>
 
       <!-- ══ ADVANCED ══ -->
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">16</span><span class="qna-text">What actually happens if you forget <code>await</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>You get the Promise itself, not its value, and the function continues immediately. If the Promise later rejects, nothing is handling it &mdash; an unhandled rejection that crashes Node or logs an error nobody attributes to the right line.</p>
+            <pre class="code-pre">const user = getUser();          // a Promise, not a user
+if (user.isAdmin) { /* undefined: always falsy */ }
+
+await Promise.all([a(), b()]);   // both start, then both awaited</pre>
+            <p>Starting the calls first and awaiting after is how you run work concurrently on purpose &mdash; awaiting each in turn serialises them for no reason.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">17</span><span class="qna-text">How do you handle errors in async code, and what does <code>try/catch</code> miss?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>try/catch</code> around an <code>await</code> catches a rejection. It does <em>not</em> catch a rejection from a Promise you never awaited, nor one thrown inside a callback that runs later, such as a <code>setTimeout</code> body.</p>
+            <pre class="code-pre">try { await risky(); } catch (e) { /* caught */ }
+
+try { risky(); } catch (e) { /* NOT caught: no await */ }
+setTimeout(() =&gt; { throw new Error(); }, 0);  // NOT caught</pre>
+            <p>For fire-and-forget work, attach <code>.catch()</code> explicitly. At the process edge, listen for <code>unhandledrejection</code> so nothing fails silently.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">18</span><span class="qna-text">What is a race condition in a single-threaded language?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>JavaScript runs one piece of code at a time, but <code>await</code> yields &mdash; anything can run between the start and end of an async function. Two overlapping calls can interleave and clobber shared state.</p>
+            <pre class="code-pre">let cache = null;
+async function get() {
+  if (!cache) cache = await fetchIt();  // two callers both see null and both fetch
+  return cache;
+}
+// fix: cache the Promise, not the value
+let inflight = null;
+function get() { return inflight ??= fetchIt(); }</pre>
+            <p>The general shape of the fix is to make the in-progress operation itself the thing you store, so the second caller joins the first instead of starting a second.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">19</span><span class="qna-text">How do you cancel an in-flight request?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Promises are not cancellable, so you cancel the operation behind them with an <code>AbortController</code>. <code>fetch</code> takes its signal and rejects with an <code>AbortError</code>.</p>
+            <pre class="code-pre">const ctrl = new AbortController();
+fetch(url, { signal: ctrl.signal })
+  .catch(e =&gt; { if (e.name !== 'AbortError') throw e; });
+ctrl.abort();     // e.g. the user typed again, or the component unmounted</pre>
+            <p>This is what stops a stale search response from overwriting a newer one, and what prevents a state update after a component has gone away.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="async">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">20</span><span class="qna-text">What is the difference between <code>setTimeout(fn, 0)</code> and <code>queueMicrotask(fn)</code>?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>queueMicrotask</code> runs in the microtask queue, which drains completely before the next macrotask &mdash; the same queue Promise callbacks use. <code>setTimeout(fn, 0)</code> schedules a macrotask, so it runs after the current microtask queue empties and after rendering has had its chance.</p>
+            <pre class="code-pre">setTimeout(() =&gt; console.log('timeout'), 0);
+Promise.resolve().then(() =&gt; console.log('promise'));
+queueMicrotask(() =&gt; console.log('micro'));
+console.log('sync');
+// sync, promise, micro, timeout</pre>
+            <div class="callout callout-amber">A microtask that queues another microtask can starve the macrotask queue entirely &mdash; the page stops rendering. Use <code>setTimeout</code> when you actually want to yield to the browser.</div>
+          </div>
+        </div>
       <div class="section-label" id="sec-advanced"><i class="ti ti-flame"></i> Advanced JavaScript</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">Explain prototypal inheritance and the prototype chain.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">21</span><span class="qna-text">Explain prototypal inheritance and the prototype chain.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             Every object has an internal link (<code>[[Prototype]]</code>) to another object. When you access a property JS can't find on the object, it walks up this <strong>prototype chain</strong> until it finds the property or reaches <code>null</code>. This is how methods are shared without copying them onto every instance.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
@@ -362,7 +470,7 @@ dog.<span class="fn">speak</span>();        <span class="cm">// found on Animal.
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">Implement <code>debounce</code>. How does it differ from throttle?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">22</span><span class="qna-text">Implement <code>debounce</code>. How does it differ from throttle?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>Debounce</strong> delays running a function until a pause in calls (e.g. search-as-you-type). <strong>Throttle</strong> runs at most once per interval regardless of call frequency (e.g. scroll handlers).
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
@@ -378,7 +486,7 @@ dog.<span class="fn">speak</span>();        <span class="cm">// found on Animal.
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">What is event delegation and why is it useful?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">23</span><span class="qna-text">What is event delegation and why is it useful?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>Event delegation</strong> attaches a single listener to a parent element and uses event bubbling to handle events from its children — including children added later. It's more memory-efficient than one listener per child.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
@@ -391,7 +499,7 @@ dog.<span class="fn">speak</span>();        <span class="cm">// found on Animal.
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">What are the nullish coalescing (<code>??</code>) and optional chaining (<code>?.</code>) operators?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">24</span><span class="qna-text">What are the nullish coalescing (<code>??</code>) and optional chaining (<code>?.</code>) operators?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <ul>
               <li><code>a ?? b</code> — returns <code>b</code> only when <code>a</code> is <code>null</code> or <code>undefined</code> (not for other falsy values like <code>0</code> or <code>""</code>, unlike <code>||</code>).</li>
@@ -405,7 +513,7 @@ user?.address?.city  <span class="cm">// undefined instead of TypeError</span></
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">What is currying? Show a simple implementation.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">25</span><span class="qna-text">What is currying? Show a simple implementation.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>Currying</strong> transforms a function of many arguments into a chain of functions each taking one argument. It enables partial application and reusable, specialised functions.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">javascript</span></div>
@@ -418,6 +526,66 @@ add5(<span class="nm">10</span>)(<span class="nm">20</span>);     <span class="c
         </div>
 
       </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">26</span><span class="qna-text">What are generators, and what are they actually used for?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>A <code>function*</code> can pause at <code>yield</code> and resume where it left off, producing values lazily. That makes infinite or expensive sequences cheap &mdash; you compute only what is consumed.</p>
+            <pre class="code-pre">function* ids() { let i = 0; while (true) yield ++i; }
+const it = ids();
+it.next().value;   // 1
+it.next().value;   // 2</pre>
+            <p>They are the machinery under async/await, and are still the clean way to write custom iterables, paginate an API lazily, or walk a tree without building the whole list.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">27</span><span class="qna-text">What is the module pattern, and how do ES modules differ from CommonJS?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>ES modules are static: <code>import</code>/<code>export</code> are analysed before execution, which is what makes tree-shaking and circular-import detection possible. CommonJS <code>require()</code> is a synchronous function call resolved at runtime, so the dependency graph is only known by running the code.</p>
+            <pre class="code-pre">// ESM — hoisted, live bindings, always strict mode
+import { helper } from './helper.js';
+export const value = 1;
+
+// CJS — runtime, copies the value at require time
+const { helper } = require('./helper');
+module.exports = { value: 1 };</pre>
+            <p>ESM bindings are live: reassign an export and importers see the new value. A CommonJS destructure captures a snapshot.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">28</span><span class="qna-text">What is memoisation, and when does it hurt?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Caching a pure function’s result by its arguments, so a repeat call is a lookup. It pays when the function is expensive and called repeatedly with the same inputs.</p>
+            <pre class="code-pre">const memo = (fn, cache = new Map()) =&gt; (...args) =&gt; {
+  const k = JSON.stringify(args);
+  if (!cache.has(k)) cache.set(k, fn(...args));
+  return cache.get(k);
+};</pre>
+            <div class="callout callout-red">It hurts when the function is not pure &mdash; you cache a stale answer &mdash; or when the key space is unbounded, which turns the cache into a memory leak. A plain <code>Map</code> keyed on user input grows forever; bound it, or use a <code>WeakMap</code> keyed on objects so entries can be collected.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">29</span><span class="qna-text">Explain <code>call</code>, <code>apply</code> and <code>bind</code>.</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>All three set <code>this</code>. <code>call</code> invokes immediately with arguments listed; <code>apply</code> invokes immediately with arguments as an array; <code>bind</code> invokes nothing and returns a new function with <code>this</code> fixed.</p>
+            <pre class="code-pre">greet.call(user, 'hi');
+greet.apply(user, ['hi']);
+const bound = greet.bind(user);   // call later</pre>
+            <p><code>bind</code> is what makes a method safe to pass as a callback in code that predates arrow functions. Note an arrow function ignores all three &mdash; its <code>this</code> is captured from the enclosing scope and cannot be reassigned.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">30</span><span class="qna-text">What is the difference between <code>Map</code> and a plain object, and between <code>Set</code> and an array?</span><span class="qna-tag tag-js">JS</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>Map</code> takes any value as a key (including objects), keeps insertion order, reports <code>size</code> directly, and has no prototype keys to collide with. An object coerces every key to a string and inherits from <code>Object.prototype</code>.</p>
+            <pre class="code-pre">const m = new Map([[objKey, 1]]);
+m.get(objKey);        // 1 — an object as a real key
+
+const s = new Set([1, 1, 2]);
+s.has(1);             // O(1); array.includes is O(n)</pre>
+            <p>Reach for <code>Map</code> when keys are dynamic or not strings, and <code>Set</code> for membership tests and de-duplication. A plain object is still right for a fixed, known shape &mdash; and it is the only one of the four that serialises to JSON directly.</p>
+          </div>
+        </div>
 
       <div class="no-results" id="no-results">
         <div class="nr-text">No questions match your search.</div>
@@ -439,7 +607,7 @@ add5(<span class="nm">10</span>)(<span class="nm">20</span>);     <span class="c
   <script src="../assets/js/utils.js?v=12"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-const TRACK='js',TOTAL=15;
+const TRACK='js',TOTAL=30;
 function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
 function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
 function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}

@@ -166,14 +166,14 @@
       <p class="iph-sub">15 C++ questions — references vs pointers, RAII, smart pointers, the rule of five, virtual functions and the vtable, and move semantics. The memory-model depth systems and quant interviewers dig into. Tagged for FAANG and startups.</p>
       <div class="iph-badges"><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Core</span><span class="iph-badge" style="color:var(--red);border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.07);">Memory</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Advanced</span></div>
     </div>
-    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">15</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">5</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--red)"><span class="is-val" style="color:var(--red)">5</span><span class="is-label">Memory</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">30</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">5</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--red)"><span class="is-val" style="color:var(--red)">5</span><span class="is-label">Memory</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
     <div class="progress-banner anim-in">
       <div class="pb-icon"><i class="ti ti-pin"></i></div>
       <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
       <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
       <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
     </div>
-    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('memory',this)"><span class="ftab-dot" style="color:var(--red)"></span>Memory</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('memory',this)"><span class="ftab-dot" style="color:var(--red)"></span>Memory</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
 
       <!-- ══ CORE ══ -->
       <div class="section-label" id="sec-core"><i class="ti ti-brand-cpp"></i> Core C++</div>
@@ -242,11 +242,65 @@
       </div>
 
       <!-- ══ MEMORY ══ -->
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">06</span><span class="qna-text">Overloading, overriding and hiding &mdash; three different things. Which is which?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><strong>Overloading</strong> is two functions in the same scope with the same name and different parameter lists; the compiler picks one at the call site. <strong>Overriding</strong> replaces a <code>virtual</code> base function in a derived class with the same signature, resolved through the vtable at runtime. <strong>Hiding</strong> is the accident: a derived member with the same name but a different signature hides <em>every</em> base overload of that name.</p>
+            <div class="callout callout-amber"><strong>The trap:</strong> hiding looks like overriding until a call fails to compile. <code>using Base::f;</code> in the derived class brings the base overloads back into scope, and <code>override</code> makes the compiler reject a mismatched signature outright.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">What does <code>explicit</code> do on a constructor?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>It blocks implicit conversion. A single-argument constructor without <code>explicit</code> doubles as a conversion operator, so the compiler will silently build your type to make a call work.</p>
+            <pre class="code-pre">struct Buffer {
+  Buffer(int size);          // implicit
+  explicit Buffer(int size); // opt out
+};
+
+void send(Buffer b);
+send(42);   // compiles with the first; rejected with the second</pre>
+            <p>Mark single-argument constructors <code>explicit</code> by default. Leave it off only when the conversion is genuinely something you want at every call site, such as <code>std::string</code> from a string literal.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">Lvalue vs rvalue &mdash; how do you tell them apart?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>An <strong>lvalue</strong> has an identity you can take the address of: a named variable, a dereferenced pointer, a function returning <code>T&amp;</code>. An <strong>rvalue</strong> is a temporary with no name: a literal, an arithmetic result, a function returning by value.</p>
+            <pre class="code-pre">int  x = 5;   // x is an lvalue, 5 is an rvalue
+int&amp; a = x;   // fine: lvalue reference binds to an lvalue
+int&amp; b = 5;   // error
+int&amp;&amp; c = 5;  // fine: rvalue reference binds to a temporary
+const int&amp; d = 5; // also fine: const lvalue ref extends the temporary</pre>
+            <p>The distinction is what move semantics is built on: if the compiler can prove an argument is an rvalue, its contents can be stolen rather than copied.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text"><code>static</code> has three different meanings in C++. Name them.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><strong>At file scope</strong> it gives a variable or function internal linkage, so it is private to that translation unit. <strong>Inside a function</strong> it makes a local persist across calls, initialised once on first use and destroyed at exit. <strong>Inside a class</strong> it makes a member belong to the class rather than any object, shared by every instance and callable without one.</p>
+            <div class="callout callout-blue">Function-local statics have been thread-safe to initialise since C++11 &mdash; the compiler emits a guard. That is what makes the Meyers singleton safe without a mutex.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">Why do headers need include guards, and what does <code>#pragma once</code> change?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>#include</code> is textual: without a guard, a header pulled in twice pastes its declarations twice, and redefinition is an error. A guard makes the second inclusion expand to nothing.</p>
+            <pre class="code-pre">#ifndef WIDGET_H
+#define WIDGET_H
+// ... declarations ...
+#endif
+
+// or, one line:
+#pragma once</pre>
+            <p><code>#pragma once</code> does the same job keyed on the file identity rather than a macro name, so it cannot collide and cannot be misspelled. It is not in the standard, but every mainstream compiler supports it.</p>
+          </div>
+        </div>
       <div class="section-label" id="sec-memory"><i class="ti ti-cpu"></i> Memory &amp; Resources</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="memory">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">06</span><span class="qna-text">Stack vs heap — how do they differ?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">Stack vs heap — how do they differ?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <table><thead><tr><th></th><th>Stack</th><th>Heap</th></tr></thead>
             <tbody>
@@ -261,7 +315,7 @@
         </div>
 
         <div class="qna-item" data-subtopic="memory">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">What is RAII?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">What is RAII?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>RAII</strong> (Resource Acquisition Is Initialization) ties a resource's lifetime to an object's scope: acquire in the constructor, release in the destructor. When the object goes out of scope — even via an exception — the destructor runs and cleans up automatically.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">cpp</span></div>
@@ -274,7 +328,7 @@
         </div>
 
         <div class="qna-item" data-subtopic="memory">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">Compare <code>unique_ptr</code>, <code>shared_ptr</code>, and <code>weak_ptr</code>.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">Compare <code>unique_ptr</code>, <code>shared_ptr</code>, and <code>weak_ptr</code>.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <ul>
               <li><code>unique_ptr</code> — sole ownership, no overhead, move-only. The default choice.</li>
@@ -290,7 +344,7 @@ std::weak_ptr&lt;<span class="cl">Widget</span>&gt; w = s;            <span clas
         </div>
 
         <div class="qna-item" data-subtopic="memory">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text">What is a dangling pointer, and how do you avoid one?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">What is a dangling pointer, and how do you avoid one?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <strong>dangling pointer</strong> points at memory that has been freed or gone out of scope. Dereferencing it is undefined behavior — often a silent corruption rather than a clean crash.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">cpp</span></div>
@@ -302,7 +356,7 @@ std::weak_ptr&lt;<span class="cl">Widget</span>&gt; w = s;            <span clas
         </div>
 
         <div class="qna-item" data-subtopic="memory">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text"><code>new</code>/<code>delete</code> vs <code>malloc</code>/<code>free</code>?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text"><code>new</code>/<code>delete</code> vs <code>malloc</code>/<code>free</code>?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <table><thead><tr><th></th><th>new / delete</th><th>malloc / free</th></tr></thead>
             <tbody>
@@ -318,11 +372,60 @@ std::weak_ptr&lt;<span class="cl">Widget</span>&gt; w = s;            <span clas
       </div>
 
       <!-- ══ ADVANCED ══ -->
+        <div class="qna-item" data-subtopic="memory">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">16</span><span class="qna-text">Why does deleting through a base pointer need a virtual destructor?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Without one, <code>delete</code> on a <code>Base*</code> runs only <code>~Base</code>. The derived part of the object is never destroyed, so anything it owns leaks &mdash; and the standard calls this undefined behaviour, not merely a leak.</p>
+            <pre class="code-pre">struct Base { ~Base(); };                  // not virtual
+struct Derived : Base { std::vector&lt;int&gt; data; };
+
+Base* p = new Derived;
+delete p;   // ~Derived never runs; data leaks</pre>
+            <div class="callout callout-green"><strong>Rule:</strong> if a class has any virtual function, give it a virtual destructor. If it is not meant to be deleted polymorphically, make the destructor protected and non-virtual to say so.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="memory">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">17</span><span class="qna-text">What is a <code>shared_ptr</code> cycle, and how does <code>weak_ptr</code> break it?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Two objects holding <code>shared_ptr</code>s to each other keep each other’s reference count at one forever. Neither is ever destroyed, and reference counting cannot detect it &mdash; there is no garbage collector to notice the island.</p>
+            <pre class="code-pre">struct Node {
+  std::shared_ptr&lt;Node&gt; next;   // parent -&gt; child: ownership
+  std::weak_ptr&lt;Node&gt;   prev;   // child -&gt; parent: observation
+};</pre>
+            <p>Make one direction non-owning. A <code>weak_ptr</code> does not raise the count; you call <code>lock()</code> to get a <code>shared_ptr</code> when you need the object, and get an empty one if it is already gone. Parent-child and observer links are the usual places this shows up.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="memory">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">18</span><span class="qna-text">You suspect a leak. How do you actually find it?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Reproduce under a tool rather than reading code. <strong>AddressSanitizer</strong> (<code>-fsanitize=address</code>) is built into Clang and GCC and reports leaks with allocation stacks at exit. <strong>Valgrind</strong>’s memcheck needs no rebuild but runs far slower. On Windows, CRT debug heap or Application Verifier.</p>
+            <div class="callout callout-blue">A leak that grows with load is the one that matters. A single allocation held for the process lifetime is not a bug worth chasing &mdash; measure whether the number rises across repeated cycles of the same operation.</div>
+            <p>The structural fix is almost always ownership: a raw <code>new</code> with no owner becomes a <code>unique_ptr</code>, and the leak class disappears rather than getting patched.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="memory">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">19</span><span class="qna-text">What does <code>std::move</code> actually do?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Nothing at runtime. It is a cast: it turns its argument into an rvalue reference so that overload resolution picks the move constructor or move assignment instead of the copying one. The moving is done by that constructor, not by <code>move</code> itself.</p>
+            <pre class="code-pre">std::string a = "hello";
+std::string b = std::move(a);   // b steals a's buffer
+// a is valid but unspecified: safe to assign or destroy, not to read</pre>
+            <div class="callout callout-amber"><strong>Careless <code>move</code> costs nothing and gains nothing:</strong> moving a <code>const</code> object silently copies, because a move constructor cannot take a <code>const&amp;&amp;</code>. Moving a local you then return also defeats copy elision.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="memory">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">20</span><span class="qna-text">Why is <code>vector::push_back</code> amortised O(1), and what does it invalidate?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>A vector grows geometrically &mdash; typically doubling. Copying <em>n</em> elements happens only on the reallocations, and the doubling makes the total copying across <em>n</em> pushes O(n), so the cost per push averages out to a constant even though individual pushes can be O(n).</p>
+            <div class="callout callout-red"><strong>Reallocation invalidates everything:</strong> all iterators, pointers and references into the vector. A loop holding an iterator while pushing is a use-after-free. <code>reserve()</code> up front avoids both the copies and the invalidation.</div>
+            <p><code>push_back</code> that does not reallocate invalidates only the end iterator. Erasing invalidates from the erase point onward.</p>
+          </div>
+        </div>
       <div class="section-label" id="sec-advanced"><i class="ti ti-flame"></i> Advanced C++</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">Explain the rule of three / five / zero.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">21</span><span class="qna-text">Explain the rule of three / five / zero.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <ul>
               <li><strong>Rule of Three:</strong> if you define any of destructor, copy constructor, or copy assignment, you probably need all three (they manage a resource).</li>
@@ -334,7 +437,7 @@ std::weak_ptr&lt;<span class="cl">Widget</span>&gt; w = s;            <span clas
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">How do virtual functions and the vtable work?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">22</span><span class="qna-text">How do virtual functions and the vtable work?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A class with <code>virtual</code> functions gets a hidden <strong>vtable</strong> (array of function pointers). Each object stores a <strong>vptr</strong> to its class's vtable. A virtual call looks up the function through the vptr at runtime, so the derived override runs even through a base pointer.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">cpp</span></div>
@@ -345,7 +448,7 @@ p-&gt;<span class="fn">speak</span>();   <span class="cm">// Derived::speak via 
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">What are move semantics and rvalue references?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">23</span><span class="qna-text">What are move semantics and rvalue references?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>Move semantics</strong> (C++11) let you transfer resources out of a temporary instead of copying them. An <strong>rvalue reference</strong> (<code>T&amp;&amp;</code>) binds to temporaries, and <code>std::move</code> casts an lvalue to one so its resources can be stolen.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">cpp</span></div>
@@ -357,7 +460,7 @@ std::vector&lt;<span class="kw">int</span>&gt; b = std::<span class="fn">move</s
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">Shallow copy vs deep copy?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">24</span><span class="qna-text">Shallow copy vs deep copy?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <strong>shallow copy</strong> copies pointer members as-is, so two objects share (and both try to free) the same memory — a double-free crash. A <strong>deep copy</strong> duplicates the pointed-to data so each object owns its own.
             <div class="callout callout-amber"><strong>Why it matters:</strong> the compiler-generated copy constructor does a member-wise (shallow) copy. If your class owns a raw pointer, you must write a deep-copying copy constructor and assignment (the rule of three) — or use a smart pointer / container and get the rule of zero.</div>
@@ -365,7 +468,7 @@ std::vector&lt;<span class="kw">int</span>&gt; b = std::<span class="fn">move</s
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">What are templates? How do they differ from Java generics?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">25</span><span class="qna-text">What are templates? How do they differ from Java generics?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <strong>Templates</strong> generate a separate, specialized version of a function or class for each type used, at compile time, with zero runtime overhead.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">cpp</span></div>
@@ -378,6 +481,58 @@ T <span class="fn">maximum</span>(T a, T b) { <span class="kw">return</span> a &
         </div>
 
       </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">26</span><span class="qna-text"><code>const</code> vs <code>constexpr</code> &mdash; what is the real difference?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>const</code> means "this will not be modified after initialisation" &mdash; the value may still be computed at runtime. <code>constexpr</code> means "this can be computed at compile time", which is a stronger claim and lets the value be used where the language demands a constant, such as an array size or a template argument.</p>
+            <pre class="code-pre">const     int a = read();  // fine: runtime value, just immutable
+constexpr int b = read();  // error: not a constant expression
+constexpr int c = 4 * 8;   // fine
+std::array&lt;int, c&gt; arr;    // c usable as a template argument; a is not</pre>
+            <p>On a function, <code>constexpr</code> says it <em>may</em> run at compile time when its arguments allow; it still works as a normal function otherwise.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">27</span><span class="qna-text">What is copy elision, and why should you not <code>return std::move(x)</code>?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Copy elision lets the compiler construct a returned object directly in the caller’s storage, skipping the copy or move entirely. Since C++17 it is guaranteed for returning a temporary, and named return value optimisation covers most named locals too.</p>
+            <pre class="code-pre">std::string make() {
+  std::string s = build();
+  return s;             // elided: constructed in place
+  // return std::move(s); // forces a move, defeating elision
+}</pre>
+            <div class="callout callout-amber">Wrapping the return in <code>std::move</code> turns the expression into an rvalue reference, which is no longer eligible for elision. You pay for a move you would otherwise not have made.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">28</span><span class="qna-text">Name three things that are undefined behaviour in C++, and why UB is worse than a crash.</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Reading an uninitialised variable; indexing past the end of an array; dereferencing a null or dangling pointer; signed integer overflow; data race on a non-atomic; deleting through a base pointer with a non-virtual destructor.</p>
+            <p>The compiler is allowed to assume UB never happens, and optimises on that assumption. A null check <em>after</em> a dereference can be deleted as dead code, because the dereference proved the pointer non-null. That is why UB shows up as a wrong answer in an unrelated function rather than a crash at the fault.</p>
+            <div class="callout callout-green">Build with <code>-fsanitize=address,undefined</code> in CI. Most of this class of bug is caught the first time the line executes.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">29</span><span class="qna-text">How do you branch on a type at compile time?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>if constexpr</code> (C++17) discards the untaken branch before it is instantiated, so a branch that would not compile for the current type is simply not there.</p>
+            <pre class="code-pre">template &lt;typename T&gt;
+void print(const T&amp; v) {
+  if constexpr (std::is_pointer_v&lt;T&gt;) std::cout &lt;&lt; *v;  // only for pointers
+  else                                std::cout &lt;&lt;  v;
+}</pre>
+            <p>Before C++17 the same job needed tag dispatch or SFINAE &mdash; writing an overload whose signature is only valid for certain types via <code>std::enable_if</code>, so invalid candidates drop out of overload resolution instead of erroring. C++20 concepts express the same constraint readably.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">30</span><span class="qna-text">Lambda captures: by value or by reference, and what is the trap?</span><span class="qna-tag tag-cpp">C++</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>[x]</code> copies, <code>[&amp;x]</code> binds a reference, <code>[=]</code> and <code>[&amp;]</code> do either for everything used. <code>[x = std::move(v)]</code> initialises a capture directly (C++14), which is how you move something into a lambda.</p>
+            <div class="callout callout-red"><strong>The trap:</strong> a reference capture outlives the scope it referenced. A lambda that captures a local by reference and is then stored in a member, queued on a thread pool, or returned, is holding a dangling reference the moment the function returns.</div>
+            <p>If the lambda escapes the enclosing scope in any way, capture by value &mdash; or capture a <code>shared_ptr</code> so the referent stays alive as long as the lambda does.</p>
+          </div>
+        </div>
 
       <div class="no-results" id="no-results">
         <div class="nr-text">No questions match your search.</div>
@@ -399,7 +554,7 @@ T <span class="fn">maximum</span>(T a, T b) { <span class="kw">return</span> a &
   <script src="../assets/js/utils.js?v=12"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-const TRACK='cpp',TOTAL=15;
+const TRACK='cpp',TOTAL=30;
 function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
 function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
 function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}

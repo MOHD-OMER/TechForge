@@ -166,14 +166,14 @@
       <p class="iph-sub">15 Java questions — <code>==</code> vs <code>.equals()</code>, the String pool, checked exceptions, the Integer cache, HashMap internals, and generics type erasure. The concepts backend and enterprise interviewers ask every time. Tagged for FAANG and startups.</p>
       <div class="iph-badges"><span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Core</span><span class="iph-badge" style="color:var(--orange);border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.07);">OOP</span><span class="iph-badge" style="color:var(--blue);border-color:rgba(77,142,247,.25);background:rgba(77,142,247,.07);">Advanced</span></div>
     </div>
-    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">15</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">6</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--orange)"><span class="is-val" style="color:var(--orange)">4</span><span class="is-label">OOP</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
+    <div class="int-stats anim-in"><div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">30</span><span class="is-label">Total</span></div><div class="is-box" style="--is-c:var(--teal)"><span class="is-val" style="color:var(--teal)">6</span><span class="is-label">Core</span></div><div class="is-box" style="--is-c:var(--orange)"><span class="is-val" style="color:var(--orange)">4</span><span class="is-label">OOP</span></div><div class="is-box" style="--is-c:var(--blue)"><span class="is-val" style="color:var(--blue)">5</span><span class="is-label">Advanced</span></div></div>
     <div class="progress-banner anim-in">
       <div class="pb-icon"><i class="ti ti-pin"></i></div>
       <div class="pb-text"><strong>Progress saved locally.</strong> Check off questions — saves to your browser. No account needed.</div>
       <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
       <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
     </div>
-    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('oop',this)"><span class="ftab-dot" style="color:var(--orange)"></span>OOP</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('core',this)"><span class="ftab-dot" style="color:var(--teal)"></span>Core</button><button class="ftab" onclick="filterQna('oop',this)"><span class="ftab-dot" style="color:var(--orange)"></span>OOP</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Advanced</button></div>
 
       <!-- ══ CORE ══ -->
       <div class="section-label" id="sec-core"><i class="ti ti-coffee"></i> Core Java</div>
@@ -262,11 +262,53 @@ c.<span class="fn">equals</span>(d);  <span class="cm">// true — always use eq
       </div>
 
       <!-- ══ OOP ══ -->
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">What does the JVM actually do, and how do JDK, JRE and JVM relate?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>javac</code> compiles source to platform-independent bytecode in a <code>.class</code> file. The <strong>JVM</strong> loads that bytecode, verifies it, and executes it &mdash; interpreting at first, then JIT-compiling hot methods to native code.</p>
+            <p><strong>JVM</strong> runs bytecode. <strong>JRE</strong> = JVM plus the standard library, enough to run an application. <strong>JDK</strong> = JRE plus the tools to build one (<code>javac</code>, <code>jar</code>, <code>javadoc</code>).</p>
+            <div class="callout callout-blue">"Write once, run anywhere" is the bytecode, not the source: the same <code>.class</code> file runs on any JVM, and the JIT specialises it for the machine it finds itself on.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">Why can a Java method never swap its caller’s two variables?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Java is pass-by-value everywhere. For an object, the value copied is the reference &mdash; so the method can mutate what the reference points at, but reassigning the parameter only rebinds the local copy.</p>
+            <pre class="code-pre">void swap(int[] a, int[] b) { int[] t = a; a = b; b = t; }   // no effect on the caller
+void fill(int[] a)            { a[0] = 42; }                  // caller sees this</pre>
+            <p>That is why the standard idiom is to return a new value, or to mutate an object the caller already holds.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text"><code>String</code> concatenation in a loop &mdash; why is it a problem, and what do you use instead?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>String</code> is immutable, so <code>s += x</code> allocates a new string and copies the whole contents each time. In a loop over <em>n</em> items that is O(n&sup2;) copying.</p>
+            <pre class="code-pre">StringBuilder sb = new StringBuilder();
+for (String part : parts) sb.append(part);
+String out = sb.toString();</pre>
+            <p><code>StringBuilder</code> keeps a growable char buffer and appends in amortised O(1). <code>StringBuffer</code> is the synchronised version &mdash; only worth the lock if the builder is genuinely shared across threads. Outside a loop, plain <code>+</code> is fine: the compiler rewrites it to a builder for you.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">What is the contract between <code>equals</code> and <code>hashCode</code>?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>If two objects are equal, they must return the same hash code. The converse is not required &mdash; unequal objects may collide.</p>
+            <div class="callout callout-red">Override one without the other and hash-based collections break silently: an object put into a <code>HashMap</code> becomes unfindable, because lookup goes to a different bucket than insertion did.</div>
+            <p>Keep the fields used in <code>equals</code> and <code>hashCode</code> identical, and keep them effectively immutable &mdash; mutating a key after insertion strands it in the wrong bucket.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="core">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">When would you choose <code>HashMap</code>, <code>LinkedHashMap</code> or <code>TreeMap</code>?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><strong>HashMap</strong>: O(1) average lookup, no order guarantee &mdash; the default. <strong>LinkedHashMap</strong>: same cost plus a linked list keeping insertion order (or access order, which makes an LRU cache almost free). <strong>TreeMap</strong>: a red-black tree, O(log n), keys always sorted and range queries available.</p>
+            <div class="callout callout-blue">Pick on the guarantee you need, not on speed. If you never iterate, HashMap. If iteration order must be predictable, LinkedHashMap. If you need "all keys between A and B", TreeMap.</div>
+          </div>
+        </div>
       <div class="section-label" id="sec-oop"><i class="ti ti-wall"></i> OOP in Java</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="oop">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">07</span><span class="qna-text">Interface vs abstract class — when do you use each?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text">Interface vs abstract class — when do you use each?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <table><thead><tr><th></th><th>Interface</th><th>Abstract Class</th></tr></thead>
             <tbody>
@@ -280,7 +322,7 @@ c.<span class="fn">equals</span>(d);  <span class="cm">// true — always use eq
         </div>
 
         <div class="qna-item" data-subtopic="oop">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">08</span><span class="qna-text">Method overloading vs overriding?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">Method overloading vs overriding?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <ul>
               <li><strong>Overloading</strong> — same method name, different parameter lists, in the same class. Resolved at <em>compile time</em> (static polymorphism).</li>
@@ -291,7 +333,7 @@ c.<span class="fn">equals</span>(d);  <span class="cm">// true — always use eq
         </div>
 
         <div class="qna-item" data-subtopic="oop">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">09</span><span class="qna-text">What are records, and how do they differ from a class?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">What are records, and how do they differ from a class?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <strong>record</strong> (Java 16+) is an immutable data carrier. One line generates the constructor, accessors, <code>equals()</code>, <code>hashCode()</code>, and <code>toString()</code>.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">java</span></div>
@@ -305,7 +347,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
         <div class="qna-item" data-subtopic="oop">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">10</span><span class="qna-text">Explain the four access modifiers.</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">Explain the four access modifiers.</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <table><thead><tr><th>Modifier</th><th>Class</th><th>Package</th><th>Subclass</th><th>World</th></tr></thead>
             <tbody>
@@ -321,11 +363,59 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
       </div>
 
       <!-- ══ ADVANCED ══ -->
+        <div class="qna-item" data-subtopic="oop">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">16</span><span class="qna-text">What is composition over inheritance, and when does inheritance still win?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Inheritance couples a subclass to its parent’s implementation: a change upstream can break every descendant, and you get the whole interface whether it fits or not. Composition holds a collaborator as a field and delegates, so you expose only what you mean to.</p>
+            <p>Inheritance earns its place when the relationship is genuinely <em>is-a</em> and the base is designed for extension &mdash; documented hooks, or an abstract class that exists precisely to be subclassed.</p>
+            <div class="callout callout-green">The test: would a reader be surprised if the subclass were used wherever the base is expected? If yes, that is composition wearing an inheritance costume.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="oop">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">17</span><span class="qna-text">What does the <code>final</code> keyword mean on a class, a method and a field?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>On a <strong>class</strong>, it cannot be subclassed. On a <strong>method</strong>, it cannot be overridden. On a <strong>field</strong>, it must be assigned exactly once and cannot be reassigned after.</p>
+            <div class="callout callout-amber"><code>final</code> on a reference field freezes the reference, not the object. <code>final List&lt;String&gt; xs</code> can still have items added &mdash; use <code>List.copyOf</code> for an unmodifiable one.</div>
+            <p>A <code>final</code> field also carries a memory-model guarantee: once a constructor completes, other threads see the fully-initialised value without extra synchronisation.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="oop">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">18</span><span class="qna-text">Why is the singleton pattern criticised, and what is the safest way to write one in Java?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>It is global mutable state: it hides dependencies from a class’s signature, makes tests order-dependent, and is awkward to substitute. Prefer passing the instance in.</p>
+            <pre class="code-pre">public enum Config {
+  INSTANCE;
+  private final Properties props = load();
+  public String get(String k) { return props.getProperty(k); }
+}</pre>
+            <p>If you do need one, an <code>enum</code> is the safest form &mdash; the JVM guarantees a single instance, initialisation is thread-safe, and it is immune to the serialisation and reflection tricks that defeat a lazily-built holder.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="oop">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">19</span><span class="qna-text">What is the Liskov Substitution Principle, in terms of a concrete bug?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>A subclass must be usable anywhere its base is expected without changing correctness. Violations look like a subclass that strengthens what it demands or weakens what it promises.</p>
+            <pre class="code-pre">class Rectangle { void setWidth(int w); void setHeight(int h); }
+class Square extends Rectangle { /* setWidth also sets height */ }
+
+// caller: r.setWidth(5); r.setHeight(4); assert r.area() == 20;
+// holds for Rectangle, fails for Square</pre>
+            <p>The fix is not a cleverer <code>Square</code>: it is recognising that an immutable <code>Shape</code> with an <code>area()</code> is the right model, and mutable-rectangle is not a supertype of square.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="oop">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">20</span><span class="qna-text">What problem do default methods on interfaces solve, and what do they cost?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>They let an interface gain a method without breaking every existing implementer &mdash; which is how <code>Collection.stream()</code> was added to interfaces implemented across the whole ecosystem.</p>
+            <div class="callout callout-amber">The cost is a diamond: implement two interfaces that both default the same signature and the code will not compile until you override it explicitly and pick, with <code>Iface.super.method()</code>.</div>
+            <p>They are for evolution, not for shipping behaviour. State still cannot live on an interface, so anything needing fields belongs in an abstract class.</p>
+          </div>
+        </div>
       <div class="section-label" id="sec-advanced"><i class="ti ti-flame"></i> Advanced Java</div>
       <div class="qna-list anim-in">
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">11</span><span class="qna-text">How does a <code>HashMap</code> work internally?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">21</span><span class="qna-text">How does a <code>HashMap</code> work internally?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <code>HashMap</code> is an array of <strong>buckets</strong>. A key's <code>hashCode()</code> (further spread by an internal hash) selects a bucket index. Collisions in a bucket form a <strong>linked list</strong>, which converts to a <strong>balanced tree</strong> (Java 8+) once it exceeds 8 entries, improving worst-case lookup from O(n) to O(log n).
             <ul>
@@ -337,7 +427,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">12</span><span class="qna-text"><code>Comparable</code> vs <code>Comparator</code>?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">22</span><span class="qna-text"><code>Comparable</code> vs <code>Comparator</code>?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             <ul>
               <li><code>Comparable&lt;T&gt;</code> — the class's <em>natural ordering</em>, via <code>compareTo()</code>. One ordering per class.</li>
@@ -350,7 +440,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">13</span><span class="qna-text">What is generics type erasure?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">23</span><span class="qna-text">What is generics type erasure?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             Java generics exist only at <strong>compile time</strong>. The compiler checks types, then <strong>erases</strong> them — <code>List&lt;String&gt;</code> and <code>List&lt;Integer&gt;</code> are both just <code>List</code> at runtime. This preserved backward compatibility with pre-generics code.
             <br><br><strong>Consequences:</strong>
@@ -364,7 +454,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">14</span><span class="qna-text">How does Java garbage collection work?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">24</span><span class="qna-text">How does Java garbage collection work?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             The JVM automatically reclaims objects no longer <strong>reachable</strong> from GC roots (stack references, statics). The heap is generational:
             <ul>
@@ -376,7 +466,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
         <div class="qna-item" data-subtopic="advanced">
-          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">15</span><span class="qna-text">What is a fail-fast iterator?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">25</span><span class="qna-text">What is a fail-fast iterator?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
           <div class="qna-a">
             A <strong>fail-fast</strong> iterator throws <code>ConcurrentModificationException</code> if the collection is structurally modified during iteration (except through the iterator's own <code>remove()</code>). It detects modification via an internal <code>modCount</code>.
             <div class="ans-code"><div class="ans-code-hdr"><span class="ans-code-lang">java</span></div>
@@ -389,6 +479,56 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
         </div>
 
       </div>
+
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">26</span><span class="qna-text">Why is <code>synchronized</code> not enough, and what does <code>volatile</code> actually guarantee?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><code>volatile</code> guarantees <em>visibility</em> and ordering: a write is published to other threads and cannot be reordered across the access. It does not give <em>atomicity</em> &mdash; <code>count++</code> on a volatile is still read-modify-write and still races.</p>
+            <pre class="code-pre">volatile boolean running = true;   // correct: a flag one thread sets, another reads
+volatile int  count   = 0;
+count++;                           // wrong: use AtomicInteger</pre>
+            <p><code>synchronized</code> gives both atomicity and visibility, at the cost of blocking. For a single counter, <code>AtomicInteger</code> is a compare-and-swap loop with neither lock nor race.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">27</span><span class="qna-text">What does a Java <code>Stream</code> give you that a loop does not &mdash; and when is a loop better?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>Streams are lazy and composable: intermediate operations build a pipeline that runs once on terminal invocation, so <code>filter().map().findFirst()</code> touches only the elements it needs. They also express intent &mdash; the reader sees "filter then map", not index bookkeeping.</p>
+            <div class="callout callout-amber">A loop is better when you need to break out on a condition with side effects, when the body mutates several things at once, or when the stream version needs a comment to explain it. <code>parallelStream()</code> in particular is a trap: it costs a fork-join dispatch that only pays off on large, CPU-bound, side-effect-free work.</div>
+            <p>Streams are single-use: consuming one twice throws <code>IllegalStateException</code>.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">28</span><span class="qna-text">What is <code>Optional</code> for, and how is it misused?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>It is a return type that makes "there might be no value" part of the signature, so the caller cannot forget the empty case the way a bare <code>null</code> lets them.</p>
+            <pre class="code-pre">Optional&lt;User&gt; findByEmail(String email);         // good: absence is expected
+user.getName().orElse("anonymous");                // good
+
+void setUser(Optional&lt;User&gt; u);                    // misuse: parameters
+private Optional&lt;String&gt; name;                     // misuse: fields</pre>
+            <p>Do not use it for parameters or fields &mdash; it is not serialisable, adds an allocation, and a null <code>Optional</code> is the worst of both worlds. And never call <code>get()</code> without <code>isPresent()</code>; that is just a null pointer with extra steps.</p>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">29</span><span class="qna-text">Explain the JVM memory areas and where <code>OutOfMemoryError</code> comes from.</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p><strong>Heap</strong> holds objects and is what the garbage collector manages. <strong>Stack</strong> is per-thread, holding frames, locals and return addresses. <strong>Metaspace</strong> holds class metadata (native memory since Java 8, replacing PermGen).</p>
+            <p><code>OutOfMemoryError: Java heap space</code> means live objects exceed the heap &mdash; usually a leak such as an ever-growing static collection, not a genuinely large working set. <code>StackOverflowError</code> is unbounded recursion. <code>Metaspace</code> exhaustion usually means classloader leaks, which is a classic in redeployed application servers.</p>
+            <div class="callout callout-blue">Take a heap dump on OOM (<code>-XX:+HeapDumpOnOutOfMemoryError</code>) and look at dominators. The leak is nearly always one collection that nothing ever removes from.</div>
+          </div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)"><span class="qna-num">30</span><span class="qna-text">What is the executor framework, and why not just create threads?</span><span class="qna-tag tag-java">Java</span><span class="qna-chevron">▾</span></div>
+          <div class="qna-a">
+            <p>A thread is an expensive OS resource; creating one per task means unbounded thread counts under load and a scheduler that thrashes. An <code>ExecutorService</code> owns a bounded pool and a queue, so concurrency stays capped and tasks queue instead of overwhelming the machine.</p>
+            <pre class="code-pre">ExecutorService pool = Executors.newFixedThreadPool(8);
+Future&lt;Report&gt; f = pool.submit(() -&gt; build(id));
+Report r = f.get();          // blocks until ready
+pool.shutdown();</pre>
+            <p>Size the pool to the work: roughly the core count for CPU-bound tasks, higher for I/O-bound ones that spend their time blocked. Virtual threads (Java 21) change the calculus for blocking I/O &mdash; they are cheap enough to create per task.</p>
+          </div>
+        </div>
 
       <div class="no-results" id="no-results">
         <div class="nr-text">No questions match your search.</div>
@@ -410,7 +550,7 @@ p.<span class="fn">equals</span>(<span class="kw">new</span> <span class="cl">Po
   <script src="../assets/js/utils.js?v=12"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-const TRACK='java',TOTAL=15;
+const TRACK='java',TOTAL=30;
 function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
 function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
 function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}

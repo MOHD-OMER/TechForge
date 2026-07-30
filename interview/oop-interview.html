@@ -183,7 +183,7 @@
       <div style="text-align:center;flex-shrink:0;"><div class="pb-count" id="doneCount">0</div><div class="pb-lbl">/ 15 Done</div></div>
       <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;">↺ Reset</button>
     </div>
-    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">15</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('pillars',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Pillars</button><button class="ftab" onclick="filterQna('solid',this)"><span class="ftab-dot" style="color:var(--blue)"></span>SOLID</button><button class="ftab" onclick="filterQna('patterns',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Patterns</button><button class="ftab" onclick="filterQna('python',this)"><span class="ftab-dot" style="color:var(--green)"></span>Python OOP</button></div>
+    <div class="filter-row anim-in"><button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">30</span></button><div class="filter-sep"></div><button class="ftab" onclick="filterQna('pillars',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Principles</button><button class="ftab" onclick="filterQna('python',this)"><span class="ftab-dot" style="color:var(--green)"></span>In Python</button><button class="ftab" onclick="filterQna('advanced',this)"><span class="ftab-dot" style="color:var(--purple)"></span>Patterns</button></div>
     <div class="qna-list anim-in" id="list-main">
 
         <div class="qna-item" data-subtopic="pillars">
@@ -205,7 +205,7 @@
 
         <div class="qna-item" data-subtopic="pillars">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">05</span>
+            <span class="qna-num">02</span>
             <span class="qna-text">What is polymorphism? Explain with a Python example.</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -232,7 +232,7 @@
 
         <div class="qna-item" data-subtopic="pillars">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">06</span>
+            <span class="qna-num">03</span>
             <span class="qna-text">What is encapsulation? How is it achieved in Python?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -261,7 +261,7 @@
 
         <div class="qna-item" data-subtopic="pillars">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">07</span>
+            <span class="qna-num">04</span>
             <span class="qna-text">What is abstraction? How is it different from encapsulation?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -285,6 +285,51 @@
             </div>
           </div>
         </div>
+        <div class="qna-item" data-subtopic="pillars">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">05</span>
+            <span class="qna-text">Explain SOLID, one line each.</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><strong>S</strong>ingle responsibility: a class has one reason to change. <strong>O</strong>pen/closed: open to extension, closed to modification. <strong>L</strong>iskov substitution: a subtype must work anywhere its base does. <strong>I</strong>nterface segregation: many small interfaces beat one fat one. <strong>D</strong>ependency inversion: depend on abstractions, not concretions. They describe the same goal from five angles — change one part without breaking the others.</div>
+        </div>
+        <div class="qna-item" data-subtopic="pillars">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">06</span>
+            <span class="qna-text">What is coupling and cohesion, and which way do you want each?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><strong>Coupling</strong> is how much one module depends on another; <strong>cohesion</strong> is how related the things inside one module are. You want low coupling and high cohesion. A class that reaches into another's internals is tightly coupled, so a change there breaks it here. A class holding unrelated helpers has low cohesion, so every feature touches it and nothing has an obvious home.</div>
+        </div>
+        <div class="qna-item" data-subtopic="pillars">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">07</span>
+            <span class="qna-text">What is the Law of Demeter, and what does breaking it look like?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">Talk only to your immediate collaborators. The tell is a chain: <code>order.customer.address.city</code> — that code now depends on three classes' internals, so a change to any of them breaks it. Ask the object for what you need (<code>order.shipping_city()</code>) rather than reaching through it.</div>
+        </div>
+        <div class="qna-item" data-subtopic="pillars">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">08</span>
+            <span class="qna-text">Overloading vs overriding — and does Python have both?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><strong>Overriding</strong> replaces an inherited method in a subclass; Python has it, resolved through the MRO at call time. <strong>Overloading</strong> means several methods with the same name and different signatures; Python does <em>not</em> have it — a later definition simply replaces the earlier one. The equivalents are default arguments, <code>*args</code>, or <code>functools.singledispatch</code> for genuine type-based dispatch.</div>
+        </div>
+        <div class="qna-item" data-subtopic="pillars">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">09</span>
+            <span class="qna-text">What is an abstract class, and what happens if you instantiate one?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">A class that declares methods subclasses must implement and cannot itself be instantiated. In Python it comes from <code>abc.ABC</code> plus <code>@abstractmethod</code>; instantiating one raises <code>TypeError</code> listing the unimplemented methods. It exists to state a contract in code rather than a comment — the failure arrives at construction, not at the first call.</div>
+        </div>
 
       </div><!-- /list-pillars -->
 
@@ -294,7 +339,7 @@
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">02</span>
+            <span class="qna-num">10</span>
             <span class="qna-text">Explain inheritance types in Python with examples.</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -313,7 +358,7 @@
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">03</span>
+            <span class="qna-num">11</span>
             <span class="qna-text">What is the difference between @classmethod, @staticmethod, and instance method?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -348,7 +393,7 @@
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">04</span>
+            <span class="qna-num">12</span>
             <span class="qna-text">What are dunder (magic) methods in Python?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -384,7 +429,7 @@ v = <span class="fn">Vector</span>(<span class="nm">1</span>, <span class="nm">2
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">08</span>
+            <span class="qna-num">13</span>
             <span class="qna-text">What is the difference between abstract class and interface in Python?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -405,7 +450,7 @@ v = <span class="fn">Vector</span>(<span class="nm">1</span>, <span class="nm">2
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">11</span>
+            <span class="qna-num">14</span>
             <span class="qna-text">What are Python decorators in the context of classes?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -442,7 +487,7 @@ p.name = <span class="st">"bob"</span> <span class="cm"># calls @name.setter</sp
 
         <div class="qna-item" data-subtopic="python">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">13</span>
+            <span class="qna-num">15</span>
             <span class="qna-text">What is <code>__slots__</code> and when should you use it?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -468,6 +513,58 @@ p.name = <span class="st">"bob"</span> <span class="cm"># calls @name.setter</sp
             <strong>Drawback:</strong> Cannot add dynamic attributes after class definition.
           </div>
         </div>
+        <div class="qna-item" data-subtopic="python">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">16</span>
+            <span class="qna-text">What is the difference between <code>__str__</code> and <code>__repr__</code>?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><code>__repr__</code> is for developers: unambiguous, ideally something that could reconstruct the object, and what you see in the REPL or a traceback. <code>__str__</code> is for users: readable, what <code>print()</code> and <code>str()</code> give you. If you write only one, write <code>__repr__</code> — <code>__str__</code> falls back to it, but not the other way round.</div>
+        </div>
+        <div class="qna-item" data-subtopic="python">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">17</span>
+            <span class="qna-text">How do you make a class support <code>==</code> and use it in a set?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">Implement <code>__eq__</code> for equality and <code>__hash__</code> for hashing, over the same fields. Defining <code>__eq__</code> alone sets <code>__hash__</code> to <code>None</code>, making the class unhashable — that is Python protecting you from objects that compare equal but hash differently. <code>@dataclass(frozen=True)</code> generates both correctly, which is usually the right answer.</div>
+        </div>
+        <div class="qna-item" data-subtopic="python">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">18</span>
+            <span class="qna-text">What is a property, and why not just use a public attribute?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><code>@property</code> turns a method into a read that looks like an attribute, with an optional <code>@x.setter</code>. Start with a plain public attribute — Python has no need for Java-style getters. Reach for a property only when you later need validation, a computed value, or a deprecation shim, and the point is that you can add it <em>without</em> changing a single caller.</div>
+        </div>
+        <div class="qna-item" data-subtopic="python">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">19</span>
+            <span class="qna-text">What is duck typing, and how do protocols fit in?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">Python dispatches on behaviour, not declared type: if an object has the method you call, it works. That is why functions take "something iterable" rather than a specific class. <code>typing.Protocol</code> makes that contract checkable — a static type describing the methods required, with no inheritance needed, so existing classes satisfy it retroactively.</div>
+        </div>
+        <div class="qna-item" data-subtopic="python">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">20</span>
+            <span class="qna-text">What is the difference between a class attribute and an instance attribute?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">A class attribute lives on the class and is shared by every instance; an instance attribute is created per object, usually in <code>__init__</code>. Assigning through an instance creates an instance attribute that shadows the class one. <pre class="code-pre">class Dog:
+    tricks = []            # shared by every dog — the classic bug
+    def __init__(self, name):
+        self.name = name   # per instance
+
+a, b = Dog("a"), Dog("b")
+a.tricks.append("sit")
+b.tricks               # ["sit"] — same list</pre></div>
+        </div>
 
       </div><!-- /list-python -->
 
@@ -477,7 +574,7 @@ p.name = <span class="st">"bob"</span> <span class="cm"># calls @name.setter</sp
 
         <div class="qna-item" data-subtopic="advanced">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">09</span>
+            <span class="qna-num">21</span>
             <span class="qna-text">What is the Diamond Problem in inheritance? How does Python solve it?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -515,7 +612,7 @@ p.name = <span class="st">"bob"</span> <span class="cm"># calls @name.setter</sp
 
         <div class="qna-item" data-subtopic="advanced">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">10</span>
+            <span class="qna-num">22</span>
             <span class="qna-text">What is composition? When should you prefer it over inheritance?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -551,7 +648,7 @@ p.name = <span class="st">"bob"</span> <span class="cm"># calls @name.setter</sp
 
         <div class="qna-item" data-subtopic="advanced">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">12</span>
+            <span class="qna-num">23</span>
             <span class="qna-text">Explain the Singleton pattern and how to implement it in Python.</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -588,7 +685,7 @@ a, b = <span class="fn">Singleton</span>(), <span class="fn">Singleton</span>()
 
         <div class="qna-item" data-subtopic="advanced">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">14</span>
+            <span class="qna-num">24</span>
             <span class="qna-text">What is the difference between shallow copy and deep copy in OOP?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -626,7 +723,7 @@ p2.addr.city = <span class="st">"LA"</span>
 
         <div class="qna-item" data-subtopic="advanced">
           <div class="qna-q" onclick="toggleQ(this)">
-            <span class="qna-num">15</span>
+            <span class="qna-num">25</span>
             <span class="qna-text">What are metaclasses in Python?</span>
             <span class="qna-tag tag-oop">OOP</span>
             <span class="qna-chevron">▾</span>
@@ -656,6 +753,51 @@ p2.addr.city = <span class="st">"LA"</span>
             <div class="callout callout-amber"><strong>Use sparingly:</strong> Metaclasses are powerful but add significant complexity. ORMs (like Django), API frameworks, and dataclasses use them internally.</div>
           </div>
         </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">26</span>
+            <span class="qna-text">What are the four main creational patterns, in one line each?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a"><strong>Factory method</strong>: a method decides which subclass to build. <strong>Abstract factory</strong>: one object builds a whole family of related products. <strong>Builder</strong>: assemble a complex object step by step, so the constructor does not take twelve arguments. <strong>Prototype</strong>: clone an existing instance instead of constructing from scratch. All four exist to keep the choice of concrete class out of the calling code.</div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">27</span>
+            <span class="qna-text">Explain the observer pattern and where you have already used it.</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">One subject keeps a list of observers and notifies them when its state changes, so publishers know nothing about subscribers. You have used it every time you wrote <code>addEventListener</code>, subscribed to a store, or connected a signal. The trap is lifetime: an observer that never unsubscribes keeps the subject holding a reference to it, which is a leak.</div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">28</span>
+            <span class="qna-text">What is the strategy pattern, and what does it replace?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">Interchangeable algorithms behind one interface, chosen at runtime. It replaces the growing <code>if/elif</code> chain that picks behaviour by type — each branch becomes its own object, and adding a case stops meaning editing the dispatcher. In Python a strategy is often just a function passed in; you do not need a class per algorithm.</div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">29</span>
+            <span class="qna-text">What is dependency injection, and why does it matter for tests?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">Passing a collaborator in rather than constructing it inside. A class that builds its own database client can only ever be tested against a real database; one that accepts a client can be handed a fake. That is the whole benefit — it turns a hard dependency into a parameter, which is also what makes the dependency visible in the signature.</div>
+        </div>
+        <div class="qna-item" data-subtopic="advanced">
+          <div class="qna-q" onclick="toggleQ(this)">
+            <span class="qna-num">30</span>
+            <span class="qna-text">When is inheritance the wrong tool, and what are the symptoms?</span>
+            <span class="qna-tag tag-oop">OOP</span>
+            <span class="qna-chevron">▾</span>
+          </div>
+          <div class="qna-a">When the relationship is not genuinely <em>is-a</em>. Symptoms: a subclass overriding a method to raise <code>NotImplementedError</code>; a base class growing flags so it can behave differently per subclass; a hierarchy more than two or three deep; needing to know which subclass you have. Each of those is composition or a strategy wearing an inheritance costume.</div>
+        </div>
 
       </div><!-- /list-advanced -->
 
@@ -684,7 +826,7 @@ p2.addr.city = <span class="st">"LA"</span>
   <script src="../assets/js/utils.js?v=12"></script>
   <script src="../assets/js/platform.js?v=4"></script>
 <script>
-const TRACK='oop',TOTAL=15;
+const TRACK='oop',TOTAL=30;
 function getKey(n){return 'tf_q_'+TRACK+'_'+n;}
 function isChecked(n){try{return localStorage.getItem(getKey(n))==='1';}catch(e){return false;}}
 function setChecked(n,v){try{if(v)localStorage.setItem(getKey(n),'1');else localStorage.removeItem(getKey(n));}catch(e){}}
