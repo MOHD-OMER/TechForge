@@ -224,16 +224,6 @@
     "depth": "page"
   },
   {
-    "id": "data-cloud/index",
-    "title": "Data &amp; Cloud",
-    "desc": "Data &amp; Cloud hub — every database engine (SQL, Postgres, MongoDB, Redis and 10 more) and the full DevOps track (Linu",
-    "icon": "📄",
-    "section": "data-cloud",
-    "sectionKey": "data-cloud",
-    "href": "data-cloud/index.html",
-    "depth": "guide"
-  },
-  {
     "id": "databases/cassandra",
     "title": "Cassandra — Database Systems",
     "desc": "Cassandra — Database Systems guide on TechForge. Theory, examples, interview questions, and best practices.",
@@ -1601,6 +1591,16 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/libraries.html",
+    "depth": "guide"
+  },
+  {
+    "id": "programming/modules",
+    "title": "Python Modules &amp; Packaging — Imports, Packages, Project Layout | TechForge",
+    "desc": "Python Modules &amp; Packaging — Imports, Packages, Project Layout | TechForge",
+    "icon": "📄",
+    "section": "programming",
+    "sectionKey": "programming",
+    "href": "python/modules.html",
     "depth": "guide"
   },
   {
