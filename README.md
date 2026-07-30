@@ -15,7 +15,7 @@
 
 **100% Static · Zero Build Step · Zero Backend · Security Hardened · Production Ready**
 
-Roadmaps · Programming Languages · DSA · System Design · Data & Cloud · OS & Networks · AI/ML · Interview Prep
+Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps · OS & Networks · AI/ML · Interview Prep
 
 </div>
 
@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Data & Cloud · OS 
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 21 guided roadmaps, 334 curated interview questions, and eight complete learning tracks across 234 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 21 guided roadmaps, 433 curated interview questions, and nine complete learning tracks across 234 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -43,11 +43,12 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 |---|---|---|
 | Roadmaps | 14 topic flow charts + 7 career paths | [/roadmaps](https://techforge-dev.vercel.app/roadmaps/index.html) |
 | Data Structures & Algorithms | 29 topics · 28 Canvas visualizers · 4 language tabs | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
-| Programming | Python · JavaScript · TypeScript · Java · C++ (8 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
+| Programming | Python · JavaScript · TypeScript · Java · C++ (9 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
-| Data & Cloud | 14 DB engines + 23 DevOps guides (databases + DevOps combined) | [/data-cloud](https://techforge-dev.vercel.app/data-cloud/index.html) |
+| Databases | SQL guide (27 sections) + 14 engine deep-dives | [/databases](https://techforge-dev.vercel.app/databases/index.html) |
+| DevOps | 23 guides — Git, Docker, Kubernetes, CI/CD, AWS, Terraform | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
-| Interview Prep | 334 questions · 13 banks · flashcards · timed quiz | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
+| Interview Prep | 433 questions · 13 banks · flashcards · timed quiz | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
 | OS & Networks | 4 complete pillars — OS, Networking, Security, Theory of Computation (32 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
 
 ---
@@ -71,8 +72,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 ### Programming Tracks
 - **Five languages** — Python, JavaScript, TypeScript, Java and C++
-- **8 modules each**, from basics through the language's advanced ground: OOP, collections, error handling, concurrency, modules and tooling
+- **8-9 modules each**, from basics through the language's advanced ground: OOP, collections, error handling, concurrency, modules and tooling
 - **A practice-programs page per language** — 137 annotated Python programs, 35–40 for each of the others
+- **Modules & packaging** — imports, `sys.path` resolution, circular imports, `pyproject.toml` and project layout
 - Language-specific depth: Python decorators and asyncio, JS closures and the event loop, TS generics and type-level programming, Java streams and concurrency, C++ pointers and templates
 
 ### System Design
@@ -82,8 +84,8 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Real-world scenarios and trade-offs
 
 ### Databases
-- **Full SQL reference** with queries, joins, subqueries, window functions, normalization
-- **13 database deep-dives**: PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, graph databases
+- **Full SQL reference** — 27 sections covering queries, joins, subqueries, window functions, normalization, isolation levels, execution plans, views, stored procedures, injection and sharding
+- **14 database deep-dives**: PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, graph databases
 
 ### AI/ML Hub
 - **8 comprehensive modules** spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI
@@ -92,7 +94,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Interactive visualizations
 
 ### Interview Preparation
-- **334 curated questions** across 13 question banks
+- **433 curated questions** across 13 question banks
 - Banks: DSA, Python, JavaScript, Java, C++, OOP, SQL, AI/ML, DevOps, System Design, OS, Networking, Security
 - FAANG and startup tagged · Difficulty rated · Progress tracked in browser
 - **Spaced repetition** — Leitner-box flashcards with due-card resurfacing on every bank
@@ -104,7 +106,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Major cloud platforms: AWS, GCP, Azure
 
 ### Platform & UX
-- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all eight tracks from a keyboard-driven command palette, no page reload
+- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all nine tracks from a keyboard-driven command palette, no page reload
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
 - **Branded loading screen** — animated splash on load, so opening the app never shows a blank flash
 - **Progress tracking** — mark topics and interview questions complete, saved in the browser
@@ -180,10 +182,10 @@ TechForge/
 ├── programming/                  # Programming Languages hub
 │   ├── python/ javascript/ typescript/ java/ cpp/   # 8 modules + programs each
 ├── system-design/                # System Design (26 guides)
-├── databases/                    # Databases (14 deep-dives)  ┐ Data & Cloud
+├── databases/                    # Databases (SQL guide + 14 deep-dives)
 ├── aiml/                         # AI/ML Hub (8 modules)
-├── interview/                    # Interview Prep (13 banks, 334 questions)
-├── devops/                       # DevOps (23 guides)         ┘ (data-cloud/ hub)
+├── interview/                    # Interview Prep (13 banks, 433 questions)
+├── devops/                       # DevOps (23 guides)
 ├── systems/                      # OS & Networks (os/ networking/ security/ theory/ — 32 guides)
 │
 ├── tools/                        # Build & utility scripts
@@ -378,7 +380,7 @@ Full release notes: **[RELEASES.md](RELEASES.md)**
 - [x] Guided roadmaps — 14 topic flow charts + 7 career paths, generated from the site's own pages
 - [x] Four more language tracks — JavaScript, TypeScript, Java, C++
 - [x] OS & Networks section complete — 4 pillars, 32 guides
-- [x] Six more interview banks (13 banks · 334 questions)
+- [x] Six more interview banks (13 banks · 433 questions)
 - [x] C++ implementations across DSA (4 language tabs)
 - [x] Cross-track dashboard with weak-area recommendations
 
