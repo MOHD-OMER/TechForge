@@ -63,7 +63,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 ### Data Structures & Algorithms
 - **29 in-depth topics** across 6 categories
-- **28 interactive Canvas 2D visualizers** (every topic except Dynamic Programming)
+- **A visualizer on all 29 topics** — 28 interactive Canvas 2D animations, plus a step-by-step DP table fill for Dynamic Programming
 - **Four language tabs** on every topic — Python, JavaScript, Java and C++, with your choice remembered
 - Comprehensive coverage: arrays, linked lists, stacks, queues, trees, graphs, hashing, sorting, searching, bit manipulation, sliding window, two pointer
 - Big-O analysis and a full roadmap of the track

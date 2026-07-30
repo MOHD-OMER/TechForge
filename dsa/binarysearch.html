@@ -197,6 +197,7 @@
   <div class="info-tabs">
     <div class="info-tab active" onclick="switchTab(this,'tp-bs-0')">Logic</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bs-1')">Code</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bs-quiz')">Quiz</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bs-prac')">Practice <i class="ti ti-trophy"></i></div>
   </div>
 
@@ -268,6 +269,63 @@
     <span class="kw">return</span> -<span class="nm">1</span>;
 }</pre>
     </div>
+    </div>
+  </div>
+
+  <div class="info-pane" id="tp-bs-quiz">
+    <div class="quiz-wrap">
+      <div class="quiz-q">1. What must be true of the array before binary search works?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It must contain no duplicates</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">It must be sorted</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Its length must be a power of two</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing, it works on any array</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">2. Searching 1,000,000 sorted elements takes roughly how many comparisons?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1,000,000</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1,000</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">About 20</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Exactly 2</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">3. <code>arr[mid]</code> is smaller than the target. What happens next?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>lo = mid + 1</code>, search the right half</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>hi = mid - 1</code>, search the left half</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>lo = mid</code>, keep mid in range</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Return -1, the target is absent</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">4. Why is <code>mid = lo + (hi - lo) // 2</code> preferred over <code>(lo + hi) // 2</code> in languages with fixed-width integers?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster to compute</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">It cannot overflow when lo and hi are both large</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It rounds up instead of down</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It handles unsorted input</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">5. The loop ends with <code>lo &gt; hi</code>. What does that mean?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The array was not sorted</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The search space is empty, so the target is not present</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The target sits at index lo</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The loop should restart from the beginning</button>
+      </div>
+      <div class="quiz-feedback"></div>
     </div>
   </div>
 

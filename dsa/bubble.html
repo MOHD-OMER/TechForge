@@ -207,7 +207,8 @@
   <div class="info-tabs">
     <div class="info-tab active" onclick="switchTab(this,'tp-bub-0')">How It Works</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bub-1')">Code</div>
-    <div class="info-tab" onclick="switchTab(this,'tp-bub-prac')">Practice <i class="ti ti-trophy"></i></div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bub-quiz')">Quiz</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-bub-prac')">Practice <i class="ti ti-trophy"></i></div>
   </div>
 
   <div class="info-pane active" id="tp-bub-0">
@@ -290,7 +291,64 @@
     </div>
   </div>
 
-  <div class="info-pane" id="tp-bub-prac">
+  <div class="info-pane" id="tp-bub-quiz">
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. What does one full pass of bubble sort guarantee?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The whole array is sorted</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">The largest unsorted element has reached its final position at the end</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The smallest element has reached index 0</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Half the array is sorted</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Worst-case time complexity of bubble sort?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n log n)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n&sup2;)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(log n)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. With the early-exit optimisation, what is the best case and when does it happen?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n) on an already-sorted array, because the first pass makes no swaps</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n log n) on a reverse-sorted array</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n&sup2;) always; the optimisation only saves memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(1) when the array has one element</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Bubble sort is stable. What does that mean?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It never crashes on large input</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Equal elements keep their original relative order</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It uses a fixed amount of memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Its running time does not vary with input</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Why is bubble sort taught but rarely shipped?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It cannot sort strings</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It needs O(n) extra memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n&sup2;) comparisons make it far slower than merge or quick sort on real input</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It is unstable</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </div>
+
+      <div class="info-pane" id="tp-bub-prac">
       <div class="pq-progress">
           <div class="pq-progress-label"><span>Bubble Mastery</span><span id="prog-bubble">0 / 5 solved</span></div>
           <div class="pq-bar"><div class="pq-bar-fill" id="bar-bubble" style="width:0%"></div></div>

@@ -979,6 +979,66 @@
       <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>Interview tip:</strong> Most production schemas target 3NF. Sometimes denormalization is intentional for read-performance — know when to justify it.</div></div>
     </section>
 
+    <section class="py-section" id="quiz">
+      <div class="sec-header"><span class="sec-num">18</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+      <p class="prose">Five questions on the parts interviewers reach for first: joins, filtering, indexes and normal forms.</p>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. A <code>LEFT JOIN</code> returns which rows?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Only rows matching in both tables</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Every row from the left table, with NULLs where the right has no match</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Every row from both tables, matched or not</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Every combination of rows from both tables</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. You want departments whose headcount exceeds 10. Which clause filters that?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>WHERE COUNT(*) &gt; 10</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>HAVING COUNT(*) &gt; 10</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>ORDER BY COUNT(*) &gt; 10</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Either WHERE or HAVING, they are interchangeable</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. What does an index cost you?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing, it is a pure win</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Extra storage and slower writes, since every insert and update maintains it</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Slower reads on the indexed column</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The table can no longer be joined</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A column stores <code>"php,mysql,react"</code> as a single comma-separated value. Which normal form does that break?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">1NF — values must be atomic</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">2NF — no partial dependencies</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">3NF — no transitive dependencies</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">None, it is valid in every normal form</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. You create <code>INDEX idx_dept_salary ON users(department, salary)</code>. Which query can use it?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>WHERE department = 'Eng'</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>WHERE salary &gt; 90000</code> alone</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Neither, composite indexes only work when both columns are given</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Both equally, column order does not matter</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
     <!-- INTERVIEW CTA -->
     <div class="interview-cta anim-in">
       <div class="icta-icon"><i class="ti ti-target"></i></div>

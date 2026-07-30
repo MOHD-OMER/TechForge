@@ -509,7 +509,8 @@
     <a class="sb-link" href="#mistakes"><span class="sb-num">04</span>Common Mistakes</a>
     <a class="sb-link" href="#gitignore"><span class="sb-num">05</span>.gitignore</a>
     <a class="sb-link" href="#quickref"><span class="sb-num">06</span>Quick Reference</a>
-    <a class="sb-link" href="#resources"><span class="sb-num">07</span>Resources</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">07</span>Quick Quiz</a>
+    <a class="sb-link" href="#resources"><span class="sb-num">08</span>Resources</a>
 
     <div class="sidebar-label" style="margin-top:20px;">Command Groups</div>
     <a class="sb-link" href="#tab-daily"  onclick="switchToTab('daily',event)"><i class="ti ti-calendar"></i> Daily Use (1–5)</a>
@@ -1320,6 +1321,68 @@ desktop.ini</div>
             <tr><td style="color:var(--text2);font-size:12px;font-family:var(--mono)">20</td><td><code class="ref-cmd">git reflog</code></td><td class="ref-desc">Recover lost commits (your safety net)</td><td><span class="ref-cat cat-pro">Pro</span></td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- ══════ QUIZ ══════ -->
+    <section class="section" id="quiz">
+      <div class="sec-header"><span class="sec-icon"><i class="ti ti-help-circle"></i></span><span class="sec-title">Quick Quiz</span></div>
+      <div class="sec-divider"></div>
+      <p class="prose">Five questions on the four places, the daily commands, and the two mistakes that cost the most time.</p>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which command moves a file from the working directory into the staging area?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git commit</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git add</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git push</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git stash</code></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. You have staged changes and want to see exactly what is about to be committed. Which command?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git diff</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git diff --staged</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git log -p</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git status --short</code></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Why should <code>.gitignore</code> exist before your first commit?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Git refuses to commit without one</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Once a secret or <code>node_modules</code> is committed it stays in history, even after deletion</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It makes clones faster</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It is what marks the repository root</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Why is <code>git push --force</code> onto a shared branch dangerous?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It locks the branch against other pushes</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It uploads every branch, not just the current one</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">It overwrites the remote history, discarding commits your teammates already pulled</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It skips the pre-push hooks</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. You are mid-task on a feature branch and need to switch to a hotfix without committing half-finished work. What do you reach for?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git reset --hard</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git stash</code>, then <code>git stash pop</code> when you return</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git revert HEAD</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Delete the branch and re-clone</button>
+        </div>
+        <div class="quiz-feedback"></div>
       </div>
     </section>
 

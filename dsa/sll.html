@@ -314,6 +314,7 @@
           <div class="info-tab active" onclick="switchTab(this,'tp-sll-0')">How It Works</div>
           <div class="info-tab" onclick="switchTab(this,'tp-sll-1')">Code</div>
           <div class="info-tab" onclick="switchTab(this,'tp-sll-2')">Complexity</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-sll-quiz')">Quiz</div>
           <div class="info-tab" onclick="switchTab(this,'tp-sll-prac')">Practice <i class="ti ti-trophy"></i></div>
         </div>
 
@@ -529,7 +530,64 @@ class SLL {
           <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><span><strong>Tip:</strong> Keep a tail pointer to make append O(1). This is commonly done in practice for queues.</span></div>
         </div>
 
-        <div class="info-pane" id="tp-sll-prac">
+        <div class="info-pane" id="tp-sll-quiz">
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Why is inserting at the head O(1) while inserting at the tail is O(n)?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Head insertion needs no new node</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">The head pointer is known, but reaching the tail means walking every node</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Tail insertion has to re-sort the list</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">They are both O(1)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Reading the 500th element of a singly linked list costs:</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(1), like an array</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(log n), the list is searched by halves</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n) &mdash; you must follow 500 <code>next</code> pointers</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n&sup2;)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. To delete a node you hold a pointer to, what else do you normally need?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Its index in the list</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">A pointer to the previous node, so its <code>next</code> can be relinked</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The list length</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing; deletion is always O(1)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. The fast/slow pointer technique advances one pointer two steps and the other one. What does that find in a single pass?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The largest value</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">The middle node, and whether the list has a cycle</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The sorted order</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The number of duplicates</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Reversing a singly linked list iteratively means tracking how many pointers?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">One</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Three: previous, current and next</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">As many as there are nodes</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">None &mdash; reversal is done by swapping values</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </div>
+
+      <div class="info-pane" id="tp-sll-prac">
           <div class="pq-progress">
             <div class="pq-progress-label"><span>Progress</span><span id="prog-sll">0 / 8 solved</span></div>
             <div class="pq-bar"><div class="pq-bar-fill" id="bar-sll" style="width:0%"></div></div>
