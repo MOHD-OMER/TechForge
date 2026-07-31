@@ -45,6 +45,27 @@ jobs:
             './**/*.html'
           fail: true
 
+  # Assets are served immutable for a year, so an asset whose contents change
+  # without its ?v= moving reaches nobody who has visited before. That shipped
+  # three times before this gate existed, once leaving buttons unstyled.
+  cache-versions:
+    runs-on: ubuntu-latest
+    steps:
+      # Full history is required: the check compares each asset's last content
+      # commit against the last commit touching its version string. On the
+      # default shallow clone both collapse to one commit and it reports a
+      # false pass — worse than failing, because the gate looks green forever.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check for stale cache versions
+        run: npm run check:cache
+
   a11y:
     runs-on: ubuntu-latest
     steps:
