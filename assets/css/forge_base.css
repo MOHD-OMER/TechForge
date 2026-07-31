@@ -627,6 +627,16 @@ button.badge {
 }
 .prose strong { color: var(--text); font-weight: 600; }
 .prose em { color: var(--text); font-style: italic; }
+/* An inline link in body copy had never been styled, so it fell back to the
+   browser default #0000ee — 2.11:1 on the dark background. Underlined rather
+   than colour-only, so it is still identifiable without relying on hue. */
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.prose a:hover { color: var(--text); text-decoration-color: var(--accent); }
 .prose code {
   font-family: var(--mono);
   font-size: 12.5px;
