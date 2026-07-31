@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Logic Building Before DSA — Conditions, Loops, Recursion, Arrays | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/dsa/logic-building.html"/>
+  <meta property="og:title" content="Logic Building Before DSA | TechForge"/>
+  <meta property="og:description" content="The step between knowing your syntax and starting DSA: dry runs, conditions, loops, recursion, arrays and strings, as a six-phase practice ladder."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="dsa/logic-building" data-section="dsa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../index.html">
+      <div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+    <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Start Here</div>
+      <a class="sb-link active" href="#sec-why"><span class="sb-num">01</span> Why logic first</a>
+      <a class="sb-link" href="#sec-dry-run"><span class="sb-num">02</span> The dry run</a>
+      <div class="sidebar-label" style="margin-top:14px;">The Six Phases</div>
+      <a class="sb-link" href="#sec-phase-1"><span class="sb-num">03</span> Conditions</a>
+      <a class="sb-link" href="#sec-phase-2"><span class="sb-num">04</span> Loops &amp; patterns</a>
+      <a class="sb-link" href="#sec-phase-3"><span class="sb-num">05</span> Recursion</a>
+      <a class="sb-link" href="#sec-phase-4"><span class="sb-num">06</span> Arrays</a>
+      <a class="sb-link" href="#sec-phase-5"><span class="sb-num">07</span> Strings</a>
+      <a class="sb-link" href="#sec-phase-6"><span class="sb-num">08</span> Mixed challenges</a>
+      <a class="sb-link" href="#sec-next"><span class="sb-num">09</span> Ready for DSA?</a>
+      <a class="sb-link" href="#sec-quiz"><span class="sb-num">10</span> Quick Quiz</a>
+      <div class="sidebar-label" style="margin-top:14px;">Next in DSA</div>
+      <a class="sb-link" href="bigo.html"><span class="sb-num">→</span> Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">→</span> Arrays &amp; Strings</a>
+      <a class="sb-link" href="index.html"><span class="sb-num">→</span> DSA Hub</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">DSA — Before You Start</div>
+        <h1 class="pg-title">Logic Building <span>Before DSA</span></h1>
+        <p class="pg-sub">Six phases of problems that need no data structure you have not met — just conditions, loops, recursion and a list. The rung between syntax and algorithms.</p>
+        <div class="pg-badges">
+          <span class="badge b-blue"><i class="ti ti-brain"></i> Foundations</span>
+          <span class="badge b-green">✓ Start here</span>
+          <span class="badge b-amber">36 problems</span>
+          <span class="badge b-py"><i class="ti ti-flame"></i> Before Big-O</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-why">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-bulb"></i></span><h2 class="sec-title">Why Logic Before Data Structures</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Most people who stall on their first DSA problem do not lack knowledge of arrays. They lack the habit of turning a sentence into steps. You can recite what a hash map is and still freeze at "find the first non-repeating character", because the gap is not the structure — it is the reasoning that decides to use one.</p>
+        <p class="prose">This page is the rung between knowing your language's syntax and starting <a href="bigo.html">Big-O</a>. Six phases, each one a small set of problems that can be solved with nothing but conditions, loops, recursion and a list. No data structure you have not met yet, no algorithm names — just the thinking.</p>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div><strong>How to use it:</strong> solve on paper first, then type. If you cannot describe the steps in a sentence, writing code will not rescue you — it will only hide the fact that the plan is missing.</div></div>
+      </section>
+
+      <section class="py-section" id="sec-dry-run">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-table"></i></span><h2 class="sec-title">The Dry Run — Your Most Useful Tool</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>dry run</strong> is tracing your code by hand, one line at a time, writing down what every variable holds after each step. It is the single technique that separates people who debug quickly from people who guess.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Trace this by hand before running it</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">mystery</span>(n):
+    total = 0
+    <span class="kw">while</span> n > 0:
+        total = total + (n % 10)
+        n = n // 10
+    <span class="kw">return</span> total
+
+<span class="fn">mystery</span>(472)</pre>
+        </div>
+        <p class="prose">Now the trace table. One row per pass, one column per variable:</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Pass</th><th>n at start</th><th>n % 10</th><th>total after</th><th>n after</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>472</td><td>2</td><td>0 + 2 = 2</td><td>47</td></tr>
+              <tr><td>2</td><td>47</td><td>7</td><td>2 + 7 = 9</td><td>4</td></tr>
+              <tr><td>3</td><td>4</td><td>4</td><td>9 + 4 = 13</td><td>0</td></tr>
+              <tr><td>—</td><td>0</td><td>loop ends</td><td><strong>13</strong></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose">Three rows and the function names itself: it sums the digits. You now also know the loop runs once per digit, which is the beginning of complexity analysis without the vocabulary.</p>
+        <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-circle-check"></i></span><div>When a solution is wrong, do not re-read it hoping to spot the bug. Trace it with the smallest input that fails. The row where the table stops matching your expectation is the line with the bug — every time.</div></div>
+        <p class="prose">Two habits worth forming alongside it. <strong>Pseudocode</strong> first: write the steps in plain language, then translate. And know your <strong>edge cases</strong> before you start — zero, one element, empty input, negatives, duplicates, the largest value. Most failed submissions are correct logic meeting an input the author never considered.</p>
+      </section>
+
+      <section class="py-section" id="sec-phase-1">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-git-branch"></i></span><h2 class="sec-title">Phase 1 — Conditions &amp; Boolean Logic</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> make a decision correctly, including when several conditions interact.</p>
+        <p class="prose"><strong>What you are practising:</strong> relational operators, <code>and</code> / <code>or</code> / <code>not</code>, nested conditions, ordering your checks so the first true branch is the right one.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">The ordering trap</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Wrong: 95 prints "Pass", because the first true branch wins</span>
+<span class="kw">if</span> score >= 40: <span class="fn">print</span>("Pass")
+<span class="kw">elif</span> score >= 75: <span class="fn">print</span>("Distinction")
+
+<span class="cm"># Right: test the narrowest condition first</span>
+<span class="kw">if</span> score >= 75: <span class="fn">print</span>("Distinction")
+<span class="kw">elif</span> score >= 40: <span class="fn">print</span>("Pass")</pre>
+        </div>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Print whether a number is positive, negative or zero — three outcomes, not two.</li>
+          <li>Decide whether a year is a leap year. The rule has three parts and most people get the century case wrong.</li>
+          <li>Take three numbers and print the largest, without using a built-in max.</li>
+          <li>Classify a character as uppercase, lowercase, digit or symbol.</li>
+          <li>Given three side lengths, decide whether they form a triangle, and if so whether it is equilateral, isosceles or scalene.</li>
+          <li>Given a temperature and whether it is raining, decide between four clothing recommendations. Write the conditions so no input falls through with no answer.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-phase-2">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-repeat"></i></span><h2 class="sec-title">Phase 2 — Loops &amp; Patterns</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> repeat work deliberately, and know how many times the body will run before you press run.</p>
+        <p class="prose"><strong>What you are practising:</strong> <code>for</code> and <code>while</code>, accumulator variables, nested loops, <code>break</code> and <code>continue</code>, and reading a loop by its invariant.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">The accumulator pattern — the shape of half of these</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">total = 0                 <span class="cm"># start from the identity</span>
+<span class="kw">for</span> d <span class="kw">in</span> digits:
+    total = total + d     <span class="cm"># one step per item</span>
+<span class="fn">print</span>(total)</pre>
+        </div>
+        <p class="prose">A nested loop is not twice the work — it is the work squared. Two loops over the same <em>n</em> items run <em>n</em>&sup2; times, which is why a pattern that prints instantly for 10 rows crawls at 10,000.</p>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Print the multiplication table for a number, then for every number to 10 — the second is the first inside another loop.</li>
+          <li>Sum the digits of a number, then reverse it. Both are the same loop with a different accumulator.</li>
+          <li>Decide whether a number is prime. Then find every prime below 100. Stop the inner loop as soon as you know the answer.</li>
+          <li>Print a right triangle of stars, then a pyramid. Work out the spaces before the stars on paper first.</li>
+          <li>Compute a factorial with a loop, then the first n Fibonacci numbers.</li>
+          <li>Given a series of inputs ending in zero, report the count, sum, largest and smallest in a single pass.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-phase-3">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-arrow-loop-left"></i></span><h2 class="sec-title">Phase 3 — Recursion</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> solve a problem by describing it in terms of a smaller version of itself.</p>
+        <p class="prose"><strong>What you are practising:</strong> the base case, the recursive step, trusting the call, and seeing the call stack unwind.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Every recursive function is these two lines</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="kw">if</span> n &lt;= 1: <span class="kw">return</span> 1        <span class="cm"># base case: the smallest problem, answered directly</span>
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - 1)  <span class="cm"># recursive step: assume it works for n-1</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>Missing or unreachable base case is the whole of recursion debugging. If the argument does not move toward the base on every call, you get a stack overflow — trace three levels by hand and you will see it immediately.</div></div>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Factorial and the nth Fibonacci number. Then trace how many calls Fibonacci makes for n = 6, and see why it explodes.</li>
+          <li>Sum the digits of a number recursively — the same problem as Phase 2, now without a loop.</li>
+          <li>Reverse a string recursively.</li>
+          <li>Decide whether a string is a palindrome, comparing the outermost characters and recursing inward.</li>
+          <li>Compute the greatest common divisor with Euclid's rule: gcd(a, b) = gcd(b, a mod b).</li>
+          <li>Print every subset of a small list. Draw the decision tree before writing it — include this element or not.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-phase-4">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-list-numbers"></i></span><h2 class="sec-title">Phase 4 — Arrays</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> reason about a collection: visit it, measure it, rearrange it.</p>
+        <p class="prose"><strong>What you are practising:</strong> traversal, running maximum and minimum, counting occurrences, two indexes moving through one list, in-place changes.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">The running-best pattern</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">largest = items[0]            <span class="cm"># never start from 0 — negatives break that</span>
+<span class="kw">for</span> x <span class="kw">in</span> items[1:]:
+    <span class="kw">if</span> x > largest:
+        largest = x</pre>
+        </div>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Find the largest and smallest value in one pass, not two.</li>
+          <li>Find the second largest. The obvious approach fails on duplicates — decide what you want it to do first.</li>
+          <li>Count how many times each value occurs.</li>
+          <li>Reverse a list in place, using two indexes that move toward each other.</li>
+          <li>Move every zero to the end while keeping the order of the rest.</li>
+          <li>Find the elements that appear in both of two lists, and then those in one but not the other.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-phase-5">
+        <div class="sec-header"><span class="sec-num">07</span><span class="sec-icon"><i class="ti ti-abc"></i></span><h2 class="sec-title">Phase 5 — Strings</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> treat text as a sequence you can measure and rebuild.</p>
+        <p class="prose"><strong>What you are practising:</strong> indexing and slicing, character classification, building a result piece by piece, comparing two strings.</p>
+        <p class="prose">A string is an array whose elements happen to be characters — every Phase 4 pattern applies. What changes is that in most languages strings are immutable, so "modifying" one means building a new one.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Build, do not mutate</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">result = ""
+<span class="kw">for</span> ch <span class="kw">in</span> text:
+    <span class="kw">if</span> ch <span class="kw">not</span> <span class="kw">in</span> "aeiou":
+        result = result + ch    <span class="cm"># a new string each time — fine here, O(n^2) at scale</span></pre>
+        </div>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Count the vowels, consonants, digits and spaces in a sentence.</li>
+          <li>Reverse the words in a sentence without reversing the letters inside them.</li>
+          <li>Decide whether a string is a palindrome, ignoring case and punctuation.</li>
+          <li>Find the first character that does not repeat.</li>
+          <li>Decide whether two strings are anagrams, without using a built-in counter.</li>
+          <li>Compress a string so that "aaabbc" becomes "a3b2c1", and leave it unchanged when compression would make it longer.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-phase-6">
+        <div class="sec-header"><span class="sec-num">08</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Phase 6 — Mixed Challenges</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Goal:</strong> choose the approach yourself, with no chapter heading telling you which tool to reach for.</p>
+        <p class="prose"><strong>What you are practising:</strong> everything above, combined — this is what a real interview question feels like.</p>
+        <p class="prose">Solve these without deciding in advance which phase they belong to. That choice <em>is</em> the skill.</p>
+        <p class="prose"><strong>Work through these:</strong></p>
+        <ol class="prose" style="padding-left:20px;line-height:2">
+          <li>Given student marks, report how many passed, the average, and the highest scorer.</li>
+          <li>Validate a password: minimum length, at least one uppercase, one digit and one symbol. Report which rule failed, not just true or false.</li>
+          <li>Print the frequency of each digit in a number.</li>
+          <li>Count the prime numbers in a list.</li>
+          <li>Print every palindromic word in a sentence.</li>
+          <li>Given a list of daily temperatures, find the longest run of consecutive rising days.</li>
+        </ol>
+      </section>
+
+      <section class="py-section" id="sec-next">
+        <div class="sec-header"><span class="sec-num">09</span><span class="sec-icon"><i class="ti ti-arrow-right"></i></span><h2 class="sec-title">When You Are Ready for DSA</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">You are ready when you can read a problem, describe the steps aloud, name the edge cases, and trace your solution on paper before running it. Not when you have solved all thirty-six — when the process feels routine.</p>
+        <p class="prose">From here, <a href="bigo.html">Big-O Notation</a> gives you the language for the cost you have already been feeling, and <a href="arrays.html">Arrays &amp; Strings</a> starts the patterns proper. The <a href="../roadmaps/dsa.html">DSA roadmap</a> lays out the full order.</p>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div>Keep the dry-run habit. It stays useful long after these problems stop being hard — it is the same skill you will use on a failing test at work.</div></div>
+      </section>
+
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">10</span><span class="sec-icon"><i class="ti ti-help-circle"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Five questions on the habits, not the syntax.</p>
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. What is a dry run?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Running the code with no input</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Tracing the code by hand, recording every variable after each step</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Running it without the debugger attached</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">A test that makes no database calls</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. <code>if score >= 40: "Pass" elif score >= 75: "Distinction"</code> — what does 95 print?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Distinction</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Pass, because the first true branch wins</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Both</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. A nested loop over the same n items runs how many times?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">2n</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">n&sup2;</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">n log n</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">n</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. Your recursive function overflows the stack. What is almost always wrong?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">The language's recursion limit is too low</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">The base case is missing, or the argument never moves toward it</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">You need more memory</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Recursion cannot be used for that problem</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. Finding the largest value, why is starting from <code>largest = 0</code> a bug?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">It is slower</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">It returns 0 when every value is negative</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">It fails on an empty list only</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">It is not a bug</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="index.html">← DSA Hub</a>
+        <a class="nav-link" href="bigo.html">Big-O Notation →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../assets/js/topics-manifest.js?v=3"></script>
+  <script src="../assets/js/site-index.js?v=5"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=13"></script>
+  <script src="../assets/js/platform.js?v=5"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+<script src="/assets/js/pyrun.js?v=1" defer></script>
+</body>
+</html>

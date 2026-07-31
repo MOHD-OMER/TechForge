@@ -814,6 +814,16 @@
     "depth": "guide"
   },
   {
+    "id": "dsa/logic-building",
+    "title": "Logic Building Before DSA — Conditions, Loops, Recursion, Arrays | TechForge",
+    "desc": "Logic Building Before DSA — Conditions, Loops, Recursion, Arrays | TechForge",
+    "icon": "📊",
+    "section": "DSA",
+    "sectionKey": "dsa",
+    "href": "dsa/logic-building.html",
+    "depth": "guide"
+  },
+  {
     "id": "dsa/merge",
     "title": "Merge Sort",
     "desc": "Merge Sort",
