@@ -46,6 +46,13 @@
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
+  /* A scratchpad is a textarea, whose current contents live in .value; a
+     rendered example is a pre, whose contents live in .textContent. Read at
+     click time either way, so an edited scratchpad runs what it now says. */
+  function codeOf(el) {
+    return el.tagName === 'TEXTAREA' ? el.value : el.textContent;
+  }
+
   async function run(btn, block, pre) {
     var out = outPanel(block);
     btn.disabled = true;
@@ -63,7 +70,7 @@
         var v = window.prompt(p === undefined || p === null ? '' : String(p));
         return v === null ? '' : v;
       });
-      var code = pre.textContent;
+      var code = codeOf(pre);
       /* Pyodide's event loop is already running — asyncio.run() would throw.
        * runPythonAsync supports top-level await, so rewrite it. */
       code = code.replace(/\basyncio\.run\((.+)\)/g, 'await $1');
@@ -109,9 +116,11 @@
     document.head.appendChild(st);
 
     document.querySelectorAll('.code-block').forEach(function (block) {
-      var pre = block.querySelector('pre.code-pre');
+      /* A scratchpad is a textarea so that Enter produces a real newline and
+         undo works; a rendered example is a pre. Read whichever is present. */
+      var pre = block.querySelector('pre.code-pre, textarea.code-input');
       if (!pre) return;
-      var code = pre.textContent;
+      var code = codeOf(pre);
       if (!runnable(code)) return;
       if (block.querySelector('.pyrun-btn')) return;
       /* only python blocks — skip JS/Java panes from the language toggle */

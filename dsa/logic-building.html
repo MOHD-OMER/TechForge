@@ -26,6 +26,18 @@
     :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
     .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
     .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .tf-scratch { margin-top: 22px; }
+    .tf-scratch-hd { font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--text3); display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
+    /* a textarea so Enter makes a real newline and undo works; styled to sit
+       inside the code block exactly as a rendered example does */
+    .tf-scratch textarea.code-input {
+      display: block; width: 100%; min-height: 148px; resize: vertical;
+      background: transparent; border: 0; color: var(--text);
+      font-family: var(--mono); font-size: 13px; line-height: 1.75;
+      padding: 18px 20px; caret-color: var(--accent); tab-size: 4;
+      box-sizing: border-box; white-space: pre-wrap; overflow-wrap: break-word;
+    }
+    .tf-scratch textarea.code-input:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
 </style>
 
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
@@ -179,6 +191,18 @@
           <li>Given three side lengths, decide whether they form a triangle, and if so whether it is equilateral, isosceles or scalene.</li>
           <li>Given a temperature and whether it is raining, decide between four clothing recommendations. Write the conditions so no input falls through with no answer.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the conditions problems" id="scratch-conditions"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-phase-2">
@@ -208,6 +232,18 @@ total = 0                 <span class="cm"># start from the identity</span>
           <li>Compute a factorial with a loop, then the first n Fibonacci numbers.</li>
           <li>Given a series of inputs ending in zero, report the count, sum, largest and smallest in a single pass.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the loops problems" id="scratch-loops"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-phase-3">
@@ -236,6 +272,18 @@ total = 0                 <span class="cm"># start from the identity</span>
           <li>Compute the greatest common divisor with Euclid's rule: gcd(a, b) = gcd(b, a mod b).</li>
           <li>Print every subset of a small list. Draw the decision tree before writing it — include this element or not.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the recursion problems" id="scratch-recursion"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-phase-4">
@@ -266,6 +314,18 @@ largest = items[0]            <span class="cm"># never start from 0 — negative
           <li>Move every zero to the end while keeping the order of the rest.</li>
           <li>Find the elements that appear in both of two lists, and then those in one but not the other.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the arrays problems" id="scratch-arrays"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-phase-5">
@@ -297,6 +357,18 @@ result = ""
           <li>Decide whether two strings are anagrams, without using a built-in counter.</li>
           <li>Compress a string so that "aaabbc" becomes "a3b2c1", and leave it unchanged when compression would make it longer.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the strings problems" id="scratch-strings"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-phase-6">
@@ -314,6 +386,18 @@ result = ""
           <li>Print every palindromic word in a sentence.</li>
           <li>Given a list of daily temperatures, find the longest run of consecutive rising days.</li>
         </ol>
+        <div class="tf-scratch">
+          <div class="tf-scratch-hd"><i class="ti ti-pencil" aria-hidden="true"></i> Your turn — write a solution and run it</div>
+          <div class="code-block">
+            <div class="code-hdr"><span class="code-lang">Python — scratchpad</span>
+              <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+            </div>
+            <textarea class="code-pre code-input" spellcheck="false" aria-label="Scratchpad for the mixed challenges" id="scratch-mixed"># Pick a problem above, write it here, press Run.
+# Runs in your browser. Nothing is installed or saved.
+
+</textarea>
+          </div>
+        </div>
       </section>
 
       <section class="py-section" id="sec-next">
