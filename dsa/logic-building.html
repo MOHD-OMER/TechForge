@@ -30,7 +30,7 @@
 
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
-<body data-topic-id="dsa/logic-building" data-section="dsa">
+<body data-topic-id="dsa/logic-building" data-section="dsa" data-pyrun="on">
 <a href="#mainContent" class="skip-link">Skip to content</a>
   <header class="topbar">
     <a class="tb-logo" href="../index.html">
@@ -160,7 +160,9 @@
             <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
           </div>
           <button class="copy-btn" onclick="copyCode(this)">COPY</button>
-          <pre class="code-pre"><span class="cm"># Wrong: 95 prints "Pass", because the first true branch wins</span>
+          <pre class="code-pre">score = 95
+
+<span class="cm"># Wrong: 95 prints "Pass", because the first true branch wins</span>
 <span class="kw">if</span> score >= 40: <span class="fn">print</span>("Pass")
 <span class="kw">elif</span> score >= 75: <span class="fn">print</span>("Distinction")
 
@@ -189,7 +191,9 @@
             <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
           </div>
           <button class="copy-btn" onclick="copyCode(this)">COPY</button>
-          <pre class="code-pre">total = 0                 <span class="cm"># start from the identity</span>
+          <pre class="code-pre">digits = [4, 7, 2]
+
+total = 0                 <span class="cm"># start from the identity</span>
 <span class="kw">for</span> d <span class="kw">in</span> digits:
     total = total + d     <span class="cm"># one step per item</span>
 <span class="fn">print</span>(total)</pre>
@@ -218,7 +222,9 @@
           <button class="copy-btn" onclick="copyCode(this)">COPY</button>
           <pre class="code-pre"><span class="kw">def</span> <span class="fn">factorial</span>(n):
     <span class="kw">if</span> n &lt;= 1: <span class="kw">return</span> 1        <span class="cm"># base case: the smallest problem, answered directly</span>
-    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - 1)  <span class="cm"># recursive step: assume it works for n-1</span></pre>
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - 1)  <span class="cm"># recursive step: assume it works for n-1</span>
+
+<span class="fn">print</span>(<span class="fn">factorial</span>(5))               <span class="cm"># 120</span></pre>
         </div>
         <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>Missing or unreachable base case is the whole of recursion debugging. If the argument does not move toward the base on every call, you get a stack overflow — trace three levels by hand and you will see it immediately.</div></div>
         <p class="prose"><strong>Work through these:</strong></p>
@@ -242,10 +248,14 @@
             <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
           </div>
           <button class="copy-btn" onclick="copyCode(this)">COPY</button>
-          <pre class="code-pre">largest = items[0]            <span class="cm"># never start from 0 — negatives break that</span>
+          <pre class="code-pre">items = [-9, -3, -17, -40]    <span class="cm"># all negative: starting from 0 would answer 0</span>
+
+largest = items[0]            <span class="cm"># never start from 0 — negatives break that</span>
 <span class="kw">for</span> x <span class="kw">in</span> items[1:]:
     <span class="kw">if</span> x > largest:
-        largest = x</pre>
+        largest = x
+
+<span class="fn">print</span>(largest)                <span class="cm"># -3, not 0</span></pre>
         </div>
         <p class="prose"><strong>Work through these:</strong></p>
         <ol class="prose" style="padding-left:20px;line-height:2">
@@ -269,10 +279,14 @@
             <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
           </div>
           <button class="copy-btn" onclick="copyCode(this)">COPY</button>
-          <pre class="code-pre">result = ""
+          <pre class="code-pre">text = "logic building"
+
+result = ""
 <span class="kw">for</span> ch <span class="kw">in</span> text:
     <span class="kw">if</span> ch <span class="kw">not</span> <span class="kw">in</span> "aeiou":
-        result = result + ch    <span class="cm"># a new string each time — fine here, O(n^2) at scale</span></pre>
+        result = result + ch    <span class="cm"># a new string each time — fine here, O(n^2) at scale</span>
+
+<span class="fn">print</span>(result)</pre>
         </div>
         <p class="prose"><strong>Work through these:</strong></p>
         <ol class="prose" style="padding-left:20px;line-height:2">
@@ -411,6 +425,6 @@
       });
     }
   </script>
-<script src="/assets/js/pyrun.js?v=1" defer></script>
+<script src="/assets/js/pyrun.js?v=2" defer></script>
 </body>
 </html>

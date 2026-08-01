@@ -3,7 +3,12 @@
  * jsDelivr on the first Run click, then reused for every block. */
 (function () {
   'use strict';
-  if ((document.body.dataset.section || '') !== 'python') return;
+  /* Python-track pages get this automatically. Any other page opts in with
+     data-pyrun="on" — used by the logic-building page, whose worked examples
+     are Python. Deliberately not widened to a whole section: the DSA topic
+     pages carry four languages per block. */
+  var section = document.body.dataset.section || '';
+  if (section !== 'python' && document.body.dataset.pyrun !== 'on') return;
 
   var PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
   var pyodidePromise = null;
