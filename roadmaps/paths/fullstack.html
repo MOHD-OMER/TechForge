@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-graph.css?v=10" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=1" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -57,18 +57,20 @@
 
 <!-- No sidebar: a flow chart wants the whole page, and the graph is its own
      navigation. Section links live in the topbar and the breadcrumb below. -->
-<div class="rg-page">
-  <main class="rg-main" id="mainContent">
-    <nav class="rg-crumbs" aria-label="Breadcrumb">
+<div class="rt-page">
+  <main class="rt-main" id="mainContent">
+    <nav class="rt-crumbs" aria-label="Breadcrumb">
       <a href="../index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i>All Roadmaps</a>
       </nav>
 
-    <div class="rg-head">
-      <h1 class="rg-h1">Full Stack Developer</h1>
-      <p class="rg-lede">Both ends of the wire. Own the browser with JavaScript and TypeScript, serve it with Python and SQL, then package and ship the whole thing yourself. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
+    <div class="rt-head">
+      <div class="rt-eyebrow">TechForge Roadmap</div>
+      <h1 class="rt-h1">Full Stack Developer</h1>
+      <p class="rt-sub">Both ends of the wire. Own the browser with JavaScript and TypeScript, serve it with Python and SQL, then package and ship the whole thing yourself. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
+      <div class="rt-count">9 steps · 2 topics</div>
     </div>
 
-    <div id="rgMount"></div>
+    <div id="rgMount" class="rt-mount"></div>
     <script type="application/json" id="rgGraph">
 {
   "id": "fullstack",
@@ -201,13 +203,7 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
 <script src="../../assets/js/platform.js?v=5"></script>
-<script src="../../assets/js/roadmap-graph.js?v=6"></script>
-<script>
-  (function () {
-    var graph = JSON.parse(document.getElementById('rgGraph').textContent);
-    window.TFRoadmapGraph.mount(document.getElementById('rgMount'), graph);
-  }());
-</script>
+<script src="../../assets/js/roadmap-timeline.js?v=1"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');
