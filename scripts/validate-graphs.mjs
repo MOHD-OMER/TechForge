@@ -26,9 +26,25 @@ export function validateGraph(graph, htmlPath) {
     if (!['spine', 'branch', 'detail'].includes(n.tier)) {
       errors.push(`${n.id}: tier must be spine|branch|detail, got ${n.tier}`);
     }
+    if (n.status !== undefined && !['live', 'soon'].includes(n.status)) {
+      errors.push(`${n.id}: status must be live|soon, got ${n.status}`);
+    }
+
     // A node may deep-link into a section (page.html#sec-x). Check the file, not
     // the fragment — existsSync on "page.html#sec-x" is always false.
-    if (n.href && !fs.existsSync(path.join(dir, n.href.split('#')[0]))) {
+    const target = n.href ? path.join(dir, n.href.split('#')[0]) : null;
+
+    if (n.status === 'soon') {
+      /* Reverse drift. Generating roadmaps from the site made it impossible for
+         them to fall out of step; authoring them gave that up. This restores it
+         from the other side: an href on a soon node is the path its page will
+         live at, so the day someone writes that page the roadmap must stop
+         claiming it is coming. Without an href there is nothing to check —
+         allowed, but the node then relies on a human to notice. */
+      if (target && fs.existsSync(target)) {
+        errors.push(`${n.id}: marked status "soon" but ${n.href} now exists — drop the status`);
+      }
+    } else if (target && !fs.existsSync(target)) {
       errors.push(`${n.id}: href does not exist -> ${n.href}`);
     }
   }

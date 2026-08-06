@@ -22,6 +22,43 @@
     'var(--amber)', 'var(--teal)', 'var(--orange)', 'var(--red)',
   ];
 
+  /* ── completion ───────────────────────────────────────────────────────
+     A roadmap you cannot tick off is a table of contents. Ticks read and write
+     the same tf_completed_topics the lesson pages and the dashboard already
+     use, so marking a step here moves the dashboard's numbers too.
+
+     A page's progress key is not derivable from its path — system-design/cdn
+     .html is sd/cdn, programming/javascript/dom.html is js/dom — so the
+     generated site index carries the real one, and this maps href to it. */
+  var topicByPath = null;
+
+  function siteRoot() {
+    /* the logo always points at the site root, at whatever depth this page is,
+       which beats counting ../ segments ourselves and works over file:// */
+    var logo = document.querySelector('.tb-logo');
+    var href = logo ? logo.getAttribute('href') : 'index.html';
+    return new URL(href.replace(/index\.html$/, ''), global.location.href).href;
+  }
+
+  function topicOf(href) {
+    if (!href) return null;
+    if (topicByPath === null) {
+      topicByPath = {};
+      (global.TF_SITE_INDEX || []).forEach(function (e) {
+        if (e.path && e.topic) topicByPath[e.path] = e.topic;
+      });
+    }
+    var abs, root = siteRoot();
+    try { abs = new URL(href.split('#')[0], global.location.href).href; } catch (e) { return null; }
+    if (abs.indexOf(root) !== 0) return null;
+    return topicByPath[decodeURIComponent(abs.slice(root.length))] || null;
+  }
+
+  function progress() {
+    return global.TFProgress || { all: function () { return []; },
+      is: function () { return false; }, toggle: function () { return false; } };
+  }
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -85,6 +122,57 @@
     return buckets;
   }
 
+  /* One subnode. `status: "soon"` means the topic belongs on the roadmap but
+     TechForge has not written it yet: it renders as a non-link so nobody is
+     sent to a 404, tagged in text rather than dimmed — conveying state by
+     lowering opacity has broken contrast here before. */
+  /* The tick is a sibling button, never nested inside the pill: a control
+     inside a link is not operable by keyboard and fails validation. */
+  function tick(topic, label) {
+    if (!topic) return '';
+    var done = progress().is(topic);
+    return '<button type="button" class="rt-tick" data-topic="' + esc(topic) + '"' +
+      ' aria-pressed="' + done + '"' +
+      ' aria-label="Mark ' + esc(label) + ' as done">' +
+      '<i class="ti ti-check" aria-hidden="true"></i></button>';
+  }
+
+  function subItem(k) {
+    var soon = k.status === 'soon';
+    var label = esc(k.t) +
+      (soon ? '<span class="rt-tag">soon</span>' : '') +
+      (k.tier === 'branch' ? '<span class="rt-tag">optional</span>' : '');
+
+    /* A soon node may carry the href its page will eventually live at — the
+       validator uses it to catch the reverse drift, once that page exists —
+       so ignore href here and go by status alone. Some nodes are pure grouping
+       labels ("Searching", "Sorting") with no page of their own and never
+       will have: those render as a plain pill, not as coming-soon. */
+    var pill, topic = null;
+    if (soon) {
+      pill = '<span class="rt-pill-node rt-soon" aria-disabled="true">' + label + '</span>';
+    } else if (!k.href) {
+      pill = '<span class="rt-pill-node">' + label + '</span>';
+    } else {
+      topic = topicOf(k.href);
+      pill = '<a class="rt-pill-node" href="' + esc(k.href) + '">' + label + '</a>';
+    }
+    return '<li' + (topic ? ' data-topic="' + esc(topic) + '"' : '') +
+      (topic && progress().is(topic) ? ' class="rt-done"' : '') + '>' +
+      tick(topic, k.t) + pill + '</li>';
+  }
+
+  /* Same rule for a step's own heading. A step can be coming-soon too — the
+     whole of HTML and CSS is, today — and its href is then the path the page
+     will live at, which would 404 if rendered as a link. */
+  function title(step) {
+    if (step.status === 'soon') {
+      return '<span class="rt-title rt-soon-title" aria-disabled="true">' +
+        esc(step.t) + '<span class="rt-tag">soon</span></span>';
+    }
+    return '<a class="rt-title" href="' + esc(step.href || '#') + '">' + esc(step.t) + '</a>';
+  }
+
   function render(mount, graph) {
     var nodes = graph.nodes || [];
     var steps = orderSpine(nodes);
@@ -119,33 +207,51 @@
       var colour = bandColour[step.g] || fallback;
       var kids = buckets[step.id] || [];
 
+      var stepTopic = step.status === 'soon' ? null : topicOf(step.href);
+
       var li = document.createElement('li');
-      li.className = 'rt-step';
+      li.className = 'rt-step' + (stepTopic && progress().is(stepTopic) ? ' rt-done' : '');
+      if (stepTopic) li.dataset.topic = stepTopic;
       li.dataset.colour = colour;
+      /* Kept on the element rather than read back out of .rt-title, whose text
+         also carries the "soon" tag — an aria-label of "Step 1: HTMLsoon" is
+         worse than no label. */
+      li.dataset.title = step.t;
 
       var showBand = step.g && step.g !== lastBand;
       lastBand = step.g || lastBand;
 
-      var bullets = kids.map(function (k) {
-        var label = esc(k.t);
-        var optional = k.tier === 'branch' ? '<span class="rt-opt">optional</span>' : '';
-        return k.href
-          ? '<li><a href="' + esc(k.href) + '">' + label + '</a>' + optional + '</li>'
-          : '<li>' + label + optional + '</li>';
-      }).join('');
+      var bullets = kids.map(subItem).join('');
 
+      /* No fallback to the step number: the node on the spine already carries
+         it, and a floating chip repeating it was the one element on the card
+         that belonged to nothing. */
       var icon = step.i
-        ? '<i class="ti ' + esc(step.i) + '" aria-hidden="true"></i>'
-        : String(i + 1);
+        ? '<span class="rt-ico"><i class="ti ' + esc(step.i) + '" aria-hidden="true"></i></span>'
+        : '';
+
+      /* The toggle labels itself from the step title, so a screen reader hears
+         "Collapse React" rather than twenty identical "Collapse" buttons. */
+      var listId = 'rt-sub-' + i;
+      var toggle = bullets
+        ? '<button type="button" class="rt-toggle" aria-expanded="true"' +
+            ' aria-controls="' + listId + '"' +
+            ' aria-label="Collapse ' + esc(step.t) + '">' +
+            '<i class="ti ti-chevron-down" aria-hidden="true"></i>' +
+          '</button>'
+        : '';
 
       li.innerHTML =
         '<div class="rt-card" style="--c:' + colour + '">' +
-          '<div class="rt-chip">' + icon + '</div>' +
           '<div class="rt-body">' +
             (showBand ? '<div class="rt-band">' + esc(step.g) + '</div>' : '') +
-            '<a class="rt-title" href="' + esc(step.href || '#') + '">' + esc(step.t) + '</a>' +
+            '<div class="rt-head-row">' + icon + tick(stepTopic, step.t) + title(step) + toggle + '</div>' +
             (step.s ? '<p class="rt-desc">' + esc(step.s) + '</p>' : '') +
-            (bullets ? '<ul class="rt-list">' + bullets + '</ul>' : '') +
+            (bullets
+              ? '<div class="rt-wrap" data-open="true">' +
+                  '<ul class="rt-list" id="' + listId + '">' + bullets + '</ul>' +
+                '</div>'
+              : '') +
           '</div>' +
         '</div>' +
         '<div class="rt-node" style="--c:' + colour + '">' +
@@ -156,8 +262,19 @@
     });
 
     road.appendChild(list);
+
+    var summary = document.createElement('div');
+    summary.className = 'rt-progress';
+    /* polite, not assertive: the count updating is worth hearing after the
+       button's own state change, not on top of it */
+    summary.setAttribute('aria-live', 'polite');
+    mount.appendChild(summary);
     mount.appendChild(road);
-    return { road: road, fill: fill, steps: Array.prototype.slice.call(list.children) };
+
+    return {
+      road: road, fill: fill, summary: summary,
+      steps: Array.prototype.slice.call(list.children),
+    };
   }
 
   /* ── scroll behaviour: spine fill, active node, mini-map, pill ────── */
@@ -177,13 +294,72 @@
       steps.forEach(function (s) { s.classList.add('rt-seen'); });
     }
 
+    /* ── progress ──────────────────────────────────────────────────────
+       The spine fill is how far along the path you are, not how far you have
+       scrolled. Scroll position is already shown by the active node and the
+       step pill; spending the most prominent element in the layout on it too
+       was what made this read as a document rather than a route. */
+    /* the rows, not the tick buttons — those carry data-topic too, and matching
+       both counted every topic twice */
+    var trackable = view.road.querySelectorAll('li.rt-step[data-topic], .rt-list li[data-topic]');
+
+    function paintProgress() {
+      var done = 0;
+      Array.prototype.forEach.call(trackable, function (el) {
+        var is = progress().is(el.dataset.topic);
+        el.classList.toggle('rt-done', is);
+        var btn = el.querySelector(':scope > .rt-tick, :scope .rt-head-row > .rt-tick');
+        if (btn) btn.setAttribute('aria-pressed', String(is));
+        if (is) done++;
+      });
+      var total = trackable.length;
+      var pct = total ? Math.round((done / total) * 100) : 0;
+      view.summary.innerHTML = total
+        ? '<div class="rt-pbar"><div class="rt-pbar-fill" style="transform:scaleX(' + (done / total) + ')"></div></div>' +
+          '<span class="rt-pnum"><strong>' + done + '</strong> of ' + total + ' done · ' + pct + '%</span>'
+        : '';
+      view.fill.style.transform = 'translateX(-50%) scaleY(' + (total ? done / total : 0) + ')';
+    }
+
+    view.road.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.rt-tick');
+      if (!btn) return;
+      progress().toggle(btn.dataset.topic);
+      paintProgress();
+    });
+
+    /* another tab ticking something off, or a lesson page being finished in
+       one, should not leave this roadmap showing stale numbers */
+    global.addEventListener('storage', function (e) {
+      if (!e.key || e.key === 'tf_completed_topics') paintProgress();
+    });
+
+    paintProgress();
+
+    /* Disclosure toggles, delegated — one listener beats fifty. Everything
+       starts expanded: a roadmap that opens collapsed reads as a file tree,
+       which is what was rejected the first time round. */
+    view.road.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.rt-toggle');
+      if (!btn) return;
+      var wrap = document.getElementById(btn.getAttribute('aria-controls'));
+      wrap = wrap && wrap.parentNode;
+      if (!wrap) return;
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      wrap.dataset.open = String(open);
+      var step = btn.closest('.rt-step');
+      btn.setAttribute('aria-label', (open ? 'Collapse ' : 'Expand ') + (step ? step.dataset.title : ''));
+      onScroll();   // the spine fill is a function of height, which just changed
+    });
+
     /* mini-map: real buttons in a nav, so it is reachable by keyboard and
        announced as navigation rather than as decoration */
     var map = document.createElement('nav');
     map.className = 'rt-map';
     map.setAttribute('aria-label', 'Roadmap steps');
     var dots = steps.map(function (step, i) {
-      var title = (step.querySelector('.rt-title') || {}).textContent || ('Step ' + (i + 1));
+      var title = step.dataset.title || ('Step ' + (i + 1));
       var dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'rt-dot';
@@ -227,9 +403,6 @@
     function update() {
       var rect = view.road.getBoundingClientRect();
       var mid = global.innerHeight * 0.5;
-      var pct = Math.max(0, Math.min(1, (mid - rect.top) / (rect.height || 1)));
-      view.fill.style.transform = 'translateX(-50%) scaleY(' + pct + ')';
-
       var inside = rect.top < mid && rect.bottom > mid;
       pill.classList.toggle('rt-on', inside);
       if (!inside) return;

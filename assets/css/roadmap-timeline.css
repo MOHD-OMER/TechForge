@@ -7,6 +7,14 @@
    step. PRODUCT.md principle 3: the accent is wayfinding, so the hue tells you
    which phase you are in rather than just adding variety. */
 
+/* The ink used on top of a band colour. This has to flip with the theme: the
+   band palette inverts between them (--cyan is #22d3ee in dark, #042533 in
+   light), so a fixed near-black gave the numbered spine nodes 1.27:1 in light
+   theme — the step numbers were there and unreadable. It was only ever a
+   fallback value; nothing declared it. */
+:root { --rt-ink: #04070d; }
+html.light { --rt-ink: #ffffff; }
+
 .rt-page { width: 100%; }
 .rt-main {
   max-width: 1080px;
@@ -77,7 +85,11 @@
 .rt-step:nth-child(even) .rt-card { grid-column: 3; grid-row: 1; justify-self: start; flex-direction: row-reverse; }
 .rt-step .rt-node { grid-column: 2; grid-row: 1; justify-self: center; }
 
-.rt-card { display: flex; align-items: center; gap: 14px; max-width: 420px; width: 100%; }
+/* 560, not 420: at 420 the card filled a third of a 1040px lane and the road
+   ran 5.8 screens, so you never saw more than one step at a time and the whole
+   thing read as a list of articles. Wider cards let the pills sit two-up and
+   put the shape of the path back on screen. */
+.rt-card { display: flex; align-items: center; gap: 14px; max-width: 560px; width: 100%; }
 
 /* ── node on the spine ─────────────────────────────────────────────── */
 .rt-node {
@@ -95,17 +107,26 @@
 .rt-step:nth-child(odd) .rt-node::before { right: 100%; }
 .rt-step:nth-child(even) .rt-node::before { left: 100%; }
 
-.rt-chip {
-  flex: none; width: 54px; height: 54px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
+/* The step icon, in the card header beside the title rather than as a chip
+   floating outside the card. Freeing that column is also what lets the
+   subnodes sit two-up. */
+.rt-ico {
+  flex: none; width: 24px; height: 24px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
   background: color-mix(in srgb, var(--c) 16%, var(--surface));
-  border: 1.5px solid var(--c); color: var(--c);
+  border: 1px solid color-mix(in srgb, var(--c) 45%, var(--border));
+  color: var(--c);
 }
 
 /* ── card ──────────────────────────────────────────────────────────── */
 .rt-body {
-  background: var(--card, var(--surface)); border: 1px solid var(--border);
-  border-left: 3px solid var(--c); border-radius: 12px; padding: 13px 16px;
+  background: var(--card, var(--surface));
+  /* tinted all the way round, the same treatment the pills get. The band
+     colour already arrives four other ways here — chip, spine node, title,
+     pill borders — so a bar down one edge was a fifth telling of the same
+     thing. */
+  border: 1px solid color-mix(in srgb, var(--c) 26%, var(--border));
+  border-radius: 12px; padding: 13px 16px;
   flex: 1; min-width: 0;
   transition: transform var(--m-base, .18s) var(--m-out, ease), border-color var(--m-base, .18s) var(--m-out, ease);
 }
@@ -120,26 +141,150 @@
   letter-spacing: .3px; text-transform: uppercase; color: var(--c);
   text-decoration: none;
 }
-.rt-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+a.rt-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* A step with no page yet keeps the band colour so the spine still reads as one
+   journey; the tag beside it, not a dimmer colour, is what says "not written". */
+.rt-soon-title { cursor: default; }
 .rt-desc { margin: 7px 0 0; font-size: 12.5px; line-height: 1.65; color: var(--text2); }
-.rt-list { margin: 8px 0 0; padding-left: 16px; }
-.rt-list li { font-size: 12.5px; line-height: 1.6; margin-bottom: 1px; }
-.rt-list li::marker { color: var(--c); }
-/* Underlined, not colour-only. Where a list item also carries an "optional"
-   tag the link sits inside a text block, and a link in running text has to be
-   distinguishable without relying on hue — at --text2 against --text it is
-   2.16:1, well under the 3:1 that colour-only distinction requires. */
-.rt-list a {
-  color: var(--text2);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--c) 55%, transparent);
-  text-underline-offset: 2px;
-  text-decoration-thickness: 1px;
+/* ── subnodes ──────────────────────────────────────────────────────
+   Pills, not bullets: a bullet reads as a list item, a pill reads as a node
+   on a diagram, which is the point of showing the branch at all. Left
+   unfilled — the step nodes are filled, and if these were too the two levels
+   would carry equal weight and the hierarchy would flatten. */
+.rt-list {
+  list-style: none;
+  margin: 9px 0 0;
+  padding: 0 0 0 15px;
+  display: grid;
+  /* two-up once there is room. Pill labels run 5 to 34 characters, so a fixed
+     two columns leaves a sawtooth; auto-fill with a floor packs them and still
+     drops to one column inside a narrow card. */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 5px 10px;
+  position: relative;
 }
-.rt-list a:hover { color: var(--text); text-decoration-color: var(--c); }
-.rt-opt {
-  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
-  letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-left: 5px;
+/* the vertical guide the branches hang from */
+.rt-list::before {
+  content: ''; position: absolute; left: 3px; top: 4px; bottom: 10px;
+  width: 1px; background: color-mix(in srgb, var(--c) 40%, var(--border));
+}
+/* tick and pill sit on one row; the pill takes the rest so every subnode in a
+   card is the same width. Ragged widths — 47px beside 290px — were reading as
+   a bulleted list rather than a row of nodes. */
+.rt-list li { position: relative; display: flex; align-items: stretch; gap: 6px; }
+
+.rt-pill-node {
+  flex: 1; min-width: 0;
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  font-size: 12.5px; line-height: 1.5;
+  color: var(--text2);
+  background: var(--surface2, var(--surface));
+  /* the band colour tints the whole border rather than sitting as a bar down
+     one edge — same wayfinding, one less visual device */
+  border: 1px solid color-mix(in srgb, var(--c) 32%, var(--border));
+  border-radius: var(--r-md, 8px);
+  text-decoration: none;
+  overflow-wrap: break-word;          /* 34-char labels in a 227px card */
+  transition: border-color var(--m-base, .18s) var(--m-out, ease), color var(--m-base, .18s) var(--m-out, ease);
+}
+a.rt-pill-node:hover { color: var(--text); border-color: var(--c); }
+
+/* ── ticking things off ────────────────────────────────────────────────
+   The thing that turns a list of topics into a route you are walking. Reads
+   and writes the same store as the lesson pages, so the dashboard agrees. */
+.rt-tick {
+  flex: none; width: 19px; height: 19px; align-self: center;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; cursor: pointer;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--c) 40%, var(--border));
+  border-radius: 6px;
+  color: transparent;                 /* the check is there, just not inked yet */
+  transition: background var(--m-base, .16s) var(--m-out, ease),
+              border-color var(--m-base, .16s) var(--m-out, ease),
+              color var(--m-base, .16s) var(--m-out, ease);
+}
+.rt-tick i { font-size: 12px; line-height: 1; }
+.rt-tick:hover { border-color: var(--c); color: color-mix(in srgb, var(--c) 55%, transparent); }
+.rt-tick:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+.rt-tick[aria-pressed="true"] {
+  background: var(--c); border-color: var(--c); color: var(--rt-ink, #04070d);
+}
+
+/* Done is shown by the filled check and a struck label — never by fading the
+   text out. Dimming state with opacity has broken contrast on this site three
+   times; a line through the words survives any theme. */
+.rt-done > .rt-pill-node,
+.rt-done > .rt-head-row > .rt-title {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--c) 70%, transparent);
+  text-decoration-thickness: 1.5px;
+}
+.rt-done > .rt-pill-node { border-color: color-mix(in srgb, var(--c) 55%, var(--border)); }
+
+.rt-head-row { display: flex; align-items: center; gap: 8px; }
+.rt-head-row .rt-title { flex: 1; min-width: 0; }
+
+/* ── progress summary ──────────────────────────────────────────────── */
+.rt-progress {
+  display: flex; align-items: center; gap: 12px;
+  max-width: 420px; margin: 0 auto 26px;
+}
+.rt-pbar {
+  flex: 1; height: 6px; border-radius: 999px;
+  background: color-mix(in srgb, var(--rt-accent, var(--blue)) 14%, var(--border));
+  overflow: hidden;
+}
+/* scaleX rather than width, matching .rt-fill: this animates on every tick, and
+   a width transition relayouts the bar each frame. */
+.rt-pbar-fill {
+  width: 100%; height: 100%; border-radius: 999px;
+  background: var(--rt-accent, var(--blue));
+  transform-origin: left center;
+  transition: transform var(--m-slow, .4s) var(--m-out, ease);
+}
+.rt-pnum {
+  flex: none; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .4px; color: var(--text2);
+}
+.rt-pnum strong { color: var(--rt-accent, var(--blue)); }
+a.rt-pill-node:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+
+/* Not written yet. Dashed border and a tag — never dimmed with opacity, which
+   is how contrast was broken twice in this codebase. */
+.rt-pill-node.rt-soon { border-style: dashed; border-left-style: dashed; cursor: default; }
+.rt-tag {
+  font-family: var(--font-mono); font-size: 8.5px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text3); margin-left: 6px;
+  border: 1px solid var(--border2); border-radius: 4px; padding: 0 4px;
+}
+
+/* ── collapse ──────────────────────────────────────────────────────
+   grid-template-rows 1fr → 0fr animates the height without animating height. */
+.rt-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; margin-left: 6px; padding: 0;
+  background: none; border: 1px solid var(--border); border-radius: 5px;
+  color: var(--text3); cursor: pointer; vertical-align: middle;
+  transition: color var(--m-base, .18s) var(--m-out, ease), border-color var(--m-base, .18s) var(--m-out, ease);
+}
+.rt-toggle:hover { color: var(--c); border-color: var(--c); }
+.rt-toggle:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+.rt-toggle i { font-size: 13px; line-height: 1; transition: transform var(--m-base, .2s) var(--m-out, ease); }
+.rt-toggle[aria-expanded="false"] i { transform: rotate(-90deg); }
+
+.rt-wrap { display: grid; grid-template-rows: 1fr; }
+.rt-wrap[data-open="false"] { grid-template-rows: 0fr; }
+/* visibility, not just zero height: a 0fr row still leaves its links in the tab
+   order, so keyboard focus would disappear into a collapsed branch. Hiding is
+   delayed by the collapse duration so the pills don't vanish before the box
+   finishes shrinking; revealing is immediate. */
+.rt-wrap > .rt-list { overflow: hidden; min-height: 0; visibility: visible; transition: visibility 0s; }
+.rt-wrap[data-open="false"] > .rt-list { visibility: hidden; transition: visibility 0s var(--m-base, .22s); }
+@media (prefers-reduced-motion: no-preference) {
+  .rt-wrap { transition: grid-template-rows var(--m-base, .22s) var(--m-out, ease); }
 }
 
 /* ── mini-map rail ─────────────────────────────────────────────────── */
@@ -201,4 +346,9 @@
   .rt-step:nth-child(even) .rt-node::before { left: 100%; right: auto; width: 16px; }
   .rt-card { max-width: 100%; }
   .rt-chip { width: 44px; height: 44px; font-size: 18px; border-radius: 12px; }
+  /* the card body is ~227px at 375px, so the branch column shrinks rather than
+     pushing pill text into one word per line */
+  .rt-list { padding-left: 11px; }
+  .rt-list::before { left: 2px; }
+  .rt-list li::before { left: -9px; width: 7px; }
 }

@@ -70,6 +70,15 @@
     return getCompleted().indexOf(id) >= 0;
   }
 
+  /* Exported so the roadmaps can show and set completion without keeping their
+     own copy of this. One store, one format — the dashboard's totals and the
+     roadmap's ticks can never disagree. */
+  window.TFProgress = {
+    all: getCompleted,
+    is: isCompleted,
+    toggle: toggleCompleted
+  };
+
   function estimateReadingTime(el) {
     if (!el) return 5;
     var text = el.innerText || '';

@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and system-design basics that frontend interviews still test. Every milestone opens a TechForge lesson."/>
+  <meta name="description" content="The full frontend path: HTML and CSS, JavaScript, how the browser fetches a page, Git, build tooling, TypeScript, React, testing, accessibility, performance, security and deployment."/>
   <meta property="og:title" content="Frontend Developer Roadmap — TechForge"/>
-  <meta property="og:description" content="Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and system-design basics that frontend interviews still test."/>
+  <meta property="og:description" content="The full frontend path: HTML and CSS, JavaScript, how the browser fetches a page, Git, build tooling, TypeScript, React, testing, accessibility, performance, security and deployment."/>
   <meta property="og:type" content="website"/>
   <title>Frontend Developer Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/frontend.html"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-timeline.css?v=1" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -66,8 +66,8 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">Frontend Developer</h1>
-      <p class="rt-sub">Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and system-design basics that frontend interviews still test. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
-      <div class="rt-count">6 steps · 3 topics</div>
+      <p class="rt-sub">The full path from your first HTML document to shipping a typed, tested, accessible React app. Follow the trunk in order; branches marked <strong>optional</strong> are worth knowing but can wait. Steps marked <strong>soon</strong> are part of the real roadmap — TechForge has not written those lessons yet.</p>
+      <div class="rt-count">16 steps · 69 topics · 46 coming soon</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
@@ -78,98 +78,248 @@
   "accent": "var(--cyan)",
   "nodes": [
     {
-      "id": "programming-javascript-index",
+      "id": "html",
+      "t": "HTML",
+      "href": "../../frontend/html.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-file-code",
+      "g": "The web platform",
+      "s": "The document itself. Structure first — every framework you meet later compiles down to this."
+    },
+    { "id": "html-semantics", "t": "Semantic elements", "href": "../../frontend/html.html#semantics", "status": "soon", "tier": "detail", "after": ["html"] },
+    { "id": "html-forms", "t": "Forms & native validation", "href": "../../frontend/html.html#forms", "status": "soon", "tier": "detail", "after": ["html"] },
+    { "id": "html-media", "t": "Images, video & responsive media", "href": "../../frontend/html.html#media", "status": "soon", "tier": "detail", "after": ["html"] },
+    { "id": "html-meta", "t": "Metadata & SEO basics", "href": "../../frontend/html.html#meta", "status": "soon", "tier": "detail", "after": ["html"] },
+
+    {
+      "id": "css",
+      "t": "CSS",
+      "href": "../../frontend/css.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-brush",
+      "s": "Layout and presentation. The cascade is the part everyone skips and then fights for years.",
+      "after": ["html"]
+    },
+    { "id": "css-cascade", "t": "Selectors, cascade & specificity", "href": "../../frontend/css.html#cascade", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-box", "t": "Box model & positioning", "href": "../../frontend/css.html#box", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-flex", "t": "Flexbox", "href": "../../frontend/css.html#flexbox", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-grid", "t": "Grid", "href": "../../frontend/css.html#grid", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-responsive", "t": "Responsive design & media queries", "href": "../../frontend/css.html#responsive", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-vars", "t": "Custom properties & theming", "href": "../../frontend/css.html#custom-properties", "status": "soon", "tier": "detail", "after": ["css"] },
+    { "id": "css-motion", "t": "Transitions & animation", "href": "../../frontend/css.html#motion", "status": "soon", "tier": "detail", "after": ["css"] },
+
+    {
+      "id": "js",
       "t": "JavaScript",
       "href": "../../programming/javascript/index.html",
       "tier": "spine",
-      "g": "The language",
-      "s": "Closures, prototypes, classes, and the npm ecosystem — the language every browser runs."
+      "i": "ti-code",
+      "s": "The one language every browser runs. Learn it properly before any framework — frameworks change, this does not.",
+      "after": ["css"]
     },
+    { "id": "js-basics", "t": "Syntax & control flow", "href": "../../programming/javascript/basics.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-functions", "t": "Functions & closures", "href": "../../programming/javascript/functions.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-collections", "t": "Arrays, objects & maps", "href": "../../programming/javascript/collections.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-oop", "t": "Prototypes & classes", "href": "../../programming/javascript/oop.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-modules", "t": "Modules & the npm ecosystem", "href": "../../programming/javascript/modules.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-dom", "t": "The DOM & events", "href": "../../programming/javascript/dom.html", "tier": "detail", "after": ["js"] },
+    { "id": "js-async", "t": "Async, promises & the event loop", "href": "../../programming/javascript/async.html", "tier": "detail", "after": ["js"] },
+
     {
-      "id": "programming-javascript-dom",
-      "t": "The DOM & the Browser",
-      "href": "../../programming/javascript/dom.html",
+      "id": "web",
+      "t": "How a URL Becomes a Page",
+      "href": "../../systems/networking/url-journey.html",
       "tier": "spine",
-      "s": "Selecting and changing the page, event handling, and fetching data.",
-      "after": [
-        "programming-javascript-index"
-      ]
+      "i": "ti-world",
+      "g": "How the web works",
+      "s": "Everything between pressing Enter and seeing pixels. Frontend bugs live in this gap more often than in your code.",
+      "after": ["js"]
     },
+    { "id": "web-dns", "t": "DNS", "href": "../../systems/networking/dns.html", "tier": "detail", "after": ["web"] },
+    { "id": "web-http", "t": "HTTP & HTTPS", "href": "../../systems/networking/http.html", "tier": "detail", "after": ["web"] },
+    { "id": "web-realtime", "t": "WebSockets & realtime", "href": "../../systems/networking/realtime.html", "tier": "detail", "after": ["web"] },
+    { "id": "web-tcp", "t": "TCP & UDP", "href": "../../systems/networking/tcp-udp.html", "tier": "branch", "after": ["web"] },
+
     {
-      "id": "programming-javascript-async",
-      "t": "Asynchronous JavaScript",
-      "href": "../../programming/javascript/async.html",
+      "id": "git",
+      "t": "Git & GitHub",
+      "href": "../../devops/git.html",
       "tier": "spine",
-      "s": "Promises, async/await, and the event loop that orders it all.",
-      "after": [
-        "programming-javascript-index",
-        "programming-javascript-dom"
-      ]
+      "i": "ti-git-branch",
+      "g": "Working like a professional",
+      "s": "Branch, review, merge, revert. Non-negotiable on any team.",
+      "after": ["web"]
     },
+    { "id": "git-github", "t": "Pull requests & code review", "href": "../../devops/github.html", "tier": "detail", "after": ["git"] },
+
     {
-      "id": "programming-typescript-index",
+      "id": "tooling",
+      "t": "Build Tooling",
+      "href": "../../frontend/tooling.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-package",
+      "s": "What turns your source into something a browser can load quickly.",
+      "after": ["git"]
+    },
+    { "id": "tooling-npm", "t": "npm, lockfiles & semver", "href": "../../frontend/tooling.html#npm", "status": "soon", "tier": "detail", "after": ["tooling"] },
+    { "id": "tooling-vite", "t": "Vite & module bundling", "href": "../../frontend/tooling.html#vite", "status": "soon", "tier": "detail", "after": ["tooling"] },
+    { "id": "tooling-lint", "t": "ESLint & Prettier", "href": "../../frontend/tooling.html#lint", "status": "soon", "tier": "detail", "after": ["tooling"] },
+    { "id": "tooling-ts", "t": "tsconfig & compiler options", "href": "../../programming/typescript/tooling.html", "tier": "detail", "after": ["tooling"] },
+
+    {
+      "id": "ts",
       "t": "TypeScript",
       "href": "../../programming/typescript/index.html",
       "tier": "spine",
-      "s": "A static type system over the same language: inference, generics, and unions that catch bugs before runtime.",
-      "after": [
-        "programming-javascript-index",
-        "programming-javascript-async"
-      ]
+      "i": "ti-brackets",
+      "s": "A type system over the same language. The industry default for anything past a weekend project.",
+      "after": ["tooling"]
     },
+    { "id": "ts-basics", "t": "Types & inference", "href": "../../programming/typescript/basics.html", "tier": "detail", "after": ["ts"] },
+    { "id": "ts-objects", "t": "Objects & interfaces", "href": "../../programming/typescript/objects.html", "tier": "detail", "after": ["ts"] },
+    { "id": "ts-unions", "t": "Unions & narrowing", "href": "../../programming/typescript/unions.html", "tier": "detail", "after": ["ts"] },
+    { "id": "ts-functions", "t": "Typing functions", "href": "../../programming/typescript/functions.html", "tier": "detail", "after": ["ts"] },
+    { "id": "ts-generics", "t": "Generics", "href": "../../programming/typescript/generics.html", "tier": "detail", "after": ["ts"] },
+    { "id": "ts-advanced", "t": "Advanced types", "href": "../../programming/typescript/advanced-types.html", "tier": "branch", "after": ["ts"] },
+
     {
-      "id": "dsa-bigo",
-      "t": "Big-O Notation",
-      "href": "../../dsa/bigo.html",
+      "id": "react",
+      "t": "React",
+      "href": "../../frontend/react.html",
+      "status": "soon",
       "tier": "spine",
-      "g": "What interviews still ask",
-      "s": "Reason about time and space cost before you reach for an optimisation.",
-      "after": [
-        "programming-typescript-index"
-      ]
+      "i": "ti-box-multiple",
+      "g": "Frameworks",
+      "s": "The component model most jobs ask for. Vue, Svelte and Angular solve the same problem — learn one deeply and the rest transfer.",
+      "after": ["ts"]
     },
+    { "id": "react-jsx", "t": "Components & JSX", "href": "../../frontend/react.html#jsx", "status": "soon", "tier": "detail", "after": ["react"] },
+    { "id": "react-state", "t": "Props, state & lifting", "href": "../../frontend/react.html#state", "status": "soon", "tier": "detail", "after": ["react"] },
+    { "id": "react-hooks", "t": "Hooks & effects", "href": "../../frontend/react.html#hooks", "status": "soon", "tier": "detail", "after": ["react"] },
+    { "id": "react-lists", "t": "Lists, keys & reconciliation", "href": "../../frontend/react.html#lists", "status": "soon", "tier": "detail", "after": ["react"] },
+    { "id": "react-context", "t": "Context & composition", "href": "../../frontend/react.html#context", "status": "soon", "tier": "detail", "after": ["react"] },
+    { "id": "react-boundaries", "t": "Error boundaries & Suspense", "href": "../../frontend/react.html#boundaries", "status": "soon", "tier": "branch", "after": ["react"] },
+
     {
-      "id": "dsa-arrays",
-      "t": "Arrays & Strings",
-      "href": "../../dsa/arrays.html",
-      "tier": "branch",
-      "s": "The most-tested structure, and the two-pointer and sliding-window patterns that go with it.",
-      "after": [
-        "dsa-bigo"
-      ]
+      "id": "appstate",
+      "t": "Routing & State",
+      "href": "../../frontend/state.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-topology-star-3",
+      "s": "Where data lives once an app outgrows one component tree.",
+      "after": ["react"]
     },
+    { "id": "state-router", "t": "Client-side routing", "href": "../../frontend/state.html#routing", "status": "soon", "tier": "detail", "after": ["appstate"] },
+    { "id": "state-server", "t": "Server state & caching", "href": "../../frontend/state.html#server-state", "status": "soon", "tier": "detail", "after": ["appstate"] },
+    { "id": "state-global", "t": "Global state stores", "href": "../../frontend/state.html#global", "status": "soon", "tier": "detail", "after": ["appstate"] },
+    { "id": "state-forms", "t": "Forms & validation", "href": "../../frontend/state.html#forms", "status": "soon", "tier": "detail", "after": ["appstate"] },
+
     {
-      "id": "system-design-fundamentals",
-      "t": "System Design Fundamentals",
-      "href": "../../system-design/fundamentals.html",
-      "tier": "branch",
-      "s": "Functional vs non-functional requirements, and how a request actually flows through a system.",
-      "after": [
-        "dsa-bigo"
-      ]
+      "id": "ssr",
+      "t": "Rendering on the Server",
+      "href": "../../frontend/nextjs.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-server",
+      "s": "SSR, static generation and server components — why a meta-framework exists at all.",
+      "after": ["appstate"]
     },
+    { "id": "ssr-modes", "t": "SSR, SSG & incremental rendering", "href": "../../frontend/nextjs.html#modes", "status": "soon", "tier": "detail", "after": ["ssr"] },
+    { "id": "ssr-server-components", "t": "Server components", "href": "../../frontend/nextjs.html#server-components", "status": "soon", "tier": "detail", "after": ["ssr"] },
+    { "id": "ssr-api", "t": "API routes & data loading", "href": "../../frontend/nextjs.html#data", "status": "soon", "tier": "detail", "after": ["ssr"] },
+
     {
-      "id": "system-design-caching",
-      "t": "Caching Strategies",
-      "href": "../../system-design/caching.html",
-      "tier": "branch",
-      "s": "Cache layers from memory to CDN edge, and the consistency cost of each.",
-      "after": [
-        "dsa-bigo"
-      ]
+      "id": "testing",
+      "t": "Testing",
+      "href": "../../frontend/testing.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-flask",
+      "g": "Making it hold up",
+      "s": "Test behaviour, not implementation — that is the difference between a suite that helps and one people delete.",
+      "after": ["ssr"]
     },
+    { "id": "testing-unit", "t": "Unit tests with Vitest", "href": "../../frontend/testing.html#unit", "status": "soon", "tier": "detail", "after": ["testing"] },
+    { "id": "testing-component", "t": "Component tests", "href": "../../frontend/testing.html#component", "status": "soon", "tier": "detail", "after": ["testing"] },
+    { "id": "testing-e2e", "t": "End-to-end with Playwright", "href": "../../frontend/testing.html#e2e", "status": "soon", "tier": "detail", "after": ["testing"] },
+
     {
-      "id": "interview-js-interview",
-      "t": "JavaScript Interview",
+      "id": "a11y",
+      "t": "Accessibility",
+      "href": "../../frontend/accessibility.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-eye",
+      "s": "WCAG in practice. A legal requirement in most markets, and the fastest way to spot a careless frontend.",
+      "after": ["testing"]
+    },
+    { "id": "a11y-semantics", "t": "Semantics & ARIA", "href": "../../frontend/accessibility.html#aria", "status": "soon", "tier": "detail", "after": ["a11y"] },
+    { "id": "a11y-keyboard", "t": "Keyboard & focus management", "href": "../../frontend/accessibility.html#keyboard", "status": "soon", "tier": "detail", "after": ["a11y"] },
+    { "id": "a11y-contrast", "t": "Colour contrast", "href": "../../frontend/accessibility.html#contrast", "status": "soon", "tier": "detail", "after": ["a11y"] },
+    { "id": "a11y-testing", "t": "Testing with a screen reader", "href": "../../frontend/accessibility.html#screen-readers", "status": "soon", "tier": "detail", "after": ["a11y"] },
+
+    {
+      "id": "perf",
+      "t": "Web Performance",
+      "href": "../../frontend/performance.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-gauge",
+      "s": "Core Web Vitals, and the handful of decisions that account for most of the score.",
+      "after": ["a11y"]
+    },
+    { "id": "perf-vitals", "t": "Core Web Vitals", "href": "../../frontend/performance.html#vitals", "status": "soon", "tier": "detail", "after": ["perf"] },
+    { "id": "perf-bundle", "t": "Bundle size & code splitting", "href": "../../frontend/performance.html#bundles", "status": "soon", "tier": "detail", "after": ["perf"] },
+    { "id": "perf-assets", "t": "Images & fonts", "href": "../../frontend/performance.html#assets", "status": "soon", "tier": "detail", "after": ["perf"] },
+    { "id": "perf-cdn", "t": "CDNs", "href": "../../system-design/cdn.html", "tier": "detail", "after": ["perf"] },
+    { "id": "perf-caching", "t": "Caching strategies", "href": "../../system-design/caching.html", "tier": "detail", "after": ["perf"] },
+
+    {
+      "id": "security",
+      "t": "Web Security",
+      "href": "../../systems/security/web-security.html",
+      "tier": "spine",
+      "i": "ti-shield-lock",
+      "s": "XSS, CSRF and CSP. The browser is a hostile environment and your code runs inside it.",
+      "after": ["perf"]
+    },
+    { "id": "sec-app", "t": "Application security", "href": "../../systems/security/app-security.html", "tier": "detail", "after": ["security"] },
+    { "id": "sec-auth", "t": "Authentication & sessions", "href": "../../systems/security/authentication.html", "tier": "detail", "after": ["security"] },
+    { "id": "sec-tls", "t": "TLS & certificates", "href": "../../systems/security/tls-pki.html", "tier": "detail", "after": ["security"] },
+
+    {
+      "id": "ship",
+      "t": "Deploying",
+      "href": "../../devops/cicd.html",
+      "tier": "spine",
+      "i": "ti-rocket",
+      "g": "Shipping it",
+      "s": "Getting it in front of people, repeatably, without a human running commands.",
+      "after": ["security"]
+    },
+    { "id": "ship-actions", "t": "GitHub Actions", "href": "../../devops/github-actions.html", "tier": "detail", "after": ["ship"] },
+    { "id": "ship-nginx", "t": "Nginx & reverse proxies", "href": "../../devops/nginx.html", "tier": "detail", "after": ["ship"] },
+    { "id": "ship-docker", "t": "Docker", "href": "../../devops/docker.html", "tier": "branch", "after": ["ship"] },
+    { "id": "ship-monitoring", "t": "Monitoring & error tracking", "href": "../../devops/monitoring.html", "tier": "branch", "after": ["ship"] },
+
+    {
+      "id": "interview",
+      "t": "Interview Preparation",
       "href": "../../interview/js-interview.html",
       "tier": "spine",
+      "i": "ti-checklist",
       "g": "Prove it",
-      "s": "15 questions on closures, `this`, the event loop, and prototypes.",
-      "after": [
-        "programming-javascript-async",
-        "dsa-bigo"
-      ]
-    }
+      "s": "Frontend interviews still test fundamentals: the language, cost analysis, and one system-design conversation.",
+      "after": ["ship"]
+    },
+    { "id": "iv-bigo", "t": "Big-O notation", "href": "../../dsa/bigo.html", "tier": "detail", "after": ["interview"] },
+    { "id": "iv-arrays", "t": "Arrays & strings", "href": "../../dsa/arrays.html", "tier": "detail", "after": ["interview"] },
+    { "id": "iv-sysdesign", "t": "System design fundamentals", "href": "../../system-design/fundamentals.html", "tier": "detail", "after": ["interview"] },
+    { "id": "iv-oop", "t": "OOP questions", "href": "../../interview/oop-interview.html", "tier": "branch", "after": ["interview"] }
   ]
 }
 </script>
@@ -179,11 +329,11 @@
 <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
 
 <script src="../../assets/js/topics-manifest.js?v=3"></script>
-<script src="../../assets/js/site-index.js?v=6"></script>
+<script src="../../assets/js/site-index.js?v=7"></script>
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
-<script src="../../assets/js/platform.js?v=5"></script>
-<script src="../../assets/js/roadmap-timeline.js?v=1"></script>
+<script src="../../assets/js/platform.js?v=6"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=3"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

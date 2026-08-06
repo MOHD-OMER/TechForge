@@ -67,4 +67,36 @@ function mkGraph(nodes) {
   assert.deepEqual(errors, [], `expected no errors, got: ${JSON.stringify(errors)}`);
 }
 
-console.log('OK: 5/5 validate-graphs regression checks passed');
+// 6. reverse drift: a "soon" node whose page now exists must be reported, and
+//    one whose page is still missing must not be — the check is worthless if it
+//    fires either always or never.
+{
+  const written = mkGraph([
+    { id: 'root', tier: 'spine' },
+    { id: 'x', tier: 'branch', after: ['root'], status: 'soon', href: '../dsa/arrays.html' },
+  ]);
+  assert.ok(
+    validateGraph(written, 'roadmaps/probe.html').some((e) => e.includes('now exists')),
+    'expected reverse-drift error for a soon node whose page exists'
+  );
+
+  const unwritten = mkGraph([
+    { id: 'root', tier: 'spine' },
+    { id: 'x', tier: 'branch', after: ['root'], status: 'soon', href: '../frontend/react.html' },
+  ]);
+  assert.deepEqual(
+    validateGraph(unwritten, 'roadmaps/probe.html'), [],
+    'a soon node pointing at a page that does not exist yet is the normal case'
+  );
+}
+
+// 7. an unknown status value is rejected
+{
+  const graph = mkGraph([{ id: 'root', tier: 'spine', status: 'maybe' }]);
+  assert.ok(
+    validateGraph(graph, 'roadmaps/probe.html').some((e) => e.includes('status must be')),
+    'expected an error for an unrecognised status'
+  );
+}
+
+console.log('OK: 7/7 validate-graphs regression checks passed');

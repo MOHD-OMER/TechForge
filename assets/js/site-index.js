@@ -11,6 +11,8 @@
     "section": "home",
     "sectionKey": "home",
     "href": "404.html",
+    "path": "404.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -21,6 +23,8 @@
     "section": "about",
     "sectionKey": "about",
     "href": "about.html",
+    "path": "about.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -31,6 +35,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/aiml-explained.html",
+    "path": "aiml/aiml-explained.html",
+    "topic": "aiml/aiml-explained",
     "depth": "guide"
   },
   {
@@ -41,6 +47,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/cv.html",
+    "path": "aiml/cv.html",
+    "topic": "aiml/cv",
     "depth": "guide"
   },
   {
@@ -51,6 +59,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/dl.html",
+    "path": "aiml/dl.html",
+    "topic": "aiml/dl",
     "depth": "guide"
   },
   {
@@ -61,6 +71,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/ds-cheatsheet.html",
+    "path": "aiml/ds-cheatsheet.html",
+    "topic": "aiml/ds-cheatsheet",
     "depth": "guide"
   },
   {
@@ -71,6 +83,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/genai.html",
+    "path": "aiml/genai.html",
+    "topic": "aiml/genai",
     "depth": "guide"
   },
   {
@@ -81,6 +95,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/index.html",
+    "path": "aiml/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -91,6 +107,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/ml.html",
+    "path": "aiml/ml.html",
+    "topic": "aiml/ml",
     "depth": "guide"
   },
   {
@@ -101,6 +119,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/nlp.html",
+    "path": "aiml/nlp.html",
+    "topic": "aiml/nlp",
     "depth": "guide"
   },
   {
@@ -111,6 +131,8 @@
     "section": "AI/ML",
     "sectionKey": "aiml",
     "href": "aiml/rl.html",
+    "path": "aiml/rl.html",
+    "topic": "aiml/rl",
     "depth": "guide"
   },
   {
@@ -121,6 +143,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/basics.html",
+    "path": "programming/cpp/basics.html",
+    "topic": "cpp/basics",
     "depth": "guide"
   },
   {
@@ -131,6 +155,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/containers.html",
+    "path": "programming/cpp/containers.html",
+    "topic": "cpp/containers",
     "depth": "guide"
   },
   {
@@ -141,6 +167,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/control.html",
+    "path": "programming/cpp/control.html",
+    "topic": "cpp/control",
     "depth": "guide"
   },
   {
@@ -151,6 +179,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/functions.html",
+    "path": "programming/cpp/functions.html",
+    "topic": "cpp/functions",
     "depth": "guide"
   },
   {
@@ -161,6 +191,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/index.html",
+    "path": "programming/cpp/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -171,6 +203,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/modern.html",
+    "path": "programming/cpp/modern.html",
+    "topic": "cpp/modern",
     "depth": "guide"
   },
   {
@@ -181,6 +215,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/oop.html",
+    "path": "programming/cpp/oop.html",
+    "topic": "cpp/oop",
     "depth": "guide"
   },
   {
@@ -191,6 +227,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/pointers.html",
+    "path": "programming/cpp/pointers.html",
+    "topic": "cpp/pointers",
     "depth": "guide"
   },
   {
@@ -201,6 +239,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/programs.html",
+    "path": "programming/cpp/programs.html",
+    "topic": "cpp/programs",
     "depth": "guide"
   },
   {
@@ -211,6 +251,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "cpp/templates.html",
+    "path": "programming/cpp/templates.html",
+    "topic": "cpp/templates",
     "depth": "guide"
   },
   {
@@ -221,6 +263,8 @@
     "section": "home",
     "sectionKey": "home",
     "href": "dashboard.html",
+    "path": "dashboard.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -231,6 +275,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/cassandra.html",
+    "path": "databases/cassandra.html",
+    "topic": "db/cassandra",
     "depth": "guide"
   },
   {
@@ -241,6 +287,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/couchdb.html",
+    "path": "databases/couchdb.html",
+    "topic": "db/couchdb",
     "depth": "guide"
   },
   {
@@ -251,6 +299,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/dynamodb.html",
+    "path": "databases/dynamodb.html",
+    "topic": "db/dynamodb",
     "depth": "guide"
   },
   {
@@ -261,6 +311,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/elasticsearch.html",
+    "path": "databases/elasticsearch.html",
+    "topic": "db/elasticsearch",
     "depth": "guide"
   },
   {
@@ -271,6 +323,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/graph-databases.html",
+    "path": "databases/graph-databases.html",
+    "topic": "db/graph-databases",
     "depth": "guide"
   },
   {
@@ -281,6 +335,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/index.html",
+    "path": "databases/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -291,6 +347,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/influxdb.html",
+    "path": "databases/influxdb.html",
+    "topic": "db/influxdb",
     "depth": "guide"
   },
   {
@@ -301,6 +359,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/mariadb.html",
+    "path": "databases/mariadb.html",
+    "topic": "db/mariadb",
     "depth": "guide"
   },
   {
@@ -311,6 +371,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/mongodb.html",
+    "path": "databases/mongodb.html",
+    "topic": "db/mongodb",
     "depth": "guide"
   },
   {
@@ -321,6 +383,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/mysql.html",
+    "path": "databases/mysql.html",
+    "topic": "db/mysql",
     "depth": "guide"
   },
   {
@@ -331,6 +395,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/neo4j.html",
+    "path": "databases/neo4j.html",
+    "topic": "db/neo4j",
     "depth": "guide"
   },
   {
@@ -341,6 +407,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/postgres.html",
+    "path": "databases/postgres.html",
+    "topic": "db/postgres",
     "depth": "guide"
   },
   {
@@ -351,6 +419,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/redis.html",
+    "path": "databases/redis.html",
+    "topic": "db/redis",
     "depth": "guide"
   },
   {
@@ -361,6 +431,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/sql.html",
+    "path": "databases/sql.html",
+    "topic": "db/sql",
     "depth": "guide"
   },
   {
@@ -371,6 +443,8 @@
     "section": "Database Systems",
     "sectionKey": "databases",
     "href": "databases/sqlite.html",
+    "path": "databases/sqlite.html",
+    "topic": "db/sqlite",
     "depth": "guide"
   },
   {
@@ -381,6 +455,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/ansible.html",
+    "path": "devops/ansible.html",
+    "topic": "devops/ansible",
     "depth": "guide"
   },
   {
@@ -391,6 +467,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/aws-basics.html",
+    "path": "devops/aws-basics.html",
+    "topic": "devops/aws-basics",
     "depth": "guide"
   },
   {
@@ -401,6 +479,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/azure-basics.html",
+    "path": "devops/azure-basics.html",
+    "topic": "devops/azure-basics",
     "depth": "guide"
   },
   {
@@ -411,6 +491,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/bash-scripting.html",
+    "path": "devops/bash-scripting.html",
+    "topic": "devops/bash-scripting",
     "depth": "guide"
   },
   {
@@ -421,6 +503,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/cicd.html",
+    "path": "devops/cicd.html",
+    "topic": "devops/cicd",
     "depth": "guide"
   },
   {
@@ -431,6 +515,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/cloud-fundamentals.html",
+    "path": "devops/cloud-fundamentals.html",
+    "topic": "devops/cloud-fundamentals",
     "depth": "guide"
   },
   {
@@ -441,6 +527,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/docker-compose.html",
+    "path": "devops/docker-compose.html",
+    "topic": "devops/docker-compose",
     "depth": "guide"
   },
   {
@@ -451,6 +539,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/docker.html",
+    "path": "devops/docker.html",
+    "topic": "devops/docker",
     "depth": "guide"
   },
   {
@@ -461,6 +551,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/gcp-basics.html",
+    "path": "devops/gcp-basics.html",
+    "topic": "devops/gcp-basics",
     "depth": "guide"
   },
   {
@@ -471,6 +563,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/git.html",
+    "path": "devops/git.html",
+    "topic": "devops/git",
     "depth": "guide"
   },
   {
@@ -481,6 +575,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/github-actions.html",
+    "path": "devops/github-actions.html",
+    "topic": "devops/github-actions",
     "depth": "guide"
   },
   {
@@ -491,6 +587,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/github.html",
+    "path": "devops/github.html",
+    "topic": "devops/github",
     "depth": "guide"
   },
   {
@@ -501,6 +599,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/grafana.html",
+    "path": "devops/grafana.html",
+    "topic": "devops/grafana",
     "depth": "guide"
   },
   {
@@ -511,6 +611,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/helm.html",
+    "path": "devops/helm.html",
+    "topic": "devops/helm",
     "depth": "guide"
   },
   {
@@ -521,6 +623,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/index.html",
+    "path": "devops/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -531,6 +635,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/infrastructure.html",
+    "path": "devops/infrastructure.html",
+    "topic": "devops/infrastructure",
     "depth": "guide"
   },
   {
@@ -541,6 +647,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/jenkins.html",
+    "path": "devops/jenkins.html",
+    "topic": "devops/jenkins",
     "depth": "guide"
   },
   {
@@ -551,6 +659,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/kubernetes.html",
+    "path": "devops/kubernetes.html",
+    "topic": "devops/kubernetes",
     "depth": "guide"
   },
   {
@@ -561,6 +671,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/linux-basics.html",
+    "path": "devops/linux-basics.html",
+    "topic": "devops/linux-basics",
     "depth": "guide"
   },
   {
@@ -571,6 +683,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/monitoring.html",
+    "path": "devops/monitoring.html",
+    "topic": "devops/monitoring",
     "depth": "guide"
   },
   {
@@ -581,6 +695,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/nginx.html",
+    "path": "devops/nginx.html",
+    "topic": "devops/nginx",
     "depth": "guide"
   },
   {
@@ -591,6 +707,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/prometheus.html",
+    "path": "devops/prometheus.html",
+    "topic": "devops/prometheus",
     "depth": "guide"
   },
   {
@@ -601,6 +719,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/reverse-proxy.html",
+    "path": "devops/reverse-proxy.html",
+    "topic": "devops/reverse-proxy",
     "depth": "guide"
   },
   {
@@ -611,6 +731,8 @@
     "section": "DevOps",
     "sectionKey": "devops",
     "href": "devops/terraform.html",
+    "path": "devops/terraform.html",
+    "topic": "devops/terraform",
     "depth": "guide"
   },
   {
@@ -621,6 +743,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/arrays.html",
+    "path": "dsa/arrays.html",
+    "topic": "dsa/arrays",
     "depth": "guide"
   },
   {
@@ -631,6 +755,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/avl.html",
+    "path": "dsa/avl.html",
+    "topic": "dsa/avl",
     "depth": "guide"
   },
   {
@@ -641,6 +767,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/bfs.html",
+    "path": "dsa/bfs.html",
+    "topic": "dsa/bfs",
     "depth": "guide"
   },
   {
@@ -651,6 +779,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/bigo.html",
+    "path": "dsa/bigo.html",
+    "topic": "dsa/bigo",
     "depth": "guide"
   },
   {
@@ -661,6 +791,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/binarysearch.html",
+    "path": "dsa/binarysearch.html",
+    "topic": "dsa/binarysearch",
     "depth": "guide"
   },
   {
@@ -671,6 +803,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/bits.html",
+    "path": "dsa/bits.html",
+    "topic": "dsa/bits",
     "depth": "guide"
   },
   {
@@ -681,6 +815,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/bst.html",
+    "path": "dsa/bst.html",
+    "topic": "dsa/bst",
     "depth": "guide"
   },
   {
@@ -691,6 +827,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/bubble.html",
+    "path": "dsa/bubble.html",
+    "topic": "dsa/bubble",
     "depth": "guide"
   },
   {
@@ -701,6 +839,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/cll.html",
+    "path": "dsa/cll.html",
+    "topic": "dsa/cll",
     "depth": "guide"
   },
   {
@@ -711,6 +851,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/dfs.html",
+    "path": "dsa/dfs.html",
+    "topic": "dsa/dfs",
     "depth": "guide"
   },
   {
@@ -721,6 +863,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/dijkstra.html",
+    "path": "dsa/dijkstra.html",
+    "topic": "dsa/dijkstra",
     "depth": "guide"
   },
   {
@@ -731,6 +875,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/dll.html",
+    "path": "dsa/dll.html",
+    "topic": "dsa/dll",
     "depth": "guide"
   },
   {
@@ -741,6 +887,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/dp.html",
+    "path": "dsa/dp.html",
+    "topic": "dsa/dp",
     "depth": "guide"
   },
   {
@@ -751,6 +899,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/graph.html",
+    "path": "dsa/graph.html",
+    "topic": "dsa/graph",
     "depth": "guide"
   },
   {
@@ -761,6 +911,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/hashtable.html",
+    "path": "dsa/hashtable.html",
+    "topic": "dsa/hashtable",
     "depth": "guide"
   },
   {
@@ -771,6 +923,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/heap.html",
+    "path": "dsa/heap.html",
+    "topic": "dsa/heap",
     "depth": "guide"
   },
   {
@@ -781,6 +935,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/heapsort.html",
+    "path": "dsa/heapsort.html",
+    "topic": "dsa/heapsort",
     "depth": "guide"
   },
   {
@@ -791,6 +947,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/index.html",
+    "path": "dsa/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -801,6 +959,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/insertion.html",
+    "path": "dsa/insertion.html",
+    "topic": "dsa/insertion",
     "depth": "guide"
   },
   {
@@ -811,6 +971,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/linearsearch.html",
+    "path": "dsa/linearsearch.html",
+    "topic": "dsa/linearsearch",
     "depth": "guide"
   },
   {
@@ -821,6 +983,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/logic-building.html",
+    "path": "dsa/logic-building.html",
+    "topic": "dsa/logic-building",
     "depth": "guide"
   },
   {
@@ -831,6 +995,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/merge.html",
+    "path": "dsa/merge.html",
+    "topic": "dsa/merge",
     "depth": "guide"
   },
   {
@@ -841,6 +1007,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/queue.html",
+    "path": "dsa/queue.html",
+    "topic": "dsa/queue",
     "depth": "guide"
   },
   {
@@ -851,6 +1019,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/quick.html",
+    "path": "dsa/quick.html",
+    "topic": "dsa/quick",
     "depth": "guide"
   },
   {
@@ -861,6 +1031,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/recursion.html",
+    "path": "dsa/recursion.html",
+    "topic": "dsa/recursion",
     "depth": "guide"
   },
   {
@@ -871,6 +1043,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/selection.html",
+    "path": "dsa/selection.html",
+    "topic": "dsa/selection",
     "depth": "guide"
   },
   {
@@ -881,6 +1055,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/sliding.html",
+    "path": "dsa/sliding.html",
+    "topic": "dsa/sliding",
     "depth": "guide"
   },
   {
@@ -891,6 +1067,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/sll.html",
+    "path": "dsa/sll.html",
+    "topic": "dsa/sll",
     "depth": "guide"
   },
   {
@@ -901,6 +1079,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/stack.html",
+    "path": "dsa/stack.html",
+    "topic": "dsa/stack",
     "depth": "guide"
   },
   {
@@ -911,6 +1091,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/trie.html",
+    "path": "dsa/trie.html",
+    "topic": "dsa/trie",
     "depth": "guide"
   },
   {
@@ -921,6 +1103,8 @@
     "section": "DSA",
     "sectionKey": "dsa",
     "href": "dsa/twopointer.html",
+    "path": "dsa/twopointer.html",
+    "topic": "dsa/twopointer",
     "depth": "guide"
   },
   {
@@ -931,6 +1115,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/aiml-interview.html",
+    "path": "interview/aiml-interview.html",
+    "topic": "iv/aiml-interview",
     "depth": "guide"
   },
   {
@@ -941,6 +1127,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/cpp-interview.html",
+    "path": "interview/cpp-interview.html",
+    "topic": "iv/cpp-interview",
     "depth": "guide"
   },
   {
@@ -951,6 +1139,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/devops-interview.html",
+    "path": "interview/devops-interview.html",
+    "topic": "iv/devops-interview",
     "depth": "guide"
   },
   {
@@ -961,6 +1151,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/dsa-interview.html",
+    "path": "interview/dsa-interview.html",
+    "topic": "iv/dsa-interview",
     "depth": "guide"
   },
   {
@@ -971,6 +1163,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/index.html",
+    "path": "interview/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -981,6 +1175,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/java-interview.html",
+    "path": "interview/java-interview.html",
+    "topic": "iv/java-interview",
     "depth": "guide"
   },
   {
@@ -991,6 +1187,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/js-interview.html",
+    "path": "interview/js-interview.html",
+    "topic": "iv/js-interview",
     "depth": "guide"
   },
   {
@@ -1001,6 +1199,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/networking-interview.html",
+    "path": "interview/networking-interview.html",
+    "topic": "iv/networking-interview",
     "depth": "guide"
   },
   {
@@ -1011,6 +1211,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/oop-interview.html",
+    "path": "interview/oop-interview.html",
+    "topic": "iv/oop-interview",
     "depth": "guide"
   },
   {
@@ -1021,6 +1223,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/os-interview.html",
+    "path": "interview/os-interview.html",
+    "topic": "iv/os-interview",
     "depth": "guide"
   },
   {
@@ -1031,6 +1235,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/python-interview.html",
+    "path": "interview/python-interview.html",
+    "topic": "iv/python-interview",
     "depth": "guide"
   },
   {
@@ -1041,6 +1247,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/security-interview.html",
+    "path": "interview/security-interview.html",
+    "topic": "iv/security-interview",
     "depth": "guide"
   },
   {
@@ -1051,6 +1259,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/sql-interview.html",
+    "path": "interview/sql-interview.html",
+    "topic": "iv/sql-interview",
     "depth": "guide"
   },
   {
@@ -1061,6 +1271,8 @@
     "section": "Interview",
     "sectionKey": "interview",
     "href": "interview/system-design-interview.html",
+    "path": "interview/system-design-interview.html",
+    "topic": "iv/system-design-interview",
     "depth": "guide"
   },
   {
@@ -1071,6 +1283,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/basics.html",
+    "path": "programming/java/basics.html",
+    "topic": "java/basics",
     "depth": "guide"
   },
   {
@@ -1081,6 +1295,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/collections.html",
+    "path": "programming/java/collections.html",
+    "topic": "java/collections",
     "depth": "guide"
   },
   {
@@ -1091,6 +1307,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/concurrency.html",
+    "path": "programming/java/concurrency.html",
+    "topic": "java/concurrency",
     "depth": "guide"
   },
   {
@@ -1101,6 +1319,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/control.html",
+    "path": "programming/java/control.html",
+    "topic": "java/control",
     "depth": "guide"
   },
   {
@@ -1111,6 +1331,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/exceptions.html",
+    "path": "programming/java/exceptions.html",
+    "topic": "java/exceptions",
     "depth": "guide"
   },
   {
@@ -1121,6 +1343,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/index.html",
+    "path": "programming/java/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1131,6 +1355,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/methods.html",
+    "path": "programming/java/methods.html",
+    "topic": "java/methods",
     "depth": "guide"
   },
   {
@@ -1141,6 +1367,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/oop.html",
+    "path": "programming/java/oop.html",
+    "topic": "java/oop",
     "depth": "guide"
   },
   {
@@ -1151,6 +1379,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/programs.html",
+    "path": "programming/java/programs.html",
+    "topic": "java/programs",
     "depth": "guide"
   },
   {
@@ -1161,6 +1391,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "java/streams.html",
+    "path": "programming/java/streams.html",
+    "topic": "java/streams",
     "depth": "guide"
   },
   {
@@ -1171,6 +1403,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/async.html",
+    "path": "programming/javascript/async.html",
+    "topic": "js/async",
     "depth": "guide"
   },
   {
@@ -1181,6 +1415,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/basics.html",
+    "path": "programming/javascript/basics.html",
+    "topic": "js/basics",
     "depth": "guide"
   },
   {
@@ -1191,6 +1427,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/collections.html",
+    "path": "programming/javascript/collections.html",
+    "topic": "js/collections",
     "depth": "guide"
   },
   {
@@ -1201,6 +1439,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/control.html",
+    "path": "programming/javascript/control.html",
+    "topic": "js/control",
     "depth": "guide"
   },
   {
@@ -1211,6 +1451,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/dom.html",
+    "path": "programming/javascript/dom.html",
+    "topic": "js/dom",
     "depth": "guide"
   },
   {
@@ -1221,6 +1463,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/functions.html",
+    "path": "programming/javascript/functions.html",
+    "topic": "js/functions",
     "depth": "guide"
   },
   {
@@ -1231,6 +1475,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/index.html",
+    "path": "programming/javascript/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1241,6 +1487,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/modules.html",
+    "path": "programming/javascript/modules.html",
+    "topic": "js/modules",
     "depth": "guide"
   },
   {
@@ -1251,6 +1499,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/oop.html",
+    "path": "programming/javascript/oop.html",
+    "topic": "js/oop",
     "depth": "guide"
   },
   {
@@ -1261,6 +1511,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "javascript/programs.html",
+    "path": "programming/javascript/programs.html",
+    "topic": "js/programs",
     "depth": "guide"
   },
   {
@@ -1271,6 +1523,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/dns.html",
+    "path": "systems/networking/dns.html",
+    "topic": "sys/net-dns",
     "depth": "guide"
   },
   {
@@ -1281,6 +1535,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/http.html",
+    "path": "systems/networking/http.html",
+    "topic": "sys/net-http",
     "depth": "guide"
   },
   {
@@ -1291,6 +1547,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/index.html",
+    "path": "systems/networking/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1301,6 +1559,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/realtime.html",
+    "path": "systems/networking/realtime.html",
+    "topic": "sys/net-realtime",
     "depth": "guide"
   },
   {
@@ -1311,6 +1571,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/routing.html",
+    "path": "systems/networking/routing.html",
+    "topic": "sys/net-routing",
     "depth": "guide"
   },
   {
@@ -1321,6 +1583,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/sockets.html",
+    "path": "systems/networking/sockets.html",
+    "topic": "sys/net-sockets",
     "depth": "guide"
   },
   {
@@ -1331,6 +1595,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/stack.html",
+    "path": "systems/networking/stack.html",
+    "topic": "sys/net-stack",
     "depth": "guide"
   },
   {
@@ -1341,6 +1607,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/tcp-udp.html",
+    "path": "systems/networking/tcp-udp.html",
+    "topic": "sys/net-tcp-udp",
     "depth": "guide"
   },
   {
@@ -1351,6 +1619,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "networking/url-journey.html",
+    "path": "systems/networking/url-journey.html",
+    "topic": "sys/net-url-journey",
     "depth": "guide"
   },
   {
@@ -1361,6 +1631,8 @@
     "section": "home",
     "sectionKey": "home",
     "href": "offline.html",
+    "path": "offline.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1371,6 +1643,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/boot.html",
+    "path": "systems/os/boot.html",
+    "topic": "sys/os-boot",
     "depth": "guide"
   },
   {
@@ -1381,6 +1655,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/concurrency.html",
+    "path": "systems/os/concurrency.html",
+    "topic": "sys/os-concurrency",
     "depth": "guide"
   },
   {
@@ -1391,6 +1667,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/deadlocks.html",
+    "path": "systems/os/deadlocks.html",
+    "topic": "sys/os-deadlocks",
     "depth": "guide"
   },
   {
@@ -1401,6 +1679,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/filesystems.html",
+    "path": "systems/os/filesystems.html",
+    "topic": "sys/os-filesystems",
     "depth": "guide"
   },
   {
@@ -1411,6 +1691,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/index.html",
+    "path": "systems/os/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1421,6 +1703,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/io.html",
+    "path": "systems/os/io.html",
+    "topic": "sys/os-io",
     "depth": "guide"
   },
   {
@@ -1431,6 +1715,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/memory.html",
+    "path": "systems/os/memory.html",
+    "topic": "sys/os-memory",
     "depth": "guide"
   },
   {
@@ -1441,6 +1727,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/processes.html",
+    "path": "systems/os/processes.html",
+    "topic": "sys/os-processes",
     "depth": "guide"
   },
   {
@@ -1451,6 +1739,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "os/scheduling.html",
+    "path": "systems/os/scheduling.html",
+    "topic": "sys/os-scheduling",
     "depth": "guide"
   },
   {
@@ -1461,6 +1751,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/aiml.html",
+    "path": "roadmaps/paths/aiml.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1471,6 +1763,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/backend.html",
+    "path": "roadmaps/paths/backend.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1481,6 +1775,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/cs.html",
+    "path": "roadmaps/paths/cs.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1491,6 +1787,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/devops.html",
+    "path": "roadmaps/paths/devops.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1501,16 +1799,20 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/dsa.html",
+    "path": "roadmaps/paths/dsa.html",
+    "topic": null,
     "depth": "page"
   },
   {
     "id": "roadmaps/frontend",
     "title": "Frontend Developer Roadmap",
-    "desc": "Build for the browser. Master the one language browsers run, add a type system on top, then pick up the complexity and s",
+    "desc": "The full frontend path: HTML and CSS, JavaScript, how the browser fetches a page, Git, build tooling, TypeScript, React,",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/frontend.html",
+    "path": "roadmaps/paths/frontend.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1521,6 +1823,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/fullstack.html",
+    "path": "roadmaps/paths/fullstack.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1531,6 +1835,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "programming/index.html",
+    "path": "programming/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1541,6 +1847,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/async.html",
+    "path": "programming/python/async.html",
+    "topic": "py/async",
     "depth": "guide"
   },
   {
@@ -1551,6 +1859,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/basics.html",
+    "path": "programming/python/basics.html",
+    "topic": "py/basics",
     "depth": "guide"
   },
   {
@@ -1561,6 +1871,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/collections.html",
+    "path": "programming/python/collections.html",
+    "topic": "py/collections",
     "depth": "guide"
   },
   {
@@ -1571,6 +1883,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/control.html",
+    "path": "programming/python/control.html",
+    "topic": "py/control",
     "depth": "guide"
   },
   {
@@ -1581,6 +1895,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/functions.html",
+    "path": "programming/python/functions.html",
+    "topic": "py/functions",
     "depth": "guide"
   },
   {
@@ -1591,6 +1907,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/index.html",
+    "path": "programming/python/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1601,6 +1919,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/libraries.html",
+    "path": "programming/python/libraries.html",
+    "topic": "py/libraries",
     "depth": "guide"
   },
   {
@@ -1611,6 +1931,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/modules.html",
+    "path": "programming/python/modules.html",
+    "topic": "py/modules",
     "depth": "guide"
   },
   {
@@ -1621,6 +1943,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/oop.html",
+    "path": "programming/python/oop.html",
+    "topic": "py/oop",
     "depth": "guide"
   },
   {
@@ -1631,6 +1955,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "python/programs.html",
+    "path": "programming/python/programs.html",
+    "topic": "py/programs",
     "depth": "guide"
   },
   {
@@ -1641,6 +1967,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/aiml.html",
+    "path": "roadmaps/aiml.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1651,6 +1979,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/cpp.html",
+    "path": "roadmaps/cpp.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1661,6 +1991,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/databases.html",
+    "path": "roadmaps/databases.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1671,6 +2003,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/devops.html",
+    "path": "roadmaps/devops.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1681,6 +2015,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/dsa.html",
+    "path": "roadmaps/dsa.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1691,6 +2027,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/index.html",
+    "path": "roadmaps/index.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1701,6 +2039,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/java.html",
+    "path": "roadmaps/java.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1711,6 +2051,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/javascript.html",
+    "path": "roadmaps/javascript.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1721,6 +2063,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/networking.html",
+    "path": "roadmaps/networking.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1731,6 +2075,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/os.html",
+    "path": "roadmaps/os.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1741,6 +2087,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/python.html",
+    "path": "roadmaps/python.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1751,6 +2099,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/security.html",
+    "path": "roadmaps/security.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1761,6 +2111,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/system-design.html",
+    "path": "roadmaps/system-design.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1771,6 +2123,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/theory.html",
+    "path": "roadmaps/theory.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1781,6 +2135,8 @@
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "roadmaps/typescript.html",
+    "path": "roadmaps/typescript.html",
+    "topic": null,
     "depth": "page"
   },
   {
@@ -1791,6 +2147,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/app-security.html",
+    "path": "systems/security/app-security.html",
+    "topic": "sys/sec-appsec",
     "depth": "guide"
   },
   {
@@ -1801,6 +2159,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/authentication.html",
+    "path": "systems/security/authentication.html",
+    "topic": "sys/sec-auth",
     "depth": "guide"
   },
   {
@@ -1811,6 +2171,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/crypto.html",
+    "path": "systems/security/crypto.html",
+    "topic": "sys/sec-crypto",
     "depth": "guide"
   },
   {
@@ -1821,6 +2183,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/fundamentals.html",
+    "path": "systems/security/fundamentals.html",
+    "topic": "sys/sec-fundamentals",
     "depth": "guide"
   },
   {
@@ -1831,6 +2195,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/incident-response.html",
+    "path": "systems/security/incident-response.html",
+    "topic": "sys/sec-incident",
     "depth": "guide"
   },
   {
@@ -1841,6 +2207,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/index.html",
+    "path": "systems/security/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -1851,6 +2219,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/network-security.html",
+    "path": "systems/security/network-security.html",
+    "topic": "sys/sec-network",
     "depth": "guide"
   },
   {
@@ -1861,6 +2231,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/tls-pki.html",
+    "path": "systems/security/tls-pki.html",
+    "topic": "sys/sec-tls",
     "depth": "guide"
   },
   {
@@ -1871,6 +2243,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "security/web-security.html",
+    "path": "systems/security/web-security.html",
+    "topic": "sys/sec-web",
     "depth": "guide"
   },
   {
@@ -1881,6 +2255,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/api-gateway.html",
+    "path": "system-design/api-gateway.html",
+    "topic": "sd/api-gateway",
     "depth": "guide"
   },
   {
@@ -1891,6 +2267,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/caching.html",
+    "path": "system-design/caching.html",
+    "topic": "sd/caching",
     "depth": "guide"
   },
   {
@@ -1901,6 +2279,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/cap-theorem.html",
+    "path": "system-design/cap-theorem.html",
+    "topic": "sd/cap-theorem",
     "depth": "guide"
   },
   {
@@ -1911,6 +2291,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/cdn.html",
+    "path": "system-design/cdn.html",
+    "topic": "sd/cdn",
     "depth": "guide"
   },
   {
@@ -1921,6 +2303,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/consistency-models.html",
+    "path": "system-design/consistency-models.html",
+    "topic": "sd/consistency-models",
     "depth": "guide"
   },
   {
@@ -1931,6 +2315,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/database-sharding.html",
+    "path": "system-design/database-sharding.html",
+    "topic": "sd/database-sharding",
     "depth": "guide"
   },
   {
@@ -1941,6 +2327,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/distributed-systems.html",
+    "path": "system-design/distributed-systems.html",
+    "topic": "sd/distributed-systems",
     "depth": "guide"
   },
   {
@@ -1951,6 +2339,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/django.html",
+    "path": "system-design/django.html",
+    "topic": "sd/django",
     "depth": "guide"
   },
   {
@@ -1961,6 +2351,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/event-driven.html",
+    "path": "system-design/event-driven.html",
+    "topic": "sd/event-driven",
     "depth": "guide"
   },
   {
@@ -1971,6 +2363,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/fastapi.html",
+    "path": "system-design/fastapi.html",
+    "topic": "sd/fastapi",
     "depth": "guide"
   },
   {
@@ -1981,6 +2375,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/fault-tolerance.html",
+    "path": "system-design/fault-tolerance.html",
+    "topic": "sd/fault-tolerance",
     "depth": "guide"
   },
   {
@@ -1991,6 +2387,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/flask.html",
+    "path": "system-design/flask.html",
+    "topic": "sd/flask",
     "depth": "guide"
   },
   {
@@ -2001,6 +2399,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/fundamentals.html",
+    "path": "system-design/fundamentals.html",
+    "topic": "sd/fundamentals",
     "depth": "guide"
   },
   {
@@ -2011,6 +2411,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/high-availability.html",
+    "path": "system-design/high-availability.html",
+    "topic": "sd/high-availability",
     "depth": "guide"
   },
   {
@@ -2021,6 +2423,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/index.html",
+    "path": "system-design/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -2031,6 +2435,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/kafka.html",
+    "path": "system-design/kafka.html",
+    "topic": "sd/kafka",
     "depth": "guide"
   },
   {
@@ -2041,6 +2447,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/load-balancing.html",
+    "path": "system-design/load-balancing.html",
+    "topic": "sd/load-balancing",
     "depth": "guide"
   },
   {
@@ -2051,6 +2459,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/microservices.html",
+    "path": "system-design/microservices.html",
+    "topic": "sd/microservices",
     "depth": "guide"
   },
   {
@@ -2061,6 +2471,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/monolith.html",
+    "path": "system-design/monolith.html",
+    "topic": "sd/monolith",
     "depth": "guide"
   },
   {
@@ -2071,6 +2483,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/partitioning.html",
+    "path": "system-design/partitioning.html",
+    "topic": "sd/partitioning",
     "depth": "guide"
   },
   {
@@ -2081,6 +2495,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/queues.html",
+    "path": "system-design/queues.html",
+    "topic": "sd/queues",
     "depth": "guide"
   },
   {
@@ -2091,6 +2507,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/rabbitmq.html",
+    "path": "system-design/rabbitmq.html",
+    "topic": "sd/rabbitmq",
     "depth": "guide"
   },
   {
@@ -2101,6 +2519,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/rate-limiting.html",
+    "path": "system-design/rate-limiting.html",
+    "topic": "sd/rate-limiting",
     "depth": "guide"
   },
   {
@@ -2111,6 +2531,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/replication.html",
+    "path": "system-design/replication.html",
+    "topic": "sd/replication",
     "depth": "guide"
   },
   {
@@ -2121,6 +2543,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/reverse-proxy.html",
+    "path": "system-design/reverse-proxy.html",
+    "topic": "sd/reverse-proxy",
     "depth": "guide"
   },
   {
@@ -2131,6 +2555,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/scalability.html",
+    "path": "system-design/scalability.html",
+    "topic": "sd/scalability",
     "depth": "guide"
   },
   {
@@ -2141,6 +2567,8 @@
     "section": "System Design",
     "sectionKey": "system-design",
     "href": "system-design/service-discovery.html",
+    "path": "system-design/service-discovery.html",
+    "topic": "sd/service-discovery",
     "depth": "guide"
   },
   {
@@ -2151,6 +2579,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "systems/index.html",
+    "path": "systems/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -2161,6 +2591,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/automata.html",
+    "path": "systems/theory/automata.html",
+    "topic": "sys/toc-automata",
     "depth": "guide"
   },
   {
@@ -2171,6 +2603,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/complexity.html",
+    "path": "systems/theory/complexity.html",
+    "topic": "sys/toc-complexity",
     "depth": "guide"
   },
   {
@@ -2181,6 +2615,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/decidability.html",
+    "path": "systems/theory/decidability.html",
+    "topic": "sys/toc-decidability",
     "depth": "guide"
   },
   {
@@ -2191,6 +2627,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/grammars.html",
+    "path": "systems/theory/grammars.html",
+    "topic": "sys/toc-grammars",
     "depth": "guide"
   },
   {
@@ -2201,6 +2639,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/index.html",
+    "path": "systems/theory/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -2211,6 +2651,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/p-vs-np.html",
+    "path": "systems/theory/p-vs-np.html",
+    "topic": "sys/toc-pnp",
     "depth": "guide"
   },
   {
@@ -2221,6 +2663,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/reductions.html",
+    "path": "systems/theory/reductions.html",
+    "topic": "sys/toc-reductions",
     "depth": "guide"
   },
   {
@@ -2231,6 +2675,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/regular-languages.html",
+    "path": "systems/theory/regular-languages.html",
+    "topic": "sys/toc-regular",
     "depth": "guide"
   },
   {
@@ -2241,6 +2687,8 @@
     "section": "systems",
     "sectionKey": "systems",
     "href": "theory/turing-machines.html",
+    "path": "systems/theory/turing-machines.html",
+    "topic": "sys/toc-turing",
     "depth": "guide"
   },
   {
@@ -2251,6 +2699,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/advanced-types.html",
+    "path": "programming/typescript/advanced-types.html",
+    "topic": "ts/advanced-types",
     "depth": "guide"
   },
   {
@@ -2261,6 +2711,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/basics.html",
+    "path": "programming/typescript/basics.html",
+    "topic": "ts/basics",
     "depth": "guide"
   },
   {
@@ -2271,6 +2723,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/functions.html",
+    "path": "programming/typescript/functions.html",
+    "topic": "ts/functions",
     "depth": "guide"
   },
   {
@@ -2281,6 +2735,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/generics.html",
+    "path": "programming/typescript/generics.html",
+    "topic": "ts/generics",
     "depth": "guide"
   },
   {
@@ -2291,6 +2747,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/index.html",
+    "path": "programming/typescript/index.html",
+    "topic": null,
     "depth": "guide"
   },
   {
@@ -2301,6 +2759,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/objects.html",
+    "path": "programming/typescript/objects.html",
+    "topic": "ts/objects",
     "depth": "guide"
   },
   {
@@ -2311,6 +2771,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/oop.html",
+    "path": "programming/typescript/oop.html",
+    "topic": "ts/oop",
     "depth": "guide"
   },
   {
@@ -2321,6 +2783,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/programs.html",
+    "path": "programming/typescript/programs.html",
+    "topic": "ts/programs",
     "depth": "guide"
   },
   {
@@ -2331,6 +2795,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/tooling.html",
+    "path": "programming/typescript/tooling.html",
+    "topic": "ts/tooling",
     "depth": "guide"
   },
   {
@@ -2341,6 +2807,8 @@
     "section": "programming",
     "sectionKey": "programming",
     "href": "typescript/unions.html",
+    "path": "programming/typescript/unions.html",
+    "topic": "ts/unions",
     "depth": "guide"
   }
 ];
