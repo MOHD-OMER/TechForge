@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to graphs and dynamic programming, then drill the question bank. Every milestone opens a TechForge lesson."/>
+  <meta name="description" content="The order to learn data structures and algorithms in, from logic building and Big-O through to dynamic programming, then the practice and interview rounds that turn it into an offer. Branches marked optional can wait."/>
   <meta property="og:title" content="DSA &amp; Interview Prep Roadmap — TechForge"/>
-  <meta property="og:description" content="The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to graphs and dynamic programming, then drill the question bank."/>
+  <meta property="og:description" content="The order to learn data structures and algorithms in, from logic building and Big-O through to dynamic programming, then the practice and interview rounds that turn it into an offer. Branches marked optional can wait."/>
   <meta property="og:type" content="website"/>
   <title>DSA &amp; Interview Prep Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/dsa.html"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -66,8 +66,8 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">DSA &amp; Interview Prep</h1>
-      <p class="rt-sub">The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to graphs and dynamic programming, then drill the question bank. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
-      <div class="rt-count">13 steps · 2 topics</div>
+      <p class="rt-sub">The order to learn data structures and algorithms in, from logic building and Big-O through to dynamic programming, then the practice and interview rounds that turn it into an offer. Branches marked <strong>optional</strong> can wait.</p>
+      <div class="rt-count">16 steps · 27 topics · 1 coming soon</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
@@ -75,161 +75,428 @@
 {
   "id": "dsa",
   "title": "DSA & Interview Prep",
-  "accent": "var(--blue)",
+  "accent": "var(--amber)",
   "nodes": [
     {
-      "id": "dsa-bigo",
+      "id": "lang",
+      "t": "Pick One Language",
+      "href": "../../programming/index.html",
+      "tier": "spine",
+      "i": "ti-code",
+      "g": "Before you start",
+      "s": "Solve everything in the same language for months. Switching mid-way costs you the fluency that makes a 45-minute interview possible."
+    },
+    {
+      "id": "lang-python",
+      "t": "Python",
+      "href": "../../programming/python/index.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "lang-java",
+      "t": "Java",
+      "href": "../../programming/java/index.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "lang-cpp",
+      "t": "C++",
+      "href": "../../programming/cpp/index.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "lang-js",
+      "t": "JavaScript",
+      "href": "../../programming/javascript/index.html",
+      "tier": "branch",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "logic",
+      "t": "Logic Building",
+      "href": "../../dsa/logic-building.html",
+      "tier": "spine",
+      "i": "ti-function",
+      "after": [
+        "lang"
+      ],
+      "s": "Turning a statement into steps before reaching for a data structure. Skipping this is why people plateau at easy problems."
+    },
+    {
+      "id": "bigo",
       "t": "Big-O Notation",
       "href": "../../dsa/bigo.html",
       "tier": "spine",
-      "g": "Fundamentals",
-      "s": "The vocabulary of efficiency you will use in every other answer."
+      "i": "ti-clock",
+      "after": [
+        "logic"
+      ],
+      "s": "Time and space cost. You will be asked for it on every single problem, so learn it before the structures, not after."
     },
     {
-      "id": "dsa-arrays",
+      "id": "arrays",
       "t": "Arrays & Strings",
       "href": "../../dsa/arrays.html",
       "tier": "spine",
-      "s": "Two pointers, sliding window, and prefix sums.",
+      "i": "ti-table",
+      "g": "Linear structures",
       "after": [
-        "dsa-bigo"
+        "bigo"
+      ],
+      "s": "The most-tested structure by a wide margin, and the home of the two patterns below."
+    },
+    {
+      "id": "arrays-two",
+      "t": "Two pointers",
+      "href": "../../dsa/twopointer.html",
+      "tier": "detail",
+      "after": [
+        "arrays"
       ]
     },
     {
-      "id": "dsa-sll",
-      "t": "Singly Linked Lists",
-      "href": "../../dsa/sll.html",
+      "id": "arrays-slide",
+      "t": "Sliding window",
+      "href": "../../dsa/sliding.html",
+      "tier": "detail",
+      "after": [
+        "arrays"
+      ]
+    },
+    {
+      "id": "search",
+      "t": "Searching",
+      "href": "../../dsa/binarysearch.html",
       "tier": "spine",
-      "s": "Pointer surgery, reversal, fast/slow traversal, and the classic off-by-one traps.",
+      "i": "ti-search",
       "after": [
-        "dsa-arrays"
+        "arrays"
+      ],
+      "s": "Binary search, and recognising the far larger set of problems that are secretly a binary search on the answer."
+    },
+    {
+      "id": "search-linear",
+      "t": "Linear search",
+      "href": "../../dsa/linearsearch.html",
+      "tier": "detail",
+      "after": [
+        "search"
       ]
     },
     {
-      "id": "dsa-hashtable",
+      "id": "sorting",
+      "t": "Sorting",
+      "href": "../../dsa/merge.html",
+      "tier": "spine",
+      "i": "ti-arrows-split",
+      "after": [
+        "search"
+      ],
+      "s": "Implement each once. You will call a library sort forever after, but the divide-and-conquer shape recurs everywhere."
+    },
+    {
+      "id": "sort-bubble",
+      "t": "Bubble sort",
+      "href": "../../dsa/bubble.html",
+      "tier": "detail",
+      "after": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "sort-selection",
+      "t": "Selection sort",
+      "href": "../../dsa/selection.html",
+      "tier": "detail",
+      "after": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "sort-insertion",
+      "t": "Insertion sort",
+      "href": "../../dsa/insertion.html",
+      "tier": "detail",
+      "after": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "sort-quick",
+      "t": "Quick sort",
+      "href": "../../dsa/quick.html",
+      "tier": "detail",
+      "after": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "sort-heap",
+      "t": "Heap sort",
+      "href": "../../dsa/heapsort.html",
+      "tier": "detail",
+      "after": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "hash",
       "t": "Hash Tables",
       "href": "../../dsa/hashtable.html",
       "tier": "spine",
-      "s": "Hashing, collisions, and the O(1) lookup that half of all solutions lean on.",
+      "i": "ti-hash",
       "after": [
-        "dsa-sll"
+        "sorting"
+      ],
+      "s": "The single highest-leverage structure in interviews. A large share of medium problems collapse to one lookup table."
+    },
+    {
+      "id": "lists",
+      "t": "Linked Lists",
+      "href": "../../dsa/sll.html",
+      "tier": "spine",
+      "i": "ti-list",
+      "after": [
+        "hash"
+      ],
+      "s": "Pointer manipulation under pressure. Reversal, cycle detection and merging are the recurring three."
+    },
+    {
+      "id": "lists-dll",
+      "t": "Doubly linked lists",
+      "href": "../../dsa/dll.html",
+      "tier": "detail",
+      "after": [
+        "lists"
       ]
     },
     {
-      "id": "dsa-stack",
-      "t": "Stacks",
+      "id": "lists-cll",
+      "t": "Circular linked lists",
+      "href": "../../dsa/cll.html",
+      "tier": "branch",
+      "after": [
+        "lists"
+      ]
+    },
+    {
+      "id": "stackqueue",
+      "t": "Stacks & Queues",
       "href": "../../dsa/stack.html",
       "tier": "spine",
-      "g": "Core structures",
-      "s": "LIFO, the call stack, and monotonic-stack problems.",
+      "i": "ti-box-multiple",
       "after": [
-        "dsa-hashtable"
-      ]
+        "lists"
+      ],
+      "s": "Monotonic stacks and BFS queues. Small structures that unlock a whole category of problems."
     },
     {
-      "id": "dsa-queue",
+      "id": "sq-queue",
       "t": "Queues",
       "href": "../../dsa/queue.html",
-      "tier": "spine",
-      "s": "FIFO, circular buffers, and the deque behind sliding-window maxima.",
+      "tier": "detail",
       "after": [
-        "dsa-stack"
+        "stackqueue"
       ]
     },
     {
-      "id": "dsa-bst",
-      "t": "Binary Search Trees",
+      "id": "recursion",
+      "t": "Recursion & Backtracking",
+      "href": "../../dsa/recursion.html",
+      "tier": "spine",
+      "i": "ti-repeat",
+      "g": "Non-linear thinking",
+      "after": [
+        "stackqueue"
+      ],
+      "s": "The gate to trees, graphs and dynamic programming. Get comfortable with the call stack before going further."
+    },
+    {
+      "id": "trees",
+      "t": "Trees",
       "href": "../../dsa/bst.html",
       "tier": "spine",
-      "s": "Ordered insert and lookup, in-order traversal, and how a tree degenerates.",
+      "i": "ti-binary-tree",
       "after": [
-        "dsa-queue"
-      ]
+        "recursion"
+      ],
+      "s": "Traversals first, then balancing. Roughly a third of interview questions live in this section."
     },
     {
-      "id": "dsa-avl",
-      "t": "AVL Trees",
+      "id": "trees-avl",
+      "t": "AVL trees",
       "href": "../../dsa/avl.html",
-      "tier": "branch",
-      "s": "Rotations that keep a search tree balanced, and the cost of skipping them.",
+      "tier": "detail",
       "after": [
-        "dsa-bst"
+        "trees"
       ]
     },
     {
-      "id": "dsa-graph",
+      "id": "trees-heap",
+      "t": "Heaps & priority queues",
+      "href": "../../dsa/heap.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-trie",
+      "t": "Tries",
+      "href": "../../dsa/trie.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "graphs",
       "t": "Graphs",
       "href": "../../dsa/graph.html",
       "tier": "spine",
-      "g": "Graphs",
-      "s": "Adjacency lists vs matrices, directed vs weighted, and the terminology interviews assume.",
+      "i": "ti-topology-star-3",
       "after": [
-        "dsa-bst"
-      ]
+        "trees"
+      ],
+      "s": "Representation, then traversal, then shortest paths. Most grid and dependency problems are graph problems in disguise."
     },
     {
-      "id": "dsa-bfs",
-      "t": "BFS",
+      "id": "graphs-bfs",
+      "t": "Breadth-first search",
       "href": "../../dsa/bfs.html",
-      "tier": "spine",
-      "s": "Level-order traversal, and shortest paths on an unweighted graph.",
+      "tier": "detail",
       "after": [
-        "dsa-graph"
+        "graphs"
       ]
     },
     {
-      "id": "dsa-dfs",
-      "t": "DFS",
+      "id": "graphs-dfs",
+      "t": "Depth-first search",
       "href": "../../dsa/dfs.html",
-      "tier": "spine",
-      "s": "Depth-first traversal, cycle detection, and recursive backtracking.",
+      "tier": "detail",
       "after": [
-        "dsa-graph",
-        "dsa-bfs"
+        "graphs"
       ]
     },
     {
-      "id": "dsa-dijkstra",
-      "t": "Dijkstra's Algorithm",
+      "id": "graphs-dijkstra",
+      "t": "Dijkstra's algorithm",
       "href": "../../dsa/dijkstra.html",
-      "tier": "branch",
-      "s": "Shortest paths once edges carry weight.",
+      "tier": "detail",
       "after": [
-        "dsa-graph",
-        "dsa-bfs",
-        "dsa-dfs"
+        "graphs"
       ]
     },
     {
-      "id": "dsa-recursion",
-      "t": "Recursion",
-      "href": "../../dsa/recursion.html",
-      "tier": "spine",
-      "g": "Hard mode",
-      "s": "Base cases, the call stack, and the habit of thinking one level down.",
-      "after": [
-        "dsa-dfs"
-      ]
-    },
-    {
-      "id": "dsa-dp",
+      "id": "dp",
       "t": "Dynamic Programming",
       "href": "../../dsa/dp.html",
       "tier": "spine",
-      "s": "Memoization, tabulation, and learning to recognise the pattern.",
+      "i": "ti-brain",
+      "g": "The hard part",
       "after": [
-        "dsa-recursion"
+        "graphs"
+      ],
+      "s": "Overlapping subproblems, memoisation, then tabulation. The last topic to click and the one that separates candidates."
+    },
+    {
+      "id": "bits",
+      "t": "Bit Manipulation",
+      "href": "../../dsa/bits.html",
+      "tier": "spine",
+      "i": "ti-binary",
+      "after": [
+        "dp"
+      ],
+      "s": "A small trick bag with an outsized presence in screening rounds."
+    },
+    {
+      "id": "practice",
+      "t": "Deliberate Practice",
+      "href": "../../dsa/index.html",
+      "tier": "spine",
+      "i": "ti-target",
+      "g": "Prove it",
+      "after": [
+        "bits"
+      ],
+      "s": "Volume beats novelty. Solve by pattern, redo the ones you failed, and time yourself before you feel ready."
+    },
+    {
+      "id": "practice-patterns",
+      "t": "Pattern checklist",
+      "href": "../../dsa/patterns.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "practice"
       ]
     },
     {
-      "id": "interview-dsa-interview",
-      "t": "DSA Interview Bank",
+      "id": "iv",
+      "t": "Interview Rounds",
       "href": "../../interview/dsa-interview.html",
       "tier": "spine",
-      "g": "Prove it",
-      "s": "47 questions across arrays, trees, graphs, DP and sorting, tagged for FAANG and startups.",
+      "i": "ti-checklist",
       "after": [
-        "dsa-dp"
+        "practice"
+      ],
+      "s": "Explaining your approach out loud before writing is a separate skill from solving, and it is the one being graded."
+    },
+    {
+      "id": "iv-oop",
+      "t": "OOP questions",
+      "href": "../../interview/oop-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sd",
+      "t": "System design questions",
+      "href": "../../interview/system-design-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-os",
+      "t": "OS questions",
+      "href": "../../interview/os-interview.html",
+      "tier": "branch",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-net",
+      "t": "Networking questions",
+      "href": "../../interview/networking-interview.html",
+      "tier": "branch",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sql",
+      "t": "SQL questions",
+      "href": "../../interview/sql-interview.html",
+      "tier": "branch",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -245,7 +512,7 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
 <script src="../../assets/js/platform.js?v=6"></script>
-<script src="../../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

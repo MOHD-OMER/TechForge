@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all. Every milestone opens a TechForge lesson."/>
+  <meta name="description" content="A computer science curriculum in order: programming, data structures and algorithms, operating systems, networks, databases, theory of computation, security and system design. Branches marked optional can wait."/>
   <meta property="og:title" content="CS Fundamentals Roadmap — TechForge"/>
-  <meta property="og:description" content="What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all."/>
+  <meta property="og:description" content="A computer science curriculum in order: programming, data structures and algorithms, operating systems, networks, databases, theory of computation, security and system design. Branches marked optional can wait."/>
   <meta property="og:type" content="website"/>
   <title>CS Fundamentals Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/cs.html"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -66,170 +66,876 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">CS Fundamentals</h1>
-      <p class="rt-sub">What every layer under your code is actually doing. The operating system, the network, the database, and the theory that decides which problems are solvable at all. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
-      <div class="rt-count">10 steps · 5 topics</div>
+      <p class="rt-sub">A computer science curriculum in order: programming, data structures and algorithms, operating systems, networks, databases, theory of computation, security and system design. Branches marked <strong>optional</strong> can wait.</p>
+      <div class="rt-count">15 steps · 77 topics</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
     <script type="application/json" id="rgGraph">
 {
   "id": "cs",
-  "title": "CS Fundamentals",
-  "accent": "var(--teal)",
+  "title": "Computer Science Fundamentals",
+  "accent": "var(--blue)",
   "nodes": [
     {
-      "id": "systems-os-processes",
-      "t": "Processes & Threads",
-      "href": "../../systems/os/processes.html",
+      "id": "prog",
+      "t": "Learn to Program",
+      "href": "../../programming/index.html",
       "tier": "spine",
-      "g": "The operating system",
-      "s": "What a running program actually is, and how the kernel juggles many at once."
+      "i": "ti-code",
+      "g": "Programming",
+      "s": "One language, deeply. Which one matters far less than getting past the point where syntax is what you are thinking about."
     },
     {
-      "id": "systems-os-memory",
-      "t": "Memory Management",
-      "href": "../../systems/os/memory.html",
-      "tier": "spine",
-      "s": "Virtual memory, paging, and why your pointer is not the address you think.",
+      "id": "prog-python",
+      "t": "Python",
+      "href": "../../programming/python/index.html",
+      "tier": "detail",
       "after": [
-        "systems-os-processes"
+        "prog"
       ]
     },
     {
-      "id": "systems-os-scheduling",
-      "t": "CPU Scheduling",
-      "href": "../../systems/os/scheduling.html",
-      "tier": "spine",
-      "s": "How the OS picks what runs next, and the trade-off inside each policy.",
+      "id": "prog-java",
+      "t": "Java",
+      "href": "../../programming/java/index.html",
+      "tier": "detail",
       "after": [
-        "systems-os-memory"
+        "prog"
       ]
     },
     {
-      "id": "systems-os-concurrency",
-      "t": "Concurrency & Synchronization",
-      "href": "../../systems/os/concurrency.html",
-      "tier": "spine",
-      "s": "Race conditions, locks, semaphores, and the bugs that only surface under load.",
+      "id": "prog-cpp",
+      "t": "C++",
+      "href": "../../programming/cpp/index.html",
+      "tier": "detail",
       "after": [
-        "systems-os-scheduling"
+        "prog"
       ]
     },
     {
-      "id": "systems-os-deadlocks",
-      "t": "Deadlocks",
-      "href": "../../systems/os/deadlocks.html",
+      "id": "prog-js",
+      "t": "JavaScript",
+      "href": "../../programming/javascript/index.html",
+      "tier": "detail",
+      "after": [
+        "prog"
+      ]
+    },
+    {
+      "id": "prog-ts",
+      "t": "TypeScript",
+      "href": "../../programming/typescript/index.html",
       "tier": "branch",
-      "s": "The four necessary conditions, and which one to break.",
       "after": [
-        "systems-os-concurrency"
+        "prog"
       ]
     },
     {
-      "id": "systems-networking-stack",
-      "t": "The TCP/IP Stack",
-      "href": "../../systems/networking/stack.html",
+      "id": "logic",
+      "t": "Problem Solving",
+      "href": "../../dsa/logic-building.html",
       "tier": "spine",
-      "g": "The network",
-      "s": "Layers, encapsulation, and which protocol lives where.",
+      "i": "ti-function",
       "after": [
-        "systems-os-concurrency"
+        "prog"
+      ],
+      "s": "Turning a problem statement into steps. The skill every later course silently assumes you already have."
+    },
+    {
+      "id": "logic-recursion",
+      "t": "Recursion",
+      "href": "../../dsa/recursion.html",
+      "tier": "detail",
+      "after": [
+        "logic"
       ]
     },
     {
-      "id": "systems-networking-tcp-udp",
-      "t": "TCP vs UDP",
-      "href": "../../systems/networking/tcp-udp.html",
-      "tier": "spine",
-      "s": "Reliable vs fast, the three-way handshake, and when each is the right call.",
-      "after": [
-        "systems-networking-stack"
-      ]
-    },
-    {
-      "id": "systems-networking-http",
-      "t": "HTTP & HTTPS",
-      "href": "../../systems/networking/http.html",
-      "tier": "spine",
-      "s": "Methods, status codes, headers, TLS, and what HTTP/2 and /3 changed.",
-      "after": [
-        "systems-networking-tcp-udp"
-      ]
-    },
-    {
-      "id": "systems-networking-dns",
-      "t": "DNS",
-      "href": "../../systems/networking/dns.html",
+      "id": "logic-bits",
+      "t": "Bit manipulation",
+      "href": "../../dsa/bits.html",
       "tier": "branch",
-      "s": "How a name becomes an address, and every cache in between.",
       "after": [
-        "systems-networking-stack",
-        "systems-networking-http"
+        "logic"
       ]
     },
     {
-      "id": "databases-sql",
-      "t": "SQL & Databases",
-      "href": "../../databases/sql.html",
-      "tier": "spine",
-      "g": "Data & security",
-      "s": "Relational modelling, transactions, joins, and indexes.",
-      "after": [
-        "systems-networking-http"
-      ]
-    },
-    {
-      "id": "systems-security-fundamentals",
-      "t": "Security Fundamentals",
-      "href": "../../systems/security/fundamentals.html",
-      "tier": "branch",
-      "s": "The CIA triad, threat modelling, and the attack classes worth knowing by name.",
-      "after": [
-        "databases-sql"
-      ]
-    },
-    {
-      "id": "dsa-bigo",
-      "t": "Big-O Notation",
+      "id": "bigo",
+      "t": "Complexity Analysis",
       "href": "../../dsa/bigo.html",
       "tier": "spine",
-      "g": "Theory",
-      "s": "The vocabulary of efficiency, used everywhere else on this list.",
+      "i": "ti-clock",
+      "g": "Data structures & algorithms",
       "after": [
-        "databases-sql"
+        "logic"
+      ],
+      "s": "Time and space cost. The vocabulary every other topic on this roadmap is measured in."
+    },
+    {
+      "id": "linear",
+      "t": "Linear Structures",
+      "href": "../../dsa/arrays.html",
+      "tier": "spine",
+      "i": "ti-table",
+      "after": [
+        "bigo"
+      ],
+      "s": "Arrays, lists, stacks and queues — and the pointer patterns that make them fast."
+    },
+    {
+      "id": "linear-sll",
+      "t": "Singly linked lists",
+      "href": "../../dsa/sll.html",
+      "tier": "detail",
+      "after": [
+        "linear"
       ]
     },
     {
-      "id": "systems-theory-p-vs-np",
+      "id": "linear-dll",
+      "t": "Doubly linked lists",
+      "href": "../../dsa/dll.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-cll",
+      "t": "Circular linked lists",
+      "href": "../../dsa/cll.html",
+      "tier": "branch",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-stack",
+      "t": "Stacks",
+      "href": "../../dsa/stack.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-queue",
+      "t": "Queues",
+      "href": "../../dsa/queue.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-two",
+      "t": "Two pointers",
+      "href": "../../dsa/twopointer.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-slide",
+      "t": "Sliding window",
+      "href": "../../dsa/sliding.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "linear-hash",
+      "t": "Hash tables",
+      "href": "../../dsa/hashtable.html",
+      "tier": "detail",
+      "after": [
+        "linear"
+      ]
+    },
+    {
+      "id": "sortsearch",
+      "t": "Sorting & Searching",
+      "href": "../../dsa/binarysearch.html",
+      "tier": "spine",
+      "i": "ti-arrows-split",
+      "after": [
+        "linear"
+      ],
+      "s": "The classic algorithms, and what each one costs. Worth implementing once even though you will never write them again."
+    },
+    {
+      "id": "ss-linear",
+      "t": "Linear search",
+      "href": "../../dsa/linearsearch.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-bubble",
+      "t": "Bubble sort",
+      "href": "../../dsa/bubble.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-selection",
+      "t": "Selection sort",
+      "href": "../../dsa/selection.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-insertion",
+      "t": "Insertion sort",
+      "href": "../../dsa/insertion.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-merge",
+      "t": "Merge sort",
+      "href": "../../dsa/merge.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-quick",
+      "t": "Quick sort",
+      "href": "../../dsa/quick.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "ss-heap",
+      "t": "Heap sort",
+      "href": "../../dsa/heapsort.html",
+      "tier": "detail",
+      "after": [
+        "sortsearch"
+      ]
+    },
+    {
+      "id": "trees",
+      "t": "Trees & Graphs",
+      "href": "../../dsa/bst.html",
+      "tier": "spine",
+      "i": "ti-binary-tree",
+      "after": [
+        "sortsearch"
+      ],
+      "s": "Non-linear structures, and the traversals that show up in half of all technical interviews."
+    },
+    {
+      "id": "trees-avl",
+      "t": "AVL trees",
+      "href": "../../dsa/avl.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-heap",
+      "t": "Heaps",
+      "href": "../../dsa/heap.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-trie",
+      "t": "Tries",
+      "href": "../../dsa/trie.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-graph",
+      "t": "Graphs",
+      "href": "../../dsa/graph.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-bfs",
+      "t": "Breadth-first search",
+      "href": "../../dsa/bfs.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-dfs",
+      "t": "Depth-first search",
+      "href": "../../dsa/dfs.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "trees-dijkstra",
+      "t": "Dijkstra's algorithm",
+      "href": "../../dsa/dijkstra.html",
+      "tier": "detail",
+      "after": [
+        "trees"
+      ]
+    },
+    {
+      "id": "dp",
+      "t": "Dynamic Programming",
+      "href": "../../dsa/dp.html",
+      "tier": "spine",
+      "i": "ti-repeat",
+      "after": [
+        "trees"
+      ],
+      "s": "Overlapping subproblems and memoisation. The topic most people skip and then meet in an interview."
+    },
+    {
+      "id": "os",
+      "t": "Operating Systems",
+      "href": "../../systems/os/index.html",
+      "tier": "spine",
+      "i": "ti-cpu",
+      "g": "Systems",
+      "after": [
+        "dp"
+      ],
+      "s": "How your program is actually scheduled, given memory, and stopped."
+    },
+    {
+      "id": "os-processes",
+      "t": "Processes & threads",
+      "href": "../../systems/os/processes.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-memory",
+      "t": "Memory management",
+      "href": "../../systems/os/memory.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-scheduling",
+      "t": "Scheduling",
+      "href": "../../systems/os/scheduling.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-concurrency",
+      "t": "Concurrency",
+      "href": "../../systems/os/concurrency.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-deadlocks",
+      "t": "Deadlocks",
+      "href": "../../systems/os/deadlocks.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-fs",
+      "t": "Filesystems",
+      "href": "../../systems/os/filesystems.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-io",
+      "t": "I/O",
+      "href": "../../systems/os/io.html",
+      "tier": "detail",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "os-boot",
+      "t": "Boot process",
+      "href": "../../systems/os/boot.html",
+      "tier": "branch",
+      "after": [
+        "os"
+      ]
+    },
+    {
+      "id": "net",
+      "t": "Computer Networks",
+      "href": "../../systems/networking/index.html",
+      "tier": "spine",
+      "i": "ti-world",
+      "after": [
+        "os"
+      ],
+      "s": "The layers, and what each one is actually responsible for when something times out."
+    },
+    {
+      "id": "net-stack",
+      "t": "The network stack",
+      "href": "../../systems/networking/stack.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-http",
+      "t": "HTTP & HTTPS",
+      "href": "../../systems/networking/http.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-dns",
+      "t": "DNS",
+      "href": "../../systems/networking/dns.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-tcp",
+      "t": "TCP & UDP",
+      "href": "../../systems/networking/tcp-udp.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-routing",
+      "t": "Routing",
+      "href": "../../systems/networking/routing.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-sockets",
+      "t": "Sockets",
+      "href": "../../systems/networking/sockets.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-url",
+      "t": "How a URL becomes a page",
+      "href": "../../systems/networking/url-journey.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "db",
+      "t": "Databases",
+      "href": "../../databases/sql.html",
+      "tier": "spine",
+      "i": "ti-database",
+      "after": [
+        "net"
+      ],
+      "s": "The relational model, SQL, and what indexes and transactions actually guarantee."
+    },
+    {
+      "id": "db-postgres",
+      "t": "PostgreSQL",
+      "href": "../../databases/postgres.html",
+      "tier": "detail",
+      "after": [
+        "db"
+      ]
+    },
+    {
+      "id": "db-mysql",
+      "t": "MySQL",
+      "href": "../../databases/mysql.html",
+      "tier": "detail",
+      "after": [
+        "db"
+      ]
+    },
+    {
+      "id": "db-index",
+      "t": "Database systems",
+      "href": "../../databases/index.html",
+      "tier": "detail",
+      "after": [
+        "db"
+      ]
+    },
+    {
+      "id": "db-mongo",
+      "t": "MongoDB",
+      "href": "../../databases/mongodb.html",
+      "tier": "branch",
+      "after": [
+        "db"
+      ]
+    },
+    {
+      "id": "db-redis",
+      "t": "Redis",
+      "href": "../../databases/redis.html",
+      "tier": "branch",
+      "after": [
+        "db"
+      ]
+    },
+    {
+      "id": "theory",
+      "t": "Theory of Computation",
+      "href": "../../systems/theory/index.html",
+      "tier": "spine",
+      "i": "ti-brain",
+      "g": "Theory",
+      "after": [
+        "db"
+      ],
+      "s": "What a machine can compute at all, and what it can compute quickly. The part of the degree that dates the slowest."
+    },
+    {
+      "id": "theory-automata",
+      "t": "Automata",
+      "href": "../../systems/theory/automata.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-regular",
+      "t": "Regular languages",
+      "href": "../../systems/theory/regular-languages.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-grammars",
+      "t": "Grammars",
+      "href": "../../systems/theory/grammars.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-turing",
+      "t": "Turing machines",
+      "href": "../../systems/theory/turing-machines.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-decidability",
+      "t": "Decidability",
+      "href": "../../systems/theory/decidability.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-reductions",
+      "t": "Reductions",
+      "href": "../../systems/theory/reductions.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-complexity",
+      "t": "Complexity classes",
+      "href": "../../systems/theory/complexity.html",
+      "tier": "detail",
+      "after": [
+        "theory"
+      ]
+    },
+    {
+      "id": "theory-pnp",
       "t": "P vs NP",
       "href": "../../systems/theory/p-vs-np.html",
-      "tier": "branch",
-      "s": "Which problems are tractable, and which only look like they are.",
+      "tier": "detail",
       "after": [
-        "dsa-bigo"
+        "theory"
       ]
     },
     {
-      "id": "interview-os-interview",
-      "t": "OS Interview",
-      "href": "../../interview/os-interview.html",
+      "id": "sec",
+      "t": "Security",
+      "href": "../../systems/security/fundamentals.html",
       "tier": "spine",
-      "g": "Prove it",
-      "s": "30 questions on processes, scheduling, memory, concurrency, deadlocks and I/O.",
+      "i": "ti-shield-lock",
+      "g": "Building real systems",
       "after": [
-        "systems-os-concurrency",
-        "dsa-bigo"
+        "theory"
+      ],
+      "s": "Threats, cryptography and the assumptions that fail. Increasingly a core course rather than an elective."
+    },
+    {
+      "id": "sec-crypto",
+      "t": "Cryptography",
+      "href": "../../systems/security/crypto.html",
+      "tier": "detail",
+      "after": [
+        "sec"
       ]
     },
     {
-      "id": "interview-networking-interview",
-      "t": "Networking Interview",
-      "href": "../../interview/networking-interview.html",
-      "tier": "branch",
-      "s": "30 questions on TCP/IP, DNS, HTTP, sockets, subnets and NAT.",
+      "id": "sec-auth",
+      "t": "Authentication",
+      "href": "../../systems/security/authentication.html",
+      "tier": "detail",
       "after": [
-        "systems-networking-http",
-        "interview-os-interview"
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-net",
+      "t": "Network security",
+      "href": "../../systems/security/network-security.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-web",
+      "t": "Web security",
+      "href": "../../systems/security/web-security.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-tls",
+      "t": "TLS & PKI",
+      "href": "../../systems/security/tls-pki.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sd",
+      "t": "System Design",
+      "href": "../../system-design/fundamentals.html",
+      "tier": "spine",
+      "i": "ti-topology-star-3",
+      "after": [
+        "sec"
+      ],
+      "s": "Where all of the above meets a real workload and something has to give."
+    },
+    {
+      "id": "sd-scale",
+      "t": "Scalability",
+      "href": "../../system-design/scalability.html",
+      "tier": "detail",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "sd-cache",
+      "t": "Caching",
+      "href": "../../system-design/caching.html",
+      "tier": "detail",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "sd-lb",
+      "t": "Load balancing",
+      "href": "../../system-design/load-balancing.html",
+      "tier": "detail",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "sd-cap",
+      "t": "CAP theorem",
+      "href": "../../system-design/cap-theorem.html",
+      "tier": "detail",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "sd-dist",
+      "t": "Distributed systems",
+      "href": "../../system-design/distributed-systems.html",
+      "tier": "detail",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "sd-micro",
+      "t": "Microservices",
+      "href": "../../system-design/microservices.html",
+      "tier": "branch",
+      "after": [
+        "sd"
+      ]
+    },
+    {
+      "id": "git",
+      "t": "Version Control",
+      "href": "../../devops/git.html",
+      "tier": "spine",
+      "i": "ti-git-branch",
+      "after": [
+        "sd"
+      ],
+      "s": "Not usually a course, and the first thing every job expects."
+    },
+    {
+      "id": "git-github",
+      "t": "GitHub",
+      "href": "../../devops/github.html",
+      "tier": "detail",
+      "after": [
+        "git"
+      ]
+    },
+    {
+      "id": "git-linux",
+      "t": "Linux basics",
+      "href": "../../devops/linux-basics.html",
+      "tier": "detail",
+      "after": [
+        "git"
+      ]
+    },
+    {
+      "id": "git-docker",
+      "t": "Docker",
+      "href": "../../devops/docker.html",
+      "tier": "branch",
+      "after": [
+        "git"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
+      "href": "../../interview/index.html",
+      "tier": "spine",
+      "i": "ti-checklist",
+      "g": "Prove it",
+      "after": [
+        "git"
+      ],
+      "s": "The graduate loop: data structures, one systems round, and a language screen."
+    },
+    {
+      "id": "iv-dsa",
+      "t": "DSA questions",
+      "href": "../../interview/dsa-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-os",
+      "t": "OS questions",
+      "href": "../../interview/os-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-net",
+      "t": "Networking questions",
+      "href": "../../interview/networking-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-oop",
+      "t": "OOP questions",
+      "href": "../../interview/oop-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sql",
+      "t": "SQL questions",
+      "href": "../../interview/sql-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sd",
+      "t": "System design questions",
+      "href": "../../interview/system-design-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -245,7 +951,7 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
 <script src="../../assets/js/platform.js?v=6"></script>
-<script src="../../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

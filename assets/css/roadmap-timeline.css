@@ -190,6 +190,17 @@ a.rt-title:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 a.rt-pill-node:hover { color: var(--text); border-color: var(--c); }
 
+/* The position in the required sequence. aria-hidden in the markup: the list is
+   already in order for a screen reader, so reading "one" before every label is
+   noise. This is purely to disambiguate a two-column grid for sighted readers. */
+.rt-ord {
+  flex: none;
+  min-width: 15px;
+  margin-right: 2px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  color: color-mix(in srgb, var(--c) 75%, var(--text2));
+}
+
 /* ── ticking things off ────────────────────────────────────────────────
    The thing that turns a list of topics into a route you are walking. Reads
    and writes the same store as the lesson pages, so the dashboard agrees. */

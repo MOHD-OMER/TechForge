@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Relational foundations first, then the NoSQL and specialised stores built for other shapes of data. Every node opens a TechForge lesson."/>
+  <meta name="description" content="From tables and SQL through schema design, indexes, transactions and injection, then the non-relational engines and what changes once one machine is not enough. Branches marked optional can wait."/>
   <meta property="og:title" content="Databases &amp; SQL Roadmap — TechForge"/>
-  <meta property="og:description" content="Relational foundations first, then the NoSQL and specialised stores built for other shapes of data."/>
+  <meta property="og:description" content="From tables and SQL through schema design, indexes, transactions and injection, then the non-relational engines and what changes once one machine is not enough. Branches marked optional can wait."/>
   <meta property="og:type" content="website"/>
   <title>Databases &amp; SQL Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/databases.html"/>
@@ -22,7 +22,7 @@
   <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -68,162 +68,530 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">Databases &amp; SQL Roadmap</h1>
-      <p class="rt-sub">Relational foundations first, then the NoSQL and specialised stores built for other shapes of data. Follow the trunk down; the pills beside each step belong to that group.</p>
-      <div class="rt-count">4 steps · 11 topics</div>
+      <p class="rt-sub">From tables and SQL through schema design, indexes, transactions and injection, then the non-relational engines and what changes once one machine is not enough. Branches marked <strong>optional</strong> can wait.</p>
+      <div class="rt-count">13 steps · 41 topics</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
     <script type="application/json" id="rgGraph">
 {
   "id": "databases",
-  "title": "Databases & SQL",
-  "accent": "var(--cyan)",
+  "title": "Databases",
+  "accent": "var(--blue)",
   "nodes": [
     {
-      "id": "sql",
-      "t": "SQL from Basics to Advanced.",
-      "href": "../databases/sql.html",
+      "id": "basics",
+      "t": "How Databases Work",
+      "href": "../databases/sql.html#database-basics",
       "tier": "spine",
-      "g": "Relational (RDBMS)"
+      "i": "ti-database",
+      "g": "Relational foundations",
+      "s": "Tables, rows, types and constraints. The model almost every other database is defined in contrast to."
     },
     {
-      "id": "postgres",
+      "id": "basics-sublang",
+      "t": "DDL, DML & the sublanguages",
+      "href": "../databases/sql.html#sublanguages",
+      "tier": "detail",
+      "after": [
+        "basics"
+      ]
+    },
+    {
+      "id": "basics-types",
+      "t": "Data types",
+      "href": "../databases/sql.html#data-types",
+      "tier": "detail",
+      "after": [
+        "basics"
+      ]
+    },
+    {
+      "id": "basics-constraints",
+      "t": "Constraints",
+      "href": "../databases/sql.html#constraints",
+      "tier": "detail",
+      "after": [
+        "basics"
+      ]
+    },
+    {
+      "id": "basics-keys",
+      "t": "Primary & foreign keys",
+      "href": "../databases/sql.html#keys",
+      "tier": "detail",
+      "after": [
+        "basics"
+      ]
+    },
+    {
+      "id": "sql",
+      "t": "Writing SQL",
+      "href": "../databases/sql.html",
+      "tier": "spine",
+      "i": "ti-code",
+      "after": [
+        "basics"
+      ],
+      "s": "The one query language you are guaranteed to need, whatever else you end up using."
+    },
+    {
+      "id": "sql-create",
+      "t": "CREATE TABLE",
+      "href": "../databases/sql.html#create-table",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-alter",
+      "t": "ALTER TABLE",
+      "href": "../databases/sql.html#alter-table",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-insert",
+      "t": "Inserting data",
+      "href": "../databases/sql.html#insert-data",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-select",
+      "t": "SELECT queries",
+      "href": "../databases/sql.html#select-query",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-update",
+      "t": "UPDATE & DELETE",
+      "href": "../databases/sql.html#update-delete",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-joins",
+      "t": "Joins",
+      "href": "../databases/sql.html#joins",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-group",
+      "t": "GROUP BY & aggregation",
+      "href": "../databases/sql.html#group-by",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-union",
+      "t": "UNION & set operations",
+      "href": "../databases/sql.html#union",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-functions",
+      "t": "Built-in functions",
+      "href": "../databases/sql.html#sql-functions",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-nulls",
+      "t": "NULL handling",
+      "href": "../databases/sql.html#nulls",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-window",
+      "t": "Window functions",
+      "href": "../databases/sql.html#window-functions",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-patterns",
+      "t": "Common query patterns",
+      "href": "../databases/sql.html#query-patterns",
+      "tier": "detail",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-views",
+      "t": "Views",
+      "href": "../databases/sql.html#views",
+      "tier": "branch",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "sql-procedural",
+      "t": "Stored procedures",
+      "href": "../databases/sql.html#procedural",
+      "tier": "branch",
+      "after": [
+        "sql"
+      ]
+    },
+    {
+      "id": "design",
+      "t": "Schema Design",
+      "href": "../databases/sql.html#normalization",
+      "tier": "spine",
+      "i": "ti-table",
+      "after": [
+        "sql"
+      ],
+      "s": "Normalisation, and the deliberate denormalisation you do later once you know the read pattern."
+    },
+    {
+      "id": "perf",
+      "t": "Indexes & Performance",
+      "href": "../databases/sql.html#indexes",
+      "tier": "spine",
+      "i": "ti-bolt",
+      "g": "Making it fast and safe",
+      "after": [
+        "design"
+      ],
+      "s": "Why a query got slow, and how to read the plan that tells you instead of guessing."
+    },
+    {
+      "id": "perf-plan",
+      "t": "Execution plans",
+      "href": "../databases/sql.html#execution-plan",
+      "tier": "detail",
+      "after": [
+        "perf"
+      ]
+    },
+    {
+      "id": "perf-scaling",
+      "t": "Scaling operations",
+      "href": "../databases/sql.html#scaling-ops",
+      "tier": "detail",
+      "after": [
+        "perf"
+      ]
+    },
+    {
+      "id": "tx",
+      "t": "Transactions",
+      "href": "../databases/sql.html#transactions",
+      "tier": "spine",
+      "i": "ti-refresh",
+      "after": [
+        "perf"
+      ],
+      "s": "ACID, isolation levels, and the anomalies each level still lets through."
+    },
+    {
+      "id": "tx-isolation",
+      "t": "Isolation levels",
+      "href": "../databases/sql.html#isolation",
+      "tier": "detail",
+      "after": [
+        "tx"
+      ]
+    },
+    {
+      "id": "sec",
+      "t": "Database Security",
+      "href": "../databases/sql.html#injection",
+      "tier": "spine",
+      "i": "ti-shield-lock",
+      "after": [
+        "tx"
+      ],
+      "s": "SQL injection and how parameterisation actually prevents it — still the most exploited web vulnerability there is."
+    },
+    {
+      "id": "sec-app",
+      "t": "Application security",
+      "href": "../systems/security/app-security.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-auth",
+      "t": "Authentication",
+      "href": "../systems/security/authentication.html",
+      "tier": "branch",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "engines",
+      "t": "Relational Engines",
+      "href": "../databases/index.html",
+      "tier": "spine",
+      "i": "ti-server",
+      "g": "Pick an engine",
+      "after": [
+        "sec"
+      ],
+      "s": "They all speak SQL and they are not interchangeable. The differences show up under load."
+    },
+    {
+      "id": "engines-postgres",
       "t": "PostgreSQL",
       "href": "../databases/postgres.html",
       "tier": "detail",
       "after": [
-        "sql"
-      ],
-      "bus": true
+        "engines"
+      ]
     },
     {
-      "id": "mysql",
+      "id": "engines-mysql",
       "t": "MySQL",
       "href": "../databases/mysql.html",
       "tier": "detail",
       "after": [
-        "sql"
-      ],
-      "bus": true
+        "engines"
+      ]
     },
     {
-      "id": "mariadb",
+      "id": "engines-mariadb",
       "t": "MariaDB",
       "href": "../databases/mariadb.html",
       "tier": "detail",
       "after": [
-        "sql"
-      ],
-      "bus": true
+        "engines"
+      ]
     },
     {
-      "id": "sqlite",
+      "id": "engines-sqlite",
       "t": "SQLite",
       "href": "../databases/sqlite.html",
       "tier": "detail",
       "after": [
-        "sql"
-      ],
-      "bus": true
-    },
-    {
-      "id": "mongodb",
-      "t": "MongoDB",
-      "href": "../databases/mongodb.html",
-      "tier": "spine",
-      "g": "NoSQL",
-      "after": [
-        "sql"
+        "engines"
       ]
     },
     {
-      "id": "redis",
-      "t": "Redis",
+      "id": "kv",
+      "t": "Key-Value & Caching",
       "href": "../databases/redis.html",
-      "tier": "detail",
+      "tier": "spine",
+      "i": "ti-hash",
+      "g": "Beyond relational",
       "after": [
-        "mongodb"
+        "engines"
       ],
-      "bus": true
+      "s": "In-memory stores. The first thing reached for when a database is the bottleneck."
     },
     {
-      "id": "cassandra",
-      "t": "Cassandra",
+      "id": "kv-caching",
+      "t": "Caching strategies",
+      "href": "../system-design/caching.html",
+      "tier": "detail",
+      "after": [
+        "kv"
+      ]
+    },
+    {
+      "id": "doc",
+      "t": "Document Stores",
+      "href": "../databases/mongodb.html",
+      "tier": "spine",
+      "i": "ti-file-code",
+      "after": [
+        "kv"
+      ],
+      "s": "Schema-on-read. Flexible up front, and the flexibility is a bill you pay later."
+    },
+    {
+      "id": "doc-couch",
+      "t": "CouchDB",
+      "href": "../databases/couchdb.html",
+      "tier": "branch",
+      "after": [
+        "doc"
+      ]
+    },
+    {
+      "id": "wide",
+      "t": "Wide-Column Stores",
       "href": "../databases/cassandra.html",
-      "tier": "detail",
+      "tier": "spine",
+      "i": "ti-layout-grid",
       "after": [
-        "mongodb"
+        "doc"
       ],
-      "bus": true
+      "s": "Built for write throughput across many machines, with a query model you design the schema around."
     },
     {
-      "id": "dynamodb",
+      "id": "wide-dynamo",
       "t": "DynamoDB",
       "href": "../databases/dynamodb.html",
       "tier": "detail",
       "after": [
-        "mongodb"
-      ],
-      "bus": true
-    },
-    {
-      "id": "couchdb",
-      "t": "CouchDB",
-      "href": "../databases/couchdb.html",
-      "tier": "detail",
-      "after": [
-        "mongodb"
-      ],
-      "bus": true
-    },
-    {
-      "id": "neo4j",
-      "t": "Neo4j (Graph)",
-      "href": "../databases/neo4j.html",
-      "tier": "spine",
-      "g": "Specialized Stores",
-      "after": [
-        "mongodb"
+        "wide"
       ]
     },
     {
-      "id": "graph-databases",
-      "t": "Graph Databases",
+      "id": "special",
+      "t": "Specialised Stores",
+      "href": "../databases/elasticsearch.html",
+      "tier": "spine",
+      "i": "ti-search",
+      "after": [
+        "wide"
+      ],
+      "s": "Search, graph and time series. Narrow tools that beat a relational database badly inside their niche."
+    },
+    {
+      "id": "special-graph",
+      "t": "Graph databases",
       "href": "../databases/graph-databases.html",
       "tier": "detail",
       "after": [
-        "neo4j"
-      ],
-      "bus": true
+        "special"
+      ]
     },
     {
-      "id": "influxdb",
-      "t": "InfluxDB (Time Series)",
+      "id": "special-neo4j",
+      "t": "Neo4j",
+      "href": "../databases/neo4j.html",
+      "tier": "detail",
+      "after": [
+        "special"
+      ]
+    },
+    {
+      "id": "special-influx",
+      "t": "InfluxDB & time series",
       "href": "../databases/influxdb.html",
       "tier": "detail",
       "after": [
-        "neo4j"
-      ],
-      "bus": true
+        "special"
+      ]
     },
     {
-      "id": "elasticsearch",
-      "t": "Elasticsearch (Search)",
-      "href": "../databases/elasticsearch.html",
+      "id": "special-modern",
+      "t": "Modern column types",
+      "href": "../databases/sql.html#modern-types",
+      "tier": "branch",
+      "after": [
+        "special"
+      ]
+    },
+    {
+      "id": "scale",
+      "t": "Databases at Scale",
+      "href": "../system-design/database-sharding.html",
+      "tier": "spine",
+      "i": "ti-arrows-split",
+      "g": "At scale",
+      "after": [
+        "special"
+      ],
+      "s": "What breaks when one machine is not enough, and the guarantees you trade away to get past it."
+    },
+    {
+      "id": "scale-replication",
+      "t": "Replication",
+      "href": "../system-design/replication.html",
       "tier": "detail",
       "after": [
-        "neo4j"
-      ],
-      "bus": true
+        "scale"
+      ]
     },
     {
-      "id": "interview",
-      "t": "Interview Questions",
+      "id": "scale-partitioning",
+      "t": "Partitioning",
+      "href": "../system-design/partitioning.html",
+      "tier": "detail",
+      "after": [
+        "scale"
+      ]
+    },
+    {
+      "id": "scale-consistency",
+      "t": "Consistency models",
+      "href": "../system-design/consistency-models.html",
+      "tier": "detail",
+      "after": [
+        "scale"
+      ]
+    },
+    {
+      "id": "scale-cap",
+      "t": "CAP theorem",
+      "href": "../system-design/cap-theorem.html",
+      "tier": "detail",
+      "after": [
+        "scale"
+      ]
+    },
+    {
+      "id": "scale-ha",
+      "t": "High availability",
+      "href": "../system-design/high-availability.html",
+      "tier": "detail",
+      "after": [
+        "scale"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
       "href": "../interview/sql-interview.html",
       "tier": "spine",
+      "i": "ti-checklist",
       "g": "Prove it",
       "after": [
-        "neo4j"
+        "scale"
+      ],
+      "s": "SQL screens are near-universal for backend and data roles, and they are the most reliably passable round on the list."
+    },
+    {
+      "id": "iv-quiz",
+      "t": "SQL quiz",
+      "href": "../databases/sql.html#quiz",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sd",
+      "t": "System design questions",
+      "href": "../interview/system-design-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -239,7 +607,7 @@
 <script src="../assets/js/search-modal.js?v=2" defer></script>
 <script src="../assets/js/utils.js?v=13"></script>
 <script src="../assets/js/platform.js?v=6"></script>
-<script src="../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

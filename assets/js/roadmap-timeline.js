@@ -137,9 +137,17 @@
       '<i class="ti ti-check" aria-hidden="true"></i></button>';
   }
 
-  function subItem(k) {
+  /* `order` is the position in the required sequence, or 0 for an optional
+     branch. Once subnodes sit two-up the layout stops answering "which of
+     these four do I do first" — reading down and reading across are equally
+     plausible — so the sequence is stated rather than implied. Optional nodes
+     are deliberately unnumbered: that is what makes them visibly not part of
+     the run. */
+  function subItem(k, order) {
     var soon = k.status === 'soon';
-    var label = esc(k.t) +
+    var label =
+      (order ? '<span class="rt-ord" aria-hidden="true">' + order + '</span>' : '') +
+      esc(k.t) +
       (soon ? '<span class="rt-tag">soon</span>' : '') +
       (k.tier === 'branch' ? '<span class="rt-tag">optional</span>' : '');
 
@@ -221,7 +229,10 @@
       var showBand = step.g && step.g !== lastBand;
       lastBand = step.g || lastBand;
 
-      var bullets = kids.map(subItem).join('');
+      var seq = 0;
+      var bullets = kids.map(function (k) {
+        return subItem(k, k.tier === 'branch' ? 0 : ++seq);
+      }).join('');
 
       /* No fallback to the step number: the node on the spine already carries
          it, and a floating chip repeating it was the one element on the card

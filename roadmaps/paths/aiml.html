@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through deep learning to the models behind today's LLMs. Every milestone opens a TechForge lesson."/>
+  <meta name="description" content="Maths, Python and the data stack first, then classical ML, deep learning, the specialisations, and the applied and MLOps work most AI jobs actually involve. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
   <meta property="og:title" content="AI / ML Engineer Roadmap — TechForge"/>
-  <meta property="og:description" content="Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through deep learning to the models behind today's LLMs."/>
+  <meta property="og:description" content="Maths, Python and the data stack first, then classical ML, deep learning, the specialisations, and the applied and MLOps work most AI jobs actually involve. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
   <meta property="og:type" content="website"/>
   <title>AI / ML Engineer Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/aiml.html"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -66,8 +66,8 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">AI / ML Engineer</h1>
-      <p class="rt-sub">Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through deep learning to the models behind today's LLMs. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
-      <div class="rt-count">6 steps · 2 topics</div>
+      <p class="rt-sub">Maths, Python and the data stack first, then classical ML, deep learning, the specialisations, and the applied and MLOps work most AI jobs actually involve. Branches marked <strong>optional</strong> can wait. Steps marked <strong>soon</strong> belong on the roadmap but TechForge has not written them yet.</p>
+      <div class="rt-count">13 steps · 78 topics · 17 coming soon</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
@@ -78,85 +78,870 @@
   "accent": "var(--purple)",
   "nodes": [
     {
-      "id": "programming-python-index",
+      "id": "math",
+      "t": "Mathematics",
+      "href": "../../aiml/math.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-hash",
+      "g": "Foundations",
+      "s": "Not optional and not deep. Enough linear algebra, calculus and probability to read a paper and debug a model that will not converge."
+    },
+    {
+      "id": "math-linalg",
+      "t": "Linear algebra",
+      "href": "../../aiml/math.html#linear-algebra",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "math-calc",
+      "t": "Calculus & gradients",
+      "href": "../../aiml/math.html#calculus",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "math-prob",
+      "t": "Probability",
+      "href": "../../aiml/math.html#probability",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "math-stats",
+      "t": "Statistics",
+      "href": "../../aiml/aiml-explained.html#stats",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "py",
       "t": "Python",
       "href": "../../programming/python/index.html",
       "tier": "spine",
-      "g": "Foundations",
-      "s": "The lingua franca of data science and machine learning."
+      "i": "ti-code",
+      "after": [
+        "math"
+      ],
+      "s": "The whole field runs on it. Get fluent before the libraries, or you will be debugging the language instead of the model."
     },
     {
-      "id": "aiml-ds-cheatsheet",
-      "t": "Data Science & AI Cheat Sheet",
+      "id": "py-basics",
+      "t": "Syntax & control flow",
+      "href": "../../programming/python/basics.html",
+      "tier": "detail",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "py-functions",
+      "t": "Functions",
+      "href": "../../programming/python/functions.html",
+      "tier": "detail",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "py-collections",
+      "t": "Collections",
+      "href": "../../programming/python/collections.html",
+      "tier": "detail",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "py-oop",
+      "t": "Objects & classes",
+      "href": "../../programming/python/oop.html",
+      "tier": "detail",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "py-libs",
+      "t": "Standard library",
+      "href": "../../programming/python/libraries.html",
+      "tier": "detail",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "py-modules",
+      "t": "Modules & packaging",
+      "href": "../../programming/python/modules.html",
+      "tier": "branch",
+      "after": [
+        "py"
+      ]
+    },
+    {
+      "id": "data",
+      "t": "The Data Stack",
       "href": "../../aiml/ds-cheatsheet.html",
       "tier": "spine",
-      "s": "A fast reference for the probability, linear algebra, and statistics the rest of this path assumes.",
+      "i": "ti-table",
+      "g": "Working with data",
       "after": [
-        "programming-python-index"
+        "py"
+      ],
+      "s": "NumPy, pandas and plotting. Most of an ML job is here, not in the model."
+    },
+    {
+      "id": "data-numpy",
+      "t": "NumPy & arrays",
+      "href": "../../aiml/ds-cheatsheet.html#numpy",
+      "tier": "detail",
+      "after": [
+        "data"
       ]
     },
     {
-      "id": "aiml-ml",
-      "t": "Machine Learning",
+      "id": "data-pandas",
+      "t": "pandas & dataframes",
+      "href": "../../aiml/ds-cheatsheet.html#pandas",
+      "tier": "detail",
+      "after": [
+        "data"
+      ]
+    },
+    {
+      "id": "data-viz",
+      "t": "Plotting with matplotlib",
+      "href": "../../aiml/ds-cheatsheet.html#matplotlib",
+      "tier": "detail",
+      "after": [
+        "data"
+      ]
+    },
+    {
+      "id": "data-sql",
+      "t": "SQL",
+      "href": "../../aiml/ds-cheatsheet.html#sql",
+      "tier": "detail",
+      "after": [
+        "data"
+      ]
+    },
+    {
+      "id": "data-db",
+      "t": "Databases",
+      "href": "../../databases/sql.html",
+      "tier": "branch",
+      "after": [
+        "data"
+      ]
+    },
+    {
+      "id": "prep",
+      "t": "Data Preparation",
+      "href": "../../aiml/data-prep.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-refresh",
+      "after": [
+        "data"
+      ],
+      "s": "Cleaning, splitting and feature engineering. The step that decides your ceiling before any model is chosen."
+    },
+    {
+      "id": "prep-eda",
+      "t": "Exploratory analysis",
+      "href": "../../aiml/data-prep.html#eda",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "prep"
+      ]
+    },
+    {
+      "id": "prep-clean",
+      "t": "Cleaning & missing values",
+      "href": "../../aiml/data-prep.html#cleaning",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "prep"
+      ]
+    },
+    {
+      "id": "prep-features",
+      "t": "Feature engineering",
+      "href": "../../aiml/data-prep.html#features",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "prep"
+      ]
+    },
+    {
+      "id": "prep-splits",
+      "t": "Train, validation & test splits",
+      "href": "../../aiml/data-prep.html#splits",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "prep"
+      ]
+    },
+    {
+      "id": "intro",
+      "t": "What AI Actually Is",
+      "href": "../../aiml/aiml-explained.html",
+      "tier": "spine",
+      "i": "ti-brain",
+      "g": "Machine learning",
+      "after": [
+        "prep"
+      ],
+      "s": "The vocabulary, and where the boundaries between AI, ML and deep learning actually fall."
+    },
+    {
+      "id": "intro-foundations",
+      "t": "Foundations",
+      "href": "../../aiml/aiml-explained.html#foundations",
+      "tier": "detail",
+      "after": [
+        "intro"
+      ]
+    },
+    {
+      "id": "intro-viz",
+      "t": "Algorithms, visualised",
+      "href": "../../aiml/aiml-explained.html#visualizations",
+      "tier": "detail",
+      "after": [
+        "intro"
+      ]
+    },
+    {
+      "id": "ml",
+      "t": "Classical Machine Learning",
       "href": "../../aiml/ml.html",
       "tier": "spine",
-      "g": "Core ML",
-      "s": "Supervised and unsupervised learning, and the full model lifecycle.",
+      "i": "ti-binary-tree",
       "after": [
-        "programming-python-index",
-        "aiml-ds-cheatsheet"
+        "intro"
+      ],
+      "s": "Regression, trees and ensembles still win on tabular data. Learn these before reaching for a network."
+    },
+    {
+      "id": "ml-what",
+      "t": "What ML is",
+      "href": "../../aiml/ml.html#ml-what",
+      "tier": "detail",
+      "after": [
+        "ml"
       ]
     },
     {
-      "id": "aiml-dl",
+      "id": "ml-supervised",
+      "t": "Supervised learning",
+      "href": "../../aiml/ml.html#ml-supervised",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-unsupervised",
+      "t": "Unsupervised learning",
+      "href": "../../aiml/ml.html#ml-unsupervised",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-algorithms",
+      "t": "The core algorithms",
+      "href": "../../aiml/ml.html#ml-algorithms",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-pipeline",
+      "t": "The ML pipeline",
+      "href": "../../aiml/ml.html#ml-pipeline",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-eval",
+      "t": "Model evaluation",
+      "href": "../../aiml/ml.html#ml-eval",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-sklearn",
+      "t": "scikit-learn",
+      "href": "../../aiml/ds-cheatsheet.html#sklearn",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-overfit",
+      "t": "Overfitting & regularisation",
+      "href": "../../aiml/regularisation.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "dl",
       "t": "Deep Learning",
       "href": "../../aiml/dl.html",
       "tier": "spine",
-      "s": "Neural networks, backpropagation, and training at scale.",
+      "i": "ti-topology-star-3",
+      "g": "Neural networks",
       "after": [
-        "aiml-ml"
+        "ml"
+      ],
+      "s": "Layers, backpropagation and the training loop everything else is a variation on."
+    },
+    {
+      "id": "dl-nn",
+      "t": "Neural network basics",
+      "href": "../../aiml/dl.html#dl-nn",
+      "tier": "detail",
+      "after": [
+        "dl"
       ]
     },
     {
-      "id": "aiml-nlp",
+      "id": "dl-backprop",
+      "t": "Backpropagation",
+      "href": "../../aiml/dl.html#dl-backprop",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-activations",
+      "t": "Activation functions",
+      "href": "../../aiml/dl.html#dl-activations",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-cnn",
+      "t": "Convolutional networks",
+      "href": "../../aiml/dl.html#dl-cnn",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-rnn",
+      "t": "Recurrent networks",
+      "href": "../../aiml/dl.html#dl-rnn",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-transformer",
+      "t": "Transformers & attention",
+      "href": "../../aiml/dl.html#dl-transformer",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-generative",
+      "t": "Generative architectures",
+      "href": "../../aiml/dl.html#dl-generative",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-pytorch",
+      "t": "PyTorch",
+      "href": "../../aiml/ds-cheatsheet.html#pytorch",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-training",
+      "t": "Optimisers & training tricks",
+      "href": "../../aiml/training.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "nlp",
       "t": "Natural Language Processing",
       "href": "../../aiml/nlp.html",
-      "tier": "branch",
-      "g": "Domains",
-      "s": "From embeddings through to transformers.",
+      "tier": "spine",
+      "i": "ti-message-circle",
+      "g": "Specialisations",
       "after": [
-        "aiml-dl"
+        "dl"
+      ],
+      "s": "Tokenisation, embeddings and the sequence models that led to today's language models."
+    },
+    {
+      "id": "nlp-basics",
+      "t": "NLP basics",
+      "href": "../../aiml/nlp.html#nlp-basics",
+      "tier": "detail",
+      "after": [
+        "nlp"
       ]
     },
     {
-      "id": "aiml-cv",
+      "id": "nlp-embeddings",
+      "t": "Embeddings",
+      "href": "../../aiml/nlp.html#nlp-embeddings",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-transformer",
+      "t": "Transformers for text",
+      "href": "../../aiml/nlp.html#nlp-transformer",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-models",
+      "t": "Language models",
+      "href": "../../aiml/nlp.html#nlp-models",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-tasks",
+      "t": "Common NLP tasks",
+      "href": "../../aiml/nlp.html#nlp-tasks",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-finetune",
+      "t": "Fine-tuning for NLP",
+      "href": "../../aiml/nlp.html#nlp-finetune",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-speech",
+      "t": "Speech",
+      "href": "../../aiml/nlp.html#nlp-speech",
+      "tier": "branch",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "cv",
       "t": "Computer Vision",
       "href": "../../aiml/cv.html",
-      "tier": "branch",
-      "s": "Convolutions, detection, and image models.",
+      "tier": "spine",
+      "i": "ti-eye",
       "after": [
-        "aiml-dl"
+        "nlp"
+      ],
+      "s": "Classification, detection and segmentation, and why data augmentation matters more than architecture."
+    },
+    {
+      "id": "cv-cnn",
+      "t": "CNNs for vision",
+      "href": "../../aiml/cv.html#cv-cnn",
+      "tier": "detail",
+      "after": [
+        "cv"
       ]
     },
     {
-      "id": "aiml-genai",
-      "t": "Generative AI & LLMs",
+      "id": "cv-classification",
+      "t": "Image classification",
+      "href": "../../aiml/cv.html#cv-classification",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-detection",
+      "t": "Object detection",
+      "href": "../../aiml/cv.html#cv-detection",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-segmentation",
+      "t": "Segmentation",
+      "href": "../../aiml/cv.html#cv-segmentation",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-architectures",
+      "t": "Vision architectures",
+      "href": "../../aiml/cv.html#cv-architectures",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-generative",
+      "t": "Generative vision",
+      "href": "../../aiml/cv.html#cv-generative",
+      "tier": "branch",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "rl",
+      "t": "Reinforcement Learning",
+      "href": "../../aiml/rl.html",
+      "tier": "spine",
+      "i": "ti-target",
+      "after": [
+        "cv"
+      ],
+      "s": "Agents, rewards and policies. Narrower in industry than its share of the headlines, and central to how models are aligned."
+    },
+    {
+      "id": "rl-mdp",
+      "t": "Markov decision processes",
+      "href": "../../aiml/rl.html#rl-mdp",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-algorithms",
+      "t": "RL algorithms",
+      "href": "../../aiml/rl.html#rl-algorithms",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-policy",
+      "t": "Policy methods",
+      "href": "../../aiml/rl.html#rl-policy",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-drl",
+      "t": "Deep RL",
+      "href": "../../aiml/rl.html#rl-drl",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-rlhf",
+      "t": "RLHF & alignment",
+      "href": "../../aiml/rl.html#rl-rlhf",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "gen",
+      "t": "Generative AI",
       "href": "../../aiml/genai.html",
       "tier": "spine",
-      "s": "How large language models work, and how to build on top of them.",
+      "i": "ti-bolt",
+      "g": "Applied AI",
       "after": [
-        "aiml-dl"
+        "rl"
+      ],
+      "s": "Where most AI engineering jobs currently are: building on top of models rather than training them from scratch."
+    },
+    {
+      "id": "gen-what",
+      "t": "What generative AI is",
+      "href": "../../aiml/genai.html#genai-what",
+      "tier": "detail",
+      "after": [
+        "gen"
       ]
     },
     {
-      "id": "interview-aiml-interview",
-      "t": "AI/ML Interview",
+      "id": "gen-models",
+      "t": "The model landscape",
+      "href": "../../aiml/genai.html#genai-models",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-llm",
+      "t": "How LLMs work",
+      "href": "../../aiml/genai.html#genai-llms",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-prompt",
+      "t": "Prompt engineering",
+      "href": "../../aiml/genai.html#genai-prompt",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-rag",
+      "t": "Retrieval-augmented generation",
+      "href": "../../aiml/genai.html#genai-rag",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-finetune",
+      "t": "Fine-tuning",
+      "href": "../../aiml/genai.html#genai-finetune",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-agents",
+      "t": "Agents & tool use",
+      "href": "../../aiml/genai.html#genai-agents",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-tools",
+      "t": "The tooling ecosystem",
+      "href": "../../aiml/genai.html#genai-tools",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-langgraph",
+      "t": "LangGraph",
+      "href": "../../aiml/ds-cheatsheet.html#langgraph",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-vector",
+      "t": "Vector databases",
+      "href": "../../aiml/vector-databases.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-eval",
+      "t": "Evaluating generative systems",
+      "href": "../../aiml/genai-eval.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "mlops",
+      "t": "MLOps",
+      "href": "../../aiml/mlops.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-rocket",
+      "g": "Shipping it",
+      "after": [
+        "gen"
+      ],
+      "s": "A model in a notebook is not a product. Versioning, serving, and noticing when the data moves under you."
+    },
+    {
+      "id": "mlops-tracking",
+      "t": "Experiment tracking",
+      "href": "../../aiml/mlops.html#tracking",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-serving",
+      "t": "Model serving",
+      "href": "../../aiml/mlops.html#serving",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-drift",
+      "t": "Monitoring & drift",
+      "href": "../../aiml/mlops.html#drift",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-api",
+      "t": "Serving with FastAPI",
+      "href": "../../system-design/fastapi.html",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-docker",
+      "t": "Docker",
+      "href": "../../devops/docker.html",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-cicd",
+      "t": "CI/CD",
+      "href": "../../devops/cicd.html",
+      "tier": "detail",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "mlops-k8s",
+      "t": "Kubernetes",
+      "href": "../../devops/kubernetes.html",
+      "tier": "branch",
+      "after": [
+        "mlops"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
       "href": "../../interview/aiml-interview.html",
       "tier": "spine",
+      "i": "ti-checklist",
       "g": "Prove it",
-      "s": "Questions across ML fundamentals, deep learning, and modern LLMs.",
       "after": [
-        "aiml-genai"
+        "mlops"
+      ],
+      "s": "ML interviews mix model theory, a coding round, and one question about what you would do when the metric drops."
+    },
+    {
+      "id": "iv-python",
+      "t": "Python questions",
+      "href": "../../interview/python-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-bigo",
+      "t": "Big-O notation",
+      "href": "../../dsa/bigo.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-dsa",
+      "t": "DSA questions",
+      "href": "../../interview/dsa-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sd",
+      "t": "System design questions",
+      "href": "../../interview/system-design-interview.html",
+      "tier": "branch",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -172,7 +957,7 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
 <script src="../../assets/js/platform.js?v=6"></script>
-<script src="../../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

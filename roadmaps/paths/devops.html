@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the whole thing to the cloud as code. Every milestone opens a TechForge lesson."/>
+  <meta name="description" content="From a Linux box to a production platform: containers, Kubernetes, infrastructure as code, cloud, pipelines, observability and the reliability practices that keep it up. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
   <meta property="og:title" content="DevOps &amp; Cloud Roadmap — TechForge"/>
-  <meta property="og:description" content="Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the whole thing to the cloud as code."/>
+  <meta property="og:description" content="From a Linux box to a production platform: containers, Kubernetes, infrastructure as code, cloud, pipelines, observability and the reliability practices that keep it up. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
   <meta property="og:type" content="website"/>
   <title>DevOps &amp; Cloud Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/devops.html"/>
@@ -22,7 +22,7 @@
   <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -66,99 +66,680 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">DevOps &amp; Cloud</h1>
-      <p class="rt-sub">Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the whole thing to the cloud as code. Follow the trunk for the required steps; the branches beside it are worth knowing but optional.</p>
-      <div class="rt-count">7 steps · 1 topics</div>
+      <p class="rt-sub">From a Linux box to a production platform: containers, Kubernetes, infrastructure as code, cloud, pipelines, observability and the reliability practices that keep it up. Branches marked <strong>optional</strong> can wait. Steps marked <strong>soon</strong> belong on the roadmap but TechForge has not written them yet.</p>
+      <div class="rt-count">14 steps · 55 topics · 13 coming soon</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
     <script type="application/json" id="rgGraph">
 {
   "id": "devops",
-  "title": "DevOps & Cloud",
-  "accent": "var(--red)",
+  "title": "DevOps Engineer",
+  "accent": "var(--orange)",
   "nodes": [
     {
-      "id": "devops-linux-basics",
-      "t": "Linux Basics",
+      "id": "linux",
+      "t": "Linux",
       "href": "../../devops/linux-basics.html",
       "tier": "spine",
+      "i": "ti-device-desktop",
       "g": "Foundations",
-      "s": "The shell, the filesystem, permissions, and processes — everything is a file."
+      "s": "The whole job sits on it. Files, permissions, processes, systemd, and reading logs on a box that will not boot."
     },
     {
-      "id": "devops-git",
-      "t": "Git Commands",
+      "id": "linux-bash",
+      "t": "Bash scripting",
+      "href": "../../devops/bash-scripting.html",
+      "tier": "detail",
+      "after": [
+        "linux"
+      ]
+    },
+    {
+      "id": "linux-processes",
+      "t": "Processes & threads",
+      "href": "../../systems/os/processes.html",
+      "tier": "detail",
+      "after": [
+        "linux"
+      ]
+    },
+    {
+      "id": "linux-memory",
+      "t": "Memory management",
+      "href": "../../systems/os/memory.html",
+      "tier": "detail",
+      "after": [
+        "linux"
+      ]
+    },
+    {
+      "id": "linux-fs",
+      "t": "Filesystems",
+      "href": "../../systems/os/filesystems.html",
+      "tier": "detail",
+      "after": [
+        "linux"
+      ]
+    },
+    {
+      "id": "linux-boot",
+      "t": "Boot process",
+      "href": "../../systems/os/boot.html",
+      "tier": "branch",
+      "after": [
+        "linux"
+      ]
+    },
+    {
+      "id": "net",
+      "t": "Networking",
+      "href": "../../systems/networking/index.html",
+      "tier": "spine",
+      "i": "ti-world",
+      "after": [
+        "linux"
+      ],
+      "s": "Most outages are a network problem wearing a costume. Know the layers well enough to prove it is not DNS."
+    },
+    {
+      "id": "net-http",
+      "t": "HTTP & HTTPS",
+      "href": "../../systems/networking/http.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-dns",
+      "t": "DNS",
+      "href": "../../systems/networking/dns.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-tcp",
+      "t": "TCP & UDP",
+      "href": "../../systems/networking/tcp-udp.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-routing",
+      "t": "Routing",
+      "href": "../../systems/networking/routing.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "net-stack",
+      "t": "The network stack",
+      "href": "../../systems/networking/stack.html",
+      "tier": "detail",
+      "after": [
+        "net"
+      ]
+    },
+    {
+      "id": "script",
+      "t": "A Scripting Language",
+      "href": "../../programming/python/index.html",
+      "tier": "spine",
+      "i": "ti-code",
+      "after": [
+        "net"
+      ],
+      "s": "Glue, tooling and one-off automation. Python or Go; the point is that you stop doing it by hand."
+    },
+    {
+      "id": "script-basics",
+      "t": "Syntax & control flow",
+      "href": "../../programming/python/basics.html",
+      "tier": "detail",
+      "after": [
+        "script"
+      ]
+    },
+    {
+      "id": "script-modules",
+      "t": "Modules & packaging",
+      "href": "../../programming/python/modules.html",
+      "tier": "detail",
+      "after": [
+        "script"
+      ]
+    },
+    {
+      "id": "script-libs",
+      "t": "Standard library",
+      "href": "../../programming/python/libraries.html",
+      "tier": "detail",
+      "after": [
+        "script"
+      ]
+    },
+    {
+      "id": "git",
+      "t": "Git & GitHub",
       "href": "../../devops/git.html",
       "tier": "spine",
-      "s": "The twenty commands that do most of the work, plus branching, merging, and rebase.",
+      "i": "ti-git-branch",
       "after": [
-        "devops-linux-basics"
+        "script"
+      ],
+      "s": "Every pipeline, every environment and every rollback starts from a commit."
+    },
+    {
+      "id": "git-github",
+      "t": "Pull requests & review",
+      "href": "../../devops/github.html",
+      "tier": "detail",
+      "after": [
+        "git"
       ]
     },
     {
-      "id": "devops-docker",
-      "t": "Docker",
+      "id": "docker",
+      "t": "Containers",
       "href": "../../devops/docker.html",
       "tier": "spine",
-      "g": "Containers",
-      "s": "Layered images built from a Dockerfile, and reproducible environments.",
+      "i": "ti-package",
+      "g": "Packaging",
       "after": [
-        "devops-git"
+        "git"
+      ],
+      "s": "Images, layers, registries. The unit everything downstream deploys."
+    },
+    {
+      "id": "docker-compose",
+      "t": "Docker Compose",
+      "href": "../../devops/docker-compose.html",
+      "tier": "detail",
+      "after": [
+        "docker"
       ]
     },
     {
-      "id": "devops-kubernetes",
+      "id": "docker-registry",
+      "t": "Registries & image scanning",
+      "href": "../../devops/registries.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "docker"
+      ]
+    },
+    {
+      "id": "k8s",
       "t": "Kubernetes",
       "href": "../../devops/kubernetes.html",
       "tier": "spine",
-      "s": "The control plane, pods, services and deployments — containers at cluster scale.",
+      "i": "ti-topology-star-3",
       "after": [
-        "devops-docker"
+        "docker"
+      ],
+      "s": "Pods, services, deployments and the control loop that keeps reconciling whether you are watching or not."
+    },
+    {
+      "id": "k8s-helm",
+      "t": "Helm",
+      "href": "../../devops/helm.html",
+      "tier": "detail",
+      "after": [
+        "k8s"
       ]
     },
     {
-      "id": "devops-cicd",
-      "t": "CI/CD Overview",
+      "id": "k8s-gitops",
+      "t": "GitOps & Argo CD",
+      "href": "../../devops/gitops.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "k8s"
+      ]
+    },
+    {
+      "id": "k8s-mesh",
+      "t": "Service mesh",
+      "href": "../../devops/service-mesh.html",
+      "status": "soon",
+      "tier": "branch",
+      "after": [
+        "k8s"
+      ]
+    },
+    {
+      "id": "iac",
+      "t": "Infrastructure as Code",
+      "href": "../../devops/terraform.html",
+      "tier": "spine",
+      "i": "ti-file-code",
+      "g": "Infrastructure",
+      "after": [
+        "k8s"
+      ],
+      "s": "Servers described in a file and reviewed like code. Clicking in a console does not survive the person who clicked."
+    },
+    {
+      "id": "iac-infra",
+      "t": "Infrastructure basics",
+      "href": "../../devops/infrastructure.html",
+      "tier": "detail",
+      "after": [
+        "iac"
+      ]
+    },
+    {
+      "id": "iac-ansible",
+      "t": "Ansible & config management",
+      "href": "../../devops/ansible.html",
+      "tier": "detail",
+      "after": [
+        "iac"
+      ]
+    },
+    {
+      "id": "iac-state",
+      "t": "State, modules & drift",
+      "href": "../../devops/terraform-state.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "iac"
+      ]
+    },
+    {
+      "id": "cloud",
+      "t": "Cloud",
+      "href": "../../devops/cloud-fundamentals.html",
+      "tier": "spine",
+      "i": "ti-cloud",
+      "after": [
+        "iac"
+      ],
+      "s": "Compute, storage, networking and IAM. Learn one provider properly; the second one is mostly renaming."
+    },
+    {
+      "id": "cloud-aws",
+      "t": "AWS",
+      "href": "../../devops/aws-basics.html",
+      "tier": "detail",
+      "after": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "cloud-azure",
+      "t": "Azure",
+      "href": "../../devops/azure-basics.html",
+      "tier": "branch",
+      "after": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "cloud-gcp",
+      "t": "Google Cloud",
+      "href": "../../devops/gcp-basics.html",
+      "tier": "branch",
+      "after": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "cloud-iam",
+      "t": "IAM & least privilege",
+      "href": "../../devops/iam.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "cloud-cost",
+      "t": "Cost management",
+      "href": "../../devops/cost.html",
+      "status": "soon",
+      "tier": "branch",
+      "after": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "cicd",
+      "t": "CI/CD",
       "href": "../../devops/cicd.html",
       "tier": "spine",
-      "g": "Automation",
-      "s": "Automated build, test, and deploy triggered by every commit.",
+      "i": "ti-rocket",
+      "g": "Delivery",
       "after": [
-        "devops-git",
-        "devops-docker",
-        "devops-kubernetes"
+        "cloud"
+      ],
+      "s": "Build, test, deploy — the same way every time, with a rollback that someone has actually tried."
+    },
+    {
+      "id": "cicd-actions",
+      "t": "GitHub Actions",
+      "href": "../../devops/github-actions.html",
+      "tier": "detail",
+      "after": [
+        "cicd"
       ]
     },
     {
-      "id": "devops-aws-basics",
-      "t": "AWS Basics",
-      "href": "../../devops/aws-basics.html",
+      "id": "cicd-jenkins",
+      "t": "Jenkins",
+      "href": "../../devops/jenkins.html",
+      "tier": "detail",
+      "after": [
+        "cicd"
+      ]
+    },
+    {
+      "id": "cicd-strategies",
+      "t": "Blue-green & canary releases",
+      "href": "../../devops/release-strategies.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "cicd"
+      ]
+    },
+    {
+      "id": "cicd-secrets",
+      "t": "Secrets management",
+      "href": "../../devops/secrets.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "cicd"
+      ]
+    },
+    {
+      "id": "serve",
+      "t": "Web Servers & Proxies",
+      "href": "../../devops/nginx.html",
       "tier": "spine",
-      "g": "Cloud",
-      "s": "Regions and Availability Zones, compute, storage, and IAM.",
+      "i": "ti-server",
       "after": [
-        "devops-cicd"
+        "cicd"
+      ],
+      "s": "The thing in front of your app: TLS termination, routing, timeouts, and the config that quietly caps throughput."
+    },
+    {
+      "id": "serve-proxy",
+      "t": "Reverse proxies",
+      "href": "../../devops/reverse-proxy.html",
+      "tier": "detail",
+      "after": [
+        "serve"
       ]
     },
     {
-      "id": "devops-terraform",
-      "t": "Terraform",
-      "href": "../../devops/terraform.html",
+      "id": "serve-lb",
+      "t": "Load balancing",
+      "href": "../../system-design/load-balancing.html",
+      "tier": "detail",
+      "after": [
+        "serve"
+      ]
+    },
+    {
+      "id": "serve-cdn",
+      "t": "CDNs",
+      "href": "../../system-design/cdn.html",
+      "tier": "detail",
+      "after": [
+        "serve"
+      ]
+    },
+    {
+      "id": "serve-gateway",
+      "t": "API gateways",
+      "href": "../../system-design/api-gateway.html",
       "tier": "branch",
-      "s": "Declarative HCL for infrastructure — declare it, version it, apply it.",
       "after": [
-        "devops-aws-basics"
+        "serve"
       ]
     },
     {
-      "id": "interview-devops-interview",
-      "t": "DevOps Interview",
+      "id": "obs",
+      "t": "Observability",
+      "href": "../../devops/monitoring.html",
+      "tier": "spine",
+      "i": "ti-gauge",
+      "g": "Running it",
+      "after": [
+        "serve"
+      ],
+      "s": "Metrics, logs and traces. Not dashboards for their own sake — the specific questions you will be asked at 3am."
+    },
+    {
+      "id": "obs-prom",
+      "t": "Prometheus",
+      "href": "../../devops/prometheus.html",
+      "tier": "detail",
+      "after": [
+        "obs"
+      ]
+    },
+    {
+      "id": "obs-grafana",
+      "t": "Grafana",
+      "href": "../../devops/grafana.html",
+      "tier": "detail",
+      "after": [
+        "obs"
+      ]
+    },
+    {
+      "id": "obs-logs",
+      "t": "Centralised logging",
+      "href": "../../devops/logging.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "obs"
+      ]
+    },
+    {
+      "id": "obs-tracing",
+      "t": "Distributed tracing",
+      "href": "../../devops/tracing.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "obs"
+      ]
+    },
+    {
+      "id": "obs-alerting",
+      "t": "Alerting & on-call",
+      "href": "../../devops/alerting.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "obs"
+      ]
+    },
+    {
+      "id": "sre",
+      "t": "Reliability",
+      "href": "../../system-design/high-availability.html",
+      "tier": "spine",
+      "i": "ti-shield-check",
+      "after": [
+        "obs"
+      ],
+      "s": "Designing for the failure you have not had yet, and agreeing in advance how much downtime is acceptable."
+    },
+    {
+      "id": "sre-ft",
+      "t": "Fault tolerance",
+      "href": "../../system-design/fault-tolerance.html",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sre-scale",
+      "t": "Scalability",
+      "href": "../../system-design/scalability.html",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sre-rate",
+      "t": "Rate limiting",
+      "href": "../../system-design/rate-limiting.html",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sre-slo",
+      "t": "SLOs & error budgets",
+      "href": "../../devops/slo.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sre-incident",
+      "t": "Incident response",
+      "href": "../../systems/security/incident-response.html",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sre-postmortem",
+      "t": "Blameless postmortems",
+      "href": "../../devops/postmortems.html",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "sre"
+      ]
+    },
+    {
+      "id": "sec",
+      "t": "Security",
+      "href": "../../systems/security/fundamentals.html",
+      "tier": "spine",
+      "i": "ti-shield-lock",
+      "after": [
+        "sre"
+      ],
+      "s": "You hold the keys to production. Hardening, certificates, and the network boundary are your problem."
+    },
+    {
+      "id": "sec-net",
+      "t": "Network security",
+      "href": "../../systems/security/network-security.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-tls",
+      "t": "TLS & certificates",
+      "href": "../../systems/security/tls-pki.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-auth",
+      "t": "Authentication",
+      "href": "../../systems/security/authentication.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-app",
+      "t": "Application security",
+      "href": "../../systems/security/app-security.html",
+      "tier": "detail",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "sec-crypto",
+      "t": "Cryptography basics",
+      "href": "../../systems/security/crypto.html",
+      "tier": "branch",
+      "after": [
+        "sec"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
       "href": "../../interview/devops-interview.html",
       "tier": "spine",
+      "i": "ti-checklist",
       "g": "Prove it",
-      "s": "29 questions on Docker, Kubernetes, CI/CD, Linux, monitoring, IaC and SRE.",
       "after": [
-        "devops-aws-basics"
+        "sec"
+      ],
+      "s": "DevOps interviews are a Linux screen, a networking screen, and one conversation about how you would run it."
+    },
+    {
+      "id": "iv-os",
+      "t": "OS questions",
+      "href": "../../interview/os-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-net",
+      "t": "Networking questions",
+      "href": "../../interview/networking-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sd",
+      "t": "System design questions",
+      "href": "../../interview/system-design-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-sec",
+      "t": "Security questions",
+      "href": "../../interview/security-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -174,7 +755,7 @@
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
 <script src="../../assets/js/utils.js?v=13"></script>
 <script src="../../assets/js/platform.js?v=6"></script>
-<script src="../../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');

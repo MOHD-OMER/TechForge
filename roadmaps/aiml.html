@@ -5,9 +5,9 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="From what machine learning is, through deep learning, to the specialisations built on it. Every node opens a TechForge lesson."/>
+  <meta name="description" content="The AI and machine learning subject map: the vocabulary and data stack, classical ML, deep learning, then NLP, vision, reinforcement learning and the applied generative work on top. Branches marked optional can wait."/>
   <meta property="og:title" content="AI / ML Roadmap — TechForge"/>
-  <meta property="og:description" content="From what machine learning is, through deep learning, to the specialisations built on it."/>
+  <meta property="og:description" content="The AI and machine learning subject map: the vocabulary and data stack, classical ML, deep learning, then NLP, vision, reinforcement learning and the applied generative work on top. Branches marked optional can wait."/>
   <meta property="og:type" content="website"/>
   <title>AI / ML Roadmap — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/aiml.html"/>
@@ -22,7 +22,7 @@
   <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
   <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
-  <link href="../assets/css/roadmap-timeline.css?v=3" rel="stylesheet"/>
+  <link href="../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
 </head>
 <body data-section="roadmaps">
@@ -68,102 +68,629 @@
     <div class="rt-head">
       <div class="rt-eyebrow">TechForge Roadmap</div>
       <h1 class="rt-h1">AI / ML Roadmap</h1>
-      <p class="rt-sub">From what machine learning is, through deep learning, to the specialisations built on it. Follow the trunk down; the pills beside each step belong to that group.</p>
-      <div class="rt-count">4 steps · 5 topics</div>
+      <p class="rt-sub">The AI and machine learning subject map: the vocabulary and data stack, classical ML, deep learning, then NLP, vision, reinforcement learning and the applied generative work on top. Branches marked <strong>optional</strong> can wait.</p>
+      <div class="rt-count">9 steps · 57 topics</div>
     </div>
 
     <div id="rgMount" class="rt-mount"></div>
     <script type="application/json" id="rgGraph">
 {
   "id": "aiml",
-  "title": "AI / ML",
+  "title": "AI & Machine Learning",
   "accent": "var(--purple)",
   "nodes": [
     {
-      "id": "aiml-explained",
-      "t": "Learn Artificial Intelligence& Machine Learning.",
+      "id": "intro",
+      "t": "What AI Actually Is",
       "href": "../aiml/aiml-explained.html",
       "tier": "spine",
-      "g": "Foundations"
+      "i": "ti-brain",
+      "g": "Orientation",
+      "s": "The vocabulary, and where the boundaries between AI, machine learning and deep learning actually fall."
+    },
+    {
+      "id": "intro-foundations",
+      "t": "Foundations",
+      "href": "../aiml/aiml-explained.html#foundations",
+      "tier": "detail",
+      "after": [
+        "intro"
+      ]
+    },
+    {
+      "id": "intro-stats",
+      "t": "Statistics you need",
+      "href": "../aiml/aiml-explained.html#stats",
+      "tier": "detail",
+      "after": [
+        "intro"
+      ]
+    },
+    {
+      "id": "intro-viz",
+      "t": "Algorithms, visualised",
+      "href": "../aiml/aiml-explained.html#visualizations",
+      "tier": "detail",
+      "after": [
+        "intro"
+      ]
+    },
+    {
+      "id": "tools",
+      "t": "The Data Stack",
+      "href": "../aiml/ds-cheatsheet.html",
+      "tier": "spine",
+      "i": "ti-table",
+      "after": [
+        "intro"
+      ],
+      "s": "NumPy, pandas, plotting and SQL. Most of the work happens here, long before a model is chosen."
+    },
+    {
+      "id": "tools-numpy",
+      "t": "NumPy",
+      "href": "../aiml/ds-cheatsheet.html#numpy",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "tools-pandas",
+      "t": "pandas",
+      "href": "../aiml/ds-cheatsheet.html#pandas",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "tools-matplotlib",
+      "t": "matplotlib",
+      "href": "../aiml/ds-cheatsheet.html#matplotlib",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "tools-sql",
+      "t": "SQL",
+      "href": "../aiml/ds-cheatsheet.html#sql",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "tools-sklearn",
+      "t": "scikit-learn",
+      "href": "../aiml/ds-cheatsheet.html#sklearn",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "tools-pytorch",
+      "t": "PyTorch",
+      "href": "../aiml/ds-cheatsheet.html#pytorch",
+      "tier": "detail",
+      "after": [
+        "tools"
+      ]
     },
     {
       "id": "ml",
       "t": "Machine Learning",
       "href": "../aiml/ml.html",
+      "tier": "spine",
+      "i": "ti-binary-tree",
+      "g": "Learning from data",
+      "s": "Supervised and unsupervised learning, the core algorithms, and how a model is actually evaluated.",
+      "after": [
+        "tools"
+      ]
+    },
+    {
+      "id": "ml-what",
+      "t": "What ML is",
+      "href": "../aiml/ml.html#ml-what",
       "tier": "detail",
       "after": [
-        "aiml-explained"
-      ],
-      "bus": true
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-supervised",
+      "t": "Supervised learning",
+      "href": "../aiml/ml.html#ml-supervised",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-unsupervised",
+      "t": "Unsupervised learning",
+      "href": "../aiml/ml.html#ml-unsupervised",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-algorithms",
+      "t": "The core algorithms",
+      "href": "../aiml/ml.html#ml-algorithms",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-pipeline",
+      "t": "The ML pipeline",
+      "href": "../aiml/ml.html#ml-pipeline",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-eval",
+      "t": "Model evaluation",
+      "href": "../aiml/ml.html#ml-eval",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
+    },
+    {
+      "id": "ml-code",
+      "t": "In code",
+      "href": "../aiml/ml.html#ml-code",
+      "tier": "detail",
+      "after": [
+        "ml"
+      ]
     },
     {
       "id": "dl",
       "t": "Deep Learning",
       "href": "../aiml/dl.html",
+      "tier": "spine",
+      "i": "ti-topology-star-3",
+      "after": [
+        "ml"
+      ],
+      "s": "Layers, backpropagation, and the architectures that everything since is a variation on."
+    },
+    {
+      "id": "dl-nn",
+      "t": "Neural network basics",
+      "href": "../aiml/dl.html#dl-nn",
       "tier": "detail",
       "after": [
-        "aiml-explained"
-      ],
-      "bus": true
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-backprop",
+      "t": "Backpropagation",
+      "href": "../aiml/dl.html#dl-backprop",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-activations",
+      "t": "Activation functions",
+      "href": "../aiml/dl.html#dl-activations",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-cnn",
+      "t": "Convolutional networks",
+      "href": "../aiml/dl.html#dl-cnn",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-rnn",
+      "t": "Recurrent networks",
+      "href": "../aiml/dl.html#dl-rnn",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-transformer",
+      "t": "Transformers & attention",
+      "href": "../aiml/dl.html#dl-transformer",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-generative",
+      "t": "Generative architectures",
+      "href": "../aiml/dl.html#dl-generative",
+      "tier": "detail",
+      "after": [
+        "dl"
+      ]
+    },
+    {
+      "id": "dl-compare",
+      "t": "Comparing architectures",
+      "href": "../aiml/dl.html#dl-compare",
+      "tier": "branch",
+      "after": [
+        "dl"
+      ]
     },
     {
       "id": "nlp",
-      "t": "NLP & LLMs",
+      "t": "Natural Language Processing",
       "href": "../aiml/nlp.html",
       "tier": "spine",
-      "g": "Specializations",
+      "i": "ti-message-circle",
+      "g": "Specialisations",
       "after": [
-        "aiml-explained"
+        "dl"
+      ],
+      "s": "From tokenisation and embeddings through to the language models everything now runs on."
+    },
+    {
+      "id": "nlp-basics",
+      "t": "NLP basics",
+      "href": "../aiml/nlp.html#nlp-basics",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-embeddings",
+      "t": "Embeddings",
+      "href": "../aiml/nlp.html#nlp-embeddings",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-transformer",
+      "t": "Transformers for text",
+      "href": "../aiml/nlp.html#nlp-transformer",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-models",
+      "t": "Language models",
+      "href": "../aiml/nlp.html#nlp-models",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-tasks",
+      "t": "Common tasks",
+      "href": "../aiml/nlp.html#nlp-tasks",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-finetune",
+      "t": "Fine-tuning",
+      "href": "../aiml/nlp.html#nlp-finetune",
+      "tier": "detail",
+      "after": [
+        "nlp"
+      ]
+    },
+    {
+      "id": "nlp-speech",
+      "t": "Speech",
+      "href": "../aiml/nlp.html#nlp-speech",
+      "tier": "branch",
+      "after": [
+        "nlp"
       ]
     },
     {
       "id": "cv",
       "t": "Computer Vision",
       "href": "../aiml/cv.html",
-      "tier": "detail",
+      "tier": "spine",
+      "i": "ti-eye",
       "after": [
         "nlp"
       ],
-      "bus": true
+      "s": "Classification, detection and segmentation, and the architectures behind each."
+    },
+    {
+      "id": "cv-cnn",
+      "t": "CNNs for vision",
+      "href": "../aiml/cv.html#cv-cnn",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-classification",
+      "t": "Image classification",
+      "href": "../aiml/cv.html#cv-classification",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-detection",
+      "t": "Object detection",
+      "href": "../aiml/cv.html#cv-detection",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-segmentation",
+      "t": "Segmentation",
+      "href": "../aiml/cv.html#cv-segmentation",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-architectures",
+      "t": "Vision architectures",
+      "href": "../aiml/cv.html#cv-architectures",
+      "tier": "detail",
+      "after": [
+        "cv"
+      ]
+    },
+    {
+      "id": "cv-generative",
+      "t": "Generative vision",
+      "href": "../aiml/cv.html#cv-generative",
+      "tier": "branch",
+      "after": [
+        "cv"
+      ]
     },
     {
       "id": "rl",
       "t": "Reinforcement Learning",
       "href": "../aiml/rl.html",
-      "tier": "detail",
-      "after": [
-        "nlp"
-      ],
-      "bus": true
-    },
-    {
-      "id": "genai",
-      "t": "Generative AI",
-      "href": "../aiml/genai.html",
-      "tier": "detail",
-      "after": [
-        "nlp"
-      ],
-      "bus": true
-    },
-    {
-      "id": "ds-cheatsheet",
-      "t": "Data Science & AI Cheat Sheet",
-      "href": "../aiml/ds-cheatsheet.html",
       "tier": "spine",
-      "g": "Reference",
+      "i": "ti-target",
       "after": [
-        "nlp"
+        "cv"
+      ],
+      "s": "Agents, rewards and policies — and the mechanism behind how today's models are aligned."
+    },
+    {
+      "id": "rl-mdp",
+      "t": "Markov decision processes",
+      "href": "../aiml/rl.html#rl-mdp",
+      "tier": "detail",
+      "after": [
+        "rl"
       ]
     },
     {
-      "id": "interview",
-      "t": "Interview Questions",
+      "id": "rl-algorithms",
+      "t": "RL algorithms",
+      "href": "../aiml/rl.html#rl-algorithms",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-policy",
+      "t": "Policy methods",
+      "href": "../aiml/rl.html#rl-policy",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-drl",
+      "t": "Deep RL",
+      "href": "../aiml/rl.html#rl-drl",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-rlhf",
+      "t": "RLHF & alignment",
+      "href": "../aiml/rl.html#rl-rlhf",
+      "tier": "detail",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "rl-apps",
+      "t": "Where RL is used",
+      "href": "../aiml/rl.html#rl-apps",
+      "tier": "branch",
+      "after": [
+        "rl"
+      ]
+    },
+    {
+      "id": "gen",
+      "t": "Generative AI",
+      "href": "../aiml/genai.html",
+      "tier": "spine",
+      "i": "ti-bolt",
+      "g": "Applied",
+      "after": [
+        "rl"
+      ],
+      "s": "Building on top of large models: prompting, retrieval, fine-tuning and agents."
+    },
+    {
+      "id": "gen-what",
+      "t": "What generative AI is",
+      "href": "../aiml/genai.html#genai-what",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-models",
+      "t": "The model landscape",
+      "href": "../aiml/genai.html#genai-models",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-llms",
+      "t": "How LLMs work",
+      "href": "../aiml/genai.html#genai-llms",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-prompt",
+      "t": "Prompt engineering",
+      "href": "../aiml/genai.html#genai-prompt",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-rag",
+      "t": "Retrieval-augmented generation",
+      "href": "../aiml/genai.html#genai-rag",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-finetune",
+      "t": "Fine-tuning",
+      "href": "../aiml/genai.html#genai-finetune",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-agents",
+      "t": "Agents & tool use",
+      "href": "../aiml/genai.html#genai-agents",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-tools",
+      "t": "The tooling ecosystem",
+      "href": "../aiml/genai.html#genai-tools",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "gen-langgraph",
+      "t": "LangGraph",
+      "href": "../aiml/ds-cheatsheet.html#langgraph",
+      "tier": "detail",
+      "after": [
+        "gen"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
       "href": "../interview/aiml-interview.html",
       "tier": "spine",
+      "i": "ti-checklist",
       "g": "Prove it",
       "after": [
-        "ds-cheatsheet"
+        "gen"
+      ],
+      "s": "Model theory, a coding round, and one question about what you do when the metric drops in production."
+    },
+    {
+      "id": "iv-nlp",
+      "t": "NLP questions",
+      "href": "../aiml/nlp.html#nlp-interview",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-cv",
+      "t": "Vision questions",
+      "href": "../aiml/cv.html#cv-interview",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-rl",
+      "t": "RL questions",
+      "href": "../aiml/rl.html#rl-interview",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-gen",
+      "t": "Generative AI questions",
+      "href": "../aiml/genai.html#genai-interview",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-python",
+      "t": "Python questions",
+      "href": "../interview/python-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
       ]
     }
   ]
@@ -179,7 +706,7 @@
 <script src="../assets/js/search-modal.js?v=2" defer></script>
 <script src="../assets/js/utils.js?v=13"></script>
 <script src="../assets/js/platform.js?v=6"></script>
-<script src="../assets/js/roadmap-timeline.js?v=3"></script>
+<script src="../assets/js/roadmap-timeline.js?v=4"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');
