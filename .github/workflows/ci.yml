@@ -85,6 +85,12 @@ jobs:
       - name: Validate roadmap graphs
         run: npm run validate:graphs
 
+      # validate:graphs only checks that a node's file exists. A roadmap links
+      # deep into page sections, so a renamed anchor would still "resolve" and
+      # quietly dump the learner at the top of the page.
+      - name: Check roadmap anchors
+        run: npm run check:anchors
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

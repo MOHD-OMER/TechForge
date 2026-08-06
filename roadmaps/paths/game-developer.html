@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="A systems language and the maths behind everything on screen, then an engine, graphics and physics, and the profiling and shipping work that separates a demo from a game. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
+  <meta property="og:title" content="Game Developer Roadmap — TechForge"/>
+  <meta property="og:description" content="A systems language and the maths behind everything on screen, then an engine, graphics and physics, and the profiling and shipping work that separates a demo from a game. Branches marked optional can wait. Steps marked soon belong on the roadmap but TechForge has not written them yet."/>
+  <meta property="og:type" content="website"/>
+  <title>Game Developer Roadmap — TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/roadmaps/paths/game-developer.html"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/roadmap-timeline.css?v=4" rel="stylesheet"/>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-section="roadmaps">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <a class="tb-logo" href="../../index.html">
+    <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link current" href="../index.html">Roadmaps</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../roles/index.html">Roles</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../databases/index.html">Databases</a>
+    <a class="tb-link" href="../../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">☰</button>
+  </div>
+</header>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<!-- No sidebar: a roadmap wants the whole page, and the graph is its own
+     navigation. Section links live in the topbar and the breadcrumb below. -->
+<div class="rt-page">
+  <main class="rt-main" id="mainContent">
+    <nav class="rt-crumbs" aria-label="Breadcrumb">
+      <a href="../index.html"><i class="ti ti-arrow-left" aria-hidden="true"></i>All Roadmaps</a>
+      </nav>
+
+    <div class="rt-head">
+      <div class="rt-eyebrow">TechForge Roadmap</div>
+      <h1 class="rt-h1">Game Developer</h1>
+      <p class="rt-sub">A systems language and the maths behind everything on screen, then an engine, graphics and physics, and the profiling and shipping work that separates a demo from a game. Branches marked <strong>optional</strong> can wait. Steps marked <strong>soon</strong> belong on the roadmap but TechForge has not written them yet.</p>
+      <div class="rt-count">10 steps · 36 topics · 29 coming soon</div>
+    </div>
+
+    <div id="rgMount" class="rt-mount"></div>
+    <script type="application/json" id="rgGraph">
+{
+  "id": "game-developer",
+  "title": "Game Developer",
+  "accent": "var(--red)",
+  "nodes": [
+    {
+      "id": "lang",
+      "t": "A Systems Language",
+      "href": "../../programming/cpp/index.html",
+      "tier": "spine",
+      "i": "ti-code",
+      "g": "Foundations",
+      "s": "C++ still runs the industry, with C# close behind through Unity. Both make you think about memory, which is the point."
+    },
+    {
+      "id": "lang-oop",
+      "t": "Object-oriented programming",
+      "href": "../../programming/cpp/oop.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "lang-memory",
+      "t": "Memory management",
+      "href": "../../systems/os/memory.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "lang-git",
+      "t": "Git",
+      "href": "../../devops/git.html",
+      "tier": "detail",
+      "after": [
+        "lang"
+      ]
+    },
+    {
+      "id": "math",
+      "t": "Game Mathematics",
+      "href": "../../games/math.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-hash",
+      "after": [
+        "lang"
+      ],
+      "s": "Vectors, matrices and quaternions. Every position, rotation and camera on screen is this maths running sixty times a second."
+    },
+    {
+      "id": "math-vectors",
+      "t": "Vectors & linear algebra",
+      "href": "../../games/math.html#vectors",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "math-matrices",
+      "t": "Matrices & transforms",
+      "href": "../../games/math.html#matrices",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "math-quaternions",
+      "t": "Quaternions & rotation",
+      "href": "../../games/math.html#quaternions",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "math"
+      ]
+    },
+    {
+      "id": "dsa",
+      "t": "Data Structures",
+      "href": "../../dsa/index.html",
+      "tier": "spine",
+      "i": "ti-binary-tree",
+      "after": [
+        "math"
+      ],
+      "s": "Games are the one field where the constant factor genuinely matters. Cache behaviour is a design concern here."
+    },
+    {
+      "id": "dsa-bigo",
+      "t": "Big-O notation",
+      "href": "../../dsa/bigo.html",
+      "tier": "detail",
+      "after": [
+        "dsa"
+      ]
+    },
+    {
+      "id": "dsa-arrays",
+      "t": "Arrays",
+      "href": "../../dsa/arrays.html",
+      "tier": "detail",
+      "after": [
+        "dsa"
+      ]
+    },
+    {
+      "id": "dsa-trees",
+      "t": "Trees",
+      "href": "../../dsa/bst.html",
+      "tier": "detail",
+      "after": [
+        "dsa"
+      ]
+    },
+    {
+      "id": "dsa-graphs",
+      "t": "Graphs",
+      "href": "../../dsa/graph.html",
+      "tier": "detail",
+      "after": [
+        "dsa"
+      ]
+    },
+    {
+      "id": "dsa-pathfinding",
+      "t": "Pathfinding",
+      "href": "../../dsa/dijkstra.html",
+      "tier": "detail",
+      "after": [
+        "dsa"
+      ]
+    },
+    {
+      "id": "engine",
+      "t": "Pick an Engine",
+      "href": "../../games/engines.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-device-gamepad-2",
+      "g": "The engine",
+      "after": [
+        "dsa"
+      ],
+      "s": "Unity, Unreal or Godot. Ship something small in one before evaluating the others."
+    },
+    {
+      "id": "engine-unity",
+      "t": "Unity",
+      "href": "../../games/engines.html#unity",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "engine"
+      ]
+    },
+    {
+      "id": "engine-unreal",
+      "t": "Unreal",
+      "href": "../../games/engines.html#unreal",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "engine"
+      ]
+    },
+    {
+      "id": "engine-godot",
+      "t": "Godot",
+      "href": "../../games/engines.html#godot",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "engine"
+      ]
+    },
+    {
+      "id": "engine-loop",
+      "t": "The game loop",
+      "href": "../../games/engines.html#loop",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "engine"
+      ]
+    },
+    {
+      "id": "engine-ecs",
+      "t": "Entity component systems",
+      "href": "../../games/engines.html#ecs",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "engine"
+      ]
+    },
+    {
+      "id": "gfx",
+      "t": "Graphics",
+      "href": "../../games/graphics.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-brush",
+      "after": [
+        "engine"
+      ],
+      "s": "The rendering pipeline, and shaders once you want anything the engine does not hand you."
+    },
+    {
+      "id": "gfx-pipeline",
+      "t": "The rendering pipeline",
+      "href": "../../games/graphics.html#pipeline",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gfx"
+      ]
+    },
+    {
+      "id": "gfx-shaders",
+      "t": "Shaders",
+      "href": "../../games/graphics.html#shaders",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gfx"
+      ]
+    },
+    {
+      "id": "gfx-lighting",
+      "t": "Lighting & materials",
+      "href": "../../games/graphics.html#lighting",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gfx"
+      ]
+    },
+    {
+      "id": "physics",
+      "t": "Physics & Animation",
+      "href": "../../games/physics.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-refresh",
+      "after": [
+        "gfx"
+      ],
+      "s": "Collision detection, rigid bodies, and the fixed timestep that keeps simulation stable."
+    },
+    {
+      "id": "physics-collision",
+      "t": "Collision detection",
+      "href": "../../games/physics.html#collision",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "physics"
+      ]
+    },
+    {
+      "id": "physics-timestep",
+      "t": "Fixed timestep",
+      "href": "../../games/physics.html#timestep",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "physics"
+      ]
+    },
+    {
+      "id": "physics-animation",
+      "t": "Animation systems",
+      "href": "../../games/physics.html#animation",
+      "status": "soon",
+      "tier": "branch",
+      "after": [
+        "physics"
+      ]
+    },
+    {
+      "id": "gameplay",
+      "t": "Gameplay Systems",
+      "href": "../../games/gameplay.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-target",
+      "g": "Making it a game",
+      "after": [
+        "physics"
+      ],
+      "s": "Input, state machines, AI and audio. The systems players actually experience as the game."
+    },
+    {
+      "id": "gameplay-input",
+      "t": "Input handling",
+      "href": "../../games/gameplay.html#input",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gameplay"
+      ]
+    },
+    {
+      "id": "gameplay-ai",
+      "t": "Game AI & state machines",
+      "href": "../../games/gameplay.html#ai",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gameplay"
+      ]
+    },
+    {
+      "id": "gameplay-audio",
+      "t": "Audio",
+      "href": "../../games/gameplay.html#audio",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "gameplay"
+      ]
+    },
+    {
+      "id": "gameplay-ui",
+      "t": "Game UI",
+      "href": "../../games/gameplay.html#ui",
+      "status": "soon",
+      "tier": "branch",
+      "after": [
+        "gameplay"
+      ]
+    },
+    {
+      "id": "multi",
+      "t": "Multiplayer",
+      "href": "../../games/multiplayer.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-world",
+      "after": [
+        "gameplay"
+      ],
+      "s": "The hardest thing in the field. Latency, prediction and authority, on top of ordinary networking."
+    },
+    {
+      "id": "multi-net",
+      "t": "Networking fundamentals",
+      "href": "../../systems/networking/index.html",
+      "tier": "detail",
+      "after": [
+        "multi"
+      ]
+    },
+    {
+      "id": "multi-udp",
+      "t": "TCP & UDP",
+      "href": "../../systems/networking/tcp-udp.html",
+      "tier": "detail",
+      "after": [
+        "multi"
+      ]
+    },
+    {
+      "id": "multi-sockets",
+      "t": "Sockets",
+      "href": "../../systems/networking/sockets.html",
+      "tier": "detail",
+      "after": [
+        "multi"
+      ]
+    },
+    {
+      "id": "multi-prediction",
+      "t": "Prediction & reconciliation",
+      "href": "../../games/multiplayer.html#prediction",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "multi"
+      ]
+    },
+    {
+      "id": "ship",
+      "t": "Optimising & Shipping",
+      "href": "../../games/shipping.html",
+      "status": "soon",
+      "tier": "spine",
+      "i": "ti-rocket",
+      "g": "Finishing it",
+      "after": [
+        "multi"
+      ],
+      "s": "Frame budgets, profiling, and the unglamorous build and platform work that most projects die before reaching."
+    },
+    {
+      "id": "ship-profiling",
+      "t": "Profiling & frame budget",
+      "href": "../../games/shipping.html#profiling",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "ship"
+      ]
+    },
+    {
+      "id": "ship-assets",
+      "t": "Asset pipelines",
+      "href": "../../games/shipping.html#assets",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "ship"
+      ]
+    },
+    {
+      "id": "ship-platforms",
+      "t": "Platforms & store release",
+      "href": "../../games/shipping.html#platforms",
+      "status": "soon",
+      "tier": "detail",
+      "after": [
+        "ship"
+      ]
+    },
+    {
+      "id": "ship-cicd",
+      "t": "CI/CD",
+      "href": "../../devops/cicd.html",
+      "tier": "detail",
+      "after": [
+        "ship"
+      ]
+    },
+    {
+      "id": "iv",
+      "t": "Interview Preparation",
+      "href": "../../interview/cpp-interview.html",
+      "tier": "spine",
+      "i": "ti-checklist",
+      "g": "Prove it",
+      "after": [
+        "ship"
+      ],
+      "s": "C++ and maths questions, a performance problem, and your portfolio — which matters more here than in most of the industry."
+    },
+    {
+      "id": "iv-dsa",
+      "t": "DSA questions",
+      "href": "../../interview/dsa-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    },
+    {
+      "id": "iv-oop",
+      "t": "OOP questions",
+      "href": "../../interview/oop-interview.html",
+      "tier": "detail",
+      "after": [
+        "iv"
+      ]
+    }
+  ]
+}
+</script>
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+<script src="../../assets/js/topics-manifest.js?v=3"></script>
+<script src="../../assets/js/site-index.js?v=7"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+<script src="../../assets/js/utils.js?v=13"></script>
+<script src="../../assets/js/platform.js?v=6"></script>
+<script src="../../assets/js/roadmap-timeline.js?v=4"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var pf = document.getElementById('progressFill'), bt = document.getElementById('backTop');
+  window.addEventListener('scroll', function () {
+    var s = window.scrollY, h = document.body.scrollHeight - window.innerHeight;
+    if (pf) pf.style.width = (h > 0 ? (s / h) * 100 : 0) + '%';
+    if (bt) bt.classList.toggle('visible', s > 400);
+  }, { passive: true });
+  if (bt) bt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+});
+</script>
+</body>
+</html>

@@ -5,6 +5,30 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { metaFor } from './roadmap-meta.mjs';
+import { topicsForRoadmap, coversForRoadmap } from './roadmap-topics.mjs';
+
+/* The directory page advertises counts for each roadmap. They were hand-written
+   and drifted badly — every card still said "flow chart" long after that
+   renderer was deleted. Derived now, and checked here so an edit to a graph
+   that forgets the directory fails the build rather than shipping a lie. */
+export function checkDirectory(indexPath = 'roadmaps/index.html') {
+  if (!fs.existsSync(indexPath)) return [];
+  const html = fs.readFileSync(indexPath, 'utf8');
+  const dir = path.dirname(indexPath);
+  const errors = [];
+  const re = /<a class="rd-card" href="([^"]+)"[\s\S]*?<span class="rd-meta">([^<]*)<\/span>/g;
+
+  for (const [, href, shown] of html.matchAll(re)) {
+    const target = path.join(dir, href);
+    if (!fs.existsSync(target)) { errors.push(`directory links to a missing page: ${href}`); continue; }
+    const want = metaFor(target);
+    if (want && shown.trim() !== want) {
+      errors.push(`directory card ${href} says "${shown.trim()}", graph says "${want}"`);
+    }
+  }
+  return errors;
+}
 
 export function readGraph(htmlPath) {
   const html = fs.readFileSync(htmlPath, 'utf8');
@@ -95,6 +119,36 @@ export function validateGraph(graph, htmlPath) {
   return errors;
 }
 
+/* The roles hub bakes each career's topic list into the page so it can show
+   progress and compare two roles without fetching anything. That list is
+   derived from the graphs, so it goes stale the moment a roadmap changes and
+   nobody reruns the builder — the same way every directory card still said
+   "flow chart" months after that renderer was deleted. Recompute and compare. */
+export function checkRolesHub(hubPath = 'roles/index.html') {
+  if (!fs.existsSync(hubPath)) return [];
+  const html = fs.readFileSync(hubPath, 'utf8');
+  const m = html.match(/<script type="application\/json" id="rolesData">([\s\S]*?)<\/script>/);
+  if (!m) return [`${hubPath}: no #rolesData block`];
+
+  const errors = [];
+  let baked;
+  try { baked = JSON.parse(m[1]); } catch (e) { return [`${hubPath}: #rolesData is not valid JSON`]; }
+
+  for (const role of baked.roles || []) {
+    const page = `roadmaps/paths/${role.id}.html`;
+    if (!fs.existsSync(page)) { errors.push(`roles hub lists ${role.id}, but ${page} is missing`); continue; }
+    const fresh = topicsForRoadmap(page);
+    if (fresh.join('|') !== (role.topics || []).join('|')) {
+      errors.push(`roles hub: ${role.id} has ${(role.topics || []).length} baked topics, graph gives ${fresh.length} — rerun tools/build-roles-hub.mjs`);
+    }
+    const covers = coversForRoadmap(page).length;
+    if (covers !== (role.covers || []).length) {
+      errors.push(`roles hub: ${role.id} covers ${(role.covers || []).length} baked, graph gives ${covers} — rerun tools/build-roles-hub.mjs`);
+    }
+  }
+  return errors;
+}
+
 export function computeRanks(nodes, byId, errors = []) {
   const rank = new Map();
   const resolve = (id, seen = new Set()) => {
@@ -137,6 +191,14 @@ if (argv1 && (import.meta.url === expected || import.meta.url.endsWith(argv1.rep
     if (!fs.readFileSync(f, 'utf8').includes('id="rgGraph"')) { skipped++; continue; }
     const g = readGraph(f);
     const errs = validateGraph(g, f);
+
+    // the page's own header count, from the same source as the directory card
+    const shown = (fs.readFileSync(f, 'utf8').match(/<div class="rt-count">([^<]*)<\/div>/) || [])[1];
+    const want = metaFor(f);
+    if (shown !== undefined && want && shown.trim() !== want) {
+      errs.push(`rt-count says "${shown.trim()}", graph says "${want}"`);
+    }
+
     total += errs.length;
     if (errs.length) {
       console.log(`FAIL ${f}`);
@@ -145,6 +207,29 @@ if (argv1 && (import.meta.url === expected || import.meta.url.endsWith(argv1.rep
       console.log(`  ok  ${f}: ${g.nodes.length} nodes`);
     }
   }
+  // only meaningful on a full sweep; a single-file run has nothing to compare
+  if (!targets.length) {
+    for (const page of ['roadmaps/index.html', 'roles/index.html']) {
+      const dirErrors = checkDirectory(page);
+      total += dirErrors.length;
+      if (dirErrors.length) {
+        console.log(`FAIL ${page}`);
+        dirErrors.forEach((e) => console.log('  ' + e));
+      } else {
+        console.log(`  ok  ${page}: card counts match their graphs`);
+      }
+    }
+
+    const hubErrors = checkRolesHub();
+    total += hubErrors.length;
+    if (hubErrors.length) {
+      console.log('FAIL roles/index.html');
+      hubErrors.forEach((e) => console.log('  ' + e));
+    } else {
+      console.log('  ok  roles/index.html: baked topic lists match their graphs');
+    }
+  }
+
   if (total) { console.log(`\n${total} problem(s)`); process.exit(1); }
   console.log('\nAll graphs valid.');
 }

@@ -1746,7 +1746,7 @@
   {
     "id": "roadmaps/aiml",
     "title": "AI / ML Engineer Roadmap",
-    "desc": "Build intelligent systems. Ground yourself in Python and the maths, then climb from classical machine learning through d",
+    "desc": "Maths, Python and the data stack first, then classical ML, deep learning, the specialisations, and the applied and MLOps",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1758,7 +1758,7 @@
   {
     "id": "roadmaps/backend",
     "title": "Backend Developer Roadmap",
-    "desc": "Build the server side. Pick a strong language, get fluent in objects and SQL, then layer on APIs, scale, and the operati",
+    "desc": "The full server-side path: a language, the Linux and network layer under it, SQL and NoSQL, APIs and auth, then scale, q",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1768,9 +1768,33 @@
     "depth": "page"
   },
   {
+    "id": "roadmaps/blockchain-developer",
+    "title": "Blockchain Developer Roadmap",
+    "desc": "Cryptography and distributed consensus first, then smart contracts, the tooling around them, and the security practice a",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/blockchain-developer.html",
+    "path": "roadmaps/paths/blockchain-developer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/cloud-engineer",
+    "title": "Cloud Engineer Roadmap",
+    "desc": "Linux and networking underneath, then one provider learned properly, infrastructure as code, containers, and the securit",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/cloud-engineer.html",
+    "path": "roadmaps/paths/cloud-engineer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
     "id": "roadmaps/cs",
     "title": "CS Fundamentals Roadmap",
-    "desc": "What every layer under your code is actually doing. The operating system, the network, the database, and the theory that",
+    "desc": "A computer science curriculum in order: programming, data structures and algorithms, operating systems, networks, databa",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1780,9 +1804,45 @@
     "depth": "page"
   },
   {
+    "id": "roadmaps/data-analyst",
+    "title": "Data Analyst Roadmap",
+    "desc": "Spreadsheets and SQL first, then Python and the statistics to make a number mean something, and the visualisation and re",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/data-analyst.html",
+    "path": "roadmaps/paths/data-analyst.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/data-engineer",
+    "title": "Data Engineer Roadmap",
+    "desc": "The pipelines everyone else depends on: SQL and Python, warehouses and modelling, batch and streaming, and the orchestra",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/data-engineer.html",
+    "path": "roadmaps/paths/data-engineer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/data-scientist",
+    "title": "Data Scientist Roadmap",
+    "desc": "Statistics and Python underneath, modelling and experimentation on top, and the communication that turns a model into a ",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/data-scientist.html",
+    "path": "roadmaps/paths/data-scientist.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
     "id": "roadmaps/devops",
     "title": "DevOps &amp; Cloud Roadmap",
-    "desc": "Ship and run software reliably. Start at Linux and Git, containerise, orchestrate, automate the pipeline, then take the ",
+    "desc": "From a Linux box to a production platform: containers, Kubernetes, infrastructure as code, cloud, pipelines, observabili",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1794,7 +1854,7 @@
   {
     "id": "roadmaps/dsa",
     "title": "DSA &amp; Interview Prep Roadmap",
-    "desc": "The single most-tested category at every company. Work bottom-up from complexity analysis through the core structures to",
+    "desc": "The order to learn data structures and algorithms in, from logic building and Big-O through to dynamic programming, then",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1818,12 +1878,84 @@
   {
     "id": "roadmaps/fullstack",
     "title": "Full Stack Developer Roadmap",
-    "desc": "Both ends of the wire. Own the browser with JavaScript and TypeScript, serve it with Python and SQL, then package and sh",
+    "desc": "HTML, CSS and JavaScript, then TypeScript and React on the client, an API and a database on the server, and the auth, te",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
     "href": "paths/fullstack.html",
     "path": "roadmaps/paths/fullstack.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/game-developer",
+    "title": "Game Developer Roadmap",
+    "desc": "A systems language and the maths behind everything on screen, then an engine, graphics and physics, and the profiling an",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/game-developer.html",
+    "path": "roadmaps/paths/game-developer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/mobile-developer",
+    "title": "Mobile Developer Roadmap",
+    "desc": "One platform learned properly — Android or iOS — then the UI, storage, networking and release process that every mobile ",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/mobile-developer.html",
+    "path": "roadmaps/paths/mobile-developer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/qa-engineer",
+    "title": "QA Engineer Roadmap",
+    "desc": "Test design and manual technique first, then automation at every level, API and performance testing, and the pipeline th",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/qa-engineer.html",
+    "path": "roadmaps/paths/qa-engineer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/security-engineer",
+    "title": "Security Engineer Roadmap",
+    "desc": "Networks and operating systems first — you cannot defend what you do not understand — then cryptography, application and",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/security-engineer.html",
+    "path": "roadmaps/paths/security-engineer.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/software-architect",
+    "title": "Software Architect Roadmap",
+    "desc": "Years of building first, then the distributed-systems knowledge, trade-off vocabulary and communication skills to make d",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/software-architect.html",
+    "path": "roadmaps/paths/software-architect.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roadmaps/sre",
+    "title": "Site Reliability Engineer Roadmap",
+    "desc": "Software engineering applied to operations: the systems underneath, the observability to see them, and the SLOs, automat",
+    "icon": "📄",
+    "section": "roadmaps",
+    "sectionKey": "roadmaps",
+    "href": "paths/sre.html",
+    "path": "roadmaps/paths/sre.html",
     "topic": null,
     "depth": "page"
   },
@@ -1962,7 +2094,7 @@
   {
     "id": "roadmaps/aiml",
     "title": "AI / ML Roadmap",
-    "desc": "From what machine learning is, through deep learning, to the specialisations built on it. Every node opens a TechForge l",
+    "desc": "The AI and machine learning subject map: the vocabulary and data stack, classical ML, deep learning, then NLP, vision, r",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -1986,7 +2118,7 @@
   {
     "id": "roadmaps/databases",
     "title": "Databases &amp; SQL Roadmap",
-    "desc": "Relational foundations first, then the NoSQL and specialised stores built for other shapes of data. Every node opens a T",
+    "desc": "From tables and SQL through schema design, indexes, transactions and injection, then the non-relational engines and what",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -2010,7 +2142,7 @@
   {
     "id": "roadmaps/dsa",
     "title": "DSA Roadmap",
-    "desc": "The DSA roadmap as an interactive flow chart — work outward from Big-O through linear structures, trees, graphs, and tec",
+    "desc": "The DSA roadmap as an interactive roadmap — work outward from Big-O through linear structures, trees, graphs, and techni",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -2022,7 +2154,7 @@
   {
     "id": "roadmaps/index",
     "title": "Developer Roadmaps",
-    "desc": "Every TechForge roadmap in one place: seven career paths from Frontend to AI/ML, and topic-by-topic flow charts starting",
+    "desc": "Every TechForge roadmap in one place: seven career paths from Frontend to AI/ML, and topic-by-topic roadmaps starting wi",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -2082,7 +2214,7 @@
   {
     "id": "roadmaps/python",
     "title": "Python Roadmap",
-    "desc": "The Python roadmap as a flow chart: variables and types through control flow, collections, functions, OOP, async and the",
+    "desc": "The Python roadmap as a roadmap: variables and types through control flow, collections, functions, OOP, async and the st",
     "icon": "📄",
     "section": "roadmaps",
     "sectionKey": "roadmaps",
@@ -2136,6 +2268,18 @@
     "sectionKey": "roadmaps",
     "href": "roadmaps/typescript.html",
     "path": "roadmaps/typescript.html",
+    "topic": null,
+    "depth": "page"
+  },
+  {
+    "id": "roles/index",
+    "title": "Learn by Role",
+    "desc": "Pick a career and follow it end to end: frontend, backend, full stack, mobile, games, AI and ML, data science, data engi",
+    "icon": "📄",
+    "section": "roles",
+    "sectionKey": "roles",
+    "href": "roles/index.html",
+    "path": "roles/index.html",
     "topic": null,
     "depth": "page"
   },

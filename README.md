@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 21 guided roadmaps, 433 curated interview questions, and nine complete learning tracks across 234 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and nine complete learning tracks across 246 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -41,7 +41,8 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 | Track | Topics | URL |
 |---|---|---|
-| Roadmaps | 14 topic flow charts + 7 career paths | [/roadmaps](https://techforge-dev.vercel.app/roadmaps/index.html) |
+| Roles | 18 career paths, grouped — build, data & AI, production, depth | [/roles](https://techforge-dev.vercel.app/roles/index.html) |
+| Roadmaps | 14 topic roadmaps + 18 career paths | [/roadmaps](https://techforge-dev.vercel.app/roadmaps/index.html) |
 | Data Structures & Algorithms | 29 topics · 28 Canvas visualizers · 4 language tabs | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
 | Programming | Python · JavaScript · TypeScript · Java · C++ (9 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
@@ -56,7 +57,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 ## ✨ Key Features
 
 ### Roadmaps
-- **21 roadmaps on one renderer** — 14 topic flow charts and 7 career paths
+- **32 roadmaps on one renderer** — 14 topic roadmaps and 18 career paths
 - **Spine-and-branches layout** — the trunk is the order to learn in, branches are the optional detours, and every node opens a real lesson
 - **Prerequisites are real edges** — hover a step to light the whole chain leading to it
 - **Generated from the site itself** — `tools/build-roadmaps.mjs` derives each roadmap from the pages and section headings it points at, so it cannot drift from the lessons
@@ -177,7 +178,7 @@ TechForge/
 │   ├── icon-192-maskable.png / icon-512-maskable.png  # Android adaptive icons
 │   └── og-image.png              # Open Graph social preview (1200×630)
 │
-├── roadmaps/                     # 14 topic flow charts + paths/ (7 career roadmaps)
+├── roadmaps/                     # 14 topic roadmaps + paths/ (18 career roadmaps)
 ├── dsa/                          # Data Structures & Algorithms (29 topics)
 ├── programming/                  # Programming Languages hub
 │   ├── python/ javascript/ typescript/ java/ cpp/   # 8 modules + programs each
@@ -257,9 +258,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 234 pages pass the Nu validator)
+- **100% HTML validation** (all 246 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (234 × 2 = 468 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (246 × 2 = 492 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:
@@ -377,7 +378,7 @@ Example:
 Full release notes: **[RELEASES.md](RELEASES.md)**
 
 ### v3.0.0 — shipped 2026-07-28
-- [x] Guided roadmaps — 14 topic flow charts + 7 career paths, generated from the site's own pages
+- [x] Guided roadmaps — 14 topic roadmaps + 7 career paths, generated from the site's own pages
 - [x] Four more language tracks — JavaScript, TypeScript, Java, C++
 - [x] OS & Networks section complete — 4 pillars, 32 guides
 - [x] Six more interview banks (13 banks · 433 questions)
@@ -396,7 +397,7 @@ Full release notes: **[RELEASES.md](RELEASES.md)**
 - [x] "Review weak areas" recommendations
 
 ### v3.1.0 (Q3 2027)
-- [ ] Build your own roadmap — pick topics, get a saved flow chart of your own
+- [ ] Build your own roadmap — pick topics, get a saved roadmap of your own
 - [ ] Interactive coding challenges with an in-page editor
 - [ ] Performance monitoring & analytics
 
