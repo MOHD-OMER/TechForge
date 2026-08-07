@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and eleven complete learning tracks across 254 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and eleven complete learning tracks across 258 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -260,9 +260,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 254 pages pass the Nu validator)
+- **100% HTML validation** (all 258 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (254 × 2 = 508 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (258 × 2 = 516 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:

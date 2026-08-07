@@ -18,6 +18,21 @@ window.TF_TOPICS = {
         ]
       },
       {
+        id: 'prep',
+        label: 'Preparing Data',
+        topics: [
+          { id: 'data/data-prep', file: 'data-prep.html', title: 'Data Preparation', icon: '<i class="ti ti-refresh"></i>', desc: 'Exploratory analysis, cleaning and missing values, feature engineering, and splits that do not leak.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'mlfound',
+        label: 'Machine Learning Foundations',
+        topics: [
+          { id: 'data/math', file: 'math.html', title: 'Mathematics for ML', icon: '<i class="ti ti-math-symbols"></i>', desc: 'Linear algebra, calculus and gradients, and probability — the working subset, not a degree.', depth: 'full' },
+          { id: 'data/mlops', file: 'mlops.html', title: 'MLOps', icon: '<i class="ti ti-rocket"></i>', desc: 'Experiment tracking, serving patterns, and noticing when the data moves under you.', depth: 'full' }
+        ]
+      },
+      {
         id: 'platform',
         label: 'Where Data Lives',
         topics: [

@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Data preparation — exploratory analysis, cleaning and missing values, feature engineering, and train/validation/test splits with leakage avoided. Interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/data-prep.html"/>
+  <meta property="og:title" content="Data Preparation — Data | TechForge"/>
+  <meta property="og:description" content="Data preparation — exploratory analysis, cleaning and missing values, feature engineering, and train/validation/test splits with leakage avoided. Interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Data Preparation — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/data-prep" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <div class="sidebar-label">Preparing Data</div>
+    <a class="sb-link active" href="data-prep.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>Data Preparation</a>
+    <div class="sidebar-label">Machine Learning Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Mathematics for ML</a>
+    <a class="sb-link" href="mlops.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>MLOps</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Data Preparation</h1>
+      <p class="pg-sub">Exploratory analysis, cleaning, feature engineering and splitting — the work that sets your ceiling before any model is chosen.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> Where the Work Actually Is</h2>
+      <div class="callout callout-blue"><span>Practitioners consistently report spending most of their time here rather than on modelling. That is not a failure of tooling — preparation is where the accuracy comes from.</span></div>
+      <p class="lesson-prose">Your features set the ceiling. A good model on weak features loses to an ordinary model on strong ones, every time. Swapping algorithms moves a metric by a fraction of what a well-constructed feature does.</p>
+      <p class="lesson-prose">This section is also where the most damaging mistakes happen, because they are silent. A leak or a bad join does not throw an error — it produces an excellent validation score and a model that fails in production.</p>
+      <p class="lesson-prose">The order matters: look at the data, clean it, split it, <em>then</em> engineer features using only the training part. Doing those last two in the wrong order is the single most common serious error in applied machine learning.</p>
+    </section>
+    <section class="lesson-section" id="eda">
+      <h2><span class="sec-icon"><i class="ti ti-zoom-check"></i></span> Exploratory Analysis</h2>
+      <p class="lesson-prose">Before any transformation, find out what you actually have. The goal is not pretty charts — it is discovering the problems early, while they are still cheap.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Check</th><th>What you are looking for</th></tr></thead><tbody><tr><td>Row and column count</td><td>Does it match what you were promised?</td></tr><tr><td>Missingness per column</td><td>Which columns are unusable, and is the missingness patterned?</td></tr><tr><td>Distribution of each numeric</td><td>Skew, bimodality, impossible values</td></tr><tr><td>Cardinality of each category</td><td>An ID masquerading as a feature</td></tr><tr><td>Duplicate rows</td><td>Usually a join that fanned out</td></tr><tr><td>Target balance</td><td>1% positives changes everything downstream</td></tr><tr><td>Correlation with the target</td><td>Anything suspiciously perfect is a leak</td></tr></tbody></table></div>
+      <div class="callout callout-amber"><span>A feature that predicts the target almost perfectly is not a triumph, it is a bug. Something derived from the answer has ended up in your inputs. Find it before you celebrate.</span></div>
+      <p class="lesson-prose">Plot before you summarise. Identical means and variances hide completely different shapes, and the shape decides which transformations make sense.</p>
+    </section>
+    <section class="lesson-section" id="cleaning">
+      <h2><span class="sec-icon"><i class="ti ti-eraser"></i></span> Cleaning &amp; Missing Values</h2>
+      <p class="lesson-prose">Ask <em>why</em> a value is missing before deciding what to do about it. The mechanism decides whether dropping is harmless or destroys your sample.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Mechanism</th><th>Meaning</th><th>Dropping rows is…</th></tr></thead><tbody><tr><td><strong>MCAR</strong></td><td>Missing completely at random</td><td>Safe, just wasteful</td></tr><tr><td><strong>MAR</strong></td><td>Missing depends on other observed columns</td><td>Biased unless you account for it</td></tr><tr><td><strong>MNAR</strong></td><td>Missing depends on the missing value itself</td><td>Actively dangerous</td></tr></tbody></table></div>
+      <p class="lesson-prose">Income left blank by high earners is MNAR: dropping those rows removes exactly the people you most need. Often the <strong>fact</strong> of missingness is itself predictive, so add a boolean <code>was_missing</code> column rather than pretending the gap never existed.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Strategy</th><th>Use when</th><th>Cost</th></tr></thead><tbody><tr><td>Drop the row</td><td>Few rows affected, MCAR</td><td>Loses data, can bias</td></tr><tr><td>Drop the column</td><td>Mostly empty and not important</td><td>Loses a signal you cannot recover</td></tr><tr><td>Mean or median fill</td><td>Numeric, small gaps</td><td>Shrinks variance, invents certainty</td></tr><tr><td>Category "Unknown"</td><td>Categorical</td><td>Honest, and often predictive</td></tr><tr><td>Model-based imputation</td><td>Gaps matter and data is rich</td><td>Complexity, and a new leak risk</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>Compute the fill value from the training split only. Taking the median of the whole dataset lets test-set information reach your model, and the score you then report is not real.</span></div>
+      <p class="lesson-prose">Outliers deserve the same question. A negative age is an error and should be fixed. A very large transaction may be the exact case you are trying to detect — deleting it because it is inconvenient is how fraud models get built that never fire.</p>
+    </section>
+    <section class="lesson-section" id="features">
+      <h2><span class="sec-icon"><i class="ti ti-tools"></i></span> Feature Engineering</h2>
+      <p class="lesson-prose">Turning raw columns into things a model can use. Domain knowledge pays off here more than anywhere else in the pipeline.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Technique</th><th>For</th><th>Notes</th></tr></thead><tbody><tr><td><strong>One-hot encoding</strong></td><td>Low-cardinality categories</td><td>Explodes with many categories</td></tr><tr><td><strong>Ordinal encoding</strong></td><td>Categories with a real order</td><td>Implies spacing that may not exist</td></tr><tr><td><strong>Target encoding</strong></td><td>High-cardinality categories</td><td>Leaks badly unless fitted inside folds</td></tr><tr><td><strong>Scaling</strong></td><td>Distance and gradient models</td><td>Trees do not need it</td></tr><tr><td><strong>Log transform</strong></td><td>Right-skewed numerics</td><td>Prices, counts, durations</td></tr><tr><td><strong>Binning</strong></td><td>Non-linear effects</td><td>Discards information; use sparingly</td></tr><tr><td><strong>Date parts</strong></td><td>Timestamps</td><td>Day of week and hour usually beat the raw stamp</td></tr></tbody></table></div>
+      <p class="lesson-prose">Scaling matters for anything measuring distance or following a gradient — k-nearest neighbours, SVMs, neural networks, and regularised regression. Tree-based models split on thresholds and are indifferent to it, which is one reason gradient boosting is so forgiving on tabular data.</p>
+      <div class="callout callout-amber"><span>Fit every transformer on the training split and apply it to the others. A scaler fitted on all your data has already seen the test set. Pipelines exist mainly to make this mistake hard to commit.</span></div>
+    </section>
+    <section class="lesson-section" id="splits">
+      <h2><span class="sec-icon"><i class="ti ti-arrows-split"></i></span> Train, Validation &amp; Test Splits</h2>
+      <p class="lesson-prose">Three sets, three jobs. <strong>Train</strong> fits the parameters. <strong>Validation</strong> chooses between models and settings. <strong>Test</strong> is looked at once, at the end, to estimate real performance.</p>
+      <p class="lesson-prose">Every time you tune against the test set you contaminate it a little, and its estimate drifts optimistic. That is what the validation set is protecting.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Situation</th><th>Split it by</th><th>Because</th></tr></thead><tbody><tr><td>Ordinary tabular data</td><td>Random</td><td>Rows are independent</td></tr><tr><td>Imbalanced target</td><td>Stratified</td><td>Keeps the rare class in every fold</td></tr><tr><td>Time series</td><td>Chronologically</td><td>You cannot train on the future</td></tr><tr><td>Several rows per user</td><td>By user (grouped)</td><td>Otherwise the same person is in both sides</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>Data leakage is the defining failure of this stage: any information in training that would not exist at prediction time. It shows up as a validation score that looks too good and a production model that does not work. Split first, engineer second.</span></div>
+      <p class="lesson-prose">With limited data, <strong>k-fold cross-validation</strong> gives a more stable estimate than one split, because every row is used for validation exactly once. Keep a genuinely untouched test set anyway.</p>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> Common Mistakes</h2>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Mistake</th><th>What it produces</th></tr></thead><tbody><tr><td>Scaling or imputing before splitting</td><td>Leakage; an inflated score that never reproduces</td></tr><tr><td>Random split on time series</td><td>Training on the future; useless in production</td></tr><tr><td>Random split with repeat users</td><td>The same person on both sides of the split</td></tr><tr><td>Dropping every row with a gap</td><td>Silently biased sample when missingness is patterned</td></tr><tr><td>Deleting outliers by default</td><td>Removing the very events you were asked to detect</td></tr><tr><td>Target encoding outside folds</td><td>The strongest and most convincing leak there is</td></tr><tr><td>Tuning against the test set</td><td>No honest estimate of performance left</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>What is data leakage and how do you prevent it?</q><p>Any information available in training that would not exist at prediction time. Prevent it by splitting first and fitting every transformer — scalers, imputers, encoders — on the training split alone, then applying to the rest. Pipelines make this the default.</p></div>
+      <div class="iq"><q>Why split time series chronologically?</q><p>A random split lets the model learn from the future to predict the past, which it can never do in production. Train on earlier periods, validate on later ones.</p></div>
+      <div class="iq"><q>MCAR, MAR, MNAR — why does it matter?</q><p>It decides whether dropping rows is safe. MCAR is merely wasteful. MAR biases you unless you account for the related columns. MNAR — where missingness depends on the hidden value, like high earners omitting income — removes exactly the cases you need.</p></div>
+      <div class="iq"><q>Which models need feature scaling?</q><p>Anything using distance or gradients: k-NN, SVMs, neural networks, regularised regression. Tree-based models split on thresholds and are unaffected.</p></div>
+      <div class="iq"><q>Your validation accuracy is 99%. What do you check first?</q><p>Leakage. Look for a feature derived from the target, a row that appears on both sides of the split, or a transformer fitted before splitting. A near-perfect score on real-world data is a bug until proven otherwise.</p></div>
+      <div class="iq"><q>Why three sets rather than two?</q><p>Validation is used repeatedly to choose models and hyperparameters, so it gradually stops being an honest estimate. The test set is held back and looked at once, at the end.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. You should fit a scaler on…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The whole dataset</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The training split only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The test split only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Each split separately</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Time-series data should be split…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Randomly</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Chronologically</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">By stratifying on the target</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Alphabetically</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. High earners leaving income blank is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">MCAR</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">MAR</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">MNAR</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Not a missingness problem</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Which model type is indifferent to feature scaling?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">k-nearest neighbours</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Support vector machine</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Gradient-boosted trees</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Neural network</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. A feature correlating almost perfectly with the target usually means…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">An excellent feature</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Leakage</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The model is ready to ship</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">You need more data</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=7"></script>
+<script src="../assets/js/site-index.js?v=12"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

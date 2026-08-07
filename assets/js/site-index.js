@@ -280,15 +280,51 @@
     "depth": "guide"
   },
   {
+    "id": "data/data-prep",
+    "title": "Data Preparation — Data | TechForge",
+    "desc": "Data preparation — exploratory analysis, cleaning and missing values, feature engineering, and train/validation/test spl",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/data-prep.html",
+    "path": "data/data-prep.html",
+    "topic": "data/data-prep",
+    "depth": "guide"
+  },
+  {
     "id": "data/index",
     "title": "Data",
-    "desc": "Statistics, experimentation, visualisation and the storage layer underneath — the shared ground between analysts, scient",
+    "desc": "Statistics, experimentation, visualisation, data preparation, the mathematics under machine learning, and the storage an",
     "icon": "📄",
     "section": "data",
     "sectionKey": "data",
     "href": "data/index.html",
     "path": "data/index.html",
     "topic": null,
+    "depth": "guide"
+  },
+  {
+    "id": "data/math",
+    "title": "Mathematics for ML — Data | TechForge",
+    "desc": "Mathematics for machine learning — linear algebra, calculus and gradients, and probability. The working subset, with int",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/math.html",
+    "path": "data/math.html",
+    "topic": "data/math",
+    "depth": "guide"
+  },
+  {
+    "id": "data/mlops",
+    "title": "MLOps — Data | TechForge",
+    "desc": "MLOps — experiment tracking and reproducibility, model serving patterns, and monitoring for data and concept drift. Inte",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/mlops.html",
+    "path": "data/mlops.html",
+    "topic": "data/mlops",
     "depth": "guide"
   },
   {

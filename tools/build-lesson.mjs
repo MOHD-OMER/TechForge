@@ -105,6 +105,14 @@ function buildHub(spec) {
     `<body$1data-section="${spec.key}"`
   );
   html = html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/, (m) => m.replace(/>([^<]+)</, `>${esc(spec.hubTitle)}<`));
+
+  /* The hub needs its own contents list too. Without this it kept the shell
+     section's sidebar, so every link resolved against the new directory and
+     pointed at a file that does not exist — 23 dead links per hub. */
+  html = html.replace(
+    /(<a class="sb-link[^"]*" href="index\.html">[\s\S]*?)(\n\s*<\/aside>)/,
+    () => sidebar(spec, 'index.html').replace('class="sb-link" href="index.html"', 'class="sb-link active" href="index.html"') + '\n  </aside>'
+  );
   html = html.replace(/class="tb-link current"/g, 'class="tb-link"');
   html = html.replace(/tfRenderHub\('[^']*',\s*'[^']*'\)/, `tfRenderHub('${spec.key}', '${spec.key}HubTopics')`);
   html = html.replace(/id="devopsHubTopics"/, `id="${spec.key}HubTopics"`);

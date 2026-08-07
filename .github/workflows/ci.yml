@@ -91,6 +91,17 @@ jobs:
       - name: Check roadmap anchors
         run: npm run check:anchors
 
+      # Adding a section regenerates its sidebar, the search index and the
+      # sitemap, but nothing regenerates the home page. Two sections shipped
+      # reachable only through search because of that.
+      - name: Check every section is reachable
+        run: npm run check:sections
+
+      # lychee checks the deployed site, where a root-absolute path resolves.
+      # These pages also have to open from disk, where it does not.
+      - name: Check local links resolve from disk
+        run: npm run check:links
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
