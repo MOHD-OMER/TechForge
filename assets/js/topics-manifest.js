@@ -50,13 +50,15 @@ window.TF_TOPICS = {
         id: 'ui',
         label: 'Building Interfaces',
         topics: [
-          { id: 'fe/react', file: 'react.html', title: 'React', icon: '<i class="ti ti-box-multiple"></i>', desc: 'Components and JSX, props and state, hooks and effects, keys and reconciliation, context and boundaries.', depth: 'full' }
+          { id: 'fe/react', file: 'react.html', title: 'React', icon: '<i class="ti ti-box-multiple"></i>', desc: 'Components and JSX, props and state, hooks and effects, keys and reconciliation, context and boundaries.', depth: 'full' },
+          { id: 'fe/state', file: 'state.html', title: 'Routing & State', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'Client routing, server state and caching, global stores, and forms with validation.', depth: 'full' }
         ]
       },
       {
         id: 'quality',
         label: 'Quality',
         topics: [
+          { id: 'fe/testing', file: 'testing.html', title: 'Testing', icon: '<i class="ti ti-flask"></i>', desc: 'Unit, component and end-to-end tests, and how to keep a suite people trust.', depth: 'full' },
           { id: 'fe/accessibility', file: 'accessibility.html', title: 'Accessibility', icon: '<i class="ti ti-eye"></i>', desc: 'Semantics and ARIA, keyboard and focus, colour contrast, and testing with a screen reader.', depth: 'full' }
         ]
       },

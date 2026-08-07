@@ -1242,7 +1242,7 @@
   {
     "id": "frontend/index",
     "title": "Frontend",
-    "desc": "The web platform from the ground up: semantic HTML, the CSS cascade, layout with Flexbox and Grid, the React component m",
+    "desc": "The web platform from the ground up: semantic HTML and the CSS cascade, the React component model, routing and state, te",
     "icon": "📄",
     "section": "frontend",
     "sectionKey": "frontend",
@@ -1261,6 +1261,30 @@
     "href": "frontend/react.html",
     "path": "frontend/react.html",
     "topic": "fe/react",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/state",
+    "title": "Routing &amp; State — Frontend | TechForge",
+    "desc": "Frontend routing and state — client-side routing, server state and caching, global state stores, and form state with val",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/state.html",
+    "path": "frontend/state.html",
+    "topic": "fe/state",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/testing",
+    "title": "Testing — Frontend | TechForge",
+    "desc": "Frontend testing — unit tests, component tests with Testing Library, and end-to-end tests with Playwright. Test behaviou",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/testing.html",
+    "path": "frontend/testing.html",
+    "topic": "fe/testing",
     "depth": "guide"
   },
   {

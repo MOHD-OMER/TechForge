@@ -82,7 +82,10 @@ function mkGraph(nodes) {
 
   const unwritten = mkGraph([
     { id: 'root', tier: 'spine' },
-    { id: 'x', tier: 'branch', after: ['root'], status: 'soon', href: '../frontend/react.html' },
+    /* A path that will never be a real page. The fixture used to name a genuine
+       planned lesson, and broke the day that lesson was written — the check was
+       right, the test data was not. */
+    { id: 'x', tier: 'branch', after: ['root'], status: 'soon', href: '../__not-a-real-page__/x.html' },
   ]);
   assert.deepEqual(
     validateGraph(unwritten, 'roadmaps/probe.html'), [],
