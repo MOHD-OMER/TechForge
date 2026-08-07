@@ -1204,6 +1204,18 @@
     "depth": "guide"
   },
   {
+    "id": "frontend/accessibility",
+    "title": "Accessibility — Frontend | TechForge",
+    "desc": "Web accessibility — semantics and ARIA, keyboard and focus management, colour contrast, and screen-reader testing. WCAG ",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/accessibility.html",
+    "path": "frontend/accessibility.html",
+    "topic": "fe/accessibility",
+    "depth": "guide"
+  },
+  {
     "id": "frontend/css",
     "title": "CSS — Frontend | TechForge",
     "desc": "CSS — the cascade and specificity, box model, Flexbox, Grid, responsive design, custom properties and motion. Theory, ex",
@@ -1230,13 +1242,25 @@
   {
     "id": "frontend/index",
     "title": "Frontend",
-    "desc": "The web platform from the ground up: semantic HTML, the CSS cascade, layout with Flexbox and Grid, responsive design, cu",
+    "desc": "The web platform from the ground up: semantic HTML, the CSS cascade, layout with Flexbox and Grid, the React component m",
     "icon": "📄",
     "section": "frontend",
     "sectionKey": "frontend",
     "href": "frontend/index.html",
     "path": "frontend/index.html",
     "topic": null,
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/react",
+    "title": "React — Frontend | TechForge",
+    "desc": "React — components and JSX, props and state, hooks and effects, lists and reconciliation, context and composition, error",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/react.html",
+    "path": "frontend/react.html",
+    "topic": "fe/react",
     "depth": "guide"
   },
   {

@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Web accessibility — semantics and ARIA, keyboard and focus management, colour contrast, and screen-reader testing. WCAG in practice, with interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/frontend/accessibility.html"/>
+  <meta property="og:title" content="Accessibility — Frontend | TechForge"/>
+  <meta property="og:description" content="Web accessibility — semantics and ARIA, keyboard and focus management, colour contrast, and screen-reader testing. WCAG in practice, with interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Accessibility — Frontend | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="fe/accessibility" data-section="frontend">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">The Web Platform</div>
+    <a class="sb-link" href="html.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>HTML</a>
+    <a class="sb-link" href="css.html"><span class="sb-num"><i class="ti ti-brush"></i></span>CSS</a>
+    <div class="sidebar-label">Building Interfaces</div>
+    <a class="sb-link" href="react.html"><span class="sb-num"><i class="ti ti-box-multiple"></i></span>React</a>
+    <div class="sidebar-label">Quality</div>
+    <a class="sb-link active" href="accessibility.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Accessibility</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Frontend Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Frontend · Guide</div>
+      <h1 class="pg-title">Accessibility</h1>
+      <p class="pg-sub">Semantics and ARIA, keyboard and focus, colour contrast, and how to actually test with a screen reader.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Frontend</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> Why This Is Not Optional</h2>
+      <div class="callout callout-blue"><span>Accessibility is a legal requirement in most markets, and it is the fastest way to tell a careful frontend from a careless one. It is also the cheapest thing to get right early and the most expensive to retrofit.</span></div>
+      <p class="lesson-prose">The standard is <strong>WCAG</strong>, organised under four principles: content must be <strong>perceivable</strong>, <strong>operable</strong>, <strong>understandable</strong> and <strong>robust</strong>. Level AA is what regulations generally require and what teams target.</p>
+      <p class="lesson-prose">Most of it is not extra work — it is the work done properly. Semantic markup, real buttons, labelled inputs and sufficient contrast are all things a careful developer does anyway. The retrofit is expensive precisely because it means undoing shortcuts.</p>
+      <p class="lesson-prose">Automated tools catch perhaps a third of issues. They will tell you a contrast ratio is 3:1; they cannot tell you the focus order makes no sense or the alt text describes the wrong thing.</p>
+    </section>
+    <section class="lesson-section" id="aria">
+      <h2><span class="sec-icon"><i class="ti ti-sitemap"></i></span> Semantics &amp; ARIA</h2>
+      <p class="lesson-prose">Every element has an implicit role. A <code>&lt;button&gt;</code> is announced as a button, is focusable, and fires on Enter and Space — none of which you had to write.</p>
+      <p class="lesson-prose">ARIA adds roles, states and properties where HTML has no equivalent. It changes only how something is <em>announced</em> — never how it behaves. Adding <code>role="button"</code> to a div does not make it focusable or keyboard-operable; it only makes a screen reader announce a lie.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Attribute</th><th>Says</th><th>Use on</th></tr></thead><tbody><tr><td><code>aria-label</code></td><td>The accessible name, when no visible text exists</td><td>An icon-only button</td></tr><tr><td><code>aria-expanded</code></td><td>Whether the thing it controls is open</td><td>Disclosures, menus, accordions</td></tr><tr><td><code>aria-controls</code></td><td>Which element it operates</td><td>Paired with aria-expanded</td></tr><tr><td><code>aria-current</code></td><td>The current item in a set</td><td>The active nav link, current page</td></tr><tr><td><code>aria-live</code></td><td>Announce changes here</td><td>Status messages, results counts</td></tr><tr><td><code>aria-hidden</code></td><td>Ignore this entirely</td><td>Decorative icons beside real text</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>The first rule of ARIA is not to use it. A native element with the behaviour built in beats any amount of ARIA on a div — and bad ARIA is worse than none, because it makes a broken control sound like a working one.</span></div>
+    </section>
+    <section class="lesson-section" id="keyboard">
+      <h2><span class="sec-icon"><i class="ti ti-keyboard"></i></span> Keyboard &amp; Focus Management</h2>
+      <p class="lesson-prose">Everything usable with a mouse must be usable without one. That covers screen-reader users, people with motor impairments, and anyone whose trackpad has died.</p>
+      <p class="lesson-prose">The test takes a minute: put the mouse down and Tab through the page. You should always be able to see where you are, reach everything interactive, and never get stuck.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Rule</th><th>Why</th></tr></thead><tbody><tr><td>Never remove focus outlines without a replacement</td><td>Keyboard users lose their place entirely</td></tr><tr><td>Follow DOM order</td><td>Tab order comes from the DOM, not from CSS position</td></tr><tr><td>Avoid positive <code>tabindex</code></td><td>It jumps ahead of everything and breaks the sequence</td></tr><tr><td><code>tabindex="-1"</code> for programmatic focus</td><td>Focusable by script, skipped when tabbing</td></tr><tr><td>Trap focus inside a modal</td><td>Otherwise Tab wanders behind the overlay</td></tr><tr><td>Restore focus on close</td><td>Return it to the control that opened the dialog</td></tr><tr><td>Escape closes</td><td>Expected for anything overlaying the page</td></tr></tbody></table></div>
+      <div class="callout callout-amber"><span>A collapsed panel that is merely zero height still holds its links in the tab order — focus disappears into something invisible. Hide collapsed content with <code>visibility: hidden</code>, <code>display: none</code> or the <code>hidden</code> attribute.</span></div>
+      <p class="lesson-prose">A <strong>skip link</strong> as the first focusable element, jumping to the main content, saves keyboard users tabbing through the whole navigation on every page.</p>
+    </section>
+    <section class="lesson-section" id="contrast">
+      <h2><span class="sec-icon"><i class="ti ti-contrast"></i></span> Colour Contrast</h2>
+      <p class="lesson-prose">Contrast is a ratio between the text colour and what is behind it, from 1:1 to 21:1. WCAG AA sets the thresholds.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Content</th><th>AA minimum</th><th>AAA</th></tr></thead><tbody><tr><td>Body text</td><td>4.5:1</td><td>7:1</td></tr><tr><td>Large text (18pt, or 14pt bold)</td><td>3:1</td><td>4.5:1</td></tr><tr><td>UI components and graphics</td><td>3:1</td><td>—</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>Never convey state by lowering opacity. A "dimmed" label is text with its contrast quietly reduced, and it fails at exactly the moment it matters. Choose a different colour deliberately and measure it.</span></div>
+      <p class="lesson-prose">Colour must also never be the <em>only</em> carrier of meaning. Red for errors is fine, red alone is not — around 1 in 12 men has some colour vision deficiency. Add an icon, a label, or a shape.</p>
+      <p class="lesson-prose">Check both themes. A palette that inverts between light and dark will pass in one and fail in the other, and the failure is invisible from whichever one you happen to be looking at.</p>
+    </section>
+    <section class="lesson-section" id="screen-readers">
+      <h2><span class="sec-icon"><i class="ti ti-headphones"></i></span> Testing With a Screen Reader</h2>
+      <p class="lesson-prose">Nothing replaces listening to the page. Most of what a screen reader exposes — the heading outline, the landmarks, the accessible names — is invisible in the browser.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Reader</th><th>Platform</th><th>Start it with</th></tr></thead><tbody><tr><td><strong>VoiceOver</strong></td><td>macOS, iOS</td><td>Cmd + F5</td></tr><tr><td><strong>NVDA</strong></td><td>Windows, free</td><td>Ctrl + Alt + N</td></tr><tr><td><strong>Narrator</strong></td><td>Windows, built in</td><td>Ctrl + Win + Enter</td></tr><tr><td><strong>TalkBack</strong></td><td>Android</td><td>Volume keys held</td></tr></tbody></table></div>
+      <p class="lesson-prose">You do not need fluency. Four checks catch most problems: browse by heading and see whether the outline makes sense; browse by landmark and see whether the regions are named; Tab through and listen to whether each control announces what it is and what it does; and trigger a status message to check it is announced at all.</p>
+      <div class="callout callout-blue"><span>Automated tooling — axe-core in CI, Lighthouse locally — is worth having and catches roughly a third of issues. Treat a clean automated run as the floor, not the finish line.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>What is the first rule of ARIA?</q><p>Do not use it. Prefer the native element that already has the role, focus behaviour and keyboard handling. ARIA changes announcement only, never behaviour, so ARIA on a div still leaves it unfocusable and unusable by keyboard.</p></div>
+      <div class="iq"><q>What are the WCAG AA contrast minimums?</q><p>4.5:1 for body text, 3:1 for large text — 18pt, or 14pt bold — and 3:1 for UI components and meaningful graphics.</p></div>
+      <div class="iq"><q>How do you make a modal accessible?</q><p>Move focus into it on open, trap focus inside while it is open, close on Escape, restore focus to the trigger on close, and mark the content behind it as inert or hidden so a screen reader does not read through it.</p></div>
+      <div class="iq"><q>Why is opacity a bad way to show a disabled or inactive state?</q><p>It silently lowers contrast, so the state that most needs to be legible becomes the least legible. Choose a specific colour that meets the ratio instead.</p></div>
+      <div class="iq"><q>Automated tools pass. Are you accessible?</q><p>No. They catch roughly a third — contrast, missing alt, missing labels. They cannot judge whether the focus order is logical, whether alt text describes the right thing, or whether a custom widget behaves as announced. Keyboard and screen-reader testing are still required.</p></div>
+      <div class="iq"><q>What does aria-live do?</q><p>Marks a region whose changes should be announced without moving focus — a results count, a save confirmation. "polite" waits for a pause; "assertive" interrupts and should be rare.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. WCAG AA minimum contrast for body text is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">3:1</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">4.5:1</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">7:1</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">21:1</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Adding <code>role="button"</code> to a div makes it…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Focusable and keyboard-operable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Announced as a button, and nothing more</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fully accessible</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Submit a form</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Collapsed content at zero height still…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Keeps its links in the tab order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Is fully hidden</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fails to render</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Loses its styles</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Roughly what share of issues do automated tools catch?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nearly all</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">About a third</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">None</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Exactly half</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. A positive <code>tabindex</code> is discouraged because it…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Is deprecated</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Jumps ahead of everything and breaks the sequence</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Hides the element</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Removes the focus ring</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=8"></script>
+<script src="../assets/js/site-index.js?v=13"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

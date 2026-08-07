@@ -47,6 +47,20 @@ window.TF_TOPICS = {
     accent: '#22d3ee',
     categories: [
       {
+        id: 'ui',
+        label: 'Building Interfaces',
+        topics: [
+          { id: 'fe/react', file: 'react.html', title: 'React', icon: '<i class="ti ti-box-multiple"></i>', desc: 'Components and JSX, props and state, hooks and effects, keys and reconciliation, context and boundaries.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'quality',
+        label: 'Quality',
+        topics: [
+          { id: 'fe/accessibility', file: 'accessibility.html', title: 'Accessibility', icon: '<i class="ti ti-eye"></i>', desc: 'Semantics and ARIA, keyboard and focus, colour contrast, and testing with a screen reader.', depth: 'full' }
+        ]
+      },
+      {
         id: 'platform',
         label: 'The Web Platform',
         topics: [

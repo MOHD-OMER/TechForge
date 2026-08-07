@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="React — components and JSX, props and state, hooks and effects, lists and reconciliation, context and composition, error boundaries and Suspense. Interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/frontend/react.html"/>
+  <meta property="og:title" content="React — Frontend | TechForge"/>
+  <meta property="og:description" content="React — components and JSX, props and state, hooks and effects, lists and reconciliation, context and composition, error boundaries and Suspense. Interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>React — Frontend | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="fe/react" data-section="frontend">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">The Web Platform</div>
+    <a class="sb-link" href="html.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>HTML</a>
+    <a class="sb-link" href="css.html"><span class="sb-num"><i class="ti ti-brush"></i></span>CSS</a>
+    <div class="sidebar-label">Building Interfaces</div>
+    <a class="sb-link active" href="react.html"><span class="sb-num"><i class="ti ti-box-multiple"></i></span>React</a>
+    <div class="sidebar-label">Quality</div>
+    <a class="sb-link" href="accessibility.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Accessibility</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Frontend Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Frontend · Guide</div>
+      <h1 class="pg-title">React</h1>
+      <p class="pg-sub">Components and JSX, props and state, hooks and effects, lists and keys, context, and the boundaries that stop one failure taking the page.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Frontend</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> The One Idea</h2>
+      <div class="callout callout-blue"><span>Your UI is a function of your state. Change the state and describe what the screen should look like; React works out the DOM operations. Everything else follows from that.</span></div>
+      <p class="lesson-prose">Before React, code mutated the DOM directly — find the node, change the text, toggle a class. That works until two places can change the same thing, at which point the screen and the data quietly disagree.</p>
+      <p class="lesson-prose">React inverts it. You never say <em>how</em> to update; you say what the output should be for the current state. Re-rendering is cheap because React compares the described output against the previous one and applies only the differences.</p>
+      <p class="lesson-prose">Learn one component model deeply and the rest transfer. Vue, Svelte and Angular solve the same problem with different syntax; the reasoning about state, derived values and effects is the same everywhere.</p>
+    </section>
+    <section class="lesson-section" id="jsx">
+      <h2><span class="sec-icon"><i class="ti ti-code"></i></span> Components &amp; JSX</h2>
+      <p class="lesson-prose">A component is a function that takes an object of inputs and returns a description of some UI. JSX is syntax sugar over ordinary function calls — it compiles away entirely.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">JSX — and what it compiles to</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">function</span> <span class="fn">Greeting</span>({ name, muted }) {
+  <span class="kw">return</span> &lt;<span class="kw">p</span> <span class="fn">className</span>={muted ? <span class="st">'dim'</span> : <span class="st">''</span>}&gt;Hello, {name}&lt;/<span class="kw">p</span>&gt;;
+}
+
+<span class="cm">// the compiler turns that into a plain function call:</span>
+<span class="cm">// jsx('p', { className: ..., children: ['Hello, ', name] })</span>
+
+<span class="cm">// so it is JavaScript, and normal rules apply:</span>
+{items.<span class="fn">map</span>(i =&gt; &lt;<span class="kw">Row</span> <span class="fn">key</span>={i.id} {...i} /&gt;)}   <span class="cm">// loops are map</span>
+{isOpen &amp;&amp; &lt;<span class="kw">Panel</span> /&gt;}                        <span class="cm">// conditionals are expressions</span></pre>
+      </div>
+      <p class="lesson-prose">Because it is JavaScript, there is no template language to learn — but the attribute names follow the DOM properties rather than HTML: <code>className</code> not <code>class</code>, <code>htmlFor</code> not <code>for</code>, and event handlers are camelCase functions rather than strings.</p>
+      <div class="callout callout-amber"><span>A component name must be capitalised. Lowercase is treated as a literal HTML tag, so <code>&lt;greeting /&gt;</code> renders an unknown element and nothing happens — with no error.</span></div>
+    </section>
+    <section class="lesson-section" id="state">
+      <h2><span class="sec-icon"><i class="ti ti-refresh"></i></span> Props &amp; State</h2>
+      <p class="lesson-prose"><strong>Props</strong> come from the parent and are read-only. <strong>State</strong> belongs to the component and, when it changes, causes a re-render. That is the whole distinction, and most design mistakes are putting a value in the wrong one.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">State that updates predictably</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">const</span> [count, setCount] = <span class="fn">useState</span>(<span class="st">0</span>);
+
+<span class="cm">// wrong: both calls read the same stale count, so this adds 1</span>
+<span class="fn">setCount</span>(count + <span class="st">1</span>);
+<span class="fn">setCount</span>(count + <span class="st">1</span>);
+
+<span class="cm">// right: the updater form sees the value React is about to use</span>
+<span class="fn">setCount</span>(c =&gt; c + <span class="st">1</span>);
+<span class="fn">setCount</span>(c =&gt; c + <span class="st">1</span>);   <span class="cm">// adds 2</span>
+
+<span class="cm">// never mutate — React compares by reference</span>
+items.<span class="fn">push</span>(x);          <span class="cm">// same array, no re-render</span>
+<span class="fn">setItems</span>([...items, x]);  <span class="cm">// new array, renders</span></pre>
+      </div>
+      <p class="lesson-prose">State updates are asynchronous and batched: reading the variable straight after setting it gives the old value. That surprises everyone once, and the updater form is the answer whenever the next value depends on the previous one.</p>
+      <p class="lesson-prose">Do not put in state anything you can calculate during render. A <code>fullName</code> derived from first and last is not state — it is an expression. Storing it creates a second source of truth that can drift.</p>
+      <div class="callout callout-blue"><span>When two components need the same value, move it to their nearest common parent and pass it down. That is <strong>lifting state up</strong>, and it is the answer long before any state library is.</span></div>
+    </section>
+    <section class="lesson-section" id="hooks">
+      <h2><span class="sec-icon"><i class="ti ti-plug"></i></span> Hooks &amp; Effects</h2>
+      <p class="lesson-prose">Hooks let a function component hold state and reach outside itself. They must be called unconditionally at the top level — React tracks them by call order, so a hook inside an <code>if</code> shifts every hook after it.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Hook</th><th>For</th></tr></thead><tbody><tr><td><code>useState</code></td><td>A value that changes and should re-render</td></tr><tr><td><code>useEffect</code></td><td>Synchronising with something outside React</td></tr><tr><td><code>useRef</code></td><td>A mutable box that does not re-render; DOM access</td></tr><tr><td><code>useMemo</code></td><td>Caching an expensive calculation</td></tr><tr><td><code>useCallback</code></td><td>Keeping a function's identity stable across renders</td></tr><tr><td><code>useContext</code></td><td>Reading a value provided further up the tree</td></tr></tbody></table></div>
+      <p class="lesson-prose"><code>useEffect</code> is the most misused. It is for <strong>synchronising with an external system</strong> — a subscription, a timer, the document title, a network request. It is not a general "run this after render" hook, and reaching for it to compute derived data is the most common source of extra renders and stale values.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">An effect with the two parts people forget</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="fn">useEffect</span>(() =&gt; {
+  <span class="kw">const</span> id = <span class="fn">setInterval</span>(tick, <span class="st">1000</span>);
+  <span class="kw">return</span> () =&gt; <span class="fn">clearInterval</span>(id);   <span class="cm">// 1. cleanup</span>
+}, [tick]);                            <span class="cm">// 2. dependencies</span>
+
+<span class="cm">// no dependency array  -> runs after every render</span>
+<span class="cm">// []                   -> runs once on mount</span>
+<span class="cm">// [a, b]               -> runs when a or b change</span></pre>
+      </div>
+      <div class="callout callout-red"><span>Missing cleanup is how you get duplicate subscriptions, timers that never stop, and state updates on unmounted components. If the effect starts something, the returned function must stop it.</span></div>
+    </section>
+    <section class="lesson-section" id="lists">
+      <h2><span class="sec-icon"><i class="ti ti-list"></i></span> Lists, Keys &amp; Reconciliation</h2>
+      <p class="lesson-prose">When state changes, React builds a new description and compares it with the last. That comparison is <strong>reconciliation</strong>, and for lists it needs help identifying which item is which.</p>
+      <p class="lesson-prose">That is what <code>key</code> is for. It must be <strong>stable, unique and tied to the item</strong> — a database id, not an array index.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Key</th><th>Result</th></tr></thead><tbody><tr><td>A stable id</td><td>Correct: React moves the existing element</td></tr><tr><td>The array index</td><td>Breaks on insert, delete or reorder</td></tr><tr><td><code>Math.random()</code></td><td>Every item remounts on every render</td></tr><tr><td>Omitted</td><td>Falls back to index, with a warning</td></tr></tbody></table></div>
+      <p class="lesson-prose">The index looks fine until you delete the first row. Every remaining item shifts index, so React thinks each one <em>changed</em> rather than moved — and any internal state, like what someone had typed into an input, lands on the wrong row.</p>
+      <div class="callout callout-amber"><span>Index keys are safe only when the list is never reordered, filtered, or added to except at the end, and the items hold no state of their own. That is rarer than it sounds.</span></div>
+    </section>
+    <section class="lesson-section" id="context">
+      <h2><span class="sec-icon"><i class="ti ti-topology-star-3"></i></span> Context &amp; Composition</h2>
+      <p class="lesson-prose">Passing a prop through five components that do not use it — <strong>prop drilling</strong> — is the problem context solves. A provider publishes a value; any descendant reads it without the layers between knowing.</p>
+      <p class="lesson-prose">Use it for genuinely global, rarely-changing things: the theme, the signed-in user, the language. It is not a state manager, and a context whose value changes often re-renders every consumer.</p>
+      <div class="callout callout-blue"><span>Try <strong>composition</strong> first. Passing children as a prop often removes the drilling entirely — a layout that accepts a <code>&lt;Sidebar&gt;</code> element does not need to know what is inside it, so nothing has to be threaded through.</span></div>
+      <p class="lesson-prose">Custom hooks are the other composition tool. Any function starting with <code>use</code> that calls other hooks is one, and it lets you share stateful logic — a fetch, a subscription, a form — between components without sharing markup.</p>
+    </section>
+    <section class="lesson-section" id="boundaries">
+      <h2><span class="sec-icon"><i class="ti ti-shield"></i></span> Error Boundaries &amp; Suspense</h2>
+      <p class="lesson-prose">By default a thrown error during render unmounts the entire tree — the user gets a blank page. An <strong>error boundary</strong> catches errors from its children and renders a fallback instead, so one broken widget does not take the application.</p>
+      <p class="lesson-prose">Boundaries catch errors during rendering, in lifecycle methods and in constructors below them. They do <em>not</em> catch errors in event handlers, in asynchronous code, or in the boundary itself — those still need ordinary <code>try/catch</code>.</p>
+      <p class="lesson-prose"><strong>Suspense</strong> is the same idea for waiting rather than failing: it renders a fallback while something below it is not ready. Wrap the part of the page that depends on slow data, so the rest still paints.</p>
+      <div class="callout callout-amber"><span>Place boundaries where a partial failure is acceptable — around a sidebar, a comments panel, a chart. One boundary at the root only converts a blank screen into a slightly friendlier blank screen.</span></div>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> Common Mistakes</h2>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Mistake</th><th>What happens</th></tr></thead><tbody><tr><td>Mutating state directly</td><td>Same reference, so no re-render</td></tr><tr><td>Array index as key</td><td>State lands on the wrong row after a reorder</td></tr><tr><td><code>useEffect</code> for derived data</td><td>Extra render, stale values, sometimes a loop</td></tr><tr><td>Missing effect cleanup</td><td>Duplicate timers and subscriptions</td></tr><tr><td>Reading state right after setting it</td><td>Gets the old value; updates are batched</td></tr><tr><td>Hook inside a condition</td><td>Call order shifts and hooks break</td></tr><tr><td>Everything in context</td><td>Every consumer re-renders on every change</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>Why must keys be stable and unique?</q><p>They tell React which item is which between renders. With array indexes, deleting or reordering shifts every index, so React treats moves as changes and any internal state — text typed into an input, for instance — ends up on the wrong item.</p></div>
+      <div class="iq"><q>What is useEffect actually for?</q><p>Synchronising with something outside React: a subscription, a timer, the document title, a request. It is not a post-render hook, and using it to compute derived data causes an extra render and stale values.</p></div>
+      <div class="iq"><q>Why does calling setCount(count + 1) twice only add one?</q><p>Both calls close over the same value from this render, and updates are batched. The updater form, setCount(c =&gt; c + 1), receives the pending value, so two calls add two.</p></div>
+      <div class="iq"><q>Props or state?</q><p>Props come from the parent and are read-only. State is owned by the component and re-renders it when it changes. If a value can be computed from props or other state, it should not be state at all.</p></div>
+      <div class="iq"><q>Why can hooks not go inside conditions?</q><p>React identifies hooks by call order, not name. A conditional hook changes that order between renders, so state from one hook is handed to another.</p></div>
+      <div class="iq"><q>When would you reach for context?</q><p>Rarely-changing global values — theme, current user, locale. For prop drilling, try composition first; for frequently-changing shared state, context re-renders every consumer and a purpose-built store is better.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. <code>items.push(x)</code> then <code>setItems(items)</code> does not re-render because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The array reference did not change</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">push is asynchronous</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Arrays cannot be state</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It needs useEffect</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. The safest key for a list of records is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The array index</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">A stable id from the record</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Math.random()</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">No key at all</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. An effect that starts an interval must return…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The interval id</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">A cleanup function that clears it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">null</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A promise</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Hooks must be called…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Unconditionally, at the top level</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Inside useEffect</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">In alphabetical order</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Only in class components</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. An error boundary does NOT catch errors in…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Child rendering</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Event handlers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Child constructors</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Child lifecycle methods</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=8"></script>
+<script src="../assets/js/site-index.js?v=13"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
