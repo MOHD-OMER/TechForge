@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Data visualisation — choosing a chart, dashboard design, and communicating a result so it gets acted on. Interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/visualisation.html"/>
+  <meta property="og:title" content="Visualisation — Data | TechForge"/>
+  <meta property="og:description" content="Data visualisation — choosing a chart, dashboard design, and communicating a result so it gets acted on. Interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Visualisation — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/visualisation" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link active" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Visualisation</h1>
+      <p class="pg-sub">Choosing the chart that answers the question, designing a dashboard people use, and telling the story that gets acted on.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> A Chart Is an Argument</h2>
+      <div class="callout callout-blue"><span>Analysis that nobody acts on has the same value as analysis nobody did. Communication is not the last 5% of the job; it is what the job produces.</span></div>
+      <p class="lesson-prose">Every chart makes a claim. The choice of encoding — position, length, angle, colour, area — decides how accurately a reader can decode it, and human beings read some encodings far better than others.</p>
+      <p class="lesson-prose">Position on a common scale is the most accurate. Length is next. Angle and area are noticeably worse, which is the real reason pie charts are criticised: readers cannot compare wedges reliably. Colour intensity is the weakest of all, and should carry your least important variable.</p>
+    </section>
+    <section class="lesson-section" id="charts">
+      <h2><span class="sec-icon"><i class="ti ti-chart-bar"></i></span> Choosing a Chart</h2>
+      <p class="lesson-prose">Start from the question, never from the chart library. The question dictates the form.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>The question</th><th>The chart</th><th>Watch out for</th></tr></thead><tbody><tr><td>How has this changed over time?</td><td>Line</td><td>Truncated y-axis exaggerating the trend</td></tr><tr><td>How do these categories compare?</td><td>Bar</td><td>Bars must start at zero</td></tr><tr><td>How are these values distributed?</td><td>Histogram or box plot</td><td>Bin width changes the story</td></tr><tr><td>Do these two things move together?</td><td>Scatter</td><td>Overplotting hiding density</td></tr><tr><td>What is the composition?</td><td>Stacked bar</td><td>Only the bottom segment is easy to compare</td></tr><tr><td>Where is it concentrated?</td><td>Heatmap</td><td>Colour scale doing too much work</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>Bar charts must start at zero, because the bar's length <em>is</em> the value. Line charts need not, because the reader is comparing slope rather than magnitude. Truncating a bar axis is the most common way a chart lies.</span></div>
+      <p class="lesson-prose">Never use colour alone to carry meaning. Roughly one man in twelve has some form of colour vision deficiency, so pair colour with shape, label or position.</p>
+    </section>
+    <section class="lesson-section" id="dashboards">
+      <h2><span class="sec-icon"><i class="ti ti-layout-grid"></i></span> Dashboard Design</h2>
+      <p class="lesson-prose">A dashboard answers a recurring question for a specific person. A dashboard that answers everything for everyone gets checked twice and then ignored.</p>
+      <p class="lesson-prose">Lead with the headline number, then the trend, then the breakdown. Someone should be able to glance for three seconds and know whether anything needs their attention — that is the whole design brief.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Principle</th><th>In practice</th></tr></thead><tbody><tr><td>One audience</td><td>Ask whose decision this serves; build for them</td></tr><tr><td>Context beside every number</td><td>"1,204" means nothing; "1,204, up 8% on last week" does</td></tr><tr><td>Same period everywhere</td><td>Mixed date ranges on one screen create false comparisons</td></tr><tr><td>Fewer panels</td><td>Every extra chart lowers the attention paid to the rest</td></tr><tr><td>State the definition</td><td>Two teams will otherwise mean two things by "active user"</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="storytelling">
+      <h2><span class="sec-icon"><i class="ti ti-message-circle"></i></span> Communicating Results</h2>
+      <p class="lesson-prose">Lead with the conclusion. Analysts are trained to build up to a finding the way the investigation happened; decision-makers need the answer first and the method only if they challenge it.</p>
+      <p class="lesson-prose">Structure that works: <strong>what we found</strong>, <strong>what it means</strong>, <strong>what to do</strong>, then the method in an appendix. Say what would change your mind, and be explicit about uncertainty — an analyst who states confidence intervals is trusted more, not less.</p>
+      <div class="callout callout-amber"><span>If you cannot say what decision changes based on this analysis, the analysis is not finished. Sometimes the honest answer is that the data cannot resolve the question — say that too.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>Why must bar charts start at zero when line charts need not?</q><p>A bar encodes value as length, so truncating the axis distorts the ratio the reader perceives. A line encodes change as slope, and the reader is comparing direction rather than magnitude.</p></div>
+      <div class="iq"><q>What is wrong with pie charts?</q><p>They ask readers to compare angles and areas, which people judge far less accurately than position or length. A bar chart answers the same question better. They are tolerable for two or three parts of a whole.</p></div>
+      <div class="iq"><q>How do you design a dashboard people actually use?</q><p>Pick one audience and one recurring decision. Headline number, then trend, then breakdown. Context beside every figure, consistent date ranges, and fewer panels than you want.</p></div>
+      <div class="iq"><q>How do you present a result nobody wants to hear?</q><p>Lead with the finding, show the guardrails you checked, state the uncertainty honestly, and say what evidence would change the conclusion. Burying it costs your credibility the next time.</p></div>
+      <div class="iq"><q>Why not rely on colour alone?</q><p>Colour vision deficiency affects roughly 8% of men, and colour is also the least accurately decoded encoding for everyone. Pair it with shape, label or position.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which encoding do people read most accurately?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Position on a common scale</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Area</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Angle</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Colour intensity</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Bar charts must start at zero because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Convention demands it</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The bar's length is the value</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Otherwise they will not render</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It saves space</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Best chart for the distribution of one variable:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Pie chart</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Histogram</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Stacked bar</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Line chart</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A good dashboard is built for…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Everyone in the company</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">One audience and one recurring decision</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Whoever requested the most charts</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The data that was easiest to query</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. When presenting to decision-makers you should…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Walk through the method first</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Lead with the conclusion</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Omit uncertainty to sound confident</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Show every chart you made</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=5"></script>
+<script src="../assets/js/site-index.js?v=10"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

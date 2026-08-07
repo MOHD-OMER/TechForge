@@ -3,6 +3,29 @@
  * Single source of truth for section expansion (Phase 2).
  */
 window.TF_TOPICS = {
+  data: {
+    label: 'Data',
+    hub: 'data/index.html',
+    accent: '#22d3ee',
+    categories: [
+      {
+        id: 'analysis',
+        label: 'Making Data Mean Something',
+        topics: [
+          { id: 'data/statistics', file: 'statistics.html', title: 'Statistics', icon: '<i class="ti ti-hash"></i>', desc: 'Descriptive measures, hypothesis testing, Bayesian thinking, and the sampling traps that quietly invalidate a result.', depth: 'full' },
+          { id: 'data/ab-testing', file: 'ab-testing.html', title: 'Experimentation', icon: '<i class="ti ti-flask"></i>', desc: 'A/B tests, statistical power, and the peeking problem that makes half of all reported wins imaginary.', depth: 'full' },
+          { id: 'data/visualisation', file: 'visualisation.html', title: 'Visualisation', icon: '<i class="ti ti-chart-donut"></i>', desc: 'Choosing the chart that answers the question, designing a dashboard, and telling the story that gets acted on.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'platform',
+        label: 'Where Data Lives',
+        topics: [
+          { id: 'data/warehouses', file: 'warehouses.html', title: 'Warehouses & Lakes', icon: '<i class="ti ti-database"></i>', desc: 'Columnar storage, Parquet, partitioning, and the lakehouse pattern the field has converged on.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   frontend: {
     label: 'Frontend',
     hub: 'frontend/index.html',

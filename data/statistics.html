@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Statistics for data work — descriptive measures, hypothesis testing and p-values, Bayesian thinking, and sampling bias. Theory, interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/statistics.html"/>
+  <meta property="og:title" content="Statistics — Data | TechForge"/>
+  <meta property="og:description" content="Statistics for data work — descriptive measures, hypothesis testing and p-values, Bayesian thinking, and sampling bias. Theory, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Statistics — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/statistics" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link active" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Statistics</h1>
+      <p class="pg-sub">Descriptive measures, hypothesis testing, Bayesian thinking, and the sampling traps that quietly invalidate a result.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> Why Statistics Decides Everything</h2>
+      <div class="callout callout-blue"><span>The difference between a number and a finding is statistics. Anyone can compute an average; knowing whether it means anything is the job.</span></div>
+      <p class="lesson-prose">Every dataset you touch is a <strong>sample</strong>, not the world. Statistics is the discipline of saying how much of what you observed is signal and how much is the luck of which rows you happened to get.</p>
+      <p class="lesson-prose">This is the skill that separates a data scientist from someone who can call <code>fit()</code>, and an analyst from someone who can write SQL. A model with no notion of uncertainty will confidently report a pattern that vanishes next month.</p>
+      <p class="lesson-prose">You need less of it than a statistics degree and more of it than most bootcamps admit. The four sections below are the working set.</p>
+    </section>
+    <section class="lesson-section" id="descriptive">
+      <h2><span class="sec-icon"><i class="ti ti-chart-bar"></i></span> Descriptive Statistics</h2>
+      <p class="lesson-prose">Describing what you have, before inferring anything about what you do not. The first question is always the shape of the distribution, because every summary number after that depends on it.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Measure</th><th>What it tells you</th><th>When it misleads</th></tr></thead><tbody><tr><td><strong>Mean</strong></td><td>The balance point</td><td>Dragged hard by outliers and skew</td></tr><tr><td><strong>Median</strong></td><td>The middle value</td><td>Ignores the size of extremes entirely</td></tr><tr><td><strong>Mode</strong></td><td>The most common value</td><td>Meaningless on continuous data</td></tr><tr><td><strong>Std deviation</strong></td><td>Typical distance from the mean</td><td>Assumes a roughly symmetric shape</td></tr><tr><td><strong>Percentiles</strong></td><td>Where a value sits in the pack</td><td>Needs enough data to be stable</td></tr></tbody></table></div>
+      <p class="lesson-prose">Income, latency and session length are all right-skewed, which is why <strong>mean salary</strong> and <strong>mean response time</strong> are two of the most misleading numbers in common use. Report the median and the tail percentiles instead: p50, p95, p99.</p>
+      <div class="callout callout-amber"><span>Anscombe's quartet is four datasets with identical means, variances and correlations, and completely different shapes. Plot the data before you summarise it — always.</span></div>
+    </section>
+    <section class="lesson-section" id="inference">
+      <h2><span class="sec-icon"><i class="ti ti-scale"></i></span> Hypothesis Testing</h2>
+      <p class="lesson-prose">Inference is the move from sample to population. You assume nothing is happening — the <strong>null hypothesis</strong> — and ask how surprising your data would be if that were true.</p>
+      <p class="lesson-prose">A <strong>p-value</strong> answers exactly one question: if there were no real effect, how often would I see a result at least this extreme? A small p-value means the data sits awkwardly with the null. It does <em>not</em> tell you the probability that your hypothesis is true, and it says nothing at all about whether the effect is big enough to care about.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Term</th><th>Plain meaning</th></tr></thead><tbody><tr><td><strong>Null hypothesis</strong></td><td>Nothing is going on</td></tr><tr><td><strong>p-value</strong></td><td>How surprising this data would be if nothing were going on</td></tr><tr><td><strong>Confidence interval</strong></td><td>A range of effect sizes the data is compatible with</td></tr><tr><td><strong>Type I error</strong></td><td>Crying wolf — a false positive</td></tr><tr><td><strong>Type II error</strong></td><td>Missing a real effect — a false negative</td></tr><tr><td><strong>Statistical power</strong></td><td>Your chance of detecting an effect that is really there</td></tr></tbody></table></div>
+      <p class="lesson-prose">Prefer the <strong>confidence interval</strong> to the p-value whenever you can. "Between 1% and 9% lift" tells a decision-maker something actionable; "p = 0.04" does not.</p>
+      <div class="callout callout-red"><span>Statistical significance is not business significance. With enough traffic, a 0.01% change becomes significant. The question is never only "is it real" but "is it worth doing".</span></div>
+    </section>
+    <section class="lesson-section" id="bayes">
+      <h2><span class="sec-icon"><i class="ti ti-brain"></i></span> Bayesian Thinking</h2>
+      <p class="lesson-prose">The Bayesian move is to start from what you already believed and update it with evidence, rather than testing a single hypothesis in isolation.</p>
+      <p class="lesson-prose">The classic illustration: a test is 99% accurate for a disease that affects 1 in 10,000 people. You test positive. Your actual chance of having it is under 1%, because the false positives from the enormous healthy population swamp the true positives from the tiny sick one. The <strong>base rate</strong> dominates the test accuracy.</p>
+      <div class="callout callout-blue"><span>This is why fraud detection, spam filtering and medical screening all care more about base rates than about model accuracy. On a rare event, a 99%-accurate model can still be wrong nearly every time it fires.</span></div>
+      <p class="lesson-prose">In practice the Bayesian framing wins where you have real prior knowledge or need a probability you can act on directly — "there is an 85% chance B beats A" is easier to decide on than a p-value.</p>
+    </section>
+    <section class="lesson-section" id="bias">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> Bias &amp; Sampling Traps</h2>
+      <p class="lesson-prose">Most bad analysis is not bad mathematics. It is correct mathematics on a sample that was never representative.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Trap</th><th>What goes wrong</th><th>Typical example</th></tr></thead><tbody><tr><td><strong>Survivorship bias</strong></td><td>You only measured what remained</td><td>Studying customers who did not churn</td></tr><tr><td><strong>Selection bias</strong></td><td>The sample was never random</td><td>Surveying only people who opened the email</td></tr><tr><td><strong>Simpson's paradox</strong></td><td>A trend reverses once you split by a group</td><td>Overall rate up, every segment down</td></tr><tr><td><strong>Confounding</strong></td><td>A third variable drives both</td><td>Ice cream sales and drownings</td></tr><tr><td><strong>Multiple comparisons</strong></td><td>Test twenty things, one looks significant</td><td>Slicing until something has p &lt; 0.05</td></tr></tbody></table></div>
+      <div class="callout callout-red"><span>Correlation is not causation, and the only reliable way to earn a causal claim is an experiment where you controlled the assignment. Everything else is an argument.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>What does a p-value actually mean?</q><p>The probability of seeing data at least this extreme if the null hypothesis were true. It is not the probability the null is true, and not the probability your finding is real. Candidates who state either of those are usually rejected on the spot.</p></div>
+      <div class="iq"><q>Mean or median for salary?</q><p>Median. Salary is right-skewed, so a few very large values pull the mean above what a typical person earns. Report the median plus percentiles.</p></div>
+      <div class="iq"><q>Explain Type I and Type II error.</q><p>Type I is a false positive — you acted on an effect that was not there. Type II is a false negative — you missed one that was. Lowering your significance threshold trades the first for the second.</p></div>
+      <div class="iq"><q>What is Simpson's paradox?</q><p>A trend that holds in every subgroup reverses when the groups are combined, usually because group sizes differ. It is the reason you always check whether an aggregate result survives segmentation.</p></div>
+      <div class="iq"><q>A test is 99% accurate for a 1-in-10,000 disease and you test positive. Should you worry?</q><p>Not much. The healthy population is so much larger that its 1% false positives outnumber the true positives from the sick population by roughly a hundred to one. Base rate beats test accuracy.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. A p-value of 0.03 means…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">There is a 3% chance the null is true</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Data this extreme would occur 3% of the time if the null were true</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The effect is 3% in size</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">There is a 97% chance the result replicates</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Best summary for a right-skewed distribution:</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Mean alone</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Median plus percentiles</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Mode alone</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Standard deviation alone</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Testing twenty unrelated metrics until one is significant is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Good exploratory practice</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The multiple comparisons problem</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Simpson's paradox</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Survivorship bias</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Studying only customers who stayed is an example of…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Survivorship bias</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Confounding</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A Type I error</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Regression to the mean</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Statistical significance guarantees…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The effect is large</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The effect is worth shipping</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Neither of those</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Causation</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=5"></script>
+<script src="../assets/js/site-index.js?v=10"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

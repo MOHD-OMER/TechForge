@@ -268,6 +268,66 @@
     "depth": "page"
   },
   {
+    "id": "data/ab-testing",
+    "title": "Experimentation — Data | TechForge",
+    "desc": "Experimentation and A/B testing — experiment design, sample size and power, the peeking problem, and reading a result ho",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/ab-testing.html",
+    "path": "data/ab-testing.html",
+    "topic": "data/ab-testing",
+    "depth": "guide"
+  },
+  {
+    "id": "data/index",
+    "title": "Data",
+    "desc": "Statistics, experimentation, visualisation and the storage layer underneath — the shared ground between analysts, scient",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/index.html",
+    "path": "data/index.html",
+    "topic": null,
+    "depth": "guide"
+  },
+  {
+    "id": "data/statistics",
+    "title": "Statistics — Data | TechForge",
+    "desc": "Statistics for data work — descriptive measures, hypothesis testing and p-values, Bayesian thinking, and sampling bias. ",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/statistics.html",
+    "path": "data/statistics.html",
+    "topic": "data/statistics",
+    "depth": "guide"
+  },
+  {
+    "id": "data/visualisation",
+    "title": "Visualisation — Data | TechForge",
+    "desc": "Data visualisation — choosing a chart, dashboard design, and communicating a result so it gets acted on. Interview quest",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/visualisation.html",
+    "path": "data/visualisation.html",
+    "topic": "data/visualisation",
+    "depth": "guide"
+  },
+  {
+    "id": "data/warehouses",
+    "title": "Warehouses &amp; Lakes — Data | TechForge",
+    "desc": "Data warehouses and lakes — columnar storage, Parquet and file formats, partitioning, and lakehouse architecture. Interv",
+    "icon": "📄",
+    "section": "data",
+    "sectionKey": "data",
+    "href": "data/warehouses.html",
+    "path": "data/warehouses.html",
+    "topic": "data/warehouses",
+    "depth": "guide"
+  },
+  {
     "id": "databases/cassandra",
     "title": "Cassandra — Database Systems",
     "desc": "Cassandra — Database Systems guide on TechForge. Theory, examples, interview questions, and best practices.",
