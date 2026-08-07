@@ -1242,13 +1242,37 @@
   {
     "id": "frontend/index",
     "title": "Frontend",
-    "desc": "The web platform from the ground up: semantic HTML and the CSS cascade, the React component model, routing and state, te",
+    "desc": "The web platform end to end: semantic HTML and the CSS cascade, React, routing and state, server rendering, build toolin",
     "icon": "📄",
     "section": "frontend",
     "sectionKey": "frontend",
     "href": "frontend/index.html",
     "path": "frontend/index.html",
     "topic": null,
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/nextjs",
+    "title": "Server Rendering — Frontend | TechForge",
+    "desc": "Server rendering for the web — SSR, SSG and incremental regeneration, React server components, and data loading patterns",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/nextjs.html",
+    "path": "frontend/nextjs.html",
+    "topic": "fe/nextjs",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/performance",
+    "title": "Web Performance — Frontend | TechForge",
+    "desc": "Web performance — Core Web Vitals (LCP, INP, CLS), bundle size and code splitting, and image and font loading. Interview",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/performance.html",
+    "path": "frontend/performance.html",
+    "topic": "fe/performance",
     "depth": "guide"
   },
   {
@@ -1285,6 +1309,18 @@
     "href": "frontend/testing.html",
     "path": "frontend/testing.html",
     "topic": "fe/testing",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/tooling",
+    "title": "Build Tooling — Frontend | TechForge",
+    "desc": "Frontend build tooling — npm, semver and lockfiles, module bundling with Vite, and ESLint and Prettier. Interview questi",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/tooling.html",
+    "path": "frontend/tooling.html",
+    "topic": "fe/tooling",
     "depth": "guide"
   },
   {

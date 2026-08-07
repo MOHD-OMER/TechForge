@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Server rendering for the web — SSR, SSG and incremental regeneration, React server components, and data loading patterns. Interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/frontend/nextjs.html"/>
+  <meta property="og:title" content="Server Rendering — Frontend | TechForge"/>
+  <meta property="og:description" content="Server rendering for the web — SSR, SSG and incremental regeneration, React server components, and data loading patterns. Interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Server Rendering — Frontend | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="fe/nextjs" data-section="frontend">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">The Web Platform</div>
+    <a class="sb-link" href="html.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>HTML</a>
+    <a class="sb-link" href="css.html"><span class="sb-num"><i class="ti ti-brush"></i></span>CSS</a>
+    <div class="sidebar-label">Building Interfaces</div>
+    <a class="sb-link" href="react.html"><span class="sb-num"><i class="ti ti-box-multiple"></i></span>React</a>
+    <a class="sb-link" href="state.html"><span class="sb-num"><i class="ti ti-topology-star-3"></i></span>Routing &amp; State</a>
+    <a class="sb-link active" href="nextjs.html"><span class="sb-num"><i class="ti ti-server"></i></span>Server Rendering</a>
+    <div class="sidebar-label">Shipping It</div>
+    <a class="sb-link" href="tooling.html"><span class="sb-num"><i class="ti ti-package"></i></span>Build Tooling</a>
+    <a class="sb-link" href="performance.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>Web Performance</a>
+    <div class="sidebar-label">Quality</div>
+    <a class="sb-link" href="testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Testing</a>
+    <a class="sb-link" href="accessibility.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Accessibility</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Frontend Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Frontend · Guide</div>
+      <h1 class="pg-title">Server Rendering</h1>
+      <p class="pg-sub">SSR, static generation and incremental rendering, server components, and loading data — why a meta-framework exists at all.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Frontend</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> Why Render on the Server At All</h2>
+      <div class="callout callout-blue"><span>A pure client app ships an empty page and a large bundle. Nothing is visible until the JavaScript downloads, parses and runs — and search crawlers and slow phones both pay that bill.</span></div>
+      <p class="lesson-prose">Server rendering sends real HTML. The user sees content on the first response instead of after a round of downloading and executing, and a crawler gets a page rather than an empty shell.</p>
+      <p class="lesson-prose">The page then <strong>hydrates</strong>: the same components run in the browser and attach their event handlers to markup that already exists. Between arrival and hydration the page looks ready but does not respond — a real gap, and a large bundle widens it.</p>
+      <p class="lesson-prose">This is most of what a meta-framework is for. Routing, data loading, bundling and the server and client halves of rendering are hard to wire together correctly, and the framework has made those decisions already.</p>
+    </section>
+    <section class="lesson-section" id="modes">
+      <h2><span class="sec-icon"><i class="ti ti-versions"></i></span> SSR, SSG &amp; Incremental Rendering</h2>
+      <p class="lesson-prose">The real question is <em>when</em> the HTML is produced. Everything else follows from that answer.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Mode</th><th>HTML is built</th><th>Fits</th><th>Cost</th></tr></thead><tbody><tr><td><strong>CSR</strong></td><td>In the browser, after JS loads</td><td>Dashboards behind a login</td><td>Blank first paint, poor for crawlers</td></tr><tr><td><strong>SSR</strong></td><td>Per request, on the server</td><td>Personalised or fast-changing pages</td><td>Server cost and latency on every hit</td></tr><tr><td><strong>SSG</strong></td><td>At build time</td><td>Docs, marketing, blogs</td><td>Stale until you rebuild</td></tr><tr><td><strong>ISR</strong></td><td>At build, then refreshed in the background</td><td>Catalogues that change sometimes</td><td>A window where content is stale</td></tr></tbody></table></div>
+      <p class="lesson-prose">Prefer the earliest one that works. Static HTML from a CDN is the fastest and cheapest thing on the web; per-request rendering is the most flexible and the most expensive. Incremental regeneration is the middle: serve the cached page, rebuild it behind the scenes when it ages out.</p>
+      <div class="callout callout-amber"><span>These are per-route decisions, not per-application. A marketing page can be static while the account page beside it renders per request.</span></div>
+    </section>
+    <section class="lesson-section" id="server-components">
+      <h2><span class="sec-icon"><i class="ti ti-server"></i></span> Server Components</h2>
+      <p class="lesson-prose">A server component runs only on the server and never ships to the browser. Its output is sent as rendered markup, so the code — and any dependency it used — stays out of the bundle entirely.</p>
+      <p class="lesson-prose">That is the appeal: a component that formats dates with a large library adds nothing to what the user downloads. Data fetching can also happen directly inside it, with no API round trip from the client.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th></th><th>Server component</th><th>Client component</th></tr></thead><tbody><tr><td>Ships JS to the browser</td><td>No</td><td>Yes</td></tr><tr><td>State and effects</td><td>No</td><td>Yes</td></tr><tr><td>Event handlers</td><td>No</td><td>Yes</td></tr><tr><td>Direct database access</td><td>Yes</td><td>No</td></tr><tr><td>Browser APIs</td><td>No</td><td>Yes</td></tr></tbody></table></div>
+      <p class="lesson-prose">The two compose: server components render the static shell and pass data down; client components handle anything interactive. Push the boundary as deep as you can — a single interactive button should not make its whole page a client component.</p>
+      <div class="callout callout-red"><span>Anything a server component touches — secrets, tokens, database handles — stays on the server. That is exactly why it must never be passed as a prop into a client component, where it would be serialised and shipped.</span></div>
+    </section>
+    <section class="lesson-section" id="data">
+      <h2><span class="sec-icon"><i class="ti ti-plug"></i></span> API Routes &amp; Data Loading</h2>
+      <p class="lesson-prose">With rendering on the server, data loading moves there too — fetch during render rather than after mount, and the HTML arrives complete instead of arriving empty and filling in.</p>
+      <p class="lesson-prose">The failure to watch for is the <strong>waterfall</strong>: a parent awaits its data, then renders a child that awaits its own. Two sequential round trips where one would do. Start independent requests together and await them together.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Situation</th><th>Do</th></tr></thead><tbody><tr><td>Several independent fetches</td><td>Start them in parallel, await once</td></tr><tr><td>One slow section</td><td>Stream it behind a Suspense boundary</td></tr><tr><td>Data that rarely changes</td><td>Cache it; revalidate on a timer</td></tr><tr><td>A user action changing data</td><td>Mutate on the server, then revalidate</td></tr><tr><td>Anything secret</td><td>Keep it server-side; never send it down</td></tr></tbody></table></div>
+      <p class="lesson-prose">A meta-framework also gives you <strong>API routes</strong> — server endpoints living beside the pages. Useful for webhooks, form handling and anything needing a key you cannot expose, without standing up a separate service.</p>
+      <div class="callout callout-blue"><span>Streaming is the practical win. Send the shell immediately and let slow sections arrive as they resolve, so one slow query stops holding the entire page hostage.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>SSR versus SSG — how do you choose?</q><p>By when the HTML can be built. If the page is the same for everyone and changes rarely, build it once at deploy and serve it from a CDN. If it is personalised or changes constantly, render per request and pay the server cost. Incremental regeneration sits between them.</p></div>
+      <div class="iq"><q>What is hydration, and what goes wrong with it?</q><p>The client re-runs the components and attaches handlers to server-rendered markup. Between paint and hydration the page looks interactive but is not, and a large bundle widens that gap. A mismatch between server and client output also forces a re-render and can flash.</p></div>
+      <div class="iq"><q>What does a server component actually save?</q><p>Bundle size and a round trip. The component and its dependencies never reach the browser, and it can read data directly instead of calling an API. The trade is no state, no effects, no event handlers.</p></div>
+      <div class="iq"><q>What is a data waterfall?</q><p>Sequential fetches that could have been parallel — a parent awaits, then renders a child that awaits. Each layer adds a full round trip. Start independent requests together.</p></div>
+      <div class="iq"><q>Why not render everything on the server?</q><p>Anything interactive needs client JavaScript, and per-request rendering costs server time and latency on every hit. The aim is the smallest client bundle that still delivers the interactivity the page needs.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. A marketing page identical for everyone is best served by…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Static generation</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Per-request SSR</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Client-side rendering</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It makes no difference</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Between first paint and hydration the page is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Visible but not interactive</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Blank</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Fully interactive</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Still downloading HTML</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A server component cannot…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Read from a database</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Hold state or handle clicks</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Render markup</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Import a large library</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. A parent awaits data, then its child awaits more. That is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">A waterfall</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Streaming</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Hydration</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Incremental regeneration</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Rendering mode is chosen…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Once for the whole application</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Per route</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">By the browser</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">At random</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=10"></script>
+<script src="../assets/js/site-index.js?v=15"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

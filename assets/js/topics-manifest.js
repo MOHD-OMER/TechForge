@@ -51,7 +51,16 @@ window.TF_TOPICS = {
         label: 'Building Interfaces',
         topics: [
           { id: 'fe/react', file: 'react.html', title: 'React', icon: '<i class="ti ti-box-multiple"></i>', desc: 'Components and JSX, props and state, hooks and effects, keys and reconciliation, context and boundaries.', depth: 'full' },
-          { id: 'fe/state', file: 'state.html', title: 'Routing & State', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'Client routing, server state and caching, global stores, and forms with validation.', depth: 'full' }
+          { id: 'fe/state', file: 'state.html', title: 'Routing & State', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'Client routing, server state and caching, global stores, and forms with validation.', depth: 'full' },
+          { id: 'fe/nextjs', file: 'nextjs.html', title: 'Server Rendering', icon: '<i class="ti ti-server"></i>', desc: 'SSR, static generation and incremental rendering, server components, and data loading.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping It',
+        topics: [
+          { id: 'fe/tooling', file: 'tooling.html', title: 'Build Tooling', icon: '<i class="ti ti-package"></i>', desc: 'npm, semver and lockfiles, bundling with Vite, and linting and formatting.', depth: 'full' },
+          { id: 'fe/performance', file: 'performance.html', title: 'Web Performance', icon: '<i class="ti ti-gauge"></i>', desc: 'Core Web Vitals, bundle size and code splitting, and image and font loading.', depth: 'full' }
         ]
       },
       {

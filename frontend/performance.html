@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Web performance — Core Web Vitals (LCP, INP, CLS), bundle size and code splitting, and image and font loading. Interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/frontend/performance.html"/>
+  <meta property="og:title" content="Web Performance — Frontend | TechForge"/>
+  <meta property="og:description" content="Web performance — Core Web Vitals (LCP, INP, CLS), bundle size and code splitting, and image and font loading. Interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Web Performance — Frontend | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="fe/performance" data-section="frontend">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">The Web Platform</div>
+    <a class="sb-link" href="html.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>HTML</a>
+    <a class="sb-link" href="css.html"><span class="sb-num"><i class="ti ti-brush"></i></span>CSS</a>
+    <div class="sidebar-label">Building Interfaces</div>
+    <a class="sb-link" href="react.html"><span class="sb-num"><i class="ti ti-box-multiple"></i></span>React</a>
+    <a class="sb-link" href="state.html"><span class="sb-num"><i class="ti ti-topology-star-3"></i></span>Routing &amp; State</a>
+    <a class="sb-link" href="nextjs.html"><span class="sb-num"><i class="ti ti-server"></i></span>Server Rendering</a>
+    <div class="sidebar-label">Shipping It</div>
+    <a class="sb-link" href="tooling.html"><span class="sb-num"><i class="ti ti-package"></i></span>Build Tooling</a>
+    <a class="sb-link active" href="performance.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>Web Performance</a>
+    <div class="sidebar-label">Quality</div>
+    <a class="sb-link" href="testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Testing</a>
+    <a class="sb-link" href="accessibility.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Accessibility</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Frontend Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Frontend · Guide</div>
+      <h1 class="pg-title">Web Performance</h1>
+      <p class="pg-sub">Core Web Vitals, bundle size and code splitting, and the image and font decisions that move the numbers most.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Frontend</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> Measure, Then Fix</h2>
+      <div class="callout callout-blue"><span>Optimising without measuring is guessing. The bottleneck is almost never where it feels like it is, and the fix that mattered is usually one of three or four things — not the hundred you could do.</span></div>
+      <p class="lesson-prose">Two kinds of data. <strong>Lab</strong> — Lighthouse on your machine — is repeatable and good for comparing before and after. <strong>Field</strong> — real users on real devices and networks — is the truth, and it is always worse than the lab.</p>
+      <p class="lesson-prose">Test on a mid-range phone over a throttled connection. A desktop on office wifi will tell you everything is fine, right up until it is not for the people actually using it.</p>
+    </section>
+    <section class="lesson-section" id="vitals">
+      <h2><span class="sec-icon"><i class="ti ti-gauge"></i></span> Core Web Vitals</h2>
+      <p class="lesson-prose">Three metrics, each standing for a different question a user is asking without thinking about it.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Metric</th><th>Asks</th><th>Good</th><th>Usually caused by</th></tr></thead><tbody><tr><td><strong>LCP</strong><br/>Largest Contentful Paint</td><td>Has the main thing appeared?</td><td>Under 2.5s</td><td>A slow server, or a huge hero image</td></tr><tr><td><strong>INP</strong><br/>Interaction to Next Paint</td><td>Does it respond when I touch it?</td><td>Under 200ms</td><td>Long JavaScript tasks blocking the main thread</td></tr><tr><td><strong>CLS</strong><br/>Cumulative Layout Shift</td><td>Does it stay still?</td><td>Under 0.1</td><td>Images and ads with no reserved space</td></tr></tbody></table></div>
+      <p class="lesson-prose"><strong>CLS is the cheapest to fix</strong> and the most infuriating to experience — the tap that lands on the wrong thing because content moved. Set <code>width</code> and <code>height</code> on every image, reserve space for anything injected, and never insert content above what someone is already reading.</p>
+      <p class="lesson-prose"><strong>INP</strong> is about the main thread. JavaScript is single-threaded, so a long task means nothing else can happen — not a click, not a keystroke, not a repaint. Break long work up, or move it off the main thread.</p>
+      <div class="callout callout-amber"><span>Chase the field data, not the Lighthouse score. A perfect lab score on a fast laptop says nothing about a four-year-old phone on mobile data, which is what a large share of your users actually have.</span></div>
+    </section>
+    <section class="lesson-section" id="bundles">
+      <h2><span class="sec-icon"><i class="ti ti-package"></i></span> Bundle Size &amp; Code Splitting</h2>
+      <p class="lesson-prose">JavaScript is the most expensive thing you ship, byte for byte. An image of the same size decodes off the main thread; JavaScript must be downloaded, parsed, compiled and executed before it does anything.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Technique</th><th>Effect</th></tr></thead><tbody><tr><td>Route-based splitting</td><td>Load only the current page's code</td></tr><tr><td>Lazy-load heavy components</td><td>Charts and editors arrive when opened</td></tr><tr><td>Audit before adding a dependency</td><td>A date library can outweigh your app</td></tr><tr><td>Prefer platform APIs</td><td><code>Intl</code> and <code>fetch</code> cost nothing to ship</td></tr><tr><td>Defer third-party scripts</td><td>Analytics should never block first paint</td></tr></tbody></table></div>
+      <p class="lesson-prose">Run a bundle analyser before optimising anything. It routinely shows one dependency accounting for a third of the bundle, and often one nobody remembers adding.</p>
+      <div class="callout callout-red"><span>Third-party scripts are the most common cause of a fast site being slow, and the easiest to overlook because they are not in your repository. Every tag manager, chat widget and analytics snippet runs on your main thread.</span></div>
+    </section>
+    <section class="lesson-section" id="assets">
+      <h2><span class="sec-icon"><i class="ti ti-photo"></i></span> Images &amp; Fonts</h2>
+      <p class="lesson-prose">Images are usually most of a page's bytes, so the decisions here move LCP more than almost anything else in your control.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Do</th><th>Why</th></tr></thead><tbody><tr><td>Serve modern formats</td><td>Far smaller than JPEG at the same quality</td></tr><tr><td>Offer sizes with <code>srcset</code></td><td>A phone should not download a desktop image</td></tr><tr><td>Set width and height</td><td>Reserves space, so no layout shift</td></tr><tr><td><code>loading="lazy"</code> below the fold</td><td>Do not spend bandwidth on unseen images</td></tr><tr><td>Never lazy-load the hero</td><td>It is your LCP element — prioritise it</td></tr></tbody></table></div>
+      <p class="lesson-prose">Fonts cause the other visible problem. A custom font that has not arrived yet leaves text either invisible or in a fallback that reflows when it swaps.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Technique</th><th>Effect</th></tr></thead><tbody><tr><td><code>font-display: swap</code></td><td>Show fallback text immediately</td></tr><tr><td>Preload the critical font</td><td>Starts the download sooner</td></tr><tr><td>Subset the character set</td><td>Drops glyphs you never use</td></tr><tr><td>Match fallback metrics</td><td>Reduces the reflow when it swaps</td></tr><tr><td>Self-host</td><td>Removes a third-party connection</td></tr></tbody></table></div>
+      <div class="callout callout-blue"><span>The fastest asset is the one you do not send. Before optimising an image, ask whether the page needs it — and before adding a font, whether a system font would do.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>What are the Core Web Vitals?</q><p>LCP, how long until the main content appears, good under 2.5s. INP, how quickly the page responds to interaction, good under 200ms. CLS, how much the layout moves, good under 0.1.</p></div>
+      <div class="iq"><q>How do you fix layout shift?</q><p>Reserve space before content arrives — width and height on images, fixed dimensions for embeds and ads, and never inserting content above something the user is already reading.</p></div>
+      <div class="iq"><q>Why is JavaScript more expensive than an image of the same size?</q><p>An image is decoded off the main thread. JavaScript must be downloaded, parsed, compiled and executed on the main thread, blocking everything else while it runs.</p></div>
+      <div class="iq"><q>Lab data looks great, field data is poor. Why?</q><p>Lab is a fast machine on a fast network with no extensions and a warm cache. Field is real devices, real networks and real third-party scripts. Field is the truth; lab is for comparing changes.</p></div>
+      <div class="iq"><q>Which image should never be lazy-loaded?</q><p>The one above the fold, usually the hero — it is typically the LCP element, and deferring it directly delays the metric you are trying to improve.</p></div>
+      <div class="iq"><q>What does <code>font-display: swap</code> do?</q><p>Renders text in a fallback font immediately rather than leaving it invisible while the custom font loads. Text is readable sooner, at the cost of a reflow when the real font arrives — which matching fallback metrics reduces.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. CLS measures…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Load time</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">How much the layout moves</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Response to input</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Bundle size</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. The hero image should…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Be lazy-loaded like the rest</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Never be lazy-loaded</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Have no width or height</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Load after fonts</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Poor INP usually means…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Long tasks blocking the main thread</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Images too large</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Too much CSS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A slow DNS lookup</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Which data should you trust?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Lab, it is repeatable</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Field, it is real users</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Neither</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Whichever looks better</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Byte for byte, the most expensive thing to ship is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Images</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">JavaScript</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">CSS</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">HTML</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=10"></script>
+<script src="../assets/js/site-index.js?v=15"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
