@@ -3,6 +3,21 @@
  * Single source of truth for section expansion (Phase 2).
  */
 window.TF_TOPICS = {
+  frontend: {
+    label: 'Frontend',
+    hub: 'frontend/index.html',
+    accent: '#22d3ee',
+    categories: [
+      {
+        id: 'platform',
+        label: 'The Web Platform',
+        topics: [
+          { id: 'fe/html', file: 'html.html', title: 'HTML', icon: '<i class="ti ti-file-code"></i>', desc: 'Semantic structure, forms and native validation, media, and the metadata search engines read.', depth: 'full' },
+          { id: 'fe/css', file: 'css.html', title: 'CSS', icon: '<i class="ti ti-brush"></i>', desc: 'The cascade, the box model, Flexbox and Grid, responsive design, custom properties and motion.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   devops: {
     label: 'DevOps',
     hub: 'devops/index.html',

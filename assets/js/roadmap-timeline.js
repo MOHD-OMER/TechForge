@@ -126,15 +126,36 @@
      TechForge has not written it yet: it renders as a non-link so nobody is
      sent to a 404, tagged in text rather than dimmed — conveying state by
      lowering opacity has broken contrast here before. */
-  /* The tick is a sibling button, never nested inside the pill: a control
-     inside a link is not operable by keyboard and fails validation. */
-  function tick(topic, label) {
-    if (!topic) return '';
+  /* Completion is stored per page, but a roadmap node is often a section of a
+     page — the Databases roadmap points at twenty-nine parts of one sql.html.
+     Ticking any of them ticked all of them, which looked like a bug and was
+     really the data model showing through.
+
+     So a checkbox appears once per page, on the node that owns it. Every other
+     node linking into that page is a place to jump to, not a task to finish,
+     and gets a marker saying so. The two share a column, so rows still line up
+     and you can tell which is which without hovering. */
+  function marker(node, label, owned) {
+    if (node.status === 'soon' || !node.href) return '';
+
+    var page = node.href.split('#')[0];
+    var topic = topicOf(node.href);
+
+    // a section of a page already accounted for, or a page we cannot track
+    if (!topic || owned[page]) {
+      return '<span class="rt-jump" aria-hidden="true"><i class="ti ti-chevron-right"></i></span>';
+    }
+
+    owned[page] = true;
     var done = progress().is(topic);
     return '<button type="button" class="rt-tick" data-topic="' + esc(topic) + '"' +
       ' aria-pressed="' + done + '"' +
       ' aria-label="Mark ' + esc(label) + ' as done">' +
       '<i class="ti ti-check" aria-hidden="true"></i></button>';
+  }
+
+  function ownsTick(node, owned) {
+    return node.status !== 'soon' && node.href && topicOf(node.href) && !owned[node.href.split('#')[0]];
   }
 
   /* `order` is the position in the required sequence, or 0 for an optional
@@ -143,7 +164,7 @@
      plausible — so the sequence is stated rather than implied. Optional nodes
      are deliberately unnumbered: that is what makes them visibly not part of
      the run. */
-  function subItem(k, order) {
+  function subItem(k, order, owned) {
     var soon = k.status === 'soon';
     var label =
       (order ? '<span class="rt-ord" aria-hidden="true">' + order + '</span>' : '') +
@@ -156,18 +177,22 @@
        so ignore href here and go by status alone. Some nodes are pure grouping
        labels ("Searching", "Sorting") with no page of their own and never
        will have: those render as a plain pill, not as coming-soon. */
-    var pill, topic = null;
+    var pill;
+    // only the node that owns the page carries the topic, so progress counts
+    // each lesson once however many sections of it the roadmap lists
+    var topic = ownsTick(k, owned) ? topicOf(k.href) : null;
+    var mark = marker(k, k.t, owned);
+
     if (soon) {
       pill = '<span class="rt-pill-node rt-soon" aria-disabled="true">' + label + '</span>';
     } else if (!k.href) {
       pill = '<span class="rt-pill-node">' + label + '</span>';
     } else {
-      topic = topicOf(k.href);
       pill = '<a class="rt-pill-node" href="' + esc(k.href) + '">' + label + '</a>';
     }
     return '<li' + (topic ? ' data-topic="' + esc(topic) + '"' : '') +
       (topic && progress().is(topic) ? ' class="rt-done"' : '') + '>' +
-      tick(topic, k.t) + pill + '</li>';
+      mark + pill + '</li>';
   }
 
   /* Same rule for a step's own heading. A step can be coming-soon too — the
@@ -200,6 +225,11 @@
 
     var buckets = groupChildren(nodes, steps);
 
+    /* Which pages have already been given a checkbox in this roadmap. Steps are
+       walked before their subnodes, so a step owns its page and the sections
+       hanging off it become jump markers. */
+    var owned = {};
+
     var road = document.createElement('div');
     road.className = 'rt-road';
 
@@ -215,7 +245,8 @@
       var colour = bandColour[step.g] || fallback;
       var kids = buckets[step.id] || [];
 
-      var stepTopic = step.status === 'soon' ? null : topicOf(step.href);
+      var stepTopic = ownsTick(step, owned) ? topicOf(step.href) : null;
+      var stepMark = marker(step, step.t, owned);
 
       var li = document.createElement('li');
       li.className = 'rt-step' + (stepTopic && progress().is(stepTopic) ? ' rt-done' : '');
@@ -231,7 +262,7 @@
 
       var seq = 0;
       var bullets = kids.map(function (k) {
-        return subItem(k, k.tier === 'branch' ? 0 : ++seq);
+        return subItem(k, k.tier === 'branch' ? 0 : ++seq, owned);
       }).join('');
 
       /* No fallback to the step number: the node on the spine already carries
@@ -256,7 +287,7 @@
         '<div class="rt-card" style="--c:' + colour + '">' +
           '<div class="rt-body">' +
             (showBand ? '<div class="rt-band">' + esc(step.g) + '</div>' : '') +
-            '<div class="rt-head-row">' + icon + tick(stepTopic, step.t) + title(step) + toggle + '</div>' +
+            '<div class="rt-head-row">' + icon + stepMark + title(step) + toggle + '</div>' +
             (step.s ? '<p class="rt-desc">' + esc(step.s) + '</p>' : '') +
             (bullets
               ? '<div class="rt-wrap" data-open="true">' +

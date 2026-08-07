@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="CSS — the cascade and specificity, box model, Flexbox, Grid, responsive design, custom properties and motion. Theory, examples, interview questions and a quiz on TechForge."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/frontend/css.html"/>
+  <meta property="og:title" content="CSS — Frontend | TechForge"/>
+  <meta property="og:description" content="CSS — the cascade and specificity, box model, Flexbox, Grid, responsive design, custom properties and motion. Theory, examples, interview questions and a quiz on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>CSS — Frontend | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=29" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="fe/css" data-section="frontend">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../databases/index.html">Databases</a>
+    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../systems/index.html">OS &amp; Networks</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a><a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS & Networks</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">The Web Platform</div>
+    <a class="sb-link" href="html.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>HTML</a>
+    <a class="sb-link active" href="css.html"><span class="sb-num"><i class="ti ti-brush"></i></span>CSS</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Frontend Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Frontend · Guide</div>
+      <h1 class="pg-title">CSS</h1>
+      <p class="pg-sub">Layout and presentation: the cascade, the box model, Flexbox and Grid, responsive design, custom properties and motion.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Frontend</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-book"></i></span> How CSS Decides</h2>
+      <div class="callout callout-blue"><span>Most CSS frustration is not about properties. It is about not knowing which rule won, and why.</span></div>
+      <p class="lesson-prose">CSS is a system for resolving conflicts. Many rules can target the same element; the language defines exactly which one applies. Learn that resolution order and the language stops feeling arbitrary.</p>
+      <p class="lesson-prose">The browser asks, in order: does a rule match this element? If several do, which has the highest <strong>specificity</strong>? If they tie, which came <strong>last</strong>? That is nearly the whole story, and the section below is the part everyone skips.</p>
+    </section>
+    <section class="lesson-section" id="cascade">
+      <h2><span class="sec-icon"><i class="ti ti-stack-2"></i></span> Selectors, Cascade &amp; Specificity</h2>
+      <p class="lesson-prose">Specificity is counted as three numbers: <strong>ids</strong>, then <strong>classes</strong> (including attribute selectors and pseudo-classes), then <strong>elements</strong>. Compare left to right; the first difference decides it. No amount of classes ever beats a single id.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Selector</th><th>Specificity</th><th>Reads as</th></tr></thead><tbody><tr><td><code>p</code></td><td>0-0-1</td><td>One element</td></tr><tr><td><code>.card</code></td><td>0-1-0</td><td>One class</td></tr><tr><td><code>.card p</code></td><td>0-1-1</td><td>Class + element</td></tr><tr><td><code>.card.dark p</code></td><td>0-2-1</td><td>Two classes + element</td></tr><tr><td><code>#hero</code></td><td>1-0-0</td><td>Beats every combination of classes</td></tr><tr><td><code>style="…"</code></td><td>inline</td><td>Beats all selectors</td></tr></tbody></table></div>
+      <p class="lesson-prose">Two rules tie? The later one in source order wins. This is why a media query written <em>above</em> the rule it means to override silently does nothing — a mistake that survives review because the code looks right.</p>
+      <div class="callout callout-red"><span><code>!important</code> is not a strength level, it is a separate layer that ignores specificity. It wins now and costs you later, because the only way to beat it is another <code>!important</code>. Reach for it in third-party overrides, not in your own stylesheet.</span></div>
+      <p class="lesson-prose">Inheritance is separate from the cascade. Font and colour properties pass down to children; layout properties like <code>margin</code> and <code>display</code> do not. <code>inherit</code>, <code>initial</code> and <code>unset</code> let you opt in or out per property.</p>
+    </section>
+    <section class="lesson-section" id="box">
+      <h2><span class="sec-icon"><i class="ti ti-box"></i></span> The Box Model &amp; Positioning</h2>
+      <p class="lesson-prose">Every element is a box: content, then <code>padding</code>, then <code>border</code>, then <code>margin</code>. The argument is over what <code>width</code> measures.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — the one line nearly every project starts with</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm">/* width now includes padding and border, not just content */</span>
+<span class="kw">*</span>, <span class="kw">*::before</span>, <span class="kw">*::after</span> { <span class="fn">box-sizing</span>: <span class="st">border-box</span>; }
+
+<span class="cm">/* without it, this box is 340px wide, not 300 */</span>
+<span class="kw">.card</span> { <span class="fn">width</span>: <span class="st">300px</span>; <span class="fn">padding</span>: <span class="st">16px</span>; <span class="fn">border</span>: <span class="st">4px solid</span>; }</pre>
+      </div>
+      <p class="lesson-prose">Vertical margins between siblings <strong>collapse</strong> — 20px below one element and 30px above the next produces 30px, not 50. It surprises everyone once. Padding and flex or grid gaps do not collapse, which is one reason gap has largely replaced margin for spacing inside a layout.</p>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th><code>position</code></th><th>Positioned relative to</th><th>Leaves a gap behind?</th></tr></thead><tbody><tr><td><code>static</code></td><td>Normal flow (the default)</td><td>—</td></tr><tr><td><code>relative</code></td><td>Where it would have been</td><td>Yes, space is kept</td></tr><tr><td><code>absolute</code></td><td>Nearest positioned ancestor</td><td>No, removed from flow</td></tr><tr><td><code>fixed</code></td><td>The viewport</td><td>No</td></tr><tr><td><code>sticky</code></td><td>Flow until a scroll threshold</td><td>Yes</td></tr></tbody></table></div>
+      <div class="callout callout-amber"><span><code>position: absolute</code> looks for the nearest ancestor that is not <code>static</code>. Forgetting to set <code>position: relative</code> on that ancestor is why the element flew to the corner of the page.</span></div>
+    </section>
+    <section class="lesson-section" id="flexbox">
+      <h2><span class="sec-icon"><i class="ti ti-layout-rows"></i></span> Flexbox</h2>
+      <p class="lesson-prose">Flexbox lays out in <strong>one direction</strong> and distributes leftover space. Reach for it for a row of buttons, a navigation bar, a card footer — anything essentially linear.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — the flex properties you will actually use</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">.bar</span> {
+  <span class="fn">display</span>: <span class="st">flex</span>;
+  <span class="fn">align-items</span>: <span class="st">center</span>;        <span class="cm">/* across the line */</span>
+  <span class="fn">justify-content</span>: <span class="st">space-between</span>;  <span class="cm">/* along the line */</span>
+  <span class="fn">gap</span>: <span class="st">12px</span>;
+  <span class="fn">flex-wrap</span>: <span class="st">wrap</span>;           <span class="cm">/* let it break rather than overflow */</span>
+}
+
+<span class="kw">.bar .spacer</span> { <span class="fn">flex</span>: <span class="st">1</span>; }   <span class="cm">/* grow, shrink, basis 0 */</span></pre>
+      </div>
+      <p class="lesson-prose">The two axes are the thing to memorise: <code>justify-content</code> works <em>along</em> the direction of flow, <code>align-items</code> works <em>across</em> it. Set <code>flex-direction: column</code> and the two swap meaning, which is where most confusion comes from.</p>
+      <div class="callout callout-blue"><span><code>flex: 1</code> is shorthand for <code>flex: 1 1 0</code> — grow to fill, shrink if needed, ignore my content width when dividing space. It is what makes equal columns equal.</span></div>
+    </section>
+    <section class="lesson-section" id="grid">
+      <h2><span class="sec-icon"><i class="ti ti-layout-grid"></i></span> Grid</h2>
+      <p class="lesson-prose">Grid lays out in <strong>two directions at once</strong>. Use it for page structure and card galleries — anywhere rows and columns both matter. Flexbox and Grid are not rivals; a Grid cell frequently contains a flex row.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — a responsive gallery with no media query</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">.gallery</span> {
+  <span class="fn">display</span>: <span class="st">grid</span>;
+  <span class="fn">gap</span>: <span class="st">16px</span>;
+  <span class="cm">/* as many columns as fit, each at least 240px */</span>
+  <span class="fn">grid-template-columns</span>: <span class="st">repeat(auto-fill, minmax(240px, 1fr))</span>;
+}
+
+<span class="cm">/* an explicit page shape */</span>
+<span class="kw">.page</span> {
+  <span class="fn">display</span>: <span class="st">grid</span>;
+  <span class="fn">grid-template-columns</span>: <span class="st">240px 1fr</span>;
+  <span class="fn">grid-template-areas</span>: <span class="st">"side main"</span>;
+}</pre>
+      </div>
+      <p class="lesson-prose">The <code>fr</code> unit is a share of what is left after fixed sizes and gaps are taken out. <code>minmax(240px, 1fr)</code> with <code>auto-fill</code> is the single most useful line in modern CSS: a grid that reflows at every width without a single breakpoint.</p>
+      <p class="lesson-prose"><code>auto-fill</code> keeps empty tracks; <code>auto-fit</code> collapses them so the remaining items stretch. With one item, <code>auto-fit</code> makes it full width and <code>auto-fill</code> leaves it at 240px.</p>
+    </section>
+    <section class="lesson-section" id="responsive">
+      <h2><span class="sec-icon"><i class="ti ti-devices"></i></span> Responsive Design</h2>
+      <p class="lesson-prose">Write the narrow layout first and add complexity as space appears. Starting wide means every breakpoint is an undo, and phones — the majority of traffic — get the version you tested least.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — mobile first, and breakpoints on content</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">.layout</span> { <span class="fn">display</span>: <span class="st">grid</span>; <span class="fn">gap</span>: <span class="st">16px</span>; }  <span class="cm">/* one column by default */</span>
+
+<span class="cm">/* add the sidebar only once there is room for it */</span>
+<span class="kw">@media</span> (<span class="fn">min-width</span>: <span class="st">760px</span>) {
+  <span class="kw">.layout</span> { <span class="fn">grid-template-columns</span>: <span class="st">240px 1fr</span>; }
+}
+
+<span class="cm">/* fluid type: scales, but never past sensible bounds */</span>
+<span class="kw">h1</span> { <span class="fn">font-size</span>: <span class="st">clamp(1.6rem, 4vw, 3rem)</span>; }</pre>
+      </div>
+      <p class="lesson-prose">Choose breakpoints where <em>your</em> layout breaks, not at device widths. Device lists go stale; the point at which your cards get too narrow does not.</p>
+      <div class="callout callout-amber"><span>Test at 320px. It is still the narrowest screen in common use, and it is where fixed widths and long unbroken strings cause the horizontal scrolling that makes a page feel broken.</span></div>
+    </section>
+    <section class="lesson-section" id="custom-properties">
+      <h2><span class="sec-icon"><i class="ti ti-palette"></i></span> Custom Properties &amp; Theming</h2>
+      <p class="lesson-prose">Custom properties are real CSS values, not build-time find-and-replace. They inherit, they can be changed at runtime, and they can be read and written from JavaScript — which is what makes theming with them straightforward.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — a two-theme setup in a dozen lines</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">:root</span> {
+  <span class="fn">--bg</span>: <span class="st">#0b1020</span>;
+  <span class="fn">--text</span>: <span class="st">#e7ecf5</span>;
+  <span class="fn">--accent</span>: <span class="st">#22d3ee</span>;
+}
+
+<span class="cm">/* one class on &lt;html&gt; swaps the whole palette */</span>
+<span class="kw">html.light</span> {
+  <span class="fn">--bg</span>: <span class="st">#fffaf0</span>;
+  <span class="fn">--text</span>: <span class="st">#1a1a1a</span>;
+  <span class="fn">--accent</span>: <span class="st">#0e7490</span>;
+}
+
+<span class="kw">body</span> { <span class="fn">background</span>: <span class="st">var(--bg)</span>; <span class="fn">color</span>: <span class="st">var(--text)</span>; }</pre>
+      </div>
+      <p class="lesson-prose">Because they inherit, a custom property set on a component overrides the global one for that subtree only — which is how a single card gets its own accent without a new class for every colour.</p>
+      <div class="callout callout-red"><span>When you swap a palette, re-check contrast. A colour that reads clearly on a dark background is often unreadable on a light one, and the failure is invisible in the theme you happened to be looking at.</span></div>
+    </section>
+    <section class="lesson-section" id="motion">
+      <h2><span class="sec-icon"><i class="ti ti-wand"></i></span> Transitions &amp; Animation</h2>
+      <p class="lesson-prose">Animate <code>transform</code> and <code>opacity</code>. Those two can be handled by the compositor without recalculating layout or repainting. Animating <code>width</code>, <code>height</code>, <code>top</code> or <code>margin</code> forces layout on every frame, which is what janky animation actually is.</p>
+      <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">CSS — cheap motion, and respecting the setting</span><div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div></div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">.card</span> {
+  <span class="fn">transition</span>: <span class="st">transform .18s ease, opacity .18s ease</span>;
+}
+<span class="kw">.card:hover</span> { <span class="fn">transform</span>: <span class="st">translateY(-3px)</span>; }
+
+<span class="cm">/* some people get motion sick. This is not optional. */</span>
+<span class="kw">@media</span> (<span class="fn">prefers-reduced-motion</span>: <span class="st">reduce</span>) {
+  <span class="kw">*</span> { <span class="fn">transition-duration</span>: <span class="st">.01ms</span> <span class="kw">!important</span>;
+      <span class="fn">animation-duration</span>: <span class="st">.01ms</span> <span class="kw">!important</span>; }
+}</pre>
+      </div>
+      <p class="lesson-prose">Keep interface motion short — 150 to 250ms. Anything longer stops reading as responsiveness and starts reading as lag.</p>
+    </section>
+    <section class="lesson-section" id="mistakes">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> Common Mistakes</h2>
+      <div class="table-wrap"><table class="py-table"><thead><tr><th>Mistake</th><th>What happens</th><th>Instead</th></tr></thead><tbody><tr><td>Media query written above the rule it overrides</td><td>Silently loses the tie on source order</td><td>Put overrides last</td></tr><tr><td><code>!important</code> to win a fight</td><td>Only another <code>!important</code> can beat it</td><td>Fix the specificity</td></tr><tr><td>Forgetting <code>box-sizing: border-box</code></td><td>Padding pushes boxes past their width</td><td>Set it globally, once</td></tr><tr><td>Animating <code>width</code> or <code>top</code></td><td>Layout recalculated every frame</td><td><code>transform</code> and <code>opacity</code></td></tr><tr><td>Breakpoints copied from device sizes</td><td>Goes stale, misses your real break</td><td>Break where the layout does</td></tr><tr><td>Dimming text with <code>opacity</code> to show state</td><td>Contrast quietly fails</td><td>Change the colour deliberately</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+      <div class="iq"><q>Explain specificity.</q><p>Three counters: ids, then classes and pseudo-classes and attribute selectors, then elements. Compare left to right and the first difference wins. Ties go to whichever rule comes later. Inline styles outrank all selectors, and !important is a separate layer above everything.</p></div>
+      <div class="iq"><q>Flexbox or Grid?</q><p>Flexbox for one direction — a toolbar, a row of chips. Grid for two — page structure, galleries. They combine: a Grid cell very often holds a flex row.</p></div>
+      <div class="iq"><q>What does box-sizing: border-box change?</q><p>It makes width include padding and border rather than only the content box, so a 300px box stays 300px once you add padding. It is why almost every stylesheet opens with it.</p></div>
+      <div class="iq"><q>Which properties are cheap to animate, and why?</q><p>transform and opacity. The compositor can handle both without recalculating layout or repainting. Animating width, height or top forces layout every frame.</p></div>
+      <div class="iq"><q>What is margin collapsing?</q><p>Adjacent vertical margins merge into the larger of the two rather than adding up. It applies to block siblings in normal flow — not to padding, and not inside flex or grid containers, which is one reason gap is now preferred.</p></div>
+      <div class="iq"><q>How do you build a grid that reflows without media queries?</q><p>grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)). The browser fits as many 240px-minimum columns as it can and shares the remainder between them.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which wins: <code>#hero p</code> or <code>.a.b.c.d p</code>?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">#hero p</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">.a.b.c.d p</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Whichever is later</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">They tie</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Two rules of equal specificity both match. Which applies?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The first in the file</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The last in the file</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The shorter selector</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Neither, it is an error</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. <code>justify-content</code> in a flex row aligns items…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Along the row, horizontally</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Across the row, vertically</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Both at once</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Only when wrapping</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Which pair is cheapest to animate?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">width and height</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">top and left</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">transform and opacity</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">margin and padding</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. <code>minmax(240px, 1fr)</code> with <code>auto-fill</code> gives you…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Exactly one column</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">As many columns as fit, sharing the remainder</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Columns fixed at 240px forever</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A flex row</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=4"></script>
+<script src="../assets/js/site-index.js?v=9"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=13"></script>
+<script src="../assets/js/platform.js?v=6"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

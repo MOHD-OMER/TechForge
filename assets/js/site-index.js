@@ -1108,6 +1108,42 @@
     "depth": "guide"
   },
   {
+    "id": "frontend/css",
+    "title": "CSS — Frontend | TechForge",
+    "desc": "CSS — the cascade and specificity, box model, Flexbox, Grid, responsive design, custom properties and motion. Theory, ex",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/css.html",
+    "path": "frontend/css.html",
+    "topic": "fe/css",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/html",
+    "title": "HTML — Frontend | TechForge",
+    "desc": "HTML — semantic elements, forms and native validation, responsive media, and metadata. Theory, examples, interview quest",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/html.html",
+    "path": "frontend/html.html",
+    "topic": "fe/html",
+    "depth": "guide"
+  },
+  {
+    "id": "frontend/index",
+    "title": "Frontend",
+    "desc": "The web platform from the ground up: semantic HTML, the CSS cascade, layout with Flexbox and Grid, responsive design, cu",
+    "icon": "📄",
+    "section": "frontend",
+    "sectionKey": "frontend",
+    "href": "frontend/index.html",
+    "path": "frontend/index.html",
+    "topic": null,
+    "depth": "guide"
+  },
+  {
     "id": "interview/aiml-interview",
     "title": "AI/ML Interview Q&A",
     "desc": "AI/ML Interview Q&A",
