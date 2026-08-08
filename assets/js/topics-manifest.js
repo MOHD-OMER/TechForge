@@ -81,6 +81,38 @@ window.TF_TOPICS = {
       }
     ]
   },
+  games: {
+    label: 'Game Development',
+    hub: 'games/index.html',
+    accent: '#a78bfa',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'games/math', file: 'math.html', title: 'Game Maths', icon: '<i class="ti ti-math-symbols"></i>', desc: 'Vectors, dot and cross products, transform matrices, and why rotations use quaternions instead of three angles.', depth: 'full' },
+          { id: 'games/engines', file: 'engines.html', title: 'Game Engines', icon: '<i class="ti ti-cpu"></i>', desc: 'The game loop, fixed versus variable timestep, entity-component-system, and where Unity, Unreal and Godot differ.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'world',
+        label: 'Building the World',
+        topics: [
+          { id: 'games/graphics', file: 'graphics.html', title: 'Real-Time Graphics', icon: '<i class="ti ti-palette"></i>', desc: 'The rasterisation pipeline, vertex and fragment shaders, draw calls and batching, and physically based lighting.', depth: 'full' },
+          { id: 'games/physics', file: 'physics.html', title: 'Physics & Animation', icon: '<i class="ti ti-atom"></i>', desc: 'Broad and narrow phase collision, fixed timesteps and tunnelling, and skeletal animation with blending.', depth: 'full' },
+          { id: 'games/gameplay', file: 'gameplay.html', title: 'Gameplay Systems', icon: '<i class="ti ti-device-gamepad-2"></i>', desc: 'Input buffering and coyote time, behaviour trees and pathfinding, game audio, and UI that survives every screen.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Beyond One Player',
+        topics: [
+          { id: 'games/multiplayer', file: 'multiplayer.html', title: 'Multiplayer & Netcode', icon: '<i class="ti ti-world"></i>', desc: 'Authoritative servers, client prediction and reconciliation, entity interpolation and lag compensation.', depth: 'full' },
+          { id: 'games/shipping', file: 'shipping.html', title: 'Profiling & Shipping', icon: '<i class="ti ti-rocket"></i>', desc: 'Frame budgets, CPU versus GPU profiling, the asset pipeline, and platform certification.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   devops: {
     label: 'DevOps',
     hub: 'devops/index.html',

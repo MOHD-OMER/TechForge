@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Input buffering and coyote time, state machines and behaviour trees, pathfinding, game audio, and UI architecture."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/games/gameplay.html"/>
+  <meta property="og:title" content="Gameplay Systems — Game Development | TechForge"/>
+  <meta property="og:description" content="Input buffering and coyote time, state machines and behaviour trees, pathfinding, game audio, and UI architecture."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Gameplay Systems — Game Development | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=31" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="games/gameplay" data-section="games">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item current" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Game Maths</a>
+    <a class="sb-link" href="engines.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Game Engines</a>
+    <div class="sidebar-label">Building the World</div>
+    <a class="sb-link" href="graphics.html"><span class="sb-num"><i class="ti ti-palette"></i></span>Real-Time Graphics</a>
+    <a class="sb-link" href="physics.html"><span class="sb-num"><i class="ti ti-atom"></i></span>Physics &amp; Animation</a>
+    <a class="sb-link active" href="gameplay.html"><span class="sb-num"><i class="ti ti-device-gamepad-2"></i></span>Gameplay Systems</a>
+    <div class="sidebar-label">Beyond One Player</div>
+    <a class="sb-link" href="multiplayer.html"><span class="sb-num"><i class="ti ti-world"></i></span>Multiplayer &amp; Netcode</a>
+    <a class="sb-link" href="shipping.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>Profiling &amp; Shipping</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Game Development Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Game Development · Guide</div>
+      <h1 class="pg-title">Gameplay Systems</h1>
+      <p class="pg-sub">Input that feels immediate, AI that reads as intelligent, audio that carries information, and UI that survives every screen.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Game Development</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-device-gamepad-2"></i></span> Feel Is A System</h2>
+<div class="callout callout-blue"><span>Everything on this page decides whether a game feels good. Feel is not polish applied at the end — it is buffering, timing windows, feedback and response, designed deliberately and tuned in milliseconds.</span></div>
+<p class="lesson-prose">The through-line is that players judge <strong>responsiveness and legibility</strong>, not correctness. An input that is technically registered but visibly acted on 120 ms later reads as broken. An enemy following a mathematically optimal path reads as cheating. These systems exist to manage perception.</p>
+    </section>
+    <section class="lesson-section" id="input">
+      <h2><span class="sec-icon"><i class="ti ti-keyboard"></i></span> Input &amp; Game Feel</h2>
+<p class="lesson-prose">Reading a button is trivial. Making it feel right is not, because human timing is imprecise and unforgiving rules punish players for being human by a few frames.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Technique</th><th>Fixes</th></tr></thead><tbody><tr><td>Input buffering</td><td>A jump pressed just before landing still fires</td></tr><tr><td>Coyote time</td><td>A jump a few frames after leaving the ledge still works</td></tr><tr><td>Dead zones</td><td>Stick drift does not creep the character</td></tr><tr><td>Rebindable actions</td><td>Accessibility, and every non-QWERTY layout</td></tr></tbody></table></div>
+<p class="lesson-prose">Buffering and coyote time are usually two or three frames — around 100 ms. Players never notice them, and removing them makes a game feel immediately worse without anyone being able to say why.</p>
+<div class="callout callout-amber"><span>Poll input as close to the simulation step as possible and read <strong>events, not state</strong>, for one-shot actions. Sampling held state each frame will silently drop a press-and-release that happened between polls.</span></div>
+<p class="lesson-prose">Feedback closes the loop. A hit that lands with a sound, a flash, a screen shake and a few frames of pause registers as impact; the same hit with none of it registers as a bug.</p>
+    </section>
+    <section class="lesson-section" id="ai">
+      <h2><span class="sec-icon"><i class="ti ti-brain"></i></span> Game AI</h2>
+<p class="lesson-prose">Game AI is not machine learning. It is a small set of decision structures chosen so the behaviour is <strong>readable, debuggable and beatable</strong> — a player has to be able to work out what an enemy is doing in order to outplay it.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Structure</th><th>Good for</th></tr></thead><tbody><tr><td>Finite state machine</td><td>A few clear states — patrol, chase, attack, flee</td></tr><tr><td>Behaviour tree</td><td>Layered priorities that stay editable as they grow</td></tr><tr><td>Utility AI</td><td>Scoring competing options by context</td></tr><tr><td>Steering behaviours</td><td>Movement — seek, flee, avoid, flock</td></tr></tbody></table></div>
+<p class="lesson-prose">State machines are the honest first answer and stay fine until transitions multiply; at that point every state needs to know about every other. Behaviour trees replace that with a priority-ordered tree evaluated from the top, so adding a new emergency behaviour does not mean touching every existing state.</p>
+<p class="lesson-prose"><strong>Pathfinding</strong> is the other half, and it is A* over a navigation mesh — the same graph search from any algorithms course, with a heuristic to steer the frontier toward the goal. The path it returns is a set of waypoints; steering behaviours make following them look natural rather than robotic.</p>
+<div class="callout callout-amber"><span>Perfect AI is not fun. Reaction delays, imprecise aim and deliberate mistakes are what make an opponent feel like a character instead of a machine — and they are as much a part of the design as the difficulty curve.</span></div>
+    </section>
+    <section class="lesson-section" id="audio">
+      <h2><span class="sec-icon"><i class="ti ti-music"></i></span> Audio</h2>
+<p class="lesson-prose">Audio carries information the screen cannot. Footsteps behind you, a reload, a low-health heartbeat — these are gameplay signals, and a mix that buries them makes the game harder in a way no one will attribute to sound.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Concept</th><th>Why</th></tr></thead><tbody><tr><td>3D positioning</td><td>Direction and distance are gameplay information</td></tr><tr><td>Buses and ducking</td><td>Important cues cut through the mix automatically</td></tr><tr><td>Randomised variation</td><td>The same footstep clip repeated becomes grating fast</td></tr><tr><td>Adaptive layers</td><td>Music responds to tension without a hard cut</td></tr><tr><td>Voice limiting</td><td>Forty simultaneous impacts should not sound like static</td></tr></tbody></table></div>
+<p class="lesson-prose">Separate volume sliders for music, effects and voice are the minimum. Players turn music off and keep effects — take that away and some of them stop playing.</p>
+    </section>
+    <section class="lesson-section" id="ui">
+      <h2><span class="sec-icon"><i class="ti ti-layout-grid"></i></span> UI &amp; HUD</h2>
+<p class="lesson-prose">Game UI has to survive a phone, an ultrawide monitor and a television across the room, on a controller, a mouse and a touchscreen. Anchoring and scaling rules, decided early, are what make that possible; hard-coded pixel positions are what make it a rewrite.</p>
+<p class="lesson-prose">Keep the HUD driven by <strong>events, not polling</strong>. A health bar that rebuilds itself every frame is wasted work and a common source of frame-time spikes; a health bar that updates when health changes costs nothing.</p>
+<div class="callout callout-amber"><span>Console platforms enforce a <strong>title-safe area</strong> — keep anything critical away from the outer few percent of the screen, because some displays crop it. Failing this is a genuine certification failure, not a style note.</span></div>
+<p class="lesson-prose">Accessibility is not optional here. Full controller navigation, remappable inputs, scalable text, subtitles on by default, and colour that is never the only signal — each of these is the difference between a playable game and an unplayable one for a real share of players.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>What is input buffering and why does it matter?</q><p>A press received slightly before the action is legal is remembered for a few frames and fires as soon as it becomes legal. Without it, players who press a frame early are punished for imprecision they cannot perceive.</p></div>
+<div class="iq"><q>What is coyote time?</q><p>A short window after leaving a ledge during which a jump still works. It matches what the player believes happened rather than what the collision said.</p></div>
+<div class="iq"><q>Behaviour tree or state machine?</q><p>A state machine is simpler and fine for a few states, but transitions grow combinatorially. A behaviour tree evaluates priorities from the top, so new behaviour can be added without rewiring existing states.</p></div>
+<div class="iq"><q>How does pathfinding work in practice?</q><p>A* over a navigation mesh returns a list of waypoints; steering behaviours then follow them with smoothing and avoidance so the movement does not look like it is on rails.</p></div>
+<div class="iq"><q>Why deliberately make AI imperfect?</q><p>Perfect reactions and aim read as cheating rather than skill. Delays and misses give the player a readable, beatable opponent, which is what makes the encounter fun.</p></div>
+<div class="iq"><q>Why should HUD updates be event-driven?</q><p>Rebuilding UI every frame burns frame time for nothing. Updating on the value change costs nothing when nothing changes, which is most frames.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. Coyote time lets a player jump…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Before reaching the ledge</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Shortly after leaving the ledge</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Twice in mid-air</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Through walls</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. One-shot actions should read input as…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Held state each frame</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Events</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Raw axis values</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Polled at render time</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Behaviour trees are preferred once…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Transitions between states multiply</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The game is 3D</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">There is networking</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Frame rate drops</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Pathfinding on a navmesh typically uses…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A*</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Bubble sort</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Ray tracing</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Slerp</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. The title-safe area exists because…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Shaders clip edges</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Some displays crop the screen edges</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Controllers need space</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">UI scales badly</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="physics.html">← Physics &amp; Animation</a>
+      <a class="nav-link next" href="multiplayer.html">Multiplayer &amp; Netcode →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=12"></script>
+<script src="../assets/js/site-index.js?v=17"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=15"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

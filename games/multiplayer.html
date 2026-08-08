@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Authoritative servers, client prediction and reconciliation, entity interpolation, lag compensation and cheating."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/games/multiplayer.html"/>
+  <meta property="og:title" content="Multiplayer &amp; Netcode — Game Development | TechForge"/>
+  <meta property="og:description" content="Authoritative servers, client prediction and reconciliation, entity interpolation, lag compensation and cheating."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Multiplayer &amp; Netcode — Game Development | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=31" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="games/multiplayer" data-section="games">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item current" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Game Maths</a>
+    <a class="sb-link" href="engines.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Game Engines</a>
+    <div class="sidebar-label">Building the World</div>
+    <a class="sb-link" href="graphics.html"><span class="sb-num"><i class="ti ti-palette"></i></span>Real-Time Graphics</a>
+    <a class="sb-link" href="physics.html"><span class="sb-num"><i class="ti ti-atom"></i></span>Physics &amp; Animation</a>
+    <a class="sb-link" href="gameplay.html"><span class="sb-num"><i class="ti ti-device-gamepad-2"></i></span>Gameplay Systems</a>
+    <div class="sidebar-label">Beyond One Player</div>
+    <a class="sb-link active" href="multiplayer.html"><span class="sb-num"><i class="ti ti-world"></i></span>Multiplayer &amp; Netcode</a>
+    <a class="sb-link" href="shipping.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>Profiling &amp; Shipping</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Game Development Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Game Development · Guide</div>
+      <h1 class="pg-title">Multiplayer &amp; Netcode</h1>
+      <p class="pg-sub">Why the server owns the truth, and the prediction tricks that hide a hundred milliseconds of it from the player.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Game Development</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-world"></i></span> Latency Is The Whole Problem</h2>
+<div class="callout callout-blue"><span>A packet across a continent takes 40–80 ms each way. Every technique in networked games exists to hide that round trip from a player who expects their button press to matter immediately.</span></div>
+<p class="lesson-prose">There is no way to make the network faster, so multiplayer engineering is the craft of showing each player a <strong>plausible present</strong> built out of stale information — while keeping every client's version of events close enough to agree on who won.</p>
+<p class="lesson-prose">Retrofitting this is famously painful. Prediction, authority and reconciliation reach into movement, combat, animation and input, so a single-player codebase rarely survives the conversion intact.</p>
+    </section>
+    <section class="lesson-section" id="authority">
+      <h2><span class="sec-icon"><i class="ti ti-server"></i></span> Authority &amp; Topology</h2>
+<p class="lesson-prose">Someone has to be right when two clients disagree. That choice is the first architectural decision and it decides how cheatable the game is.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Model</th><th>Trade-off</th></tr></thead><tbody><tr><td>Authoritative server</td><td>Cheat-resistant, costs hosting, adds a round trip</td></tr><tr><td>Listen server (a player hosts)</td><td>Free, but the host has zero latency and can cheat</td></tr><tr><td>Peer-to-peer lockstep</td><td>No server, but one slow peer stalls everyone</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Never trust the client. Anything a client asserts — position, damage, item pickup — can be forged. The client sends <strong>intent</strong> ("I am holding forward, I fired"); the server decides what happened.</span></div>
+<p class="lesson-prose">What travels matters as much as who decides. Sending full state to everyone every tick does not scale, so engines send deltas against the last acknowledged state, prioritise by relevance, and cull anything a player cannot see. Most game traffic is UDP: a late packet is worthless, and TCP's insistence on redelivering it stalls everything behind it.</p>
+    </section>
+    <section class="lesson-section" id="prediction">
+      <h2><span class="sec-icon"><i class="ti ti-clock"></i></span> Prediction, Reconciliation &amp; Interpolation</h2>
+<p class="lesson-prose">Three techniques do nearly all the work of hiding latency, and they apply to different things.</p>
+<p class="lesson-prose"><strong>Client prediction</strong> covers your own character. The client applies your input immediately instead of waiting, so movement feels instant, and simultaneously sends the input to the server.</p>
+<p class="lesson-prose"><strong>Reconciliation</strong> handles being wrong. Each input carries a sequence number; when the server's authoritative state arrives, the client rewinds to it and replays every input since. If the prediction was right — the usual case — nothing visibly changes. If it was wrong, the correction is applied and smoothed rather than snapped.</p>
+<p class="lesson-prose"><strong>Entity interpolation</strong> covers everyone else. Other players are rendered slightly in the past, between the last two received snapshots, so their movement stays smooth despite packets arriving irregularly. The cost is that you are aiming at where someone was ~100 ms ago.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Technique</th><th>Applies to</th><th>Cost</th></tr></thead><tbody><tr><td>Prediction</td><td>Your own character</td><td>Occasional visible corrections</td></tr><tr><td>Reconciliation</td><td>Fixing mispredictions</td><td>Replaying inputs each update</td></tr><tr><td>Interpolation</td><td>Remote entities</td><td>You see them slightly in the past</td></tr><tr><td>Lag compensation</td><td>Hit detection</td><td>The shooter's advantage over the target</td></tr></tbody></table></div>
+<p class="lesson-prose"><strong>Lag compensation</strong> resolves what interpolation costs you: the server keeps a short history of past positions and rewinds the world to what the shooter actually saw when validating a shot. This is why you occasionally take damage after reaching cover — on the shooter's screen, you had not reached it yet. That is not a bug; it is the deliberate choice to make shooting feel fair to the person shooting.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why is the server authoritative?</q><p>Clients can be modified, so anything they assert can be forged. The client sends intent and the server decides outcomes — the only structure that resists cheating.</p></div>
+<div class="iq"><q>Why UDP rather than TCP?</q><p>A game update that arrives late is worthless. TCP guarantees ordered delivery, so one lost packet stalls everything behind it while it is retransmitted — exactly the wrong trade for state that is about to be replaced anyway.</p></div>
+<div class="iq"><q>How does client prediction work?</q><p>The client applies your input locally straight away rather than waiting for the round trip, so control feels instant while the authoritative result is still in flight.</p></div>
+<div class="iq"><q>What is reconciliation?</q><p>Inputs are numbered. When authoritative state arrives, the client rewinds to it and replays every input made since, so a correct prediction changes nothing visible and a wrong one is corrected smoothly.</p></div>
+<div class="iq"><q>Why render other players in the past?</q><p>Snapshots arrive irregularly, so interpolating between the last two known positions is what keeps remote movement smooth instead of teleporting each update.</p></div>
+<div class="iq"><q>Why do you get shot after reaching cover?</q><p>Lag compensation rewinds the server to what the shooter saw. On their screen the shot connected, and the design favours the shooter over the target.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. A client should send the server…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Its authoritative position</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Its input and intent</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Damage dealt</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Final scores</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Games favour UDP because…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">It is encrypted</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Late packets are worthless and must not block newer ones</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster to parse</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">It guarantees order</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Reconciliation replays…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The last rendered frame</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Inputs since the acknowledged state</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">All animations</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The whole match</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Entity interpolation renders remote players…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Ahead of time</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Slightly in the past</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">At the server tick exactly</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Without animation</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Lag compensation makes the server…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Ignore latency</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Rewind to what the shooter saw</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Drop late shots</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Trust the client fully</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="gameplay.html">← Gameplay Systems</a>
+      <a class="nav-link next" href="shipping.html">Profiling &amp; Shipping →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=12"></script>
+<script src="../assets/js/site-index.js?v=17"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=15"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

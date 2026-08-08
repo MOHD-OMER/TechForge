@@ -247,16 +247,24 @@ function tfInjectSidebarHomeNav() {
   const depth = last.includes('.') ? segs.length - 1 : segs.length;
   const root = '../'.repeat(depth);
 
+  /* Same order as the navbar. Keep in step with tools/sync-navbar.mjs, which
+     renders this grid statically into every page that ships with one — this
+     runs only on the pages that do not. */
   const sections = [
     { href: root + 'index.html',               icon: '<i class="ti ti-home"></i>', label: 'Home' },
+    { href: root + 'roadmaps/index.html',       icon: '<i class="ti ti-route"></i>', label: 'Roadmaps' },
+    { href: root + 'roles/index.html',          icon: '<i class="ti ti-briefcase"></i>', label: 'Roles' },
     { href: root + 'programming/index.html',    icon: '<i class="ti ti-code"></i>', label: 'Programming' },
-    { href: root + 'aiml/index.html',           icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },
     { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
     { href: root + 'system-design/index.html',  icon: '<i class="ti ti-building"></i>', label: 'Sys Design' },
+    { href: root + 'interview/index.html',      icon: '<i class="ti ti-target"></i>', label: 'Interview' },
+    { href: root + 'frontend/index.html',       icon: '<i class="ti ti-browser"></i>', label: 'Frontend' },
     { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
     { href: root + 'devops/index.html',         icon: '<i class="ti ti-server-cog"></i>', label: 'DevOps' },
     { href: root + 'systems/index.html',        icon: '<i class="ti ti-cpu"></i>', label: 'OS & Networks' },
-    { href: root + 'interview/index.html',      icon: '<i class="ti ti-target"></i>', label: 'Interview' },
+    { href: root + 'data/index.html',           icon: '<i class="ti ti-chart-donut"></i>', label: 'Data' },
+    { href: root + 'aiml/index.html',           icon: '<i class="ti ti-robot"></i>', label: 'AI & ML' },
+    { href: root + 'games/index.html',          icon: '<i class="ti ti-device-gamepad-2"></i>', label: 'Game Dev' },
     { href: root + 'about.html',                icon: '<i class="ti ti-info-circle"></i>', label: 'About' },
   ];
 
@@ -285,7 +293,60 @@ function tfInjectSidebarHomeNav() {
 // tfInjectMobileNavStyles: styles now live in forge_base.css — no JS injection needed.
 function tfInjectMobileNavStyles() {}
 
+/* The navbar's "More" menu. Open state lives on the wrapper as a data
+   attribute so CSS owns visibility: on mobile the same markup is shown flat
+   inside the hamburger panel, and this must not fight it. Lives here rather
+   than in platform.js because platform.js is not loaded on the home page. */
+function tfInitMoreMenu() {
+  const wrap = document.getElementById('tbMore');
+  const btn = document.getElementById('tbMoreBtn');
+  const menu = document.getElementById('tbMoreMenu');
+  if (!wrap || !btn || !menu) return;
+
+  const isOpen = () => wrap.getAttribute('data-open') === 'true';
+  function setOpen(open) {
+    wrap.setAttribute('data-open', open ? 'true' : 'false');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!isOpen());
+  });
+
+  // opening from the keyboard should land you on the first item
+  btn.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown') return;
+    e.preventDefault();
+    setOpen(true);
+    const first = menu.querySelector('.tb-more-item');
+    if (first) first.focus();
+  });
+
+  document.addEventListener('click', function (e) {
+    if (isOpen() && !wrap.contains(e.target)) setOpen(false);
+  });
+
+  wrap.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !isOpen()) return;
+    e.stopPropagation();
+    setOpen(false);
+    btn.focus();
+  });
+
+  /* Tabbing out closes it. focusout fires before the next element takes
+     focus, so the check has to wait a tick. */
+  wrap.addEventListener('focusout', function () {
+    setTimeout(function () {
+      if (isOpen() && !wrap.contains(document.activeElement)) setOpen(false);
+    }, 0);
+  });
+
+  setOpen(false);
+}
+
 function tfInitTopbarChrome() {
+  tfInitMoreMenu();
   const navToggle = document.getElementById('navToggle');
   const topNav = document.getElementById('topNav');
   const sidebarToggle = document.getElementById('sidebarToggle');

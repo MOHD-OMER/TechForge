@@ -348,6 +348,60 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
   background: var(--accent);
 }
 
+/* ── "More" ──────────────────────────────────────────────
+   Eleven links at one weight is a list, not a hierarchy. The five paths most
+   people are actually on stay in the bar; the rest sit behind this. The button
+   carries the same .tb-link styling — including the current underline, so a
+   page inside the menu still marks its place in the bar. */
+header.topbar .tb-more { position: relative; display: flex; align-items: center; }
+header.topbar .tb-more-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+}
+header.topbar .tb-more-chev {
+  display: inline-flex; font-size: 13px; line-height: 1;
+  transition: transform .18s ease;
+}
+header.topbar .tb-more[data-open="true"] .tb-more-chev { transform: rotate(180deg); }
+header.topbar .tb-more[data-open="true"] .tb-more-btn { color: var(--text); background: var(--surface); }
+
+header.topbar .tb-more-menu {
+  display: none;
+  /* 14px clears the gap between the nav row and the header edge — the links
+     are 30px inside a 58px bar — then 8px of air below the border. */
+  position: absolute; top: calc(100% + 22px); right: 0;
+  min-width: 208px; padding: 6px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.42);
+  flex-direction: column; gap: 2px;
+  z-index: 10000;
+}
+header.topbar .tb-more[data-open="true"] .tb-more-menu { display: flex; }
+header.topbar .tb-more-item {
+  font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+  color: var(--text2); text-decoration: none;
+  padding: 9px 12px; border-radius: 8px;
+  white-space: nowrap; line-height: 1.2;
+  transition: color .18s ease, background-color .18s ease;
+}
+header.topbar .tb-more-label {
+  font-family: var(--sans); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--text3, var(--text2));
+  padding: 9px 12px 5px;
+}
+header.topbar .tb-more-label + .tb-more-item { margin-top: 0; }
+header.topbar .tb-more-item:hover { color: var(--text); background: var(--surface); }
+header.topbar .tb-more-item.current {
+  color: var(--text); font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  header.topbar .tb-more-chev { transition: none; }
+}
+
 /* ══════════════════════════════════════════
    INTERACTIVE FEEDBACK
    Nothing on the site acknowledged a click before this: buttons changed colour
@@ -1232,6 +1286,21 @@ html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
     font-weight: 600;
     border-radius: 10px;
   }
+  /* In the hamburger panel there is no shortage of room, so "More" stops being
+     a menu and becomes what it is listing: the rest of the sections, flat.
+     One markup, no second mobile nav to keep in sync. */
+  .tb-nav.mobile-visible .tb-more { display: block; }
+  .tb-nav.mobile-visible .tb-more-btn { display: none; }
+  .tb-nav.mobile-visible .tb-more-menu {
+    display: flex; position: static;
+    min-width: 0; padding: 0; margin-top: 2px;
+    background: none; border: 0; border-radius: 0; box-shadow: none;
+  }
+  .tb-nav.mobile-visible .tb-more-item {
+    min-height: 48px; display: flex; align-items: center;
+    padding: 12px 16px; font-size: 16px; font-weight: 600; border-radius: 10px;
+  }
+  .tb-nav.mobile-visible .tb-more-label { padding: 14px 16px 4px; }
   /* Avoid iOS zoom on focus */
   .search-input { font-size: 16px !important; }
 }
@@ -2568,21 +2637,18 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
    MOBILE NAV — safety override
    Ensures hamburger shows on ALL pages
 ══════════════════════════════════════════ */
-/* Between the mobile breakpoint and a roomy desktop the full nav has more
-   items than horizontal space, and the last links slide off the right edge.
-   Tighten the links instead of dropping them. */
+/* Between the mobile breakpoint and a roomy desktop the nav has more items than
+   horizontal space. Tighten the spacing rather than dropping links — and never
+   make .tb-nav a scroll container, which would clip the "More" menu. */
 @media (min-width: 901px) and (max-width: 1300px) {
   header.topbar .tb-logo, header.topbar .topbar-actions { flex-shrink: 0; }
-  header.topbar .tb-nav {
-    gap: 0;
-    min-width: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  header.topbar .tb-nav::-webkit-scrollbar { display: none; }
-  header.topbar .tb-link { padding: 7px 7px; font-size: 12.5px; letter-spacing: 0; }
-  header.topbar .tb-link.current::after { left: 7px; right: 7px; }
+  header.topbar .tb-nav { gap: 0; min-width: 0; }
+  header.topbar .tb-link { padding: 7px 9px; font-size: 13px; letter-spacing: 0; }
+  header.topbar .tb-link.current::after { left: 9px; right: 9px; }
+}
+@media (min-width: 901px) and (max-width: 1080px) {
+  header.topbar .tb-link { padding: 7px 6px; font-size: 12.5px; }
+  header.topbar .tb-link.current::after { left: 6px; right: 6px; }
 }
 
 @media (max-width: 900px) {

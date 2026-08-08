@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="The game loop, fixed vs variable timestep, entity-component-system architecture, and an honest comparison of Unity, Unreal and Godot."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/games/engines.html"/>
+  <meta property="og:title" content="Game Engines — Game Development | TechForge"/>
+  <meta property="og:description" content="The game loop, fixed vs variable timestep, entity-component-system architecture, and an honest comparison of Unity, Unreal and Godot."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Game Engines — Game Development | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=31" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="games/engines" data-section="games">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item current" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Game Maths</a>
+    <a class="sb-link active" href="engines.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>Game Engines</a>
+    <div class="sidebar-label">Building the World</div>
+    <a class="sb-link" href="graphics.html"><span class="sb-num"><i class="ti ti-palette"></i></span>Real-Time Graphics</a>
+    <a class="sb-link" href="physics.html"><span class="sb-num"><i class="ti ti-atom"></i></span>Physics &amp; Animation</a>
+    <a class="sb-link" href="gameplay.html"><span class="sb-num"><i class="ti ti-device-gamepad-2"></i></span>Gameplay Systems</a>
+    <div class="sidebar-label">Beyond One Player</div>
+    <a class="sb-link" href="multiplayer.html"><span class="sb-num"><i class="ti ti-world"></i></span>Multiplayer &amp; Netcode</a>
+    <a class="sb-link" href="shipping.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>Profiling &amp; Shipping</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Game Development Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Game Development · Guide</div>
+      <h1 class="pg-title">Game Engines</h1>
+      <p class="pg-sub">The loop underneath every engine, the data layout that keeps it fast, and where Unity, Unreal and Godot actually differ.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Game Development</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-cpu"></i></span> What An Engine Is</h2>
+<div class="callout callout-blue"><span>An engine is the answer to everything that is not your game: rendering, input, audio, physics, asset loading, scene management, builds for five platforms. Writing one teaches a great deal. Shipping one costs years.</span></div>
+<p class="lesson-prose">Choosing an engine is mostly choosing a <strong>community, an asset pipeline and a set of defaults</strong>. All three major engines can render your game. They differ in what is easy, what is possible, and who you can hire.</p>
+<p class="lesson-prose">Underneath the editor, every one of them is the same loop reading input, stepping simulation and drawing a frame. Learn the loop and the engine becomes a tool rather than a magic box.</p>
+    </section>
+    <section class="lesson-section" id="loop">
+      <h2><span class="sec-icon"><i class="ti ti-refresh"></i></span> The Game Loop</h2>
+<p class="lesson-prose">A game is a loop that never returns. Each pass: gather input, advance the world by some amount of time, draw the result, repeat — sixty or more times a second, forever.</p>
+<pre class="code-block"><code>while (running) {
+  input.poll();
+  accumulator += clock.deltaTime();
+
+  while (accumulator &gt;= FIXED_STEP) {      // simulation: fixed steps
+    physics.step(FIXED_STEP);
+    accumulator -= FIXED_STEP;
+  }
+
+  render(accumulator / FIXED_STEP);        // rendering: whatever rate it gets
+}</code></pre>
+<p class="lesson-prose">The important structure is that <strong>simulation and rendering run at different rates</strong>. Physics wants equal-sized steps so results are deterministic and stable; rendering wants to draw as often as the display allows. The accumulator reconciles the two, and the leftover fraction is passed to the renderer so it can interpolate between the last two simulation states.</p>
+<div class="callout callout-red"><span>Tying game logic to frame rate is the classic beginner bug: <code>position += speed</code> per frame means the game runs at double speed on a 120 Hz monitor. Multiply by delta time, always.</span></div>
+<p class="lesson-prose">Even with delta time, a variable step breaks physics. A frame hitch produces one enormous step, and a fast-moving object teleports through a wall because it was never on the collision side of it at any sampled moment. Fixed steps exist for that reason.</p>
+    </section>
+    <section class="lesson-section" id="ecs">
+      <h2><span class="sec-icon"><i class="ti ti-components"></i></span> Entity-Component-System</h2>
+<p class="lesson-prose">Deep inheritance hierarchies collapse under their own weight once a design changes: a <code>FlyingEnemy</code> that also needs to swim has no correct parent. Composition solves it — an entity is an id, components are plain data attached to it, and systems are functions that run over every entity holding a given set of components.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Piece</th><th>Is</th></tr></thead><tbody><tr><td>Entity</td><td>An id. No behaviour, no data of its own</td></tr><tr><td>Component</td><td>Plain data — position, health, sprite</td></tr><tr><td>System</td><td>Logic that runs over everything with the components it needs</td></tr></tbody></table></div>
+<p class="lesson-prose">The design win is that behaviour becomes a matter of which components an entity has, decided at runtime. The performance win is separate and larger: components of one type are stored contiguously, so a system walks memory in a straight line and the cache prefetcher keeps up.</p>
+<div class="callout callout-amber"><span>That cache-friendly layout is the actual reason data-oriented design gets attention. A pointer-chasing hierarchy of objects can spend most of its time waiting on memory, whichever CPU you are running on.</span></div>
+<p class="lesson-prose">Unity's DOTS, Unreal's Mass and Bevy's core are all this idea. It is not always the right shape — for a small game, plain objects are simpler and fast enough — but at thousands of entities the difference stops being theoretical.</p>
+    </section>
+    <section class="lesson-section" id="unity">
+      <h2><span class="sec-icon"><i class="ti ti-brand-c-sharp"></i></span> Unity</h2>
+<p class="lesson-prose">C#, an enormous asset store, and by far the largest hiring pool. Unity dominates mobile and indie work because the iteration loop is quick and the answer to almost any question already exists in a forum post.</p>
+<p class="lesson-prose">The default model is <strong>GameObjects with MonoBehaviour components</strong> — composition, but with per-object callbacks rather than systems. It is easy to start with, and the cost arrives later as thousands of tiny <code>Update()</code> calls with unpredictable ordering.</p>
+<div class="callout callout-blue"><span>Strengths: 2D and mobile, fast prototyping, the widest platform support, the deepest pool of tutorials and hires.</span></div>
+    </section>
+    <section class="lesson-section" id="unreal">
+      <h2><span class="sec-icon"><i class="ti ti-brand-cpp"></i></span> Unreal</h2>
+<p class="lesson-prose">C++ with <strong>Blueprints</strong>, a visual scripting layer that designers use without touching the codebase. Unreal ships with high-end rendering, a mature replication system for multiplayer, and a full-source licence, and it is the default for large 3D productions.</p>
+<p class="lesson-prose">The cost is weight. The engine is large, the build times are long, the source is a substantial thing to learn, and the editor asks for a real workstation. For a small 2D game it is far more machinery than the problem needs.</p>
+<div class="callout callout-blue"><span>Strengths: photoreal 3D, built-in networking, Blueprints for non-programmers, full engine source.</span></div>
+    </section>
+    <section class="lesson-section" id="godot">
+      <h2><span class="sec-icon"><i class="ti ti-box"></i></span> Godot</h2>
+<p class="lesson-prose">Open source under MIT, small enough to download in seconds, and built on <strong>nodes in a scene tree</strong> — every scene is reusable inside another scene, which makes composition the natural way to build rather than a pattern you impose.</p>
+<p class="lesson-prose">GDScript is Python-shaped and fast to write; C# is supported for those who want it. The 2D pipeline is genuinely first-class rather than 3D with the z-axis ignored. The 3D side is improving quickly but still behind Unreal at the high end, and the asset ecosystem is smaller.</p>
+<div class="callout callout-blue"><span>Strengths: no licensing questions ever, excellent 2D, tiny editor, a scene model that stays clean as the project grows.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why separate fixed simulation steps from rendering?</q><p>Physics needs equal-sized steps to stay stable and repeatable, while rendering should use whatever frame rate the display offers. An accumulator runs the simulation in fixed steps and hands the leftover fraction to the renderer to interpolate.</p></div>
+<div class="iq"><q>What breaks if game logic is not multiplied by delta time?</q><p>Speed becomes a function of frame rate — the game literally runs twice as fast on a 120 Hz monitor as on a 60 Hz one, and behaves differently on every machine.</p></div>
+<div class="iq"><q>Why does ECS help performance?</q><p>Components of the same type sit contiguously in memory, so a system iterates linearly and the cache prefetcher keeps ahead of it, instead of chasing pointers around the heap.</p></div>
+<div class="iq"><q>When is ECS the wrong choice?</q><p>When the entity count is small. Plain objects are simpler to read and debug, and the memory-layout win only matters once you are iterating thousands of things per frame.</p></div>
+<div class="iq"><q>Unity or Unreal for a high-end 3D multiplayer game?</q><p>Unreal — its renderer and its replication system are built for that scale, and Blueprints let designers work without engine programmers. Unity is the stronger pick for 2D, mobile and fast iteration.</p></div>
+<div class="iq"><q>Why do teams pick Godot?</q><p>MIT licence with no revenue share or royalty questions, a very small editor, a scene-tree model where any scene nests inside another, and 2D support that is genuinely first-class.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. Physics runs on a fixed timestep mainly to be…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Faster</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Stable and repeatable</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Easier to render</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Multi-threaded</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Forgetting delta time in movement code causes…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Stuttering only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Speed that varies with frame rate</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Memory leaks</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Z-fighting</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. In ECS, a component is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A class with methods</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Plain data attached to an entity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A rendering pass</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">An id</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. The accumulator in the loop exists to…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Count frames</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Carry leftover time between fixed steps</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Smooth input</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Limit the frame rate</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Which engine ships a mature built-in replication system for multiplayer?</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Unreal</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Godot</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Unity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">None of them</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="math.html">← Game Maths</a>
+      <a class="nav-link next" href="graphics.html">Real-Time Graphics →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=12"></script>
+<script src="../assets/js/site-index.js?v=17"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=15"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

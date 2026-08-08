@@ -108,6 +108,12 @@ jobs:
       - name: Check section navigation is complete
         run: npm run check:sidebars
 
+      # The top nav is copied into every page, so a change used to mean a
+      # find-and-replace across 275 of them — and the mobile grid drifted three
+      # sections behind the bar. tools/sync-navbar.mjs is now the only copy.
+      - name: Check the navbar matches its source of truth
+        run: npm run check:navbar
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
