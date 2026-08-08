@@ -713,8 +713,8 @@
   },
   {
     "id": "devops/index",
-    "title": "DevOps Hub",
-    "desc": "DevOps learning hub — Git, Docker, CI/CD, Kubernetes, monitoring, and infrastructure basics. Free guides for engineers s",
+    "title": "DevOps",
+    "desc": "Linux and Git through containers, orchestration and pipelines, out to cloud, observability, reliability practice and sec",
     "icon": "⎇",
     "section": "DevOps",
     "sectionKey": "devops",
@@ -796,6 +796,18 @@
     "depth": "guide"
   },
   {
+    "id": "devops/observability",
+    "title": "Observability — DevOps | TechForge",
+    "desc": "Observability — structured centralised logging, distributed tracing across services, and alerting that people act on. In",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/observability.html",
+    "path": "devops/observability.html",
+    "topic": "devops/observability",
+    "depth": "guide"
+  },
+  {
     "id": "devops/prometheus",
     "title": "Prometheus — DevOps",
     "desc": "Prometheus is a pull-based monitoring system: it scrapes HTTP /metrics endpoints on a configured interval (default 15s).",
@@ -817,6 +829,30 @@
     "href": "devops/reverse-proxy.html",
     "path": "devops/reverse-proxy.html",
     "topic": "devops/reverse-proxy",
+    "depth": "guide"
+  },
+  {
+    "id": "devops/secrets",
+    "title": "Secrets &amp; IAM — DevOps | TechForge",
+    "desc": "Secrets management and IAM — secret stores, rotation, injection at runtime, and least privilege with roles rather than l",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/secrets.html",
+    "path": "devops/secrets.html",
+    "topic": "devops/secrets",
+    "depth": "guide"
+  },
+  {
+    "id": "devops/slo",
+    "title": "SLOs &amp; Reliability — DevOps | TechForge",
+    "desc": "SLOs and reliability practice — choosing SLIs, spending an error budget, eliminating toil, humane on-call, blameless pos",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/slo.html",
+    "path": "devops/slo.html",
+    "topic": "devops/slo",
     "depth": "guide"
   },
   {

@@ -95,6 +95,15 @@ window.TF_TOPICS = {
         ]
       },
       {
+        id: 'reliability',
+        label: 'Reliability & Observability',
+        topics: [
+          { id: 'devops/slo', file: 'slo.html', title: 'SLOs & Reliability', icon: '<i class="ti ti-target"></i>', desc: 'Error budgets, toil, on-call, blameless postmortems and capacity planning.', depth: 'full' },
+          { id: 'devops/observability', file: 'observability.html', title: 'Observability', icon: '<i class="ti ti-activity"></i>', desc: 'Structured logging, distributed tracing, and alerting people actually act on.', depth: 'full' },
+          { id: 'devops/secrets', file: 'secrets.html', title: 'Secrets & IAM', icon: '<i class="ti ti-key"></i>', desc: 'Secret stores and rotation, and least privilege with roles over static keys.', depth: 'full' }
+        ]
+      },
+      {
         id: 'containers',
         label: 'Containers',
         topics: [

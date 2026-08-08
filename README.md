@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and eleven complete learning tracks across 265 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and eleven complete learning tracks across 268 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -49,7 +49,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | Programming | Python · JavaScript · TypeScript · Java · C++ (9 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
 | System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
 | Databases | SQL guide (27 sections) + 14 engine deep-dives | [/databases](https://techforge-dev.vercel.app/databases/index.html) |
-| DevOps | 23 guides — Git, Docker, Kubernetes, CI/CD, AWS, Terraform | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
+| DevOps | 26 guides — Git, Docker, Kubernetes, CI/CD, AWS, Terraform | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
 | AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
 | Interview Prep | 433 questions · 13 banks · flashcards · timed quiz | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
 | OS & Networks | 4 complete pillars — OS, Networking, Security, Theory of Computation (32 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
@@ -104,8 +104,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Timed MCQ quiz** — distractors generated from the bank itself, 30s timer, streaks, and a stats summary with missed-answer review
 
 ### DevOps
-- **23 comprehensive guides** covering the entire DevOps landscape
+- **26 comprehensive guides** covering the entire DevOps landscape
 - Topics: Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code
+- **Reliability engineering**: SLIs/SLOs, error budgets, toil, on-call, blameless postmortems, capacity planning, structured logging, distributed tracing, alerting, secrets management and IAM
 - Major cloud platforms: AWS, GCP, Azure
 
 ### Platform & UX
@@ -260,9 +261,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 265 pages pass the Nu validator)
+- **100% HTML validation** (all 268 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (265 × 2 = 530 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (268 × 2 = 536 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:
