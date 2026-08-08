@@ -370,10 +370,44 @@ function tfInitTopbarChrome() {
     }
   }
 
+  /* One mobile surface everywhere. Pages with a sidebar show the grid inside
+     it; pages without one show the same grid in this panel. The stacked list
+     of nav links below is the fallback for anything that has neither, and it
+     is why the hamburger used to look different on the roadmaps. */
+  const mobilePanel = document.getElementById('tfHomeMobilePanel');
+
   if (sidebar && navToggle) {
     navToggle.setAttribute('hidden', 'hidden');
     navToggle.setAttribute('aria-hidden', 'true');
     navToggle.style.display = 'none';
+  } else if (navToggle && mobilePanel) {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-controls', 'tfHomeMobilePanel');
+
+    const setPanel = (open) => {
+      mobilePanel.classList.toggle('open', open);
+      navToggle.classList.toggle('is-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    navToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setPanel(!mobilePanel.classList.contains('open'));
+    });
+    document.addEventListener('click', function (e) {
+      if (mobilePanel.classList.contains('open') && !mobilePanel.contains(e.target) && e.target !== navToggle) {
+        setPanel(false);
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mobilePanel.classList.contains('open')) {
+        setPanel(false);
+        navToggle.focus();
+      }
+    });
+    mobilePanel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setPanel(false);
+    });
   } else if (navToggle && topNav) {
     navToggle.setAttribute('aria-expanded', 'false');
     navToggle.addEventListener('click', function (e) {

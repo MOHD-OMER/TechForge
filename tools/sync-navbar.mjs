@@ -47,6 +47,7 @@ const MORE = [
   {
     label: 'Specialisms',
     items: [
+      { href: 'mobile/index.html', label: 'Mobile', short: 'Mobile', icon: 'ti-device-mobile', match: under('mobile') },
       { href: 'data/index.html', label: 'Data', short: 'Data', icon: 'ti-chart-donut', match: under('data') },
       { href: 'aiml/index.html', label: 'AI &amp; ML', short: 'AI &amp; ML', icon: 'ti-robot', match: under('aiml') },
       { href: 'games/index.html', label: 'Game Dev', short: 'Game Dev', icon: 'ti-device-gamepad-2', match: under('games') },
@@ -100,6 +101,22 @@ function renderGrid(rel, prefix) {
   ).join('\n');
 }
 
+/* Pages with a section sidebar carry the grid inside it. Pages without one —
+   the roadmaps, the dashboard, the roles hub — had no grid at all and fell
+   back to a stacked list of nav links, so the hamburger opened something
+   different depending on where you were. Give them the panel. */
+function panelBlock(rel) {
+  return [
+    '',
+    '<div class="tf-home-mobile-panel" id="tfHomeMobilePanel">',
+    '  <div class="tf-hmp-label">Navigate</div>',
+    '  <div class="tf-hmp-grid">',
+    renderGrid(rel, 'hmp'),
+    '  </div>',
+    '</div>',
+  ].join('\n');
+}
+
 const SKIP = new Set(['node_modules', '.git', '.claude', 'docs', 'tools', 'scripts', '.github']);
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -129,6 +146,14 @@ for (const file of walk('.')) {
   const nl = (s) => (eol === '\n' ? s : s.replace(/\n/g, eol));
 
   let next = html.replace(NAV_RE, nl(renderNav(rel)));
+
+  const needsPanel = !html.includes('id="sidebar"')
+    && !html.includes('tf-mobile-home-nav')
+    && !html.includes('tfHomeMobilePanel');
+  if (needsPanel) {
+    next = next.replace(/(<\/header>\r?\n)/, (m) => m + nl(panelBlock(rel)) + eol);
+  }
+
   next = next.replace(MHN_RE, (m, open, close) => open + nl(renderGrid(rel, 'mhn')) + close);
   next = next.replace(HMP_RE, (m, open, close) => open + nl(renderGrid(rel, 'hmp')) + close);
   if (next === html) continue;

@@ -81,6 +81,44 @@ window.TF_TOPICS = {
       }
     ]
   },
+  mobile: {
+    label: 'Mobile Development',
+    hub: 'mobile/index.html',
+    accent: '#34d399',
+    categories: [
+      {
+        id: 'start',
+        label: 'Getting Started',
+        topics: [
+          { id: 'mobile/platforms', file: 'platforms.html', title: 'Choosing a Platform', icon: '<i class="ti ti-device-mobile"></i>', desc: 'Native versus cross-platform, Kotlin and Android, Swift and iOS, and the app lifecycle that has no desktop equivalent.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'build',
+        label: 'Building the App',
+        topics: [
+          { id: 'mobile/ui', file: 'ui.html', title: 'Building the UI', icon: '<i class="ti ti-layout-grid"></i>', desc: 'Jetpack Compose and SwiftUI, navigation that survives process death, responsive layout and mobile accessibility.', depth: 'full' },
+          { id: 'mobile/architecture', file: 'architecture.html', title: 'State & Architecture', icon: '<i class="ti ti-components"></i>', desc: 'MVVM and MVI, unidirectional data flow, dependency injection, and background work that outlives the screen.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'data',
+        label: 'Data & Connectivity',
+        topics: [
+          { id: 'mobile/networking', file: 'networking.html', title: 'Networking & Offline', icon: '<i class="ti ti-antenna"></i>', desc: 'REST clients, retries and timeouts, offline-first design, sync outboxes and conflict resolution.', depth: 'full' },
+          { id: 'mobile/storage', file: 'storage.html', title: 'Local Storage', icon: '<i class="ti ti-database"></i>', desc: 'Key-value preferences, on-device databases and migrations, files, and the secure store credentials belong in.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping',
+        topics: [
+          { id: 'mobile/release', file: 'release.html', title: 'Testing & Release', icon: '<i class="ti ti-rocket"></i>', desc: 'The test pyramid on a device, app store review, staged rollouts, crash reporting and analytics.', depth: 'full' },
+          { id: 'mobile/cross-platform', file: 'cross-platform.html', title: 'Cross-Platform', icon: '<i class="ti ti-devices"></i>', desc: 'React Native and Flutter compared — rendering models, what they share, and where the saving stops.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   games: {
     label: 'Game Development',
     hub: 'games/index.html',

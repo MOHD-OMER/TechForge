@@ -2818,3 +2818,70 @@ html.light .btn-aim-primary:hover, html.light .cta-primary:hover { background: v
     font-size: 15px;
   }
 }
+
+/* ══════════════════════════════════════════
+   MOBILE NAV PANEL
+   One mobile navigation surface for the whole site. Pages with a section
+   sidebar show this grid inside it; pages without one — the roadmaps, the
+   dashboard, the roles hub — used to fall back to a stacked list of nav links,
+   which is why the hamburger looked different depending on where you were.
+   Both now render the same grid from tools/sync-navbar.mjs.
+══════════════════════════════════════════ */
+.tf-home-mobile-panel {
+  display: none;
+  position: fixed;
+  top: calc(var(--topbar-h, 58px) + var(--safe-top, 0px));
+  left: 0; right: 0;
+  max-height: min(78dvh, calc(100dvh - var(--topbar-h, 58px) - var(--safe-top, 0px)));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px max(16px, var(--safe-left)) max(16px, var(--safe-bottom)) max(16px, var(--safe-right));
+  z-index: 89;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+.tf-home-mobile-panel.open { display: block; }
+.tf-hmp-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.tf-hmp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.tf-hmp-item {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  min-height: 62px;
+  padding: 10px 4px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .15s ease;
+}
+.tf-hmp-item:hover,
+.tf-hmp-item:active,
+.tf-hmp-item:focus-visible {
+  background: var(--surface2);
+  border-color: var(--accent);
+}
+.tf-hmp-icon { font-size: 20px; line-height: 1; color: var(--text2); }
+.tf-hmp-text {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 600;
+  color: var(--text2);
+  text-align: center;
+}
+@media (min-width: 901px) {
+  .tf-home-mobile-panel { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tf-hmp-item { transition: none; }
+}

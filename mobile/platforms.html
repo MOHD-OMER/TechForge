@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Native versus cross-platform, Kotlin and Android, Swift and iOS, and the app lifecycle that has no desktop equivalent."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/mobile/platforms.html"/>
+  <meta property="og:title" content="Choosing a Platform — Mobile Development | TechForge"/>
+  <meta property="og:description" content="Native versus cross-platform, Kotlin and Android, Swift and iOS, and the app lifecycle that has no desktop equivalent."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Choosing a Platform — Mobile Development | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="mobile/platforms" data-section="mobile">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item current" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Getting Started</div>
+    <a class="sb-link active" href="platforms.html"><span class="sb-num"><i class="ti ti-device-mobile"></i></span>Choosing a Platform</a>
+    <div class="sidebar-label">Building the App</div>
+    <a class="sb-link" href="ui.html"><span class="sb-num"><i class="ti ti-layout-grid"></i></span>Building the UI</a>
+    <a class="sb-link" href="architecture.html"><span class="sb-num"><i class="ti ti-components"></i></span>State &amp; Architecture</a>
+    <div class="sidebar-label">Data &amp; Connectivity</div>
+    <a class="sb-link" href="networking.html"><span class="sb-num"><i class="ti ti-antenna"></i></span>Networking &amp; Offline</a>
+    <a class="sb-link" href="storage.html"><span class="sb-num"><i class="ti ti-database"></i></span>Local Storage</a>
+    <div class="sidebar-label">Shipping</div>
+    <a class="sb-link" href="release.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>Testing &amp; Release</a>
+    <a class="sb-link" href="cross-platform.html"><span class="sb-num"><i class="ti ti-devices"></i></span>Cross-Platform</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Mobile Development Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Mobile Development · Guide</div>
+      <h1 class="pg-title">Choosing a Platform</h1>
+      <p class="pg-sub">Native or cross-platform, Kotlin or Swift, and the lifecycle every mobile app has to survive.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Mobile Development</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-device-mobile"></i></span> The Decision That Shapes Everything Else</h2>
+<div class="callout callout-blue"><span>Mobile is not desktop with a smaller window. The operating system can suspend or kill your process at any moment, memory is tight, the network comes and goes, and the battery is a budget you are spending.</span></div>
+<p class="lesson-prose">The first question is <strong>native or cross-platform</strong>, and it is more organisational than technical. Native means two codebases, two languages, two teams — and full access to every platform feature the day it ships. Cross-platform means one codebase and a bridge that is usually close enough.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Approach</th><th>Buys you</th><th>Costs you</th></tr></thead><tbody><tr><td>Native (Kotlin + Swift)</td><td>Best performance, every API on day one, platform-correct feel</td><td>Two codebases, two skill sets</td></tr><tr><td>React Native / Flutter</td><td>One codebase, shared logic, fast iteration</td><td>A bridge to maintain, lag behind new OS features</td></tr><tr><td>Web wrapped in a shell</td><td>Cheapest by far</td><td>Feels like a website, and users notice</td></tr></tbody></table></div>
+<p class="lesson-prose">The honest heuristic: if the app <strong>is</strong> the product and its feel is the differentiator, go native. If it is a client onto a service you already run, cross-platform will save you a year.</p>
+    </section>
+    <section class="lesson-section" id="kotlin">
+      <h2><span class="sec-icon"><i class="ti ti-brand-kotlin"></i></span> Kotlin &amp; Android</h2>
+<p class="lesson-prose">Kotlin is the language Android ships with, and it fixed the parts of Java that hurt most in app code: <strong>null safety in the type system</strong>, data classes instead of fifty lines of boilerplate, extension functions, and coroutines for asynchronous work that reads like sequential code.</p>
+<pre class="code-block"><code>data class User(val id: String, val name: String, val email: String?)
+
+// The type says whether null is possible, and the compiler enforces it
+fun greeting(user: User): String =
+    user.email?.let { "Signed in as $it" } ?: "Signed in as ${user.name}"
+
+// Coroutines: asynchronous, but written top to bottom
+suspend fun loadProfile(id: String): User = withContext(Dispatchers.IO) {
+    api.fetchUser(id)
+}</code></pre>
+<p class="lesson-prose">Android itself is the harder half. An <strong>Activity</strong> is a screen, a <strong>Fragment</strong> is a reusable piece of one, an <strong>Intent</strong> is how you ask the system or another app to do something, and the <strong>manifest</strong> declares what your app is and what it may touch. Modern apps lean on Jetpack — the libraries that make lifecycle, navigation, storage and background work survivable.</p>
+<div class="callout callout-amber"><span>Android runs on thousands of device models across a decade of OS versions. Test the low end: a two-year-old mid-range phone tells you more about your app than a flagship ever will.</span></div>
+    </section>
+    <section class="lesson-section" id="swift">
+      <h2><span class="sec-icon"><i class="ti ti-brand-swift"></i></span> Swift &amp; iOS</h2>
+<p class="lesson-prose">Swift is fast, statically typed and expressive, with optionals doing the same job Kotlin's nullable types do. The ecosystem is smaller and more consistent — a handful of device sizes, an OS version curve where most users update within months, and one vendor deciding how everything works.</p>
+<pre class="code-block"><code>struct User: Codable {
+    let id: String
+    let name: String
+    let email: String?
+}
+
+// async/await, the same shape as Kotlin's coroutines
+func loadProfile(id: String) async throws -&gt; User {
+    try await api.fetchUser(id: id)
+}</code></pre>
+<p class="lesson-prose">A <strong>UIViewController</strong> is roughly an Activity, <strong>Combine</strong> or async sequences handle streams of values, and Swift Package Manager handles dependencies. The platform is opinionated: doing things the Apple way is easy and everything else is uphill.</p>
+<div class="callout callout-blue"><span>The two ecosystems have converged hard. Kotlin coroutines and Swift concurrency, Compose and SwiftUI, MVVM on both sides — learning one now transfers most of the way to the other.</span></div>
+    </section>
+    <section class="lesson-section" id="lifecycle">
+      <h2><span class="sec-icon"><i class="ti ti-refresh"></i></span> The App Lifecycle</h2>
+<p class="lesson-prose">This is the part with no desktop equivalent, and the part that produces the bugs nobody can reproduce. Your app does not own its process. The system starts it, backgrounds it, freezes it, and — under memory pressure — <strong>kills it without warning</strong>, then expects it to reappear exactly where the user left off.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Transition</th><th>What you must do</th></tr></thead><tbody><tr><td>Launched</td><td>Restore saved state, not just show a fresh screen</td></tr><tr><td>Backgrounded</td><td>Persist anything unsaved, release expensive resources</td></tr><tr><td>Resumed</td><td>Refresh anything that may be stale, reacquire the camera or location</td></tr><tr><td>Killed while backgrounded</td><td>Nothing — you are not running. This is why you saved on the way out</td></tr><tr><td>Rotated or resized</td><td>On Android the screen is rebuilt; survive it, do not reload</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>The classic Android bug: state held in the Activity, lost on rotation, and the screen reloads from the network every time the user turns the phone. State belongs in something lifecycle-aware — a ViewModel — not in the screen.</span></div>
+<p class="lesson-prose">Test it deliberately. Enable "don't keep activities" on Android, or background the app and let iOS reclaim it, then reopen. If the user loses their place, their draft, or their scroll position, the lifecycle is not handled.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>When would you choose native over cross-platform?</q><p>When the app is the product and its feel is the differentiator, when it needs new OS features on release day, or when performance-critical work like camera, graphics or audio is central. Otherwise a shared codebase usually wins on cost.</p></div>
+<div class="iq"><q>Why does Kotlin put nullability in the type system?</q><p>It moves an entire class of runtime crashes to compile time. The type states whether a value may be absent, and the compiler will not let you dereference it without handling that case.</p></div>
+<div class="iq"><q>What is the Android app lifecycle problem?</q><p>The system can stop and kill your process at any point and expects a seamless restore. State kept in the screen is lost on rotation or process death, so it belongs in a lifecycle-aware holder that outlives the view.</p></div>
+<div class="iq"><q>How do coroutines and async/await compare?</q><p>They solve the same problem the same way — suspend at an await point, free the thread, resume later — so asynchronous code reads sequentially instead of nesting callbacks.</p></div>
+<div class="iq"><q>Why is Android testing harder than iOS testing?</q><p>Fragmentation. Thousands of device models, screen sizes, OEM skins and OS versions still in use, versus a handful of Apple devices on a version curve where most users upgrade quickly.</p></div>
+<div class="iq"><q>How do you verify lifecycle handling?</q><p>Force the failure: turn on "don't keep activities", rotate the device, or background the app until the OS reclaims it. If the user loses their place or their unsaved input, it is not handled.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. State that must survive rotation belongs in…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The Activity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A lifecycle-aware ViewModel</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A static field</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The view hierarchy</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Kotlin null safety mainly prevents…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Memory leaks</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A whole class of runtime crashes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Slow builds</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Battery drain</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. The strongest case for going native is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Lower cost</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Feel and platform APIs are the product</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Faster hiring</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">One codebase</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. A backgrounded app should…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Keep polling the network</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Persist unsaved state and release resources</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Hold the camera open</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Assume it stays alive</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Coroutines and Swift async/await both…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Create one thread per call</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Let asynchronous code read sequentially</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Require callbacks</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Block the main thread</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link disabled" href="#">← Start of section</a>
+      <a class="nav-link next" href="ui.html">Building the UI →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=13"></script>
+<script src="../assets/js/site-index.js?v=18"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
