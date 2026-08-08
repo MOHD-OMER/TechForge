@@ -102,6 +102,12 @@ jobs:
       - name: Check local links resolve from disk
         run: npm run check:links
 
+      # Sidebars are hardcoded per page, so adding a lesson reaches only the
+      # pages regenerated with it. One lesson sat unreachable from all 29 of
+      # its siblings until this check existed.
+      - name: Check section navigation is complete
+        run: npm run check:sidebars
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

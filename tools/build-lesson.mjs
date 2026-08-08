@@ -30,6 +30,29 @@ function sidebar(spec, current) {
   return `    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>\n${groups}`;
 }
 
+/* Prev/next along the section's own order — the same order the sidebar shows,
+   so "what do I read next" has one answer and it is the taught one. Every
+   hand-written lesson on the site ends with this pair; a generated page
+   without it dead-ends the reader. */
+function pageNav(spec, page) {
+  const order = spec.sidebar.flatMap((g) => g.topics);
+  const i = order.findIndex((t) => t.file === page.file);
+  if (i === -1) return '';
+
+  const prev = order[i - 1];
+  const next = order[i + 1];
+  if (!prev && !next) return '';
+
+  const left = prev
+    ? `      <a class="nav-link" href="${prev.file}">← ${esc(prev.title)}</a>\n`
+    : `      <a class="nav-link disabled" href="#">← Start of section</a>\n`;
+  const right = next
+    ? `      <a class="nav-link next" href="${next.file}">${esc(next.title)} →</a>\n`
+    : `      <a class="nav-link next" href="index.html">Back to ${esc(spec.label)} →</a>\n`;
+
+  return `    <div class="page-nav">\n${left}${right}    </div>\n\n`;
+}
+
 function head(html, { title, section, desc, file }) {
   return html
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)} — ${esc(section)} | TechForge</title>`)
@@ -83,6 +106,11 @@ function buildLesson(spec, page) {
     `      </div>\n` +
     `    </header>\n` +
     page.sections.join('\n') + '\n' +
+    pageNav(spec, page) +
+    `    <div class="lesson-related">\n` +
+    `      <h3>Related topics</h3>\n` +
+    `      <div class="lesson-related-links" id="lessonRelated"></div>\n` +
+    `    </div>\n` +
     `  </main>`;
 
   html = html.replace(/<main class="main">[\s\S]*?<\/main>/, article);
