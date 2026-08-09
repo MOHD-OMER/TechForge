@@ -49,6 +49,7 @@ const MORE = [
     items: [
       { href: 'mobile/index.html', label: 'Mobile', short: 'Mobile', icon: 'ti-device-mobile', match: under('mobile') },
       { href: 'blockchain/index.html', label: 'Blockchain', short: 'Blockchain', icon: 'ti-link', match: under('blockchain') },
+      { href: 'qa/index.html', label: 'QA &amp; Testing', short: 'QA', icon: 'ti-checklist', match: under('qa') },
       { href: 'data/index.html', label: 'Data', short: 'Data', icon: 'ti-chart-donut', match: under('data') },
       { href: 'aiml/index.html', label: 'AI &amp; ML', short: 'AI &amp; ML', icon: 'ti-robot', match: under('aiml') },
       { href: 'games/index.html', label: 'Game Dev', short: 'Game Dev', icon: 'ti-device-gamepad-2', match: under('games') },

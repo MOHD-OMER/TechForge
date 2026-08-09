@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Types of testing, the testing pyramid, writing test cases, and bug reports that get acted on."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/qa/fundamentals.html"/>
+  <meta property="og:title" content="Testing Fundamentals — QA &amp; Testing | TechForge"/>
+  <meta property="og:description" content="Types of testing, the testing pyramid, writing test cases, and bug reports that get acted on."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Testing Fundamentals — QA &amp; Testing | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="qa/fundamentals" data-section="qa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item current" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link active" href="fundamentals.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Testing Fundamentals</a>
+    <a class="sb-link" href="manual.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Manual Testing</a>
+    <div class="sidebar-label">Automation</div>
+    <a class="sb-link" href="automation.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Unit &amp; Integration Tests</a>
+    <a class="sb-link" href="ui-automation.html"><span class="sb-num"><i class="ti ti-robot"></i></span>UI Automation</a>
+    <div class="sidebar-label">Beyond the UI</div>
+    <a class="sb-link" href="api-testing.html"><span class="sb-num"><i class="ti ti-plug-connected"></i></span>API Testing</a>
+    <a class="sb-link" href="performance.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>Performance &amp; Security</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← QA &amp; Testing Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">QA &amp; Testing · Guide</div>
+      <h1 class="pg-title">Testing Fundamentals</h1>
+      <p class="pg-sub">What testing is actually for, the shape of a suite people trust, and how to write a bug report that gets fixed.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">QA &amp; Testing</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-checklist"></i></span> Testing Buys Information, Not Certainty</h2>
+<div class="callout callout-blue"><span>Testing cannot prove software correct. It can only show that specific behaviours held under specific conditions — so the job is choosing the conditions that carry the most information per minute spent.</span></div>
+<p class="lesson-prose">That framing settles most arguments about coverage. A suite is not better because it runs more assertions; it is better because a failure in it means something is genuinely broken, and a pass means the risky parts still work.</p>
+<p class="lesson-prose">Two roles sit underneath the word QA. <strong>Verification</strong> asks whether the thing was built to spec. <strong>Validation</strong> asks whether the spec was worth building. A team that only does the first ships a product that matches a document and disappoints its users.</p>
+    </section>
+    <section class="lesson-section" id="types">
+      <h2><span class="sec-icon"><i class="ti ti-category"></i></span> Types of Testing</h2>
+<p class="lesson-prose">The vocabulary is worth pinning down, because half of testing disagreements are two people using one word for different things.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Type</th><th>Answers</th></tr></thead><tbody><tr><td>Unit</td><td>Does this function behave, in isolation</td></tr><tr><td>Integration</td><td>Do these pieces agree at their boundary</td></tr><tr><td>End-to-end</td><td>Can a user complete the journey</td></tr><tr><td>Regression</td><td>Did fixing that break this</td></tr><tr><td>Smoke</td><td>Is this build worth testing further</td></tr><tr><td>Acceptance</td><td>Does this satisfy the person who asked for it</td></tr></tbody></table></div>
+<p class="lesson-prose">Cutting the same space another way: <strong>functional</strong> testing asks whether it does the right thing, and <strong>non-functional</strong> testing asks whether it does it fast enough, safely enough and for enough people at once. The second kind is skipped far more often and causes the more expensive incidents.</p>
+<div class="callout callout-amber"><span>Black box tests the behaviour with no view of the code, white box uses that view to reach the awkward branches. Neither is more rigorous — they find different bugs, and a suite of only one kind has a predictable blind spot.</span></div>
+    </section>
+    <section class="lesson-section" id="pyramid">
+      <h2><span class="sec-icon"><i class="ti ti-triangle"></i></span> The Testing Pyramid</h2>
+<p class="lesson-prose">The pyramid is a claim about <strong>cost and feedback speed</strong>, not about virtue. Tests near the bottom are fast, cheap and precise about what broke. Tests near the top are slow, expensive and the only ones that prove the product actually works.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Layer</th><th>Share</th><th>Runs in</th><th>Tells you</th></tr></thead><tbody><tr><td>Unit</td><td>Most</td><td>Milliseconds</td><td>Exactly which function is wrong</td></tr><tr><td>Integration</td><td>Some</td><td>Seconds</td><td>Which boundary disagrees</td></tr><tr><td>End-to-end</td><td>Few</td><td>Minutes</td><td>Something in this journey is broken</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Invert it — mostly end-to-end tests — and you get the <strong>ice cream cone</strong>: a suite that takes forty minutes, fails for environmental reasons twice a week, and points at a screen rather than a cause. Teams stop trusting it, then stop reading it.</span></div>
+<p class="lesson-prose">The shape is guidance, not arithmetic. A thin service that is mostly glue between other systems genuinely needs more integration tests than units, because its own logic is small and its risk is at the seams.</p>
+    </section>
+    <section class="lesson-section" id="cases">
+      <h2><span class="sec-icon"><i class="ti ti-list-details"></i></span> Writing Test Cases</h2>
+<p class="lesson-prose">A test case is a claim about behaviour that someone else can check. It needs a precondition, an action, and an expected result specific enough to be wrong.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Weak</th><th>Usable</th></tr></thead><tbody><tr><td>"Check login works"</td><td>"Given a verified account, entering the correct password lands on the dashboard within 3s"</td></tr><tr><td>"Test the form"</td><td>"Submitting with an empty email shows the field error and does not call the API"</td></tr><tr><td>"Verify the list"</td><td>"With 0 results the empty state is shown, not a blank panel"</td></tr></tbody></table></div>
+<p class="lesson-prose">Two techniques do most of the work of choosing inputs. <strong>Equivalence partitioning</strong> says values that should behave alike need one representative each, not fifty. <strong>Boundary value analysis</strong> says the bugs live at the edges — 0, 1, the maximum, one past the maximum, empty, and null.</p>
+<div class="callout callout-amber"><span>Test the unhappy paths deliberately. Most production incidents are the case nobody wrote a case for: the expired token, the duplicate submit, the 40-character surname, the user who pressed back.</span></div>
+    </section>
+    <section class="lesson-section" id="bug-reports">
+      <h2><span class="sec-icon"><i class="ti ti-bug"></i></span> Bug Reports That Get Fixed</h2>
+<p class="lesson-prose">A bug report is a request for someone else's time. The ones that get acted on quickly all contain the same six things.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Field</th><th>Why it decides the outcome</th></tr></thead><tbody><tr><td>Title</td><td>Read in a list of two hundred — state the symptom, not "broken"</td></tr><tr><td>Steps</td><td>Numbered, from a known starting state, reproducible by a stranger</td></tr><tr><td>Expected vs actual</td><td>Without both, it is an opinion</td></tr><tr><td>Environment</td><td>Build, browser, device, account — half of bugs are conditional</td></tr><tr><td>Evidence</td><td>Screenshot, video, logs, network trace, request id</td></tr><tr><td>Severity and frequency</td><td>Impact and how often — the two inputs to priority</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>"Doesn't work" costs the developer an hour of guessing and usually comes back as "cannot reproduce". Ten minutes narrowing it down is the cheapest work in the whole cycle.</span></div>
+<p class="lesson-prose">Separate <strong>severity</strong> from <strong>priority</strong>. Severity is how badly it behaves; priority is how soon it should be fixed. A crash in an unused admin screen can be severe and low priority; a typo on the pricing page is trivial and urgent.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Can testing prove software is correct?</q><p>No. It can only demonstrate that particular behaviours held under particular conditions. The skill is picking the conditions that carry the most information for the time spent.</p></div>
+<div class="iq"><q>Verification versus validation?</q><p>Verification asks whether it was built to spec; validation asks whether the spec solves the user's problem. Teams that only verify ship things that match a document and miss the point.</p></div>
+<div class="iq"><q>Why is the pyramid shaped that way?</q><p>Cost and feedback speed. Unit tests are fast and say exactly what broke; end-to-end tests are slow and flaky but are the only ones that prove the journey works. Invert it and the suite gets ignored.</p></div>
+<div class="iq"><q>What is the ice cream cone anti-pattern?</q><p>A suite dominated by end-to-end tests. It takes tens of minutes, fails for environmental reasons, and reports a screen rather than a cause — so people stop trusting the results.</p></div>
+<div class="iq"><q>What are equivalence partitioning and boundary values?</q><p>Partitioning groups inputs that should behave identically so you test one from each. Boundary analysis then targets the edges of those groups — 0, 1, max, max+1, empty, null — where bugs actually cluster.</p></div>
+<div class="iq"><q>Severity or priority — what is the difference?</q><p>Severity is how bad the behaviour is; priority is how soon it gets fixed. A crash in an unused screen is severe and low priority; a pricing typo is trivial and urgent.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. The testing pyramid argues for mostly…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">End-to-end tests</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Unit tests</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Manual tests</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Load tests</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Boundary value analysis targets…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Typical inputs</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The edges of each input range</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Random inputs</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Only invalid inputs</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. A bug report missing expected-vs-actual is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Fine if there is a screenshot</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">An opinion, not a report</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Automatically low severity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Still reproducible</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Non-functional testing covers…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Whether features work</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Speed, security, capacity and accessibility</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Only load testing</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Unit behaviour</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. A crash in an unused admin screen is typically…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,true)">High severity, low priority</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Low severity, high priority</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Both high</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Neither</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link disabled" href="#">← Start of section</a>
+      <a class="nav-link next" href="manual.html">Manual Testing →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=15"></script>
+<script src="../assets/js/site-index.js?v=20"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

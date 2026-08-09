@@ -114,6 +114,12 @@ jobs:
       - name: Check the navbar matches its source of truth
         run: npm run check:navbar
 
+      # A bare & is a parse error the browser hides. Nu reports it, but as a
+      # nested tag a line later, and only sometimes — 437 of them sat in 163
+      # files until two pages happened to trip the validator.
+      - name: Check character references
+        run: npm run check:entities
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

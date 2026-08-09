@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <title>Authentication & Authorization — Security | TechForge</title>
+  <title>Authentication &amp; Authorization — Security | TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/authentication.html"/>
   <meta property="og:title" content="Authentication & Authorization — Security | TechForge"/>
   <meta property="og:description" content="Authentication & Authorization — theory, diagrams, examples, interview questions and a quiz on TechForge."/>
@@ -69,6 +69,7 @@
         <div class="tb-more-label">Specialisms</div>
         <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
         <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
         <a class="tb-more-item" href="../../data/index.html">Data</a>
         <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
         <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
@@ -102,6 +103,7 @@
         <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
         <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
         <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
         <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
         <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
         <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
@@ -128,7 +130,7 @@
     </aside>
     <main class="main">
       <header class="pg-head">
-        <div class="pg-crumb">Security · AuthN & AuthZ</div>
+        <div class="pg-crumb">Security · AuthN &amp; AuthZ</div>
         <h1 class="pg-title">AuthN <span>&amp;</span> AuthZ</h1>
         <p class="pg-sub">Who are you, and what may you do — passwords done right, sessions vs tokens, OAuth without the hand-waving.</p>
         <div class="pg-badges">
@@ -149,7 +151,7 @@
 
 ph = <span class="fn">PasswordHasher</span>()            <span class="cm"># sane defaults: memory-hard, salted</span>
 digest = ph.<span class="fn">hash</span>(<span class="st">"correct horse battery staple"</span>)
-<span class="cm"># store digest; salt & params live inside the string</span>
+<span class="cm"># store digest; salt &amp; params live inside the string</span>
 
 ph.<span class="fn">verify</span>(digest, attempt)       <span class="cm"># raises on mismatch</span></pre>
         </div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>MD5/SHA-256 for passwords is the classic breach headline: they’re <em>designed to be fast</em>, which is exactly what a cracker wants. Add rate limiting and breach-password denylists; consider pepper (server-side secret) for depth.</span></div>
@@ -162,7 +164,7 @@ ph.<span class="fn">verify</span>(digest, attempt)       <span class="cm"># rais
         </div>        <p class="prose">Cookie flags are non-negotiable either way: <code>httpOnly</code> (JS can’t read it — blunts XSS token theft), <code>Secure</code> (HTTPS only), <code>SameSite=Lax/Strict</code> (blunts CSRF). For JWTs: short expiry + refresh tokens, verify the algorithm server-side (reject <code>alg: none</code>), and never put secrets in the payload — it’s only <em>signed</em>, not encrypted.</p>
       </section>
       <section class="py-section" id="sec-04">
-        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-brand-oauth"></i></span><h2 class="sec-title">OAuth 2.0 & OIDC — Delegated Access</h2></div>
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-brand-oauth"></i></span><h2 class="sec-title">OAuth 2.0 &amp; OIDC — Delegated Access</h2></div>
         <div class="section-divider"></div>        <p class="prose">OAuth answers: how does app A get limited access to your data in service B <em>without ever seeing your B password?</em> The <strong>authorization-code flow</strong>: app redirects you to the provider → you log in and consent <em>there</em> → provider redirects back with a one-time code → app’s backend exchanges code + client secret for an <strong>access token</strong>, scoped and expiring.</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 190" width="100%" role="img" aria-label="OAuth authorization code flow between user, app, and identity provider" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
       <rect x="15" y="20" width="100" height="34" rx="7" fill="var(--surface2)" stroke="var(--cyan,#22d3ee)" stroke-width="1.5"/><text x="65" y="41" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Browser</text>
       <rect x="180" y="20" width="100" height="34" rx="7" fill="var(--surface2)" stroke="var(--green,#34d399)" stroke-width="1.5"/><text x="230" y="41" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Your App</text>
@@ -243,8 +245,8 @@ ph.<span class="fn">verify</span>(digest, attempt)       <span class="cm"># rais
     </main>
   </div>
   <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
-  <script src="../../assets/js/topics-manifest.js?v=14"></script>
-  <script src="../../assets/js/site-index.js?v=19"></script>
+  <script src="../../assets/js/topics-manifest.js?v=15"></script>
+  <script src="../../assets/js/site-index.js?v=20"></script>
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
   <script src="../../assets/js/utils.js?v=17"></script>
   <script src="../../assets/js/platform.js?v=7"></script>

@@ -81,6 +81,37 @@ window.TF_TOPICS = {
       }
     ]
   },
+  qa: {
+    label: 'QA & Testing',
+    hub: 'qa/index.html',
+    accent: '#f472b6',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'qa/fundamentals', file: 'fundamentals.html', title: 'Testing Fundamentals', icon: '<i class="ti ti-checklist"></i>', desc: 'Types of testing, the testing pyramid, writing test cases that can fail, and bug reports that get acted on.', depth: 'full' },
+          { id: 'qa/manual', file: 'manual.html', title: 'Manual Testing', icon: '<i class="ti ti-eye"></i>', desc: 'Exploratory testing with charters and session notes, and keeping regression coverage from swallowing the schedule.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'automation',
+        label: 'Automation',
+        topics: [
+          { id: 'qa/automation', file: 'automation.html', title: 'Unit & Integration Tests', icon: '<i class="ti ti-flask"></i>', desc: 'Frameworks and structure, test doubles that do not lie, and fixtures that keep a suite deterministic.', depth: 'full' },
+          { id: 'qa/ui-automation', file: 'ui-automation.html', title: 'UI Automation', icon: '<i class="ti ti-robot"></i>', desc: 'Selenium and Playwright, locator strategy, the page object model, and diagnosing flaky tests.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'beyond',
+        label: 'Beyond the UI',
+        topics: [
+          { id: 'qa/api-testing', file: 'api-testing.html', title: 'API Testing', icon: '<i class="ti ti-plug-connected"></i>', desc: 'Status codes and schemas, authorisation and idempotency, contract testing between services, and REST clients.', depth: 'full' },
+          { id: 'qa/performance', file: 'performance.html', title: 'Performance & Security', icon: '<i class="ti ti-gauge"></i>', desc: 'Load, stress and soak testing, percentiles over averages, finding the bottleneck, and the security checks QA owns.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   blockchain: {
     label: 'Blockchain',
     hub: 'blockchain/index.html',

@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Selenium and Playwright compared, locator strategy, the page object model, and diagnosing flaky UI tests."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/qa/ui-automation.html"/>
+  <meta property="og:title" content="UI Automation — QA &amp; Testing | TechForge"/>
+  <meta property="og:description" content="Selenium and Playwright compared, locator strategy, the page object model, and diagnosing flaky UI tests."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>UI Automation — QA &amp; Testing | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="qa/ui-automation" data-section="qa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item current" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Testing Fundamentals</a>
+    <a class="sb-link" href="manual.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Manual Testing</a>
+    <div class="sidebar-label">Automation</div>
+    <a class="sb-link" href="automation.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Unit &amp; Integration Tests</a>
+    <a class="sb-link active" href="ui-automation.html"><span class="sb-num"><i class="ti ti-robot"></i></span>UI Automation</a>
+    <div class="sidebar-label">Beyond the UI</div>
+    <a class="sb-link" href="api-testing.html"><span class="sb-num"><i class="ti ti-plug-connected"></i></span>API Testing</a>
+    <a class="sb-link" href="performance.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>Performance &amp; Security</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← QA &amp; Testing Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">QA &amp; Testing · Guide</div>
+      <h1 class="pg-title">UI Automation</h1>
+      <p class="pg-sub">Driving a real browser: Selenium and Playwright, page objects, and the discipline that keeps tests from going flaky.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">QA &amp; Testing</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-robot"></i></span> The Expensive Layer</h2>
+<div class="callout callout-blue"><span>UI tests are the only ones that prove a user can actually complete a journey — and the slowest, most fragile tests you will own. Both facts are true, which is why the answer is "a few, kept in very good repair".</span></div>
+<p class="lesson-prose">Everything in a browser is asynchronous, so most UI test failures are timing rather than logic. The craft is expressing intent in a way that survives a redesign, and waiting for the right condition rather than for a number of seconds.</p>
+    </section>
+    <section class="lesson-section" id="selenium">
+      <h2><span class="sec-icon"><i class="ti ti-browser"></i></span> Selenium</h2>
+<p class="lesson-prose">Selenium WebDriver is the long-standing standard: a W3C protocol, every major language binding, every browser, and the automation layer underneath a great deal of enterprise tooling.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Strength</th><th>Cost</th></tr></thead><tbody><tr><td>Universal browser and language support</td><td>Waiting is your problem to solve</td></tr><tr><td>A genuine standard, not one vendor</td><td>More setup — drivers, versions, grid</td></tr><tr><td>Huge ecosystem and hiring pool</td><td>Slower feedback loop than modern tools</td></tr><tr><td>Selenium Grid for parallel runs</td><td>Infrastructure to maintain</td></tr></tbody></table></div>
+<div class="callout callout-red"><span><code>sleep(3)</code> is the single biggest source of flaky Selenium suites. It is too short on a loaded CI machine and wasted time everywhere else. Use explicit waits for a condition — element visible, request finished, text present.</span></div>
+    </section>
+    <section class="lesson-section" id="playwright">
+      <h2><span class="sec-icon"><i class="ti ti-player-play"></i></span> Playwright</h2>
+<p class="lesson-prose">Playwright takes the newer approach: one API across Chromium, Firefox and WebKit, with <strong>auto-waiting built into every action</strong>. Clicking waits for the element to exist, be visible, be stable and be enabled — which removes most of the wait code a Selenium suite carries.</p>
+<pre class="code-block"><code>// auto-waits for the button, and for the assertion to become true
+await page.getByRole('button', { name: 'Check out' }).click();
+await expect(page.getByText('Order confirmed')).toBeVisible();
+
+// intercept the network instead of depending on a live backend
+await page.route('**/api/prices', route =&gt;
+  route.fulfill({ json: { total: 4200 } })
+);</code></pre>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Feature</th><th>Why it matters</th></tr></thead><tbody><tr><td>Auto-waiting</td><td>Removes the main cause of flakiness</td></tr><tr><td>Trace viewer</td><td>A failed CI run replays with DOM snapshots</td></tr><tr><td>Network interception</td><td>Test the UI without depending on a backend</td></tr><tr><td>Parallel isolated contexts</td><td>Fast, and no state leaking between tests</td></tr></tbody></table></div>
+<p class="lesson-prose">Locator strategy matters more than the tool. Prefer <strong>role and accessible name</strong> — <code>getByRole('button', { name: 'Save' })</code> — then test ids. CSS paths tied to layout break on the next redesign, and XPath through five divs breaks on the one after.</p>
+    </section>
+    <section class="lesson-section" id="page-objects">
+      <h2><span class="sec-icon"><i class="ti ti-components"></i></span> Page Object Model</h2>
+<p class="lesson-prose">Without structure, every test contains selectors, and a renamed field means editing forty files. The page object model puts the selectors and interactions for one screen behind a small class, so tests read as intent.</p>
+<pre class="code-block"><code>class CheckoutPage {
+  constructor(page) { this.page = page; }
+
+  async payWith(card) {
+    await this.page.getByLabel('Card number').fill(card.number);
+    await this.page.getByRole('button', { name: 'Pay' }).click();
+  }
+
+  confirmation() { return this.page.getByText('Order confirmed'); }
+}
+
+// the test says what, the page object knows how
+await checkout.payWith(validCard);
+await expect(checkout.confirmation()).toBeVisible();</code></pre>
+<div class="callout callout-amber"><span>Keep assertions in the tests, not in the page objects. A page object that asserts becomes a second test suite nobody can read, and the same method starts meaning different things to different tests.</span></div>
+    </section>
+    <section class="lesson-section" id="flaky">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> Fixing Flaky Tests</h2>
+<p class="lesson-prose">A flaky test passes and fails on the same code. It is worse than a failing test, because it teaches the team that red means nothing.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Cause</th><th>Fix</th></tr></thead><tbody><tr><td>Fixed sleeps</td><td>Wait for a condition, not a duration</td></tr><tr><td>Shared test accounts or data</td><td>Create fresh data per test</td></tr><tr><td>Test order dependence</td><td>Reset state; run in random order to expose it</td></tr><tr><td>Animations and transitions</td><td>Disable them in the test environment</td></tr><tr><td>Live third-party services</td><td>Intercept the network and serve a fixture</td></tr><tr><td>Race on load</td><td>Assert on the settled state, not an intermediate one</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Never fix flakiness with an automatic retry. Retries hide the defect — sometimes a real race in the product — and the suite quietly stops being evidence of anything. Quarantine the test, find the cause, then bring it back.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why are UI tests kept few?</q><p>They are the slowest and most fragile layer. They prove a journey works end to end, which nothing else does, but a large UI suite is slow, flaky and eventually ignored.</p></div>
+<div class="iq"><q>Selenium or Playwright?</q><p>Selenium is the W3C standard with the widest language and browser reach and a huge ecosystem. Playwright auto-waits on every action, intercepts network and ships a trace viewer, which removes most flakiness by default.</p></div>
+<div class="iq"><q>What is the best locator strategy?</q><p>Role and accessible name first, then dedicated test ids. CSS paths and XPath tied to structure break on the next redesign, and they also say nothing about intent.</p></div>
+<div class="iq"><q>What does the page object model buy you?</q><p>One place per screen holding selectors and interactions, so tests express intent and a renamed field is a single edit rather than forty.</p></div>
+<div class="iq"><q>Why is a flaky test worse than a failing one?</q><p>It destroys trust in the whole suite. Once red sometimes means nothing, people rerun until green and real failures pass through unnoticed.</p></div>
+<div class="iq"><q>Why not auto-retry flaky tests?</q><p>A retry hides the cause, which is sometimes a genuine race condition in the product. Quarantine, diagnose and fix, then return the test to the suite.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. The most common cause of flaky UI tests is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Slow networks</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Waiting on time instead of a condition</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Too many assertions</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Parallel execution</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Playwright differs from Selenium mainly by…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Supporting more languages</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Auto-waiting on every action</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Running headless only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Avoiding a driver protocol</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. The most durable locator is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A CSS path from the body</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Role and accessible name</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">An XPath index</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Class names</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Assertions belong in…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Page objects</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The tests</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Fixtures</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The runner config</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Auto-retrying a flaky test…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Fixes the flakiness</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Hides a defect that may be real</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Speeds up CI</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Is best practice</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="automation.html">← Unit &amp; Integration Tests</a>
+      <a class="nav-link next" href="api-testing.html">API Testing →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=15"></script>
+<script src="../assets/js/site-index.js?v=20"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

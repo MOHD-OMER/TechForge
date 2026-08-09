@@ -69,6 +69,7 @@
         <div class="tb-more-label">Specialisms</div>
         <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
         <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
         <a class="tb-more-item" href="../../data/index.html">Data</a>
         <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
         <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
@@ -102,6 +103,7 @@
         <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
         <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
         <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
         <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
         <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
         <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
@@ -137,11 +139,11 @@
         </div>
       </header>
       <section class="py-section" id="sec-01">
-        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-firewall"></i></span><h2 class="sec-title">Firewalls & the Default-Deny Rule</h2></div>
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-firewall"></i></span><h2 class="sec-title">Firewalls &amp; the Default-Deny Rule</h2></div>
         <div class="section-divider"></div>        <p class="prose">A <strong>firewall</strong> filters traffic against rules on IP, port and protocol. The one principle that matters: <strong>default deny</strong> — block everything, then allow only what’s needed. An allowlist fails safe (a forgotten service stays closed); a denylist fails open (a forgotten port stays exposed).</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Type</th><th>Operates on</th><th>Example</th></tr></thead><tbody><tr><td><strong>Stateless (ACL)</strong></td><td>Individual packets</td><td>Router ACL: drop inbound to :22 except from the office</td></tr><tr><td><strong>Stateful</strong></td><td>Connection state</td><td>Allow replies to connections we initiated</td></tr><tr><td><strong>Application / WAF</strong></td><td>L7 content</td><td>Block requests matching SQLi/XSS patterns</td></tr></tbody></table></div>        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Cloud <strong>security groups</strong> are stateful default-deny firewalls per instance. The most common cloud breach starts with one rule opening a database port to <code>0.0.0.0/0</code> “temporarily”.</span></div>
       </section>
       <section class="py-section" id="sec-02">
-        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-layout-grid"></i></span><h2 class="sec-title">Segmentation & the DMZ</h2></div>
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-layout-grid"></i></span><h2 class="sec-title">Segmentation &amp; the DMZ</h2></div>
         <div class="section-divider"></div>        <p class="prose">Flat networks are a gift to attackers: one foothold reaches everything. <strong>Segmentation</strong> splits the network into zones with controlled crossings, so a breach in one doesn’t become a breach in all — the same blast-radius logic as least privilege, at the network layer.</p>        <div class="lesson-diagram"><svg viewBox="0 0 460 170" width="100%" role="img" aria-label="Network segmentation: internet to DMZ holding web servers, then a firewall to a private zone with app servers and database" style="max-width:460px;display:block;margin:0 auto;font-family:var(--font-mono,monospace)">
       <rect x="10" y="65" width="80" height="40" rx="7" fill="var(--surface2)" stroke="var(--red,#f87171)" stroke-width="1.5"/><text x="50" y="89" text-anchor="middle" fill="var(--text)" font-size="10" font-weight="700">Internet</text>
       <rect x="130" y="55" width="120" height="60" rx="8" fill="none" stroke="var(--amber,#fbbf24)" stroke-width="1.5" stroke-dasharray="5 3"/><text x="190" y="50" text-anchor="middle" fill="var(--amber,#fbbf24)" font-size="9" font-weight="700">DMZ</text>
@@ -155,7 +157,7 @@
     </svg></div>        <p class="prose">The <strong>DMZ</strong> holds internet-facing services (web servers); the database lives in a private zone reachable <em>only</em> from the app tier, never from the internet. If the web server falls, the attacker still faces another firewall before the data.</p>
       </section>
       <section class="py-section" id="sec-03">
-        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-activity"></i></span><h2 class="sec-title">DDoS & Volumetric Defense</h2></div>
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-activity"></i></span><h2 class="sec-title">DDoS &amp; Volumetric Defense</h2></div>
         <div class="section-divider"></div>        <p class="prose"><strong>DDoS</strong> attacks availability by drowning you in traffic from many sources. Volumetric floods (raw bandwidth), protocol floods (SYN floods exhausting connection tables), and application-layer floods (expensive requests) each need different mitigation.</p>        <div class="table-wrap"><table class="py-table"><thead><tr><th>Layer</th><th>Attack</th><th>Mitigation</th></tr></thead><tbody><tr><td>Volumetric</td><td>UDP/amplification floods</td><td>Upstream scrubbing, CDN/Anycast absorption</td></tr><tr><td>Protocol</td><td>SYN flood</td><td>SYN cookies, connection rate limits</td></tr><tr><td>Application</td><td>HTTP request floods</td><td>Rate limiting, CAPTCHAs, WAF, caching</td></tr></tbody></table></div>        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>You can’t out-buy a large botnet on your own — volumetric defense means fronting with a provider (Cloudflare, CDN Anycast) whose capacity dwarfs the attack. Design assuming absorption upstream, not heroics at your origin.</span></div>
       </section>
       <section class="py-section" id="sec-04">
@@ -230,8 +232,8 @@
     </main>
   </div>
   <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
-  <script src="../../assets/js/topics-manifest.js?v=14"></script>
-  <script src="../../assets/js/site-index.js?v=19"></script>
+  <script src="../../assets/js/topics-manifest.js?v=15"></script>
+  <script src="../../assets/js/site-index.js?v=20"></script>
 <script src="../../assets/js/search-modal.js?v=2" defer></script>
   <script src="../../assets/js/utils.js?v=17"></script>
   <script src="../../assets/js/platform.js?v=7"></script>

@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Testing REST APIs, status codes and schema validation, contract testing between services, and Postman and REST clients."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/qa/api-testing.html"/>
+  <meta property="og:title" content="API Testing — QA &amp; Testing | TechForge"/>
+  <meta property="og:description" content="Testing REST APIs, status codes and schema validation, contract testing between services, and Postman and REST clients."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>API Testing — QA &amp; Testing | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="qa/api-testing" data-section="qa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item current" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Testing Fundamentals</a>
+    <a class="sb-link" href="manual.html"><span class="sb-num"><i class="ti ti-eye"></i></span>Manual Testing</a>
+    <div class="sidebar-label">Automation</div>
+    <a class="sb-link" href="automation.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Unit &amp; Integration Tests</a>
+    <a class="sb-link" href="ui-automation.html"><span class="sb-num"><i class="ti ti-robot"></i></span>UI Automation</a>
+    <div class="sidebar-label">Beyond the UI</div>
+    <a class="sb-link active" href="api-testing.html"><span class="sb-num"><i class="ti ti-plug-connected"></i></span>API Testing</a>
+    <a class="sb-link" href="performance.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>Performance &amp; Security</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← QA &amp; Testing Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">QA &amp; Testing · Guide</div>
+      <h1 class="pg-title">API Testing</h1>
+      <p class="pg-sub">Testing the layer under the UI — where the logic actually lives, and where contract breaks are cheapest to catch.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">QA &amp; Testing</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-plug-connected"></i></span> Below the Interface</h2>
+<div class="callout callout-blue"><span>API tests sit in the sweet spot: far faster and steadier than UI tests, far broader than unit tests. Most business logic is reachable there, without a browser in the way.</span></div>
+<p class="lesson-prose">A thorough API test checks more than the happy path body. Status code, response shape, headers, error cases, authorisation, and what happens on a repeat call all matter — and each of them has shipped broken in production somewhere this week.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Check</th><th>Typical miss</th></tr></thead><tbody><tr><td>Status codes</td><td>200 with an error body inside it</td></tr><tr><td>Response schema</td><td>A field silently renamed or nulled</td></tr><tr><td>Authorisation</td><td>Another user's id works fine</td></tr><tr><td>Validation</td><td>Bad input accepted, or a 500 instead of a 400</td></tr><tr><td>Idempotency</td><td>A retried POST charges twice</td></tr><tr><td>Pagination</td><td>Page 2 repeats items from page 1</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="contracts">
+      <h2><span class="sec-icon"><i class="ti ti-file-description"></i></span> Contract Testing</h2>
+<p class="lesson-prose">Two services agree on a shape. One team changes it. Nothing fails until production, because each service's own tests pass against its own idea of the contract. <strong>Contract testing</strong> closes that gap without standing up both systems together.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Side</th><th>What it verifies</th></tr></thead><tbody><tr><td>Consumer</td><td>Records the requests it makes and the responses it needs</td></tr><tr><td>Provider</td><td>Replays those expectations against the real implementation</td></tr><tr><td>Broker</td><td>Shares contracts between the two, versioned per deploy</td></tr></tbody></table></div>
+<p class="lesson-prose">The payoff is that a provider learns it is about to break a consumer <em>before</em> deploying, in a fast test rather than an integration environment. It is the cheapest defence against the failure mode microservices are most prone to.</p>
+<div class="callout callout-amber"><span>A schema definition — OpenAPI, JSON Schema — is worth validating responses against in ordinary tests too. It turns "the docs are out of date" from a recurring complaint into a failing build.</span></div>
+    </section>
+    <section class="lesson-section" id="tools">
+      <h2><span class="sec-icon"><i class="ti ti-terminal-2"></i></span> Postman &amp; REST Clients</h2>
+<p class="lesson-prose">Exploring an API by hand is how you learn what it really does. A GUI client is right for discovery; a scripted runner is right for anything you intend to repeat.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Tool</th><th>Best at</th></tr></thead><tbody><tr><td>Postman / Insomnia</td><td>Exploration, collections, sharing with the team</td></tr><tr><td>curl / HTTPie</td><td>One-off checks and pasting into a bug report</td></tr><tr><td>REST Client files in the repo</td><td>Requests versioned alongside the code</td></tr><tr><td>Code-level clients</td><td>The real suite — assertions, fixtures, CI</td></tr></tbody></table></div>
+<pre class="code-block"><code># a bug report with this in it is reproducible by anyone
+curl -i -X POST https://api.example.com/v1/orders \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"sku":"ABC-1","qty":0}'
+
+# expected 400 with {"error":"qty must be positive"} — actual 500</code></pre>
+<div class="callout callout-amber"><span>A Postman collection is a fine artefact and a poor test suite: it drifts from the code, hides in one person's account, and is awkward to review. Once a check matters, move it into the repository where it runs on every commit.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why test at the API layer?</q><p>It is far faster and more stable than the UI and much broader than unit tests. Most business logic is reachable there without a browser, so it gives the best information per second of runtime.</p></div>
+<div class="iq"><q>What should an API test assert beyond the body?</q><p>Status code, response schema, headers, error cases, authorisation, idempotency on retry and pagination behaviour — each is a common production defect.</p></div>
+<div class="iq"><q>What problem does contract testing solve?</q><p>Two services agreeing on a shape that one of them changes. Each side's own tests keep passing, and it only breaks in production. Contract tests verify the agreement without running both systems together.</p></div>
+<div class="iq"><q>How does consumer-driven contract testing work?</q><p>The consumer records the requests it makes and the responses it needs; the provider replays those expectations against its real implementation, so it learns it is about to break someone before deploying.</p></div>
+<div class="iq"><q>Why validate responses against a schema?</q><p>It catches silently renamed or nulled fields and keeps the published API definition honest — the docs failing the build rather than quietly going stale.</p></div>
+<div class="iq"><q>Is a Postman collection a test suite?</q><p>It is good for exploration and sharing, but it drifts from the code, lives outside version control and is hard to review. Checks that matter belong in the repository, running on every commit.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. API tests sit between unit and UI tests because they are…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The slowest</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Fast and stable but broad in coverage</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Only for smoke testing</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Manual</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. A retried POST that charges twice is a failure of…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Pagination</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Idempotency</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Authentication</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Schema validation</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Consumer-driven contract testing verifies…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The UI matches the design</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The provider still satisfies what consumers need</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Load capacity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Database schema</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Returning 200 with an error body inside is caught by asserting…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Response time</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Status codes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Headers only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Pagination</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Checks that matter long-term belong…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">In a Postman collection</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">In the repository, running in CI</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">In a spreadsheet</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">In the ticket</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="ui-automation.html">← UI Automation</a>
+      <a class="nav-link next" href="performance.html">Performance &amp; Security →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=15"></script>
+<script src="../assets/js/site-index.js?v=20"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
