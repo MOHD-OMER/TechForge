@@ -94,6 +94,43 @@ window.TF_TOPICS = {
       }
     ]
   },
+  backend: {
+    label: 'Backend',
+    hub: 'backend/index.html',
+    accent: '#4ade80',
+    categories: [
+      {
+        id: 'service',
+        label: 'Building the Service',
+        topics: [
+          { id: 'backend/node', file: 'node.html', title: 'Node & Express', icon: '<i class="ti ti-brand-javascript"></i>', desc: 'The event loop and non-blocking I/O, the middleware chain, error handling, and running it across cores in production.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'api',
+        label: 'Designing the API',
+        topics: [
+          { id: 'backend/rest', file: 'rest.html', title: 'REST APIs', icon: '<i class="ti ti-plug-connected"></i>', desc: 'Resources and methods, idempotency keys, status codes and errors, cursor pagination, versioning, and OpenAPI contracts.', depth: 'full' },
+          { id: 'backend/graphql', file: 'graphql.html', title: 'GraphQL & gRPC', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'GraphQL schemas and the N+1 problem, gRPC and protocol buffers, and when each beats REST.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'data',
+        label: 'Talking to the Database',
+        topics: [
+          { id: 'backend/orm', file: 'orm.html', title: 'ORMs & Migrations', icon: '<i class="ti ti-database"></i>', desc: 'What an ORM hides, N+1 queries and eager loading, connection pooling, and expand-and-contract migrations.', depth: 'full' },
+          { id: 'backend/transactions', file: 'transactions.html', title: 'Transactions & Isolation', icon: '<i class="ti ti-lock"></i>', desc: 'ACID in practice, isolation levels and the anomalies each permits, optimistic versus pessimistic locking, and deadlocks.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'confidence',
+        label: 'Confidence',
+        topics: [
+          { id: 'backend/testing', file: 'testing.html', title: 'Backend Testing', icon: '<i class="ti ti-flask"></i>', desc: 'Unit tests around logic, integration tests against a real engine in a container, and load testing that finds the bottleneck.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   qa: {
     label: 'QA & Testing',
     hub: 'qa/index.html',

@@ -683,14 +683,22 @@ button.badge {
 .prose em { color: var(--text); font-style: italic; }
 /* An inline link in body copy had never been styled, so it fell back to the
    browser default #0000ee — 2.11:1 on the dark background. Underlined rather
-   than colour-only, so it is still identifiable without relying on hue. */
-.prose a {
+   than colour-only, so it is still identifiable without relying on hue.
+   Every body-copy class is listed: the rule covered .prose only, and the first
+   inline link written inside .lesson-prose reproduced the same 2.11:1 exactly. */
+.prose a,
+.lesson-prose a,
+.iq p a,
+.callout a {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
 }
-.prose a:hover { color: var(--text); text-decoration-color: var(--accent); }
+.prose a:hover,
+.lesson-prose a:hover,
+.iq p a:hover,
+.callout a:hover { color: var(--text); text-decoration-color: var(--accent); }
 .prose code {
   font-family: var(--mono);
   font-size: 12.5px;

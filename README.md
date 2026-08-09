@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and fifteen complete learning tracks across 304 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and sixteen complete learning tracks across 311 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -42,6 +42,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | Track | Topics | URL |
 |---|---|---|
 | Data | 14 guides — statistics, experimentation, causal inference, visualisation, BI, case studies, data prep, quality, pipelines, orchestration, warehouses, modelling, ML maths, MLOps | [/data](https://techforge-dev.vercel.app/data/index.html) |
+| Backend | 6 guides — Node & Express, REST & OpenAPI, GraphQL & gRPC, ORMs & migrations, transactions, testing | [/backend](https://techforge-dev.vercel.app/backend/index.html) |
 | Frontend | 9 guides — HTML, CSS, React, routing & state, server rendering, tooling, performance, testing, accessibility | [/frontend](https://techforge-dev.vercel.app/frontend/index.html) |
 | QA & Testing | 6 guides — fundamentals, manual, unit & integration, UI automation, API testing, performance & security | [/qa](https://techforge-dev.vercel.app/qa/index.html) |
 | Blockchain | 5 guides — fundamentals, smart contracts, tooling, dApps, contract security | [/blockchain](https://techforge-dev.vercel.app/blockchain/index.html) |
@@ -143,7 +144,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Multiplayer netcode (authoritative servers, prediction, reconciliation, lag compensation) and shipping (profiling, asset pipeline, certification)
 
 ### Platform & UX
-- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all fifteen tracks from a keyboard-driven command palette, no page reload
+- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all sixteen tracks from a keyboard-driven command palette, no page reload
 - **One navbar, one source** — seven primary destinations plus a **More** menu holding every remaining section, all rendered by `tools/sync-navbar.mjs` into all 275 pages; `npm run check:navbar` fails the build if a page drifts. The same list renders the mobile grid, which used to be a hand-kept copy three sections out of date
 - **Keyboard-complete dropdown** — Enter or Space opens More, `↓` moves into it, Escape closes and returns focus, click-outside and tab-out dismiss; on mobile it flattens into the hamburger panel instead
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
@@ -296,9 +297,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 304 pages pass the Nu validator)
+- **100% HTML validation** (all 311 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (304 × 2 = 608 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (311 × 2 = 622 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:

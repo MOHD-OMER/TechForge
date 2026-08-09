@@ -39,6 +39,7 @@ const MORE = [
     label: 'Core tracks',
     items: [
       { href: 'frontend/index.html', label: 'Frontend', short: 'Frontend', icon: 'ti-browser', match: under('frontend') },
+      { href: 'backend/index.html', label: 'Backend', short: 'Backend', icon: 'ti-server-2', match: under('backend') },
       { href: 'databases/index.html', label: 'Databases', short: 'Databases', icon: 'ti-database', match: under('databases') },
       { href: 'devops/index.html', label: 'DevOps', short: 'DevOps', icon: 'ti-server-cog', match: under('devops') },
       { href: 'systems/index.html', label: 'OS &amp; Networks', short: 'OS &amp; Networks', icon: 'ti-cpu', match: under('systems') },
