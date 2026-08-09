@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Confounding and DAGs, why randomisation works, difference-in-differences, matching, instrumental variables and regression discontinuity."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/causal-inference.html"/>
+  <meta property="og:title" content="Causal Inference — Data | TechForge"/>
+  <meta property="og:description" content="Confounding and DAGs, why randomisation works, difference-in-differences, matching, instrumental variables and regression discontinuity."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Causal Inference — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/causal-inference" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item current" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link active" href="causal-inference.html"><span class="sb-num"><i class="ti ti-arrows-split"></i></span>Causal Inference</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <a class="sb-link" href="bi-tools.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>BI Tools</a>
+    <a class="sb-link" href="case-studies.html"><span class="sb-num"><i class="ti ti-briefcase"></i></span>Case Study Practice</a>
+    <div class="sidebar-label">Preparing Data</div>
+    <a class="sb-link" href="data-prep.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>Data Preparation</a>
+    <a class="sb-link" href="quality.html"><span class="sb-num"><i class="ti ti-shield-check"></i></span>Data Quality Testing</a>
+    <div class="sidebar-label">Moving Data</div>
+    <a class="sb-link" href="pipelines.html"><span class="sb-num"><i class="ti ti-transfer"></i></span>Data Pipelines</a>
+    <a class="sb-link" href="orchestration.html"><span class="sb-num"><i class="ti ti-topology-star"></i></span>Orchestration &amp; dbt</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+    <a class="sb-link" href="modelling.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Dimensional Modelling</a>
+    <div class="sidebar-label">Machine Learning Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Mathematics for ML</a>
+    <a class="sb-link" href="mlops.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>MLOps</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Causal Inference</h1>
+      <p class="pg-sub">Getting from correlation to cause when you cannot run the experiment.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-arrows-split"></i></span> The Question Behind Most Analyses</h2>
+<div class="callout callout-blue"><span>Almost every business question is causal — would revenue rise <em>because</em> we did this — but the data available is observational, where the people who did the thing differ from those who did not in ways nobody recorded.</span></div>
+<p class="lesson-prose">The counterfactual is what you actually want: what would have happened to these same users had they not been treated. It is unobservable by definition, so every method here is a strategy for constructing a credible stand-in for it.</p>
+    </section>
+    <section class="lesson-section" id="confounding">
+      <h2><span class="sec-icon"><i class="ti ti-arrows-shuffle"></i></span> Confounding &amp; DAGs</h2>
+<p class="lesson-prose">A <strong>confounder</strong> causes both the treatment and the outcome, so it manufactures an association that is not causal. Users who install the mobile app spend more — but engaged users are likelier both to install and to spend, and engagement is doing the work.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Structure</th><th>Do</th></tr></thead><tbody><tr><td>Confounder — causes treatment and outcome</td><td>Control for it</td></tr><tr><td>Mediator — sits on the causal path</td><td>Do <strong>not</strong> control: it removes the effect you want</td></tr><tr><td>Collider — caused by both</td><td>Do <strong>not</strong> control: it creates false association</td></tr></tbody></table></div>
+<p class="lesson-prose">Drawing the assumed causal graph first is what makes those distinctions visible. "Control for everything available" is not a strategy — conditioning on a mediator or a collider actively introduces bias rather than removing it.</p>
+<div class="callout callout-red"><span>Selection bias is the version that catches everyone: comparing users who chose the feature with users who did not measures who chooses features, not what the feature does.</span></div>
+    </section>
+    <section class="lesson-section" id="experiments">
+      <h2><span class="sec-icon"><i class="ti ti-flask"></i></span> Why Randomisation Wins</h2>
+<p class="lesson-prose">A randomised experiment settles the problem by construction: assignment is independent of every characteristic, observed or not, so the groups differ only by chance and by the treatment. That is why an A/B test beats any amount of clever observational modelling when it is available.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Run the experiment unless</th><th></th></tr></thead><tbody><tr><td>It is unethical</td><td>Deliberately degrading someone's service</td></tr><tr><td>It is impossible</td><td>A pricing change across a whole market</td></tr><tr><td>It is too slow</td><td>The effect takes a year to appear</td></tr><tr><td>It already happened</td><td>You are evaluating a launch after the fact</td></tr></tbody></table></div>
+<p class="lesson-prose">The methods below are what you reach for in those cases — each buying credibility with a different assumption, stated explicitly.</p>
+    </section>
+    <section class="lesson-section" id="methods">
+      <h2><span class="sec-icon"><i class="ti ti-chart-line"></i></span> Difference-in-Differences, Matching &amp; IV</h2>
+<p class="lesson-prose"><strong>Difference-in-differences</strong> compares the change in a treated group with the change in an untreated one over the same period, cancelling anything that affected both. Its assumption is <em>parallel trends</em>: without treatment the two would have moved together — which you support by showing they did before the intervention.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Method</th><th>Idea</th><th>Assumption to defend</th></tr></thead><tbody><tr><td>Difference-in-differences</td><td>Compare changes, not levels</td><td>Parallel pre-trends</td></tr><tr><td>Matching / propensity scores</td><td>Build a comparable control group</td><td>No unobserved confounders</td></tr><tr><td>Instrumental variables</td><td>Use a nudge that only affects the outcome via treatment</td><td>The instrument is truly exogenous</td></tr><tr><td>Regression discontinuity</td><td>Compare either side of a cutoff</td><td>Nothing else jumps at the cutoff</td></tr><tr><td>Synthetic control</td><td>Build a weighted control from other units</td><td>The synthetic tracks the pre-period well</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>The credibility of any of these lives entirely in its assumption, not its arithmetic. Report the assumption, show the evidence for it, and test how much the conclusion moves when it is relaxed — an unstated assumption is the whole result.</span></div>
+<p class="lesson-prose">Be honest about what is being estimated, too. Most of these recover the effect for a particular subgroup — those near a cutoff, or those a nudge actually moved — which is not the same as the average effect across everybody.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why is correlation insufficient for a business decision?</q><p>The decision is causal — would acting change the outcome. Observational groups differ in unrecorded ways, so the association may be entirely produced by a confounder.</p></div>
+<div class="iq"><q>What is a confounder, and how does it differ from a mediator?</q><p>A confounder causes both treatment and outcome and must be controlled for. A mediator sits on the causal path, and controlling for it removes part of the very effect you are measuring.</p></div>
+<div class="iq"><q>Why should you not control for a collider?</q><p>A collider is caused by both variables. Conditioning on it creates an association between them that does not exist, so it introduces bias rather than removing it.</p></div>
+<div class="iq"><q>Why does randomisation solve confounding?</q><p>Assignment is independent of every characteristic, observed or not, so the groups differ only by chance and by the treatment itself.</p></div>
+<div class="iq"><q>What does difference-in-differences assume?</q><p>Parallel trends: absent the treatment, both groups would have moved together. You support it by showing their pre-treatment trends already tracked each other.</p></div>
+<div class="iq"><q>What is the weakness of matching?</q><p>It balances observed variables only. Any unobserved confounder survives the matching, so the estimate is credible only where you can argue nothing important was unmeasured.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. A confounder…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Sits on the causal path</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Causes both treatment and outcome</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Is caused by both</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Is always unobserved</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Controlling for a mediator…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Improves the estimate</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Removes part of the effect you want</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Has no effect</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Fixes selection bias</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Difference-in-differences assumes…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Random assignment</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Parallel pre-trends</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">No treatment effect</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Equal group sizes</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Matching controls for…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">All confounders</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Observed variables only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Colliders</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Mediators</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Comparing users who chose a feature with those who did not measures…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The feature's effect</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Who chooses features</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Parallel trends</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The counterfactual</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="ab-testing.html">← Experimentation</a>
+      <a class="nav-link next" href="visualisation.html">Visualisation →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=16"></script>
+<script src="../assets/js/site-index.js?v=21"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

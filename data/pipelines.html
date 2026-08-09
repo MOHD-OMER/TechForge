@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Batch versus streaming, ETL and ELT, Spark and distributed processing, idempotency, backfills and late-arriving data."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/pipelines.html"/>
+  <meta property="og:title" content="Data Pipelines — Data | TechForge"/>
+  <meta property="og:description" content="Batch versus streaming, ETL and ELT, Spark and distributed processing, idempotency, backfills and late-arriving data."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Data Pipelines — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/pipelines" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item current" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link" href="causal-inference.html"><span class="sb-num"><i class="ti ti-arrows-split"></i></span>Causal Inference</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <a class="sb-link" href="bi-tools.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>BI Tools</a>
+    <a class="sb-link" href="case-studies.html"><span class="sb-num"><i class="ti ti-briefcase"></i></span>Case Study Practice</a>
+    <div class="sidebar-label">Preparing Data</div>
+    <a class="sb-link" href="data-prep.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>Data Preparation</a>
+    <a class="sb-link" href="quality.html"><span class="sb-num"><i class="ti ti-shield-check"></i></span>Data Quality Testing</a>
+    <div class="sidebar-label">Moving Data</div>
+    <a class="sb-link active" href="pipelines.html"><span class="sb-num"><i class="ti ti-transfer"></i></span>Data Pipelines</a>
+    <a class="sb-link" href="orchestration.html"><span class="sb-num"><i class="ti ti-topology-star"></i></span>Orchestration &amp; dbt</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+    <a class="sb-link" href="modelling.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Dimensional Modelling</a>
+    <div class="sidebar-label">Machine Learning Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Mathematics for ML</a>
+    <a class="sb-link" href="mlops.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>MLOps</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Data Pipelines</h1>
+      <p class="pg-sub">Batch and streaming, distributed processing with Spark, and the idempotency that makes a rerun safe.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-transfer"></i></span> Moving Data Without Losing It</h2>
+<div class="callout callout-blue"><span>A pipeline is judged on what happens when it fails halfway, not on what happens when it works. Every serious design decision here is really about reruns.</span></div>
+<p class="lesson-prose">The old shape was <strong>ETL</strong> — extract, transform, then load the finished result — because storage and compute were expensive and the warehouse could not do the work. Cheap columnar warehouses inverted it into <strong>ELT</strong>: load the raw data first, transform it in place, and keep the raw copy so a mistake in the transform is recoverable without going back to the source.</p>
+    </section>
+    <section class="lesson-section" id="batch">
+      <h2><span class="sec-icon"><i class="ti ti-clock"></i></span> Batch Processing</h2>
+<p class="lesson-prose">Batch runs on a schedule over a bounded window of data. It is simpler, cheaper and easier to reason about than streaming, and it is the right default for anything that does not genuinely need sub-minute freshness.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th></th><th>Batch</th><th>Streaming</th></tr></thead><tbody><tr><td>Latency</td><td>Minutes to hours</td><td>Seconds</td></tr><tr><td>Reruns</td><td>Straightforward</td><td>Hard — state and ordering</td></tr><tr><td>Cost</td><td>Lower, bursty</td><td>Always-on infrastructure</td></tr><tr><td>Debugging</td><td>Inspect the window</td><td>Reproduce a moving target</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>"Real time" is usually a requirement nobody checked. If the dashboard is read once a morning, hourly batch is the same product for a fraction of the operational cost — ask what decision changes with fresher data.</span></div>
+<p class="lesson-prose">Process by <strong>partition</strong>, usually a date. Partitioned inputs and outputs are what make a rerun mean "recompute this day" rather than "recompute everything", and they are what let a backfill run in parallel.</p>
+    </section>
+    <section class="lesson-section" id="spark">
+      <h2><span class="sec-icon"><i class="ti ti-cpu"></i></span> Spark &amp; Distributed Processing</h2>
+<p class="lesson-prose">Once the data does not fit on one machine, the work is split across a cluster: a driver plans, executors compute over partitions, and results are combined. Spark is the standard engine for that, and its performance story is almost entirely about <strong>how much data has to move between machines</strong>.</p>
+<pre class="code-block"><code>orders = spark.read.parquet("s3://lake/raw/orders/dt=2026-08-08")
+
+daily = (orders
+    .filter(orders.status == "settled")      # filter early: less to shuffle
+    .groupBy("store_id")                     # a shuffle happens here
+    .agg(F.sum("net_amount").alias("revenue")))
+
+daily.write.mode("overwrite").parquet("s3://lake/marts/daily/dt=2026-08-08")</code></pre>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Concept</th><th>Why it decides the runtime</th></tr></thead><tbody><tr><td>Shuffle</td><td>Moving data across the network — the dominant cost</td></tr><tr><td>Partitions</td><td>Too few starves the cluster, too many drowns it in overhead</td></tr><tr><td>Skew</td><td>One enormous key makes one task run for an hour alone</td></tr><tr><td>Lazy evaluation</td><td>Nothing runs until an action, so the plan can be optimised</td></tr><tr><td>Broadcast join</td><td>Sending a small table everywhere beats shuffling a huge one</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Filter and aggregate as early as possible, and prefer columnar formats — Parquet lets the engine read three columns out of two hundred instead of every byte.</span></div>
+    </section>
+    <section class="lesson-section" id="idempotency">
+      <h2><span class="sec-icon"><i class="ti ti-refresh"></i></span> Idempotency &amp; Backfills</h2>
+<p class="lesson-prose">A pipeline will be rerun: after a failure, after a bug fix, after a schema change, and every time someone backfills a year of history. <strong>Idempotent</strong> means running it twice leaves the same result as running it once — and it is the property that decides whether reruns are routine or terrifying.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Pattern</th><th>Effect</th></tr></thead><tbody><tr><td>Overwrite a partition</td><td>The rerun replaces exactly what it owns</td></tr><tr><td>Merge on a natural key</td><td>Updates rather than duplicates</td></tr><tr><td>Blind append</td><td>Doubles the data on every rerun — the classic bug</td></tr><tr><td>Deterministic transforms</td><td>No <code>now()</code>, no random ids inside the logic</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Anything that reads the wall clock inside a transform makes the output depend on when it ran, so a backfill of last March produces this August's answers. Pass the logical date in as a parameter and use that everywhere.</span></div>
+<p class="lesson-prose"><strong>Late-arriving data</strong> is the other half. Events turn up hours or days after the timestamp they carry, so a partition that was correct yesterday is incomplete today. Decide a lateness window, reprocess recent partitions on a rolling basis, and make sure that reprocessing is idempotent — which is why the two topics belong together.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>ETL or ELT?</q><p>ELT is the modern default: load raw first, transform in the warehouse, and keep the raw copy so a bad transform can be fixed without re-extracting. ETL made sense when compute was scarce and the warehouse could not do the work.</p></div>
+<div class="iq"><q>When is streaming actually justified?</q><p>When a decision changes with sub-minute data — fraud checks, live operations. Otherwise batch delivers the same product with far less operational cost and much easier reruns.</p></div>
+<div class="iq"><q>What makes a pipeline idempotent?</q><p>Rerunning produces the same result: overwrite the partition you own or merge on a key rather than appending blindly, and keep transforms deterministic with no wall-clock reads.</p></div>
+<div class="iq"><q>Why is a shuffle the thing to watch in Spark?</q><p>It moves data across the network between executors. Filtering and aggregating before the shuffle, or broadcasting a small table instead, is where most of the runtime is won.</p></div>
+<div class="iq"><q>What is data skew?</q><p>One key holding a disproportionate share of rows, so a single task runs long after the rest finish. It is usually addressed by salting the key or handling the hot key separately.</p></div>
+<div class="iq"><q>How do you handle late-arriving data?</q><p>Choose a lateness window and reprocess recent partitions on a rolling schedule. That only works if the pipeline is idempotent, which is why the two are designed together.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. ELT differs from ETL by…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Skipping transformation</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Loading raw first and transforming in the warehouse</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Streaming only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Avoiding storage</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Blind appends on rerun cause…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Data loss</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Duplicated data</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Schema drift</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Skew</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. The dominant cost in a Spark job is usually…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Reading Parquet</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The shuffle</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Lazy evaluation</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Driver planning</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Calling now() inside a transform breaks…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Streaming</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Backfills</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Partitioning</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Broadcast joins</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. A broadcast join helps when…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Both tables are huge</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">One table is small enough to copy everywhere</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">There is no key</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Data is skewed evenly</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="quality.html">← Data Quality Testing</a>
+      <a class="nav-link next" href="orchestration.html">Orchestration &amp; dbt →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=16"></script>
+<script src="../assets/js/site-index.js?v=21"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

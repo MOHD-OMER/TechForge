@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Workflow orchestration with Airflow DAGs, scheduling and dependencies, retries and alerting, and dbt for transformation."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/orchestration.html"/>
+  <meta property="og:title" content="Orchestration &amp;amp; Transformation — Data | TechForge"/>
+  <meta property="og:description" content="Workflow orchestration with Airflow DAGs, scheduling and dependencies, retries and alerting, and dbt for transformation."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Orchestration &amp;amp; Transformation — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/orchestration" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item current" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link" href="causal-inference.html"><span class="sb-num"><i class="ti ti-arrows-split"></i></span>Causal Inference</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <a class="sb-link" href="bi-tools.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>BI Tools</a>
+    <a class="sb-link" href="case-studies.html"><span class="sb-num"><i class="ti ti-briefcase"></i></span>Case Study Practice</a>
+    <div class="sidebar-label">Preparing Data</div>
+    <a class="sb-link" href="data-prep.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>Data Preparation</a>
+    <a class="sb-link" href="quality.html"><span class="sb-num"><i class="ti ti-shield-check"></i></span>Data Quality Testing</a>
+    <div class="sidebar-label">Moving Data</div>
+    <a class="sb-link" href="pipelines.html"><span class="sb-num"><i class="ti ti-transfer"></i></span>Data Pipelines</a>
+    <a class="sb-link active" href="orchestration.html"><span class="sb-num"><i class="ti ti-topology-star"></i></span>Orchestration &amp; dbt</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+    <a class="sb-link" href="modelling.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Dimensional Modelling</a>
+    <div class="sidebar-label">Machine Learning Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Mathematics for ML</a>
+    <a class="sb-link" href="mlops.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>MLOps</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">Orchestration &amp;amp; Transformation</h1>
+      <p class="pg-sub">Airflow and the DAG, dbt and transformation as version-controlled SQL, and what to do when a task fails at 3am.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-topology-star"></i></span> Something Has To Decide What Runs</h2>
+<div class="callout callout-blue"><span>A pipeline is rarely one job. It is thirty, with dependencies, and the orchestrator is what knows that the revenue mart cannot run before the orders load finished — and what to do when it did not.</span></div>
+<p class="lesson-prose">Cron gets you scheduling and nothing else: no dependencies, no retries, no history, no visibility into why last Tuesday produced nothing. An orchestrator adds all four, and it is the piece that turns a set of scripts into a system somebody can operate.</p>
+    </section>
+    <section class="lesson-section" id="airflow">
+      <h2><span class="sec-icon"><i class="ti ti-sitemap"></i></span> Airflow &amp; DAGs</h2>
+<p class="lesson-prose">Airflow models a workflow as a <strong>directed acyclic graph</strong>: tasks are nodes, dependencies are edges, and the scheduler runs each task once its upstreams have succeeded for that logical date.</p>
+<pre class="code-block"><code>with DAG(
+    "daily_revenue",
+    schedule="0 3 * * *",
+    start_date=datetime(2026, 1, 1),
+    catchup=True,                 # backfill missed runs deliberately
+    default_args={"retries": 2, "retry_delay": timedelta(minutes=10)},
+) as dag:
+
+    extract = PythonOperator(task_id="extract_orders", python_callable=extract_orders)
+    load    = PythonOperator(task_id="load_raw",       python_callable=load_raw)
+    mart    = BashOperator(task_id="build_mart", bash_command="dbt run --select revenue+")
+
+    extract &gt;&gt; load &gt;&gt; mart      # the dependency, stated once</code></pre>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Concept</th><th>Meaning</th></tr></thead><tbody><tr><td>Logical date</td><td>The window a run is <em>for</em> — not when it executed</td></tr><tr><td>Catchup</td><td>Whether missed intervals are run on deploy</td></tr><tr><td>Retries</td><td>Automatic, with backoff, before anyone is woken</td></tr><tr><td>Sensor</td><td>A task that waits for a file, partition or upstream</td></tr><tr><td>SLA / timeout</td><td>Alert when a task is late, not only when it fails</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>The logical date is the parameter every task should use. Reading the current date instead is the same bug as calling <code>now()</code> in a transform: the DAG works today and produces nonsense the moment anyone backfills.</span></div>
+    </section>
+    <section class="lesson-section" id="dbt">
+      <h2><span class="sec-icon"><i class="ti ti-file-code"></i></span> dbt &amp; Transformation</h2>
+<p class="lesson-prose">dbt takes the transformation half and makes it ordinary software: models are SELECT statements in version control, dependencies are inferred from references, and the whole graph is testable and documented.</p>
+<pre class="code-block"><code>-- models/marts/revenue_daily.sql
+{{ config(materialized='incremental', unique_key='date_day') }}
+
+SELECT
+    date_trunc('day', o.settled_at) AS date_day,
+    o.store_id,
+    SUM(o.net_amount)               AS revenue
+FROM {{ ref('stg_orders') }} o           -- ref() builds the dependency graph
+{% if is_incremental() %}
+WHERE o.settled_at &gt;= (SELECT MAX(date_day) FROM {{ this }})
+{% endif %}
+GROUP BY 1, 2</code></pre>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>What it brings</th><th>Instead of</th></tr></thead><tbody><tr><td>SQL in git, reviewed in pull requests</td><td>Queries pasted into a scheduler</td></tr><tr><td>A dependency graph from <code>ref()</code></td><td>A hand-maintained run order</td></tr><tr><td>Tests as configuration</td><td>Hoping the numbers are right</td></tr><tr><td>Generated documentation and lineage</td><td>A stale wiki page</td></tr><tr><td>Incremental models</td><td>Rebuilding a billion rows nightly</td></tr></tbody></table></div>
+<p class="lesson-prose">The division of labour that has settled: the <strong>orchestrator moves and schedules</strong>, and <strong>dbt transforms</strong>. Airflow triggers <code>dbt run</code>; it does not reimplement what dbt already does.</p>
+    </section>
+    <section class="lesson-section" id="failures">
+      <h2><span class="sec-icon"><i class="ti ti-alert-triangle"></i></span> When It Fails At 3am</h2>
+<p class="lesson-prose">Pipelines fail on a schedule you did not choose, so the design question is what the failure does to everything downstream.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Practice</th><th>Why</th></tr></thead><tbody><tr><td>Retry transient errors automatically</td><td>Most failures are a timeout, not a bug</td></tr><tr><td>Fail fast on bad data</td><td>Better a missing table than a wrong number in a board pack</td></tr><tr><td>Alert on lateness, not only errors</td><td>A job that never started raises nothing</td></tr><tr><td>Make every task idempotent</td><td>So "clear and rerun" is a safe first response</td></tr><tr><td>Publish freshness</td><td>Consumers should see how old the data is</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Silent success is the worst outcome: a job that finishes green having written zero rows. Assert on row counts and freshness as part of the run, so empty output is a failure rather than a surprise found next week.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why not just use cron?</q><p>Cron schedules and nothing more. An orchestrator adds dependencies, retries with backoff, run history, backfills and visibility into why a run produced nothing.</p></div>
+<div class="iq"><q>What is the logical date in Airflow?</q><p>The data window a run is for, as opposed to when it executed. Every task should use it, otherwise backfills recompute old windows with today's date.</p></div>
+<div class="iq"><q>What does dbt actually give you?</q><p>Transformation as version-controlled SQL: models in git, a dependency graph inferred from ref(), tests as configuration, generated lineage docs, and incremental models.</p></div>
+<div class="iq"><q>How do orchestration and dbt divide the work?</q><p>The orchestrator schedules and moves data and triggers dbt; dbt owns the transformation graph inside the warehouse. Neither reimplements the other.</p></div>
+<div class="iq"><q>Why alert on lateness as well as failure?</q><p>A job that never started emits no error. An SLA or freshness alert catches the silent case, which is the one that reaches a dashboard unnoticed.</p></div>
+<div class="iq"><q>What is a silent success?</q><p>A run that completes green having written nothing or far too little. Asserting row counts and freshness inside the run turns it into an ordinary failure.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. An Airflow DAG models…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A schedule only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Tasks and their dependencies</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A database schema</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A retry policy</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Tasks should use the logical date because…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Backfills must recompute the right window</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">It avoids retries</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Cron requires it</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. dbt infers its dependency graph from…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">File names</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">ref() calls in models</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The scheduler</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Table comments</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. A run that finishes green with zero rows is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Fine</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A silent success — assert on row counts</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A skew problem</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Expected in ELT</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Automatic retries are appropriate for…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Bad data</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Transient errors like timeouts</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Schema changes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Logic bugs</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="pipelines.html">← Data Pipelines</a>
+      <a class="nav-link next" href="warehouses.html">Warehouses &amp; Lakes →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=16"></script>
+<script src="../assets/js/site-index.js?v=21"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

@@ -14,14 +14,26 @@ window.TF_TOPICS = {
         topics: [
           { id: 'data/statistics', file: 'statistics.html', title: 'Statistics', icon: '<i class="ti ti-hash"></i>', desc: 'Descriptive measures, hypothesis testing, Bayesian thinking, and the sampling traps that quietly invalidate a result.', depth: 'full' },
           { id: 'data/ab-testing', file: 'ab-testing.html', title: 'Experimentation', icon: '<i class="ti ti-flask"></i>', desc: 'A/B tests, statistical power, and the peeking problem that makes half of all reported wins imaginary.', depth: 'full' },
-          { id: 'data/visualisation', file: 'visualisation.html', title: 'Visualisation', icon: '<i class="ti ti-chart-donut"></i>', desc: 'Choosing the chart that answers the question, designing a dashboard, and telling the story that gets acted on.', depth: 'full' }
+          { id: 'data/causal-inference', file: 'causal-inference.html', title: 'Causal Inference', icon: '<i class="ti ti-arrows-split"></i>', desc: 'Confounders, mediators and colliders, why randomisation works, and difference-in-differences, matching and instrumental variables.', depth: 'full' },
+          { id: 'data/visualisation', file: 'visualisation.html', title: 'Visualisation', icon: '<i class="ti ti-chart-donut"></i>', desc: 'Choosing the chart that answers the question, designing a dashboard, and telling the story that gets acted on.', depth: 'full' },
+          { id: 'data/bi-tools', file: 'bi-tools.html', title: 'BI Tools', icon: '<i class="ti ti-chart-bar"></i>', desc: 'Power BI and Tableau, import versus DirectQuery, the semantic layer, and dashboards that answer a question.', depth: 'full' },
+          { id: 'data/case-studies', file: 'case-studies.html', title: 'Case Study Practice', icon: '<i class="ti ti-briefcase"></i>', desc: 'Structuring an open analyst question, choosing the metric, diagnosing a drop, and ending with a recommendation.', depth: 'full' }
         ]
       },
       {
         id: 'prep',
         label: 'Preparing Data',
         topics: [
-          { id: 'data/data-prep', file: 'data-prep.html', title: 'Data Preparation', icon: '<i class="ti ti-refresh"></i>', desc: 'Exploratory analysis, cleaning and missing values, feature engineering, and splits that do not leak.', depth: 'full' }
+          { id: 'data/data-prep', file: 'data-prep.html', title: 'Data Preparation', icon: '<i class="ti ti-refresh"></i>', desc: 'Exploratory analysis, cleaning and missing values, feature engineering, and splits that do not leak.', depth: 'full' },
+          { id: 'data/quality', file: 'quality.html', title: 'Data Quality Testing', icon: '<i class="ti ti-shield-check"></i>', desc: 'Tests in the pipeline, data contracts checked in the producer CI, and freshness, volume and anomaly monitoring.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'move',
+        label: 'Moving Data',
+        topics: [
+          { id: 'data/pipelines', file: 'pipelines.html', title: 'Data Pipelines', icon: '<i class="ti ti-transfer"></i>', desc: 'Batch versus streaming, ELT, Spark and shuffles, and the idempotency that makes a rerun or backfill safe.', depth: 'full' },
+          { id: 'data/orchestration', file: 'orchestration.html', title: 'Orchestration & dbt', icon: '<i class="ti ti-topology-star"></i>', desc: 'Airflow DAGs and the logical date, retries and lateness alerts, and transformation as version-controlled SQL.', depth: 'full' }
         ]
       },
       {
@@ -36,7 +48,8 @@ window.TF_TOPICS = {
         id: 'platform',
         label: 'Where Data Lives',
         topics: [
-          { id: 'data/warehouses', file: 'warehouses.html', title: 'Warehouses & Lakes', icon: '<i class="ti ti-database"></i>', desc: 'Columnar storage, Parquet, partitioning, and the lakehouse pattern the field has converged on.', depth: 'full' }
+          { id: 'data/warehouses', file: 'warehouses.html', title: 'Warehouses & Lakes', icon: '<i class="ti ti-database"></i>', desc: 'Columnar storage, Parquet, partitioning, and the lakehouse pattern the field has converged on.', depth: 'full' },
+          { id: 'data/modelling', file: 'modelling.html', title: 'Dimensional Modelling', icon: '<i class="ti ti-sitemap"></i>', desc: 'Facts and dimensions, choosing the grain, star schemas, slowly changing dimensions and surrogate keys.', depth: 'full' }
         ]
       }
     ]

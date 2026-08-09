@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Power BI and Tableau compared, semantic layers and metric definitions, and designing dashboards that answer a question."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/data/bi-tools.html"/>
+  <meta property="og:title" content="BI Tools — Data | TechForge"/>
+  <meta property="og:description" content="Power BI and Tableau compared, semantic layers and metric definitions, and designing dashboards that answer a question."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>BI Tools — Data | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="data/bi-tools" data-section="data">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item current" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Making Data Mean Something</div>
+    <a class="sb-link" href="statistics.html"><span class="sb-num"><i class="ti ti-hash"></i></span>Statistics</a>
+    <a class="sb-link" href="ab-testing.html"><span class="sb-num"><i class="ti ti-flask"></i></span>Experimentation</a>
+    <a class="sb-link" href="causal-inference.html"><span class="sb-num"><i class="ti ti-arrows-split"></i></span>Causal Inference</a>
+    <a class="sb-link" href="visualisation.html"><span class="sb-num"><i class="ti ti-chart-donut"></i></span>Visualisation</a>
+    <a class="sb-link active" href="bi-tools.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>BI Tools</a>
+    <a class="sb-link" href="case-studies.html"><span class="sb-num"><i class="ti ti-briefcase"></i></span>Case Study Practice</a>
+    <div class="sidebar-label">Preparing Data</div>
+    <a class="sb-link" href="data-prep.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>Data Preparation</a>
+    <a class="sb-link" href="quality.html"><span class="sb-num"><i class="ti ti-shield-check"></i></span>Data Quality Testing</a>
+    <div class="sidebar-label">Moving Data</div>
+    <a class="sb-link" href="pipelines.html"><span class="sb-num"><i class="ti ti-transfer"></i></span>Data Pipelines</a>
+    <a class="sb-link" href="orchestration.html"><span class="sb-num"><i class="ti ti-topology-star"></i></span>Orchestration &amp; dbt</a>
+    <div class="sidebar-label">Where Data Lives</div>
+    <a class="sb-link" href="warehouses.html"><span class="sb-num"><i class="ti ti-database"></i></span>Warehouses &amp; Lakes</a>
+    <a class="sb-link" href="modelling.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Dimensional Modelling</a>
+    <div class="sidebar-label">Machine Learning Foundations</div>
+    <a class="sb-link" href="math.html"><span class="sb-num"><i class="ti ti-math-symbols"></i></span>Mathematics for ML</a>
+    <a class="sb-link" href="mlops.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>MLOps</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Data Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Data · Guide</div>
+      <h1 class="pg-title">BI Tools</h1>
+      <p class="pg-sub">Power BI and Tableau, the semantic layer underneath them, and dashboards people actually use.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Data</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-chart-bar"></i></span> The Last Mile</h2>
+<div class="callout callout-blue"><span>A BI tool is where all the modelling work meets someone who has ninety seconds and a decision to make. Most of what makes it good happened upstream — in the model, the metric definitions and the freshness — but the last mile is where it is judged.</span></div>
+<p class="lesson-prose">The tool matters less than the two things around it: a <strong>model shaped for the questions</strong> being asked, and <strong>one agreed definition per metric</strong>. Where those are missing, no visualisation layer saves you — you get three dashboards with three revenue numbers and a meeting about which is right.</p>
+    </section>
+    <section class="lesson-section" id="power-bi">
+      <h2><span class="sec-icon"><i class="ti ti-chart-histogram"></i></span> Power BI</h2>
+<p class="lesson-prose">Microsoft's tool, and the default anywhere the organisation already runs Office and Azure. Modelling happens inside it: relationships between tables, then measures written in <strong>DAX</strong>.</p>
+<pre class="code-block"><code>Revenue = SUM(fact_orders[net_amount])
+
+Revenue YoY % =
+VAR Current  = [Revenue]
+VAR LastYear = CALCULATE([Revenue], SAMEPERIODLASTYEAR(dim_date[date]))
+RETURN DIVIDE(Current - LastYear, LastYear)</code></pre>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Strength</th><th>Cost</th></tr></thead><tbody><tr><td>Cheap per seat, ubiquitous in Microsoft shops</td><td>DAX has a genuinely steep learning curve</td></tr><tr><td>Strong modelling and time intelligence</td><td>Logic can end up living only in the report</td></tr><tr><td>Import mode is very fast</td><td>Refresh schedules and dataset size limits</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Understand <strong>import</strong> versus <strong>DirectQuery</strong> before designing anything: import copies data in and is fast but stale between refreshes; DirectQuery queries the warehouse live and is fresh but only as fast as the warehouse under dashboard load.</span></div>
+    </section>
+    <section class="lesson-section" id="tableau">
+      <h2><span class="sec-icon"><i class="ti ti-chart-line"></i></span> Tableau</h2>
+<p class="lesson-prose">Tableau leads on exploration and visual craft: drag a field, see a chart, follow the question wherever it goes. It is the stronger tool for analysts investigating something, and its defaults produce better-looking charts with less effort.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th></th><th>Power BI</th><th>Tableau</th></tr></thead><tbody><tr><td>Best at</td><td>Modelling and governed reporting</td><td>Exploration and visual analysis</td></tr><tr><td>Calculation language</td><td>DAX</td><td>Calculated fields, LOD expressions</td></tr><tr><td>Cost</td><td>Low per seat</td><td>Higher</td></tr><tr><td>Fits</td><td>Microsoft estates</td><td>Analyst-heavy teams, any stack</td></tr></tbody></table></div>
+<p class="lesson-prose">Both converge on the same failure mode. Once metric logic is written inside the tool, two reports drift apart and nobody can say which definition of "active customer" is the real one — which is the argument for a semantic layer.</p>
+    </section>
+    <section class="lesson-section" id="semantic">
+      <h2><span class="sec-icon"><i class="ti ti-sitemap"></i></span> The Semantic Layer</h2>
+<p class="lesson-prose">A semantic layer holds metric definitions <strong>once</strong>, outside any dashboard: revenue, active customer, churn — defined in version-controlled code, computed in the warehouse, and consumed identically by every tool and every notebook.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>With one</th><th>Without one</th></tr></thead><tbody><tr><td>One definition, reviewed in a pull request</td><td>The same metric written in four dashboards</td></tr><tr><td>Changes propagate everywhere</td><td>Some reports quietly stay on the old rule</td></tr><tr><td>Lineage from metric to source table</td><td>Nobody knows where the number came from</td></tr><tr><td>Consistent across BI, notebooks and APIs</td><td>Numbers depend on which tool you opened</td></tr></tbody></table></div>
+<div class="callout callout-blue"><span>Then design for the question. A dashboard that opens with the three numbers a decision needs, and drill-down beneath them, beats forty charts arranged by which table they came from. If nobody can say what action a chart supports, it is decoration.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Power BI or Tableau?</q><p>Power BI where the organisation is Microsoft-based and reporting is governed — cheap seats, strong modelling, DAX. Tableau where analysts explore and visual quality matters. Both are fine; the model beneath them matters more.</p></div>
+<div class="iq"><q>Import versus DirectQuery?</q><p>Import copies data into the tool: fast, but stale between refreshes and bounded by dataset size. DirectQuery queries the warehouse live: always fresh, but dashboard performance becomes warehouse performance.</p></div>
+<div class="iq"><q>Why does a semantic layer matter?</q><p>It defines each metric once, in version control, so every dashboard and notebook computes it the same way. Without it the same metric gets rewritten per report and the numbers drift apart.</p></div>
+<div class="iq"><q>Why do dashboards end up with conflicting numbers?</q><p>Metric logic written inside the reporting tool. Two authors implement "active customer" slightly differently and nothing reconciles them.</p></div>
+<div class="iq"><q>What makes a dashboard good?</q><p>It answers a specific question for a specific person. The headline numbers a decision needs first, drill-down beneath, and nothing on it that does not support an action.</p></div>
+<div class="iq"><q>What is the biggest cost of a wide dashboard?</q><p>Attention. Forty charts arranged by source table means nobody finds the two that matter, so the dashboard stops being opened at all.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. DirectQuery trades…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Freshness for speed</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Speed for freshness</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Cost for accuracy</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Storage for compute</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. DAX is the calculation language of…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Tableau</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Power BI</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">dbt</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Looker</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. A semantic layer exists to…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Render charts</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Define each metric once for every consumer</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Replace the warehouse</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Cache dashboards</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Conflicting revenue numbers across dashboards usually mean…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A warehouse bug</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Metric logic duplicated in the BI tool</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Stale imports only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A join error</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. A chart that supports no decision is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Context</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Decoration</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A drill-down</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A KPI</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="visualisation.html">← Visualisation</a>
+      <a class="nav-link next" href="case-studies.html">Case Study Practice →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=16"></script>
+<script src="../assets/js/site-index.js?v=21"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>
