@@ -8,7 +8,7 @@
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-techforge--dev.vercel.app-00d4ff?style=flat-square&logo=vercel)](https://techforge-dev.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-7c3aed?style=flat-square)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-3.0.0-green?style=flat-square)](RELEASES.md)
+[![Version](https://img.shields.io/badge/Version-3.1.0-green?style=flat-square)](RELEASES.md)
 [![HTML5](https://img.shields.io/badge/Built%20with-HTML5%20%2F%20Vanilla%20JS-e34f26?style=flat-square&logo=html5)](https://techforge-dev.vercel.app)
 [![Zero Runtime Dependencies](https://img.shields.io/badge/Runtime%20Dependencies-Zero-22c55e?style=flat-square)](#tech-stack)
 [![PWA](https://img.shields.io/badge/PWA-Offline%20Ready-5a67d8?style=flat-square&logo=pwa)](https://techforge-dev.vercel.app)
@@ -73,7 +73,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 
 ### Data Structures & Algorithms
 - **30 in-depth topics** across 7 categories, ending with a pattern checklist for interviews
-- **A visualizer on all 29 topics** — 28 interactive Canvas 2D animations, plus a step-by-step DP table fill for Dynamic Programming
+- **A visualizer on 29 of the 30 topics** — 28 interactive Canvas 2D animations, plus a step-by-step DP table fill for Dynamic Programming
 - **Four language tabs** on every topic — Python, JavaScript, Java and C++, with your choice remembered
 - Comprehensive coverage: arrays, linked lists, stacks, queues, trees, graphs, hashing, sorting, searching, bit manipulation, sliding window, two pointer
 - Big-O analysis and a full roadmap of the track
@@ -420,6 +420,14 @@ Example:
 
 Full release notes: **[RELEASES.md](RELEASES.md)**
 
+### v3.1.0 — shipped 2026-08-09
+- [x] Every roadmap node opens a real lesson — 221 placeholders cleared, none left
+- [x] Five new sections — Backend, Mobile, Game Development, QA & Testing, Blockchain
+- [x] Data 7 → 14 guides, DevOps 26 → 33, System Design 26 → 32, Security 8 → 14
+- [x] Roles hub — 18 career paths with progress, filtering and comparison
+- [x] One navbar and one mobile nav surface, generated into every page and gated in CI
+- [x] Six correctness gates in CI — sidebars, links, anchors, sections, navbar, entities
+
 ### v3.0.0 — shipped 2026-07-28
 - [x] Guided roadmaps — 14 topic roadmaps + 7 career paths, generated from the site's own pages
 - [x] Four more language tracks — JavaScript, TypeScript, Java, C++
@@ -439,7 +447,7 @@ Full release notes: **[RELEASES.md](RELEASES.md)**
 - [x] Spaced repetition / flashcard system (Leitner boxes, due-card resurfacing, localStorage-only)
 - [x] "Review weak areas" recommendations
 
-### v3.1.0 (Q3 2027)
+### v3.2.0 (next)
 - [ ] Build your own roadmap — pick topics, get a saved roadmap of your own
 - [ ] Interactive coding challenges with an in-page editor
 - [ ] Performance monitoring & analytics

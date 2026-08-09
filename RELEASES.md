@@ -5,6 +5,77 @@ All notable changes to TechForge. Full tagged releases live on
 
 ---
 
+## v3.1.0 — Every roadmap node opens a real lesson
+
+**2026-08-09** · 23 commits since v3.0.0 · 369 files changed · 100 new pages
+
+v3.0.0 shipped the roadmaps. Many of their nodes were honest placeholders marked
+*coming soon*. This release writes them: **221 placeholders, now zero.** Every
+node on all 32 roadmaps opens a written lesson.
+
+### Five new sections
+
+- **Backend** — 6 guides: Node and the event loop, REST and OpenAPI, GraphQL and
+  gRPC, ORMs and migrations, transactions and isolation levels, backend testing.
+- **Mobile Development** — 7 guides: platforms and the app lifecycle, Compose and
+  SwiftUI, MVVM and MVI, offline-first sync, local and secure storage, release,
+  React Native versus Flutter.
+- **Game Development** — 7 guides: game maths, engines and the loop, real-time
+  graphics, physics and animation, gameplay feel, netcode, profiling and shipping.
+- **QA & Testing** — 6 guides: fundamentals and the pyramid, exploratory and
+  regression testing, unit and integration automation, UI automation, API and
+  contract testing, performance and security.
+- **Blockchain** — 5 guides: fundamentals and consensus, smart contracts and the
+  EVM, tooling, dApps, and smart contract security.
+
+### Existing sections extended
+
+- **Data** — 7 → 14 guides: causal inference, BI tools, analyst case studies, data
+  quality testing, pipelines, orchestration and dbt, dimensional modelling.
+- **DevOps** — 26 → 33 guides: SLOs and error budgets, observability, secrets and
+  IAM, Terraform state and drift, GitOps, registries and image scanning,
+  blue-green and canary releases, service mesh, cost management, chaos engineering.
+- **System Design** — 26 → 32 guides: design patterns, domain-driven design,
+  architecture decision records, C4 diagramming, trade-off analysis, technical debt.
+- **Security** — 8 → 14 guides: scanning and enumeration, penetration testing,
+  SIEM and log analysis, threat intelligence, digital forensics, compliance.
+- **Frontend** — 2 → 9 guides · **AI/ML** — 8 → 12 modules · **DSA** — 29 → 30
+  topics, ending with an interview pattern checklist.
+
+### Navigation
+
+- **Roles hub** — 18 career paths grouped by focus, with progress, filtering and
+  role comparison.
+- **One navbar, one source** — seven primary destinations plus a keyboard-complete
+  **More** menu holding every other section, rendered into all 335 pages by
+  `tools/sync-navbar.mjs`. `npm run check:navbar` fails the build on drift.
+- **One mobile navigation surface** — the same icon grid everywhere. Thirty-five
+  pages previously fell back to a stacked list of nav links.
+- **Roadmap rows redesigned** — every node carries the same badge: the sequence
+  number until you mark it done, a tick after. A lesson referenced from several
+  places completes everywhere at once and still counts once.
+
+### Correctness gates
+
+Each was written after a real defect and proven to fail before being wired into CI.
+
+- `check:sidebars` — every lesson is listed by every sibling, and ends with
+  prev/next. Found 261 missing links across 85 pages.
+- `check:links` — 23,438 links resolve from disk, not only when served.
+- `check:anchors` — all 664 roadmap anchors point at a heading that exists.
+- `check:sections` — every section in the manifest is reachable from the home page.
+- `check:navbar` — no page's navbar has drifted from its source of truth.
+- `check:entities` — no bare ampersands in HTML text. Found 437 across 163 files,
+  reported by the validator as a nested tag one line away.
+
+### Accessibility
+
+- 335 pages × 2 themes = **670 axe audits, zero violations**.
+- Inline links in body copy are now styled by exclusion — `main a:not([class])` —
+  after the same 2.11:1 contrast failure appeared in three different containers.
+
+---
+
 ## v3.0.0 — Roadmaps, four new language tracks, and the Systems pillar
 
 **2026-07-28** · 102 commits since v2.0.0 · 272 files changed · 109 new pages
