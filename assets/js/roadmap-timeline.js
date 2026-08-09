@@ -128,34 +128,60 @@
      lowering opacity has broken contrast here before. */
   /* Completion is stored per page, but a roadmap node is often a section of a
      page — the Databases roadmap points at twenty-nine parts of one sql.html.
-     Ticking any of them ticked all of them, which looked like a bug and was
-     really the data model showing through.
+     So a page is counted once, on the node that owns it, and the other nodes
+     pointing into that page mirror its state: they show as done and can toggle
+     it, but they do not inflate the total.
 
-     So a checkbox appears once per page, on the node that owns it. Every other
-     node linking into that page is a place to jump to, not a task to finish,
-     and gets a marker saying so. The two share a column, so rows still line up
-     and you can tell which is which without hovering. */
-  function marker(node, label, owned) {
-    if (node.status === 'soon' || !node.href) return '';
+     A row used to carry either a checkbox or a jump chevron depending on which
+     of those it was, which made a group of four rows look like three tasks and
+     an oddity. Every row now has the same leading badge instead — the sequence
+     number, becoming a tick — so completing a page visibly completes every row
+     that points at it. */
+  function badgeFor(node, order, owned) {
+    var glyph = order ? String(order) : '&middot;';
+    var topic = node.status === 'soon' ? null : topicOf(node.href);
 
-    var page = node.href.split('#')[0];
-    var topic = topicOf(node.href);
-
-    // a section of a page already accounted for, or a page we cannot track
-    if (!topic || owned[page]) {
-      return '<span class="rt-jump" aria-hidden="true"><i class="ti ti-chevron-right"></i></span>';
+    if (!topic) {
+      return {
+        html: '<span class="rt-badge" aria-hidden="true">' + glyph + '</span>',
+        topic: null, mirror: null,
+      };
     }
 
-    owned[page] = true;
-    var done = progress().is(topic);
-    return '<button type="button" class="rt-tick" data-topic="' + esc(topic) + '"' +
-      ' aria-pressed="' + done + '"' +
-      ' aria-label="Mark ' + esc(label) + ' as done">' +
-      '<i class="ti ti-check" aria-hidden="true"></i></button>';
+    var page = node.href.split('#')[0];
+    var owns = !owned[page];
+    if (owns) owned[page] = true;
+
+    return {
+      html: '<button type="button" class="rt-badge rt-badge-btn" data-topic="' + esc(topic) + '"' +
+        ' aria-pressed="' + progress().is(topic) + '"' +
+        ' aria-label="Mark ' + esc(node.t) + ' as done">' +
+        '<span class="rt-badge-n" aria-hidden="true">' + glyph + '</span>' +
+        '<i class="ti ti-check rt-badge-c" aria-hidden="true"></i></button>',
+      topic: owns ? topic : null,
+      mirror: owns ? null : topic,
+    };
   }
 
-  function ownsTick(node, owned) {
-    return node.status !== 'soon' && node.href && topicOf(node.href) && !owned[node.href.split('#')[0]];
+  /* A step heading has no sequence number of its own — the node on the spine
+     carries it — so its control is the plain checkbox, sharing the badge's
+     shape and colours. */
+  function headTick(step, owned) {
+    var topic = step.status === 'soon' ? null : topicOf(step.href);
+    if (!topic) return { html: '', topic: null, mirror: null };
+
+    var page = step.href.split('#')[0];
+    var owns = !owned[page];
+    if (owns) owned[page] = true;
+
+    return {
+      html: '<button type="button" class="rt-tick" data-topic="' + esc(topic) + '"' +
+        ' aria-pressed="' + progress().is(topic) + '"' +
+        ' aria-label="Mark ' + esc(step.t) + ' as done">' +
+        '<i class="ti ti-check" aria-hidden="true"></i></button>',
+      topic: owns ? topic : null,
+      mirror: owns ? null : topic,
+    };
   }
 
   /* `order` is the position in the required sequence, or 0 for an optional
@@ -167,7 +193,6 @@
   function subItem(k, order, owned) {
     var soon = k.status === 'soon';
     var label =
-      (order ? '<span class="rt-ord" aria-hidden="true">' + order + '</span>' : '') +
       esc(k.t) +
       (soon ? '<span class="rt-tag">soon</span>' : '') +
       (k.tier === 'branch' ? '<span class="rt-tag">optional</span>' : '');
@@ -178,10 +203,8 @@
        labels ("Searching", "Sorting") with no page of their own and never
        will have: those render as a plain pill, not as coming-soon. */
     var pill;
-    // only the node that owns the page carries the topic, so progress counts
-    // each lesson once however many sections of it the roadmap lists
-    var topic = ownsTick(k, owned) ? topicOf(k.href) : null;
-    var mark = marker(k, k.t, owned);
+    var b = badgeFor(k, order, owned);
+    var state = b.topic || b.mirror;
 
     if (soon) {
       pill = '<span class="rt-pill-node rt-soon" aria-disabled="true">' + label + '</span>';
@@ -190,9 +213,13 @@
     } else {
       pill = '<a class="rt-pill-node" href="' + esc(k.href) + '">' + label + '</a>';
     }
-    return '<li' + (topic ? ' data-topic="' + esc(topic) + '"' : '') +
-      (topic && progress().is(topic) ? ' class="rt-done"' : '') + '>' +
-      mark + pill + '</li>';
+
+    return '<li class="rt-item' +
+      (soon ? ' rt-item-soon' : '') +
+      (state && progress().is(state) ? ' rt-done' : '') + '"' +
+      (b.topic ? ' data-topic="' + esc(b.topic) + '"' : '') +
+      (b.mirror ? ' data-mirror="' + esc(b.mirror) + '"' : '') + '>' +
+      b.html + pill + '</li>';
   }
 
   /* Same rule for a step's own heading. A step can be coming-soon too — the
@@ -245,12 +272,14 @@
       var colour = bandColour[step.g] || fallback;
       var kids = buckets[step.id] || [];
 
-      var stepTopic = ownsTick(step, owned) ? topicOf(step.href) : null;
-      var stepMark = marker(step, step.t, owned);
+      var head = headTick(step, owned);
+      var stepMark = head.html;
+      var stepState = head.topic || head.mirror;
 
       var li = document.createElement('li');
-      li.className = 'rt-step' + (stepTopic && progress().is(stepTopic) ? ' rt-done' : '');
-      if (stepTopic) li.dataset.topic = stepTopic;
+      li.className = 'rt-step' + (stepState && progress().is(stepState) ? ' rt-done' : '');
+      if (head.topic) li.dataset.topic = head.topic;
+      if (head.mirror) li.dataset.mirror = head.mirror;
       li.dataset.colour = colour;
       /* Kept on the element rather than read back out of .rt-title, whose text
          also carries the "soon" tag — an aria-label of "Step 1: HTMLsoon" is
@@ -341,18 +370,30 @@
        scrolled. Scroll position is already shown by the active node and the
        step pill; spending the most prominent element in the layout on it too
        was what made this read as a document rather than a route. */
-    /* the rows, not the tick buttons — those carry data-topic too, and matching
-       both counted every topic twice */
+    /* the rows, not the buttons — those carry data-topic too, and matching both
+       counted every topic twice. Mirror rows point at a page another row already
+       counts: they are painted, never totalled. */
     var trackable = view.road.querySelectorAll('li.rt-step[data-topic], .rt-list li[data-topic]');
+    var mirrors = view.road.querySelectorAll('li.rt-step[data-mirror], .rt-list li[data-mirror]');
+
+    function paintRow(el, topic) {
+      var is = progress().is(topic);
+      el.classList.toggle('rt-done', is);
+      /* the step's own tick is nested inside the card, so it is a descendant
+         rather than a child — matching only children left it stuck reading
+         aria-pressed="false" after the row was ticked */
+      var btn = el.querySelector(':scope > .rt-badge-btn, :scope .rt-head-row > .rt-tick');
+      if (btn) btn.setAttribute('aria-pressed', String(is));
+      return is;
+    }
 
     function paintProgress() {
       var done = 0;
       Array.prototype.forEach.call(trackable, function (el) {
-        var is = progress().is(el.dataset.topic);
-        el.classList.toggle('rt-done', is);
-        var btn = el.querySelector(':scope > .rt-tick, :scope .rt-head-row > .rt-tick');
-        if (btn) btn.setAttribute('aria-pressed', String(is));
-        if (is) done++;
+        if (paintRow(el, el.dataset.topic)) done++;
+      });
+      Array.prototype.forEach.call(mirrors, function (el) {
+        paintRow(el, el.dataset.mirror);
       });
       var total = trackable.length;
       var pct = total ? Math.round((done / total) * 100) : 0;
@@ -364,7 +405,7 @@
     }
 
     view.road.addEventListener('click', function (e) {
-      var btn = e.target.closest && e.target.closest('.rt-tick');
+      var btn = e.target.closest && e.target.closest('.rt-tick, .rt-badge-btn');
       if (!btn) return;
       progress().toggle(btn.dataset.topic);
       paintProgress();

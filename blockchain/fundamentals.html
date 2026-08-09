@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Blocks and hash chains, Merkle trees, proof of work and proof of stake, wallets and keys, gas and fees, and layer 2 scaling."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/blockchain/fundamentals.html"/>
+  <meta property="og:title" content="Blockchain Fundamentals — Blockchain | TechForge"/>
+  <meta property="og:description" content="Blocks and hash chains, Merkle trees, proof of work and proof of stake, wallets and keys, gas and fees, and layer 2 scaling."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Blockchain Fundamentals — Blockchain | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="blockchain/fundamentals" data-section="blockchain">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item current" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link active" href="fundamentals.html"><span class="sb-num"><i class="ti ti-link"></i></span>Blockchain Fundamentals</a>
+    <div class="sidebar-label">Writing Contracts</div>
+    <a class="sb-link" href="smart-contracts.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>Smart Contracts</a>
+    <a class="sb-link" href="tooling.html"><span class="sb-num"><i class="ti ti-tools"></i></span>Development Tooling</a>
+    <div class="sidebar-label">Shipping</div>
+    <a class="sb-link" href="dapps.html"><span class="sb-num"><i class="ti ti-app-window"></i></span>Building a dApp</a>
+    <a class="sb-link" href="security.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Contract Security</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Blockchain Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Blockchain · Guide</div>
+      <h1 class="pg-title">Blockchain Fundamentals</h1>
+      <p class="pg-sub">What a blockchain actually is, how strangers agree without a referee, and where the costs come from.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Blockchain</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-link"></i></span> A Ledger Nobody Owns</h2>
+<div class="callout callout-blue"><span>A blockchain is an append-only ledger replicated across machines that do not trust each other, where the ordering of entries is agreed by a rule rather than by an authority. Everything else is a consequence of that one constraint.</span></div>
+<p class="lesson-prose">Each block holds a batch of transactions and the <strong>hash of the block before it</strong>. Change an old transaction and its block's hash changes, which breaks the link every later block depends on — so tampering means redoing everything since, faster than the rest of the network is extending it.</p>
+<p class="lesson-prose">That is the whole security model, and it is worth being blunt about the trade. You get an audit trail nobody can quietly rewrite. You pay for it with throughput measured in tens of transactions per second, storage replicated thousands of times, and latency measured in block times. <strong>If a database with an owner is acceptable, use the database</strong> — it is faster, cheaper and easier in every dimension.</p>
+    </section>
+    <section class="lesson-section" id="merkle">
+      <h2><span class="sec-icon"><i class="ti ti-binary-tree"></i></span> Merkle Trees</h2>
+<p class="lesson-prose">A block may hold thousands of transactions, but its header holds one 32-byte number: the <strong>Merkle root</strong>. Hash each transaction, hash them in pairs, keep going, and the single value at the top commits to every transaction underneath it.</p>
+<p class="lesson-prose">The useful property is the proof. To show a transaction is in a block you do not need the block — you need the transaction and <strong>one hash per level</strong>, about twenty values for a million transactions. Recompute upward and compare against the root.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Transactions</th><th>Proof size</th></tr></thead><tbody><tr><td>1,000</td><td>~10 hashes</td></tr><tr><td>1,000,000</td><td>~20 hashes</td></tr><tr><td>1,000,000,000</td><td>~30 hashes</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>This is what makes light clients possible: a phone can verify that its payment was included without storing a terabyte of chain, because a logarithmic proof is enough.</span></div>
+    </section>
+    <section class="lesson-section" id="consensus">
+      <h2><span class="sec-icon"><i class="ti ti-users"></i></span> Consensus Mechanisms</h2>
+<p class="lesson-prose">Consensus answers one question: whose version of the next block counts? Both dominant answers make attacking expensive rather than impossible.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th></th><th>Proof of work</th><th>Proof of stake</th></tr></thead><tbody><tr><td>Scarce resource</td><td>Electricity and hardware</td><td>Capital locked as stake</td></tr><tr><td>Attack cost</td><td>Out-hash the network</td><td>Acquire a large share of the stake</td></tr><tr><td>Penalty for cheating</td><td>Wasted energy</td><td>Stake destroyed by slashing</td></tr><tr><td>Energy</td><td>Very high by design</td><td>Negligible</td></tr><tr><td>Finality</td><td>Probabilistic — wait for confirmations</td><td>Explicit, after a couple of epochs</td></tr></tbody></table></div>
+<p class="lesson-prose"><strong>Finality</strong> is the practical difference. Under proof of work a block is never strictly final; it just becomes exponentially unlikely to be reorganised, which is why exchanges wait for confirmations. Proof-of-stake chains finalise explicitly, after which reversal would require destroying an enormous amount of staked capital.</p>
+<div class="callout callout-red"><span>An attacker with a majority of the hash rate or the stake can reorder or censor recent transactions — but cannot forge signatures or spend from an account whose key they do not hold. The keys are protected by cryptography, not by consensus.</span></div>
+    </section>
+    <section class="lesson-section" id="wallets">
+      <h2><span class="sec-icon"><i class="ti ti-key"></i></span> Wallets &amp; Keys</h2>
+<p class="lesson-prose">A wallet holds no coins. It holds a <strong>private key</strong>; the balance lives on the chain. The public key derives from the private key, the address derives from the public key, and the derivation only runs one way.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Thing</th><th>Is</th></tr></thead><tbody><tr><td>Private key</td><td>A random 256-bit number. Whoever has it owns the funds</td></tr><tr><td>Public key</td><td>Derived from the private key, used to verify signatures</td></tr><tr><td>Address</td><td>A hash of the public key — what you share</td></tr><tr><td>Seed phrase</td><td>12 or 24 words that regenerate every key in the wallet</td></tr><tr><td>Signature</td><td>Proof a transaction was authorised, without revealing the key</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>There is no password reset. Lose the seed phrase and the funds are unreachable forever; share it and they are gone immediately. No support desk can help, because nobody else has a copy — that is the design, not a gap in it.</span></div>
+<p class="lesson-prose">Hence the split between <strong>hot wallets</strong> — keys on an internet-connected device, convenient and exposed — and <strong>cold storage</strong>, where the key never touches a networked machine. Anything worth protecting lives cold, and a hardware wallet signs without the key ever leaving the device.</p>
+    </section>
+    <section class="lesson-section" id="gas">
+      <h2><span class="sec-icon"><i class="ti ti-flame"></i></span> Gas &amp; Fees</h2>
+<p class="lesson-prose">Every operation costs <strong>gas</strong> — a unit of computational work — because otherwise an infinite loop would halt the network for everyone. You pay gas used × gas price, and if execution runs out of gas it <strong>reverts but still charges you</strong>: the work was done and someone has to be paid for it.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Operation</th><th>Relative cost</th></tr></thead><tbody><tr><td>Arithmetic</td><td>Trivial</td></tr><tr><td>Reading storage</td><td>Expensive</td></tr><tr><td>Writing storage</td><td>Very expensive</td></tr><tr><td>Deploying a contract</td><td>Enormous</td></tr><tr><td>Emitting an event</td><td>Cheap — the log way to record data</td></tr></tbody></table></div>
+<p class="lesson-prose">Gas price is an auction. When the chain is busy, everyone bids higher and a transaction that cost cents becomes tens of dollars — which is exactly the pressure that produced layer 2.</p>
+<div class="callout callout-amber"><span>Storage dominates the bill, so contract design is unlike ordinary programming: pack variables into single slots, keep bulk data off-chain and store a hash, and emit events instead of writing state you only ever read from outside.</span></div>
+    </section>
+    <section class="lesson-section" id="layer2">
+      <h2><span class="sec-icon"><i class="ti ti-stack-2"></i></span> Layer 2 &amp; Scaling</h2>
+<p class="lesson-prose">A chain where every node re-executes every transaction cannot scale by making blocks bigger without pushing nodes onto expensive hardware — which centralises the thing whose whole point was decentralisation. <strong>Rollups</strong> take the other route: execute elsewhere, settle on the base chain.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Type</th><th>How it proves correctness</th><th>Cost</th></tr></thead><tbody><tr><td>Optimistic rollup</td><td>Assumes valid, allows fraud proofs during a challenge window</td><td>Withdrawals wait days</td></tr><tr><td>ZK rollup</td><td>Submits a validity proof with every batch</td><td>Heavy proving, harder to build</td></tr><tr><td>Sidechain</td><td>Its own consensus, bridged</td><td>Does not inherit base-chain security</td></tr></tbody></table></div>
+<p class="lesson-prose">Rollups post compressed transaction data to the base chain, so anyone can reconstruct the state independently. That data availability is what separates a rollup from a sidechain — and why a rollup inherits the security of the chain beneath it while a sidechain does not.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>Why is a blockchain hard to tamper with?</q><p>Each block commits to the hash of the previous one, so altering an old transaction invalidates every block after it. You would have to redo that work faster than the rest of the network extends the honest chain.</p></div>
+<div class="iq"><q>What does a Merkle root give you?</q><p>A single hash that commits to every transaction in a block, and inclusion proofs that grow logarithmically — about twenty hashes for a million transactions, which is what makes light clients viable.</p></div>
+<div class="iq"><q>Proof of work versus proof of stake?</q><p>Both make attack expensive: work burns electricity, stake risks capital that slashing can destroy. Stake adds explicit finality and negligible energy use; work gives only probabilistic finality.</p></div>
+<div class="iq"><q>What can a majority attacker actually do?</q><p>Reorder or censor recent transactions and double-spend their own. They cannot forge signatures or move funds from accounts whose keys they do not hold — that is cryptography, not consensus.</p></div>
+<div class="iq"><q>Why does a failed transaction still cost gas?</q><p>The network executed it up to the failure point. Charging for that work is what stops an attacker from submitting endless failing transactions for free.</p></div>
+<div class="iq"><q>What separates a rollup from a sidechain?</q><p>A rollup posts its transaction data to the base chain and proves its state there, so it inherits that chain's security. A sidechain runs its own consensus and inherits nothing.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. Each block contains the hash of…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Its own transactions only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The previous block</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The next block</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The genesis block only</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. A Merkle inclusion proof for a million transactions is about…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A million hashes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Twenty hashes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">One hash</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Half the block</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Slashing exists in…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Proof of work</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Proof of stake</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Both equally</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Neither</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Losing a seed phrase means…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Support can restore it</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The funds are unreachable forever</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A 30-day recovery window</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Only that device is lost</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. The most expensive common EVM operation is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Arithmetic</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Writing storage</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Emitting an event</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Reading calldata</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link disabled" href="#">← Start of section</a>
+      <a class="nav-link next" href="smart-contracts.html">Smart Contracts →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=14"></script>
+<script src="../assets/js/site-index.js?v=19"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

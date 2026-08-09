@@ -136,6 +136,78 @@
     "depth": "guide"
   },
   {
+    "id": "blockchain/dapps",
+    "title": "Building a dApp — Blockchain | TechForge",
+    "desc": "Front-end integration with a chain, wallet connection and network handling, and decentralised storage with IPFS and Arwe",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/dapps.html",
+    "path": "blockchain/dapps.html",
+    "topic": "blockchain/dapps",
+    "depth": "guide"
+  },
+  {
+    "id": "blockchain/fundamentals",
+    "title": "Blockchain Fundamentals — Blockchain | TechForge",
+    "desc": "Blocks and hash chains, Merkle trees, proof of work and proof of stake, wallets and keys, gas and fees, and layer 2 scal",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/fundamentals.html",
+    "path": "blockchain/fundamentals.html",
+    "topic": "blockchain/fundamentals",
+    "depth": "guide"
+  },
+  {
+    "id": "blockchain/index",
+    "title": "Blockchain Development",
+    "desc": "How a blockchain works, writing smart contracts, the tooling around them, building a dApp, and the security discipline t",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/index.html",
+    "path": "blockchain/index.html",
+    "topic": null,
+    "depth": "guide"
+  },
+  {
+    "id": "blockchain/security",
+    "title": "Smart Contract Security — Blockchain | TechForge",
+    "desc": "Reentrancy and the common smart contract bug classes, oracle and economic attacks, and how auditing and formal verificat",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/security.html",
+    "path": "blockchain/security.html",
+    "topic": "blockchain/security",
+    "depth": "guide"
+  },
+  {
+    "id": "blockchain/smart-contracts",
+    "title": "Smart Contracts — Blockchain | TechForge",
+    "desc": "Solidity, the EVM execution model, ERC token standards, and upgrade patterns for immutable code.",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/smart-contracts.html",
+    "path": "blockchain/smart-contracts.html",
+    "topic": "blockchain/smart-contracts",
+    "depth": "guide"
+  },
+  {
+    "id": "blockchain/tooling",
+    "title": "Development Tooling — Blockchain | TechForge",
+    "desc": "Hardhat and Foundry, contract testing including fuzzing and forked state, ethers and viem, and node and RPC providers.",
+    "icon": "📄",
+    "section": "blockchain",
+    "sectionKey": "blockchain",
+    "href": "blockchain/tooling.html",
+    "path": "blockchain/tooling.html",
+    "topic": "blockchain/tooling",
+    "depth": "guide"
+  },
+  {
     "id": "programming/basics",
     "title": "C++ Basics — Types, auto & References | TechForge",
     "desc": "C++ Basics — Types, auto & References | TechForge",

@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Reentrancy and the common smart contract bug classes, oracle and economic attacks, and how auditing and formal verification work."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/blockchain/security.html"/>
+  <meta property="og:title" content="Smart Contract Security — Blockchain | TechForge"/>
+  <meta property="og:description" content="Reentrancy and the common smart contract bug classes, oracle and economic attacks, and how auditing and formal verification work."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Smart Contract Security — Blockchain | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=33" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="blockchain/security" data-section="blockchain">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item current" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Foundations</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-link"></i></span>Blockchain Fundamentals</a>
+    <div class="sidebar-label">Writing Contracts</div>
+    <a class="sb-link" href="smart-contracts.html"><span class="sb-num"><i class="ti ti-file-code"></i></span>Smart Contracts</a>
+    <a class="sb-link" href="tooling.html"><span class="sb-num"><i class="ti ti-tools"></i></span>Development Tooling</a>
+    <div class="sidebar-label">Shipping</div>
+    <a class="sb-link" href="dapps.html"><span class="sb-num"><i class="ti ti-app-window"></i></span>Building a dApp</a>
+    <a class="sb-link active" href="security.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Contract Security</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← Blockchain Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">Blockchain · Guide</div>
+      <h1 class="pg-title">Smart Contract Security</h1>
+      <p class="pg-sub">Why this code gets attacked harder than any other, the bug classes that keep recurring, and how audits actually work.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">Blockchain</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-shield-lock"></i></span> Adversarial By Default</h2>
+<div class="callout callout-red"><span>Contract code is public, permanently deployed, and holds money that anyone can try to take. The attacker sees your source, can simulate against real state for free, and only needs to be right once.</span></div>
+<p class="lesson-prose">That inverts the usual economics of software defects. A web bug is a support ticket; a contract bug is a withdrawal you cannot reverse, and there is a standing financial incentive for strangers to look for it. So the discipline is closer to cryptography than to product engineering: conservative patterns, established libraries, and a strong preference for the boring option.</p>
+    </section>
+    <section class="lesson-section" id="reentrancy">
+      <h2><span class="sec-icon"><i class="ti ti-arrow-loop-left"></i></span> Reentrancy &amp; Common Bugs</h2>
+<p class="lesson-prose"><strong>Reentrancy</strong> is the canonical bug. When your contract sends value to an address, that address may be a contract, and it runs code — which can call back into your function before the first call has finished updating state.</p>
+<pre class="code-block"><code>// Vulnerable: the balance is cleared after the external call
+function withdraw() external {
+    uint256 amount = balances[msg.sender];
+    (bool ok, ) = msg.sender.call{value: amount}("");  // attacker re-enters here
+    require(ok);
+    balances[msg.sender] = 0;                          // too late
+}
+
+// Safe: checks, then effects, then interactions
+function withdraw() external {
+    uint256 amount = balances[msg.sender];
+    require(amount &gt; 0);
+    balances[msg.sender] = 0;                          // effect first
+    (bool ok, ) = msg.sender.call{value: amount}("");  // interaction last
+    require(ok);
+}</code></pre>
+<p class="lesson-prose">The rule the fix encodes is <strong>checks-effects-interactions</strong>: validate, update your own state, and only then call out. A reentrancy guard is a useful belt on top, but ordering is the actual defence.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Bug class</th><th>Shape</th></tr></thead><tbody><tr><td>Missing access control</td><td>A privileged function anyone can call</td></tr><tr><td>Unchecked return values</td><td>A failed transfer treated as success</td></tr><tr><td>Front-running</td><td>The mempool is public; your transaction can be jumped</td></tr><tr><td>Integer assumptions</td><td>Decimals, rounding and truncation losing value each call</td></tr><tr><td>Delegatecall to untrusted code</td><td>Someone else's code writing your storage</td></tr><tr><td>Denial of service</td><td>A loop over an array anyone can grow until it runs out of gas</td></tr></tbody></table></div>
+    </section>
+    <section class="lesson-section" id="economic">
+      <h2><span class="sec-icon"><i class="ti ti-chart-line"></i></span> Oracle &amp; Economic Attacks</h2>
+<p class="lesson-prose">The expensive incidents are frequently not code bugs at all. The code does exactly what it says, using a number an attacker was able to move.</p>
+<p class="lesson-prose">A <strong>price oracle</strong> brings off-chain reality on-chain, and reading a price directly from a single pool is the classic mistake: a flash loan borrows an enormous sum with no collateral, distorts the pool, and the contract prices a trade against a number that existed for one transaction.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Weak source</th><th>Sturdier</th></tr></thead><tbody><tr><td>Spot price from one pool</td><td>Time-weighted average across blocks</td></tr><tr><td>A single reporter</td><td>A decentralised oracle network with aggregation</td></tr><tr><td>No sanity bounds</td><td>Reject moves outside a plausible range</td></tr><tr><td>No staleness check</td><td>Reject a price older than a threshold</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Assume every input an attacker can influence within one transaction is hostile — pool balances, block timestamps, transaction ordering. Flash loans make capital an attacker no longer needs to own.</span></div>
+    </section>
+    <section class="lesson-section" id="auditing">
+      <h2><span class="sec-icon"><i class="ti ti-search"></i></span> Auditing &amp; Formal Verification</h2>
+<p class="lesson-prose">An audit is a time-boxed review by people who do this constantly. It raises the bar considerably and guarantees nothing — several audited protocols have been drained — so it belongs in a chain of defences rather than at the end of one.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Layer</th><th>Finds</th></tr></thead><tbody><tr><td>Static analysis (Slither)</td><td>Known bad patterns, fast and free</td></tr><tr><td>Fuzzing and invariants</td><td>Property violations you did not anticipate</td></tr><tr><td>Manual audit</td><td>Logic and economic flaws tools cannot see</td></tr><tr><td>Formal verification</td><td>Mathematical proof that a property always holds</td></tr><tr><td>Bug bounty</td><td>Continuous review, priced against the exploit</td></tr></tbody></table></div>
+<p class="lesson-prose"><strong>Formal verification</strong> proves a stated property over all possible inputs — total supply never exceeds the cap, no path lets a user withdraw more than they deposited. It is strong and narrow: it proves what you asked, so an unstated assumption is still a hole.</p>
+<div class="callout callout-blue"><span>Operational controls matter as much as code review: a timelock on upgrades so users can exit, a multisig rather than one key, a pause switch, and caps that limit what a single incident can drain.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>What is reentrancy?</q><p>Sending value to an address runs that address's code, which can call back into your function before it finished updating state — so balances are read again before they were cleared.</p></div>
+<div class="iq"><q>What is the checks-effects-interactions pattern?</q><p>Validate inputs, update your own state, then make external calls. Ordering is the real defence; a reentrancy guard is a secondary control.</p></div>
+<div class="iq"><q>Why is reading a spot price from one pool dangerous?</q><p>A flash loan can move that pool within a single transaction, so the contract prices against a number the attacker created. Time-weighted averages and aggregated oracle networks resist that.</p></div>
+<div class="iq"><q>What do flash loans change?</q><p>They remove capital as a barrier. An attacker can borrow an enormous sum with no collateral, provided it is repaid in the same transaction, so any attack profitable at scale is available to anyone.</p></div>
+<div class="iq"><q>Does an audit make a contract safe?</q><p>No. It is a time-boxed review that raises the bar. Audited protocols have been drained — it belongs alongside static analysis, fuzzing, invariants, bounties and operational limits.</p></div>
+<div class="iq"><q>What does formal verification actually prove?</q><p>That a stated property holds for all inputs — a supply cap, a withdrawal bound. It is exactly as complete as the properties you thought to state.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. Reentrancy is prevented primarily by…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A guard modifier alone</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Updating state before external calls</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Using transfer instead of call</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Lower gas limits</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. A flash loan lets an attacker…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Skip gas fees</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Borrow huge sums with no collateral within one transaction</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Reverse a transaction</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Forge a signature</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. A safer price source is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A single pool spot price</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A time-weighted average or aggregated oracle</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The block timestamp</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The last trade</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. A completed audit means…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The contract is safe</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The bar is raised, not that it is safe</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">No further review is needed</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Insurance applies</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. Formal verification proves…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The absence of all bugs</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The properties you stated, for all inputs</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Gas efficiency</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Correct deployment</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="dapps.html">← Building a dApp</a>
+      <a class="nav-link next" href="index.html">Back to Blockchain →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=14"></script>
+<script src="../assets/js/site-index.js?v=19"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

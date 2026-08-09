@@ -81,6 +81,36 @@ window.TF_TOPICS = {
       }
     ]
   },
+  blockchain: {
+    label: 'Blockchain',
+    hub: 'blockchain/index.html',
+    accent: '#fbbf24',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'blockchain/fundamentals', file: 'fundamentals.html', title: 'Blockchain Fundamentals', icon: '<i class="ti ti-link"></i>', desc: 'Hash-linked blocks and Merkle trees, proof of work versus proof of stake, wallets and keys, gas, and layer 2 scaling.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'contracts',
+        label: 'Writing Contracts',
+        topics: [
+          { id: 'blockchain/smart-contracts', file: 'smart-contracts.html', title: 'Smart Contracts', icon: '<i class="ti ti-file-code"></i>', desc: 'Solidity, the EVM execution and storage model, ERC token standards, and proxy upgrade patterns.', depth: 'full' },
+          { id: 'blockchain/tooling', file: 'tooling.html', title: 'Development Tooling', icon: '<i class="ti ti-tools"></i>', desc: 'Hardhat and Foundry, fuzzing and invariant tests, forked mainnet, ethers and viem, and RPC providers.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping',
+        topics: [
+          { id: 'blockchain/dapps', file: 'dapps.html', title: 'Building a dApp', icon: '<i class="ti ti-app-window"></i>', desc: 'Front-end integration, the transaction lifecycle, wallet connection, and decentralised storage.', depth: 'full' },
+          { id: 'blockchain/security', file: 'security.html', title: 'Contract Security', icon: '<i class="ti ti-shield-lock"></i>', desc: 'Reentrancy and the recurring bug classes, oracle and flash-loan attacks, auditing and formal verification.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   mobile: {
     label: 'Mobile Development',
     hub: 'mobile/index.html',

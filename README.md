@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and thirteen complete learning tracks across 284 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and fourteen complete learning tracks across 290 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -43,6 +43,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 |---|---|---|
 | Data | 7 guides — statistics, experimentation, visualisation, data prep, ML maths, MLOps, warehouses | [/data](https://techforge-dev.vercel.app/data/index.html) |
 | Frontend | 9 guides — HTML, CSS, React, routing & state, server rendering, tooling, performance, testing, accessibility | [/frontend](https://techforge-dev.vercel.app/frontend/index.html) |
+| Blockchain | 5 guides — fundamentals, smart contracts, tooling, dApps, contract security | [/blockchain](https://techforge-dev.vercel.app/blockchain/index.html) |
 | Mobile Development | 7 guides — platforms & lifecycle, UI, architecture, offline networking, storage, release, cross-platform | [/mobile](https://techforge-dev.vercel.app/mobile/index.html) |
 | Game Development | 7 guides — maths, engines, graphics, physics, gameplay, netcode, shipping | [/games](https://techforge-dev.vercel.app/games/index.html) |
 | Roles | 18 career paths, grouped — build, data & AI, production, depth | [/roles](https://techforge-dev.vercel.app/roles/index.html) |
@@ -64,6 +65,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **32 roadmaps on one renderer** — 14 topic roadmaps and 18 career paths
 - **Spine-and-branches layout** — the trunk is the order to learn in, branches are the optional detours, and every node opens a real lesson
 - **Prerequisites are real edges** — hover a step to light the whole chain leading to it
+- **Every row ticks the same way** — one badge per node, the sequence number until you mark it done and a tick after; a lesson the roadmap references from several places completes everywhere at once and still counts once
 - **Generated from the site itself** — `tools/build-roadmaps.mjs` derives each roadmap from the pages and section headings it points at, so it cannot drift from the lessons
 - **Statically validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
@@ -111,6 +113,13 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Reliability engineering**: SLIs/SLOs, error budgets, toil, on-call, blameless postmortems, capacity planning, structured logging, distributed tracing, alerting, secrets management and IAM
 - Major cloud platforms: AWS, GCP, Azure
 
+### Blockchain
+- **5 guides** from hash chains to audited contracts
+- Fundamentals: Merkle proofs, proof of work versus proof of stake, wallets and keys, gas, rollups and layer 2
+- Smart contracts: Solidity, the EVM storage model, ERC standards, and proxy upgrades with their storage-layout trap
+- Tooling: Hardhat and Foundry, fuzzing and invariant tests, forked mainnet, ethers and viem, RPC providers
+- Security: reentrancy and checks-effects-interactions, flash-loan and oracle attacks, auditing and formal verification
+
 ### Mobile Development
 - **7 guides** covering native and cross-platform work end to end
 - Platform choice, Kotlin and Android, Swift and iOS, and the lifecycle that kills your process without warning
@@ -125,7 +134,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Multiplayer netcode (authoritative servers, prediction, reconciliation, lag compensation) and shipping (profiling, asset pipeline, certification)
 
 ### Platform & UX
-- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all thirteen tracks from a keyboard-driven command palette, no page reload
+- **Instant search** (`Ctrl K` / `⌘K`) — jump to any topic across all fourteen tracks from a keyboard-driven command palette, no page reload
 - **One navbar, one source** — seven primary destinations plus a **More** menu holding every remaining section, all rendered by `tools/sync-navbar.mjs` into all 275 pages; `npm run check:navbar` fails the build if a page drifts. The same list renders the mobile grid, which used to be a hand-kept copy three sections out of date
 - **Keyboard-complete dropdown** — Enter or Space opens More, `↓` moves into it, Escape closes and returns focus, click-outside and tab-out dismiss; on mobile it flattens into the hamburger panel instead
 - **Light / dark theme toggle** — every page, preference persists via `localStorage`, applied before first paint to avoid flash
@@ -278,9 +287,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 284 pages pass the Nu validator)
+- **100% HTML validation** (all 290 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (284 × 2 = 568 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (290 × 2 = 580 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:
