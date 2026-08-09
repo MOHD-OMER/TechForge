@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="Quality attributes and their conflicts, making trade-offs explicit, reversibility, and evaluating options against real requirements."/>
+  <meta name="keywords" content="Caching Strategies, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/system-design/tradeoffs.html"/>
+  <meta property="og:title" content="Trade-off Analysis — System Design | TechForge"/>
+  <meta property="og:description" content="Quality attributes and their conflicts, making trade-offs explicit, reversibility, and evaluating options against real requirements."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Trade-off Analysis — System Design | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--green); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Caching Strategies","description":"Caching stores frequently accessed data in a fast layer (memory, CDN edge) to reduce latency and backend load. The fundamental trade-off is consistency vs…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sd/tradeoffs" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-ruler-2"></i></span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num"><i class="ti ti-trending-up"></i></span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num"><i class="ti ti-scale"></i></span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic &amp; Performance</div>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num"><i class="ti ti-arrows-shuffle"></i></span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num"><i class="ti ti-world"></i></span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num"><i class="ti ti-traffic-lights"></i></span>Rate Limiting</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num"><i class="ti ti-door"></i></span>API Gateway</a>
+    <div class="sidebar-label">Messaging &amp; Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num"><i class="ti ti-mailbox"></i></span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num"><i class="ti ti-mail-fast"></i></span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num"><i class="ti ti-carrot"></i></span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link" href="microservices.html"><span class="sb-num"><i class="ti ti-puzzle"></i></span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num"><i class="ti ti-building-bank"></i></span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num"><i class="ti ti-world"></i></span>Distributed Systems</a>
+    <div class="sidebar-label">Architecture Practice</div>
+    <a class="sb-link" href="patterns.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Design Patterns</a>
+    <a class="sb-link" href="ddd.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Domain-Driven Design</a>
+    <a class="sb-link" href="decisions.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Deciding &amp; Communicating</a>
+    <a class="sb-link" href="diagrams.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Diagramming &amp; C4</a>
+    <a class="sb-link active" href="tradeoffs.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Trade-off Analysis</a>
+    <a class="sb-link" href="tech-debt.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Managing Technical Debt</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num"><i class="ti ti-link"></i></span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num"><i class="ti ti-folders"></i></span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num"><i class="ti ti-cut"></i></span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num"><i class="ti ti-search"></i></span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num"><i class="ti ti-shield"></i></span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num"><i class="ti ti-tool"></i></span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num"><i class="ti ti-brand-django"></i></span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num"><i class="ti ti-flame"></i></span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&amp;A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+    <main class="main">
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Architecture</div>
+      <h1 class="pg-title">Trade-off Analysis</h1>
+      <p class="pg-sub">Every architectural choice costs something. The work is naming what, and deciding with the cost visible.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-scale"></i></span> There Is No Best, Only Suited</h2>
+<div class="callout callout-blue"><span>Architecture is the set of decisions where every option is worse at something. A design praised as "clean" or "scalable" without naming what it gave up has not been analysed — it has been advertised.</span></div>
+<p class="lesson-prose">The senior habit is answering "it depends" and then <strong>saying what it depends on</strong>. Vague answers come from not knowing the axes; good answers name the quality attributes in tension and the constraint that decides between them.</p>
+    </section>
+    <section class="lesson-section" id="attributes">
+      <h2><span class="sec-icon"><i class="ti ti-adjustments"></i></span> Quality Attributes In Tension</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Gaining</th><th>Usually costs</th></tr></thead><tbody><tr><td>Strong consistency</td><td>Availability under partition, and latency</td></tr><tr><td>Low latency</td><td>Freshness — caching means serving something older</td></tr><tr><td>Scalability via services</td><td>Operational complexity and network failure modes</td></tr><tr><td>Flexibility and configuration</td><td>Comprehensibility — more paths to reason about</td></tr><tr><td>Security controls</td><td>Convenience, and sometimes throughput</td></tr><tr><td>Delivery speed now</td><td>Rework later, if the shortcut is not repaid</td></tr><tr><td>Cost efficiency</td><td>Headroom — the thing you want during an incident</td></tr></tbody></table></div>
+<p class="lesson-prose">Note that most of these are not resolvable, only positionable. CAP is the well-known example: during a network partition you choose consistency or availability, and no architecture escapes the choice — it only decides where on the dial you sit.</p>
+<div class="callout callout-amber"><span>Requirements decide the position, so get numbers. "Fast" is not a requirement; "p99 under 200ms for the search endpoint at 500 requests per second" is one, and it eliminates options immediately.</span></div>
+    </section>
+    <section class="lesson-section" id="method">
+      <h2><span class="sec-icon"><i class="ti ti-list-check"></i></span> A Usable Method</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Step</th><th>Detail</th></tr></thead><tbody><tr><td>Name the drivers</td><td>The two or three attributes that actually matter here</td></tr><tr><td>Quantify them</td><td>Numbers with units — latency, volume, RPO, RTO, budget</td></tr><tr><td>List real options</td><td>Including "do nothing" and "the boring one"</td></tr><tr><td>Score against the drivers</td><td>Explicitly, and note what each option sacrifices</td></tr><tr><td>Check reversibility</td><td>How expensive is undoing this in a year</td></tr><tr><td>Decide and record</td><td>In an ADR, with the sacrifices written down</td></tr></tbody></table></div>
+<pre class="code-block"><code>Driver: order writes must survive an AZ failure with RPO = 0
+
+Option A — single-region multi-AZ synchronous replication
+  + RPO 0, simple operationally
+  − Write latency +8ms; no region-level protection
+
+Option B — multi-region active-active
+  + Survives region loss
+  − Conflict resolution in the application; ~3× cost; large complexity jump
+
+Option C — single AZ with backups
+  + Cheapest, simplest
+  − RPO measured in minutes — fails the driver outright
+
+Chosen: A. B is not justified until a region-loss requirement exists.</code></pre>
+<div class="callout callout-blue"><span>Always evaluate the boring option honestly. A single well-run relational database and a monolith meets the requirements of most systems, and the burden of proof belongs to the more complex proposal.</span></div>
+    </section>
+    <section class="lesson-section" id="reversibility">
+      <h2><span class="sec-icon"><i class="ti ti-arrow-back-up"></i></span> Reversibility Changes The Answer</h2>
+<p class="lesson-prose">How hard a decision is to undo should change how much analysis it deserves, and how much risk is acceptable.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Type</th><th>Approach</th></tr></thead><tbody><tr><td>Two-way door — cheap to reverse</td><td>Decide fast, at the lowest level, and move on</td></tr><tr><td>One-way door — expensive to reverse</td><td>Options, evidence, a written record, more people</td></tr><tr><td>Reversible but costly</td><td>Prototype or spike before committing</td></tr><tr><td>Irreversible in practice</td><td>Data models, public API contracts, tenancy — slow down</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Data decisions are the most one-way of all. Code can be rewritten in a sprint; a data model with three years of history, integrations and reports built on it cannot, which is why storage format, identifiers and tenancy deserve disproportionate care.</span></div>
+<p class="lesson-prose">You can also buy reversibility deliberately: an abstraction at a boundary, a feature flag, a strangler pattern round a legacy component. Each costs a little now to keep an option open — and like any option, it is only worth buying where the uncertainty is real.</p>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>What makes a good answer to an architecture question?</q><p>Naming the quality attributes in tension and the constraint that decides between them. "It depends" is only useful when followed by what it depends on.</p></div>
+<div class="iq"><q>Give an example of an unavoidable trade-off.</q><p>Consistency versus availability during a network partition. No architecture escapes it; the design only chooses where to sit and what to do when the partition happens.</p></div>
+<div class="iq"><q>Why insist on numbers in requirements?</q><p>"Fast" cannot eliminate an option. "p99 under 200ms at 500 requests per second" rules several out immediately and makes the comparison objective.</p></div>
+<div class="iq"><q>How does reversibility change the process?</q><p>Two-way doors should be decided quickly at the lowest level. One-way doors — data models, public contracts, tenancy — deserve options, evidence and a written record.</p></div>
+<div class="iq"><q>Why evaluate the boring option?</q><p>A single well-run relational database and a monolith meets most requirements. The burden of proof belongs to the more complex proposal, not the simpler one.</p></div>
+<div class="iq"><q>How do you buy reversibility?</q><p>An abstraction at a boundary, a feature flag, or a strangler around a legacy component. Each costs something now to keep an option open, and is only worth it where uncertainty is real.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. A design described only as "scalable" is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Well analysed</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Advertised, not analysed</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Correct by default</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A trade-off</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Low latency via caching usually costs…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Availability</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Freshness</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Durability</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Security</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Two-way door decisions should be…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Documented at length</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Made quickly at a low level</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Escalated</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Prototyped first</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. The most one-way decisions are usually about…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Frameworks</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Data models and contracts</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Deployment tooling</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Code style</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. A requirement useful for eliminating options looks like…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">"Must be fast"</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">"p99 under 200ms at 500 rps"</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">"Highly available"</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">"Modern stack"</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="diagrams.html">&larr; Diagramming &amp; C4</a>
+      <a class="nav-link next" href="tech-debt.html">Managing Technical Debt &rarr;</a>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+<script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

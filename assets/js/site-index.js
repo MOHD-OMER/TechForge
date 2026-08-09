@@ -76,6 +76,18 @@
     "depth": "guide"
   },
   {
+    "id": "aiml/genai-eval",
+    "title": "Evaluating Generative Systems — AI / ML | TechForge",
+    "desc": "Why generative evaluation is hard, offline evaluation sets, LLM-as-judge, human review, online metrics and regression te",
+    "icon": "🤖",
+    "section": "AI/ML",
+    "sectionKey": "aiml",
+    "href": "aiml/genai-eval.html",
+    "path": "aiml/genai-eval.html",
+    "topic": "aiml/genai-eval",
+    "depth": "guide"
+  },
+  {
     "id": "aiml/genai",
     "title": "Generative AI",
     "desc": "Generative AI",
@@ -124,6 +136,18 @@
     "depth": "guide"
   },
   {
+    "id": "aiml/regularisation",
+    "title": "Overfitting &amp;amp; Regularisation — AI / ML | TechForge",
+    "desc": "The bias-variance trade-off, detecting overfitting, L1 and L2 penalties, dropout, early stopping and data augmentation.",
+    "icon": "🤖",
+    "section": "AI/ML",
+    "sectionKey": "aiml",
+    "href": "aiml/regularisation.html",
+    "path": "aiml/regularisation.html",
+    "topic": "aiml/regularisation",
+    "depth": "guide"
+  },
+  {
     "id": "aiml/rl",
     "title": "Reinforcement Learning",
     "desc": "Reinforcement Learning",
@@ -133,6 +157,30 @@
     "href": "aiml/rl.html",
     "path": "aiml/rl.html",
     "topic": "aiml/rl",
+    "depth": "guide"
+  },
+  {
+    "id": "aiml/training",
+    "title": "Optimisers &amp;amp; Training Tricks — AI / ML | TechForge",
+    "desc": "SGD, momentum and Adam, learning rate and schedules, batch size, gradient clipping and mixed precision, and diagnosing t",
+    "icon": "🤖",
+    "section": "AI/ML",
+    "sectionKey": "aiml",
+    "href": "aiml/training.html",
+    "path": "aiml/training.html",
+    "topic": "aiml/training",
+    "depth": "guide"
+  },
+  {
+    "id": "aiml/vector-databases",
+    "title": "Vector Databases — AI / ML | TechForge",
+    "desc": "Embeddings and similarity, approximate nearest neighbour indexes, chunking and metadata filtering, and retrieval quality",
+    "icon": "🤖",
+    "section": "AI/ML",
+    "sectionKey": "aiml",
+    "href": "aiml/vector-databases.html",
+    "path": "aiml/vector-databases.html",
+    "topic": "aiml/vector-databases",
     "depth": "guide"
   },
   {
@@ -832,6 +880,18 @@
     "depth": "guide"
   },
   {
+    "id": "devops/chaos",
+    "title": "Chaos Engineering — DevOps | TechForge",
+    "desc": "Chaos engineering principles, designing experiments with a hypothesis and blast radius, common failure injections, and g",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/chaos.html",
+    "path": "devops/chaos.html",
+    "topic": "devops/chaos",
+    "depth": "guide"
+  },
+  {
     "id": "devops/cicd",
     "title": "CI/CD Overview — DevOps",
     "desc": "CI/CD (Continuous Integration / Continuous Delivery) is the practice of automatically building, testing, and deploying c",
@@ -853,6 +913,18 @@
     "href": "devops/cloud-fundamentals.html",
     "path": "devops/cloud-fundamentals.html",
     "topic": "devops/cloud-fundamentals",
+    "depth": "guide"
+  },
+  {
+    "id": "devops/cost",
+    "title": "Cloud Cost Management — DevOps | TechForge",
+    "desc": "Cloud cost visibility and tagging, rightsizing, commitments and spot capacity, storage tiers and egress, and cost as an ",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/cost.html",
+    "path": "devops/cost.html",
+    "topic": "devops/cost",
     "depth": "guide"
   },
   {
@@ -928,6 +1000,18 @@
     "depth": "guide"
   },
   {
+    "id": "devops/gitops",
+    "title": "GitOps &amp;amp; Argo CD — DevOps | TechForge",
+    "desc": "GitOps principles, push versus pull deployment, Argo CD and Flux, repository structure, secrets, and progressive deliver",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/gitops.html",
+    "path": "devops/gitops.html",
+    "topic": "devops/gitops",
+    "depth": "guide"
+  },
+  {
     "id": "devops/grafana",
     "title": "Grafana — DevOps",
     "desc": "Grafana is an open-source analytics and monitoring platform that visualizes time-series data from multiple sources. It c",
@@ -954,7 +1038,7 @@
   {
     "id": "devops/index",
     "title": "DevOps",
-    "desc": "Linux and Git through containers, orchestration and pipelines, out to cloud, observability, reliability practice and sec",
+    "desc": "Git, containers and Kubernetes, CI/CD and GitOps, cloud and Terraform, monitoring and observability, reliability, releas",
     "icon": "⎇",
     "section": "DevOps",
     "sectionKey": "devops",
@@ -1060,6 +1144,30 @@
     "depth": "guide"
   },
   {
+    "id": "devops/registries",
+    "title": "Registries &amp;amp; Image Scanning — DevOps | TechForge",
+    "desc": "Container registries, tags versus digests, vulnerability scanning, image signing and provenance, SBOMs and promotion.",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/registries.html",
+    "path": "devops/registries.html",
+    "topic": "devops/registries",
+    "depth": "guide"
+  },
+  {
+    "id": "devops/release-strategies",
+    "title": "Blue-Green &amp;amp; Canary Releases — DevOps | TechForge",
+    "desc": "Rolling, blue-green and canary deployments, feature flags, automated rollback, and decoupling deploy from release.",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/release-strategies.html",
+    "path": "devops/release-strategies.html",
+    "topic": "devops/release-strategies",
+    "depth": "guide"
+  },
+  {
     "id": "devops/reverse-proxy",
     "title": "Reverse Proxy — DevOps",
     "desc": "From a DevOps perspective, a reverse proxy is often the first component in your production stack — it's what receives tr",
@@ -1084,6 +1192,18 @@
     "depth": "guide"
   },
   {
+    "id": "devops/service-mesh",
+    "title": "Service Mesh — DevOps | TechForge",
+    "desc": "The sidecar model, mTLS and zero trust, traffic splitting and resilience policy, mesh observability, and when not to ado",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/service-mesh.html",
+    "path": "devops/service-mesh.html",
+    "topic": "devops/service-mesh",
+    "depth": "guide"
+  },
+  {
     "id": "devops/slo",
     "title": "SLOs &amp; Reliability — DevOps | TechForge",
     "desc": "SLOs and reliability practice — choosing SLIs, spending an error budget, eliminating toil, humane on-call, blameless pos",
@@ -1093,6 +1213,18 @@
     "href": "devops/slo.html",
     "path": "devops/slo.html",
     "topic": "devops/slo",
+    "depth": "guide"
+  },
+  {
+    "id": "devops/terraform-state",
+    "title": "State, Modules &amp;amp; Drift — DevOps | TechForge",
+    "desc": "Terraform state and remote backends, locking, modules and versioning, drift detection, and importing existing infrastruc",
+    "icon": "⎇",
+    "section": "DevOps",
+    "sectionKey": "devops",
+    "href": "devops/terraform-state.html",
+    "path": "devops/terraform-state.html",
+    "topic": "devops/terraform-state",
     "depth": "guide"
   },
   {
@@ -1369,6 +1501,18 @@
     "href": "dsa/merge.html",
     "path": "dsa/merge.html",
     "topic": "dsa/merge",
+    "depth": "guide"
+  },
+  {
+    "id": "dsa/patterns",
+    "title": "Pattern Checklist — DSA | TechForge",
+    "desc": "Pattern Checklist — DSA | TechForge",
+    "icon": "📊",
+    "section": "DSA",
+    "sectionKey": "dsa",
+    "href": "dsa/patterns.html",
+    "path": "dsa/patterns.html",
+    "topic": "dsa/patterns",
     "depth": "guide"
   },
   {
@@ -3076,6 +3220,18 @@
     "depth": "guide"
   },
   {
+    "id": "systems/compliance",
+    "title": "Compliance &amp; Frameworks — Security | TechForge",
+    "desc": "Compliance &amp; Frameworks — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/compliance.html",
+    "path": "systems/security/compliance.html",
+    "topic": "sys/sec-compliance",
+    "depth": "guide"
+  },
+  {
     "id": "systems/crypto",
     "title": "Cryptography Basics — Security | TechForge",
     "desc": "Cryptography Basics — Security | TechForge",
@@ -3085,6 +3241,18 @@
     "href": "security/crypto.html",
     "path": "systems/security/crypto.html",
     "topic": "sys/sec-crypto",
+    "depth": "guide"
+  },
+  {
+    "id": "systems/forensics",
+    "title": "Digital Forensics — Security | TechForge",
+    "desc": "Digital Forensics — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/forensics.html",
+    "path": "systems/security/forensics.html",
+    "topic": "sys/sec-forensics",
     "depth": "guide"
   },
   {
@@ -3133,6 +3301,54 @@
     "href": "security/network-security.html",
     "path": "systems/security/network-security.html",
     "topic": "sys/sec-network",
+    "depth": "guide"
+  },
+  {
+    "id": "systems/pentesting",
+    "title": "Penetration Testing — Security | TechForge",
+    "desc": "Penetration Testing — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/pentesting.html",
+    "path": "systems/security/pentesting.html",
+    "topic": "sys/sec-pentesting",
+    "depth": "guide"
+  },
+  {
+    "id": "systems/scanning",
+    "title": "Scanning &amp; Enumeration — Security | TechForge",
+    "desc": "Scanning &amp; Enumeration — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/scanning.html",
+    "path": "systems/security/scanning.html",
+    "topic": "sys/sec-scanning",
+    "depth": "guide"
+  },
+  {
+    "id": "systems/siem",
+    "title": "SIEM &amp; Log Analysis — Security | TechForge",
+    "desc": "SIEM &amp; Log Analysis — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/siem.html",
+    "path": "systems/security/siem.html",
+    "topic": "sys/sec-siem",
+    "depth": "guide"
+  },
+  {
+    "id": "systems/threat-intel",
+    "title": "Threat Intelligence — Security | TechForge",
+    "desc": "Threat Intelligence — Security | TechForge",
+    "icon": "📄",
+    "section": "systems",
+    "sectionKey": "systems",
+    "href": "security/threat-intel.html",
+    "path": "systems/security/threat-intel.html",
+    "topic": "sys/sec-threat-intel",
     "depth": "guide"
   },
   {
@@ -3229,6 +3445,42 @@
     "href": "system-design/database-sharding.html",
     "path": "system-design/database-sharding.html",
     "topic": "sd/database-sharding",
+    "depth": "guide"
+  },
+  {
+    "id": "system-design/ddd",
+    "title": "Domain-Driven Design — System Design | TechForge",
+    "desc": "Ubiquitous language, entities and value objects, aggregates, bounded contexts and context mapping, and when DDD is overk",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/ddd.html",
+    "path": "system-design/ddd.html",
+    "topic": "sd/ddd",
+    "depth": "guide"
+  },
+  {
+    "id": "system-design/decisions",
+    "title": "Deciding &amp; Communicating — System Design | TechForge",
+    "desc": "What makes a decision architectural, architecture decision records, running a decision process, and communicating to dif",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/decisions.html",
+    "path": "system-design/decisions.html",
+    "topic": "sd/decisions",
+    "depth": "guide"
+  },
+  {
+    "id": "system-design/diagrams",
+    "title": "Diagramming &amp; C4 — System Design | TechForge",
+    "desc": "The C4 model, context, container, component and code diagrams, sequence diagrams, and keeping diagrams current.",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/diagrams.html",
+    "path": "system-design/diagrams.html",
+    "topic": "sd/diagrams",
     "depth": "guide"
   },
   {
@@ -3400,6 +3652,18 @@
     "depth": "guide"
   },
   {
+    "id": "system-design/patterns",
+    "title": "Design Patterns — System Design | TechForge",
+    "desc": "Creational, structural and behavioural patterns, the ones that earn their keep, and over-engineering as the real risk.",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/patterns.html",
+    "path": "system-design/patterns.html",
+    "topic": "sd/patterns",
+    "depth": "guide"
+  },
+  {
     "id": "system-design/queues",
     "title": "Message Queues — System Design",
     "desc": "Message queues decouple producers from consumers by storing messages until a consumer is ready to process them. This ena",
@@ -3481,6 +3745,30 @@
     "href": "system-design/service-discovery.html",
     "path": "system-design/service-discovery.html",
     "topic": "sd/service-discovery",
+    "depth": "guide"
+  },
+  {
+    "id": "system-design/tech-debt",
+    "title": "Managing Technical Debt — System Design | TechForge",
+    "desc": "What technical debt is and is not, classifying it, measuring the interest, and paying it down without a big rewrite.",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/tech-debt.html",
+    "path": "system-design/tech-debt.html",
+    "topic": "sd/tech-debt",
+    "depth": "guide"
+  },
+  {
+    "id": "system-design/tradeoffs",
+    "title": "Trade-off Analysis — System Design | TechForge",
+    "desc": "Quality attributes and their conflicts, making trade-offs explicit, reversibility, and evaluating options against real r",
+    "icon": "🏗️",
+    "section": "System Design",
+    "sectionKey": "system-design",
+    "href": "system-design/tradeoffs.html",
+    "path": "system-design/tradeoffs.html",
+    "topic": "sd/tradeoffs",
     "depth": "guide"
   },
   {

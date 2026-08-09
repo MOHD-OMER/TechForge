@@ -681,11 +681,15 @@ button.badge {
 }
 .prose strong { color: var(--text); font-weight: 600; }
 .prose em { color: var(--text); font-style: italic; }
-/* An inline link in body copy had never been styled, so it fell back to the
-   browser default #0000ee — 2.11:1 on the dark background. Underlined rather
-   than colour-only, so it is still identifiable without relying on hue.
-   Every body-copy class is listed: the rule covered .prose only, and the first
-   inline link written inside .lesson-prose reproduced the same 2.11:1 exactly. */
+/* An unstyled link falls back to the browser default #0000ee — 2.11:1 on the
+   dark background. This rule was written for .prose, then extended to
+   .lesson-prose, then to table cells, each time after the audit caught the
+   same 2.11 again in a container nobody had listed.
+   So it is stated by exclusion instead: any link inside the content area that
+   carries no class of its own. Every real component — .sb-link, .nav-link,
+   .rt-pill-node, .tb-link — has a class and keeps its own styling.
+   Underlined as well as coloured, so it does not rely on hue alone. */
+main a:not([class]),
 .prose a,
 .lesson-prose a,
 .iq p a,
@@ -695,6 +699,7 @@ button.badge {
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
 }
+main a:not([class]):hover,
 .prose a:hover,
 .lesson-prose a:hover,
 .iq p a:hover,

@@ -281,7 +281,8 @@ window.TF_TOPICS = {
         topics: [
           { id: 'devops/slo', file: 'slo.html', title: 'SLOs & Reliability', icon: '<i class="ti ti-target"></i>', desc: 'Error budgets, toil, on-call, blameless postmortems and capacity planning.', depth: 'full' },
           { id: 'devops/observability', file: 'observability.html', title: 'Observability', icon: '<i class="ti ti-activity"></i>', desc: 'Structured logging, distributed tracing, and alerting people actually act on.', depth: 'full' },
-          { id: 'devops/secrets', file: 'secrets.html', title: 'Secrets & IAM', icon: '<i class="ti ti-key"></i>', desc: 'Secret stores and rotation, and least privilege with roles over static keys.', depth: 'full' }
+          { id: 'devops/secrets', file: 'secrets.html', title: 'Secrets & IAM', icon: '<i class="ti ti-key"></i>', desc: 'Secret stores and rotation, and least privilege with roles over static keys.', depth: 'full' },
+          { id: 'devops/chaos', file: 'chaos.html', title: 'Chaos Engineering', icon: '<i class="ti ti-urgent"></i>', desc: 'Hypothesis-driven experiments with a bounded blast radius, injecting latency over failure, and game days.', depth: 'full' }
         ]
       },
       {
@@ -289,7 +290,8 @@ window.TF_TOPICS = {
         label: 'Containers',
         topics: [
           { id: 'devops/docker', file: 'docker.html', title: 'Docker', icon: '<i class="ti ti-brand-docker"></i>', desc: 'Images, containers, Dockerfile, volumes, networking.', depth: 'guide' },
-          { id: 'devops/docker-compose', file: 'docker-compose.html', title: 'Docker Compose', icon: '<i class="ti ti-package"></i>', desc: 'Multi-container apps, services, networks, local dev stacks.', depth: 'guide' }
+          { id: 'devops/docker-compose', file: 'docker-compose.html', title: 'Docker Compose', icon: '<i class="ti ti-package"></i>', desc: 'Multi-container apps, services, networks, local dev stacks.', depth: 'guide' },
+          { id: 'devops/registries', file: 'registries.html', title: 'Registries & Scanning', icon: '<i class="ti ti-package"></i>', desc: 'Tags versus digests, vulnerability scanning at build and in the registry, signing and SBOMs, and promoting one digest.', depth: 'full' }
         ]
       },
       {
@@ -298,7 +300,9 @@ window.TF_TOPICS = {
         topics: [
           { id: 'devops/cicd', file: 'cicd.html', title: 'CI/CD Overview', icon: '<i class="ti ti-refresh"></i>', desc: 'Pipeline stages, deployment strategies, rollback patterns.', depth: 'guide' },
           { id: 'devops/jenkins', file: 'jenkins.html', title: 'Jenkins', icon: '<i class="ti ti-building"></i>', desc: 'Jobs, pipelines, agents, and enterprise automation.', depth: 'guide' },
-          { id: 'devops/github-actions', file: 'github-actions.html', title: 'GitHub Actions', icon: '<i class="ti ti-bolt"></i>', desc: 'Workflows, matrices, secrets, reusable actions.', depth: 'guide' }
+          { id: 'devops/github-actions', file: 'github-actions.html', title: 'GitHub Actions', icon: '<i class="ti ti-bolt"></i>', desc: 'Workflows, matrices, secrets, reusable actions.', depth: 'guide' },
+          { id: 'devops/gitops', file: 'gitops.html', title: 'GitOps & Argo CD', icon: '<i class="ti ti-git-branch"></i>', desc: 'Git as the source of truth, pull versus push, Argo CD applications and self-heal, secrets, and promotion by pull request.', depth: 'full' },
+          { id: 'devops/release-strategies', file: 'release-strategies.html', title: 'Blue-Green & Canary', icon: '<i class="ti ti-rocket"></i>', desc: 'Separating deploy from release, rolling and blue-green and canary, feature flags, and automated rollback on metrics.', depth: 'full' }
         ]
       },
       {
@@ -306,7 +310,8 @@ window.TF_TOPICS = {
         label: 'Orchestration',
         topics: [
           { id: 'devops/kubernetes', file: 'kubernetes.html', title: 'Kubernetes', icon: '<i class="ti ti-brand-kubernetes"></i>', desc: 'Pods, services, deployments, ingress, scaling.', depth: 'guide' },
-          { id: 'devops/helm', file: 'helm.html', title: 'Helm', icon: '⎈', desc: 'Charts, releases, values, K8s package management.', depth: 'guide' }
+          { id: 'devops/helm', file: 'helm.html', title: 'Helm', icon: '⎈', desc: 'Charts, releases, values, K8s package management.', depth: 'guide' },
+          { id: 'devops/service-mesh', file: 'service-mesh.html', title: 'Service Mesh', icon: '<i class="ti ti-affiliate"></i>', desc: 'The sidecar model, mTLS and workload identity, traffic splitting and retry policy, and when a mesh is not worth it.', depth: 'full' }
         ]
       },
       {
@@ -344,7 +349,9 @@ window.TF_TOPICS = {
           { id: 'devops/azure-basics', file: 'azure-basics.html', title: 'Azure Basics', icon: '<i class="ti ti-brand-azure"></i>', desc: 'VMs, Blob Storage, App Service, Entra ID overview.', depth: 'guide' },
           { id: 'devops/gcp-basics', file: 'gcp-basics.html', title: 'GCP Basics', icon: '<i class="ti ti-brand-google"></i>', desc: 'Compute Engine, Cloud Storage, GKE, IAM roles.', depth: 'guide' },
           { id: 'devops/terraform', file: 'terraform.html', title: 'Terraform', icon: '<i class="ti ti-world"></i>', desc: 'IaC, state, modules, plan/apply workflow.', depth: 'guide' },
-          { id: 'devops/ansible', file: 'ansible.html', title: 'Ansible', icon: '<i class="ti ti-checklist"></i>', desc: 'Playbooks, inventory, idempotent configuration management.', depth: 'guide' }
+          { id: 'devops/ansible', file: 'ansible.html', title: 'Ansible', icon: '<i class="ti ti-checklist"></i>', desc: 'Playbooks, inventory, idempotent configuration management.', depth: 'guide' },
+          { id: 'devops/terraform-state', file: 'terraform-state.html', title: 'State, Modules & Drift', icon: '<i class="ti ti-file-description"></i>', desc: 'Remote state and locking, splitting by blast radius, module discipline, drift detection and importing existing infrastructure.', depth: 'full' },
+          { id: 'devops/cost', file: 'cost.html', title: 'Cost Management', icon: '<i class="ti ti-cash"></i>', desc: 'Tagging and attribution, rightsizing and commitments and spot, egress surprises, and cost as a unit-economics metric.', depth: 'full' }
         ]
       }
     ]
@@ -531,7 +538,9 @@ window.TF_TOPICS = {
         topics: [
           { id: 'aiml/aiml-explained', file: 'aiml-explained.html', title: 'AI / ML Explained', icon: '<i class="ti ti-brain"></i>', desc: 'The full map — what AI, ML, DL, NLP, CV, and RL are and how they relate.', depth: 'full' },
           { id: 'aiml/ml', file: 'ml.html', title: 'Machine Learning', icon: '<i class="ti ti-trending-up"></i>', desc: 'Supervised, unsupervised, core algorithms, bias-variance, evaluation metrics.', depth: 'guide' },
-          { id: 'aiml/dl', file: 'dl.html', title: 'Deep Learning', icon: '<i class="ti ti-microscope"></i>', desc: 'Neural nets, backprop, CNNs, RNNs, attention, and transformers.', depth: 'guide' }
+          { id: 'aiml/dl', file: 'dl.html', title: 'Deep Learning', icon: '<i class="ti ti-microscope"></i>', desc: 'Neural nets, backprop, CNNs, RNNs, attention, and transformers.', depth: 'guide' },
+          { id: 'aiml/regularisation', file: 'regularisation.html', title: 'Overfitting & Regularisation', icon: '<i class="ti ti-chart-line"></i>', desc: 'Bias and variance, detecting overfitting and leakage, L1 and L2 penalties, dropout, early stopping and augmentation.', depth: 'full' },
+          { id: 'aiml/training', file: 'training.html', title: 'Optimisers & Training', icon: '<i class="ti ti-trending-down"></i>', desc: 'SGD, momentum and AdamW, learning-rate schedules and warmup, gradient clipping and mixed precision, and reading a loss curve.', depth: 'full' }
         ]
       },
       {
@@ -541,7 +550,9 @@ window.TF_TOPICS = {
           { id: 'aiml/nlp', file: 'nlp.html', title: 'NLP & LLMs', icon: '<i class="ti ti-message-circle"></i>', desc: 'Text processing, embeddings, attention, BERT, GPT, RAG pipelines.', depth: 'guide' },
           { id: 'aiml/cv', file: 'cv.html', title: 'Computer Vision', icon: '<i class="ti ti-eye"></i>', desc: 'Image classification, object detection, CNNs, YOLO, transfer learning.', depth: 'guide' },
           { id: 'aiml/rl', file: 'rl.html', title: 'Reinforcement Learning', icon: '<i class="ti ti-device-gamepad-2"></i>', desc: 'Agents, environments, rewards, Q-learning, policy gradients.', depth: 'guide' },
-          { id: 'aiml/genai', file: 'genai.html', title: 'Generative AI', icon: '<i class="ti ti-sparkles"></i>', desc: 'LLMs, diffusion models, RAG, prompt engineering, production patterns.', depth: 'guide' }
+          { id: 'aiml/genai', file: 'genai.html', title: 'Generative AI', icon: '<i class="ti ti-sparkles"></i>', desc: 'LLMs, diffusion models, RAG, prompt engineering, production patterns.', depth: 'guide' },
+          { id: 'aiml/vector-databases', file: 'vector-databases.html', title: 'Vector Databases', icon: '<i class="ti ti-grid-dots"></i>', desc: 'Embeddings and similarity, ANN indexes and the recall trade-off, chunking and metadata filtering, and retrieval quality in RAG.', depth: 'full' },
+          { id: 'aiml/genai-eval', file: 'genai-eval.html', title: 'Evaluating GenAI', icon: '<i class="ti ti-scale"></i>', desc: 'Offline evaluation sets, LLM-as-judge and its biases, human review, online quality signals, and versioning prompts and models.', depth: 'full' }
         ]
       },
       {

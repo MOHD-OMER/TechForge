@@ -23,7 +23,7 @@ Roadmaps · Programming Languages · DSA · System Design · Databases · DevOps
 
 ## Overview
 
-TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and sixteen complete learning tracks across 311 pages — computer science from fundamentals to interview-ready.
+TechForge is a **fully static, zero-dependency computer science learning platform** with interactive Canvas visualizers, 32 guided roadmaps, 433 curated interview questions, and sixteen complete learning tracks across 335 pages — computer science from fundamentals to interview-ready.
 
 Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs completely in the browser with zero build toolchain, zero runtime dependencies, and zero backend infrastructure. (The `devDependencies` in `package.json` are validation and accessibility tooling for CI — nothing ships to the browser.) A Service Worker enables offline support: pages you've visited remain accessible without a network connection.
 
@@ -50,21 +50,21 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 | Game Development | 7 guides — maths, engines, graphics, physics, gameplay, netcode, shipping | [/games](https://techforge-dev.vercel.app/games/index.html) |
 | Roles | 18 career paths, grouped — build, data & AI, production, depth | [/roles](https://techforge-dev.vercel.app/roles/index.html) |
 | Roadmaps | 14 topic roadmaps + 18 career paths | [/roadmaps](https://techforge-dev.vercel.app/roadmaps/index.html) |
-| Data Structures & Algorithms | 29 topics · 28 Canvas visualizers · 4 language tabs | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
+| Data Structures & Algorithms | 30 topics · 28 Canvas visualizers · 4 language tabs | [/dsa](https://techforge-dev.vercel.app/dsa/index.html) |
 | Programming | Python · JavaScript · TypeScript · Java · C++ (9 modules + programs each) | [/programming](https://techforge-dev.vercel.app/programming/index.html) |
-| System Design | 26 deep-dive guides · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
+| System Design | 32 deep-dive guides — including design patterns, DDD, ADRs, C4, trade-offs and tech debt · Flask · FastAPI · Django | [/system-design](https://techforge-dev.vercel.app/system-design/index.html) |
 | Databases | SQL guide (27 sections) + 14 engine deep-dives | [/databases](https://techforge-dev.vercel.app/databases/index.html) |
-| DevOps | 26 guides — Git, Docker, Kubernetes, CI/CD, AWS, Terraform | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
-| AI / ML | 8 modules · ML to GenAI | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
+| DevOps | 33 guides — Git, Docker, Kubernetes, CI/CD, GitOps, AWS, Terraform, reliability, cost, chaos | [/devops](https://techforge-dev.vercel.app/devops/index.html) |
+| AI / ML | 12 modules — ML to GenAI, plus regularisation, optimisers, vector databases and GenAI evaluation | [/aiml](https://techforge-dev.vercel.app/aiml/index.html) |
 | Interview Prep | 433 questions · 13 banks · flashcards · timed quiz | [/interview](https://techforge-dev.vercel.app/interview/index.html) |
-| OS & Networks | 4 complete pillars — OS, Networking, Security, Theory of Computation (32 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
+| OS & Networks | 4 complete pillars — OS, Networking, Security (14 guides incl. pentesting, SIEM, forensics), Theory of Computation (38 guides) | [/systems](https://techforge-dev.vercel.app/systems/index.html) |
 
 ---
 
 ## ✨ Key Features
 
 ### Roadmaps
-- **32 roadmaps on one renderer** — 14 topic roadmaps and 18 career paths
+- **32 roadmaps on one renderer, every node pointing at a written lesson** — 14 topic roadmaps and 18 career paths
 - **Spine-and-branches layout** — the trunk is the order to learn in, branches are the optional detours, and every node opens a real lesson
 - **Prerequisites are real edges** — hover a step to light the whole chain leading to it
 - **Every row ticks the same way** — one badge per node, the sequence number until you mark it done and a tick after; a lesson the roadmap references from several places completes everywhere at once and still counts once
@@ -72,7 +72,7 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Statically validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 ### Data Structures & Algorithms
-- **29 in-depth topics** across 6 categories
+- **30 in-depth topics** across 7 categories, ending with a pattern checklist for interviews
 - **A visualizer on all 29 topics** — 28 interactive Canvas 2D animations, plus a step-by-step DP table fill for Dynamic Programming
 - **Four language tabs** on every topic — Python, JavaScript, Java and C++, with your choice remembered
 - Comprehensive coverage: arrays, linked lists, stacks, queues, trees, graphs, hashing, sorting, searching, bit manipulation, sliding window, two pointer
@@ -87,8 +87,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - Language-specific depth: Python decorators and asyncio, JS closures and the event loop, TS generics and type-level programming, Java streams and concurrency, C++ pointers and templates
 
 ### System Design
-- **26 production-grade deep-dive guides**
+- **32 production-grade deep-dive guides**
 - Topics: distributed systems, caching, Kafka, load balancing, microservices, rate limiting, consistency models, partitioning, replication
+- **Architecture practice**: design patterns and when not to use them, domain-driven design and bounded contexts, architecture decision records, C4 diagramming, trade-off analysis, and managing technical debt
 - Framework guides: Flask, FastAPI, Django (routing, ORM, auth, middleware, deployment)
 - Real-world scenarios and trade-offs
 
@@ -97,7 +98,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **14 database deep-dives**: PostgreSQL, MySQL, Redis, MongoDB, Cassandra, DynamoDB, CouchDB, Neo4j, InfluxDB, Elasticsearch, MariaDB, SQLite, graph databases
 
 ### AI/ML Hub
-- **8 comprehensive modules** spanning ML, Deep Learning, NLP, Computer Vision, RL, GenAI
+- **12 modules** spanning ML, Deep Learning, NLP, Computer Vision, RL and GenAI
+- **Training craft**: bias and variance, leakage, L1/L2, dropout and early stopping, SGD through AdamW, schedules and gradient clipping, and reading a loss curve
+- **Generative systems**: vector databases and ANN indexes, chunking and hybrid retrieval, and evaluating output that has no answer key
 - Clear analogies, real mathematics, visual intuition
 - Data Science cheat sheet
 - Interactive visualizations
@@ -110,8 +113,9 @@ Built entirely in **HTML5, CSS, and Vanilla JavaScript**, the platform runs comp
 - **Timed MCQ quiz** — distractors generated from the bank itself, 30s timer, streaks, and a stats summary with missed-answer review
 
 ### DevOps
-- **26 comprehensive guides** covering the entire DevOps landscape
+- **33 comprehensive guides** covering the entire DevOps landscape
 - Topics: Git, GitHub, Docker, Docker Compose, Kubernetes, Helm, CI/CD, Jenkins, GitHub Actions, Nginx, reverse proxy, Prometheus, Grafana, Terraform, Ansible, Linux, Bash, Infrastructure as Code
+- **Delivery and platform**: registries and image scanning, GitOps with Argo CD, blue-green and canary releases, service mesh and mTLS, Terraform state and drift, cloud cost management, chaos engineering
 - **Reliability engineering**: SLIs/SLOs, error budgets, toil, on-call, blameless postmortems, capacity planning, structured logging, distributed tracing, alerting, secrets management and IAM
 - Major cloud platforms: AWS, GCP, Azure
 
@@ -297,9 +301,9 @@ Install the **Live Server** extension and open `index.html`.
 - **Vercel global CDN**: Geographic distribution, instant cache invalidation
 
 ### Validation
-- **100% HTML validation** (all 311 pages pass the Nu validator)
+- **100% HTML validation** (all 335 pages pass the Nu validator)
 - **5,300+ links verified** (Lychee link checker in GitHub Actions)
-- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (311 × 2 = 622 audits, all clean); serious violations fail the build
+- **WCAG 2.1 AA enforced in CI** — axe-core audits every page in both themes (335 × 2 = 670 audits, all clean); serious violations fail the build
 - **Roadmap graphs validated** — cycles, dangling prerequisites, duplicate ids and dead links fail the build
 
 Run the suite locally:
