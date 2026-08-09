@@ -97,6 +97,11 @@ jobs:
       - name: Check every section is reachable
         run: npm run check:sections
 
+      # A gate referenced from CI but missing from package.json is a gate that
+      # only fails once it reaches the runner — check:links did exactly that.
+      - name: Check every CI script exists
+        run: npm run check:ci
+
       # lychee checks the deployed site, where a root-absolute path resolves.
       # These pages also have to open from disk, where it does not.
       - name: Check local links resolve from disk
