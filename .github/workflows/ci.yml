@@ -102,6 +102,15 @@ jobs:
       - name: Check every CI script exists
         run: npm run check:ci
 
+      # The README advertised 29 DSA topics and 275 pages long after those were
+      # 30 and 335, and the social card still said 7 tracks. Both are generated
+      # from the repo now, so both can be checked against it.
+      - name: Check the README matches the repository
+        run: npm run check:readme
+
+      - name: Check the social card matches the site
+        run: npm run check:og
+
       # lychee checks the deployed site, where a root-absolute path resolves.
       # These pages also have to open from disk, where it does not.
       - name: Check local links resolve from disk
