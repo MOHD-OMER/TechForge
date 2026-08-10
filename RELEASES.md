@@ -5,6 +5,30 @@ All notable changes to TechForge. Full tagged releases live on
 
 ---
 
+## v3.1.1 — The README and the social card, generated
+
+**2026-08-10** · docs and tooling only — no lesson content changed
+
+Both had drifted badly enough to misrepresent the project, so neither is
+hand-maintained any more.
+
+- **README rewritten** — 501 lines down to a document that states what the
+  project is, what is in it, and how it is verified. The stats, the track table,
+  the directory table and the gate list are generated from the repository by
+  `tools/sync-readme.mjs`; `npm run check:readme` fails the build on drift.
+  It had been claiming 29 DSA topics, 26 system-design guides, 23 DevOps guides
+  and 275 pages long after those were 31, 32, 33 and 335 — and listing two
+  verification scripts that no longer existed while omitting eight that did.
+- **Social card regenerated** — `assets/og-image.png` advertised 7 tracks,
+  70+ topics and 200+ questions against an actual 16, 335 and 433. It is now
+  rendered by `tools/build-og-image.mjs` from the topics manifest and the
+  filesystem, with `npm run check:og` comparing it against the live figures.
+- **`check:ci`** — every `npm run` in a workflow must resolve to a script that
+  exists. `check:links` had been referenced by CI without ever being added to
+  `package.json`, so it passed locally and failed only on the runner.
+
+---
+
 ## v3.1.0 — Every roadmap node opens a real lesson
 
 **2026-08-09** · 23 commits since v3.0.0 · 369 files changed · 100 new pages

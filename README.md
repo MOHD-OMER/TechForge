@@ -7,7 +7,7 @@
 **Computer science, end to end — free, open source, and built to be understood.**
 
 [![Live site](https://img.shields.io/badge/live-techforge--dev.vercel.app-4d9ef7?style=flat-square)](https://techforge-dev.vercel.app)
-[![Version](https://img.shields.io/badge/version-3.1.0-22c55e?style=flat-square)](RELEASES.md)
+[![Version](https://img.shields.io/badge/version-3.1.1-22c55e?style=flat-square)](RELEASES.md)
 [![License](https://img.shields.io/badge/license-MIT-8da0bb?style=flat-square)](LICENSE)
 [![Runtime dependencies](https://img.shields.io/badge/runtime%20deps-0-22d3ee?style=flat-square)](#architecture)
 [![WCAG 2.1 AA](https://img.shields.io/badge/WCAG%202.1%20AA-enforced%20in%20CI-a78bfa?style=flat-square)](#verification)
@@ -206,9 +206,9 @@ what is still missing.
 
 ## Releases
 
-Full notes in **[RELEASES.md](RELEASES.md)**. The current release is **v3.1.0**,
-in which every roadmap node stopped being a placeholder and started opening a
-written lesson.
+Full notes in **[RELEASES.md](RELEASES.md)**. The current release is **v3.1.1**; **v3.1.0**
+is the one in which every roadmap node stopped being a placeholder and started
+opening a written lesson.
 
 ---
 
