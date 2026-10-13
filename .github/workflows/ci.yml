@@ -1,4 +1,4 @@
-name: CI — Validate HTML & Links
+name: CI — Validate HTML, Links & Accessibility
 
 on:
   pull_request:
@@ -34,10 +34,115 @@ jobs:
         with:
           args: >-
             --no-progress
+            --root-dir ${{ github.workspace }}
             --exclude-path 'assets|404.html|offline.html'
             --exclude 'localhost'
             --exclude '127.0.0.1'
+            --exclude 'leetcode.com'
+            --exclude 'techforge-dev.vercel.app'
             --timeout 30
             --max-retries 2
             './**/*.html'
           fail: true
+
+  # Assets are served immutable for a year, so an asset whose contents change
+  # without its ?v= moving reaches nobody who has visited before. That shipped
+  # three times before this gate existed, once leaving buttons unstyled.
+  cache-versions:
+    runs-on: ubuntu-latest
+    steps:
+      # Full history is required: the check compares each asset's last content
+      # commit against the last commit touching its version string. On the
+      # default shallow clone both collapse to one commit and it reports a
+      # false pass — worse than failing, because the gate looks green forever.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check for stale cache versions
+        run: npm run check:cache
+
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dev tooling
+        run: npm ci
+
+      # A roadmap graph that cycles or points at a deleted page renders a
+      # picture that contradicts its own text. Cheap check, run it before the
+      # expensive browser one.
+      - name: Validate roadmap graphs
+        run: npm run validate:graphs
+
+      # validate:graphs only checks that a node's file exists. A roadmap links
+      # deep into page sections, so a renamed anchor would still "resolve" and
+      # quietly dump the learner at the top of the page.
+      - name: Check roadmap anchors
+        run: npm run check:anchors
+
+      # Adding a section regenerates its sidebar, the search index and the
+      # sitemap, but nothing regenerates the home page. Two sections shipped
+      # reachable only through search because of that.
+      - name: Check every section is reachable
+        run: npm run check:sections
+
+      # A gate referenced from CI but missing from package.json is a gate that
+      # only fails once it reaches the runner — check:links did exactly that.
+      - name: Check every CI script exists
+        run: npm run check:ci
+
+      # The README advertised 29 DSA topics and 275 pages long after those were
+      # 30 and 335, and the social card still said 7 tracks. Both are generated
+      # from the repo now, so both can be checked against it.
+      - name: Check the README matches the repository
+        run: npm run check:readme
+
+      - name: Check the social card matches the site
+        run: npm run check:og
+
+      # lychee checks the deployed site, where a root-absolute path resolves.
+      # These pages also have to open from disk, where it does not.
+      - name: Check local links resolve from disk
+        run: npm run check:links
+
+      # Sidebars are hardcoded per page, so adding a lesson reaches only the
+      # pages regenerated with it. One lesson sat unreachable from all 29 of
+      # its siblings until this check existed.
+      - name: Check section navigation is complete
+        run: npm run check:sidebars
+
+      # The top nav is copied into every page, so a change used to mean a
+      # find-and-replace across 275 of them — and the mobile grid drifted three
+      # sections behind the bar. tools/sync-navbar.mjs is now the only copy.
+      - name: Check the navbar matches its source of truth
+        run: npm run check:navbar
+
+      # A bare & is a parse error the browser hides. Nu reports it, but as a
+      # nested tag a line later, and only sometimes — 437 of them sat in 163
+      # files until two pages happened to trip the validator.
+      - name: Check character references
+        run: npm run check:entities
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run axe-core WCAG 2.1 AA audit (dark + light themes)
+        run: npm run a11y -- --fail-on=serious
+
+      - name: Upload a11y report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: a11y-report.json

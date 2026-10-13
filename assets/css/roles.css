@@ -1,0 +1,183 @@
+/* Learn by Role hub — expandable role cards, filtering, and comparison.
+   Built on the same tokens as the rest of the site; the roadmap timeline's
+   disclosure and progress-bar patterns are reused rather than reinvented. */
+
+/* ── controls ──────────────────────────────────────────────────────── */
+.rl-controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px;
+  margin: 0 0 30px;
+}
+.rl-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.rl-chip {
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .3px;
+  padding: 6px 13px; border-radius: 999px; cursor: pointer;
+  color: var(--text2); background: var(--surface);
+  border: 1px solid var(--border);
+  transition: color var(--m-base, .16s) var(--m-out, ease),
+              border-color var(--m-base, .16s) var(--m-out, ease);
+}
+.rl-chip:hover { color: var(--text); border-color: var(--accent); }
+.rl-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* selected state carries a border and a weight change, not just a tint —
+   colour alone is not a state anyone can rely on */
+.rl-chip.is-on {
+  color: var(--accent); border-color: var(--accent); font-weight: 700;
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.rl-sort { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.rl-sort label { font-family: var(--font-mono); font-size: 11.5px; color: var(--text2); }
+.rl-sort select {
+  font-family: var(--font-mono); font-size: 11.5px;
+  padding: 6px 10px; border-radius: var(--r-md, 8px);
+  color: var(--text); background: var(--surface); border: 1px solid var(--border);
+}
+.rl-sort select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ── the grid of roles ─────────────────────────────────────────────── */
+.rl-grid {
+  display: grid; gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  align-items: start;
+}
+
+.rl-card {
+  background: var(--card, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--rd-c, var(--accent)) 24%, var(--border));
+  border-radius: 14px; padding: 15px 17px;
+  transition: border-color var(--m-base, .18s) var(--m-out, ease);
+}
+.rl-card:hover { border-color: color-mix(in srgb, var(--rd-c, var(--accent)) 55%, var(--border)); }
+
+.rl-head { display: flex; align-items: center; gap: 12px; }
+.rl-icon {
+  flex: none; width: 34px; height: 34px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+  color: var(--rd-c, var(--accent));
+  background: color-mix(in srgb, var(--rd-c, var(--accent)) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--rd-c, var(--accent)) 40%, var(--border));
+}
+.rl-titles { flex: 1; min-width: 0; }
+.rl-name {
+  margin: 0; font-size: 14.5px; font-weight: 700; color: var(--text);
+  overflow-wrap: break-word;
+}
+.rl-meta {
+  margin: 3px 0 0; font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .3px; color: var(--text2);
+}
+
+.rl-toggle {
+  flex: none; width: 26px; height: 26px; border-radius: 7px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); background: transparent; border: 1px solid var(--border);
+  transition: color var(--m-base, .18s) var(--m-out, ease),
+              border-color var(--m-base, .18s) var(--m-out, ease);
+}
+.rl-toggle:hover { color: var(--rd-c, var(--accent)); border-color: var(--rd-c, var(--accent)); }
+.rl-toggle:focus-visible { outline: 2px solid var(--rd-c, var(--accent)); outline-offset: 2px; }
+.rl-toggle i { font-size: 13px; line-height: 1; transition: transform var(--m-base, .2s) var(--m-out, ease); }
+.rl-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+
+/* ── progress ──────────────────────────────────────────────────────── */
+.rl-progress { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; }
+.rl-progress:empty { display: none; }
+.rl-bar {
+  flex: 1; height: 5px; border-radius: 999px; overflow: hidden;
+  background: color-mix(in srgb, var(--rd-c, var(--accent)) 14%, var(--border));
+}
+/* scaleX rather than width: this animates whenever a topic is ticked, and a
+   width transition relayouts the bar every frame */
+.rl-bar-fill {
+  display: block; width: 100%; height: 100%; border-radius: 999px;
+  background: var(--rd-c, var(--accent));
+  transform-origin: left center;
+  transition: transform var(--m-slow, .4s) var(--m-out, ease);
+}
+.rl-num {
+  flex: none; font-family: var(--font-mono); font-size: 10.5px; color: var(--text2);
+}
+.rl-num strong { color: var(--rd-c, var(--accent)); }
+
+/* ── the expandable body ───────────────────────────────────────────── */
+.rl-wrap { display: grid; grid-template-rows: 0fr; }
+.rl-wrap[data-open="true"] { grid-template-rows: 1fr; }
+/* visibility, not just a zero row: a 0fr row still leaves its links and the
+   start button in the tab order. Hiding waits out the collapse so the content
+   does not vanish before the box finishes; revealing is immediate. */
+.rl-wrap > .rl-body {
+  overflow: hidden; min-height: 0;
+  visibility: hidden; transition: visibility 0s var(--m-base, .22s);
+}
+.rl-wrap[data-open="true"] > .rl-body { visibility: visible; transition: visibility 0s; }
+@media (prefers-reduced-motion: no-preference) {
+  .rl-wrap { transition: grid-template-rows var(--m-base, .22s) var(--m-out, ease); }
+}
+
+.rl-blurb { margin: 14px 0 0; font-size: 13px; line-height: 1.65; color: var(--text2); }
+.rl-day, .rl-aliases { margin: 10px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--text2); }
+.rl-label {
+  display: block; font-family: var(--font-mono); font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase; color: var(--text3);
+  margin-bottom: 4px;
+}
+.rl-skills { margin: 12px 0 0; }
+.rl-skills ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.rl-skills li {
+  font-size: 11.5px; padding: 3px 9px; border-radius: var(--r-md, 8px);
+  color: var(--text2); background: var(--surface2, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--rd-c, var(--accent)) 28%, var(--border));
+}
+
+.rl-start {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 15px;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .4px; text-decoration: none;
+  padding: 8px 15px; border-radius: var(--r-md, 8px);
+  color: var(--rt-ink, #04070d); background: var(--rd-c, var(--accent));
+  border: 1px solid var(--rd-c, var(--accent));
+  transition: filter var(--m-base, .16s) var(--m-out, ease);
+}
+.rl-start:hover { filter: brightness(1.1); }
+.rl-start:focus-visible { outline: 2px solid var(--rd-c, var(--accent)); outline-offset: 3px; }
+
+/* ── comparison ────────────────────────────────────────────────────── */
+.rl-compare {
+  margin: 46px 0 0; padding: 20px 22px;
+  background: var(--card, var(--surface));
+  border: 1px solid var(--border); border-radius: 14px;
+}
+.rl-compare-h { margin: 0; font-size: 16px; font-weight: 700; color: var(--text); }
+.rl-compare-sub { margin: 6px 0 16px; font-size: 12.5px; color: var(--text2); }
+.rl-compare-picks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.rl-compare-picks label { font-family: var(--font-mono); font-size: 11px; color: var(--text2); }
+.rl-compare-picks select {
+  font-size: 12.5px; padding: 6px 10px; border-radius: var(--r-md, 8px);
+  color: var(--text); background: var(--surface); border: 1px solid var(--border);
+  max-width: 100%;
+}
+.rl-compare-picks select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.rl-cmp-head { margin: 18px 0 0; font-size: 13.5px; color: var(--text2); }
+.rl-cmp-head strong { color: var(--accent); font-size: 17px; }
+.rl-cmp-note { margin: 18px 0 0; font-size: 13px; color: var(--text2); }
+.rl-cmp-cols {
+  display: grid; gap: 16px; margin-top: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.rl-cmp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 5px; }
+.rl-cmp-list li {
+  font-family: var(--font-mono); font-size: 10.5px;
+  padding: 3px 8px; border-radius: 6px;
+  color: var(--text2); background: var(--surface2, var(--surface));
+  border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.rl-cmp-list .rl-more { border-style: dashed; }
+
+/* ── phone ─────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .rl-grid { grid-template-columns: 1fr; }
+  .rl-sort { margin-left: 0; }
+  .rl-controls { gap: 12px; }
+}

@@ -18,12 +18,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
-  :root { --accent: var(--green); --accent-dim: var(--green-dim); }
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
   .bars-wrap {
       height: 200px; display: flex; align-items: flex-end; gap: 4px;
       padding: 24px; background: rgba(0,0,0,0.2); border-radius: 12px; margin-top: 16px;
@@ -40,8 +40,15 @@
   .bc-cmp  { background: var(--accent); }
   .bc-swap { background: var(--red); }
   .bc-srt  { background: var(--green); }
-  .speed-grp { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text2); }
+  .speed-grp { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #8da0bb; }
   #sorting-spd { width: 100px; height: 3px; cursor: pointer; }
+  /* .b-green uses a semi-transparent rgba background that blends with the
+     always-dark .code-block backdrop, so its theme-swapping var(--green) text
+     goes unreadable in light theme — override with a fixed dark-appropriate
+     color. (.b-surface is NOT touched: its background is fully opaque
+     var(--surface2), which legitimately swaps to a light surface of its own,
+     so var(--text2) is already correct there.) */
+  .code-block .badge.b-green { color: #34d399; }
   
   /* Forge DSA hero (injected) */
   :root {
@@ -55,7 +62,7 @@
     --red:         #f87171;
   }
   .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
-  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dsa-hero::before{content:none;}
   .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
   .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
   @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
@@ -68,7 +75,7 @@
   .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
   .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
   .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
-  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
@@ -85,18 +92,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
-    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -109,14 +132,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -126,14 +160,15 @@
     </div>
     <nav id="sidebarNav">
       <div class="sidebar-label">Foundations</div>
-      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
-      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <a class="sb-link" href="logic-building.html"><span class="sb-num">00</span>Logic Building</a>
+    <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
       <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
       <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
       <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
       <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
       <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
-      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
       <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
       <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
       <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
@@ -161,6 +196,9 @@
       <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
       <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
       <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+        <div class="sidebar-label" style="margin-top:20px;">Practice</div>
+        <a class="sb-link" href="patterns.html"><span class="sb-num">30</span>Pattern Checklist</a>
+
     </nav>
   </aside>
   <main class="main" id="mainContent">
@@ -187,12 +225,12 @@
       </div>
       <div class="speed-grp">
         <span>Slow</span>
-        <input id="sorting-spd" type="range" min="50" max="950" value="450">
+        <input id="sorting-spd" type="range" min="50" max="950" value="450" aria-label="Animation speed">
         <span>Fast</span>
       </div>
     </div>
     <canvas id="sorting-bars" style="width:100%;height:200px;display:block;background:rgba(0,0,0,.2);border-radius:12px;margin-top:16px"></canvas>
-    <div id="sorting-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:16px;">Set speed and press Start.</div>
+    <div id="sorting-status" style="font-family:var(--mono); font-size:12px; color:#8da0bb; margin-top:16px;">Set speed and press Start.</div>
   </div>
 </div>
 
@@ -200,7 +238,8 @@
   <div class="info-tabs">
     <div class="info-tab active" onclick="switchTab(this,'tp-bub-0')">How It Works</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bub-1')">Code</div>
-    <div class="info-tab" onclick="switchTab(this,'tp-bub-prac')">Practice <i class="ti ti-trophy"></i></div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bub-quiz')">Quiz</div>
+          <div class="info-tab" onclick="switchTab(this,'tp-bub-prac')">Practice <i class="ti ti-trophy"></i></div>
   </div>
 
   <div class="info-pane active" id="tp-bub-0">
@@ -215,6 +254,7 @@
       <button type="button" class="lt-btn active" data-lang="python">Python</button>
       <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
       <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
     </div>
     <div class="lang-pane" data-lang="python">
     <div class="code-block">
@@ -263,9 +303,83 @@
 }</pre>
     </div>
     </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">void</span> <span class="fn">bubble_sort</span>(std::vector&lt;<span class="kw">int</span>&gt;&amp; arr) {
+    <span class="kw">int</span> n = (<span class="kw">int</span>)arr.<span class="fn">size</span>();
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; n; i++) {
+        <span class="kw">bool</span> swapped = <span class="kw">false</span>;
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="nm">0</span>; j &lt; n - i - <span class="nm">1</span>; j++) {
+            <span class="kw">if</span> (arr[j] &gt; arr[j + <span class="nm">1</span>]) {
+                std::<span class="fn">swap</span>(arr[j], arr[j + <span class="nm">1</span>]);
+                swapped = <span class="kw">true</span>;
+            }
+        }
+        <span class="kw">if</span> (!swapped) <span class="kw">break</span>;   <span class="cm">// early exit</span>
+    }
+}</pre>
+    </div>
+    </div>
   </div>
 
-  <div class="info-pane" id="tp-bub-prac">
+  <div class="info-pane" id="tp-bub-quiz">
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. What does one full pass of bubble sort guarantee?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The whole array is sorted</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">The largest unsorted element has reached its final position at the end</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The smallest element has reached index 0</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Half the array is sorted</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Worst-case time complexity of bubble sort?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n log n)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n&sup2;)</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(log n)</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. With the early-exit optimisation, what is the best case and when does it happen?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n) on an already-sorted array, because the first pass makes no swaps</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n log n) on a reverse-sorted array</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(n&sup2;) always; the optimisation only saves memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">O(1) when the array has one element</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Bubble sort is stable. What does that mean?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It never crashes on large input</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Equal elements keep their original relative order</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It uses a fixed amount of memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Its running time does not vary with input</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Why is bubble sort taught but rarely shipped?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It cannot sort strings</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It needs O(n) extra memory</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">O(n&sup2;) comparisons make it far slower than merge or quick sort on real input</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It is unstable</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </div>
+
+      <div class="info-pane" id="tp-bub-prac">
       <div class="pq-progress">
           <div class="pq-progress-label"><span>Bubble Mastery</span><span id="prog-bubble">0 / 5 solved</span></div>
           <div class="pq-bar"><div class="pq-bar-fill" id="bar-bubble" style="width:0%"></div></div>
@@ -273,23 +387,23 @@
       <div class="pq-list" id="pql-bubble">
           <div class="pq-item" data-id="1601" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/sort-colors/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,1601,'bubble')"></button>
-              <span class="pq-num">#01</span><span class="pq-name">Sort Colors</span><span class="pq-badge pq-pbc">Google</span>
+              <span class="pq-num">#01</span><span class="pq-name"><a href="https://leetcode.com/problems/sort-colors/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Sort Colors</a></span><span class="pq-badge pq-pbc">Google</span>
           </div>
           <div class="pq-item" data-id="1602" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/majority-element/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,1602,'bubble')"></button>
-              <span class="pq-num">#02</span><span class="pq-name">Majority Element</span><span class="pq-badge pq-pbc">Amazon</span>
+              <span class="pq-num">#02</span><span class="pq-name"><a href="https://leetcode.com/problems/majority-element/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Majority Element</a></span><span class="pq-badge pq-pbc">Amazon</span>
           </div>
           <div class="pq-item" data-id="1603" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/sort-an-array/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,1603,'bubble')"></button>
-              <span class="pq-num">#03</span><span class="pq-name">Sort an Array</span><span class="pq-badge pq-startup">Swiggy</span>
+              <span class="pq-num">#03</span><span class="pq-name"><a href="https://leetcode.com/problems/sort-an-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Sort an Array</a></span><span class="pq-badge pq-startup">Swiggy</span>
           </div>
           <div class="pq-item" data-id="1604" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/valid-anagram/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,1604,'bubble')"></button>
-              <span class="pq-num">#04</span><span class="pq-name">Valid Anagram</span><span class="pq-badge pq-startup">Zomato</span>
+              <span class="pq-num">#04</span><span class="pq-name"><a href="https://leetcode.com/problems/valid-anagram/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Valid Anagram</a></span><span class="pq-badge pq-startup">Zomato</span>
           </div>
           <div class="pq-item" data-id="1605" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/move-zeroes/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,1605,'bubble')"></button>
-              <span class="pq-num">#05</span><span class="pq-name">Move Zeroes</span><span class="pq-badge pq-pbc">Meta</span>
+              <span class="pq-num">#05</span><span class="pq-name"><a href="https://leetcode.com/problems/move-zeroes/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Move Zeroes</a></span><span class="pq-badge pq-pbc">Meta</span>
           </div>
       </div>
   </div>
@@ -309,11 +423,11 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
   // Sidebar toggle functionality
   const sidebarToggle = document.getElementById('sidebarToggle');
@@ -399,12 +513,12 @@ window.runSort = async function(){
       }
     }
     done.add(n-i-1);
-    if(!swapped){setStatus('sorting-status','<span style="color:var(--green)">✓ No swaps needed — Sorted!</span>'); break;}
+    if(!swapped){setStatus('sorting-status','<span style="color:#34d399">✓ No swaps needed — Sorted!</span>'); break;}
   }
   if(!bsOff){
     for(let k=0; k<n; k++) done.add(k);
     drw(arr, -1, -1, done);
-    setStatus('sorting-status','<span style="color:var(--green)">✓ Sort complete!</span>');
+    setStatus('sorting-status','<span style="color:#34d399">✓ Sort complete!</span>');
   }
   bsOff=true;
 }

@@ -5,11 +5,11 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
-<meta name="description" content="TechForge — Free, interactive CS learning. Master DSA, Python, Backend, SQL & AI/ML with live canvas animations and 200+ interview problems."/>
+<meta name="description" content="TechForge — Free, interactive CS learning. Master DSA, Python, Backend, SQL & AI/ML with live canvas animations and 290+ interview problems."/>
 <meta name="keywords" content="DSA, Python, Backend, SQL, AI/ML, interview prep, free coding tutorials, canvas animations"/>
 <meta name="author" content="TechForge"/>
 <meta property="og:title" content="TechForge — Master CS Fundamentals"/>
-<meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 200+ interview questions."/>
+<meta property="og:description" content="Free, interactive CS learning. DSA animations, Python reference, Backend guides, SQL, AI/ML, and 290+ interview questions."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://techforge-dev.vercel.app"/>
 <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-<link href="assets/css/forge_base.css?v=10" rel="stylesheet"/><style>
+<link href="assets/css/forge_base.css?v=35" rel="stylesheet"/><style>
 
 /* --------------------------------------
    TECHFORGE HOME — v4
@@ -76,6 +76,55 @@
   padding-bottom: var(--safe-bottom);
 }
 
+/* ── MOTION TOKENS ──
+   One set of durations and curves so timings stay related instead of a dozen
+   ad-hoc values. Every animation below animates transform/opacity/filter only:
+   layout properties force reflow and are what makes hover states jitter. */
+:root {
+  --m-fast: .15s;
+  --m-base: .28s;
+  --m-slow: .5s;
+  --m-out: cubic-bezier(.22, 1, .36, 1);     /* settles, no overshoot */
+  --m-inout: cubic-bezier(.65, 0, .35, 1);
+}
+
+/* ── INTERACTIVE POLISH ──
+   Scoped to the homepage so the other 379 pages cannot regress from it. */
+
+/* The current-page underline wipes in rather than appearing, and hovering any
+   nav item previews where it would land. */
+header.topbar .tb-link { position: relative; }
+header.topbar .tb-link::after {
+  content: '';
+  position: absolute;
+  left: 12px; right: 12px; bottom: -1px;
+  height: 2px; border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--m-base) var(--m-out);
+}
+header.topbar .tb-link.current::after,
+header.topbar .tb-link:hover::after { transform: scaleX(1); }
+
+/* Clicking should feel like pressing something. Nothing on the page
+   acknowledged a click before this. */
+.btn-primary, .btn-secondary, .cmp, .topic-card {
+  transition: transform var(--m-fast) var(--m-out),
+              background-color var(--m-fast) ease,
+              border-color var(--m-fast) ease,
+              box-shadow var(--m-base) ease;
+}
+.btn-primary:active, .btn-secondary:active, .cmp:active { transform: scale(.97); }
+.topic-card:active { transform: translateY(-2px) scale(.995); }
+
+@media (prefers-reduced-motion: reduce) {
+  header.topbar .tb-link::after { transition: none; }
+  header.topbar .tb-link:hover::after { transform: scaleX(0); }
+  header.topbar .tb-link.current::after { transform: scaleX(1); }
+  .btn-primary:active, .btn-secondary:active, .cmp:active, .topic-card:active { transform: none; }
+}
+
 /* -- HERO split layout -- */
 .hero-section {
   max-width: 1200px; margin: 0 auto;
@@ -83,16 +132,20 @@
   display: grid;
   grid-template-columns: 1fr 440px;
   gap: 48px; align-items: center;
+  position: relative;
 }
+
+/* Aurora: two slow-drifting radial fields behind the hero. The first thing
+   anyone sees was completely static; this gives the page a pulse without
+   competing with the text. Composited on the GPU, never repaints. */
+.hero-left, .hero-right { position: relative; z-index: 1; }
 .hero-left { display: flex; flex-direction: column; }
 
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--cyan);
-  background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.16);
-  padding: 7px 18px; border-radius: var(--r-full);
-  margin-bottom: 28px; width: fit-content;
+  display: inline-flex; align-items: center; gap: 11px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 26px; width: fit-content;
   animation: fadeUp .5s ease both;
 }
 .eyebrow-dot {
@@ -116,12 +169,6 @@
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   min-height: 1.1em;
 }
-.hero-title .cursor {
-  display: inline-block; width: 3px; height: .82em;
-  background: var(--cyan); vertical-align: middle; margin-left: 3px;
-  animation: blink 1.1s step-end infinite;
-}
-@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
 .hero-sub {
   font-size: clamp(14px, 1.8vw, 16px); color: var(--text2);
@@ -138,11 +185,11 @@
   padding: 13px 26px; border-radius: var(--r-md);
   font-family: var(--font-body); font-size: 14px; font-weight: 700;
   text-decoration: none; border: none; cursor: pointer;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
-  color: #000; box-shadow: 0 4px 24px rgba(79,142,247,.4);
-  transition: all .2s;
+  background: var(--blue); color: #000;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.btn-primary:hover { box-shadow: 0 6px 36px rgba(0,212,255,.5); transform: translateY(-2px); }
+.btn-primary:hover { background: color-mix(in srgb, var(--blue) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.btn-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-secondary {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 13px 26px; border-radius: var(--r-md);
@@ -152,27 +199,27 @@
   border: 1px solid var(--border2); transition: all .2s;
 }
 .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+/* Light theme: the palette turns --blue/--cyan into dark ink, so the primary
+   button becomes a near-black slab — give it white text + a neutral shadow
+   for a crisp dark-on-cream button instead of black-on-black. */
+html.light .btn-primary { color: #fff; box-shadow: 0 6px 20px rgba(12,36,68,.22); }
+html.light .btn-primary:hover { box-shadow: 0 10px 28px rgba(12,36,68,.3); }
 
 .stat-row {
   display: flex; gap: 0; flex-wrap: wrap;
-  border: 1px solid var(--border); border-radius: var(--r-lg);
-  overflow: hidden; background: var(--card);
   animation: fadeUp .5s .27s ease both;
   width: fit-content;
 }
 .stat-item {
-  padding: 16px 22px; display: flex; flex-direction: column; align-items: center; gap: 3px;
-  border-right: 1px solid var(--border); transition: background .2s;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 2px 26px; border-left: 1px solid var(--border);
 }
-.stat-item:last-child { border-right: none; }
-.stat-item:hover { background: rgba(0,212,255,.04); }
+.stat-item:first-child { padding-left: 0; border-left: none; }
 .stat-val {
-  font-family: var(--font-mono); font-size: 20px; font-weight: 700;
-  background: linear-gradient(135deg, var(--text) 30%, var(--cyan) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  line-height: 1;
+  font-family: var(--font-mono); font-size: 27px; font-weight: 700;
+  color: var(--text); line-height: 1; letter-spacing: -0.5px;
 }
-.stat-key { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
+.stat-key { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.8px; color: var(--text3); text-transform: uppercase; }
 
 /* canvas panel */
 .hero-right {
@@ -206,14 +253,14 @@
 .cpb-dot:nth-child(2) { background: #febc2e; }
 .cpb-dot:nth-child(3) { background: #28c840; }
 .cpb-title { font-family: var(--font-mono); font-size: 10px; color: var(--text3); letter-spacing: 1px; margin-left: 4px; }
-#heroCanvas { display: block; width: 100%; height: 280px; flex: 1; }
+#heroCanvas { display: block; width: 100%; height: 100%; min-height: 0; flex: 1; }
 
 .canvas-mini-pills { display: flex; gap: 8px; flex-wrap: wrap; }
 .cmp {
   font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
   padding: 5px 12px; border-radius: var(--r-full); letter-spacing: .5px; cursor: pointer;
   border: 1px solid var(--border2); color: var(--text3); background: var(--card);
-  transition: all .15s;
+  transition: background-color var(--m-fast) ease, border-color var(--m-fast) ease, color var(--m-fast) ease;
 }
 .cmp:hover, .cmp.active { background: rgba(0,212,255,.08); border-color: rgba(0,212,255,.3); color: var(--cyan); }
 
@@ -248,6 +295,26 @@
   display: flex; align-items: baseline; justify-content: space-between;
   margin-bottom: 32px; padding-top: clamp(48px, 6vw, 64px);
 }
+/* Stacked variant: eyebrow → title → lede in one column. The flex/
+   space-between default above only works with two children; sections with a
+   title AND a description need them stacked, not spread across the row. */
+.section-header.sh-stack {
+  display: block;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+.sh-stack .sh-title {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(21px, 3vw, 30px);
+  font-weight: 700; letter-spacing: -0.4px;
+  color: var(--text);
+  margin: 10px 0 8px;
+  text-wrap: balance;
+}
+.sh-stack .sh-lede {
+  font-size: 14px; color: var(--text2); line-height: 1.7;
+  max-width: 52ch; margin: 0;
+}
 .section-eyebrow {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px;
   color: var(--text3); text-transform: uppercase;
@@ -267,13 +334,21 @@
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--r-xl); padding: 24px 22px 20px;
   text-decoration: none; display: flex; flex-direction: column;
-  position: relative; overflow: hidden; transition: all .25s;
+  position: relative; overflow: hidden;
+  /* Explicit properties, not `all`: `all` animates layout properties too, which
+     forces reflow on every hover and is what makes cards jitter. */
+  transition: transform var(--m-base) var(--m-out),
+              border-color var(--m-base) ease,
+              box-shadow var(--m-base) ease;
   min-height: 220px;
 }
+/* The glow tracks the cursor across the grid instead of sitting in a fixed
+   corner. --mx/--my are written once per frame by one listener on the grid. */
 .topic-card::after {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at 75% 15%, var(--tc-glow,rgba(0,212,255,.06)), transparent 60%);
-  opacity: 0; transition: opacity .35s;
+  background: radial-gradient(circle 260px at var(--mx, 75%) var(--my, 15%),
+              var(--tc-glow, rgba(0,212,255,.06)), transparent 65%);
+  opacity: 0; transition: opacity var(--m-slow) ease;
 }
 .topic-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
 .topic-card:hover::after { opacity: 1; }
@@ -285,26 +360,32 @@
 .topic-card:hover::before { opacity: 1; }
 .topic-card:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
-.tc-dsa { grid-column: span 4; --tc-a: var(--blue);  --tc-glow: rgba(79,142,247,.08); }
-.tc-py  { grid-column: span 4; --tc-a: var(--green); --tc-glow: rgba(52,211,153,.07); }
-.tc-bk  { grid-column: span 4; --tc-a: #10b981;      --tc-glow: rgba(16,185,129,.07); }
-.tc-sql { grid-column: span 4; --tc-a: #818cf8;      --tc-glow: rgba(129,140,248,.07);}
-.tc-devops { grid-column: span 4; --tc-a: #f97316; --tc-glow: rgba(249,115,22,.07); }
-.tc-ai  { grid-column: span 4; --tc-a: var(--cyan);  --tc-glow: rgba(0,212,255,.07);  }
-.tc-int { grid-column: span 4; --tc-a: var(--amber); --tc-glow: rgba(251,191,36,.07); }
+/* Each card carries its own section's accent — the same colour that page
+   uses for its hub, sidebar and nav. Vars, not hex, so the light theme's
+   dark-ink versions resolve automatically. */
+.tc-dsa { grid-column: span 4; --tc-a: var(--blue);   --tc-glow: rgba(77,158,247,.08); }
+.tc-py  { grid-column: span 4; --tc-a: var(--amber);  --tc-glow: rgba(251,191,36,.07); }
+.tc-bk  { grid-column: span 4; --tc-a: var(--green);  --tc-glow: rgba(52,211,153,.07); }
+.tc-sql { grid-column: span 4; --tc-a: var(--cyan);   --tc-glow: rgba(34,211,238,.07); }
+.tc-devops { grid-column: span 4; --tc-a: var(--red); --tc-glow: rgba(248,113,113,.07); }
+.tc-ai  { grid-column: span 4; --tc-a: var(--purple); --tc-glow: rgba(167,139,250,.07); }
+/* Seven cards in a 3-across grid leaves the last one orphaned, so the
+   Interview hub — the track everything else feeds into — takes the full
+   width instead of sitting alone beside 700px of dead space. */
+.tc-int { grid-column: span 12; --tc-a: var(--teal); --tc-glow: rgba(45,212,191,.07); }
 
 .tc-icon-box {
   width: 40px; height: 40px; border-radius: var(--r-md);
   display: grid; place-items: center; font-size: 22px;
   margin-bottom: 14px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.05);
 }
-.tc-dsa .tc-icon-box { background: rgba(79,142,247,.1); color: #4d9ef7; }
-.tc-py  .tc-icon-box { background: rgba(52,211,153,.08); color: #34d399; }
-.tc-bk  .tc-icon-box { background: rgba(16,185,129,.08); color: #10b981; }
-.tc-sql .tc-icon-box { background: rgba(129,140,248,.08); color: #818cf8; }
-.tc-devops .tc-icon-box { background: rgba(249,115,22,.08); color: #f97316; }
-.tc-ai  .tc-icon-box { background: rgba(0,212,255,.07); color: #00d4ff; }
-.tc-int .tc-icon-box { background: rgba(251,191,36,.08); color: #fbbf24; }
+.tc-dsa .tc-icon-box { background: rgba(77,158,247,.1);  color: var(--blue); }
+.tc-py  .tc-icon-box { background: rgba(251,191,36,.08); color: var(--amber); }
+.tc-bk  .tc-icon-box { background: rgba(52,211,153,.08); color: var(--green); }
+.tc-sql .tc-icon-box { background: rgba(34,211,238,.08); color: var(--cyan); }
+.tc-devops .tc-icon-box { background: rgba(248,113,113,.08); color: var(--red); }
+.tc-ai  .tc-icon-box { background: rgba(167,139,250,.08); color: var(--purple); }
+.tc-int .tc-icon-box { background: rgba(45,212,191,.08);  color: var(--teal); }
 
 .tc-label {
   font-family: var(--font-mono); font-size: 9px; font-weight: 700;
@@ -312,13 +393,13 @@
   padding: 3px 9px; border-radius: var(--r-full);
   display: inline-block; margin-bottom: 10px; width: fit-content;
 }
-.tc-dsa .tc-label { background:rgba(79,142,247,.1);   color:var(--blue);  border:1px solid rgba(79,142,247,.22); }
-.tc-py  .tc-label { background:rgba(52,211,153,.08);  color:var(--green); border:1px solid rgba(52,211,153,.2);  }
-.tc-bk  .tc-label { background:rgba(16,185,129,.08);  color:#10b981;      border:1px solid rgba(16,185,129,.2);  }
-.tc-sql .tc-label { background:rgba(129,140,248,.08); color:#818cf8;      border:1px solid rgba(129,140,248,.2); }
-.tc-devops .tc-label { background:rgba(249,115,22,.08); color:#f97316; border:1px solid rgba(249,115,22,.2); }
-.tc-ai  .tc-label { background:rgba(0,212,255,.07);   color:var(--cyan);  border:1px solid rgba(0,212,255,.18);  }
-.tc-int .tc-label { background:rgba(251,191,36,.08);  color:var(--amber); border:1px solid rgba(251,191,36,.2);  }
+.tc-dsa .tc-label { background:rgba(77,158,247,.1);   color:var(--blue);   border:1px solid rgba(77,158,247,.22); }
+.tc-py  .tc-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2);  }
+.tc-bk  .tc-label { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2);  }
+.tc-sql .tc-label { background:rgba(34,211,238,.08);  color:var(--cyan);   border:1px solid rgba(34,211,238,.2);  }
+.tc-devops .tc-label { background:rgba(248,113,113,.08); color:var(--red); border:1px solid rgba(248,113,113,.2); }
+.tc-ai  .tc-label { background:rgba(167,139,250,.08); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+.tc-int .tc-label { background:rgba(45,212,191,.08);  color:var(--teal);   border:1px solid rgba(45,212,191,.2);  }
 
 .tc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 7px; letter-spacing: -.3px; }
 .tc-desc  { font-size: 12px; color: var(--text3); line-height: 1.65; flex: 1; margin-bottom: 14px; }
@@ -332,13 +413,13 @@
 .tc-count { display: flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 10px; color: var(--text3); }
 .tc-dot   { width: 5px; height: 5px; border-radius: 50%; background: var(--tc-a,var(--cyan)); }
 .tc-arrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px; transition: gap .15s; }
-.tc-dsa .tc-arrow { color: var(--blue);  }
-.tc-py  .tc-arrow { color: var(--green); }
-.tc-bk  .tc-arrow { color: #10b981;     }
-.tc-sql .tc-arrow { color: #818cf8;     }
-.tc-devops .tc-arrow { color: #f97316; }
-.tc-ai  .tc-arrow { color: var(--cyan); }
-.tc-int .tc-arrow { color: var(--amber);}
+.tc-dsa .tc-arrow { color: var(--blue);   }
+.tc-py  .tc-arrow { color: var(--amber);  }
+.tc-bk  .tc-arrow { color: var(--green);  }
+.tc-sql .tc-arrow { color: var(--cyan);   }
+.tc-devops .tc-arrow { color: var(--red); }
+.tc-ai  .tc-arrow { color: var(--purple); }
+.tc-int .tc-arrow { color: var(--teal);   }
 .topic-card:hover .tc-arrow { gap: 9px; }
 
 /* -- HOW IT WORKS -- */
@@ -402,7 +483,7 @@
   font-family:var(--font-display); font-size:clamp(24px,4.5vw,40px);
   font-weight: 700; letter-spacing:-0.5px; color:var(--text); margin-bottom:14px; line-height:1.1;
 }
-.cta-title span { background:linear-gradient(135deg,var(--cyan),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.cta-title span { color: var(--cyan); }
 .cta-sub { font-size:14px; color:var(--text3); margin-bottom:32px; max-width:480px; line-height:1.7; }
 .cta-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
 .cta-trust {
@@ -457,7 +538,8 @@
   .tc-py  { grid-column:span 5; }
   .tc-bk  { grid-column:span 4; }
   .tc-sql { grid-column:span 4; }
-  .tc-ai  { grid-column:span 4; }
+  .tc-devops { grid-column:span 4; }
+  .tc-ai  { grid-column:span 6; }
   .tc-int { grid-column:span 6; }
   .hiw-grid { grid-template-columns:repeat(2,1fr); }
   .footer-top { grid-template-columns:1fr; }
@@ -489,55 +571,6 @@
 }
 </style>
 
-<style id="tf-home-mobile-nav">
-/* Mobile grid nav panel */
-.tf-home-mobile-panel {
-  display: none;
-  position: fixed;
-  top: calc(var(--topbar-h, 58px) + var(--safe-top, 0px));
-  left: 0; right: 0;
-  background: var(--bg2, #0d1117);
-  border-bottom: 1px solid var(--border, #1f2d42);
-  padding: 16px;
-  z-index: 89;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-}
-.tf-home-mobile-panel.open { display: block; }
-.tf-hmp-label {
-  font-family: var(--mono, monospace);
-  font-size: 9px; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--text3, #5a7094);
-  margin-bottom: 10px;
-}
-.tf-hmp-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.tf-hmp-item {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 5px;
-  padding: 10px 4px;
-  border-radius: 10px;
-  text-decoration: none;
-  background: var(--surface, #141b26);
-  border: 1px solid var(--border, #1f2d42);
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color .15s;
-}
-.tf-hmp-item:active { border-color: var(--accent, #4d9ef7); }
-.tf-hmp-icon { font-size: 20px; line-height: 1; }
-.tf-hmp-text {
-  font-family: var(--mono, monospace);
-  font-size: 9px; font-weight: 600;
-  color: var(--text2, #8da0bb);
-  text-align: center;
-}
-@media (min-width: 901px) {
-  .tf-home-mobile-panel { display: none !important; }
-}
-</style>
 <style id="tf-home-nav-hide">
 @media (max-width: 900px) {
   /* Hide the default tb-nav dropdown on homepage — we use the grid panel instead */
@@ -598,6 +631,46 @@
     .tfl-orbit { animation: none; }
     .tfl-mark, .tfl-word { animation: none; opacity: 1; transform: none; }
   }
+
+/* ── CS UNIVERSE MAP ── */
+    .csmap-section { padding: 56px 0 40px; }
+    /* Square-ish radial map that scales to fit ANY width — no scroll. */
+    .csmap-svg { display: block; max-width: 560px; margin: 0 auto; width: 100%; height: auto; font-family: var(--font-mono, monospace); }
+    /* Desktop: copy and map share the row so the diagram isn't stranded in
+       the middle with dead space beside it. Stacks back under 960px. */
+    @media (min-width: 960px) {
+      .csmap-layout { display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 620px); gap: 56px; align-items: center; }
+      .csmap-layout .section-header.sh-stack { padding-top: 0; margin-bottom: 0; }
+      .csmap-layout .csmap-svg { margin: 0; max-width: 620px; }
+    }
+    .csmap-edge { stroke: var(--border); stroke-width: 1.5; }
+    .csmap-flow { stroke-width: 1.6; stroke-dasharray: 5 88; stroke-linecap: round; opacity: .9; }
+    .csmap-node circle { fill: var(--card, rgba(255,255,255,.03)); stroke-width: 2; transition: transform .2s ease; transform-box: fill-box; transform-origin: center; }
+    .csmap-node text { fill: var(--text); font-size: 17px; font-weight: 700; }
+    .csmap-node .csmap-sub { fill: var(--text3, var(--text2)); font-size: 12px; font-weight: 400; }
+    /* Light theme: solid node faces + darker edges so the map doesn't wash out on cream */
+    html.light .csmap-node circle { fill: #fffdf7; }
+    html.light .csmap-edge { stroke: var(--text3, #6b6355); opacity: .45; }
+    html.light .csmap-node .csmap-sub { fill: var(--text2); }
+    .csmap-node circle, .csmap-node text { transition: transform .25s ease, opacity .25s ease; }
+    .csmap-node:hover circle, .csmap-node:focus-visible circle { transform: scale(1.14); }
+    .csmap-node:focus-visible { outline: 2.4px solid var(--accent, #4d9ef7); outline-offset: 4px; border-radius: 50%; }
+    .csmap-core circle { animation: csmapPulse 3.2s ease-in-out infinite; }
+    @keyframes csmapPulse { 0%,100% { stroke-opacity: 1; } 50% { stroke-opacity: .45; } }
+    @keyframes csmapDash { to { stroke-dashoffset: -95; } }
+    .csmap-flow { animation: csmapDash 3.8s linear infinite; }
+    /* hover-to-focus: dim everything but the active track + hub */
+    .csmap-svg.is-focused .csmap-node:not(.is-active):not(.csmap-core) circle,
+    .csmap-svg.is-focused .csmap-node:not(.is-active):not(.csmap-core) text { opacity: .28; }
+    .csmap-svg.is-focused .csmap-edge, .csmap-svg.is-focused .csmap-flow { opacity: .12; }
+    .csmap-node.is-active circle { filter: drop-shadow(0 0 10px currentColor); }
+    /* orbiting pulse traveling the track ring */
+    .csmap-orbit { fill: var(--accent, #4d9ef7); filter: drop-shadow(0 0 6px var(--accent, #4d9ef7)); }
+    @media (prefers-reduced-motion: reduce) {
+      .csmap-flow, .csmap-core circle { animation: none; }
+      .csmap-node circle, .csmap-node text { transition: none; }
+      .csmap-orbit { display: none; }
+    }
 </style>
 </head>
 <body>
@@ -663,18 +736,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link current" href="index.html">Home</a>
+    <a class="tb-link" href="roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="roles/index.html">Roles</a>
+    <a class="tb-link" href="programming/index.html">Programming</a>
     <a class="tb-link" href="dsa/index.html">DSA</a>
     <a class="tb-link" href="system-design/index.html">System Design</a>
-    <a class="tb-link" href="python/index.html">Python</a>
-    <a class="tb-link" href="databases/index.html">Databases</a>
-    <a class="tb-link" href="aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="devops/index.html">DevOps</a>
+    <a class="tb-link" href="interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="backend/index.html">Backend</a>
+        <a class="tb-more-item" href="databases/index.html">Databases</a>
+        <a class="tb-more-item" href="devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="data/index.html">Data</a>
+        <a class="tb-more-item" href="aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">☰</button>
   </div>
@@ -686,15 +775,25 @@
 <div class="tf-home-mobile-panel" id="tfHomeMobilePanel">
   <div class="tf-hmp-label">Navigate</div>
   <div class="tf-hmp-grid">
-    <a class="tf-hmp-item" href="index.html"><span class="tf-hmp-icon">⬡</span><span class="tf-hmp-text">Home</span></a>
-    <a class="tf-hmp-item" href="dsa/index.html"><span class="tf-hmp-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-hmp-text">DSA</span></a>
-    <a class="tf-hmp-item" href="python/index.html"><span class="tf-hmp-icon"><i class="ti ti-brand-python"></i></span><span class="tf-hmp-text">Python</span></a>
-    <a class="tf-hmp-item" href="system-design/index.html"><span class="tf-hmp-icon"><i class="ti ti-building"></i></span><span class="tf-hmp-text">Sys Design</span></a>
-    <a class="tf-hmp-item" href="databases/index.html"><span class="tf-hmp-icon"><i class="ti ti-database"></i></span><span class="tf-hmp-text">Databases</span></a>
-    <a class="tf-hmp-item" href="devops/index.html"><span class="tf-hmp-icon"><i class="ti ti-server-2"></i></span><span class="tf-hmp-text">DevOps</span></a>
-    <a class="tf-hmp-item" href="aiml/index.html"><span class="tf-hmp-icon"><i class="ti ti-robot"></i></span><span class="tf-hmp-text">AI/ML</span></a>
-    <a class="tf-hmp-item" href="interview/index.html"><span class="tf-hmp-icon"><i class="ti ti-target"></i></span><span class="tf-hmp-text">Interview</span></a>
-    <a class="tf-hmp-item" href="about.html"><span class="tf-hmp-icon"><i class="ti ti-info-circle"></i></span><span class="tf-hmp-text">About</span></a>
+        <a class="tf-hmp-item" href="index.html"><span class="tf-hmp-icon"><i class="ti ti-home"></i></span><span class="tf-hmp-text">Home</span></a>
+        <a class="tf-hmp-item" href="roadmaps/index.html"><span class="tf-hmp-icon"><i class="ti ti-route"></i></span><span class="tf-hmp-text">Roadmaps</span></a>
+        <a class="tf-hmp-item" href="roles/index.html"><span class="tf-hmp-icon"><i class="ti ti-briefcase"></i></span><span class="tf-hmp-text">Roles</span></a>
+        <a class="tf-hmp-item" href="programming/index.html"><span class="tf-hmp-icon"><i class="ti ti-code"></i></span><span class="tf-hmp-text">Programming</span></a>
+        <a class="tf-hmp-item" href="dsa/index.html"><span class="tf-hmp-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-hmp-text">DSA</span></a>
+        <a class="tf-hmp-item" href="system-design/index.html"><span class="tf-hmp-icon"><i class="ti ti-building"></i></span><span class="tf-hmp-text">Sys Design</span></a>
+        <a class="tf-hmp-item" href="interview/index.html"><span class="tf-hmp-icon"><i class="ti ti-target"></i></span><span class="tf-hmp-text">Interview</span></a>
+        <a class="tf-hmp-item" href="frontend/index.html"><span class="tf-hmp-icon"><i class="ti ti-browser"></i></span><span class="tf-hmp-text">Frontend</span></a>
+        <a class="tf-hmp-item" href="backend/index.html"><span class="tf-hmp-icon"><i class="ti ti-server-2"></i></span><span class="tf-hmp-text">Backend</span></a>
+        <a class="tf-hmp-item" href="databases/index.html"><span class="tf-hmp-icon"><i class="ti ti-database"></i></span><span class="tf-hmp-text">Databases</span></a>
+        <a class="tf-hmp-item" href="devops/index.html"><span class="tf-hmp-icon"><i class="ti ti-server-cog"></i></span><span class="tf-hmp-text">DevOps</span></a>
+        <a class="tf-hmp-item" href="systems/index.html"><span class="tf-hmp-icon"><i class="ti ti-cpu"></i></span><span class="tf-hmp-text">OS &amp; Networks</span></a>
+        <a class="tf-hmp-item" href="mobile/index.html"><span class="tf-hmp-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-hmp-text">Mobile</span></a>
+        <a class="tf-hmp-item" href="blockchain/index.html"><span class="tf-hmp-icon"><i class="ti ti-link"></i></span><span class="tf-hmp-text">Blockchain</span></a>
+        <a class="tf-hmp-item" href="qa/index.html"><span class="tf-hmp-icon"><i class="ti ti-checklist"></i></span><span class="tf-hmp-text">QA</span></a>
+        <a class="tf-hmp-item" href="data/index.html"><span class="tf-hmp-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-hmp-text">Data</span></a>
+        <a class="tf-hmp-item" href="aiml/index.html"><span class="tf-hmp-icon"><i class="ti ti-robot"></i></span><span class="tf-hmp-text">AI &amp; ML</span></a>
+        <a class="tf-hmp-item" href="games/index.html"><span class="tf-hmp-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-hmp-text">Game Dev</span></a>
+        <a class="tf-hmp-item" href="about.html"><span class="tf-hmp-icon"><i class="ti ti-info-circle"></i></span><span class="tf-hmp-text">About</span></a>
   </div>
 </div>
 
@@ -705,25 +804,26 @@
     <div class="hero-left">
       <div class="hero-eyebrow">
         <span class="eyebrow-dot"></span>
-        Free Forever · No Ads · No Account · No Login
+        Complete Computer Science · Interactive · Interview-Ready
       </div>
       <h1 class="hero-title">
-        <span class="line-1">Master CS</span>
-        <span class="line-2"><span id="typeTarget">Level Up.</span><span class="cursor"></span></span>
+        <span class="line-1">Understand it.</span>
+        <span class="line-2">Don't memorize it.</span>
       </h1>
       <p class="hero-sub">
         The interactive CS platform built for engineers who want to <strong style="color:var(--text)">understand, not just memorize</strong>.
-        Live canvas visualizations, clean code, and 200+ interview problems — all free, forever.
+        Live canvas visualizations, clean code, and 290+ interview problems — from first principles to interview-ready.
       </p>
       <div class="hero-cta">
-        <a class="btn-primary" href="dsa/index.html"><i class="ti ti-rocket" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Start with DSA</a>
+        <a class="btn-primary" href="roadmaps/index.html"><i class="ti ti-route" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Follow a Roadmap</a>
+        <a class="btn-secondary" href="dsa/index.html"><i class="ti ti-rocket" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Start with DSA</a>
         <a class="btn-secondary" href="interview/index.html"><i class="ti ti-target" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Interview Prep →</a>
       </div>
       <div class="stat-row">
-        <div class="stat-item"><span class="stat-val">7</span><span class="stat-key">Tracks</span></div>
-        <div class="stat-item"><span class="stat-val">70+</span><span class="stat-key">Topics</span></div>
-        <div class="stat-item"><span class="stat-val">200+</span><span class="stat-key">Questions</span></div>
-        <div class="stat-item"><span class="stat-val">0</span><span class="stat-key">Cost</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="7">7</span><span class="stat-key">Tracks</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="165" data-suffix="+">165+</span><span class="stat-key">Pages</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="290" data-suffix="+">290+</span><span class="stat-key">Questions</span></div>
+        <div class="stat-item"><span class="stat-val" data-count="137">137</span><span class="stat-key">Programs</span></div>
       </div>
     </div>
 
@@ -777,18 +877,97 @@
 
   <div class="section-divider"></div>
 
+  <!-- ---- CS UNIVERSE MAP ---- -->
+  <section class="csmap-section anim-in" aria-labelledby="csmapTitle">
+    <div class="section-wrap">
+      <div class="csmap-layout">
+      <div class="section-header sh-stack">
+        <div class="section-eyebrow">The Map</div>
+        <h2 id="csmapTitle" class="sh-title">One connected body of knowledge</h2>
+        <p class="sh-lede">Every track feeds the same goal. Click any node to jump in.</p>
+      </div>
+      <svg class="csmap-svg" viewBox="0 0 620 600" aria-labelledby="csmapSvgTitle">
+        <title id="csmapSvgTitle">Map of TechForge learning tracks. Six tracks — DSA, System Design, Databases, Roles, OS and Networks, and Programming Languages — all connect to Interview Prep at the centre.</title>
+        <g class="csmap-edges" aria-hidden="true">
+          <!-- spokes: every track → hub -->
+          <line class="csmap-edge" x1="310" y1="90"  x2="310" y2="300"/>
+          <line class="csmap-edge" x1="492" y1="195" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="492" y1="405" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="310" y1="510" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="128" y1="405" x2="310" y2="300"/>
+          <line class="csmap-edge" x1="128" y1="195" x2="310" y2="300"/>
+          <!-- faint ring: tracks connect to each other -->
+          <line class="csmap-edge" x1="310" y1="90"  x2="492" y2="195" opacity=".4"/>
+          <line class="csmap-edge" x1="492" y1="195" x2="492" y2="405" opacity=".4"/>
+          <line class="csmap-edge" x1="492" y1="405" x2="310" y2="510" opacity=".4"/>
+          <line class="csmap-edge" x1="310" y1="510" x2="128" y2="405" opacity=".4"/>
+          <line class="csmap-edge" x1="128" y1="405" x2="128" y2="195" opacity=".4"/>
+          <line class="csmap-edge" x1="128" y1="195" x2="310" y2="90"  opacity=".4"/>
+          <!-- animated pulses flowing toward the core -->
+          <line class="csmap-flow" x1="310" y1="90"  x2="310" y2="300" stroke="var(--blue,#4d9ef7)"/>
+          <line class="csmap-flow" x1="492" y1="195" x2="310" y2="300" stroke="var(--green,#34d399)"  style="animation-delay:-0.8s"/>
+          <line class="csmap-flow" x1="492" y1="405" x2="310" y2="300" stroke="var(--cyan,#22d3ee)"  style="animation-delay:-1.6s"/>
+          <line class="csmap-flow" x1="310" y1="510" x2="310" y2="300" stroke="var(--purple,#a78bfa)"   style="animation-delay:-2.4s"/>
+          <line class="csmap-flow" x1="128" y1="405" x2="310" y2="300" stroke="var(--red,#f87171)" style="animation-delay:-3.2s"/>
+          <line class="csmap-flow" x1="128" y1="195" x2="310" y2="300" stroke="var(--amber,#fbbf24)"  style="animation-delay:-1.2s"/>
+          <!-- pulse orbiting the track ring -->
+          <path id="csmapRing" d="M310 90 L492 195 L492 405 L310 510 L128 405 L128 195 Z" fill="none"/>
+          <circle class="csmap-orbit" r="4.5"><animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#csmapRing"/></animateMotion></circle>
+        </g>
+        <a class="csmap-node" href="dsa/index.html" aria-label="DSA track — algorithms and data structures">
+          <circle cx="310" cy="90" r="54" stroke="var(--blue,#4d9ef7)"/>
+          <text x="310" y="87" text-anchor="middle">DSA</text>
+          <text x="310" y="107" text-anchor="middle" class="csmap-sub">29 topics</text>
+        </a>
+        <a class="csmap-node" href="system-design/index.html" aria-label="System Design track — 26 architecture topics">
+          <circle cx="492" cy="195" r="54" stroke="var(--green,#34d399)"/>
+          <text x="492" y="192" text-anchor="middle">Sys Design</text>
+          <text x="492" y="212" text-anchor="middle" class="csmap-sub">26 topics</text>
+        </a>
+        <a class="csmap-node" href="databases/index.html" aria-label="Databases track">
+          <circle cx="492" cy="405" r="54" stroke="var(--cyan,#22d3ee)"/>
+          <text x="492" y="402" text-anchor="middle">Databases</text>
+          <text x="492" y="422" text-anchor="middle" class="csmap-sub">14 engines</text>
+        </a>
+        <a class="csmap-node" href="roles/index.html" aria-label="Roles — eighteen career paths">
+          <circle cx="310" cy="510" r="54" stroke="var(--purple,#a78bfa)"/>
+          <text x="310" y="507" text-anchor="middle">Roles</text>
+          <text x="310" y="527" text-anchor="middle" class="csmap-sub">18 careers</text>
+        </a>
+        <a class="csmap-node" href="systems/index.html" aria-label="OS and Networks track — operating systems and networking">
+          <circle cx="128" cy="405" r="54" stroke="var(--red,#f87171)"/>
+          <text x="128" y="402" text-anchor="middle">OS &amp; Net</text>
+          <text x="128" y="422" text-anchor="middle" class="csmap-sub">32 guides</text>
+        </a>
+        <a class="csmap-node" href="programming/index.html" aria-label="Programming Languages track — five languages">
+          <circle cx="128" cy="195" r="54" stroke="var(--amber,#fbbf24)"/>
+          <text x="128" y="192" text-anchor="middle">Languages</text>
+          <text x="128" y="212" text-anchor="middle" class="csmap-sub">5 languages</text>
+        </a>
+        <a class="csmap-node csmap-core" href="interview/index.html" aria-label="Interview Prep — where every track leads. 433 questions">
+          <circle cx="310" cy="300" r="62" stroke="var(--teal,#2dd4bf)" stroke-width="2"/>
+          <text x="310" y="296" text-anchor="middle">Interview</text>
+          <text x="310" y="317" text-anchor="middle" class="csmap-sub">433 Qs</text>
+        </a>
+      </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
   <!-- ---- SOCIAL PROOF STRIP ---- -->
   <div style="max-width:1200px;margin:0 auto;padding:32px 24px 0;">
     <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;padding:18px 28px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-xl);">
       <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);">Used by engineers preparing for</div>
       <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Google</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Amazon</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Microsoft</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Flipkart</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Razorpay</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.65;">Swiggy</span>
-        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.5;">+ more</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Google</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Amazon</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Microsoft</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Flipkart</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Razorpay</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">Swiggy</span>
+        <span style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--text2);opacity:.85;">+ more</span>
       </div>
     </div>
   </div>
@@ -804,6 +983,110 @@
       </div>
       <div class="bento-grid">
 
+        <a class="topic-card tc-ai" href="roles/index.html">
+          <div class="tc-icon-box"><i class="ti ti-briefcase"></i></div>
+          <div class="tc-label">Start Here</div>
+          <div class="tc-title">Learn by Role</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Frontend</span><span class="tc-chip">Backend</span><span class="tc-chip">Data</span><span class="tc-chip">Cloud</span>
+          </div>
+          <div class="tc-desc">Pick the job you are working toward &#9670; eighteen careers, each the real roadmap for the field, with your progress carried across all of them.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>18 careers</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-sql" href="frontend/index.html">
+          <div class="tc-icon-box"><i class="ti ti-browser"></i></div>
+          <div class="tc-label">The Web Platform</div>
+          <div class="tc-title">Frontend</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">HTML</span><span class="tc-chip">CSS</span><span class="tc-chip">Flexbox</span><span class="tc-chip">Grid</span>
+          </div>
+          <div class="tc-desc">What the browser actually runs &#9670; semantic structure, forms, the cascade, layout with Flexbox and Grid, responsive design and theming.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>9 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-bk" href="data/index.html">
+          <div class="tc-icon-box"><i class="ti ti-chart-donut"></i></div>
+          <div class="tc-label">Make It Mean Something</div>
+          <div class="tc-title">Data</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Statistics</span><span class="tc-chip">A/B Tests</span><span class="tc-chip">Charts</span><span class="tc-chip">Parquet</span>
+          </div>
+          <div class="tc-desc">Turning numbers into decisions &#9670; statistics and significance, experiment design, visualisation, data preparation, warehouses and lakes.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>7 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-dsa" href="qa/index.html">
+          <div class="tc-icon-box"><i class="ti ti-checklist"></i></div>
+          <div class="tc-label">Finding It First</div>
+          <div class="tc-title">QA &amp; Testing</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Pyramid</span><span class="tc-chip">Playwright</span><span class="tc-chip">Contracts</span><span class="tc-chip">Load</span>
+          </div>
+          <div class="tc-desc">Buying information, not certainty &#9670; the testing pyramid, exploratory and regression testing, unit and UI automation, API contracts, load and security.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>6 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-sql" href="backend/index.html">
+          <div class="tc-icon-box"><i class="ti ti-server-2"></i></div>
+          <div class="tc-label">Behind The API</div>
+          <div class="tc-title">Backend</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Node</span><span class="tc-chip">REST</span><span class="tc-chip">GraphQL</span><span class="tc-chip">Transactions</span>
+          </div>
+          <div class="tc-desc">The service behind the interface &#9670; the event loop and middleware, REST and OpenAPI, GraphQL and gRPC, ORMs and migrations, isolation levels, and testing.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>6 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-bk" href="blockchain/index.html">
+          <div class="tc-icon-box"><i class="ti ti-link"></i></div>
+          <div class="tc-label">Trustless Systems</div>
+          <div class="tc-title">Blockchain</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Consensus</span><span class="tc-chip">Solidity</span><span class="tc-chip">EVM</span><span class="tc-chip">dApps</span>
+          </div>
+          <div class="tc-desc">A ledger nobody owns &#9670; hash chains and Merkle proofs, consensus and gas, smart contracts and the EVM, tooling, dApps, and the security immutable code demands.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>5 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-sql" href="mobile/index.html">
+          <div class="tc-icon-box"><i class="ti ti-device-mobile"></i></div>
+          <div class="tc-label">Apps On Devices</div>
+          <div class="tc-title">Mobile Development</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Kotlin</span><span class="tc-chip">Swift</span><span class="tc-chip">Compose</span><span class="tc-chip">Offline</span>
+          </div>
+          <div class="tc-desc">Building for a device you do not control &#9670; platforms and lifecycle, declarative UI, architecture, offline networking, storage, release and monitoring.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>7 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
+        <a class="topic-card tc-bk" href="games/index.html">
+          <div class="tc-icon-box"><i class="ti ti-device-gamepad-2"></i></div>
+          <div class="tc-label">Real-Time Systems</div>
+          <div class="tc-title">Game Development</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Vectors</span><span class="tc-chip">Shaders</span><span class="tc-chip">Physics</span><span class="tc-chip">Netcode</span>
+          </div>
+          <div class="tc-desc">Sixteen milliseconds a frame &#9670; game maths, engines and the loop, real-time graphics, collision and animation, gameplay feel, netcode and shipping.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>7 guides</div>
+            <div class="tc-go">Explore &#8594;</div>
+          </div>
+        </a>
         <a class="topic-card tc-dsa" href="dsa/index.html">
           <div class="tc-icon-box"><i class="ti ti-chart-bar"></i></div>
           <div class="tc-label">Core Curriculum</div>
@@ -820,18 +1103,18 @@
           </div>
         </a>
 
-        <a class="topic-card tc-py" href="python/index.html">
-          <div class="tc-icon-box"><i class="ti ti-brand-python"></i></div>
-          <div class="tc-label">Language Guide</div>
-          <div class="tc-title">Python Foundations</div>
+        <a class="topic-card tc-py" href="programming/index.html">
+          <div class="tc-icon-box"><i class="ti ti-code"></i></div>
+          <div class="tc-label">Languages</div>
+          <div class="tc-title">Programming Languages</div>
           <div class="tc-sublist">
-            <span class="tc-chip">OOP</span><span class="tc-chip">Decorators</span>
-            <span class="tc-chip">Generators</span><span class="tc-chip">Libraries</span>
+            <span class="tc-chip">Python</span><span class="tc-chip">JavaScript</span>
+            <span class="tc-chip">Java</span><span class="tc-chip">C++</span>
           </div>
-          <div class="tc-desc">Complete Python reference — magic methods, decorators, comprehensions, async, and DSA patterns in Python. From beginner to interview-ready.</div>
+          <div class="tc-desc">Learn how languages turn ideas into instructions. Python is live — 7 modules and 137 programs, OOP to async; JavaScript, Java, C++ and HTML/CSS are on the way.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>7 modules</div>
-            <div class="tc-arrow">Learn ?</div>
+            <div class="tc-count"><span class="tc-dot"></span>Python live · 4 more soon</div>
+            <div class="tc-arrow">Explore ?</div>
           </div>
         </a>
 
@@ -844,36 +1127,50 @@
           </div>
           <div class="tc-desc">Load balancing, caching, microservices, and distributed systems — plus Django, Flask, and FastAPI framework guides for building production backends.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>6 concepts + 3 frameworks</div>
+            <div class="tc-count"><span class="tc-dot"></span>26 guides + 3 frameworks</div>
             <div class="tc-arrow">Design ?</div>
           </div>
         </a>
 
         <a class="topic-card tc-sql" href="databases/index.html">
           <div class="tc-icon-box"><i class="ti ti-database"></i></div>
-          <div class="tc-label">Data Layer</div>
-          <div class="tc-title">Database Systems</div>
+          <div class="tc-label">Store It</div>
+          <div class="tc-title">Databases</div>
           <div class="tc-sublist">
-            <span class="tc-chip">SQL</span><span class="tc-chip">PostgreSQL</span><span class="tc-chip">MongoDB</span><span class="tc-chip">Redis</span>
+            <span class="tc-chip">SQL</span><span class="tc-chip">Postgres</span><span class="tc-chip">Redis</span><span class="tc-chip">Mongo</span>
           </div>
-          <div class="tc-desc">RDBMS and NoSQL in one hub ◆ compare SQL, document, key-value, and graph databases with deep guides and interview-ready patterns.</div>
+          <div class="tc-desc">Relational foundations first, then the NoSQL and specialised stores built for other shapes of data ◆ 14 engines, from a full SQL reference to time-series and search.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>SQL + NoSQL families</div>
-            <div class="tc-arrow">Explore ?</div>
+            <div class="tc-count"><span class="tc-dot"></span>14 engines</div>
+            <div class="tc-go">Explore →</div>
           </div>
         </a>
 
         <a class="topic-card tc-devops" href="devops/index.html">
-          <div class="tc-icon-box"><i class="ti ti-server-2"></i></div>
-          <div class="tc-label">Ship &amp; Operate</div>
-          <div class="tc-title">DevOps Hub</div>
+          <div class="tc-icon-box"><i class="ti ti-server-cog"></i></div>
+          <div class="tc-label">Ship It</div>
+          <div class="tc-title">DevOps &amp; Cloud</div>
           <div class="tc-sublist">
-            <span class="tc-chip">Git</span><span class="tc-chip">Docker</span><span class="tc-chip">CI/CD</span><span class="tc-chip">K8s</span>
+            <span class="tc-chip">Git</span><span class="tc-chip">Docker</span><span class="tc-chip">K8s</span><span class="tc-chip">CI/CD</span>
           </div>
-          <div class="tc-desc">Version control, containers, pipelines, Kubernetes, monitoring, and infrastructure basics ◆ everything you need to ship and run software reliably.</div>
+          <div class="tc-desc">The whole ship-it toolchain ◆ Linux and Git through containers, orchestration and pipelines, out to AWS, GCP and Azure.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>6 topic areas</div>
-            <div class="tc-arrow">Ship ?</div>
+            <div class="tc-count"><span class="tc-dot"></span>26 guides</div>
+            <div class="tc-go">Explore →</div>
+          </div>
+        </a>
+
+        <a class="topic-card tc-devops" href="systems/index.html">
+          <div class="tc-icon-box"><i class="ti ti-cpu"></i></div>
+          <div class="tc-label">Below the Code</div>
+          <div class="tc-title">OS &amp; Networks</div>
+          <div class="tc-sublist">
+            <span class="tc-chip">Processes</span><span class="tc-chip">Memory</span><span class="tc-chip">TCP/IP</span><span class="tc-chip">DNS</span>
+          </div>
+          <div class="tc-desc">The systems layer every other track depends on ◆ how one machine runs your program and how millions talk to each other. All four pillars complete: OS, Networking, Security and Theory of Computation.</div>
+          <div class="tc-meta">
+            <div class="tc-count"><span class="tc-dot"></span>4 pillars · 32 guides</div>
+            <div class="tc-arrow">Go deeper ?</div>
           </div>
         </a>
 
@@ -900,9 +1197,9 @@
             <span class="tc-chip">FAANG</span><span class="tc-chip">Startup</span>
             <span class="tc-chip">DSA</span><span class="tc-chip">SQL</span><span class="tc-chip">OOP</span>
           </div>
-          <div class="tc-desc">200+ curated questions across DSA, Python, OOP, SQL, and AI/ML ◆ tagged for FAANG and startups. Progress tracked in your browser. Free, no login.</div>
+          <div class="tc-desc">290+ curated questions across DSA, Python, OOP, SQL, and AI/ML ◆ tagged for FAANG and startups. Progress tracked in your browser.</div>
           <div class="tc-meta">
-            <div class="tc-count"><span class="tc-dot"></span>200+ questions ◆ 5 tracks</div>
+            <div class="tc-count"><span class="tc-dot"></span>433 questions &#9670; 13 banks</div>
             <div class="tc-arrow">Prepare ?</div>
           </div>
         </a>
@@ -942,7 +1239,7 @@
           <div class="hiw-num">04</div>
           <div class="hiw-icon"><i class="ti ti-checklist"></i></div>
           <div class="hiw-title">Practice &amp; Track</div>
-          <div class="hiw-desc">Solve 200+ curated problems tagged for FAANG and startups. Check them off ◆ progress saves to your browser. No account ever needed.</div>
+          <div class="hiw-desc">Solve 290+ curated problems tagged for FAANG and startups. Check them off ◆ progress saves to your browser automatically.</div>
         </div>
       </div>
     </div>
@@ -982,7 +1279,7 @@
             <span class="pillar-pill pp-amber">Privacy First</span>
           </div>
           <div class="pillar-title">Local Progress Tracking</div>
-          <div class="pillar-desc">Mark problems as done and they stay checked. Progress lives in your browser's localStorage ◆ no account, no login, no data ever leaves your device.</div>
+          <div class="pillar-desc">Mark problems as done and they stay checked. Progress lives in your browser's localStorage ◆ pick up exactly where you left off, on any visit.</div>
         </div>
       </div>
     </div>
@@ -994,15 +1291,15 @@
       <div class="cta-inner">
         <div class="cta-mono">Ready to start?</div>
         <div class="cta-title">Your next offer starts<br/><span>here. Today. Free.</span></div>
-        <p class="cta-sub">Pick a topic and start building the mental models that turn good engineers into great ones. No paywall, no account, no catch ◆ just learning.</p>
+        <p class="cta-sub">Pick a topic and start building the mental models that turn good engineers into great ones. From first principles to interview-ready ◆ one platform, complete computer science.</p>
         <div class="cta-btns">
           <a class="btn-primary"   href="dsa/index.html"><i class="ti ti-rocket" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Start with DSA</a>
           <a class="btn-secondary" href="interview/index.html"><i class="ti ti-target" style="margin-right:7px;vertical-align:-3px;font-size:17px"></i>Interview Prep</a>
         </div>
         <div class="cta-trust">
-          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No ads, ever</div>
-          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No account needed</div>
-          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> No paywalls or upsells</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> 8 complete learning tracks</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> Interactive visualizers</div>
+          <div class="cta-trust-item"><span class="cta-trust-check">✓</span> Interview-focused content</div>
           <div class="cta-trust-item"><span class="cta-trust-check">✓</span> Progress saved locally</div>
         </div>
       </div>
@@ -1017,17 +1314,24 @@
           <div class="footer-logo-icon">⬡</div>
           <span>TECH</span><span style="color:var(--text3);font-weight:400">◆</span>FORGE
         </div>
-        <div class="footer-tagline">Free, interactive CS learning ◆ built for developers, by developers. No ads. No paywalls. No tracking. Ever.</div>
+        <div class="footer-tagline">Interactive CS learning ◆ built for developers, by developers. Complete computer science, one platform.</div>
       </div>
       <div class="footer-nav-cols">
         <div>
           <div class="footer-col-head">Learn</div>
           <div class="footer-links">
+            <a class="footer-lnk" href="roles/index.html"><span class="footer-lnk-dot"></span>Learn by Role</a>
+            <a class="footer-lnk" href="frontend/index.html"><span class="footer-lnk-dot"></span>Frontend</a>
+            <a class="footer-lnk" href="data/index.html"><span class="footer-lnk-dot"></span>Data</a>
+            <a class="footer-lnk" href="games/index.html"><span class="footer-lnk-dot"></span>Game Dev</a>
+            <a class="footer-lnk" href="mobile/index.html"><span class="footer-lnk-dot"></span>Mobile</a>
+            <a class="footer-lnk" href="blockchain/index.html"><span class="footer-lnk-dot"></span>Blockchain</a>
+            <a class="footer-lnk" href="qa/index.html"><span class="footer-lnk-dot"></span>QA &amp; Testing</a>
+            <a class="footer-lnk" href="backend/index.html"><span class="footer-lnk-dot"></span>Backend</a>
             <a class="footer-lnk" href="dsa/index.html"><span class="footer-lnk-dot"></span>DSA</a>
-            <a class="footer-lnk" href="python/index.html"><span class="footer-lnk-dot"></span>Python</a>
+            <a class="footer-lnk" href="programming/index.html"><span class="footer-lnk-dot"></span>Programming</a>
             <a class="footer-lnk" href="system-design/index.html"><span class="footer-lnk-dot"></span>System Design</a>
-            <a class="footer-lnk" href="databases/index.html"><span class="footer-lnk-dot"></span>Databases</a>
-            <a class="footer-lnk" href="devops/index.html"><span class="footer-lnk-dot"></span>DevOps</a>
+            <a class="footer-lnk" href="systems/index.html"><span class="footer-lnk-dot"></span>OS &amp; Networks</a>
             <a class="footer-lnk" href="aiml/index.html"><span class="footer-lnk-dot"></span>AI/ML</a>
           </div>
         </div>
@@ -1058,9 +1362,9 @@
     <div class="footer-bottom">
       <div class="footer-copy">◆ 2025◆2026 TechForge ◆ Built for learners, by learners.</div>
       <div class="footer-badges">
-        <span class="footer-badge">FREE FOREVER</span>
-        <span class="footer-badge">NO ADS</span>
-        <span class="footer-badge">NO LOGIN</span>
+        <span class="footer-badge">COMPLETE CS</span>
+        <span class="footer-badge">INTERACTIVE</span>
+        <span class="footer-badge">INTERVIEW-READY</span>
         <span class="footer-badge">OPEN SOURCE</span>
       </div>
     </div>
@@ -1073,7 +1377,7 @@
 
   
 
-<script src="assets/js/utils.js?v=5"></script>
+<script src="assets/js/utils.js?v=17"></script>
 <script>
 /* ---------------------------------------
    HOMEPAGE v4 ◆ Scripts
@@ -1088,30 +1392,41 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
   obs.observe(el);
 });
 
-// Typewriter
+/* Cursor-tracking card glow.
+   One listener on the grid rather than one per card, coordinates written inside
+   requestAnimationFrame so a fast mouse cannot queue more style writes than the
+   browser paints. Skipped entirely for reduced-motion and touch. */
 (function () {
-  const words = ['Level Up.', 'Think Sharp.', 'Get Hired.', 'Build Better.', 'Go Deep.'];
-  const el = document.getElementById('typeTarget');
-  if (!el) return;
-  let wi = 0, ci = words[0].length, deleting = false, paused = false;
-  el.textContent = words[0];
-  function tick() {
-    const word = words[wi];
-    if (paused) { paused = false; setTimeout(tick, 1500); return; }
-    if (!deleting) {
-      ci++;
-      el.textContent = word.slice(0, ci);
-      if (ci >= word.length) { deleting = true; paused = true; setTimeout(tick, 120); return; }
-      setTimeout(tick, 85 + Math.random() * 50);
-    } else {
-      ci--;
-      el.textContent = word.slice(0, ci);
-      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 320); return; }
-      setTimeout(tick, 42);
-    }
-  }
-  setTimeout(tick, 2200);
-})();
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  document.querySelectorAll('.bento-grid, .pillars-grid').forEach(function (grid) {
+    var queued = false, lastEvent = null;
+
+    grid.addEventListener('pointermove', function (e) {
+      lastEvent = e;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        queued = false;
+        var card = lastEvent.target.closest('.topic-card, .pillar');
+        if (!card) return;
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((lastEvent.clientX - r.left) / r.width * 100) + '%');
+        card.style.setProperty('--my', ((lastEvent.clientY - r.top) / r.height * 100) + '%');
+      });
+    }, { passive: true });
+
+    // Reset so the next hover starts from the card's own default, not wherever
+    // the pointer happened to leave.
+    grid.addEventListener('pointerleave', function () {
+      grid.querySelectorAll('.topic-card, .pillar').forEach(function (c) {
+        c.style.removeProperty('--mx');
+        c.style.removeProperty('--my');
+      });
+    }, { passive: true });
+  });
+}());
 
 // Ticker
 (function () {
@@ -1154,6 +1469,7 @@ document.querySelectorAll('.anim-in').forEach((el, i) => {
     ctx.scale(dpr, dpr);
   }
   resize();
+  window.addEventListener('resize', resize);
   function W() { return canvas.getBoundingClientRect().width; }
   function H() { return canvas.getBoundingClientRect().height; }
 
@@ -1382,26 +1698,64 @@ document.addEventListener('visibilitychange',()=>{
 });
 </script>
 
+<!-- The mobile nav panel is wired up by tfInitTopbarChrome in utils.js, which
+     every page loads — this used to be inline here, so only the home page had it. -->
+
+<script src="assets/js/site-index.js?v=26"></script>
+<script src="assets/js/search-modal.js?v=2" defer></script>
 <script>
-(function() {
-  var btn = document.getElementById('navToggle');
-  var panel = document.getElementById('tfHomeMobilePanel');
-  if (!btn || !panel) return;
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    var open = panel.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.addEventListener('click', function(e) {
-    if (panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) {
-      panel.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
+/* Count-up hero stats on first scroll into view. Skips animation for
+   prefers-reduced-motion users — values jump straight to final. */
+(function () {
+  var els = document.querySelectorAll('.stat-val[data-count]');
+  if (!els.length) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(el) {
+    var target = parseInt(el.dataset.count, 10);
+    var suffix = el.dataset.suffix || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    var t0 = null, dur = 900;
+    function tick(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
     }
+    requestAnimationFrame(tick);
+  }
+  var seen = new WeakSet();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !seen.has(e.target)) {
+        seen.add(e.target);
+        run(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* CS-map: hover/focus a track → dim the rest, spotlight that track + hub */
+(function () {
+  var svg = document.querySelector('.csmap-svg');
+  if (!svg) return;
+  var nodes = svg.querySelectorAll('.csmap-node');
+  function focus(node) {
+    svg.classList.add('is-focused');
+    nodes.forEach(function (n) { n.classList.toggle('is-active', n === node); });
+  }
+  function clear() {
+    svg.classList.remove('is-focused');
+    nodes.forEach(function (n) { n.classList.remove('is-active'); });
+  }
+  nodes.forEach(function (n) {
+    n.addEventListener('mouseenter', function () { focus(n); });
+    n.addEventListener('focusin', function () { focus(n); });
+    n.addEventListener('mouseleave', clear);
+    n.addEventListener('focusout', clear);
   });
 })();
 </script>
-
-<script src="assets/js/site-index.js?v=2"></script>
-<script src="assets/js/search-modal.js?v=1" defer></script>
 </body>
 </html>

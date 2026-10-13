@@ -35,7 +35,9 @@ function walk(dir, list = []) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
     if (fs.statSync(full).isDirectory()) {
-      if (name === 'node_modules' || name === '.git') continue;
+      // .claude holds agent worktrees: full copies of the site that would
+      // otherwise land in the index as duplicate search results.
+      if (name === 'node_modules' || name === '.git' || name === '.claude') continue;
       walk(full, list);
     } else if (name.endsWith('.html')) {
       list.push(full);
@@ -74,6 +76,15 @@ function parsePage(filePath) {
   const icon = SECTION_ICONS[sectionKey] || '📄';
   const id = sectionKey + '/' + file.replace('.html', '');
 
+  /* The real progress key, read off the page rather than derived: a page's
+     data-topic-id does not follow from its path (system-design/cdn.html is
+     sd/cdn, programming/javascript/dom.html is js/dom). Anything that wants to
+     know whether a lesson is finished needs this, and `id` above is a synthetic
+     search key that only looks like it would do. `path` is the full repo-
+     relative path — `href` is the last two segments, which is a relative link,
+     not something you can match on. */
+  const topicMatch = html.match(/data-topic-id="([^"]+)"/);
+
   return {
     id,
     title,
@@ -82,6 +93,8 @@ function parsePage(filePath) {
     section,
     sectionKey,
     href,
+    path: rel,
+    topic: topicMatch ? topicMatch[1] : null,
     depth: html.includes('lesson-layout') || html.includes('class="layout"') ? 'guide' : 'page',
   };
 }

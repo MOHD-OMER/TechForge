@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>Threat Intelligence — Security | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/threat-intel.html"/>
+  <meta property="og:title" content="Threat Intelligence — Security | TechForge"/>
+  <meta property="og:description" content="Strategic, operational and tactical intelligence, indicators versus behaviours, MITRE ATT&amp;CK, the intelligence lifecycle and practical use."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=35" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/sec-threat-intel" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../../roles/index.html">Roles</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../../devops/index.html">DevOps</a>
+        <a class="tb-more-item current" href="../../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../../data/index.html">Data</a>
+        <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="../../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Security Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Security</div>
+      <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+      <a class="sb-link" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+      <a class="sb-link" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+      <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+      <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+      <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+      <a class="sb-link" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+      <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+        <a class="sb-link" href="scanning.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Scanning &amp; Enumeration</a>
+        <a class="sb-link" href="pentesting.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Penetration Testing</a>
+        <a class="sb-link" href="siem.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>SIEM &amp; Log Analysis</a>
+        <a class="sb-link active" href="threat-intel.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Threat Intelligence</a>
+        <a class="sb-link" href="forensics.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Digital Forensics</a>
+        <a class="sb-link" href="compliance.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Compliance &amp; Frameworks</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+        <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Security · Intelligence</div>
+        <h1 class="pg-title">Threat <span>Intelligence</span></h1>
+        <p class="pg-sub">Knowing who is likely to come for you and how they operate — and turning that into detections rather than a newsletter.</p>
+        <div class="pg-badges tf-learning-actions">
+          <span class="badge b-blue"><i class="ti ti-shield-lock"></i> Security</span>
+          <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+          <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-telescope"></i></span><h2 class="sec-title">Intelligence, Not Information</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">Threat intelligence is information about adversaries that has been analysed for <strong>your</strong> context and can change a decision. A feed of ten thousand malicious IP addresses is data; knowing that a group targeting your sector uses a technique your estate cannot detect is intelligence.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Level</th><th>Audience</th><th>Answers</th></tr></thead><tbody><tr><td>Strategic</td><td>Executives</td><td>Who is likely to target us and why — drives investment</td></tr><tr><td>Operational</td><td>Security leadership</td><td>Which campaigns and techniques are active now</td></tr><tr><td>Tactical</td><td>Analysts and engineers</td><td>Specific behaviours and indicators to detect</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-bulb"></i></span><span>The test for any intelligence programme is whether it changed something: a new detection, a patch prioritised, a control added. If the output is a report nobody acts on, it is a subscription rather than a capability.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-stack-2"></i></span><h2 class="sec-title">Indicators Versus Behaviours</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">The Pyramid of Pain ranks what you can detect by how much it costs the adversary to change. Blocking a hash is trivially defeated; detecting the technique forces them to change how they work.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Detect on</th><th>Cost to the adversary</th></tr></thead><tbody><tr><td>File hashes</td><td>Trivial — recompile</td></tr><tr><td>IP addresses</td><td>Easy — new infrastructure</td></tr><tr><td>Domain names</td><td>Simple — register another</td></tr><tr><td>Network or host artefacts</td><td>Annoying — retooling required</td></tr><tr><td>Tools</td><td>Challenging — build or buy new ones</td></tr><tr><td>Tactics and techniques</td><td>Genuinely hard — change how they operate</td></tr></tbody></table></div>
+<div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Indicators still have a place: they are cheap, fast and catch commodity attacks. The mistake is stopping there, because indicator-only detection expires the moment the adversary rotates infrastructure.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-sitemap"></i></span><h2 class="sec-title">MITRE ATT&amp;CK</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">ATT&amp;CK is a public catalogue of adversary tactics and techniques observed in the real world, organised by objective — initial access, persistence, privilege escalation, lateral movement, exfiltration, impact.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Used for</th><th>How</th></tr></thead><tbody><tr><td>Coverage mapping</td><td>Which techniques do we detect, and where are the holes</td></tr><tr><td>Common language</td><td>One vocabulary across intel, detection and red team</td></tr><tr><td>Prioritisation</td><td>Focus on techniques used by groups targeting your sector</td></tr><tr><td>Hunt planning</td><td>Pick a technique and go looking for it</td></tr><tr><td>Purple teaming</td><td>Emulate a technique, verify the detection fires</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>A coverage heat map is a planning aid, not a scorecard. Claiming coverage of a technique because a rule exists means little until someone emulates the technique and confirms the alert actually fires.</span></div>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-refresh"></i></span><h2 class="sec-title">The Intelligence Lifecycle</h2></div>
+        <div class="section-divider"></div>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Stage</th><th>Detail</th></tr></thead><tbody><tr><td>Direction</td><td>What do we actually need to know, and who asked</td></tr><tr><td>Collection</td><td>Feeds, sharing communities, vendor reporting, internal incidents</td></tr><tr><td>Processing</td><td>Normalise, deduplicate, enrich with internal context</td></tr><tr><td>Analysis</td><td>What does this mean for us, specifically</td></tr><tr><td>Dissemination</td><td>To the people who can act, in a form they can use</td></tr><tr><td>Feedback</td><td>Was it useful — refine the direction</td></tr></tbody></table></div>
+<p class="prose">Your own incidents are the highest-quality source you have. They are unquestionably relevant to your estate, and the detections they produce are already tuned to your environment.</p>
+      </section>
+      <section class="py-section" id="sec-05">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-shield-check"></i></span><h2 class="sec-title">Making It Operational</h2></div>
+        <div class="section-divider"></div>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Practice</th><th>Effect</th></tr></thead><tbody><tr><td>Feed indicators into detection automatically</td><td>Removes the copy-and-paste step that never happens</td></tr><tr><td>Enrich alerts with intelligence context</td><td>Analysts triage faster with attribution and known behaviour</td></tr><tr><td>Map detections to ATT&amp;CK</td><td>Gaps become visible and plannable</td></tr><tr><td>Prioritise by sector relevance</td><td>Ignore campaigns that will never target you</td></tr><tr><td>Share back through communities</td><td>Sector sharing groups are reciprocal by design</td></tr></tbody></table></div>
+<div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Attribution is difficult, frequently wrong, and rarely changes what you should do. Naming a group is interesting; detecting the technique is what protects you.</span></div>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>What separates intelligence from information?</q><p>Analysis for your context and the ability to change a decision. A raw feed of indicators is data; knowing a technique used against your sector is undetectable in your estate is intelligence.</p></div>
+        <div class="iq"><q>Strategic, operational, tactical — the difference?</q><p>Strategic informs executive investment, operational describes active campaigns for security leadership, tactical gives analysts specific behaviours and indicators to detect.</p></div>
+        <div class="iq"><q>Why prefer behaviours over indicators?</q><p>Hashes, IPs and domains are trivially changed. Detecting tactics and techniques forces an adversary to change how they operate, which is genuinely expensive.</p></div>
+        <div class="iq"><q>What is MITRE ATT&amp;CK used for?</q><p>A shared vocabulary and a catalogue of real techniques — used to map detection coverage, prioritise by relevant threat groups, plan hunts and validate detections through emulation.</p></div>
+        <div class="iq"><q>What is the best source of intelligence?</q><p>Your own incidents. They are unquestionably relevant and produce detections already tuned to your environment.</p></div>
+        <div class="iq"><q>How much does attribution matter?</q><p>Less than people assume. It is hard, often wrong, and rarely changes the defensive action — detecting the technique does.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">&check;</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The hardest thing for an adversary to change is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A file hash</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Their tactics and techniques</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">An IP address</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A domain name</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Tactical intelligence is aimed at…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Executives</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Analysts and detection engineers</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Auditors</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Customers</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. MITRE ATT&amp;CK is best used to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Score vendors</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Map coverage and plan hunts</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Replace a SIEM</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Attribute attacks</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. The highest-quality intelligence source is usually…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A commercial feed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Your own incidents</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Social media</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Vendor marketing</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. An intelligence programme is working when…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Reports are published</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Detections and priorities change</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Feeds are subscribed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Attribution is confident</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="siem.html">&larr; SIEM &amp; Log Analysis</a>
+        <a class="nav-link next" href="forensics.html">Digital Forensics &rarr;</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../../assets/js/site-index.js?v=26"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../../assets/js/utils.js?v=17"></script>
+  <script src="../../assets/js/platform.js?v=7"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

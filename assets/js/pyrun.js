@@ -3,14 +3,20 @@
  * jsDelivr on the first Run click, then reused for every block. */
 (function () {
   'use strict';
-  if ((document.body.dataset.section || '') !== 'python') return;
+  /* Python-track pages get this automatically. Any other page opts in with
+     data-pyrun="on" — used by the logic-building page, whose worked examples
+     are Python. Deliberately not widened to a whole section: the DSA topic
+     pages carry four languages per block. */
+  var section = document.body.dataset.section || '';
+  if (section !== 'python' && document.body.dataset.pyrun !== 'on') return;
 
   var PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
   var pyodidePromise = null;
 
-  /* skip blocks that can't run in a browser sandbox */
+  /* skip blocks that can't run in a browser sandbox.
+   * input() is NOT skipped — it's bridged to window.prompt() below. */
   function runnable(code) {
-    return !/\baiohttp\b|\binput\s*\(|\bopen\s*\(|\bpip\b|\brequests\b/.test(code);
+    return !/\baiohttp\b|\bopen\s*\(|\bpip\b|\brequests\b/.test(code);
   }
 
   function loadPyodideOnce() {
@@ -40,6 +46,13 @@
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
 
+  /* A scratchpad is a textarea, whose current contents live in .value; a
+     rendered example is a pre, whose contents live in .textContent. Read at
+     click time either way, so an edited scratchpad runs what it now says. */
+  function codeOf(el) {
+    return el.tagName === 'TEXTAREA' ? el.value : el.textContent;
+  }
+
   async function run(btn, block, pre) {
     var out = outPanel(block);
     btn.disabled = true;
@@ -50,13 +63,27 @@
       var lines = [];
       py.setStdout({ batched: function (t) { lines.push(t); } });
       py.setStderr({ batched: function (t) { lines.push(t); } });
-      var code = pre.textContent;
+      /* input() bridge: window.prompt() blocks the main thread synchronously,
+       * same trick browser Python playgrounds (Trinket, Repl.it) use — so a
+       * plain synchronous Python input() call works without an async rewrite. */
+      py.globals.set('_tf_prompt', function (p) {
+        var v = window.prompt(p === undefined || p === null ? '' : String(p));
+        return v === null ? '' : v;
+      });
+      var code = codeOf(pre);
       /* Pyodide's event loop is already running — asyncio.run() would throw.
        * runPythonAsync supports top-level await, so rewrite it. */
       code = code.replace(/\basyncio\.run\((.+)\)/g, 'await $1');
+      var preamble =
+        'import builtins as _tf_builtins\n' +
+        'def _tf_input(prompt=""):\n' +
+        '    _v = _tf_prompt(prompt)\n' +
+        '    print(str(prompt) + str(_v))\n' +
+        '    return _v\n' +
+        '_tf_builtins.input = _tf_input\n';
       var result;
       try {
-        result = await py.runPythonAsync(code);
+        result = await py.runPythonAsync(preamble + code);
       } finally {
         py.setStdout({}); py.setStderr({});
       }
@@ -78,20 +105,22 @@
   document.addEventListener('DOMContentLoaded', function () {
     var st = document.createElement('style');
     st.textContent =
-      '.pyrun-btn{position:absolute;top:9px;right:76px;z-index:2;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.1);color:var(--green,#34d399);font-family:var(--mono,monospace);font-size:10px;font-weight:700;padding:4px 12px;border-radius:6px;cursor:pointer;letter-spacing:.5px}' +
+      '.pyrun-btn{position:absolute;top:8px;right:124px;z-index:2;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.1);color:#34d399;font-family:var(--mono,monospace);font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px;cursor:pointer;letter-spacing:.5px}' +
       '.pyrun-btn:hover{background:rgba(52,211,153,.2)}' +
       '.pyrun-btn:disabled{opacity:.5;cursor:wait}' +
       '.pyrun-out{border-top:1px solid var(--border,#1f2d42);padding:12px 18px;font-family:var(--mono,monospace);font-size:12px;line-height:1.7;background:rgba(0,0,0,.25)}' +
-      '.pyrun-out pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;color:var(--text,#e2e8f4)}' +
-      '.pyr-hd{font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--green,#34d399)}' +
-      '.pyr-err{color:var(--red,#f87171)}' +
-      '.pyr-dim{color:var(--text3,#5a7094);font-size:11.5px}';
+      '.pyrun-out pre{margin:6px 0 0;white-space:pre-wrap;word-break:break-word;color:#e2e8f4}' +
+      '.pyr-hd{font-size:9px;font-weight:700;letter-spacing:1.5px;color:#34d399}' +
+      '.pyr-err{color:#f87171}' +
+      '.pyr-dim{color:#7e93b5;font-size:11.5px}';
     document.head.appendChild(st);
 
     document.querySelectorAll('.code-block').forEach(function (block) {
-      var pre = block.querySelector('pre.code-pre');
+      /* A scratchpad is a textarea so that Enter produces a real newline and
+         undo works; a rendered example is a pre. Read whichever is present. */
+      var pre = block.querySelector('pre.code-pre, textarea.code-input');
       if (!pre) return;
-      var code = pre.textContent;
+      var code = codeOf(pre);
       if (!runnable(code)) return;
       if (block.querySelector('.pyrun-btn')) return;
       /* only python blocks — skip JS/Java panes from the language toggle */

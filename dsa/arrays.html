@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
-  <title>Arrays & Strings — TechForge</title>
+  <title>Arrays &amp; Strings — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/dsa/arrays.html"/>
   <meta property="og:title" content="Arrays &amp; Strings — TechForge"/>
   <meta property="og:description" content="Arrays &amp; Strings — theory, examples, interview prep, and best practices on TechForge."/>
@@ -18,9 +18,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet">
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
     /* FIX 1: Removed duplicate :root rule — was declared twice identically */
@@ -48,7 +48,8 @@
     .tip-box.tip-amber { border-left-color: var(--amber); }
     .tip-box.tip-red { border-left-color: var(--red); }
     .tip-box strong { color: var(--text); }
-    .mem-diagram { display: flex; gap: 0; margin: 20px 0 8px; overflow-x: auto; }
+    /* wraps to a second row rather than running off the screen */
+    .mem-diagram { display: flex; flex-wrap: wrap; gap: 0; margin: 20px 0 8px; }
     .mem-cell { min-width: 72px; text-align: center; }
     .mem-addr { font-family: var(--mono); font-size: 10px; color: var(--text3); padding: 4px 2px; border-right: 1px solid var(--border); }
     .mem-cell:last-child .mem-addr { border-right: none; }
@@ -57,14 +58,14 @@
     .mem-idx { font-size: 11px; color: var(--text3); padding: 4px 2px; font-family: var(--mono); }
     .viz-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 24px; }
     .viz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-    .viz-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 1px; }
+    .viz-label { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--text2); letter-spacing: 1px; }
     .viz-controls { display: flex; gap: 8px; flex-wrap: wrap; }
     .inp { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; color: var(--text); font-family: var(--mono); font-size: 12px; }
     .inp-wide { width: 100px; }
-    .btn { background: var(--blue); color: #fff; border: none; border-radius: 6px; padding: 7px 14px; font-family: var(--mono); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s; }
+    .btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 7px 14px; font-family: var(--mono); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s; }
     .btn:hover { filter: brightness(1.1); }
-    .btn.soft-red { background: var(--red); color: #fff; border-color: var(--red); }
-    .btn.soft-green { background: var(--green); color: #fff; border-color: var(--green); }
+    .btn.soft-red { background: var(--red-dim); color: var(--red); border-color: var(--red); }
+    .btn.soft-green { background: var(--green-dim); color: var(--green); border-color: var(--green); }
     .viz-body { border-top: 1px solid var(--border); padding-top: 16px; }
     .status { font-size: 12px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; }
     .info-tabs { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; margin-bottom: 16px; }
@@ -87,7 +88,7 @@
     .code-dots { display: flex; gap: 6px; }
     .cd { width: 12px; height: 12px; border-radius: 50%; }
     .code-pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.8; padding: 18px 20px; overflow-x: auto; color: var(--text); }
-    .cm { color: #4a6078; font-style: italic; }
+    .cm { color: #7e93b5; font-style: italic; }
     .kw { color: var(--code-kw); font-weight: 600; }
     .fn { color: var(--code-fn); }
     .str { color: var(--code-str); }
@@ -106,10 +107,15 @@
     .pb-title { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--text); }
     .pb-badge { font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: auto; }
     .pb-desc { font-size: 13.5px; color: var(--text2); line-height: 1.7; margin-bottom: 12px; }
-    .pb-example { font-family: var(--mono); font-size: 12px; color: var(--text3); background: var(--bg2); border-radius: 6px; padding: 10px 14px; line-height: 1.8; }
+    .pb-example { font-family: var(--mono); font-size: 12px; color: var(--text2); background: var(--bg2); border-radius: 6px; padding: 10px 14px; line-height: 1.8; }
+    /* .pb-example's bg (--bg2) swaps to pale cream in light theme, but its inline
+       syntax-highlight colors are dark-theme-only constants (~1.3–2.3:1 against
+       light bg2) — override with darkened equivalents, same fix as the Big-O legend. */
+    html.light .pb-example [style*="color:#f7cc45"] { color: #816305 !important; }
+    html.light .pb-example [style*="color:#4d9ef7"] { color: #0965ca !important; }
     .cplx-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
     .cplx-table th { background: var(--surface); color: var(--text2); font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
-    .cplx-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+    .cplx-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: #e2e8f4; vertical-align: middle; }
     .cplx-table tr:last-child td { border-bottom: none; }
     .cplx-table tr:hover td { background: var(--surface); }
     .cplx-pill { display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
@@ -141,7 +147,7 @@
     .pf-btn:hover { border-color: var(--accent); color: var(--accent); }
     .pf-btn.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
     .pq-list { display: flex; flex-direction: column; }
-    .pq-item { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all .15s; }
+    .pq-item { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: all .15s; }
     .pq-item:hover { background: var(--surface); padding-left: 8px; border-radius: 6px; }
     .pq-item:last-child { border-bottom: none; }
     .pq-item.completed { opacity: .45; }
@@ -176,7 +182,7 @@
     --red:         #f87171;
   }
   .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
-  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dsa-hero::before{content:none;}
   .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
   .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
   @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
@@ -189,7 +195,7 @@
   .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
   .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
   .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
-  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
@@ -207,20 +213,36 @@
       <div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
       <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
     </a>
-    <nav class="tb-nav" id="topNav">
-      <a class="tb-link" href="../index.html">Home</a>
-      <a class="tb-link current" href="./">DSA</a>
-      <a class="tb-link" href="../system-design/index.html">System Design</a>
-      <a class="tb-link" href="../python/index.html">Python</a>
-      <a class="tb-link" href="../databases/index.html">Databases</a>
-      <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-      <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-      <a class="tb-link" href="../devops/index.html">DevOps</a>
-      <a class="tb-link" href="../about.html">About</a>
-    </nav>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
     <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -233,14 +255,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -250,8 +283,9 @@
       </div>
       <nav id="sidebarNav">
         <div class="sidebar-label">Foundations</div>
-        <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
-        <a class="sb-link active" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+        <a class="sb-link" href="logic-building.html"><span class="sb-num">00</span>Logic Building</a>
+    <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+        <a class="sb-link active" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
         <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
         <a class="sb-link" href="#memory"><span class="sb-num">§1</span>Memory Model</a>
         <a class="sb-link" href="#operations"><span class="sb-num">§2</span>Operations</a>
@@ -265,7 +299,7 @@
         <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
         <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
         <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
-        <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+        <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
         <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
         <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
         <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
@@ -293,6 +327,9 @@
         <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
         <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
         <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+        <div class="sidebar-label" style="margin-top:20px;">Practice</div>
+        <a class="sb-link" href="patterns.html"><span class="sb-num">30</span>Pattern Checklist</a>
+
       </nav>
     </aside>
     <main class="main" id="mainContent">
@@ -431,6 +468,7 @@
               <button type="button" class="lt-btn active" data-lang="python">Python</button>
               <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
               <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
             </div>
             <div class="lang-pane" data-lang="python">
             <div class="code-block">
@@ -554,6 +592,40 @@ Set&lt;Integer&gt; set = <span class="kw">new</span> <span class="fn">HashSet</s
 <span class="kw">int</span>[] evens = Arrays.stream(arr).filter(v -&gt; v % <span class="nm">2</span> == <span class="nm">0</span>).toArray();</pre>
             </div>
             </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+            <div class="code-block">
+              <div class="code-hdr">
+                <span class="code-lang">C++</span>
+                <div class="code-dots"><span class="cd" style="background:#ff5f56"></span><span class="cd" style="background:#ffbd2e"></span><span class="cd" style="background:#27c93f"></span></div>
+              </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm">// ── Creating arrays ──────────────────────────</span>
+std::vector&lt;<span class="kw">int</span>&gt; arr = {<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>};
+std::vector&lt;<span class="kw">int</span>&gt; <span class="fn">zeros</span>(<span class="nm">5</span>, <span class="nm">0</span>);            <span class="cm">// {0,0,0,0,0}</span>
+std::vector&lt;std::vector&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">matrix</span>(<span class="nm">3</span>, std::vector&lt;<span class="kw">int</span>&gt;(<span class="nm">3</span>, <span class="nm">0</span>)); <span class="cm">// 3×3</span>
+
+<span class="cm">// ── Access ───────────────────────────────────</span>
+<span class="kw">int</span> x    = arr[<span class="nm">2</span>];          <span class="cm">// O(1) → 30 (no bounds check)</span>
+<span class="kw">int</span> safe = arr.<span class="fn">at</span>(<span class="nm">2</span>);       <span class="cm">// O(1) → 30 (throws if out of range)</span>
+<span class="kw">int</span> last = arr.<span class="fn">back</span>();      <span class="cm">// O(1) → 50</span>
+
+<span class="cm">// ── Mutations ────────────────────────────────</span>
+arr.<span class="fn">push_back</span>(<span class="nm">60</span>);              <span class="cm">// O(1) amortized</span>
+arr.<span class="fn">insert</span>(arr.<span class="fn">begin</span>(), <span class="nm">5</span>);     <span class="cm">// O(n) — prepend shifts all!</span>
+arr.<span class="fn">pop_back</span>();                 <span class="cm">// O(1) — remove last</span>
+arr.<span class="fn">erase</span>(arr.<span class="fn">begin</span>() + <span class="nm">2</span>);     <span class="cm">// O(n) — remove at index</span>
+
+<span class="cm">// ── Searching &amp; sorting ──────────────────────</span>
+<span class="kw">auto</span> it = std::<span class="fn">find</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), <span class="nm">40</span>);   <span class="cm">// O(n)</span>
+std::<span class="fn">sort</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>());                 <span class="cm">// O(n log n) introsort</span>
+std::<span class="fn">sort</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), std::greater&lt;&gt;()); <span class="cm">// descending</span>
+
+<span class="cm">// ── Useful ───────────────────────────────────</span>
+<span class="kw">size_t</span> n = arr.<span class="fn">size</span>();                              <span class="cm">// O(1)</span>
+<span class="kw">bool</span> present = std::<span class="fn">count</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>(), <span class="nm">30</span>) &gt; <span class="nm">0</span>; <span class="cm">// O(n)</span>
+std::unordered_set&lt;<span class="kw">int</span>&gt; <span class="fn">s</span>(arr.<span class="fn">begin</span>(), arr.<span class="fn">end</span>());  <span class="cm">// O(n) build, O(1) lookup</span></pre>
+            </div>
+            </div>
           </div>
           <div class="info-pane" id="tp-arr-quiz">
             <div class="quiz-wrap">
@@ -666,7 +738,7 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">if</span> s == target: <span style="color:#f7cc45;font-weight:600">return</span> [l, r]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">elif</span> s &lt; target: l += 1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">else</span>: r -= 1<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Two Sum II, 3Sum, Container With Most Water, Valid Palindrome</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Two Sum II, 3Sum, Container With Most Water, Valid Palindrome</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -683,10 +755,10 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 <span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_sum_subarray</span>(arr, k):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;window = sum(arr[:k]); best = window<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> i <span style="color:#f7cc45;font-weight:600">in</span> range(k, len(arr)):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window += arr[i] - arr[i-k]  <span style="color:#4a6078;font-style:italic"># slide: add new, drop old</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window += arr[i] - arr[i-k]  <span style="color:var(--text2);font-style:italic"># slide: add new, drop old</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, window)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Longest Substring, Min Window Substring, Max Sum Subarray</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Longest Substring, Min Window Substring, Max Sum Subarray</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -703,8 +775,8 @@ len(s)           <span class="cm"># O(1) — cached by Python</span>
 prefix = [0] * (len(arr) + 1)<br>
 <span style="color:#f7cc45;font-weight:600">for</span> i, x <span style="color:#f7cc45;font-weight:600">in</span> enumerate(arr):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;prefix[i+1] = prefix[i] + x<br><br>
-<span style="color:#4a6078;font-style:italic"># sum(arr[l:r]) = prefix[r] - prefix[l]  → O(1) per query</span><br>
-<span style="color:#4a6078;font-style:italic"># Use for: Product of Array Except Self, Range Sum Query, Subarray Sum = K</span>
+<span style="color:var(--text2);font-style:italic"># sum(arr[l:r]) = prefix[r] - prefix[l]  → O(1) per query</span><br>
+<span style="color:var(--text2);font-style:italic"># Use for: Product of Array Except Self, Range Sum Query, Subarray Sum = K</span>
           </div>
         </div>
         <div class="pattern-block">
@@ -721,10 +793,10 @@ prefix = [0] * (len(arr) + 1)<br>
 <span style="color:#f7cc45;font-weight:600">def</span> <span style="color:#4d9ef7">max_subarray</span>(arr):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;curr = best = arr[0]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">for</span> x <span style="color:#f7cc45;font-weight:600">in</span> arr[1:]:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curr = max(x, curr + x)  <span style="color:#4a6078;font-style:italic"># extend or restart?</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curr = max(x, curr + x)  <span style="color:var(--text2);font-style:italic"># extend or restart?</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;best = max(best, curr)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#f7cc45;font-weight:600">return</span> best<br>
-<span style="color:#4a6078;font-style:italic"># Use for: Maximum Subarray, Maximum Product Subarray, Best Time to Buy/Sell</span>
+<span style="color:var(--text2);font-style:italic"># Use for: Maximum Subarray, Maximum Product Subarray, Best Time to Buy/Sell</span>
           </div>
         </div>
       </div>
@@ -739,18 +811,18 @@ prefix = [0] * (len(arr) + 1)<br>
               <tr><th>Operation</th><th>Time</th><th>Space</th><th>Notes</th></tr>
             </thead>
             <tbody>
-              <tr><td><code style="font-family:var(--mono)">arr[i]</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Direct address calculation</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.append(x)</code></td><td><span class="cplx-pill cp-cyan">O(1)*</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Amortized — occasional O(n) resize</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.pop()</code> — last</td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">No shifting needed</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.insert(i, x)</code></td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Shifts n–i elements right</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.pop(i)</code> — at i</td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Shifts n–i–1 elements left</td></tr>
-              <tr><td><code style="font-family:var(--mono)">x in arr</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Linear scan; convert to set for O(1)</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr[l:r]</code> slice</td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td style="color:var(--text2);font-size:12px;">k = r–l; creates a new list</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.sort()</code></td><td><span class="cplx-pill cp-purple">O(n log n)</span></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td style="color:var(--text2);font-size:12px;">Timsort; stable, in-place</td></tr>
-              <tr><td><code style="font-family:var(--mono)">len(arr)</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Cached by the list object</td></tr>
-              <tr><td><code style="font-family:var(--mono)">min / max</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">Full linear scan required</td></tr>
-              <tr><td><code style="font-family:var(--mono)">a + b</code> concat</td><td><span class="cplx-pill cp-red">O(n+m)</span></td><td><span class="cplx-pill cp-amber">O(n+m)</span></td><td style="color:var(--text2);font-size:12px;">Creates a brand new list</td></tr>
-              <tr><td><code style="font-family:var(--mono)">arr.extend(b)</code></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:var(--text2);font-size:12px;">k = len(b); faster than + for merging</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr[i]</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Direct address calculation</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.append(x)</code></td><td><span class="cplx-pill cp-cyan">O(1)*</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Amortized — occasional O(n) resize</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.pop()</code> — last</td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">No shifting needed</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.insert(i, x)</code></td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Shifts n–i elements right</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.pop(i)</code> — at i</td><td><span class="cplx-pill cp-red">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Shifts n–i–1 elements left</td></tr>
+              <tr><td><code style="font-family:var(--mono)">x in arr</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Linear scan; convert to set for O(1)</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr[l:r]</code> slice</td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td style="color:#8da0bb;font-size:12px;">k = r–l; creates a new list</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.sort()</code></td><td><span class="cplx-pill cp-purple">O(n log n)</span></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td style="color:#8da0bb;font-size:12px;">Timsort; stable, in-place</td></tr>
+              <tr><td><code style="font-family:var(--mono)">len(arr)</code></td><td><span class="cplx-pill cp-green">O(1)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Cached by the list object</td></tr>
+              <tr><td><code style="font-family:var(--mono)">min / max</code></td><td><span class="cplx-pill cp-amber">O(n)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">Full linear scan required</td></tr>
+              <tr><td><code style="font-family:var(--mono)">a + b</code> concat</td><td><span class="cplx-pill cp-red">O(n+m)</span></td><td><span class="cplx-pill cp-amber">O(n+m)</span></td><td style="color:#8da0bb;font-size:12px;">Creates a brand new list</td></tr>
+              <tr><td><code style="font-family:var(--mono)">arr.extend(b)</code></td><td><span class="cplx-pill cp-amber">O(k)</span></td><td><span class="cplx-pill cp-green">O(1)</span></td><td style="color:#8da0bb;font-size:12px;">k = len(b); faster than + for merging</td></tr>
             </tbody>
           </table>
         </div>
@@ -830,182 +902,182 @@ prefix = [0] * (len(arr) + 1)<br>
           <div class="pq-item" data-id="101" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/two-sum/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,101,'arrays')" title="Mark done"></button>
             <span class="pq-num">#001</span>
-            <span class="pq-name">Two Sum<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Two Sum</a><span class="pq-diff pq-easy">Easy</span></span>
             <span class="pq-asked">Google · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="102" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,102,'arrays')" title="Mark done"></button>
             <span class="pq-num">#002</span>
-            <span class="pq-name">Best Time to Buy and Sell Stock<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Best Time to Buy and Sell Stock</a><span class="pq-diff pq-easy">Easy</span></span>
             <span class="pq-asked">Apple · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="103" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/maximum-subarray/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,103,'arrays')" title="Mark done"></button>
             <span class="pq-num">#003</span>
-            <span class="pq-name">Maximum Subarray (Kadane's)<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/maximum-subarray/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Maximum Subarray (Kadane's)</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Meta · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="104" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/product-of-array-except-self/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,104,'arrays')" title="Mark done"></button>
             <span class="pq-num">#004</span>
-            <span class="pq-name">Product of Array Except Self<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Product of Array Except Self</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Adobe · Meta</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="105" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/maximum-product-subarray/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,105,'arrays')" title="Mark done"></button>
             <span class="pq-num">#005</span>
-            <span class="pq-name">Maximum Product Subarray<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/maximum-product-subarray/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Maximum Product Subarray</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Amazon · Google</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="106" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/search-in-rotated-sorted-array/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,106,'arrays')" title="Mark done"></button>
             <span class="pq-num">#006</span>
-            <span class="pq-name">Search in Rotated Sorted Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Search in Rotated Sorted Array</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Google · Microsoft</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="107" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/3sum/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,107,'arrays')" title="Mark done"></button>
             <span class="pq-num">#007</span>
-            <span class="pq-name">3Sum<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/3sum/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">3Sum</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Amazon · Adobe</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="108" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/trapping-rain-water/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,108,'arrays')" title="Mark done"></button>
             <span class="pq-num">#008</span>
-            <span class="pq-name">Trapping Rain Water<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/trapping-rain-water/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Trapping Rain Water</a><span class="pq-diff pq-hard">Hard</span></span>
             <span class="pq-asked">Google · Anthropic</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="109" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/merge-intervals/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,109,'arrays')" title="Mark done"></button>
             <span class="pq-num">#009</span>
-            <span class="pq-name">Merge Intervals<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/merge-intervals/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Merge Intervals</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Amazon · Google</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="110" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/container-with-most-water/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,110,'arrays')" title="Mark done"></button>
             <span class="pq-num">#010</span>
-            <span class="pq-name">Container With Most Water<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Container With Most Water</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Google · Meta</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="111" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,111,'arrays')" title="Mark done"></button>
             <span class="pq-num">#011</span>
-            <span class="pq-name">Find Minimum in Rotated Sorted Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Find Minimum in Rotated Sorted Array</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Microsoft · Google</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="112" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/subarray-sum-equals-k/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,112,'arrays')" title="Mark done"></button>
             <span class="pq-num">#012</span>
-            <span class="pq-name">Subarray Sum Equals K<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Subarray Sum Equals K</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Meta · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="113" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/rotate-array/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,113,'arrays')" title="Mark done"></button>
             <span class="pq-num">#013</span>
-            <span class="pq-name">Rotate Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/rotate-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Rotate Array</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Stripe · Airbnb</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="114" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/sort-colors/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,114,'arrays')" title="Mark done"></button>
             <span class="pq-num">#014</span>
-            <span class="pq-name">Sort Colors (Dutch National Flag)<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/sort-colors/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Sort Colors (Dutch National Flag)</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Snapchat · Pinterest</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="115" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/kth-largest-element-in-an-array/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,115,'arrays')" title="Mark done"></button>
             <span class="pq-num">#015</span>
-            <span class="pq-name">Kth Largest Element in Array<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/kth-largest-element-in-an-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Kth Largest Element in Array</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Freshworks · LinkedIn</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="116" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/find-the-duplicate-number/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,116,'arrays')" title="Mark done"></button>
             <span class="pq-num">#016</span>
-            <span class="pq-name">Find the Duplicate Number<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Find the Duplicate Number</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Razorpay · Cogoport</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="117" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/maximum-sum-circular-subarray/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,117,'arrays')" title="Mark done"></button>
             <span class="pq-num">#017</span>
-            <span class="pq-name">Maximum Sum Circular Subarray<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/maximum-sum-circular-subarray/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Maximum Sum Circular Subarray</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Meesho · Flipkart</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="118" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-substring-without-repeating-characters/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,118,'arrays')" title="Mark done"></button>
             <span class="pq-num">#018</span>
-            <span class="pq-name">Longest Substring Without Repeating Chars<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Longest Substring Without Repeating Chars</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Netflix · Microsoft</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="119" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/group-anagrams/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,119,'arrays')" title="Mark done"></button>
             <span class="pq-num">#019</span>
-            <span class="pq-name">Group Anagrams<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/group-anagrams/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Group Anagrams</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Amazon · Google</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="120" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/longest-palindromic-substring/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,120,'arrays')" title="Mark done"></button>
             <span class="pq-num">#020</span>
-            <span class="pq-name">Longest Palindromic Substring<span class="pq-diff pq-medium">Medium</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Longest Palindromic Substring</a><span class="pq-diff pq-medium">Medium</span></span>
             <span class="pq-asked">Microsoft · Google</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="121" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/minimum-window-substring/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,121,'arrays')" title="Mark done"></button>
             <span class="pq-num">#021</span>
-            <span class="pq-name">Minimum Window Substring<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/minimum-window-substring/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Minimum Window Substring</a><span class="pq-diff pq-hard">Hard</span></span>
             <span class="pq-asked">Meta · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="122" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-anagram/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,122,'arrays')" title="Mark done"></button>
             <span class="pq-num">#022</span>
-            <span class="pq-name">Valid Anagram<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/valid-anagram/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Valid Anagram</a><span class="pq-diff pq-easy">Easy</span></span>
             <span class="pq-asked">Adobe · Amazon</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="123" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/valid-palindrome/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,123,'arrays')" title="Mark done"></button>
             <span class="pq-num">#023</span>
-            <span class="pq-name">Valid Palindrome<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-name"><a href="https://leetcode.com/problems/valid-palindrome/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Valid Palindrome</a><span class="pq-diff pq-easy">Easy</span></span>
             <span class="pq-asked">Amazon · Apple</span>
             <span class="pq-badge pq-pbc">PBC</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="124" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/equilibrium-index-of-an-array/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,124,'arrays')" title="Mark done"></button>
             <span class="pq-num">#024</span>
-            <span class="pq-name">Equilibrium Index<span class="pq-diff pq-easy">Easy</span></span>
+            <span class="pq-name"><a href="https://www.geeksforgeeks.org/equilibrium-index-of-an-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Equilibrium Index</a><span class="pq-diff pq-easy">Easy</span></span>
             <span class="pq-asked">Zomato · Ola</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="125" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/counting-inversions/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,125,'arrays')" title="Mark done"></button>
             <span class="pq-num">#025</span>
-            <span class="pq-name">Count Inversions in Array<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-name"><a href="https://www.geeksforgeeks.org/counting-inversions/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Count Inversions in Array</a><span class="pq-diff pq-hard">Hard</span></span>
             <span class="pq-asked">Razorpay · PhonePe</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
           <div class="pq-item" data-id="126" data-type="startup" onclick="openQ(event,'https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/')">
             <button class="pq-done-toggle" onclick="toggleDone(event,126,'arrays')" title="Mark done"></button>
             <span class="pq-num">#026</span>
-            <span class="pq-name">Merge Sorted Arrays Without Extra Space<span class="pq-diff pq-hard">Hard</span></span>
+            <span class="pq-name"><a href="https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Merge Sorted Arrays Without Extra Space</a><span class="pq-diff pq-hard">Hard</span></span>
             <span class="pq-asked">Cure.fit · Groww</span>
             <span class="pq-badge pq-startup">STARTUP</span><span class="pq-arrow">→</span>
           </div>
@@ -1027,11 +1099,11 @@ prefix = [0] * (len(arr) + 1)<br>
   
   
   
-  <script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+  <script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
     // FIX: Declare arD before DOMContentLoaded so arDraw(-1) inside the
     // callback has the array initialized. With var, the assignment runs
@@ -1112,7 +1184,13 @@ prefix = [0] * (len(arr) + 1)<br>
       var boxW = 48, gap = 6, pad = 4;
       var n = arD.length;
       var cssH = 80;
-      var cssW = n ? Math.max(cv.parentElement.clientWidth || 400, pad * 2 + n * boxW + (n - 1) * gap) : (cv.parentElement.clientWidth || 400);
+      var cssW = cv.parentElement.clientWidth || 400;
+  // Shrink the cells to the space available rather than widening the canvas
+  // past its container, which is what forced a sideways scroll on a phone.
+  if (n) {
+    var need = pad * 2 + n * boxW + (n - 1) * gap;
+    if (need > cssW) boxW = Math.max(15, boxW - (need - cssW) / n);
+  }
       cv.width = cssW * dpr; cv.height = cssH * dpr;
       cv.style.width = cssW + 'px';
       var ctx = cv.getContext('2d');

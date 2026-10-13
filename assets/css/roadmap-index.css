@@ -1,0 +1,81 @@
+/* Roadmap directory: a grid of every roadmap, career paths first, then topics.
+   Cards are plain links with one accent each — the index should be scannable,
+   not decorated. */
+.rd-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  /* The topbar is position:fixed, so content must clear it or the title renders underneath. */
+  padding: calc(var(--topbar-h) + var(--safe-top) + 40px) max(20px, var(--safe-left,0px)) 80px max(20px, var(--safe-right,0px));
+}
+.rd-hero { text-align: center; margin-bottom: 52px; }
+.rd-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 6vw, 52px);
+  font-weight: 700; letter-spacing: -1px; line-height: 1.05;
+  color: var(--text); margin-bottom: 16px; text-wrap: balance;
+}
+.rd-sub {
+  font-size: 14.5px; color: var(--text2); line-height: 1.75;
+  max-width: 62ch; margin: 0 auto; text-wrap: pretty;
+}
+
+/* Band heading: label centred between two hairlines. Rules rather than a filled
+   pill, matching the editorial style the rest of the site uses. */
+.rd-section { margin-bottom: 48px; }
+.rd-band {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  margin: 0 0 28px;
+}
+.rd-band::before,
+.rd-band::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.rd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.rd-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  text-decoration: none;
+  transition: transform var(--m-base) var(--m-out),
+              border-color var(--m-base) ease,
+              box-shadow var(--m-base) ease;
+}
+.rd-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--rd-c, var(--border2));
+  box-shadow: 0 10px 26px rgba(0,0,0,.24);
+}
+.rd-card:active { transform: translateY(-1px) scale(.995); }
+.rd-icon { font-size: 22px; color: var(--rd-c, var(--blue)); flex-shrink: 0; line-height: 1; }
+.rd-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.rd-name { font-size: 14.5px; font-weight: 600; color: var(--text); letter-spacing: -.1px; }
+.rd-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--text3); }
+
+/* Not built yet: dashed and unlinked, so it reads as a plan rather than a
+   broken link. */
+.rd-soon {
+  background: transparent;
+  border-style: dashed;
+  cursor: default;
+}
+.rd-soon .rd-name { color: var(--text2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-card { transition: none; }
+  .rd-card:hover, .rd-card:active { transform: none; box-shadow: none; }
+}

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
-  <title>NLP & LLMs — TechForge</title>
+  <title>NLP &amp; LLMs — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/aiml/nlp.html"/>
   <meta property="og:title" content="NLP &amp; LLMs — TechForge"/>
   <meta property="og:description" content="NLP &amp; LLMs — theory, examples, interview prep, and best practices on TechForge."/>
@@ -18,12 +18,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-      <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+      <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=2">
   <style>
-    :root { --accent: var(--green); --accent-dim: var(--green-dim); }
+    :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
 </style>
 
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
@@ -34,18 +34,34 @@
   <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link current" href="index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item current" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -59,14 +75,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -84,17 +111,25 @@
       <a class="sb-link" href="rl.html">Reinforcement Learning</a>
       <a class="sb-link" href="genai.html">Generative AI</a>
       <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    <a class="sb-link" href="genai-eval.html"><span class="sb-num">•</span>Evaluating Generative Systems</a>
+    <a class="sb-link" href="regularisation.html"><span class="sb-num">•</span>Overfitting &amp;amp; Regularisation</a>
+    <a class="sb-link" href="training.html"><span class="sb-num">•</span>Optimisers &amp;amp; Training Tricks</a>
+    <a class="sb-link" href="vector-databases.html"><span class="sb-num">•</span>Vector Databases</a>
     </nav>
 </aside>
 
   <main class="main" id="mainContent">
   
       <div class="aim-hero anim-in">
-        <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — NLP & LLMs</div>
-        <h1 class="aim-title"><i class="ti ti-message-circle"></i><span>NLP & LLMs</span></h1>
+        <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — NLP &amp; LLMs</div>
+        <h1 class="aim-title"><i class="ti ti-message-circle"></i><span>NLP &amp; LLMs</span></h1>
         <p class="aim-sub">Transformers, BERT, GPT, tokenization, embeddings, RAG pipelines, speech recognition, and fine-tuning strategies — how machines understand human language.</p>
         <div class="aim-badges"><span class="aim-badge">Intermediate</span><span class="aim-badge">Transformers</span><span class="aim-badge">HuggingFace</span></div>
       </div>
+
+    <div class="anim-in" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin:0 0 26px">
+      <svg viewBox="0 0 760 230" width="100%" role="img" aria-label="NLP pipeline: raw text is tokenized into subwords, tokens map to embedding vectors, a transformer applies self-attention across all positions, and a task head produces the prediction" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)"><defs><marker id="nlpp-a-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker></defs><rect x="15" y="80" width="130" height="60" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/><text x="80" y="106" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">"Cats sleep"</text><text x="80" y="123" text-anchor="middle" fill="var(--text3)" font-size="9.5">raw text</text><rect x="185" y="80" width="130" height="60" rx="10" fill="var(--surface2)" stroke="var(--purple)" stroke-width="1.5"/><text x="250" y="106" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Tokenize</text><text x="250" y="123" text-anchor="middle" fill="var(--text3)" font-size="9.5">[cats] [sleep]</text><rect x="355" y="80" width="130" height="60" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/><text x="420" y="106" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Embeddings</text><text x="420" y="123" text-anchor="middle" fill="var(--text3)" font-size="9.5">tokens → vectors</text><rect x="525" y="80" width="120" height="60" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/><text x="585" y="106" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Transformer</text><text x="585" y="123" text-anchor="middle" fill="var(--text3)" font-size="9.5">self-attention</text><rect x="675" y="80" width="72" height="60" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/><text x="711" y="106" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Head</text><text x="711" y="123" text-anchor="middle" fill="var(--text3)" font-size="9.5">output</text><line x1="145" y1="110" x2="177" y2="110" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#nlpp-a-text3)"/><line x1="315" y1="110" x2="347" y2="110" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#nlpp-a-text3)"/><line x1="485" y1="110" x2="517" y2="110" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#nlpp-a-text3)"/><line x1="645" y1="110" x2="667" y2="110" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#nlpp-a-text3)"/><text x="380" y="40" text-anchor="middle" fill="var(--text3)" font-size="10">attention lets every token look at every other token — "it" learns what noun it refers to</text><text x="380" y="185" text-anchor="middle" fill="var(--text3)" font-size="10">same backbone, different heads: classification · translation · next-token generation (GPT)</text></svg>
+    </div>
       <div class="aim-stats anim-in"><div class="bks-box" style="--bks-c:var(--green)"><span class="bks-val" style="color:var(--green)">10+</span><span class="bks-label">Topics</span></div><div class="bks-box" style="--bks-c:var(--cyan)"><span class="bks-val" style="color:var(--cyan)">Transformers</span><span class="bks-label">BERT / GPT</span></div><div class="bks-box" style="--bks-c:var(--purple)"><span class="bks-val" style="color:var(--purple)">RAG</span><span class="bks-label">Pipelines</span></div><div class="bks-box" style="--bks-c:var(--blue)"><span class="bks-val" style="color:var(--blue)">Speech</span><span class="bks-label">Recognition</span></div><div class="bks-box" style="--bks-c:var(--amber)"><span class="bks-val" style="color:var(--amber)">40m</span><span class="bks-label">Read Time</span></div></div>
 
 <div class="info-section">
@@ -260,7 +295,7 @@
             <div class="step-body">
               <div class="step-title">Positional Encoding</div>
               <div class="step-desc">Self-attention is permutation-invariant — "cat sat mat" and "mat cat sat" produce the same attention scores without position signals. Fix: add a position encoding to each token embedding before the first layer. Original paper: sinusoidal. Modern: learned positional embeddings (BERT) or RoPE / ALiBi for length generalisation (Llama, Mistral).</div>
-              <div class="step-code">token_input = token_embedding + position_encoding · RoPE rotates Q&K vectors by position</div>
+              <div class="step-code">token_input = token_embedding + position_encoding · RoPE rotates Q&amp;K vectors by position</div>
             </div>
           </div>
           <div class="step">
@@ -559,9 +594,9 @@ trainer.train()</pre>
           <div class="step">
             <div class="step-num">Q7</div>
             <div class="step-body">
-              <div class="step-title">RAG vs fine-tuning for an enterprise Q&A chatbot — which do you use?</div>
-              <div class="step-desc">For a Q&A chatbot over company documents: <strong>Use RAG</strong>. Documents change frequently (RAG updates without retraining). The system needs to cite sources (RAG retrieves and shows the actual chunks). Company data is sensitive (RAG keeps it in your vector DB, never in model weights). Fine-tune only if: you need a specific response style, the base model doesn't understand your domain vocabulary, or you need to reduce context length (smaller retrieved context after fine-tuning).</div>
-              <div class="step-code">Enterprise Q&A → RAG (updateable, citable, private) → add fine-tuning only for style</div>
+              <div class="step-title">RAG vs fine-tuning for an enterprise Q&amp;A chatbot — which do you use?</div>
+              <div class="step-desc">For a Q&amp;A chatbot over company documents: <strong>Use RAG</strong>. Documents change frequently (RAG updates without retraining). The system needs to cite sources (RAG retrieves and shows the actual chunks). Company data is sensitive (RAG keeps it in your vector DB, never in model weights). Fine-tune only if: you need a specific response style, the base model doesn't understand your domain vocabulary, or you need to reduce context length (smaller retrieved context after fine-tuning).</div>
+              <div class="step-code">Enterprise Q&amp;A → RAG (updateable, citable, private) → add fine-tuning only for style</div>
             </div>
           </div>
         </div>
@@ -770,11 +805,11 @@ result = model.transcribe("audio.mp3", language="hi", word_timestamps=True)
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 const pbar = document.getElementById('progressFill');
 window.addEventListener('scroll', () => {

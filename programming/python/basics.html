@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Basics — Variables &amp; Data Types | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/python/basics.html"/>
+  <meta property="og:title" content="Python Basics — Variables &amp; Data Types | TechForge"/>
+  <meta property="og:description" content="Python Basics — theory, examples, interview prep, and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=35" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) {
+      .compare-strip { grid-template-columns: 1fr; }
+    }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-py { background: rgba(247, 204, 69, .08); color: var(--accent); }
+    .cs-red { background: rgba(248, 113, 113, .08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="py/basics" data-section="python">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../../roles/index.html">Roles</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../../data/index.html">Data</a>
+        <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="../../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <div class="sidebar-label">Python Basics</div>
+      <a class="sb-link active" href="#sec-vars"><span class="sb-num">01</span> Variables</a>
+      <a class="sb-link" href="#sec-dtypes"><span class="sb-num">02</span> Data Types</a>
+      <div class="sidebar-label" style="margin-top: 20px;">Other Python Topics</div>
+      <a class="sb-link" href="collections.html"><span class="sb-num">→</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">→</span> Control Flow</a>
+      <a class="sb-link" href="functions.html"><span class="sb-num">→</span> Functions</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">→</span> Async / Await</a>
+    <a class="sb-link" href="modules.html"><span class="sb-num">•</span>Modules, Packages &amp; Project Layout</a>
+    <a class="sb-link" href="programs.html"><span class="sb-num">•</span>Practice Code Examples</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Basics</div>
+        <h1 class="pg-title">Variables &amp; <span>Data Types</span></h1>
+        <p class="pg-sub">Foundation concepts of Python programming — learn how to store and work with data effectively.</p>
+        <div class="pg-badges">
+          <span class="badge b-py"><i class="ti ti-brand-python"></i> Python 3</span>
+          <span class="badge b-green">✓ Beginner Friendly</span>
+          <span class="badge b-blue">2 Topics</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-vars">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-package"></i></span><h2 class="sec-title">Variables in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>variable</strong> is a name used to store data in memory. Python is <strong>dynamically typed</strong> and <strong>case-sensitive</strong>: <code>age</code>, <code>Age</code>, and <code>AGE</code> are three different variables.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Variables</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Creating variables — just assign a value</span>
+x = <span class="nm">10</span>
+name = <span class="st">"Alice"</span>
+is_student = <span class="kw">True</span>
+
+<span class="cm"># Case sensitivity demo</span>
+age = <span class="nm">20</span>
+Age = <span class="nm">30</span>
+<span class="fn">print</span>(age)   <span class="cm"># 20</span>
+<span class="fn">print</span>(Age)   <span class="cm"># 30</span>
+
+<span class="cm"># Updating a variable</span>
+count = <span class="nm">1</span>
+count = <span class="nm">2</span>   <span class="cm"># value updated</span></pre>
+        </div>
+        <div class="sub-title">Naming Rules</div>
+        <div class="compare-strip">
+          <div class="cs-item">
+            <div class="cs-head cs-py">✓ Valid Names</div>
+            <ul class="cs-list">
+              <li><code>total_marks</code></li>
+              <li><code>student_name</code></li>
+              <li><code>_count</code></li>
+              <li><code>value2</code></li>
+            </ul>
+          </div>
+          <div class="cs-item">
+            <div class="cs-head cs-red">✗ Invalid Names</div>
+            <ul class="cs-list">
+              <li><code>2marks</code> — starts with number</li>
+              <li><code>total-marks</code> — contains hyphen</li>
+              <li><code>for</code> — Python keyword</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="py-section" id="sec-dtypes">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-microscope"></i></span><h2 class="sec-title">Data Types in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead>
+              <tr><th>Type</th><th>Keyword</th><th>Example</th><th>Used For</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Integer</td><td><code>int</code></td><td><code>age = 25</code></td><td>Counting, indexing, loops</td></tr>
+              <tr><td>Float</td><td><code>float</code></td><td><code>pi = 3.14</code></td><td>Measurements, prices</td></tr>
+              <tr><td>String</td><td><code>str</code></td><td><code>name = "Alice"</code></td><td>Text, names, messages</td></tr>
+              <tr><td>Boolean</td><td><code>bool</code></td><td><code>flag = True</code></td><td>Conditions, loops</td></tr>
+              <tr><td>None</td><td><code>NoneType</code></td><td><code>result = None</code></td><td>No value / empty state</td></tr>
+              <tr><td>Complex</td><td><code>complex</code></td><td><code>z = 3 + 4j</code></td><td>Scientific calculations</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span><strong>Type Conversion Rules:</strong> Allowed: <code>int→float</code>, <code>int→complex</code>, <code>float→complex</code>, <code>int→str</code>. NOT allowed: <code>complex→int</code> or <code>complex→float</code> directly (use <code>int(z.real)</code> instead).</span></div>
+      </section>
+      
+      <section class="py-section" id="sec-tooling">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-tool"></i></span><h2 class="sec-title">Running Python, Style &amp; Tooling</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Three ways to run code, and the one that matters for packages.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Shell — running Python</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">python script.py           <span class="cm"># run a file</span>
+python -m pytest           <span class="cm"># run a module as a script — resolves imports properly</span>
+python -c <span class="st">"print(1+1)"</span>      <span class="cm"># one-off expression</span>
+python                     <span class="cm"># interactive REPL</span>
+
+<span class="cm"># On Unix, a shebang plus the executable bit makes it a command:</span>
+<span class="cm">#!/usr/bin/env python3</span>
+chmod +x script.py &amp;&amp; ./script.py</pre>
+        </div>
+        <p class="prose">Source files are <strong>UTF-8 by default</strong> since Python 3, so the old <code># -*- coding: utf-8 -*-</code> line is no longer needed — you will still meet it in older code, where it told Python 2 how to read the bytes.</p>
+        <p class="prose"><strong>PEP 8</strong> is the style guide the standard library follows: four-space indents, <code>snake_case</code> for functions and variables, <code>PascalCase</code> for classes, <code>UPPER_CASE</code> for constants, and a line length most projects set to 88 or 100. Its value is not the rules themselves but that everyone follows the same ones, so diffs show changes rather than reformatting.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Shell — the tools that enforce it</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">ruff check .        <span class="cm"># linter: unused imports, shadowed names, likely bugs</span>
+ruff format .       <span class="cm"># formatter: rewrites layout, no argument to have</span>
+mypy src/           <span class="cm"># static type checker, if you use annotations</span>
+
+<span class="cm"># older equivalents you will still see:</span>
+flake8 . ; black . ; pylint src/</pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-bulb"></i></span><div>A <strong>linter</strong> finds suspicious code; a <strong>formatter</strong> rewrites layout; a <strong>type checker</strong> proves things about types. Run all three in CI and none of them becomes an argument in code review.</div></div>
+        <p class="prose">When something misbehaves, <code>breakpoint()</code> drops you into the debugger at that line — no import needed since Python 3.7.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — debugging and profiling</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">process</span>(rows):
+    <span class="fn">breakpoint</span>()          <span class="cm"># pdb: n=next, s=step in, c=continue, p expr=print</span>
+    <span class="kw">return</span> [transform(r) <span class="kw">for</span> r <span class="kw">in</span> rows]
+
+<span class="cm"># Where the time actually goes:</span>
+<span class="cm">#   python -m cProfile -s cumtime script.py</span>
+<span class="cm"># Micro-benchmark one line:</span>
+<span class="cm">#   python -m timeit -s "xs=list(range(1000))" "sum(xs)"</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-circle-check"></i></span><div>Profile before optimising. The slow line is rarely the one you would have guessed, and <code>cumtime</code> points at the caller responsible rather than the leaf function it bottoms out in.</div></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which of these is mutable in Python?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">tuple</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">str</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">list</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">int</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. What does type(3.14) return?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">int</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">float</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">decimal</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">number</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Which value is falsy?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">[0]</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">""</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">"0"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">[1]</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Valid f-string syntax?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">f"Hi {name}"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">f"Hi ${name}"</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">f'Hi {name}'</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Both first and third</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. What is None's type?</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">null</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">NoneType</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">void</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">nil</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link disabled" href="#">← Previous</a>
+        <a class="nav-link" href="collections.html">Collections →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../../assets/js/site-index.js?v=26"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../../assets/js/utils.js?v=17"></script>
+  <script src="../../assets/js/platform.js?v=7"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      if (pbar) pbar.style.width = (scrolled / total * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function () {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => {
+        link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex';
+      });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+<script src="../../assets/js/pyrun.js?v=3" defer></script>
+</body>
+</html>

@@ -3,6 +3,265 @@
  * Single source of truth for section expansion (Phase 2).
  */
 window.TF_TOPICS = {
+  data: {
+    label: 'Data',
+    hub: 'data/index.html',
+    accent: '#22d3ee',
+    categories: [
+      {
+        id: 'analysis',
+        label: 'Making Data Mean Something',
+        topics: [
+          { id: 'data/statistics', file: 'statistics.html', title: 'Statistics', icon: '<i class="ti ti-hash"></i>', desc: 'Descriptive measures, hypothesis testing, Bayesian thinking, and the sampling traps that quietly invalidate a result.', depth: 'full' },
+          { id: 'data/ab-testing', file: 'ab-testing.html', title: 'Experimentation', icon: '<i class="ti ti-flask"></i>', desc: 'A/B tests, statistical power, and the peeking problem that makes half of all reported wins imaginary.', depth: 'full' },
+          { id: 'data/causal-inference', file: 'causal-inference.html', title: 'Causal Inference', icon: '<i class="ti ti-arrows-split"></i>', desc: 'Confounders, mediators and colliders, why randomisation works, and difference-in-differences, matching and instrumental variables.', depth: 'full' },
+          { id: 'data/visualisation', file: 'visualisation.html', title: 'Visualisation', icon: '<i class="ti ti-chart-donut"></i>', desc: 'Choosing the chart that answers the question, designing a dashboard, and telling the story that gets acted on.', depth: 'full' },
+          { id: 'data/bi-tools', file: 'bi-tools.html', title: 'BI Tools', icon: '<i class="ti ti-chart-bar"></i>', desc: 'Power BI and Tableau, import versus DirectQuery, the semantic layer, and dashboards that answer a question.', depth: 'full' },
+          { id: 'data/case-studies', file: 'case-studies.html', title: 'Case Study Practice', icon: '<i class="ti ti-briefcase"></i>', desc: 'Structuring an open analyst question, choosing the metric, diagnosing a drop, and ending with a recommendation.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'prep',
+        label: 'Preparing Data',
+        topics: [
+          { id: 'data/data-prep', file: 'data-prep.html', title: 'Data Preparation', icon: '<i class="ti ti-refresh"></i>', desc: 'Exploratory analysis, cleaning and missing values, feature engineering, and splits that do not leak.', depth: 'full' },
+          { id: 'data/quality', file: 'quality.html', title: 'Data Quality Testing', icon: '<i class="ti ti-shield-check"></i>', desc: 'Tests in the pipeline, data contracts checked in the producer CI, and freshness, volume and anomaly monitoring.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'move',
+        label: 'Moving Data',
+        topics: [
+          { id: 'data/pipelines', file: 'pipelines.html', title: 'Data Pipelines', icon: '<i class="ti ti-transfer"></i>', desc: 'Batch versus streaming, ELT, Spark and shuffles, and the idempotency that makes a rerun or backfill safe.', depth: 'full' },
+          { id: 'data/orchestration', file: 'orchestration.html', title: 'Orchestration & dbt', icon: '<i class="ti ti-topology-star"></i>', desc: 'Airflow DAGs and the logical date, retries and lateness alerts, and transformation as version-controlled SQL.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'mlfound',
+        label: 'Machine Learning Foundations',
+        topics: [
+          { id: 'data/math', file: 'math.html', title: 'Mathematics for ML', icon: '<i class="ti ti-math-symbols"></i>', desc: 'Linear algebra, calculus and gradients, and probability — the working subset, not a degree.', depth: 'full' },
+          { id: 'data/mlops', file: 'mlops.html', title: 'MLOps', icon: '<i class="ti ti-rocket"></i>', desc: 'Experiment tracking, serving patterns, and noticing when the data moves under you.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'platform',
+        label: 'Where Data Lives',
+        topics: [
+          { id: 'data/warehouses', file: 'warehouses.html', title: 'Warehouses & Lakes', icon: '<i class="ti ti-database"></i>', desc: 'Columnar storage, Parquet, partitioning, and the lakehouse pattern the field has converged on.', depth: 'full' },
+          { id: 'data/modelling', file: 'modelling.html', title: 'Dimensional Modelling', icon: '<i class="ti ti-sitemap"></i>', desc: 'Facts and dimensions, choosing the grain, star schemas, slowly changing dimensions and surrogate keys.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  frontend: {
+    label: 'Frontend',
+    hub: 'frontend/index.html',
+    accent: '#22d3ee',
+    categories: [
+      {
+        id: 'ui',
+        label: 'Building Interfaces',
+        topics: [
+          { id: 'fe/react', file: 'react.html', title: 'React', icon: '<i class="ti ti-box-multiple"></i>', desc: 'Components and JSX, props and state, hooks and effects, keys and reconciliation, context and boundaries.', depth: 'full' },
+          { id: 'fe/state', file: 'state.html', title: 'Routing & State', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'Client routing, server state and caching, global stores, and forms with validation.', depth: 'full' },
+          { id: 'fe/nextjs', file: 'nextjs.html', title: 'Server Rendering', icon: '<i class="ti ti-server"></i>', desc: 'SSR, static generation and incremental rendering, server components, and data loading.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping It',
+        topics: [
+          { id: 'fe/tooling', file: 'tooling.html', title: 'Build Tooling', icon: '<i class="ti ti-package"></i>', desc: 'npm, semver and lockfiles, bundling with Vite, and linting and formatting.', depth: 'full' },
+          { id: 'fe/performance', file: 'performance.html', title: 'Web Performance', icon: '<i class="ti ti-gauge"></i>', desc: 'Core Web Vitals, bundle size and code splitting, and image and font loading.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'quality',
+        label: 'Quality',
+        topics: [
+          { id: 'fe/testing', file: 'testing.html', title: 'Testing', icon: '<i class="ti ti-flask"></i>', desc: 'Unit, component and end-to-end tests, and how to keep a suite people trust.', depth: 'full' },
+          { id: 'fe/accessibility', file: 'accessibility.html', title: 'Accessibility', icon: '<i class="ti ti-eye"></i>', desc: 'Semantics and ARIA, keyboard and focus, colour contrast, and testing with a screen reader.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'platform',
+        label: 'The Web Platform',
+        topics: [
+          { id: 'fe/html', file: 'html.html', title: 'HTML', icon: '<i class="ti ti-file-code"></i>', desc: 'Semantic structure, forms and native validation, media, and the metadata search engines read.', depth: 'full' },
+          { id: 'fe/css', file: 'css.html', title: 'CSS', icon: '<i class="ti ti-brush"></i>', desc: 'The cascade, the box model, Flexbox and Grid, responsive design, custom properties and motion.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  backend: {
+    label: 'Backend',
+    hub: 'backend/index.html',
+    accent: '#4ade80',
+    categories: [
+      {
+        id: 'service',
+        label: 'Building the Service',
+        topics: [
+          { id: 'backend/node', file: 'node.html', title: 'Node & Express', icon: '<i class="ti ti-brand-javascript"></i>', desc: 'The event loop and non-blocking I/O, the middleware chain, error handling, and running it across cores in production.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'api',
+        label: 'Designing the API',
+        topics: [
+          { id: 'backend/rest', file: 'rest.html', title: 'REST APIs', icon: '<i class="ti ti-plug-connected"></i>', desc: 'Resources and methods, idempotency keys, status codes and errors, cursor pagination, versioning, and OpenAPI contracts.', depth: 'full' },
+          { id: 'backend/graphql', file: 'graphql.html', title: 'GraphQL & gRPC', icon: '<i class="ti ti-topology-star-3"></i>', desc: 'GraphQL schemas and the N+1 problem, gRPC and protocol buffers, and when each beats REST.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'data',
+        label: 'Talking to the Database',
+        topics: [
+          { id: 'backend/orm', file: 'orm.html', title: 'ORMs & Migrations', icon: '<i class="ti ti-database"></i>', desc: 'What an ORM hides, N+1 queries and eager loading, connection pooling, and expand-and-contract migrations.', depth: 'full' },
+          { id: 'backend/transactions', file: 'transactions.html', title: 'Transactions & Isolation', icon: '<i class="ti ti-lock"></i>', desc: 'ACID in practice, isolation levels and the anomalies each permits, optimistic versus pessimistic locking, and deadlocks.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'confidence',
+        label: 'Confidence',
+        topics: [
+          { id: 'backend/testing', file: 'testing.html', title: 'Backend Testing', icon: '<i class="ti ti-flask"></i>', desc: 'Unit tests around logic, integration tests against a real engine in a container, and load testing that finds the bottleneck.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  qa: {
+    label: 'QA & Testing',
+    hub: 'qa/index.html',
+    accent: '#f472b6',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'qa/fundamentals', file: 'fundamentals.html', title: 'Testing Fundamentals', icon: '<i class="ti ti-checklist"></i>', desc: 'Types of testing, the testing pyramid, writing test cases that can fail, and bug reports that get acted on.', depth: 'full' },
+          { id: 'qa/manual', file: 'manual.html', title: 'Manual Testing', icon: '<i class="ti ti-eye"></i>', desc: 'Exploratory testing with charters and session notes, and keeping regression coverage from swallowing the schedule.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'automation',
+        label: 'Automation',
+        topics: [
+          { id: 'qa/automation', file: 'automation.html', title: 'Unit & Integration Tests', icon: '<i class="ti ti-flask"></i>', desc: 'Frameworks and structure, test doubles that do not lie, and fixtures that keep a suite deterministic.', depth: 'full' },
+          { id: 'qa/ui-automation', file: 'ui-automation.html', title: 'UI Automation', icon: '<i class="ti ti-robot"></i>', desc: 'Selenium and Playwright, locator strategy, the page object model, and diagnosing flaky tests.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'beyond',
+        label: 'Beyond the UI',
+        topics: [
+          { id: 'qa/api-testing', file: 'api-testing.html', title: 'API Testing', icon: '<i class="ti ti-plug-connected"></i>', desc: 'Status codes and schemas, authorisation and idempotency, contract testing between services, and REST clients.', depth: 'full' },
+          { id: 'qa/performance', file: 'performance.html', title: 'Performance & Security', icon: '<i class="ti ti-gauge"></i>', desc: 'Load, stress and soak testing, percentiles over averages, finding the bottleneck, and the security checks QA owns.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  blockchain: {
+    label: 'Blockchain',
+    hub: 'blockchain/index.html',
+    accent: '#fbbf24',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'blockchain/fundamentals', file: 'fundamentals.html', title: 'Blockchain Fundamentals', icon: '<i class="ti ti-link"></i>', desc: 'Hash-linked blocks and Merkle trees, proof of work versus proof of stake, wallets and keys, gas, and layer 2 scaling.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'contracts',
+        label: 'Writing Contracts',
+        topics: [
+          { id: 'blockchain/smart-contracts', file: 'smart-contracts.html', title: 'Smart Contracts', icon: '<i class="ti ti-file-code"></i>', desc: 'Solidity, the EVM execution and storage model, ERC token standards, and proxy upgrade patterns.', depth: 'full' },
+          { id: 'blockchain/tooling', file: 'tooling.html', title: 'Development Tooling', icon: '<i class="ti ti-tools"></i>', desc: 'Hardhat and Foundry, fuzzing and invariant tests, forked mainnet, ethers and viem, and RPC providers.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping',
+        topics: [
+          { id: 'blockchain/dapps', file: 'dapps.html', title: 'Building a dApp', icon: '<i class="ti ti-app-window"></i>', desc: 'Front-end integration, the transaction lifecycle, wallet connection, and decentralised storage.', depth: 'full' },
+          { id: 'blockchain/security', file: 'security.html', title: 'Contract Security', icon: '<i class="ti ti-shield-lock"></i>', desc: 'Reentrancy and the recurring bug classes, oracle and flash-loan attacks, auditing and formal verification.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  mobile: {
+    label: 'Mobile Development',
+    hub: 'mobile/index.html',
+    accent: '#34d399',
+    categories: [
+      {
+        id: 'start',
+        label: 'Getting Started',
+        topics: [
+          { id: 'mobile/platforms', file: 'platforms.html', title: 'Choosing a Platform', icon: '<i class="ti ti-device-mobile"></i>', desc: 'Native versus cross-platform, Kotlin and Android, Swift and iOS, and the app lifecycle that has no desktop equivalent.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'build',
+        label: 'Building the App',
+        topics: [
+          { id: 'mobile/ui', file: 'ui.html', title: 'Building the UI', icon: '<i class="ti ti-layout-grid"></i>', desc: 'Jetpack Compose and SwiftUI, navigation that survives process death, responsive layout and mobile accessibility.', depth: 'full' },
+          { id: 'mobile/architecture', file: 'architecture.html', title: 'State & Architecture', icon: '<i class="ti ti-components"></i>', desc: 'MVVM and MVI, unidirectional data flow, dependency injection, and background work that outlives the screen.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'data',
+        label: 'Data & Connectivity',
+        topics: [
+          { id: 'mobile/networking', file: 'networking.html', title: 'Networking & Offline', icon: '<i class="ti ti-antenna"></i>', desc: 'REST clients, retries and timeouts, offline-first design, sync outboxes and conflict resolution.', depth: 'full' },
+          { id: 'mobile/storage', file: 'storage.html', title: 'Local Storage', icon: '<i class="ti ti-database"></i>', desc: 'Key-value preferences, on-device databases and migrations, files, and the secure store credentials belong in.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Shipping',
+        topics: [
+          { id: 'mobile/release', file: 'release.html', title: 'Testing & Release', icon: '<i class="ti ti-rocket"></i>', desc: 'The test pyramid on a device, app store review, staged rollouts, crash reporting and analytics.', depth: 'full' },
+          { id: 'mobile/cross-platform', file: 'cross-platform.html', title: 'Cross-Platform', icon: '<i class="ti ti-devices"></i>', desc: 'React Native and Flutter compared — rendering models, what they share, and where the saving stops.', depth: 'full' }
+        ]
+      }
+    ]
+  },
+  games: {
+    label: 'Game Development',
+    hub: 'games/index.html',
+    accent: '#a78bfa',
+    categories: [
+      {
+        id: 'foundations',
+        label: 'Foundations',
+        topics: [
+          { id: 'games/math', file: 'math.html', title: 'Game Maths', icon: '<i class="ti ti-math-symbols"></i>', desc: 'Vectors, dot and cross products, transform matrices, and why rotations use quaternions instead of three angles.', depth: 'full' },
+          { id: 'games/engines', file: 'engines.html', title: 'Game Engines', icon: '<i class="ti ti-cpu"></i>', desc: 'The game loop, fixed versus variable timestep, entity-component-system, and where Unity, Unreal and Godot differ.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'world',
+        label: 'Building the World',
+        topics: [
+          { id: 'games/graphics', file: 'graphics.html', title: 'Real-Time Graphics', icon: '<i class="ti ti-palette"></i>', desc: 'The rasterisation pipeline, vertex and fragment shaders, draw calls and batching, and physically based lighting.', depth: 'full' },
+          { id: 'games/physics', file: 'physics.html', title: 'Physics & Animation', icon: '<i class="ti ti-atom"></i>', desc: 'Broad and narrow phase collision, fixed timesteps and tunnelling, and skeletal animation with blending.', depth: 'full' },
+          { id: 'games/gameplay', file: 'gameplay.html', title: 'Gameplay Systems', icon: '<i class="ti ti-device-gamepad-2"></i>', desc: 'Input buffering and coyote time, behaviour trees and pathfinding, game audio, and UI that survives every screen.', depth: 'full' }
+        ]
+      },
+      {
+        id: 'ship',
+        label: 'Beyond One Player',
+        topics: [
+          { id: 'games/multiplayer', file: 'multiplayer.html', title: 'Multiplayer & Netcode', icon: '<i class="ti ti-world"></i>', desc: 'Authoritative servers, client prediction and reconciliation, entity interpolation and lag compensation.', depth: 'full' },
+          { id: 'games/shipping', file: 'shipping.html', title: 'Profiling & Shipping', icon: '<i class="ti ti-rocket"></i>', desc: 'Frame budgets, CPU versus GPU profiling, the asset pipeline, and platform certification.', depth: 'full' }
+        ]
+      }
+    ]
+  },
   devops: {
     label: 'DevOps',
     hub: 'devops/index.html',
@@ -17,11 +276,22 @@ window.TF_TOPICS = {
         ]
       },
       {
+        id: 'reliability',
+        label: 'Reliability & Observability',
+        topics: [
+          { id: 'devops/slo', file: 'slo.html', title: 'SLOs & Reliability', icon: '<i class="ti ti-target"></i>', desc: 'Error budgets, toil, on-call, blameless postmortems and capacity planning.', depth: 'full' },
+          { id: 'devops/observability', file: 'observability.html', title: 'Observability', icon: '<i class="ti ti-activity"></i>', desc: 'Structured logging, distributed tracing, and alerting people actually act on.', depth: 'full' },
+          { id: 'devops/secrets', file: 'secrets.html', title: 'Secrets & IAM', icon: '<i class="ti ti-key"></i>', desc: 'Secret stores and rotation, and least privilege with roles over static keys.', depth: 'full' },
+          { id: 'devops/chaos', file: 'chaos.html', title: 'Chaos Engineering', icon: '<i class="ti ti-urgent"></i>', desc: 'Hypothesis-driven experiments with a bounded blast radius, injecting latency over failure, and game days.', depth: 'full' }
+        ]
+      },
+      {
         id: 'containers',
         label: 'Containers',
         topics: [
           { id: 'devops/docker', file: 'docker.html', title: 'Docker', icon: '<i class="ti ti-brand-docker"></i>', desc: 'Images, containers, Dockerfile, volumes, networking.', depth: 'guide' },
-          { id: 'devops/docker-compose', file: 'docker-compose.html', title: 'Docker Compose', icon: '<i class="ti ti-package"></i>', desc: 'Multi-container apps, services, networks, local dev stacks.', depth: 'guide' }
+          { id: 'devops/docker-compose', file: 'docker-compose.html', title: 'Docker Compose', icon: '<i class="ti ti-package"></i>', desc: 'Multi-container apps, services, networks, local dev stacks.', depth: 'guide' },
+          { id: 'devops/registries', file: 'registries.html', title: 'Registries & Scanning', icon: '<i class="ti ti-package"></i>', desc: 'Tags versus digests, vulnerability scanning at build and in the registry, signing and SBOMs, and promoting one digest.', depth: 'full' }
         ]
       },
       {
@@ -30,7 +300,9 @@ window.TF_TOPICS = {
         topics: [
           { id: 'devops/cicd', file: 'cicd.html', title: 'CI/CD Overview', icon: '<i class="ti ti-refresh"></i>', desc: 'Pipeline stages, deployment strategies, rollback patterns.', depth: 'guide' },
           { id: 'devops/jenkins', file: 'jenkins.html', title: 'Jenkins', icon: '<i class="ti ti-building"></i>', desc: 'Jobs, pipelines, agents, and enterprise automation.', depth: 'guide' },
-          { id: 'devops/github-actions', file: 'github-actions.html', title: 'GitHub Actions', icon: '<i class="ti ti-bolt"></i>', desc: 'Workflows, matrices, secrets, reusable actions.', depth: 'guide' }
+          { id: 'devops/github-actions', file: 'github-actions.html', title: 'GitHub Actions', icon: '<i class="ti ti-bolt"></i>', desc: 'Workflows, matrices, secrets, reusable actions.', depth: 'guide' },
+          { id: 'devops/gitops', file: 'gitops.html', title: 'GitOps & Argo CD', icon: '<i class="ti ti-git-branch"></i>', desc: 'Git as the source of truth, pull versus push, Argo CD applications and self-heal, secrets, and promotion by pull request.', depth: 'full' },
+          { id: 'devops/release-strategies', file: 'release-strategies.html', title: 'Blue-Green & Canary', icon: '<i class="ti ti-rocket"></i>', desc: 'Separating deploy from release, rolling and blue-green and canary, feature flags, and automated rollback on metrics.', depth: 'full' }
         ]
       },
       {
@@ -38,7 +310,8 @@ window.TF_TOPICS = {
         label: 'Orchestration',
         topics: [
           { id: 'devops/kubernetes', file: 'kubernetes.html', title: 'Kubernetes', icon: '<i class="ti ti-brand-kubernetes"></i>', desc: 'Pods, services, deployments, ingress, scaling.', depth: 'guide' },
-          { id: 'devops/helm', file: 'helm.html', title: 'Helm', icon: '⎈', desc: 'Charts, releases, values, K8s package management.', depth: 'guide' }
+          { id: 'devops/helm', file: 'helm.html', title: 'Helm', icon: '⎈', desc: 'Charts, releases, values, K8s package management.', depth: 'guide' },
+          { id: 'devops/service-mesh', file: 'service-mesh.html', title: 'Service Mesh', icon: '<i class="ti ti-affiliate"></i>', desc: 'The sidecar model, mTLS and workload identity, traffic splitting and retry policy, and when a mesh is not worth it.', depth: 'full' }
         ]
       },
       {
@@ -76,7 +349,9 @@ window.TF_TOPICS = {
           { id: 'devops/azure-basics', file: 'azure-basics.html', title: 'Azure Basics', icon: '<i class="ti ti-brand-azure"></i>', desc: 'VMs, Blob Storage, App Service, Entra ID overview.', depth: 'guide' },
           { id: 'devops/gcp-basics', file: 'gcp-basics.html', title: 'GCP Basics', icon: '<i class="ti ti-brand-google"></i>', desc: 'Compute Engine, Cloud Storage, GKE, IAM roles.', depth: 'guide' },
           { id: 'devops/terraform', file: 'terraform.html', title: 'Terraform', icon: '<i class="ti ti-world"></i>', desc: 'IaC, state, modules, plan/apply workflow.', depth: 'guide' },
-          { id: 'devops/ansible', file: 'ansible.html', title: 'Ansible', icon: '<i class="ti ti-checklist"></i>', desc: 'Playbooks, inventory, idempotent configuration management.', depth: 'guide' }
+          { id: 'devops/ansible', file: 'ansible.html', title: 'Ansible', icon: '<i class="ti ti-checklist"></i>', desc: 'Playbooks, inventory, idempotent configuration management.', depth: 'guide' },
+          { id: 'devops/terraform-state', file: 'terraform-state.html', title: 'State, Modules & Drift', icon: '<i class="ti ti-file-description"></i>', desc: 'Remote state and locking, splitting by blast radius, module discipline, drift detection and importing existing infrastructure.', depth: 'full' },
+          { id: 'devops/cost', file: 'cost.html', title: 'Cost Management', icon: '<i class="ti ti-cash"></i>', desc: 'Tagging and attribution, rightsizing and commitments and spot, egress surprises, and cost as a unit-economics metric.', depth: 'full' }
         ]
       }
     ]
@@ -198,7 +473,7 @@ window.TF_TOPICS = {
 
   python: {
     label: 'Python',
-    hub: 'python/index.html',
+    hub: 'programming/python/index.html',
     accent: '#f7cc45',
     categories: [
       {
@@ -216,6 +491,7 @@ window.TF_TOPICS = {
         label: 'Advanced',
         topics: [
           { id: 'py/oop', file: 'oop.html', title: 'OOP', icon: '<i class="ti ti-building-bank"></i>', desc: 'Classes, inheritance, polymorphism, magic methods.', depth: 'full' },
+          { id: 'py/modules', file: 'modules.html', title: 'Modules & Packaging', icon: '<i class="ti ti-package"></i>', desc: 'Imports, packages, the import path, project layout.', depth: 'guide' },
           { id: 'py/async', file: 'async.html', title: 'Async / Await', icon: '<i class="ti ti-bolt"></i>', desc: 'Event loop, coroutines, asyncio, gather, aiohttp, patterns.', depth: 'full' }
         ]
       },
@@ -262,7 +538,9 @@ window.TF_TOPICS = {
         topics: [
           { id: 'aiml/aiml-explained', file: 'aiml-explained.html', title: 'AI / ML Explained', icon: '<i class="ti ti-brain"></i>', desc: 'The full map — what AI, ML, DL, NLP, CV, and RL are and how they relate.', depth: 'full' },
           { id: 'aiml/ml', file: 'ml.html', title: 'Machine Learning', icon: '<i class="ti ti-trending-up"></i>', desc: 'Supervised, unsupervised, core algorithms, bias-variance, evaluation metrics.', depth: 'guide' },
-          { id: 'aiml/dl', file: 'dl.html', title: 'Deep Learning', icon: '<i class="ti ti-microscope"></i>', desc: 'Neural nets, backprop, CNNs, RNNs, attention, and transformers.', depth: 'guide' }
+          { id: 'aiml/dl', file: 'dl.html', title: 'Deep Learning', icon: '<i class="ti ti-microscope"></i>', desc: 'Neural nets, backprop, CNNs, RNNs, attention, and transformers.', depth: 'guide' },
+          { id: 'aiml/regularisation', file: 'regularisation.html', title: 'Overfitting & Regularisation', icon: '<i class="ti ti-chart-line"></i>', desc: 'Bias and variance, detecting overfitting and leakage, L1 and L2 penalties, dropout, early stopping and augmentation.', depth: 'full' },
+          { id: 'aiml/training', file: 'training.html', title: 'Optimisers & Training', icon: '<i class="ti ti-trending-down"></i>', desc: 'SGD, momentum and AdamW, learning-rate schedules and warmup, gradient clipping and mixed precision, and reading a loss curve.', depth: 'full' }
         ]
       },
       {
@@ -272,7 +550,9 @@ window.TF_TOPICS = {
           { id: 'aiml/nlp', file: 'nlp.html', title: 'NLP & LLMs', icon: '<i class="ti ti-message-circle"></i>', desc: 'Text processing, embeddings, attention, BERT, GPT, RAG pipelines.', depth: 'guide' },
           { id: 'aiml/cv', file: 'cv.html', title: 'Computer Vision', icon: '<i class="ti ti-eye"></i>', desc: 'Image classification, object detection, CNNs, YOLO, transfer learning.', depth: 'guide' },
           { id: 'aiml/rl', file: 'rl.html', title: 'Reinforcement Learning', icon: '<i class="ti ti-device-gamepad-2"></i>', desc: 'Agents, environments, rewards, Q-learning, policy gradients.', depth: 'guide' },
-          { id: 'aiml/genai', file: 'genai.html', title: 'Generative AI', icon: '<i class="ti ti-sparkles"></i>', desc: 'LLMs, diffusion models, RAG, prompt engineering, production patterns.', depth: 'guide' }
+          { id: 'aiml/genai', file: 'genai.html', title: 'Generative AI', icon: '<i class="ti ti-sparkles"></i>', desc: 'LLMs, diffusion models, RAG, prompt engineering, production patterns.', depth: 'guide' },
+          { id: 'aiml/vector-databases', file: 'vector-databases.html', title: 'Vector Databases', icon: '<i class="ti ti-grid-dots"></i>', desc: 'Embeddings and similarity, ANN indexes and the recall trade-off, chunking and metadata filtering, and retrieval quality in RAG.', depth: 'full' },
+          { id: 'aiml/genai-eval', file: 'genai-eval.html', title: 'Evaluating GenAI', icon: '<i class="ti ti-scale"></i>', desc: 'Offline evaluation sets, LLM-as-judge and its biases, human review, online quality signals, and versioning prompts and models.', depth: 'full' }
         ]
       },
       {

@@ -20,11 +20,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
-  <link rel="stylesheet" href="../assets/css/aiml-overview.css?v=4">
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=2">
+  <link rel="stylesheet" href="../assets/css/aiml-overview.css?v=5">
   <style>
 :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
 
@@ -34,12 +34,7 @@
   margin-bottom: 44px; border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
-.aim-hero::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 50% 65% at 0% 55%, rgba(167,139,250,.07) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 50% at 100% 20%, rgba(79,142,247,.04) 0%, transparent 50%);
-}
+.aim-hero::before{content:none;}
 .aim-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--mono); font-size: 10px; letter-spacing: 2.5px;
@@ -64,10 +59,11 @@
   display: inline-flex; align-items: center; gap: 8px;
   padding: 11px 24px; border-radius: var(--radius);
   font-size: 13px; font-weight: 700; text-decoration: none;
-  background: linear-gradient(135deg, var(--purple), #7c3aed); color: #fff;
-  box-shadow: 0 4px 20px rgba(167,139,250,.3); transition: all .2s;
+  background: var(--purple); color: #000;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.btn-aim-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(167,139,250,.45); }
+.btn-aim-primary:hover { background: color-mix(in srgb, var(--purple) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.btn-aim-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-aim-ghost {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 11px 24px; border-radius: var(--radius);
@@ -170,6 +166,24 @@
   .aim-cta { flex-direction: column; align-items: stretch; }
   .btn-aim-primary, .btn-aim-ghost { width: 100%; justify-content: center; min-height: 44px; }
 }
+/* ── Foundations block ─────────────────────────────── */
+.aimx-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.aimx-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.aimx-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg, 14px); padding: 16px 18px; }
+.aimx-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin: 0 0 8px; display: flex; align-items: center; gap: 8px; }
+.aimx-card h3 i { color: var(--purple); }
+.aimx-card p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+.aimx-card .aimx-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); display: block; margin-bottom: 6px; }
+.aimx-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.aimx-chip { font-family: var(--mono); font-size: 11px; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 5px 13px; }
+.aimx-formula { font-family: var(--mono); font-size: 13px; color: var(--purple); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin: 10px 0; display: inline-block; }
+.aimx-venn-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg, 14px); padding: 18px; margin-bottom: 14px; }
+@media (max-width: 860px) {
+  .aimx-grid, .aimx-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .aimx-grid, .aimx-grid-4 { grid-template-columns: 1fr; }
+}
 </style>
 
 
@@ -181,18 +195,34 @@
   <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link current" href="index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item current" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -205,14 +235,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -230,6 +271,10 @@
       <a class="sb-link" href="rl.html">Reinforcement Learning</a>
       <a class="sb-link" href="genai.html">Generative AI</a>
       <a class="sb-link" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    <a class="sb-link" href="genai-eval.html"><span class="sb-num">•</span>Evaluating Generative Systems</a>
+    <a class="sb-link" href="regularisation.html"><span class="sb-num">•</span>Overfitting &amp;amp; Regularisation</a>
+    <a class="sb-link" href="training.html"><span class="sb-num">•</span>Optimisers &amp;amp; Training Tricks</a>
+    <a class="sb-link" href="vector-databases.html"><span class="sb-num">•</span>Vector Databases</a>
       <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
       <a class="sb-link" href="#stats">At a Glance</a>
       <a class="sb-link" href="#path">Learning Path</a>
@@ -242,11 +287,11 @@
     <!-- ════ HERO ════ -->
     <div class="aim-hero">
       <div class="aim-eyebrow"><span class="aim-dot"></span>AI / ML — 8 Modules · Beginner to Advanced</div>
-      <h1 class="aim-title">Learn <span>Artificial Intelligence</span><br/>& Machine Learning.</h1>
+      <h1 class="aim-title">Learn <span>Artificial Intelligence</span><br/>&amp; Machine Learning.</h1>
       <p class="aim-sub">
         From the fundamentals of AI to cutting-edge Generative AI — this track covers 
         everything you need: ML algorithms, deep learning, NLP, computer vision, 
-        reinforcement learning, and a complete DS & AI cheat sheet.
+        reinforcement learning, and a complete DS &amp; AI cheat sheet.
       </p>
       <div class="aim-cta">
         <a class="btn-aim-primary" href="ml.html"><i class="ti ti-robot"></i> Start with Machine Learning</a>
@@ -280,7 +325,7 @@
       <div class="aim-stat" style="--stat-c:var(--amber)">
         <span class="aim-stat-val" style="color:var(--amber)">1</span>
         <span class="aim-stat-label">Cheat Sheet</span>
-        <span class="aim-stat-sub">DS & AI reference</span>
+        <span class="aim-stat-sub">DS &amp; AI reference</span>
       </div>
     </div>
 
@@ -308,7 +353,7 @@
         <span class="aim-arrow">→</span>
         <a class="aim-step" href="nlp.html">
           <span class="aim-step-num">03</span>
-          <span class="aim-step-name">NLP & LLMs</span>
+          <span class="aim-step-name">NLP &amp; LLMs</span>
           <span class="aim-step-badge badge-mid">Mid</span>
         </a>
         <span class="aim-arrow">→</span>
@@ -335,6 +380,150 @@
           <span class="aim-step-name">Cheat Sheet</span>
           <span class="aim-step-badge badge-adv">Reference</span>
         </a>
+      </div>
+    </div>
+
+    <!-- ════ AI FOUNDATIONS ════ -->
+    <div id="foundations" class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">What is Artificial Intelligence?</h2>
+      <p class="aim-sec-sub">Coined by John McCarthy in 1956. AI is the design of intelligence in an artificial device — machines that acquire, understand and apply knowledge to achieve goals, able to learn and solve problems on their own. It borders mathematics, computer science, philosophy, psychology, biology and cognitive science.</p>
+
+      <div class="aimx-venn-wrap">
+        <svg viewBox="0 0 760 400" width="100%" role="img" aria-label="Nested circles showing how the fields relate: Artificial Intelligence is the outermost field, Machine Learning is a subset of AI, Deep Learning is a subset of ML, and Generative AI is the innermost subset of Deep Learning" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)">
+          <circle cx="380" cy="200" r="185" fill="var(--purple)" opacity="0.07"/>
+          <circle cx="380" cy="200" r="185" fill="none" stroke="var(--purple)" stroke-width="1.5"/>
+          <circle cx="380" cy="232" r="148" fill="var(--blue)" opacity="0.07"/>
+          <circle cx="380" cy="232" r="148" fill="none" stroke="var(--blue)" stroke-width="1.5"/>
+          <circle cx="380" cy="266" r="108" fill="var(--cyan)" opacity="0.08"/>
+          <circle cx="380" cy="266" r="108" fill="none" stroke="var(--cyan)" stroke-width="1.5"/>
+          <circle cx="380" cy="304" r="64" fill="var(--green)" opacity="0.09"/>
+          <circle cx="380" cy="304" r="64" fill="none" stroke="var(--green)" stroke-width="1.5"/>
+          <text x="380" y="48" text-anchor="middle" fill="var(--purple)" font-size="14" font-weight="700">Artificial Intelligence</text>
+          <text x="380" y="66" text-anchor="middle" fill="var(--text3)" font-size="10">any technique that mimics intelligent behaviour — search, logic, planning, agents</text>
+          <text x="380" y="118" text-anchor="middle" fill="var(--blue)" font-size="13" font-weight="700">Machine Learning</text>
+          <text x="380" y="135" text-anchor="middle" fill="var(--text3)" font-size="10">learns patterns from data instead of hand-coded rules</text>
+          <text x="380" y="188" text-anchor="middle" fill="var(--cyan)" font-size="12.5" font-weight="700">Deep Learning</text>
+          <text x="380" y="205" text-anchor="middle" fill="var(--text3)" font-size="10">multi-layer neural networks</text>
+          <text x="380" y="298" text-anchor="middle" fill="var(--green)" font-size="12" font-weight="700">Generative AI</text>
+          <text x="380" y="315" text-anchor="middle" fill="var(--text3)" font-size="9.5">LLMs · diffusion</text>
+        </svg>
+      </div>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Think · Human-like</span>
+          <h3><i class="ti ti-brain"></i>Cognitive Science approach</h3>
+          <p>Model human cognition precisely enough to simulate it — the goal is reproducing the <em>reasoning steps</em> a human follows, not just the answer.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Think · Rationally</span>
+          <h3><i class="ti ti-scale"></i>Laws of Thought approach</h3>
+          <p>Formal logic and inference mechanisms that are provably correct and guarantee an optimal solution when one exists.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Act · Human-like</span>
+          <h3><i class="ti ti-message-chatbot"></i>Turing Test approach</h3>
+          <p>A machine is intelligent if a human interrogator can't tell its answers from a person's — behaviour over mechanism.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Act · Rationally</span>
+          <h3><i class="ti ti-target"></i>Rational Agent approach</h3>
+          <p>Build agents that do the <em>best possible action</em> given what they know — the dominant view in modern AI (Russell &amp; Norvig).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Intelligent agents</h2>
+      <p class="aim-sec-sub">An agent perceives its environment through sensors and acts on it through actuators: <strong>agent = architecture + program</strong>. A task environment is specified as PEAS — Performance measure, Environment, Actuators, Sensors.</p>
+
+      <div class="aimx-grid-4">
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 1</span>
+          <h3><i class="ti ti-bolt"></i>Simple reflex</h3>
+          <p>Acts only on the current percept via condition→action rules. Ignores history; needs a fully observable environment.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 2</span>
+          <h3><i class="ti ti-database"></i>Model-based reflex</h3>
+          <p>Keeps an internal state + a model of "how the world works" — handles partially observable environments.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 3</span>
+          <h3><i class="ti ti-flag"></i>Goal-based</h3>
+          <p>Has an agenda: searches and plans toward an explicit goal, choosing actions by whether they get closer to it.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Type 4</span>
+          <h3><i class="ti ti-gauge"></i>Utility-based</h3>
+          <p>When many paths reach the goal, picks the <em>best</em> one by maximising a utility ("happiness") function.</p>
+        </div>
+      </div>
+
+      <p class="aim-sec-sub" style="margin:18px 0 10px">Environment properties that shape agent design:</p>
+      <div class="aimx-chips">
+        <span class="aimx-chip">Fully vs partially observable</span>
+        <span class="aimx-chip">Deterministic vs stochastic</span>
+        <span class="aimx-chip">Episodic vs sequential</span>
+        <span class="aimx-chip">Static vs dynamic</span>
+        <span class="aimx-chip">Discrete vs continuous</span>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Classical AI: search &amp; game playing</h2>
+      <p class="aim-sec-sub">Before ML, AI solved problems by searching a state space — start state, goal state, and operators between them. Still the backbone of pathfinding, planning and game AI.</p>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Uninformed (blind) search</span>
+          <h3><i class="ti ti-search"></i>BFS · DFS · Iterative Deepening</h3>
+          <p>No knowledge of how far the goal is. BFS explores level-by-level (optimal for unit costs, memory-hungry); DFS dives deep (light on memory, can loop); iterative-deepening DFS combines both — DFS memory with BFS completeness.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Informed (heuristic) search</span>
+          <h3><i class="ti ti-bulb"></i>Hill Climbing · Best-First · A*</h3>
+          <p>Uses a heuristic h(n) estimating distance to goal. Hill climbing greedily improves and gets stuck on local maxima/plateaus; A* orders by f(n) = g(n) + h(n) and is optimal when h never overestimates (admissible).</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Adversarial search</span>
+          <h3><i class="ti ti-chess"></i>Minimax + Alpha-Beta pruning</h3>
+          <p>Two-player games: MAX picks moves maximising the score, MIN minimises it, evaluated bottom-up from leaf positions. Alpha-beta pruning skips branches that can't change the outcome — same answer, far fewer nodes.</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Constraint satisfaction</span>
+          <h3><i class="ti ti-puzzle"></i>CSP: Backtracking + Local Search</h3>
+          <p>Variables, domains, constraints (map colouring, Sudoku, scheduling). Backtracking assigns values and undoes dead ends; local search repairs a complete assignment step-by-step.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="aim-section">
+      <div class="aim-sec-label">Foundations</div>
+      <h2 class="aim-sec-h2">Knowledge representation &amp; reasoning</h2>
+      <p class="aim-sec-sub">How an agent stores facts and derives new ones.</p>
+
+      <div class="aimx-grid">
+        <div class="aimx-card">
+          <span class="aimx-tag">Logic</span>
+          <h3><i class="ti ti-math-symbols"></i>Propositional &amp; First-Order Logic</h3>
+          <p>Propositional logic: whole statements joined by ¬ ∧ ∨ → ↔. First-order logic adds objects, relations and quantifiers (∀, ∃) — expressive enough to state "every student passed some exam".</p>
+        </div>
+        <div class="aimx-card">
+          <span class="aimx-tag">Inference</span>
+          <h3><i class="ti ti-arrows-right-left"></i>Forward vs Backward chaining</h3>
+          <p>Forward chaining: start from known facts, fire rules until the goal appears — data-driven. Backward chaining: start from the goal and work back to supporting facts — goal-driven (Prolog-style).</p>
+        </div>
+      </div>
+
+      <div class="aimx-card" style="margin-top:14px">
+        <span class="aimx-tag">Probabilistic reasoning</span>
+        <h3><i class="ti ti-percentage"></i>Bayes' theorem</h3>
+        <div class="aimx-formula">P(H|E) = P(E|H) · P(H) / P(E)</div>
+        <p>Update belief in hypothesis H after seeing evidence E. Foundation of Naive Bayes classifiers, spam filters and medical diagnosis — reasoning under uncertainty instead of hard true/false logic.</p>
       </div>
     </div>
 
@@ -383,7 +572,7 @@
         <a class="aim-card" href="nlp.html" style="--card-c:var(--green)">
           <div class="aim-card-icon"><i class="ti ti-message-circle"></i></div>
           <div class="aim-card-num">Module 03</div>
-          <div class="aim-card-title">NLP & LLMs</div>
+          <div class="aim-card-title">NLP &amp; LLMs</div>
           <div class="aim-card-chips">
             <span class="aim-chip">Tokenization</span>
             <span class="aim-chip">Transformers</span>
@@ -419,7 +608,7 @@
           <div class="aim-card-num">Module 05</div>
           <div class="aim-card-title">Reinforcement Learning</div>
           <div class="aim-card-chips">
-            <span class="aim-chip">Agents & Rewards</span>
+            <span class="aim-chip">Agents &amp; Rewards</span>
             <span class="aim-chip">Q-Learning</span>
             <span class="aim-chip">Policy Gradient</span>
           </div>
@@ -450,7 +639,7 @@
         <a class="aim-card" href="ds-cheatsheet.html" style="--card-c:var(--text3)">
           <div class="aim-card-icon"><i class="ti ti-checklist"></i></div>
           <div class="aim-card-num">Module 07</div>
-          <div class="aim-card-title">DS & AI Cheat Sheet</div>
+          <div class="aim-card-title">DS &amp; AI Cheat Sheet</div>
           <div class="aim-card-chips">
             <span class="aim-chip">Quick Reference</span>
             <span class="aim-chip">Formulas</span>
@@ -617,6 +806,67 @@
 
     </div><!-- /viz-section -->
 
+    <div class="aim-section" id="quiz">
+      <div class="aim-sec-label">Check yourself</div>
+      <h2 class="aim-sec-h2">Quick Quiz</h2>
+      <p class="aim-sec-sub">Five questions on the map of the field: agents, classical search, and where learning fits.</p>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">1. PEAS specifies a task environment. What does it stand for?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Perception, Environment, Action, State</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Performance measure, Environment, Actuators, Sensors</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Planning, Execution, Analysis, Search</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Policy, Estimate, Agent, Signal</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">2. A simple reflex agent acts only on the current percept. What does that require of its environment?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">That it be fully observable</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">That it be deterministic</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">That it contain no other agents</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">That it be continuous rather than discrete</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">3. Iterative-deepening DFS is used because it combines which two properties?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">The speed of DFS with the optimality of A*</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">The memory profile of DFS with the completeness of BFS</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Constant memory with constant time</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Informed search with no heuristic</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">4. What does first-order logic add over propositional logic?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Probabilities on each statement</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">Objects, relations and quantifiers</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">A faster inference procedure</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Support for contradictions</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz-wrap">
+          <div class="quiz-q">5. How do AI, machine learning and deep learning relate?</div>
+          <div class="quiz-opts">
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">They are three names for the same thing</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">Deep learning contains machine learning, which contains AI</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,true)">AI is the widest field; machine learning is one approach within it, and deep learning is one family of machine learning</button>
+            <button class="quiz-opt" onclick="quizAnswer(this,false)">AI and machine learning are separate fields that overlap only in robotics</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
       <div class="page-nav">
       <a class="nav-link" href="../index.html">← Home</a>
       <a class="nav-link next" href="ml.html">Machine Learning →</a>
@@ -631,12 +881,12 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
-<script src="../assets/js/aiml-viz.js?v=3"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
+<script src="../assets/js/aiml-viz.js?v=4"></script>
 <script>
 const pbar = document.getElementById('progressFill');
 window.addEventListener('scroll', () => {

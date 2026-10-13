@@ -65,7 +65,8 @@ function walk(dir, list = []) {
   return list;
 }
 
-const BASE_URL = 'https://tech-forge-dev.vercel.app';
+// Must match the canonical host in every page and in robots.txt.
+const BASE_URL = 'https://techforge-dev.vercel.app';
 
 function escAttr(s) {
   return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
@@ -119,7 +120,7 @@ ${ogBlock}`;
   // Normalize homepage canonical trailing slash
   if (rel === 'index.html') {
     html = html.replace(
-      /<link rel="canonical" href="https:\/\/tech-forge-dev\.vercel\.app\/?"\s*\/>/i,
+      /<link rel="canonical" href="https:\/\/[a-z-]+\.vercel\.app\/?"\s*\/>/i,
       `<link rel="canonical" href="${BASE_URL}/"/>`
     );
   }

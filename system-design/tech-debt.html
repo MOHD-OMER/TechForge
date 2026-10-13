@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="What technical debt is and is not, classifying it, measuring the interest, and paying it down without a big rewrite."/>
+  <meta name="keywords" content="Caching Strategies, System Design, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/system-design/tech-debt.html"/>
+  <meta property="og:title" content="Managing Technical Debt — System Design | TechForge"/>
+  <meta property="og:description" content="What technical debt is and is not, classifying it, measuring the interest, and paying it down without a big rewrite."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Managing Technical Debt — System Design | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--green); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Caching Strategies","description":"Caching stores frequently accessed data in a fast layer (memory, CDN edge) to reduce latency and backend load. The fundamental trade-off is consistency vs…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sd/tech-debt" data-section="system-design">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+    <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Fundamentals</div>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-ruler-2"></i></span>System Design Fundamentals</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num"><i class="ti ti-trending-up"></i></span>Scalability</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num"><i class="ti ti-scale"></i></span>CAP Theorem</a>
+    <div class="sidebar-label">Traffic &amp; Performance</div>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Load Balancing</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num"><i class="ti ti-arrows-shuffle"></i></span>Reverse Proxy</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>Caching Strategies</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num"><i class="ti ti-world"></i></span>CDN</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num"><i class="ti ti-traffic-lights"></i></span>Rate Limiting</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num"><i class="ti ti-door"></i></span>API Gateway</a>
+    <div class="sidebar-label">Messaging &amp; Events</div>
+    <a class="sb-link" href="queues.html"><span class="sb-num"><i class="ti ti-mailbox"></i></span>Message Queues</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num"><i class="ti ti-mail-fast"></i></span>Apache Kafka</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num"><i class="ti ti-carrot"></i></span>RabbitMQ</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Event-Driven Systems</a>
+    <div class="sidebar-label">Architecture Patterns</div>
+    <a class="sb-link" href="microservices.html"><span class="sb-num"><i class="ti ti-puzzle"></i></span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num"><i class="ti ti-building-bank"></i></span>Monolith</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num"><i class="ti ti-world"></i></span>Distributed Systems</a>
+    <div class="sidebar-label">Architecture Practice</div>
+    <a class="sb-link" href="patterns.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Design Patterns</a>
+    <a class="sb-link" href="ddd.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Domain-Driven Design</a>
+    <a class="sb-link" href="decisions.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Deciding &amp; Communicating</a>
+    <a class="sb-link" href="diagrams.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Diagramming &amp; C4</a>
+    <a class="sb-link" href="tradeoffs.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Trade-off Analysis</a>
+    <a class="sb-link active" href="tech-debt.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Managing Technical Debt</a>
+    <div class="sidebar-label">Data at Scale</div>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num"><i class="ti ti-link"></i></span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num"><i class="ti ti-folders"></i></span>Database Sharding</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Replication</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num"><i class="ti ti-cut"></i></span>Partitioning</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num"><i class="ti ti-search"></i></span>Service Discovery</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num"><i class="ti ti-shield"></i></span>High Availability</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num"><i class="ti ti-tool"></i></span>Fault Tolerance</a>
+    <div class="sidebar-label">Backend Frameworks</div>
+    <a class="sb-link" href="django.html"><span class="sb-num"><i class="ti ti-brand-django"></i></span>Django</a>
+    <a class="sb-link" href="flask.html"><span class="sb-num"><i class="ti ti-flame"></i></span>Flask</a>
+    <a class="sb-link" href="fastapi.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>FastAPI</a>
+    <div class="sidebar-label" style="margin-top:20px">On this page</div>
+    <a class="sb-link" href="#theory"><span class="sb-num">§</span>Theory</a>
+    <a class="sb-link" href="#diagram"><span class="sb-num">§</span>Diagram</a>
+    <a class="sb-link" href="#examples"><span class="sb-num">§</span>Examples</a>
+    <a class="sb-link" href="#interview"><span class="sb-num">§</span>Interview Q&amp;A</a>
+    <a class="sb-link" href="#best-practices"><span class="sb-num">§</span>Best Practices</a>
+    <a class="sb-link" href="#mistakes"><span class="sb-num">§</span>Common Mistakes</a>
+    <a class="sb-link" href="#cheatsheet"><span class="sb-num">§</span>Cheat Sheet</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">§</span>Quick Quiz</a>
+    <a class="sb-link" href="#exercises"><span class="sb-num">§</span>Exercises</a>
+  </aside>
+    <main class="main">
+    <header class="pg-head">
+      <div class="pg-crumb">System Design · Architecture</div>
+      <h1 class="pg-title">Managing Technical Debt</h1>
+      <p class="pg-sub">Telling deliberate shortcuts from accumulated mess, and getting repayment onto a roadmap.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">System Design</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-cash"></i></span> A Metaphor With A Point</h2>
+<div class="callout callout-blue"><span>The original metaphor is precise: debt is a <strong>deliberate</strong> shortcut taken to ship sooner, understood at the time, and repaid later with interest. Shipping fast and cleaning up afterwards is a legitimate strategy — as long as the second half happens.</span></div>
+<p class="lesson-prose">The word has since expanded to cover everything unpleasant in a codebase, which weakens it. Separating the categories matters because they need different responses.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Category</th><th>Response</th></tr></thead><tbody><tr><td>Deliberate and prudent</td><td>Repay on the schedule you set when you took it</td></tr><tr><td>Accidental — the team has learned since</td><td>Refactor as you touch the area</td></tr><tr><td>Rot — the world moved, the code did not</td><td>Upgrade deliberately; it only worsens</td></tr><tr><td>Bad code</td><td>Not debt. It is a defect, and calling it debt excuses it</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Calling everything "tech debt" is how it becomes unfundable. A named, dated shortcut with a cost attached gets scheduled; an amorphous complaint about the codebase never does.</span></div>
+    </section>
+    <section class="lesson-section" id="interest">
+      <h2><span class="sec-icon"><i class="ti ti-trending-up"></i></span> Measuring The Interest</h2>
+<p class="lesson-prose">Debt is only worth paying down where it is charging interest. Some of it never will be — a module nobody touches, on a service due for retirement, costs nothing to leave alone.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Interest shows up as</th><th>Measure</th></tr></thead><tbody><tr><td>Changes take longer than they should</td><td>Cycle time on that area</td></tr><tr><td>Every change breaks something</td><td>Change failure rate, incidents per release</td></tr><tr><td>Only one person can touch it</td><td>Bus factor — a risk, not just a cost</td></tr><tr><td>Onboarding is slow</td><td>Time to first meaningful change</td></tr><tr><td>Builds and tests crawl</td><td>Pipeline duration — paid on every commit</td></tr><tr><td>Fear of deploying</td><td>Deployment frequency falling</td></tr></tbody></table></div>
+<div class="callout callout-blue"><span>That is the argument that works with the people who fund the work: not "the code is ugly" but "this area takes three times longer to change and causes most of our incidents". Debt is a delivery-speed problem, and delivery speed is a business metric.</span></div>
+    </section>
+    <section class="lesson-section" id="paying">
+      <h2><span class="sec-icon"><i class="ti ti-tools"></i></span> Paying It Down</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Approach</th><th>When it works</th></tr></thead><tbody><tr><td>Opportunistic — improve what you touch</td><td>Continuous, invisible, and the default</td></tr><tr><td>A budget — a fixed share of each cycle</td><td>Sustained improvement without a business case per item</td></tr><tr><td>Targeted project with a delivery goal</td><td>When one area blocks something the business wants</td></tr><tr><td>Strangler pattern — new alongside old, migrate gradually</td><td>Replacing a large component safely</td></tr><tr><td>Big-bang rewrite</td><td>Almost never</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>The rewrite is the most seductive and most frequently fatal option. It restarts from zero features against a moving target, the old system still needs maintaining, and every undocumented behaviour it accumulated has to be rediscovered by breaking it.</span></div>
+<p class="lesson-prose">The strangler pattern is the credible alternative: route a slice of traffic to the new implementation, migrate a piece at a time, keep both running until the old one is unused. It is slower on paper and finishes, which the rewrite frequently does not.</p>
+    </section>
+    <section class="lesson-section" id="preventing">
+      <h2><span class="sec-icon"><i class="ti ti-shield-check"></i></span> Not Accumulating It</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Practice</th><th>Effect</th></tr></thead><tbody><tr><td>Record the shortcut when you take it</td><td>A dated ticket, not a comment nobody greps for</td></tr><tr><td>Boy-scout rule</td><td>Leave each file slightly better than you found it</td></tr><tr><td>Keep dependencies current continuously</td><td>Small upgrades instead of one impossible jump</td></tr><tr><td>Delete dead code and unused flags</td><td>The cheapest debt repayment available</td></tr><tr><td>Treat the pipeline as product</td><td>Slow builds tax every change forever</td></tr><tr><td>Review architecture at boundaries</td><td>Catch drift while it is still cheap to correct</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Dependency rot is the debt most teams underestimate. Skipping upgrades for two years turns a routine bump into a migration project, and it is the version you cannot upgrade that eventually forces the rewrite you were avoiding.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>What is technical debt, precisely?</q><p>A deliberate shortcut taken to ship sooner, understood at the time and repaid later with interest. Bad code is a defect, not debt — conflating them excuses it.</p></div>
+<div class="iq"><q>How do you decide what to pay down?</q><p>By the interest it charges: cycle time, change failure rate, incidents and onboarding cost in that area. Debt in code nobody touches is free to leave alone.</p></div>
+<div class="iq"><q>How do you make the business case?</q><p>In delivery terms rather than aesthetics — "this area takes three times longer to change and causes most of our incidents" is fundable; "the code is ugly" is not.</p></div>
+<div class="iq"><q>Why do rewrites usually fail?</q><p>They restart at zero features against a moving target while the old system still needs maintaining, and every undocumented behaviour has to be rediscovered by breaking it.</p></div>
+<div class="iq"><q>What is the strangler pattern?</q><p>Building the replacement alongside the original and migrating a slice at a time until the old one is unused. Slower on paper, and it finishes.</p></div>
+<div class="iq"><q>Which debt is most underestimated?</q><p>Dependency rot. Deferred upgrades compound until a routine bump becomes a migration project, and an unupgradeable version forces the rewrite you were avoiding.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. Technical debt in the original sense is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Any bad code</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A deliberate shortcut to be repaid</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A missing test</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">An outdated library</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Debt is worth paying down when it…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Looks untidy</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Charges interest in delivery speed or incidents</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Is old</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Was written by someone who left</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. The most reliable way to replace a large component is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A big-bang rewrite</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The strangler pattern</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A freeze and refactor</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Outsourcing it</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. The business case for debt work should be framed as…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Code quality</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Delivery speed and incident rate</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Developer happiness</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Line count</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. The most underestimated form of debt is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Duplication</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Dependency rot</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Naming</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Missing comments</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="tradeoffs.html">&larr; Trade-off Analysis</a>
+      <a class="nav-link next" href="index.html">Back to System Design &rarr;</a>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+<script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

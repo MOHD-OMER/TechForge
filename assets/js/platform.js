@@ -13,9 +13,14 @@
 
   function rootPath() {
     var p = window.location.pathname.replace(/\\/g, '/');
-    if (p.includes('/dsa/') || p.includes('/python/') || p.includes('/devops/') ||
+    // Wings live one level deeper (/programming/python/, /systems/os/ …) → ../../
+    if (/\/(programming|systems)\/[a-z0-9-]+\//.test(p)) {
+      return '../../';
+    }
+    if (p.includes('/programming/') || p.includes('/dsa/') || p.includes('/devops/') ||
         p.includes('/system-design/') || p.includes('/databases/') ||
-        p.includes('/aiml/') || p.includes('/interview/')) {
+        p.includes('/aiml/') || p.includes('/interview/') ||
+        p.includes('/systems/')) {
       return '../';
     }
     return '';
@@ -64,6 +69,15 @@
   function isCompleted(id) {
     return getCompleted().indexOf(id) >= 0;
   }
+
+  /* Exported so the roadmaps can show and set completion without keeping their
+     own copy of this. One store, one format — the dashboard's totals and the
+     roadmap's ticks can never disagree. */
+  window.TFProgress = {
+    all: getCompleted,
+    is: isCompleted,
+    toggle: toggleCompleted
+  };
 
   function estimateReadingTime(el) {
     if (!el) return 5;

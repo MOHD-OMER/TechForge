@@ -5,14 +5,14 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="200+ curated interview questions covering DSA, Python, OOP, AI/ML, and SQL — tagged for FAANG and top startups. Track your progress locally."/>
+  <meta name="description" content="335+ curated interview questions across DSA, Python, JavaScript, Java, C++, OOP, AI/ML, SQL, System Design, DevOps, OS, Networking and Security — tagged for FAANG and top startups. Track your progress locally."/>
   <meta property="og:title" content="Interview Q&A Hub — TechForge"/>
-  <meta property="og:description" content="200+ interview questions across DSA, Python, OOP, AI/ML, and SQL. FAANG & Startup tagged. Free, no login."/>
+  <meta property="og:description" content="335+ interview questions across 13 tracks — DSA, Python, JavaScript, Java, C++, OOP, AI/ML, SQL, System Design, DevOps, OS, Networking, Security. FAANG & startup tagged."/>
   <meta property="og:type" content="website"/>
-  <title>Interview Q&A Hub — TechForge</title>
+  <title>Interview Q&amp;A Hub — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/interview/index.html"/>
   <meta property="og:title" content="Interview Q&amp;A Hub — TechForge"/>
-  <meta property="og:description" content="200+ curated interview questions covering DSA, Python, OOP, AI/ML, and SQL — tagged for FAANG and top startups. Track your progress locally."/>
+  <meta property="og:description" content="335+ curated interview questions across DSA, Python, JavaScript, Java, C++, OOP, AI/ML, SQL, System Design, DevOps, OS, Networking and Security — tagged for FAANG and top startups. Track your progress locally."/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -22,10 +22,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
 <style>
+:root { --accent: var(--teal); }
 /* ════════════════════════════════════════
    INTERVIEW HUB — v5 MAJOR UPGRADE
    ════════════════════════════════════════ */
@@ -34,33 +35,24 @@
   position: relative; padding: 56px 0 48px;
   margin-bottom: 48px; border-bottom: 1px solid var(--border); overflow: hidden;
 }
-.int-hero::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 80% at -5% 50%, rgba(251,191,36,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 60% at 105% 20%, rgba(34,211,238,.05) 0%, transparent 55%),
-    radial-gradient(ellipse 30% 40% at 50% 100%, rgba(167,139,250,.03) 0%, transparent 50%);
-  pointer-events: none;
-}
+.int-hero::before { content: none; }
 .hero-grid {
   display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: center;
 }
 .ih-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--amber);
-  background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2);
-  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 20px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 20px;
 }
-.ih-dot { width:5px;height:5px;border-radius:50%;background:var(--amber);box-shadow:0 0 6px var(--amber);animation:ihdot 2s ease infinite; }
+.ih-dot { width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:ihdot 2s ease infinite; }
 @keyframes ihdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
 .ih-title {
-  font-family: var(--font-display); font-size: clamp(30px,5.5vw,52px);
-  font-weight: 700; letter-spacing: -0.75px; line-height: 1.0;
+  font-family: var(--font-display); font-size: clamp(28px,5.5vw,46px);
+  font-weight: 700; letter-spacing: -0.55px; line-height: 1.02;
   color: var(--text); margin-bottom: 16px;
 }
 .ih-title .grad {
-  background: linear-gradient(135deg, var(--amber) 0%, #f97316 60%, var(--cyan) 100%);
+  background: linear-gradient(135deg, var(--teal), color-mix(in srgb, var(--teal) 55%, #ffffff));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 .ih-sub { font-size: 14.5px; color: var(--text2); line-height: 1.82; max-width: 500px; margin-bottom: 28px; }
@@ -68,10 +60,11 @@
 .btn-ih-primary {
   display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
   border-radius: var(--r-md); font-size: 13.5px; font-weight: 700; text-decoration: none;
-  background: linear-gradient(135deg, var(--amber) 0%, #f97316 100%); color: #000;
-  box-shadow: 0 4px 24px rgba(251,191,36,.35); transition: all .2s;
+  background: var(--amber); color: #000;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.btn-ih-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(251,191,36,.5); }
+.btn-ih-primary:hover { background: color-mix(in srgb, var(--amber) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.btn-ih-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-ih-ghost {
   display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
   border-radius: var(--r-md); font-size: 13.5px; font-weight: 600; text-decoration: none;
@@ -174,11 +167,14 @@
 .dl-hard { background:var(--red); }
 
 /* Category bento */
-.cat-bento { display:grid; grid-template-columns:repeat(12,1fr); gap:12px; }
+.cat-bento { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:1fr; gap:12px; }
 .icat-card {
   background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl);
   padding:24px 22px 20px; text-decoration:none; display:flex; flex-direction:column;
   position:relative; overflow:hidden; transition:all .25s; min-height:210px;
+  /* the card is an <a>: without this, anything not explicitly coloured
+     (the icon) falls back to the browser's default link blue */
+  color:var(--text);
 }
 .icat-card::before { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:linear-gradient(90deg,var(--ic-a,var(--amber)),transparent); opacity:0; transition:opacity .2s; }
 .icat-card::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 80% 10%,var(--ic-glow,rgba(251,191,36,.06)),transparent 55%); opacity:0; transition:opacity .3s; }
@@ -186,22 +182,26 @@
 .icat-card:hover::before { opacity:1; }
 .icat-card:hover::after  { opacity:1; }
 .icat-card:focus-visible { outline:2px solid var(--ic-a,var(--amber)); outline-offset:2px; }
-.ic-dsa { grid-column:span 4; --ic-a:var(--cyan);   --ic-glow:rgba(34,211,238,.06); }
-.ic-py  { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(79,142,247,.07); }
-.ic-oop { grid-column:span 4; --ic-a:var(--green);  --ic-glow:rgba(52,211,153,.06); }
+/* Each bank card wears the accent of the section it drills — DSA blue,
+   Programming amber, Data & Cloud cyan, and so on — so the colour tells you
+   which track you're heading into before you read the title. The hub's own
+   chrome stays teal. */
+.ic-dsa { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(77,158,247,.07); }
+.ic-py  { grid-column:span 4; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
+.ic-oop { grid-column:span 4; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
 .ic-ai  { grid-column:span 6; --ic-a:var(--purple); --ic-glow:rgba(167,139,250,.07); }
-.ic-sql { grid-column:span 6; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
-.ic-icon { font-size:26px; margin-bottom:12px; }
+.ic-sql { grid-column:span 6; --ic-a:var(--cyan);   --ic-glow:rgba(34,211,238,.06); }
+.ic-icon { font-size:26px; margin-bottom:12px; color:var(--ic-a, var(--teal)); }
 .ic-label {
   font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px;
   text-transform:uppercase; padding:3px 10px; border-radius:var(--r-full);
   display:inline-block; margin-bottom:9px; width:fit-content;
 }
-.ic-dsa .ic-label { background:rgba(34,211,238,.07);  color:var(--cyan);   border:1px solid rgba(34,211,238,.18); }
-.ic-py  .ic-label { background:rgba(79,142,247,.1);   color:var(--blue);   border:1px solid rgba(79,142,247,.22); }
-.ic-oop .ic-label { background:rgba(52,211,153,.08);  color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+.ic-dsa .ic-label { background:rgba(77,158,247,.1);   color:var(--blue);   border:1px solid rgba(77,158,247,.22); }
+.ic-py  .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-oop .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
 .ic-ai  .ic-label { background:rgba(167,139,250,.09); color:var(--purple); border:1px solid rgba(167,139,250,.2); }
-.ic-sql .ic-label { background:rgba(251,191,36,.08);  color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-sql .ic-label { background:rgba(34,211,238,.07);  color:var(--cyan);   border:1px solid rgba(34,211,238,.18); }
 .ic-title { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; letter-spacing:-.3px; }
 .ic-desc  { font-size:11.5px; color:var(--text3); line-height:1.65; flex:1; margin-bottom:14px; }
 .ic-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
@@ -216,11 +216,36 @@
 .ic-count { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
 .ic-dot   { width:5px; height:5px; border-radius:50%; background:var(--ic-a,var(--amber)); }
 .ic-arrow { font-family:var(--font-mono); font-size:11px; font-weight:700; display:inline-flex; align-items:center; gap:5px; transition:gap .15s; }
-.ic-dsa .ic-arrow { color:var(--cyan); }
-.ic-py  .ic-arrow { color:var(--blue); }
-.ic-oop .ic-arrow { color:var(--green); }
+.ic-dsa .ic-arrow { color:var(--blue); }
+.ic-py  .ic-arrow { color:var(--amber); }
+.ic-oop .ic-arrow { color:var(--amber); }
 .ic-ai  .ic-arrow { color:var(--purple); }
-.ic-sql .ic-arrow { color:var(--amber); }
+.ic-sql .ic-arrow { color:var(--cyan); }
+.ic-sd  { grid-column:span 4; --ic-a:var(--green);  --ic-glow:rgba(52,211,153,.06); }
+.ic-devops { grid-column:span 4; --ic-a:var(--cyan); --ic-glow:rgba(34,211,238,.06); }
+.ic-os  { grid-column:span 4; --ic-a:var(--red);    --ic-glow:rgba(248,113,113,.06); }
+.ic-net { grid-column:span 6; --ic-a:var(--red);    --ic-glow:rgba(248,113,113,.06); }
+.ic-sec { grid-column:span 6; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
+.ic-sd  .ic-label { background:rgba(52,211,153,.08); color:var(--green);  border:1px solid rgba(52,211,153,.2); }
+.ic-devops .ic-label { background:rgba(34,211,238,.07); color:var(--cyan); border:1px solid rgba(34,211,238,.18); }
+.ic-os  .ic-label { background:rgba(248,113,113,.08); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
+.ic-net .ic-label { background:rgba(248,113,113,.08); color:var(--red);   border:1px solid rgba(248,113,113,.2); }
+.ic-sec .ic-label { background:rgba(251,191,36,.08); color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-sd  .ic-arrow { color:var(--green); }
+.ic-devops .ic-arrow { color:var(--cyan); }
+.ic-os  .ic-arrow { color:var(--red); }
+.ic-net .ic-arrow { color:var(--red); }
+.ic-sec .ic-arrow { color:var(--amber); }
+.ic-js   { grid-column:span 4; --ic-a:var(--amber);  --ic-glow:rgba(251,191,36,.06); }
+.ic-java { grid-column:span 4; --ic-a:var(--orange); --ic-glow:rgba(249,115,22,.06); }
+.ic-cpp  { grid-column:span 4; --ic-a:var(--blue);   --ic-glow:rgba(77,158,247,.07); }
+.ic-js   .ic-label { background:rgba(251,191,36,.08); color:var(--amber);  border:1px solid rgba(251,191,36,.2); }
+.ic-java .ic-label { background:rgba(249,115,22,.08); color:var(--orange); border:1px solid rgba(249,115,22,.2); }
+.ic-cpp  .ic-label { background:rgba(77,158,247,.1);  color:var(--blue);   border:1px solid rgba(77,158,247,.22); }
+.ic-js   .ic-arrow { color:var(--amber); }
+.ic-java .ic-arrow { color:var(--orange); }
+.ic-cpp  .ic-arrow { color:var(--blue); }
+@media (max-width:820px){ .ic-dsa,.ic-py,.ic-oop,.ic-ai,.ic-sql,.ic-sd,.ic-devops,.ic-os,.ic-net,.ic-sec,.ic-js,.ic-java,.ic-cpp { grid-column:span 12; } }
 .icat-card:hover .ic-arrow { gap:9px; }
 
 /* Company tracks */
@@ -307,7 +332,8 @@
 .pb-btn-secondary:hover { border-color:var(--border2); color:var(--text2); }
 
 /* Resources */
-.resources-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+/* Four resource cards: 2×2 rather than 3+1, which leaves an orphan. */
+.resources-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
 .res-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r-lg); padding:18px; text-decoration:none; display:flex; align-items:flex-start; gap:14px; transition:all .2s; }
 .res-card:hover { border-color:var(--border2); transform:translateY(-2px); }
 .res-icon { font-size:22px; flex-shrink:0; }
@@ -328,13 +354,14 @@
   .int-stats { grid-template-columns:repeat(3,1fr); }
   .ic-dsa,.ic-py,.ic-oop { grid-column:span 6; }
   .ic-ai,.ic-sql { grid-column:span 6; }
+  .ic-sd,.ic-devops,.ic-os,.ic-net,.ic-sec { grid-column:span 6; }
   .tracks-grid { grid-template-columns:1fr; }
   .tips-grid { grid-template-columns:1fr 1fr; }
   .resources-grid { grid-template-columns:1fr 1fr; }
 }
 @media (max-width:640px) {
   .int-stats { grid-template-columns:repeat(3,1fr); }
-  .ic-dsa,.ic-py,.ic-oop,.ic-ai,.ic-sql { grid-column:span 12; }
+  .ic-dsa,.ic-py,.ic-oop,.ic-ai,.ic-sql,.ic-sd,.ic-devops,.ic-os,.ic-net,.ic-sec { grid-column:span 12; }
   .tips-grid,.plan-grid,.resources-grid { grid-template-columns:1fr; }
   .ih-cta { flex-direction:column; align-items:stretch; }
   .btn-ih-primary,.btn-ih-ghost { width:100%; justify-content:center; min-height:44px; }
@@ -360,18 +387,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link current" href="./">Interview Q&amp;A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link current" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -387,27 +430,47 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
 
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
     <div class="sidebar-label">Interview Tracks</div>
     <a class="sb-link active" href="./"><span class="sb-num"><i class="ti ti-target"></i></span>All Categories</a>
     <a class="sb-link" href="dsa-interview.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>DSA — 47 Qs</a>
     <a class="sb-link" href="python-interview.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python — 35+ Qs</a>
+    <a class="sb-link" href="js-interview.html"><span class="sb-num"><i class="ti ti-brand-javascript"></i></span>JavaScript — 15 Qs</a>
+    <a class="sb-link" href="java-interview.html"><span class="sb-num"><i class="ti ti-coffee"></i></span>Java — 15 Qs</a>
+    <a class="sb-link" href="cpp-interview.html"><span class="sb-num"><i class="ti ti-brand-cpp"></i></span>C++ — 15 Qs</a>
     <a class="sb-link" href="oop-interview.html"><span class="sb-num"><i class="ti ti-wall"></i></span>OOP — 15 Qs</a>
     <a class="sb-link" href="aiml-interview.html"><span class="sb-num"><i class="ti ti-robot"></i></span>AI/ML — 25+ Qs</a>
     <a class="sb-link" href="sql-interview.html"><span class="sb-num"><i class="ti ti-database"></i></span>SQL — 40+ Qs</a>
     <a class="sb-link" href="system-design-interview.html"><span class="sb-num"><i class="ti ti-building"></i></span>System Design — 38 Qs</a>
     <a class="sb-link" href="devops-interview.html"><span class="sb-num"><i class="ti ti-server-2"></i></span>DevOps — 29 Qs</a>
+    <a class="sb-link" href="os-interview.html"><span class="sb-num"><i class="ti ti-cpu"></i></span>OS — 30 Qs</a>
+    <a class="sb-link" href="networking-interview.html"><span class="sb-num"><i class="ti ti-network"></i></span>Networking — 30 Qs</a>
+    <a class="sb-link" href="security-interview.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Security — 30 Qs</a>
     <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
     <a class="sb-link" href="#stats"><span class="sb-num">00</span>At a Glance</a>
     <a class="sb-link" href="#tracks"><span class="sb-num">01</span>Company Tracks</a>
@@ -427,12 +490,12 @@
         <div class="hero-left">
           <div class="ih-eyebrow"><span class="ih-dot"></span>Interview Prep Hub</div>
           <h1 class="ih-title">
-            <span class="grad">200+ Questions.</span><br/>Zero Paywalls.
+            <span class="grad">335+ Questions.</span><br/>Thirteen tracks.
           </h1>
           <p class="ih-sub">
-            Curated interview questions across DSA, Python, OOP, AI/ML, and SQL —
-            tagged for FAANG and top Indian startups. Track your progress in your browser.
-            No account, no login, no cost.
+            Curated interview questions across DSA, Python, OOP, AI/ML, SQL, System Design,
+            DevOps, OS, Networking and Security — tagged for FAANG and top Indian startups.
+            Track your progress right in your browser.
           </p>
           <div class="ih-cta">
             <a class="btn-ih-primary" href="dsa-interview.html"><i class="ti ti-target"></i> Start with DSA</a>
@@ -441,7 +504,7 @@
           <div class="ih-trust">
             <div class="ih-trust-item"><span class="ih-trust-dot"></span>No account required</div>
             <div class="ih-trust-item"><span class="ih-trust-dot"></span>Progress saved locally</div>
-            <div class="ih-trust-item"><span class="ih-trust-dot"></span>Free forever</div>
+            <div class="ih-trust-item"><span class="ih-trust-dot"></span>Thirteen question banks</div>
           </div>
         </div>
         <div class="hero-right">
@@ -450,7 +513,7 @@
             <div class="hpc-total">
               <div class="hpc-num" id="heroProgressNum">0</div>
               <div>
-                <div class="hpc-of">/ 162+ done</div>
+                <div class="hpc-of">/ 335+ total</div>
                 <div class="hpc-label">questions completed</div>
               </div>
             </div>
@@ -484,7 +547,7 @@
 
     <!-- STATS -->
     <div id="stats" class="int-stats anim-in">
-      <div class="ist-box" style="--ist-c:var(--amber)"><span class="ist-val" style="color:var(--amber)">200+</span><span class="ist-label">Total Qs</span></div>
+      <div class="ist-box" style="--ist-c:var(--amber)"><span class="ist-val" style="color:var(--amber)">335+</span><span class="ist-label">Total Qs</span></div>
       <div class="ist-box" style="--ist-c:var(--cyan)"><span class="ist-val" style="color:var(--cyan)">47</span><span class="ist-label">DSA</span></div>
       <div class="ist-box" style="--ist-c:var(--blue)"><span class="ist-val" style="color:var(--blue)">35+</span><span class="ist-label">Python</span></div>
       <div class="ist-box" style="--ist-c:var(--green)"><span class="ist-val" style="color:var(--green)">15</span><span class="ist-label">OOP</span></div>
@@ -530,7 +593,7 @@
     <!-- QUESTION BANKS -->
     <div id="categories" class="sec-block anim-in">
       <div class="sec-label">Interview Tracks</div>
-      <h2 class="sec-h2">All 5 question banks</h2>
+      <h2 class="sec-h2">All 13 question banks</h2>
       <p class="sec-sub">Each track is self-contained. Practice the ones that match your interview focus.</p>
       <div class="search-wrap">
         <span class="search-icon"><i class="ti ti-search"></i></span>
@@ -538,7 +601,7 @@
         <button class="search-clear" id="searchClear" aria-label="Clear search"><i class="ti ti-x"></i></button>
       </div>
       <div class="filter-tabs">
-        <button class="ftab active" data-filter="all">All Tracks <span class="ftab-count">7</span></button>
+        <button class="ftab active" data-filter="all">All Tracks <span class="ftab-count">13</span></button>
         <button class="ftab" data-filter="faang"><span class="ftab-dot" style="color:var(--blue)"></span>FAANG-heavy</button>
         <button class="ftab" data-filter="startup"><span class="ftab-dot" style="color:var(--green)"></span>Startup-friendly</button>
         <button class="ftab" data-filter="math"><span class="ftab-dot" style="color:var(--purple)"></span>Math-intensive</button>
@@ -561,6 +624,33 @@
           <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:2"></div><div class="ic-diff-seg diff-m" style="flex:2"></div><div class="ic-diff-seg diff-h" style="flex:.5"></div></div>
           <div class="ic-desc">Python-specific questions — decorators, generators, comprehensions, the GIL, memory management, and coding problems written in Python.</div>
           <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>35+ questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-js" href="js-interview.html" data-tags="startup faang">
+          <div class="ic-icon"><i class="ti ti-brand-javascript"></i></div>
+          <div class="ic-label">Language Track</div>
+          <div class="ic-title">JavaScript Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Closures</span><span class="ic-chip">Event Loop</span><span class="ic-chip">this</span><span class="ic-chip">Prototypes</span><span class="ic-chip">Async</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:2"></div><div class="ic-diff-seg diff-m" style="flex:2"></div><div class="ic-diff-seg diff-h" style="flex:.7"></div></div>
+          <div class="ic-desc">JavaScript-specific questions — closures, the event loop, this binding, prototypal inheritance, promises and async/await. Core for frontend and full-stack roles.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>15 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-java" href="java-interview.html" data-tags="startup faang">
+          <div class="ic-icon"><i class="ti ti-coffee"></i></div>
+          <div class="ic-label">Language Track</div>
+          <div class="ic-title">Java Interview</div>
+          <div class="ic-chips"><span class="ic-chip">equals/hashCode</span><span class="ic-chip">Exceptions</span><span class="ic-chip">HashMap</span><span class="ic-chip">Generics</span><span class="ic-chip">GC</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.8"></div><div class="ic-diff-seg diff-m" style="flex:2.2"></div><div class="ic-diff-seg diff-h" style="flex:.8"></div></div>
+          <div class="ic-desc">Java-specific questions — == vs equals, the String pool, checked exceptions, the Integer cache, HashMap internals, and generics type erasure. Backend and enterprise staple.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>15 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-cpp" href="cpp-interview.html" data-tags="faang startup">
+          <div class="ic-icon"><i class="ti ti-brand-cpp"></i></div>
+          <div class="ic-label">Language Track</div>
+          <div class="ic-title">C++ Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Pointers</span><span class="ic-chip">RAII</span><span class="ic-chip">Smart Ptrs</span><span class="ic-chip">Rule of 5</span><span class="ic-chip">Move</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.2"></div><div class="ic-diff-seg diff-m" style="flex:2.3"></div><div class="ic-diff-seg diff-h" style="flex:1.5"></div></div>
+          <div class="ic-desc">C++-specific questions — references vs pointers, RAII, smart pointers, the rule of five, virtual functions and the vtable, and move semantics. For systems and quant roles.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>15 questions</div><div class="ic-arrow">Practice →</div></div>
         </a>
         <a class="icat-card ic-oop" href="oop-interview.html" data-tags="startup faang">
           <div class="ic-icon"><i class="ti ti-wall"></i></div>
@@ -606,6 +696,33 @@
           <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.5"></div><div class="ic-diff-seg diff-m" style="flex:2.5"></div><div class="ic-diff-seg diff-h" style="flex:1"></div></div>
           <div class="ic-desc">Containers, orchestration, pipelines, observability, cloud IAM, Terraform, and incident response — for platform and SRE interviews.</div>
           <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>29 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-os" href="os-interview.html" data-tags="faang startup" style="--ic-accent:var(--red)">
+          <div class="ic-icon"><i class="ti ti-cpu"></i></div>
+          <div class="ic-label">Systems Track</div>
+          <div class="ic-title">OS Interview</div>
+          <div class="ic-chips"><span class="ic-chip">Processes</span><span class="ic-chip">Scheduling</span><span class="ic-chip">Memory</span><span class="ic-chip">Concurrency</span><span class="ic-chip">Deadlocks</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.5"></div><div class="ic-diff-seg diff-m" style="flex:2.3"></div><div class="ic-diff-seg diff-h" style="flex:1.2"></div></div>
+          <div class="ic-desc">Processes vs threads, virtual memory, the TLB, race conditions, the Coffman conditions, epoll — everything OS interviewers actually ask.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>30 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-net" href="networking-interview.html" data-tags="faang startup" style="--ic-accent:var(--red)">
+          <div class="ic-icon"><i class="ti ti-network"></i></div>
+          <div class="ic-label">Systems Track</div>
+          <div class="ic-title">Networking Interview</div>
+          <div class="ic-chips"><span class="ic-chip">TCP/IP</span><span class="ic-chip">DNS</span><span class="ic-chip">HTTP/S</span><span class="ic-chip">Sockets</span><span class="ic-chip">Subnets</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.5"></div><div class="ic-diff-seg diff-m" style="flex:2.3"></div><div class="ic-diff-seg diff-h" style="flex:1.2"></div></div>
+          <div class="ic-desc">Handshakes, DNS resolution, HTTP/1.1 vs 2 vs 3, NAT, longest-prefix match — plus the “type a URL, hit Enter” classic, answered end to end.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>30 questions</div><div class="ic-arrow">Practice →</div></div>
+        </a>
+        <a class="icat-card ic-sec" href="security-interview.html" data-tags="faang startup" style="--ic-accent:var(--amber)">
+          <div class="ic-icon"><i class="ti ti-shield-lock"></i></div>
+          <div class="ic-label">Systems Track</div>
+          <div class="ic-title">Security Interview</div>
+          <div class="ic-chips"><span class="ic-chip">CIA Triad</span><span class="ic-chip">Crypto</span><span class="ic-chip">OWASP</span><span class="ic-chip">Auth</span><span class="ic-chip">TLS</span></div>
+          <div class="ic-diff-row"><div class="ic-diff-seg diff-e" style="flex:1.6"></div><div class="ic-diff-seg diff-m" style="flex:2.2"></div><div class="ic-diff-seg diff-h" style="flex:1.2"></div></div>
+          <div class="ic-desc">CIA triad, hashing vs encryption, SQLi/XSS/CSRF, OAuth, TLS and forward secrecy, zero trust — the defensive concepts backend and security interviews probe.</div>
+          <div class="ic-foot"><div class="ic-count"><span class="ic-dot"></span>30 questions</div><div class="ic-arrow">Practice →</div></div>
         </a>
       </div>
       <div class="diff-legend" style="margin-top:14px;">
@@ -783,13 +900,17 @@
           <div class="res-icon"><i class="ti ti-chart-bar"></i></div>
           <div><div class="res-title">DSA with Live Animations</div><div class="res-desc">See every data structure visualized on canvas — reinforce interview answers with visual intuition.</div></div>
         </a>
-        <a class="res-card" href="../python/index.html">
+        <a class="res-card" href="../programming/python/index.html">
           <div class="res-icon"><i class="ti ti-brand-python"></i></div>
           <div><div class="res-title">Python Deep Reference</div><div class="res-desc">OOP, decorators, generators, async, and libraries — everything to answer Python questions with confidence.</div></div>
         </a>
         <a class="res-card" href="../aiml/index.html">
           <div class="res-icon"><i class="ti ti-robot"></i></div>
           <div><div class="res-title">AI/ML Explained</div><div class="res-desc">ML, deep learning, NLP, transformers, and RL — clear analogies and real math to back up every AI/ML answer.</div></div>
+        </a>
+        <a class="res-card" href="../systems/index.html">
+          <div class="res-icon"><i class="ti ti-cpu"></i></div>
+          <div><div class="res-title">OS &amp; Networks Guides</div><div class="res-desc">Twenty-four full guides behind the OS, Networking and Security tracks — processes to boot, TCP/IP to WebSockets, crypto to incident response.</div></div>
         </a>
       </div>
     </div>
@@ -807,11 +928,11 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var progressFill = document.getElementById('progressFill');

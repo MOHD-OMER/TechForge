@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <meta name="description" content="The sidecar model, mTLS and zero trust, traffic splitting and resilience policy, mesh observability, and when not to adopt one."/>
+  <meta name="keywords" content="Nginx, DevOps, interview, TechForge"/>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/devops/service-mesh.html"/>
+  <meta property="og:title" content="Service Mesh — DevOps | TechForge"/>
+  <meta property="og:description" content="The sidecar model, mTLS and zero trust, traffic splitting and resilience policy, mesh observability, and when not to adopt one."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <title>Service Mesh — DevOps | TechForge</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+  <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>:root { --accent: var(--cyan); }</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Nginx","description":"Nginx is an event-driven, asynchronous web server and reverse proxy. Unlike Apache's thread-per-request model, Nginx uses a non-blocking I/O event loop,…","learningResourceType":"Guide","isAccessibleForFree":true,"provider":{"@type":"Organization","name":"TechForge"}}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="devops/service-mesh" data-section="devops">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item current" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout" id="mainContent">
+  <aside class="sidebar" id="sidebar">
+<div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off"/>
+    </div>
+        <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Section hub</a>
+    <div class="sidebar-label">Version Control</div>
+    <a class="sb-link" href="git.html"><span class="sb-num"><i class="ti ti-server-2"></i></span>Git &amp; Version Control</a>
+    <a class="sb-link" href="github.html"><span class="sb-num"><i class="ti ti-brand-github"></i></span>GitHub</a>
+    <div class="sidebar-label">Containers</div>
+    <a class="sb-link" href="docker.html"><span class="sb-num"><i class="ti ti-brand-docker"></i></span>Docker</a>
+    <a class="sb-link" href="docker-compose.html"><span class="sb-num"><i class="ti ti-stack-2"></i></span>Docker Compose</a>
+    <a class="sb-link" href="registries.html"><span class="sb-num"><i class="ti ti-package"></i></span>Registries &amp; Scanning</a>
+    <div class="sidebar-label">CI/CD</div>
+    <a class="sb-link" href="cicd.html"><span class="sb-num"><i class="ti ti-refresh"></i></span>CI/CD Overview</a>
+    <a class="sb-link" href="jenkins.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Jenkins</a>
+    <a class="sb-link" href="github-actions.html"><span class="sb-num"><i class="ti ti-brand-github"></i></span>GitHub Actions</a>
+    <a class="sb-link" href="gitops.html"><span class="sb-num"><i class="ti ti-git-branch"></i></span>GitOps &amp; Argo CD</a>
+    <a class="sb-link" href="release-strategies.html"><span class="sb-num"><i class="ti ti-rocket"></i></span>Blue-Green &amp; Canary</a>
+    <div class="sidebar-label">Orchestration</div>
+    <a class="sb-link" href="kubernetes.html"><span class="sb-num"><i class="ti ti-brand-kubernetes"></i></span>Kubernetes</a>
+    <a class="sb-link" href="helm.html"><span class="sb-num"><i class="ti ti-package"></i></span>Helm</a>
+    <a class="sb-link active" href="service-mesh.html"><span class="sb-num"><i class="ti ti-affiliate"></i></span>Service Mesh</a>
+    <div class="sidebar-label">Web &amp; Proxy</div>
+    <a class="sb-link" href="nginx.html"><span class="sb-num"><i class="ti ti-server"></i></span>Nginx</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num"><i class="ti ti-arrows-exchange"></i></span>Reverse Proxy</a>
+    <div class="sidebar-label">Linux &amp; Shell</div>
+    <a class="sb-link" href="linux-basics.html"><span class="sb-num"><i class="ti ti-brand-ubuntu"></i></span>Linux Basics</a>
+    <a class="sb-link" href="bash-scripting.html"><span class="sb-num"><i class="ti ti-terminal-2"></i></span>Bash Scripting</a>
+    <div class="sidebar-label">Monitoring</div>
+    <a class="sb-link" href="monitoring.html"><span class="sb-num"><i class="ti ti-activity"></i></span>Monitoring &amp; Alerts</a>
+    <a class="sb-link" href="prometheus.html"><span class="sb-num"><i class="ti ti-flame"></i></span>Prometheus</a>
+    <a class="sb-link" href="grafana.html"><span class="sb-num"><i class="ti ti-chart-line"></i></span>Grafana</a>
+    <a class="sb-link" href="observability.html"><span class="sb-num"><i class="ti ti-telescope"></i></span>Observability</a>
+    <div class="sidebar-label">Cloud &amp; Infrastructure</div>
+    <a class="sb-link" href="infrastructure.html"><span class="sb-num"><i class="ti ti-building"></i></span>Infrastructure Basics</a>
+    <a class="sb-link" href="cloud-fundamentals.html"><span class="sb-num"><i class="ti ti-cloud"></i></span>Cloud Fundamentals</a>
+    <a class="sb-link" href="aws-basics.html"><span class="sb-num"><i class="ti ti-brand-aws"></i></span>AWS Basics</a>
+    <a class="sb-link" href="azure-basics.html"><span class="sb-num"><i class="ti ti-brand-azure"></i></span>Azure Basics</a>
+    <a class="sb-link" href="gcp-basics.html"><span class="sb-num"><i class="ti ti-brand-google"></i></span>GCP Basics</a>
+    <a class="sb-link" href="terraform.html"><span class="sb-num"><i class="ti ti-topology-star"></i></span>Terraform</a>
+    <a class="sb-link" href="terraform-state.html"><span class="sb-num"><i class="ti ti-file-description"></i></span>State, Modules &amp; Drift</a>
+    <a class="sb-link" href="ansible.html"><span class="sb-num"><i class="ti ti-settings"></i></span>Ansible</a>
+    <a class="sb-link" href="secrets.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Secrets &amp; IAM</a>
+    <a class="sb-link" href="cost.html"><span class="sb-num"><i class="ti ti-cash"></i></span>Cost Management</a>
+    <div class="sidebar-label">Reliability</div>
+    <a class="sb-link" href="slo.html"><span class="sb-num"><i class="ti ti-gauge"></i></span>SLOs &amp; Reliability</a>
+    <a class="sb-link" href="chaos.html"><span class="sb-num"><i class="ti ti-urgent"></i></span>Chaos Engineering</a>
+  </aside>
+    <main class="main">
+    <div class="lesson-breadcrumb"><a href="index.html">← DevOps Hub</a></div>
+    <header class="pg-head">
+      <div class="pg-crumb">DevOps · Guide</div>
+      <h1 class="pg-title">Service Mesh</h1>
+      <p class="pg-sub">Moving retries, mTLS and traffic control out of every service and into the platform — and when that is not worth it.</p>
+      <div class="pg-badges tf-learning-actions">
+        <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+        <span class="badge b-accent">DevOps</span>
+        <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+        <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+      </div>
+    </header>
+    <section class="lesson-section" id="theory">
+      <h2><span class="sec-icon"><i class="ti ti-affiliate"></i></span> The Same Five Problems In Every Service</h2>
+<div class="callout callout-blue"><span>Once you have thirty services, each one needs retries, timeouts, TLS, load balancing and tracing. A mesh implements them once, in a proxy beside every service, rather than in a library per language.</span></div>
+<p class="lesson-prose">The mesh splits into a <strong>data plane</strong> — the proxies that carry traffic — and a <strong>control plane</strong> that configures them. Your service talks to localhost; the proxy handles encryption, routing, retries and metrics, and the application code knows nothing about any of it.</p>
+    </section>
+    <section class="lesson-section" id="sidecar">
+      <h2><span class="sec-icon"><i class="ti ti-box-multiple"></i></span> The Sidecar Model</h2>
+<p class="lesson-prose">A proxy runs in every pod and intercepts all traffic in and out. That is what makes the mesh <strong>language-agnostic</strong>: a Go service, a Python service and a legacy Java service get identical behaviour without one of them adding a dependency.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Buys</th><th>Costs</th></tr></thead><tbody><tr><td>One implementation of retries and timeouts</td><td>A proxy's CPU and memory in every pod</td></tr><tr><td>Consistent behaviour across languages</td><td>A hop of latency on every call</td></tr><tr><td>Policy changed without redeploying services</td><td>Substantial operational complexity</td></tr><tr><td>Uniform metrics and traces</td><td>A new failure domain to debug</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Sidecarless and ambient modes exist precisely because the per-pod overhead is real. At small scale, a shared library and sensible defaults deliver most of the value for a fraction of the operational cost.</span></div>
+    </section>
+    <section class="lesson-section" id="security">
+      <h2><span class="sec-icon"><i class="ti ti-lock"></i></span> mTLS &amp; Zero Trust</h2>
+<p class="lesson-prose">The strongest argument for a mesh is usually security. It issues a certificate per workload and encrypts every service-to-service call with <strong>mutual TLS</strong> — both sides prove identity — with rotation handled automatically.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Gives</th><th>Instead of</th></tr></thead><tbody><tr><td>Encryption in transit everywhere</td><td>Plaintext inside the cluster perimeter</td></tr><tr><td>Cryptographic workload identity</td><td>Trusting whatever IP connected</td></tr><tr><td>Policy: A may call B, not C</td><td>Network rules that drift from intent</td></tr><tr><td>Automatic certificate rotation</td><td>An expiry outage every two years</td></tr></tbody></table></div>
+<p class="lesson-prose">This is what "zero trust" means concretely: being inside the network grants nothing, because every call is authenticated and authorised on its own merits.</p>
+    </section>
+    <section class="lesson-section" id="traffic">
+      <h2><span class="sec-icon"><i class="ti ti-route"></i></span> Traffic Control &amp; Observability</h2>
+<p class="lesson-prose">Because the proxy sees every request, it can route on any property of it — which is what makes canaries, mirroring and fault injection a configuration change rather than an application feature.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Capability</th><th>Use</th></tr></thead><tbody><tr><td>Weighted splitting</td><td>Canary releases without touching code</td></tr><tr><td>Header-based routing</td><td>Route staff or a test cohort to a new build</td></tr><tr><td>Mirroring</td><td>Send a copy of live traffic to a new version</td></tr><tr><td>Retries, timeouts, circuit breaking</td><td>Resilience policy, applied uniformly</td></tr><tr><td>Fault injection</td><td>Chaos experiments as configuration</td></tr></tbody></table></div>
+<div class="callout callout-red"><span>Retries configured at both the mesh and the application multiply: three at each level is nine attempts, and a struggling service gets hit with an amplified load exactly when it is least able to cope. Choose one layer to own retries.</span></div>
+<p class="lesson-prose">The mesh also produces uniform request metrics and trace spans for every service, which is how a service map gets built without instrumenting anything — although the application still has to propagate trace context.</p>
+    </section>
+    <section class="lesson-section" id="when">
+      <h2><span class="sec-icon"><i class="ti ti-help-circle"></i></span> When Not To</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Situation</th><th>Verdict</th></tr></thead><tbody><tr><td>Fewer than about ten services</td><td>Libraries and defaults are cheaper</td></tr><tr><td>One language across the estate</td><td>A shared library gets most of the benefit</td></tr><tr><td>No platform team to operate it</td><td>Do not — an unowned mesh is an outage source</td></tr><tr><td>mTLS mandated by compliance</td><td>Strong reason to adopt</td></tr><tr><td>Polyglot, many teams, real traffic policy</td><td>This is what a mesh is for</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>A mesh moves complexity rather than removing it. That is a good trade when the complexity was duplicated across thirty services, and a bad one when it was not there to begin with.</span></div>
+    </section>
+    <section class="lesson-section" id="interview">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>What problem does a service mesh solve?</q><p>It implements retries, timeouts, mTLS, load balancing and telemetry once in a proxy beside every service, instead of once per language in every service.</p></div>
+<div class="iq"><q>Data plane versus control plane?</q><p>The data plane is the proxies carrying traffic; the control plane configures them. Policy changes are applied to the control plane and take effect without redeploying services.</p></div>
+<div class="iq"><q>What does mTLS give you inside a cluster?</q><p>Encryption in transit plus cryptographic workload identity, so authorisation is based on who the caller is rather than what network it came from — the concrete meaning of zero trust.</p></div>
+<div class="iq"><q>Why are layered retries dangerous?</q><p>They multiply. Three retries in the mesh and three in the client is nine attempts, amplifying load against a service that is already failing.</p></div>
+<div class="iq"><q>What does a mesh cost?</q><p>A proxy per pod in CPU and memory, a hop of latency on every call, real operational complexity, and a new failure domain to debug.</p></div>
+<div class="iq"><q>When should you not adopt one?</q><p>With few services, a single language, or no platform team to operate it. A mesh moves duplicated complexity into one place; it does not remove it.</p></div>
+    </section>
+    <section class="lesson-section" id="quiz">
+      <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. A sidecar proxy makes mesh features…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Faster</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Language-agnostic</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Optional per service</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Cheaper</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. mTLS provides…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Encryption only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Encryption plus workload identity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Authorisation only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Certificate pinning</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Retries configured in both mesh and client…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Improve reliability</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Multiply and amplify load</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Cancel out</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Are required</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Weighted traffic splitting enables…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Blue-green only</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Canary releases without code changes</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Faster TLS</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Smaller images</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. A mesh is hardest to justify when…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">You are polyglot</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">You have a handful of services</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Compliance requires mTLS</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Traffic policy is complex</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+    </section>
+    <div class="page-nav">
+      <a class="nav-link" href="helm.html">← Helm</a>
+      <a class="nav-link next" href="nginx.html">Nginx →</a>
+    </div>
+
+    <div class="lesson-related">
+      <h3>Related topics</h3>
+      <div class="lesson-related-links" id="lessonRelated"></div>
+    </div>
+  </main>
+</div>
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+<script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+<script src="../assets/js/utils.js?v=17"></script>
+<script src="../assets/js/platform.js?v=7"></script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

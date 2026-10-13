@@ -17,9 +17,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="assets/css/forge_base.css?v=8" rel="stylesheet">
+  <link href="assets/css/forge_base.css?v=35" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-  <link href="assets/css/platform.css?v=3" rel="stylesheet"/>
+  <link href="assets/css/platform.css?v=5" rel="stylesheet"/>
 <style>
   .dash-main { max-width: 1080px; margin: 0 auto; padding: calc(var(--topbar-h, 58px) + 40px) 24px 90px; }
   .dash-head { margin-bottom: 34px; }
@@ -39,6 +39,30 @@
   .track-bar { flex: 1; height: 8px; background: var(--surface, rgba(0,0,0,.3)); border-radius: 99px; overflow: hidden; }
   .track-fill { height: 100%; border-radius: 99px; background: var(--tc, var(--blue, #4d9ef7)); transition: width .5s ease; }
   .track-pct { width: 76px; text-align: right; font-family: var(--font-mono, monospace); font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  /* Focus next — ranked weak-area recommendations */
+  .fx-list { display: flex; flex-direction: column; gap: 8px; }
+  .fx-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 13px 16px; border-radius: 10px; text-decoration: none; color: var(--text);
+    background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border);
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .fx-item:hover { border-color: var(--fx-c, var(--blue, #4d9ef7)); transform: translateX(3px); }
+  .fx-rank {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700;
+    color: var(--fx-c, var(--blue, #4d9ef7));
+    background: color-mix(in srgb, var(--fx-c, #4d9ef7) 12%, transparent);
+  }
+  .fx-body { flex: 1; min-width: 0; }
+  .fx-label { display: block; font-size: 13.5px; font-weight: 600; }
+  .fx-why { display: block; font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+  .fx-go { flex-shrink: 0; font-family: var(--font-mono, monospace); font-size: 11px; color: var(--text3); }
+  .fx-item:hover .fx-go { color: var(--fx-c, var(--blue, #4d9ef7)); }
+  .fx-empty { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  @media (prefers-reduced-motion: reduce) { .fx-item { transition: none; } .fx-item:hover { transform: none; } }
+  @media (max-width: 600px) { .fx-item { padding: 12px 14px; } .fx-go { display: none; } }
   .bk-list, .rc-list { display: flex; flex-direction: column; gap: 6px; }
   .bk-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--card, rgba(255,255,255,.02)); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: 13.5px; transition: border-color .15s; }
   .bk-item:hover { border-color: var(--blue, #4d9ef7); }
@@ -63,21 +87,62 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="index.html">Home</a>
+    <a class="tb-link" href="roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="roles/index.html">Roles</a>
+    <a class="tb-link" href="programming/index.html">Programming</a>
     <a class="tb-link" href="dsa/index.html">DSA</a>
     <a class="tb-link" href="system-design/index.html">System Design</a>
-    <a class="tb-link" href="python/index.html">Python</a>
-    <a class="tb-link" href="databases/index.html">Databases</a>
-    <a class="tb-link" href="aiml/index.html">AI/ML</a>
     <a class="tb-link" href="interview/index.html">Interview</a>
-    <a class="tb-link" href="devops/index.html">DevOps</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="backend/index.html">Backend</a>
+        <a class="tb-more-item" href="databases/index.html">Databases</a>
+        <a class="tb-more-item" href="devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="data/index.html">Data</a>
+        <a class="tb-more-item" href="aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
-    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu" aria-expanded="false">☰</button>
+<button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topNav">☰</button>
   </div>
 </header>
+
+<div class="tf-home-mobile-panel" id="tfHomeMobilePanel">
+  <div class="tf-hmp-label">Navigate</div>
+  <div class="tf-hmp-grid">
+        <a class="tf-hmp-item" href="index.html"><span class="tf-hmp-icon"><i class="ti ti-home"></i></span><span class="tf-hmp-text">Home</span></a>
+        <a class="tf-hmp-item" href="roadmaps/index.html"><span class="tf-hmp-icon"><i class="ti ti-route"></i></span><span class="tf-hmp-text">Roadmaps</span></a>
+        <a class="tf-hmp-item" href="roles/index.html"><span class="tf-hmp-icon"><i class="ti ti-briefcase"></i></span><span class="tf-hmp-text">Roles</span></a>
+        <a class="tf-hmp-item" href="programming/index.html"><span class="tf-hmp-icon"><i class="ti ti-code"></i></span><span class="tf-hmp-text">Programming</span></a>
+        <a class="tf-hmp-item" href="dsa/index.html"><span class="tf-hmp-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-hmp-text">DSA</span></a>
+        <a class="tf-hmp-item" href="system-design/index.html"><span class="tf-hmp-icon"><i class="ti ti-building"></i></span><span class="tf-hmp-text">Sys Design</span></a>
+        <a class="tf-hmp-item" href="interview/index.html"><span class="tf-hmp-icon"><i class="ti ti-target"></i></span><span class="tf-hmp-text">Interview</span></a>
+        <a class="tf-hmp-item" href="frontend/index.html"><span class="tf-hmp-icon"><i class="ti ti-browser"></i></span><span class="tf-hmp-text">Frontend</span></a>
+        <a class="tf-hmp-item" href="backend/index.html"><span class="tf-hmp-icon"><i class="ti ti-server-2"></i></span><span class="tf-hmp-text">Backend</span></a>
+        <a class="tf-hmp-item" href="databases/index.html"><span class="tf-hmp-icon"><i class="ti ti-database"></i></span><span class="tf-hmp-text">Databases</span></a>
+        <a class="tf-hmp-item" href="devops/index.html"><span class="tf-hmp-icon"><i class="ti ti-server-cog"></i></span><span class="tf-hmp-text">DevOps</span></a>
+        <a class="tf-hmp-item" href="systems/index.html"><span class="tf-hmp-icon"><i class="ti ti-cpu"></i></span><span class="tf-hmp-text">OS &amp; Networks</span></a>
+        <a class="tf-hmp-item" href="mobile/index.html"><span class="tf-hmp-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-hmp-text">Mobile</span></a>
+        <a class="tf-hmp-item" href="blockchain/index.html"><span class="tf-hmp-icon"><i class="ti ti-link"></i></span><span class="tf-hmp-text">Blockchain</span></a>
+        <a class="tf-hmp-item" href="qa/index.html"><span class="tf-hmp-icon"><i class="ti ti-checklist"></i></span><span class="tf-hmp-text">QA</span></a>
+        <a class="tf-hmp-item" href="data/index.html"><span class="tf-hmp-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-hmp-text">Data</span></a>
+        <a class="tf-hmp-item" href="aiml/index.html"><span class="tf-hmp-icon"><i class="ti ti-robot"></i></span><span class="tf-hmp-text">AI &amp; ML</span></a>
+        <a class="tf-hmp-item" href="games/index.html"><span class="tf-hmp-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-hmp-text">Game Dev</span></a>
+        <a class="tf-hmp-item" href="about.html"><span class="tf-hmp-icon"><i class="ti ti-info-circle"></i></span><span class="tf-hmp-text">About</span></a>
+  </div>
+</div>
 
 <main class="dash-main" id="mainContent">
   <div class="dash-head">
@@ -92,6 +157,11 @@
     <div class="stat-card"><div class="stat-val" id="stBookmarks" style="color:var(--blue,#4d9ef7)">0</div><div class="stat-lbl">Bookmarks</div></div>
     <div class="stat-card"><div class="stat-val" id="stTracks" style="color:var(--purple,#a78bfa)">0/7</div><div class="stat-lbl">Tracks started</div></div>
   </div>
+
+  <section class="dash-sec">
+    <h2><i class="ti ti-target-arrow"></i> Focus next</h2>
+    <div class="fx-list" id="focusList"></div>
+  </section>
 
   <section class="dash-sec">
     <h2><i class="ti ti-chart-bar"></i> Track progress</h2>
@@ -120,11 +190,11 @@
   </section>
 </main>
 
-<script src="assets/js/topics-manifest.js?v=2"></script>
-<script src="assets/js/site-index.js?v=2"></script>
-<script src="assets/js/utils.js?v=5"></script>
-<script src="assets/js/platform.js?v=4"></script>
-<script src="assets/js/search-modal.js?v=1" defer></script>
+<script src="assets/js/topics-manifest.js?v=19"></script>
+<script src="assets/js/site-index.js?v=26"></script>
+<script src="assets/js/utils.js?v=17"></script>
+<script src="assets/js/platform.js?v=7"></script>
+<script src="assets/js/search-modal.js?v=2" defer></script>
 <script>
 (function () {
   'use strict';
@@ -167,22 +237,145 @@
   document.getElementById('stTracks').textContent = started + '/' + tracks.length;
   document.getElementById('trackRows').innerHTML = rowsHtml;
 
+  /* ── Focus next: rank weak areas from the progress data already stored ──
+     Signals, strongest first:
+       1. flashcards sitting in Leitner box 1-2  → actively forgetting
+       2. cards due for review today             → scheduled work
+       3. timed-quiz best score under 70%        → shaky bank
+       4. a track started but under 40% complete → stalled
+     Everything is derived; nothing new is written to storage. */
+  (function () {
+    var host = document.getElementById('focusList');
+    if (!host) return;
+
+    var BANKS = {
+      'iv/dsa-interview':          { label: 'DSA interview', total: 47, href: 'interview/dsa-interview.html',           c: '#22d3ee' },
+      'iv/python-interview':       { label: 'Python interview', total: 35, href: 'interview/python-interview.html',     c: '#4d9ef7' },
+      'iv/oop-interview':          { label: 'OOP interview', total: 15, href: 'interview/oop-interview.html',           c: '#34d399' },
+      'iv/aiml-interview':         { label: 'AI/ML interview', total: 25, href: 'interview/aiml-interview.html',        c: '#a78bfa' },
+      'iv/sql-interview':          { label: 'SQL interview', total: 40, href: 'interview/sql-interview.html',           c: '#fbbf24' },
+      'iv/system-design-interview':{ label: 'System Design interview', total: 38, href: 'interview/system-design-interview.html', c: '#34d399' },
+      'iv/devops-interview':       { label: 'DevOps interview', total: 29, href: 'interview/devops-interview.html',     c: '#f97316' },
+      'iv/os-interview':           { label: 'OS interview', total: 30, href: 'interview/os-interview.html',             c: '#f87171' },
+      'iv/networking-interview':   { label: 'Networking interview', total: 30, href: 'interview/networking-interview.html', c: '#f87171' },
+      'iv/security-interview':     { label: 'Security interview', total: 30, href: 'interview/security-interview.html', c: '#fbbf24' }
+    };
+
+    var today = Math.floor(Date.now() / 86400000);
+    var recs = [];
+
+    Object.keys(BANKS).forEach(function (id) {
+      var bank = BANKS[id];
+
+      /* flashcard state for this bank */
+      var flash = get('tf_flash_' + id, '{}');
+      var ids = Object.keys(flash);
+      if (ids.length) {
+        var weak = 0, due = 0;
+        ids.forEach(function (cid) {
+          var rec = flash[cid] || {};
+          if (rec.b <= 2) weak++;
+          if (rec.d <= today) due++;
+        });
+        if (weak >= 3) {
+          recs.push({ score: 100 + weak, label: bank.label + ' flashcards', c: bank.c, href: bank.href,
+            why: weak + ' card' + (weak === 1 ? '' : 's') + ' stuck in the early boxes — these are the ones slipping away.' });
+        }
+        if (due >= 3) {
+          recs.push({ score: 60 + due, label: bank.label + ' review', c: bank.c, href: bank.href,
+            why: due + ' card' + (due === 1 ? '' : 's') + ' due for review today.' });
+        }
+      }
+
+      /* timed-quiz best score */
+      var best = parseInt(localStorage.getItem('tf_timedquiz_' + id) || '-1', 10);
+      if (best >= 0) {
+        var pct = Math.round(best / 10 * 100);
+        if (pct < 70) {
+          recs.push({ score: 80 + (70 - pct), label: bank.label + ' quiz', c: bank.c, href: bank.href,
+            why: 'Best timed run so far: ' + best + '/10. Worth another pass before an interview.' });
+        }
+      }
+
+      /* questions checked off in this bank */
+      var prog = get('tf_' + id.replace('iv/', '').replace('-interview', '') + '_interview_progress', '{}');
+      var checked = Object.keys(prog).length;
+      if (checked > 0 && checked < bank.total * 0.4) {
+        recs.push({ score: 30 + (bank.total - checked) / bank.total * 10, label: bank.label, c: bank.c, href: bank.href,
+          why: 'Started but only ' + checked + ' of ' + bank.total + ' questions checked off.' });
+      }
+    });
+
+    /* stalled tracks — started, under 40% */
+    tracks.forEach(function (t) {
+      if (!t.total) return;
+      var done = completed.filter(t.match).length;
+      var pct = Math.round(done / t.total * 100);
+      if (done > 0 && pct < 40) {
+        recs.push({ score: 20 + (40 - pct) / 4, label: t.label, c: t.color, href: t.hub,
+          why: 'Only ' + done + ' of ' + t.total + ' topics done (' + pct + '%). Pick up where you left off.' });
+      }
+    });
+
+    recs.sort(function (a, b) { return b.score - a.score; });
+
+    /* one recommendation per destination, top 5 */
+    var seen = {}, top = [];
+    recs.forEach(function (r) {
+      if (seen[r.href] || top.length >= 5) return;
+      seen[r.href] = 1;
+      top.push(r);
+    });
+
+    if (!top.length) {
+      host.innerHTML = '<p class="fx-empty">Nothing flagged yet. Work through a question bank, run a timed quiz or a flashcard session, and this turns into a ranked list of what to review — built from what you actually got wrong.</p>';
+      return;
+    }
+
+    host.innerHTML = top.map(function (r, i) {
+      return '<a class="fx-item" style="--fx-c:' + r.c + '" href="' + r.href + '">' +
+        '<span class="fx-rank">' + (i + 1) + '</span>' +
+        '<span class="fx-body"><span class="fx-label"></span><span class="fx-why"></span></span>' +
+        '<span class="fx-go">Open →</span></a>';
+    }).join('');
+    /* text set via textContent so stored values can never inject markup */
+    host.querySelectorAll('.fx-item').forEach(function (el, i) {
+      el.querySelector('.fx-label').textContent = top[i].label;
+      el.querySelector('.fx-why').textContent = top[i].why;
+    });
+  })();
+
+
   function ago(ts) {
     if (!ts) return '';
     var d = Math.floor((Date.now() - ts) / 86400000);
     return d === 0 ? 'today' : d === 1 ? '1d ago' : d + 'd ago';
   }
-  function esc(s) { return String(s || '').replace(/</g, '&lt;'); }
+  /* escape for both attribute and text-node use — quotes matter here because
+   * these strings get concatenated straight into an href="..." attribute. */
+  function esc(s) {
+    return String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  /* bookmarks/recent come from localStorage, which the Import feature writes
+   * to from an uploaded JSON file — treat href as untrusted. Only root-relative
+   * site links are allowed; anything else (javascript:, data:, //evil.com) is
+   * dropped rather than rendered as a clickable link. */
+  function safeHref(h) {
+    h = String(h || '');
+    return /^\/(?!\/)/.test(h) ? h : '#';
+  }
 
   if (bookmarks.length) {
     document.getElementById('bkList').innerHTML = bookmarks.slice().reverse().map(function (b) {
-      return '<a class="bk-item" href="' + esc(b.href) + '"><i class="ti ti-bookmark"></i>' + esc(b.title) +
+      return '<a class="bk-item" href="' + esc(safeHref(b.href)) + '"><i class="ti ti-bookmark"></i>' + esc(b.title) +
         '<span class="bk-when">' + ago(b.at) + '</span></a>';
     }).join('');
   }
   if (recent.length) {
     document.getElementById('rcList').innerHTML = recent.slice(0, 8).map(function (r) {
-      return '<a class="bk-item" href="' + esc(r.href) + '"><i class="ti ti-history"></i>' + esc(r.title) + '</a>';
+      return '<a class="bk-item" href="' + esc(safeHref(r.href)) + '"><i class="ti ti-history"></i>' + esc(r.title) + '</a>';
     }).join('');
   }
 

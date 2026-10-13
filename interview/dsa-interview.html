@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#030508"/>
   <meta name="description" content="47 DSA interview questions — arrays, trees, graphs, DP, sorting — tagged for FAANG and startups. Track your progress locally."/>
   <meta property="og:title" content="DSA Interview Q&A — TechForge"/>
-  <title>DSA Interview Q&A — TechForge</title>
+  <title>DSA Interview Q&amp;A — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/interview/dsa-interview.html"/>
   <meta property="og:title" content="DSA Interview Q&amp;A — TechForge"/>
   <meta property="og:description" content="47 DSA interview questions — arrays, trees, graphs, DP, sorting — tagged for FAANG and startups. Track your progress locally."/>
@@ -20,13 +20,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
   :root {
-    --accent: var(--cyan);
+    --accent: var(--teal);
     /* map old vars to Forge vars */
     --surface:  var(--card);
     --surface2: rgba(34,211,238,.05);
@@ -38,7 +38,7 @@
 
   /* ── HERO ── */
   .int-page-hero { position:relative; padding:40px 0 32px; margin-bottom:28px; border-bottom:1px solid var(--border); overflow:hidden; }
-  .int-page-hero::before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,211,238,.06) 0%,transparent 58%),radial-gradient(ellipse 40% 50% at 105% 20%,rgba(77,142,247,.04) 0%,transparent 52%); }
+  .int-page-hero::before{content:none;}
   .iph-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--cyan); background:rgba(34,211,238,.07); border:1px solid rgba(34,211,238,.2); padding:4px 12px; border-radius:var(--r-full); margin-bottom:14px; }
   .iph-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); box-shadow:0 0 5px var(--cyan); animation:iphdot 2s ease infinite; }
   @keyframes iphdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
@@ -54,11 +54,11 @@
   .is-box::after { content:''; position:absolute; top:0;left:0;right:0;height:2px; background:var(--is-c,var(--cyan)); opacity:0; transition:opacity .2s; }
   .is-box:hover { background:rgba(255,255,255,.02); }.is-box:hover::after { opacity:1; }
   .is-val   { font-family:var(--font-mono); font-size:20px; font-weight:700; line-height:1; }
-  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text3); }
+  .is-label { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--text2); }
 
   /* ── FILTER TABS ── */
   .filter-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
-  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text3); cursor:pointer; transition:all .15s; user-select:none; }
+  .ftab { display:inline-flex; align-items:center; gap:6px; padding:5px 13px; border-radius:var(--r-full); font-family:var(--font-mono); font-size:10px; font-weight:600; border:1px solid var(--border); background:var(--card); color:var(--text2); cursor:pointer; transition:all .15s; user-select:none; }
   .ftab:hover { border-color:var(--border2); color:var(--text2); }
   .ftab.active { background:rgba(34,211,238,.09); border-color:rgba(34,211,238,.3); color:var(--cyan); }
   .ftab-dot { width:5px; height:5px; border-radius:50%; background:currentColor; }
@@ -75,7 +75,7 @@
   .qna-cb:hover { border-color:var(--green); }
   .qna-cb.checked { background:var(--green); border-color:var(--green); }
   .qna-cb.checked::after { content:'✓'; font-size:10px; font-weight:700; color:#000; }
-  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text3); min-width:24px; flex-shrink:0; }
+  .qna-num { font-family:var(--font-mono); font-size:10px; font-weight:700; color:var(--text2); min-width:24px; flex-shrink:0; }
   .qna-text { font-weight:500; color:var(--text); flex:1; line-height:1.5; font-size:14px; }
   .qna-tag { font-family:var(--font-mono); font-size:8.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-full); flex-shrink:0; }
   .tag-dsa    { background:rgba(34,211,238,.08);  color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
@@ -86,8 +86,8 @@
   .diff-badge { font-family:var(--font-mono); font-size:8px; font-weight:700; padding:2px 7px; border-radius:var(--r-full); flex-shrink:0; }
   .diff-e { background:rgba(52,211,153,.08); color:var(--green); border:1px solid rgba(52,211,153,.2); }
   .diff-m { background:rgba(251,191,36,.08); color:var(--amber); border:1px solid rgba(251,191,36,.2); }
-  .diff-h { background:rgba(248,113,113,.08); color:#f87171;     border:1px solid rgba(248,113,113,.2); }
-  .qna-chevron { font-size:12px; color:var(--text3); flex-shrink:0; transition:transform .2s; }
+  .diff-h { background:rgba(248,113,113,.08); color:var(--red);     border:1px solid rgba(248,113,113,.2); }
+  .qna-chevron { font-size:12px; color:var(--text2); flex-shrink:0; transition:transform .2s; }
   .qna-item.open .qna-chevron { transform:rotate(180deg); }
   .qna-a { padding:0 20px 20px 56px; display:none; color:var(--text2); line-height:1.75; font-size:13.5px; }
   .qna-item.open .qna-a { display:block; }
@@ -99,9 +99,9 @@
   /* ── CODE BLOCKS ── */
   .ans-code { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; margin:12px 0; }
   .ans-code-hdr { display:flex; align-items:center; padding:7px 14px; border-bottom:1px solid var(--border); background:rgba(0,0,0,.2); }
-  .ans-code-lang { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+  .ans-code-lang { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text2); }
   .ans-code pre { margin:0; padding:14px 16px; font-family:var(--font-mono); font-size:11.5px; line-height:1.72; color:var(--text2); overflow-x:auto; }
-  .kw { color:#c792ea; } .fn { color:#82aaff; } .cm { color:#546e7a; font-style:italic; } .nm { color:#f78c6c; }
+  .kw { color:#c792ea; } .fn { color:#82aaff; } .cm { color:#7e93b5; font-style:italic; } .nm { color:#f78c6c; }
 
   /* ── CALLOUTS ── */
   .callout { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:var(--r-lg); margin:10px 0; font-size:13px; line-height:1.65; }
@@ -111,23 +111,23 @@
   .callout-blue   { background:rgba(77,142,247,.07);  border:1px solid rgba(77,142,247,.18); color:var(--text2); }
 
   /* ── SECTION LABEL ── */
-  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text3); text-transform:uppercase; margin:36px 0 14px; }
+  .section-label { display:flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:10px; letter-spacing:3px; color:var(--text2); text-transform:uppercase; margin:36px 0 14px; }
   .section-label::before { content:''; width:24px; height:1px; background:linear-gradient(90deg,var(--cyan),transparent); }
 
   /* ── PROGRESS BANNER ── */
   .progress-banner { background:linear-gradient(135deg,rgba(52,211,153,.05),rgba(34,211,238,.04)); border:1px solid rgba(52,211,153,.15); border-radius:var(--r-xl); padding:18px 22px; display:flex; align-items:center; gap:16px; margin-bottom:24px; }
   .pb-icon { font-size:22px; flex-shrink:0; }
-  .pb-text { flex:1; font-size:12.5px; color:var(--text3); line-height:1.6; }
+  .pb-text { flex:1; font-size:12.5px; color:var(--text2); line-height:1.6; }
   .pb-text strong { color:var(--text); }
   .pb-count { font-family:var(--font-mono); font-size:28px; font-weight:700; color:var(--green); flex-shrink:0; text-align:center; }
-  .pb-lbl   { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+  .pb-lbl   { font-family:var(--font-mono); font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text2); }
 
   /* ── NO RESULTS ── */
-  .no-results { display:none; text-align:center; padding:40px; color:var(--text3); font-family:var(--font-mono); font-size:13px; }
+  .no-results { display:none; text-align:center; padding:40px; color:var(--text2); font-family:var(--font-mono); font-size:13px; }
 
   /* ── ROADMAP ── */
   .roadmap-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r-xl); padding:24px; margin-bottom:32px; overflow-x:auto; }
-  .roadmap-wrap pre { margin:0; font-family:var(--font-mono); font-size:12px; line-height:1.8; color:var(--text2); }
+  .roadmap-wrap pre { margin:0; font-family:var(--font-mono); font-size:12px; line-height:1.8; color:#8da0bb; }
 
   /* ── ANIM ── */
   .anim-in { opacity:0; transform:translateY(12px); transition:opacity .4s ease,transform .4s ease; }
@@ -151,19 +151,35 @@
 
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link current" href="index.html">Interview Q&A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link current" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
 
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -184,14 +200,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -206,6 +233,14 @@
     <a class="sb-link" href="oop-interview.html"><span class="sb-num"><i class="ti ti-wall"></i></span>OOP</a>
     <a class="sb-link" href="aiml-interview.html"><span class="sb-num"><i class="ti ti-robot"></i></span>AI/ML</a>
     <a class="sb-link" href="sql-interview.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>SQL</a>
+    <a class="sb-link" href="cpp-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>C++ Interview Questions</a>
+    <a class="sb-link" href="devops-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>DevOps Interview Questions</a>
+    <a class="sb-link" href="java-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>Java Interview Questions</a>
+    <a class="sb-link" href="js-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>JavaScript Interview Questions</a>
+    <a class="sb-link" href="networking-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>Networking Interview Questions</a>
+    <a class="sb-link" href="os-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>OS Interview Questions</a>
+    <a class="sb-link" href="security-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>Security Interview Questions</a>
+    <a class="sb-link" href="system-design-interview.html"><span class="sb-num"><i class="ti ti-file-text"></i></span>System Design Interview Questions</a>
   </aside>
 
   <!-- MAIN -->
@@ -223,7 +258,7 @@
         <span class="iph-badge" style="color:var(--green);border-color:rgba(52,211,153,.25);background:rgba(52,211,153,.07);">Strings</span>
         <span class="iph-badge" style="color:var(--purple);border-color:rgba(167,139,250,.25);background:rgba(167,139,250,.07);">Trees</span>
         <span class="iph-badge" style="color:var(--amber);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.07);">Graphs</span>
-        <span class="iph-badge" style="color:#f97316;border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.07);">DP</span>
+        <span class="iph-badge" style="color:var(--orange);border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.07);">DP</span>
       </div>
     </div>
 
@@ -235,7 +270,7 @@
       <div class="is-box" style="--is-c:var(--green)"><span class="is-val" style="color:var(--green)">6</span><span class="is-label">Strings</span></div>
       <div class="is-box" style="--is-c:var(--purple)"><span class="is-val" style="color:var(--purple)">8</span><span class="is-label">Trees</span></div>
       <div class="is-box" style="--is-c:var(--amber)"><span class="is-val" style="color:var(--amber)">7</span><span class="is-label">Graphs</span></div>
-      <div class="is-box" style="--is-c:#f97316"><span class="is-val" style="color:#f97316">6</span><span class="is-label">DP</span></div>
+      <div class="is-box" style="--is-c:#f97316"><span class="is-val" style="color:var(--orange)">6</span><span class="is-label">DP</span></div>
     </div>
 
     <!-- PROGRESS BANNER -->
@@ -246,12 +281,12 @@
         <div class="pb-count" id="doneCount">0</div>
         <div class="pb-lbl">/ 47 Done</div>
       </div>
-      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text3);cursor:pointer;flex-shrink:0;transition:all .2s;" onmouseover="this.style.borderColor='var(--red,#f87171)'" onmouseout="this.style.borderColor='var(--border)'">↺ Reset</button>
+      <button onclick="resetProgress()" style="font-family:var(--font-mono);font-size:10px;padding:6px 14px;border-radius:var(--r-md);background:var(--card);border:1px solid var(--border);color:var(--text2);cursor:pointer;flex-shrink:0;transition:all .2s;" onmouseover="this.style.borderColor='var(--red,#f87171)'" onmouseout="this.style.borderColor='var(--border)'">↺ Reset</button>
     </div>
 
     <!-- FILTER TABS -->
     <div class="filter-row anim-in">
-      <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.6">47</span></button>
+      <button class="ftab active" onclick="filterQna('all',this)">All <span style="font-size:9px;opacity:.85">47</span></button>
       <div class="filter-sep"></div>
       <button class="ftab" onclick="filterQna('arrays',this)"><span class="ftab-dot" style="color:var(--cyan)"></span>Arrays</button>
       <button class="ftab" onclick="filterQna('linked-lists',this)"><span class="ftab-dot" style="color:var(--blue)"></span>Linked Lists</button>
@@ -279,7 +314,7 @@
 <ul>
 <li><strong>Two Pointers:</strong> Sorted arrays, pair finding, palindrome checking</li>
 <li><strong>Sliding Window:</strong> Subarray/substring problems, consecutive elements</li>
-<li><strong>Fast & Slow Pointers:</strong> Cycle detection, middle of linked list</li>
+<li><strong>Fast &amp; Slow Pointers:</strong> Cycle detection, middle of linked list</li>
 <li><strong>Merge Intervals:</strong> Overlapping intervals, scheduling problems</li>
 <li><strong>Cyclic Sort:</strong> Arrays with numbers in given range, find duplicates</li>
 <li><strong>In-place Reversal:</strong> Linked list reversal, rotate operations</li>
@@ -288,7 +323,7 @@
 <li><strong>Topological Sort:</strong> Dependency resolution, task scheduling</li>
 <li><strong>Backtracking:</strong> Combinations, permutations, subsets, N-Queens</li>
 <li><strong>Dynamic Programming:</strong> Optimization problems, counting problems</li>
-<li><strong>Divide & Conquer:</strong> Merge sort, quick sort, binary search variations</li>
+<li><strong>Divide &amp; Conquer:</strong> Merge sort, quick sort, binary search variations</li>
 <li><strong>Bit Manipulation:</strong> XOR tricks, set operations, power of 2 checks</li>
 <li><strong>Monotonic Stack:</strong> Next greater element, largest rectangle in histogram</li>
 <li><strong>Heap/Priority Queue:</strong> Top-K elements, median finding, scheduling</li>
@@ -1438,8 +1473,8 @@ factorial(5)
 <div class="section-label"><i class="ti ti-rocket"></i> DSA Master Roadmap</div>
 <div class="callout callout-cyan"><strong>Complete Learning Path:</strong> Follow this structured roadmap to master DSA systematically.</div>
 <div class="roadmap-wrap">
-<pre style="font-family:var(--font-mono); font-size: 13px; line-height: 1.8; color: var(--text2);">
-<strong style="color: var(--cyan);">DSA MASTER TREE</strong>
+<pre style="font-family:var(--font-mono); font-size: 13px; line-height: 1.8; color: #8da0bb;">
+<strong style="color: #22d3ee;">DSA MASTER TREE</strong>
 │
 ├── 1. Foundations
 │   ├── What is Data Structure
@@ -1544,7 +1579,7 @@ factorial(5)
 │   │   └── Prim
 │   └── Disjoint Set (Union-Find)
 │
-├── 11. Recursion & Backtracking
+├── 11. Recursion &amp; Backtracking
 │   ├── Recursion Basics
 │   ├── Subsets
 │   ├── Permutations
@@ -1613,11 +1648,11 @@ factorial(5)
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 const TRACK = 'dsa';
 const TOTAL = 47;

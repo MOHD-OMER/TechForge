@@ -5,14 +5,14 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
   <meta name="theme-color" content="#030508"/>
-  <meta name="description" content="About TechForge — Built for developers, by developers. Free, open, interactive CS learning platform with no ads, no paywalls, no tracking."/>
+  <meta name="description" content="About TechForge — Built for developers, by developers. Interactive CS learning platform covering programming, DSA, system design, data & cloud, OS & networks, AI/ML, and interview prep."/>
   <meta property="og:title" content="About TechForge — Built for Developers, by Developers"/>
-  <meta property="og:description" content="Free, open, and interactive CS learning platform — no ads, no paywalls, no tracking."/>
+  <meta property="og:description" content="Interactive CS learning platform — complete computer science from fundamentals to interview-ready."/>
   <meta property="og:type" content="website"/>
   <title>About TechForge — Built for Developers, by Developers</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/about.html"/>
   <meta property="og:title" content="About TechForge — Built for Developers, by Developers"/>
-  <meta property="og:description" content="About TechForge — Built for developers, by developers. Free, open, interactive CS learning platform with no ads, no paywalls, no tracking."/>
+  <meta property="og:description" content="About TechForge — Built for developers, by developers. Interactive CS learning platform covering programming, DSA, system design, data & cloud, OS & networks, AI/ML, and interview prep."/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -22,9 +22,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="assets/css/platform.css?v=5" rel="stylesheet"/>
 <style>
 
 /* ════════════════════════════════
@@ -36,24 +36,16 @@
   position: relative; padding: 44px 0 40px; margin-bottom: 48px;
   border-bottom: 1px solid var(--border); overflow: hidden;
 }
-.about-hero::before {
-  content: ''; position: absolute; top: 0; left: -40px; right: -40px; bottom: 0;
-  background:
-    radial-gradient(ellipse 55% 80% at 0% 50%, rgba(79,142,247,.06) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 60% at 100% 50%, rgba(0,212,255,.04) 0%, transparent 55%);
-  pointer-events: none;
-}
+.about-hero::before { content: none; }
 .ah-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--cyan);
-  background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.15);
-  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 20px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 20px;
 }
 .ah-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: ahdot 2s ease infinite; }
 @keyframes ahdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
 .ah-title {
-  font-family: var(--font-display); font-size: clamp(30px, 5.5vw, 48px);
+  font-family: var(--font-display); font-size: clamp(28px, 5.5vw, 46px);
   font-weight: 700; letter-spacing: -0.75px; line-height: 1.05;
   color: var(--text); margin-bottom: 16px;
 }
@@ -72,6 +64,7 @@
 .badge-amber  { background:rgba(251,191,36,.09); color:var(--amber);  border:1px solid rgba(251,191,36,.22); }
 .badge-cyan   { background:rgba(34,211,238,.07); color:var(--cyan);   border:1px solid rgba(34,211,238,.2); }
 .badge-purple { background:rgba(167,139,250,.09);color:var(--purple); border:1px solid rgba(167,139,250,.2); }
+.badge-orange { background:rgba(249,115,22,.09); color:var(--orange); border:1px solid rgba(249,115,22,.22); }
 
 /* ── STAT ROW ── */
 .stats-row {
@@ -252,10 +245,11 @@
   padding:12px 26px; border-radius:var(--r-md);
   font-family:var(--font-body); font-size:13.5px; font-weight:700;
   text-decoration:none;
-  background:linear-gradient(135deg,var(--blue),var(--cyan)); color:#000;
-  box-shadow:0 4px 20px rgba(79,142,247,.35); transition:all .2s;
+  background:var(--blue); color:#000;
+  transition:background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.btn-cta-primary:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(0,212,255,.45); }
+.btn-cta-primary:hover { background:color-mix(in srgb, var(--blue) 82%, #fff); transform:translateY(-1px); box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.btn-cta-primary:active { transform:translateY(0); box-shadow:none; }
 .btn-cta-secondary {
   display:inline-flex; align-items:center; gap:8px;
   padding:12px 26px; border-radius:var(--r-md);
@@ -318,18 +312,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="index.html">Home</a>
+    <a class="tb-link" href="roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="roles/index.html">Roles</a>
+    <a class="tb-link" href="programming/index.html">Programming</a>
     <a class="tb-link" href="dsa/index.html">DSA</a>
     <a class="tb-link" href="system-design/index.html">System Design</a>
-    <a class="tb-link" href="python/index.html">Python</a>
-    <a class="tb-link" href="databases/index.html">Databases</a>
-    <a class="tb-link" href="aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="devops/index.html">DevOps</a>
+    <a class="tb-link" href="interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="backend/index.html">Backend</a>
+        <a class="tb-more-item" href="databases/index.html">Databases</a>
+        <a class="tb-more-item" href="devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="data/index.html">Data</a>
+        <a class="tb-more-item" href="aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link current" href="about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -346,14 +356,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
-        <a class="tf-mhn-item" href="aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -361,7 +382,7 @@
     <div class="sidebar-label">Navigate</div>
     <a class="sb-link" href="index.html"><span class="sb-num">⬡</span>Home</a>
     <a class="sb-link" href="dsa/index.html"><span class="sb-num"><i class="ti ti-chart-bar"></i></span>DSA</a>
-    <a class="sb-link" href="python/index.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python</a>
+    <a class="sb-link" href="programming/python/index.html"><span class="sb-num"><i class="ti ti-brand-python"></i></span>Python</a>
     <a class="sb-link" href="system-design/index.html"><span class="sb-num"><i class="ti ti-building"></i></span>System Design</a>
     <a class="sb-link" href="databases/index.html"><span class="sb-num"><i class="ti ti-database"></i></span>Databases</a>
     <a class="sb-link" href="devops/index.html"><span class="sb-num"><i class="ti ti-server-2"></i></span>DevOps</a>
@@ -387,34 +408,34 @@
       <div class="ah-eyebrow"><span class="ah-dot"></span>About TechForge</div>
       <h1 class="ah-title">Built for Developers,<br/><span>by Developers.</span></h1>
       <p class="ah-sub">
-        TechForge is a free, open, interactive CS learning platform — no ads, no paywalls, no tracking, no account.
-        Six complete learning tracks, live canvas visualizations, and 200+ company-tagged interview problems.
+        TechForge is an interactive CS learning platform — complete computer science, from first principles to interview-ready.
+        Seven complete learning tracks, live canvas visualizations, and 290+ company-tagged interview problems.
         Built to be the resource we wished existed.
       </p>
       <div class="ah-badges">
-        <span class="ah-badge badge-green">Free Forever</span>
+        <span class="ah-badge badge-green">Complete CS</span>
         <span class="ah-badge badge-blue">Open Source</span>
         <span class="ah-badge badge-amber">Interactive Viz</span>
-        <span class="ah-badge badge-cyan">No Ads</span>
-        <span class="ah-badge badge-purple">No Sign-up</span>
-        <span class="ah-badge" style="background:rgba(249,115,22,.09);color:#f97316;border:1px solid rgba(249,115,22,.22);">6 Tracks</span>
+        <span class="ah-badge badge-cyan">Runnable Code</span>
+        <span class="ah-badge badge-purple">Interview-Ready</span>
+        <span class="ah-badge badge-orange">6 Tracks</span>
       </div>
     </div>
 
     <!-- ════ STATS ════ -->
     <div id="stats" class="stats-row anim-in" style="grid-template-columns:repeat(5,1fr)">
       <div class="stat-box" style="--sb-c:var(--cyan)">
-        <span class="stat-num" style="color:var(--cyan)">6</span>
+        <span class="stat-num" style="color:var(--cyan)">8</span>
         <span class="stat-label">Tracks</span>
-        <span class="stat-desc">DSA · Python · Backend<br/>SQL · AI/ML · Interview</span>
+        <span class="stat-desc">Programming · DSA · Sys Design<br/>Data&amp;Cloud · OS&amp;Net · AI/ML …</span>
       </div>
       <div class="stat-box" style="--sb-c:var(--blue)">
-        <span class="stat-num" style="color:var(--blue)">40+</span>
-        <span class="stat-label">Topics</span>
+        <span class="stat-num" style="color:var(--blue)">150+</span>
+        <span class="stat-label">Pages</span>
         <span class="stat-desc">Structured from<br/>basics to advanced</span>
       </div>
       <div class="stat-box" style="--sb-c:var(--green)">
-        <span class="stat-num" style="color:var(--green)">200+</span>
+        <span class="stat-num" style="color:var(--green)">290+</span>
         <span class="stat-label">Problems</span>
         <span class="stat-desc">Company-tagged,<br/>difficulty-rated</span>
       </div>
@@ -424,9 +445,9 @@
         <span class="stat-desc">Live Canvas 2D<br/>visualizations</span>
       </div>
       <div class="stat-box" style="--sb-c:var(--purple)">
-        <span class="stat-num" style="color:var(--purple)">$0</span>
-        <span class="stat-label">Cost</span>
-        <span class="stat-desc">Free forever.<br/>No exceptions.</span>
+        <span class="stat-num" style="color:var(--purple)">8</span>
+        <span class="stat-label">Tracks</span>
+        <span class="stat-desc">Fundamentals<br/>to interview.</span>
       </div>
     </div>
 
@@ -453,10 +474,10 @@
           <div class="story-title">What we built instead</div>
           <div class="story-body">
             A single destination that takes a developer from <strong>zero to interview-ready</strong>
-            across the full CS stack — DSA, Python, Backend frameworks, SQL, and AI/ML.<br/><br/>
+            across the full CS stack — programming, DSA, system design, data &amp; cloud, OS &amp; networks, and AI/ML.<br/><br/>
             Not another course. Not another subscription. A permanent, free reference you can
             bookmark, return to, and actually <strong>learn from</strong> — with live canvas visualizations
-            and 200+ problems you can track in your browser.
+            and 290+ problems you can track in your browser.
           </div>
         </div>
       </div>
@@ -497,8 +518,8 @@
           <div class="tl-dot"><i class="ti ti-target"></i></div>
           <div class="tl-body">
             <div class="tl-year">v3 — Interview Prep</div>
-            <div class="tl-title">200+ curated questions with company tags</div>
-            <div class="tl-desc">Added the Interview Q&amp;A section with 200+ problems tagged for FAANG (Google, Amazon, Meta) and Indian startups (Swiggy, Razorpay, Zepto). Local progress tracking via localStorage.</div>
+            <div class="tl-title">290+ curated questions with company tags</div>
+            <div class="tl-desc">Added the Interview Q&amp;A section with 290+ problems tagged for FAANG (Google, Amazon, Meta) and Indian startups (Swiggy, Razorpay, Zepto). Local progress tracking via localStorage.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -557,15 +578,15 @@
         </div>
         <div class="cov-card" style="--cov-c:var(--green)">
           <span class="cov-icon"><i class="ti ti-brand-python"></i></span>
-          <div><div class="cov-label">Python</div><div class="cov-count">Basics → OOP, decorators, DSA patterns</div></div>
+          <div><div class="cov-label">Programming</div><div class="cov-count">Python live · JS, Java, C++ coming</div></div>
         </div>
         <div class="cov-card" style="--cov-c:#10b981">
           <span class="cov-icon"><i class="ti ti-tool"></i></span>
-          <div><div class="cov-label">Backend</div><div class="cov-count">Django, Flask, FastAPI — full guides</div></div>
+          <div><div class="cov-label">System Design</div><div class="cov-count">Scaling, caching, queues, microservices</div></div>
         </div>
         <div class="cov-card" style="--cov-c:var(--purple)">
           <span class="cov-icon"><i class="ti ti-database"></i></span>
-          <div><div class="cov-label">SQL &amp; NoSQL</div><div class="cov-count">Queries, joins, indexes, MongoDB</div></div>
+          <div><div class="cov-label">Data &amp; Cloud</div><div class="cov-count">14 DB engines + DevOps toolchain</div></div>
         </div>
         <div class="cov-card" style="--cov-c:var(--cyan)">
           <span class="cov-icon"><i class="ti ti-robot"></i></span>
@@ -573,11 +594,11 @@
         </div>
         <div class="cov-card" style="--cov-c:var(--amber)">
           <span class="cov-icon"><i class="ti ti-target"></i></span>
-          <div><div class="cov-label">Interview Q&amp;A</div><div class="cov-count">200+ questions, 5 tracks, company tags</div></div>
+          <div><div class="cov-label">Interview Q&amp;A</div><div class="cov-count">290+ questions, 10 tracks, company tags</div></div>
         </div>
         <div class="cov-card" style="--cov-c:#f97316">
           <span class="cov-icon"><i class="ti ti-leaf"></i></span>
-          <div><div class="cov-label">Git Reference</div><div class="cov-count">Commands, workflows, branching, rebase</div></div>
+          <div><div class="cov-label">OS &amp; Networks</div><div class="cov-count">Processes, memory, TCP/IP, DNS</div></div>
         </div>
         <div class="cov-card" style="--cov-c:var(--orange,#f97316)">
           <span class="cov-icon"><i class="ti ti-ruler-2"></i></span>
@@ -638,22 +659,22 @@
         <div class="principle-item">
           <div class="prin-check pch-green">✓</div>
           <div>
-            <div class="prin-title">Free forever — no exceptions</div>
-            <div class="prin-desc">TechForge will never introduce a paywall, premium tier, or paid certificate. Every topic, every animation, every problem — free. This is a commitment, not a marketing line.</div>
+            <div class="prin-title">Complete computer science, one platform</div>
+            <div class="prin-desc">Programming languages, DSA, system design, data &amp; cloud (databases + DevOps), OS &amp; networks, AI/ML, and interview prep — eight tracks that build on each other, from first principles to production patterns.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="prin-check pch-blue">◎</div>
           <div>
-            <div class="prin-title">No ads, no sponsors, no affiliate links</div>
-            <div class="prin-desc">Your learning experience is not a product. There are zero ads, zero tracking pixels, and zero sponsored content on this platform — and there never will be.</div>
+            <div class="prin-title">Learn by doing, not just reading</div>
+            <div class="prin-desc">Canvas visualizers you can step through, Python that runs in the browser, three-language code toggles, and a quiz on every page. Concepts stick when your hands are on them.</div>
           </div>
         </div>
         <div class="principle-item">
           <div class="prin-check pch-amber"><i class="ti ti-lock"></i></div>
           <div>
-            <div class="prin-title">No account, no data collection</div>
-            <div class="prin-desc">Progress tracking happens entirely in your browser's localStorage. We don't know who you are and we don't want to — your data stays yours, on your device, always.</div>
+            <div class="prin-title">Interview-ready by design</div>
+            <div class="prin-desc">Every topic maps to real interview questions — 290+ curated problems tagged for FAANG and startups, with trade-off analysis and common-mistake sections built into every page.</div>
           </div>
         </div>
         <div class="principle-item">
@@ -678,7 +699,7 @@
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--green);margin-bottom:10px;">SHIPPED</div>
           <div style="display:flex;flex-direction:column;gap:7px;">
             <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Live Canvas visualizations</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>200+ interview questions</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>290+ interview questions</div>
             <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>localStorage progress tracking</div>
             <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>Django, Flask, FastAPI guides</div>
             <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text2);"><span style="color:var(--green);font-size:11px;">✓</span>AI/ML — 8 topic modules</div>
@@ -749,15 +770,15 @@
     <div class="about-cta anim-in">
       <div class="cta-eyebrow">Ready to dive in?</div>
       <div class="cta-title">Stop reading about it —<br/><span>start learning.</span></div>
-      <p class="cta-sub">Pick any topic and go. No sign-up, no setup, no paywall, no friction. Just open a page and start building real understanding — the kind that gets you hired.</p>
+      <p class="cta-sub">Pick any topic and go. Open a page and start building real understanding — the kind that gets you hired.</p>
       <div class="cta-buttons">
         <a class="btn-cta-primary" href="dsa/index.html"><i class="ti ti-rocket"></i> Start with DSA</a>
         <a class="btn-cta-secondary" href="interview/index.html"><i class="ti ti-target"></i> Interview Prep</a>
       </div>
       <div style="margin-top:22px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
-        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No account</span>
-        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No ads</span>
-        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>No paywall</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>8 tracks</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>Interactive</span>
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>Interview-ready</span>
         <span style="font-family:var(--font-mono);font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px;"><span style="color:var(--green)">✓</span>Progress saved locally</span>
       </div>
     </div>
@@ -776,11 +797,11 @@
   
   
   
-<script src="assets/js/topics-manifest.js?v=2"></script>
-  <script src="assets/js/site-index.js?v=2"></script>
-<script src="assets/js/search-modal.js?v=1" defer></script>
-  <script src="assets/js/utils.js?v=5"></script>
-  <script src="assets/js/platform.js?v=4"></script>
+<script src="assets/js/topics-manifest.js?v=19"></script>
+  <script src="assets/js/site-index.js?v=26"></script>
+<script src="assets/js/search-modal.js?v=2" defer></script>
+  <script src="assets/js/utils.js?v=17"></script>
+  <script src="assets/js/platform.js?v=7"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var progressFill = document.getElementById('progressFill');

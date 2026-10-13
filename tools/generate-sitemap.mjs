@@ -8,13 +8,16 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
-const BASE = 'https://tech-forge-dev.vercel.app';
+// Must match the canonical host in every page and in robots.txt.
+const BASE = 'https://techforge-dev.vercel.app';
 
 function walk(dir, list = []) {
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
     if (fs.statSync(full).isDirectory()) {
-      if (name === 'node_modules' || name === '.git' || name === 'tools') continue;
+      // .claude holds agent worktrees: full copies of the site that would
+      // otherwise be submitted to search engines as duplicate URLs.
+      if (name === 'node_modules' || name === '.git' || name === 'tools' || name === '.claude') continue;
       walk(full, list);
     } else if (name.endsWith('.html')) {
       list.push(path.relative(root, full).replace(/\\/g, '/'));

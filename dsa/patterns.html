@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Pattern Checklist — DSA | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/dsa/patterns.html"/>
+  <meta property="og:title" content="Pattern Checklist — DSA | TechForge"/>
+  <meta property="og:description" content="The patterns behind most interview problems — the trigger that identifies each one, the shape of the solution, and its cost."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg"/>
+<link rel="manifest" href="../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
+  .bit-row { display: flex; gap: 4px; }
+  .bit-cell {
+    width: 34px; height: 38px; background: var(--surface); border: 2px solid var(--border);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--text);
+    position: relative; transition: all 0.2s ease;
+  }
+  .bit-cell.b-one { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .bit-cell.b-result { border-color: var(--green); background: rgba(34, 197, 94, 0.1); }
+  .bit-pos { position: absolute; top: -14px; font-size: 9px; color: var(--text2); }
+  
+  /* Forge DSA hero (injected) */
+  :root {
+    --surface:     var(--card);
+    --bg2:         rgba(0,0,0,.25);
+    --display:     var(--font-display);
+    --mono:        var(--font-mono);
+    --radius-lg:   var(--r-lg);
+    --radius-xl:   var(--r-xl);
+    --radius-full: var(--r-full);
+    --red:         #f87171;
+  }
+  .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .dsa-hero::before{content:none;}
+  .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
+  .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
+  @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+  .dh2-title{font-family:var(--font-display);font-size:clamp(22px,3.5vw,34px);font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:10px;line-height:1.05;}
+  .dh2-title span{color:var(--accent,var(--blue));}
+  .dh2-sub{font-size:13.5px;color:var(--text2);line-height:1.75;max-width:600px;margin-bottom:14px;}
+  .dh2-sub strong{color:var(--text);}
+  .dsa-stats2{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:24px;}
+  .dss-box{background:var(--card);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;position:relative;transition:background .2s;}
+  .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
+  .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
+  .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
+  .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
+  .anim-in.visible{opacity:1;transform:none;}
+  @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="dsa/patterns" data-section="dsa">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+<header class="topbar">
+  <a class="tb-logo" href="../index.html">
+    <div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+    <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+  </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../about.html">About</a>
+  </nav>
+  <div class="topbar-actions">
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search sections…" type="text" autocomplete="off"/>
+    </div>
+    <nav id="sidebarNav">
+      <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="logic-building.html"><span class="sb-num">00</span>Logic Building</a>
+    <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
+      <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
+      <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
+      <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
+      <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
+      <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
+      <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
+      <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
+      <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
+      <a class="sb-link" href="heap.html"><span class="sb-num">10</span>Heap</a>
+      <a class="sb-link" href="trie.html"><span class="sb-num">11</span>Trie</a>
+      <a class="sb-link" href="hashtable.html"><span class="sb-num">12</span>Hash Table</a>
+      <a class="sb-link" href="graph.html"><span class="sb-num">13</span>Graphs</a>
+      <div class="sidebar-label" style="margin-top:20px;">Graph Algorithms</div>
+      <a class="sb-link" href="bfs.html"><span class="sb-num">14</span>BFS Traversal</a>
+      <a class="sb-link" href="dfs.html"><span class="sb-num">15</span>DFS Traversal</a>
+      <a class="sb-link" href="dijkstra.html"><span class="sb-num">16</span>Dijkstra's Algorithm</a>
+      <div class="sidebar-label" style="margin-top:20px;">Sorting Algorithms</div>
+      <a class="sb-link" href="bubble.html"><span class="sb-num">17</span>Bubble Sort</a>
+      <a class="sb-link" href="selection.html"><span class="sb-num">18</span>Selection Sort</a>
+      <a class="sb-link" href="insertion.html"><span class="sb-num">19</span>Insertion Sort</a>
+      <a class="sb-link" href="merge.html"><span class="sb-num">20</span>Merge Sort</a>
+      <a class="sb-link" href="quick.html"><span class="sb-num">21</span>Quick Sort</a>
+      <a class="sb-link" href="heapsort.html"><span class="sb-num">22</span>Heap Sort</a>
+      <div class="sidebar-label" style="margin-top:20px;">Searching Algorithms</div>
+      <a class="sb-link" href="linearsearch.html"><span class="sb-num">23</span>Linear Search</a>
+      <a class="sb-link" href="binarysearch.html"><span class="sb-num">24</span>Binary Search</a>
+      <div class="sidebar-label" style="margin-top:20px;">Problem-Solving Techniques</div>
+      <a class="sb-link" href="recursion.html"><span class="sb-num">25</span>Recursion</a>
+      <a class="sb-link" href="dp.html"><span class="sb-num">26</span>Dynamic Programming</a>
+      <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
+      <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
+      <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+        <div class="sidebar-label" style="margin-top:20px;">Practice</div>
+        <a class="sb-link active" href="patterns.html"><span class="sb-num">30</span>Pattern Checklist</a>
+
+    </nav>
+  </aside>
+    <main class="main" id="mainContent">
+        <div class="pg-crumb">DSA &middot; Practice</div>
+        <h1 class="pg-title">Pattern Checklist</h1>
+        <p class="pg-sub">The handful of patterns behind most interview problems — what triggers each one, the shape of the solution, and what it costs.</p>
+        <div class="pg-badges tf-learning-actions">
+          <span class="lesson-meta-tag" id="lessonReadTime">— min read</span>
+          <span class="badge b-accent">DSA</span>
+          <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+          <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+        </div>
+        <section class="lesson-section" id="theory">
+          <h2><span class="sec-icon"><i class="ti ti-checklist"></i></span> Recognise, Then Recall</h2>
+<div class="callout callout-blue"><span>Interview problems are not each unique. A few dozen patterns cover most of them, and the skill being tested is recognising which one applies — not inventing an algorithm on the spot.</span></div>
+<p class="lesson-prose">The productive way to practise is therefore not "solve 500 problems" but "recognise 20 patterns and solve enough of each to know their edges". After that, an unseen problem is usually a familiar pattern wearing different words.</p>
+<p class="lesson-prose">This page is a checklist to work down: the trigger that tells you a pattern applies, the shape of the solution, and its cost. Each links to the topic that teaches it properly.</p>
+        </section>
+        <section class="lesson-section" id="arrays">
+          <h2><span class="sec-icon"><i class="ti ti-arrows-left-right"></i></span> Array &amp; String Patterns</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Trigger in the problem</th><th>Pattern</th><th>Cost</th></tr></thead><tbody><tr><td>Sorted array, find a pair or a target</td><td><a href="twopointer.html">Two pointers</a> from both ends</td><td>O(n)</td></tr><tr><td>Contiguous subarray of size k, or "longest substring with…"</td><td><a href="sliding.html">Sliding window</a></td><td>O(n)</td></tr><tr><td>Repeated range sums</td><td>Prefix sums computed once</td><td>O(n) build, O(1) query</td></tr><tr><td>"Have I seen this before"</td><td><a href="hashtable.html">Hash map</a> of seen values</td><td>O(n)</td></tr><tr><td>Sorted input, find one value</td><td><a href="binarysearch.html">Binary search</a></td><td>O(log n)</td></tr><tr><td>Next greater or smaller element</td><td>Monotonic <a href="stack.html">stack</a></td><td>O(n)</td></tr><tr><td>In-place rearrangement</td><td>Read and write pointers</td><td>O(n), O(1) space</td></tr></tbody></table></div>
+        </section>
+        <section class="lesson-section" id="trees">
+          <h2><span class="sec-icon"><i class="ti ti-binary-tree"></i></span> Tree &amp; Graph Patterns</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Trigger in the problem</th><th>Pattern</th><th>Cost</th></tr></thead><tbody><tr><td>Shortest path in an unweighted graph</td><td><a href="bfs.html">BFS</a> with a queue</td><td>O(V+E)</td></tr><tr><td>Explore every path, detect a cycle</td><td><a href="dfs.html">DFS</a> with recursion or a stack</td><td>O(V+E)</td></tr><tr><td>Weighted shortest path, no negative edges</td><td><a href="dijkstra.html">Dijkstra</a> with a heap</td><td>O(E log V)</td></tr><tr><td>Ordering with prerequisites</td><td>Topological sort</td><td>O(V+E)</td></tr><tr><td>Sorted output from a BST</td><td><a href="bst.html">In-order traversal</a></td><td>O(n)</td></tr><tr><td>Level-by-level processing</td><td>BFS tracking the queue size per level</td><td>O(n)</td></tr><tr><td>Prefix matching over many strings</td><td><a href="trie.html">Trie</a></td><td>O(length)</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span>Grids are graphs. "Islands", "rotting oranges" and "shortest path in a maze" are BFS or DFS with neighbours defined as up, down, left and right — recognising that converts a whole category into one you already know.</span></div>
+        </section>
+        <section class="lesson-section" id="optimisation">
+          <h2><span class="sec-icon"><i class="ti ti-route-2"></i></span> Optimisation Patterns</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Trigger in the problem</th><th>Pattern</th><th>Cost</th></tr></thead><tbody><tr><td>"Maximum", "minimum" or "count the ways", with overlapping subproblems</td><td><a href="dp.html">Dynamic programming</a></td><td>Usually O(n·m)</td></tr><tr><td>A locally best choice is provably globally best</td><td>Greedy</td><td>Often O(n log n) with a sort</td></tr><tr><td>Generate every combination or permutation</td><td>Backtracking on a <a href="recursion.html">recursive</a> tree</td><td>Exponential — expected</td></tr><tr><td>Top or bottom k elements</td><td><a href="heap.html">Heap</a> of size k</td><td>O(n log k)</td></tr><tr><td>Repeated merging of groups</td><td>Union-find</td><td>Near O(1) amortised</td></tr></tbody></table></div>
+<p class="lesson-prose">The dynamic-programming tell is worth memorising: <strong>overlapping subproblems plus optimal substructure</strong>. If a brute-force recursion recomputes the same state, memoise it — that step alone converts most exponential solutions into polynomial ones.</p>
+<div class="callout callout-red"><span>Greedy is the pattern people reach for wrongly. It needs an argument that the local choice is globally optimal; without one it produces a solution that passes the examples and fails on a case you did not think of.</span></div>
+        </section>
+        <section class="lesson-section" id="method">
+          <h2><span class="sec-icon"><i class="ti ti-list-numbers"></i></span> A Method For The Interview</h2>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Step</th><th>What to say and do</th></tr></thead><tbody><tr><td>Clarify</td><td>Input size, ranges, duplicates, empty input, what to return on no answer</td></tr><tr><td>State a brute force</td><td>Give its complexity out loud — it shows you know what you are improving on</td></tr><tr><td>Name the pattern</td><td>"This is a sliding window because we want the longest contiguous…"</td></tr><tr><td>Walk one example</td><td>On paper, before writing code — most bugs are caught here</td></tr><tr><td>Write it</td><td>Talking through the invariant as you go</td></tr><tr><td>Test the edges</td><td>Empty, single element, all duplicates, maximum size</td></tr><tr><td>State the complexity</td><td>Time and space, and where the bound comes from</td></tr></tbody></table></div>
+<div class="callout callout-blue"><span>Say the brute force first, always. It gives you a working baseline, buys thinking time, and gives the interviewer something to nudge — going silent and hunting for the optimal answer is the most common way a strong candidate stalls.</span></div>
+<p class="lesson-prose">When stuck: sort the input and see what becomes possible, try a hash map for the lookup, ask whether the input structure hints at binary search, or solve a smaller version and look for the recurrence. See <a href="bigo.html">Big-O Notation</a> for stating the bound precisely.</p>
+        </section>
+        <section class="lesson-section" id="interview">
+          <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Interview Questions</h2>
+<div class="iq"><q>How do you decide between sliding window and two pointers?</q><p>Both walk an array once. Sliding window maintains a contiguous range with a running aggregate; two pointers converge from the ends, typically on sorted input, to find a pair or partition.</p></div>
+<div class="iq"><q>What tells you a problem is dynamic programming?</q><p>Overlapping subproblems and optimal substructure — a brute-force recursion that recomputes the same state. Memoising that recursion is usually the whole solution.</p></div>
+<div class="iq"><q>When is greedy safe?</q><p>Only when you can argue the locally optimal choice is globally optimal. Without that argument greedy passes the examples and fails on a case nobody tried.</p></div>
+<div class="iq"><q>How do you recognise a graph problem in disguise?</q><p>Grids, dependencies, word ladders and state machines are all graphs. If states connect to neighbouring states, BFS or DFS applies regardless of how the problem is phrased.</p></div>
+<div class="iq"><q>What is the first thing to do with a new problem?</q><p>Clarify the constraints, then state a brute force with its complexity. It gives a baseline, buys thinking time, and makes the optimisation conversation concrete.</p></div>
+<div class="iq"><q>How do you find the top k elements efficiently?</q><p>A heap of size k in O(n log k), rather than sorting everything in O(n log n) — and it works on a stream, where sorting does not.</p></div>
+        </section>
+        <section class="lesson-section" id="quiz">
+          <h2><span class="sec-icon"><i class="ti ti-target"></i></span> Quick Quiz</h2>
+<div class="quiz-wrap">
+<div class="quiz-q">1. "Longest substring without repeating characters" suggests…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Binary search</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Sliding window</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Union-find</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Topological sort</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">2. Shortest path in an unweighted graph uses…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">DFS</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">BFS</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Dijkstra</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">DP</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">3. Overlapping subproblems and optimal substructure indicate…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Greedy</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">Dynamic programming</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Backtracking</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">Two pointers</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">4. Top k elements from a stream is best done with…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A full sort</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">A heap of size k</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A hash map</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">A trie</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+<div class="quiz-wrap">
+<div class="quiz-q">5. The first thing to state in an interview is…</div>
+<div class="quiz-opts">
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The optimal solution</button>
+<button class="quiz-opt" onclick="quizAnswer(this,true)">The brute force and its complexity</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The space bound</button>
+<button class="quiz-opt" onclick="quizAnswer(this,false)">The language choice</button>
+</div>
+<div class="quiz-feedback"></div>
+</div>
+        </section>
+        <div class="page-nav">
+          <a class="nav-link" href="bits.html">&larr; Bit Manipulation</a>
+          <a class="nav-link next" href="index.html">Back to DSA &rarr;</a>
+        </div>
+  </main>
+</div>
+
+<button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+
+  
+  
+  
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){refreshProg("bits");});
+
+// Sidebar toggle functionality
+const sidebar = document.getElementById('sidebar');
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const query = this.value.toLowerCase().trim();
+      if (query) {
+        const links = document.querySelectorAll('.sb-link');
+        for (const link of links) {
+          const text = link.textContent.toLowerCase();
+          if (text.includes(query)) {
+            link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            link.style.background = 'rgba(77,158,247,0.2)';
+            setTimeout(() => link.style.background = '', 1500);
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+// Progress bar
+const progressFill = document.getElementById('progressFill');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  if (progressFill) progressFill.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress);
+updateProgress();
+
+function bitRender(a,b,res,op){
+  let bits = 8;
+  let cv = document.getElementById('bit-canvas');
+  if (!cv) return;
+  let dpr = window.devicePixelRatio || 1;
+  let cssW = cv.parentElement.clientWidth || 600;
+  let cssH = 190;
+  cv.width = cssW * dpr; cv.height = cssH * dpr;
+  let ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssW, cssH);
+
+  let cs = getComputedStyle(document.body);
+  let cBorder = cs.getPropertyValue('--border').trim() || '#1f2d42';
+  let cSurface = cs.getPropertyValue('--surface').trim() || '#141b26';
+  let cText = cs.getPropertyValue('--text').trim() || '#e2e8f4';
+  let cText2 = cs.getPropertyValue('--text2').trim() || '#8da0bb';
+  let cAccent = cs.getPropertyValue('--accent').trim() || '#4d9ef7';
+  let cGreen = cs.getPropertyValue('--green').trim() || '#34d399';
+  let mono = cs.getPropertyValue('--mono').trim() || 'monospace';
+
+  let boxW = 32, boxH = 34, gap = 4, labelW = 62;
+  let rowsY = [26, 96, 152]; // A, (op line between), B, divider, Result
+
+  function drawRow(label, val, y, cls) {
+    ctx.font = '600 11px ' + mono; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = cText2;
+    ctx.fillText(label, labelW - 8, y + boxH / 2);
+
+    for (let i = bits - 1, xi = 0; i >= 0; i--, xi++) {
+      let bit = (val >> i) & 1;
+      let x = labelW + xi * (boxW + gap);
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(x, y, boxW, boxH, 6) : ctx.rect(x, y, boxW, boxH);
+      ctx.fillStyle = cls === 'result' ? 'rgba(52,211,153,.1)' : bit ? 'rgba(77,158,247,.12)' : cSurface;
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = cls === 'result' ? cGreen : bit ? cAccent : cBorder;
+      ctx.stroke();
+
+      ctx.font = '500 8px ' + mono; ctx.textAlign = 'center';
+      ctx.fillStyle = cText2;
+      ctx.fillText(String(i), x + boxW / 2, y - 6);
+
+      ctx.font = '700 14px ' + mono;
+      ctx.fillStyle = cls === 'result' ? cGreen : bit ? cAccent : cText;
+      ctx.fillText(String(bit), x + boxW / 2, y + boxH / 2 + 1);
+    }
+
+    let endX = labelW + bits * (boxW + gap);
+    ctx.font = '500 11px ' + mono; ctx.textAlign = 'left'; ctx.fillStyle = cText2;
+    ctx.fillText('= ' + val, endX + 6, y + boxH / 2);
+  }
+
+  drawRow('A', a, rowsY[0], '');
+
+  ctx.font = '500 10px ' + mono; ctx.textAlign = 'left'; ctx.fillStyle = cText2;
+  ctx.fillText(op, labelW, rowsY[0] + boxH + 16);
+
+  drawRow('B', b, rowsY[1], '');
+
+  ctx.strokeStyle = cBorder; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(labelW, rowsY[1] + boxH + 8);
+  ctx.lineTo(labelW + bits * (boxW + gap), rowsY[1] + boxH + 8);
+  ctx.stroke();
+
+  drawRow('Result', res, rowsY[2], 'result');
+}
+function bitRun(op){
+  let a =parseInt(document.getElementById('bit-a').value)||12;
+  let b =parseInt(document.getElementById('bit-b').value)||10;
+  var res,label;
+  if(op==='AND'){res=a&b;label='A & B (AND)';}
+  else if(op==='OR'){res=a|b;label='A | B (OR)';}
+  else if(op==='XOR'){res=a^b;label='A ^ B (XOR)';}
+  else if(op==='NOT'){res=(~a)&0xFF;label='~A (NOT, 8-bit)';}
+  else if(op==='SHL'){res=(a<<1)&0xFF;label='A << 1 (left shift)';}
+  else if(op==='SHR'){res=a>>1;label='A >> 1 (right shift)';}
+  bitRender(a,b,res,label);
+  setStatus('bit-status','<b>'+a+'</b> '+op+' <b>'+b+'</b> = <span class="s-ok"><b>'+res+'</b></span>');
+}
+document.addEventListener('DOMContentLoaded',function(){
+  let a =parseInt(document.getElementById('bit-a').value)||12;
+  let b =parseInt(document.getElementById('bit-b').value)||10;
+  bitRender(a,b,a&b,'A & B (AND)');
+  window.addEventListener('resize', function() { bitRender(a,b,a&b,'A & B (AND)'); });
+});
+  
+const _dsao=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');_dsao.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.anim-in').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';_dsao.observe(el);});
+</script>
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+(function() {
+  const sectionLinks = document.querySelectorAll('.sidebar a.sb-link[href^="#"]');
+  if (!sectionLinks.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        sectionLinks.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const link = document.querySelector(`.sidebar a.sb-link[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('.lesson-section[id]').forEach(s => observer.observe(s));
+})();
+</script>
+</body>
+</html>

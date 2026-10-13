@@ -9,7 +9,7 @@
   <meta property="og:title" content="DSA Forge — Interactive Data Structures & Algorithms"/>
   <meta property="og:description" content="30+ topics with live animations, optimized code, and curated practice problems."/>
   <meta property="og:type" content="website"/>
-  <title>DSA Forge — Interactive Data Structures & Algorithms</title>
+  <title>DSA Forge — Interactive Data Structures &amp; Algorithms</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/dsa/index.html"/>
   <meta property="og:title" content="DSA Forge — Interactive Data Structures &amp; Algorithms — TechForge"/>
   <meta property="og:description" content="Master Data Structures &amp; Algorithms with live canvas animations, optimized Python code, Big-O analysis, and 100+ curated interview problems."/>
@@ -22,9 +22,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
 <style>
 
 /* ════════════════════════════════
@@ -37,25 +37,18 @@
   margin-bottom: 48px; border-bottom: 1px solid var(--border);
   overflow: hidden;
 }
-.dsa-hero::before {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 70% at 0% 50%, rgba(77,158,247,.07) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 50% at 100% 30%, rgba(34,211,238,.04) 0%, transparent 50%);
-  pointer-events: none;
-}
+.dsa-hero::before { content: none; }
 .dh-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--blue);
-  background: rgba(77,158,247,.08); border: 1px solid rgba(77,158,247,.18);
-  padding: 5px 14px; border-radius: var(--r-full); margin-bottom: 18px;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 20px;
 }
+.dh-eyebrow .dh-dot { }
 .dh-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 6px var(--blue); animation: dhdot 2s ease infinite; }
 @keyframes dhdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.65)} }
 
 .dh-title {
-  font-family: var(--font-display); font-size: clamp(22px, 5.5vw, 46px);
+  font-family: var(--font-display); font-size: clamp(28px, 5.5vw, 46px);
   font-weight: 700; letter-spacing: -0.5px; line-height: 1.05;
   color: var(--text); margin-bottom: 14px;
 }
@@ -69,10 +62,11 @@
   display: inline-flex; align-items: center; gap: 8px;
   padding: 11px 24px; border-radius: var(--r-md);
   font-size: 13px; font-weight: 700; text-decoration: none;
-  background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #000;
-  box-shadow: 0 4px 20px rgba(77,158,247,.35); transition: all .2s;
+  background: var(--blue); color: #000;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.btn-dh-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(34,211,238,.4); }
+.btn-dh-primary:hover { background: color-mix(in srgb, var(--blue) 82%, #fff); transform: translateY(-1px); box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+.btn-dh-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-dh-ghost {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 11px 24px; border-radius: var(--r-md);
@@ -99,40 +93,11 @@
 .ds-label { font-size: 9.5px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--text3); text-transform: uppercase; }
 .ds-sub   { font-size: 10.5px; color: var(--text3); margin-top: 3px; }
 
-/* ── LEARNING PATH ── */
-.path-strip {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: var(--r-xl); padding: 20px 22px;
-  margin-bottom: 40px; position: relative; overflow: hidden;
-}
-.path-strip::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple)); opacity: .5;
-}
-.path-label {
-  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 2px;
-  color: var(--text3); text-transform: uppercase; margin-bottom: 14px;
-  display: flex; align-items: center; gap: 8px;
-}
-.path-label::after { content:''; flex:1; height:1px; background:var(--border); }
-.path-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.path-step {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 13px; border-radius: var(--r-md);
-  background: var(--bg2); border: 1px solid var(--border);
-  text-decoration: none; transition: all .2s; flex-shrink: 0;
-}
-.path-step:hover { border-color: var(--blue); background: rgba(77,158,247,.06); }
-.ps-num  { font-family: var(--font-mono); font-size: 9px; color: var(--blue); font-weight: 700; }
-.ps-name { font-size: 11.5px; font-weight: 600; color: var(--text); }
-.ps-diff {
-  font-family: var(--font-mono); font-size: 8px; font-weight: 700;
-  padding: 2px 6px; border-radius: var(--r-full); margin-left: 2px;
-}
+/* Difficulty badges — shared by the topic cards further down, kept when the
+   linear path strip was removed. */
 .diff-starter { background:rgba(52,211,153,.1);   color:var(--green); border:1px solid rgba(52,211,153,.2); }
 .diff-mid     { background:rgba(251,191,36,.09);  color:var(--amber); border:1px solid rgba(251,191,36,.2); }
 .diff-adv     { background:rgba(248,113,113,.1);  color:var(--red);   border:1px solid rgba(248,113,113,.2); }
-.path-arrow   { font-size: 12px; color: var(--text3); flex-shrink: 0; }
 
 /* ── SECTION LABELS ── */
 .sec-label {
@@ -163,6 +128,17 @@
 .bo-cell:hover { background: rgba(77,158,247,.04); }
 .bo-notation { font-family: var(--font-mono); font-size: 12px; font-weight: 700; line-height: 1; }
 .bo-name     { font-size: 9.5px; color: var(--text3); font-family: var(--font-mono); }
+/* The Big-O legend's per-notation colors are hardcoded (dark-theme-tuned
+   brights) since they form a fixed green-to-red complexity gradient, not
+   the shared palette hues. In light theme, on a white card, several drop
+   below 4.5:1 (as low as 1.5:1) — darken each to a same-hue variant. */
+html.light .bo-notation[style*="color:#34d399"] { color: #12563d !important; }
+html.light .bo-notation[style*="color:#4ade80"] { color: #126430 !important; }
+html.light .bo-notation[style*="color:#a3e635"] { color: #43640c !important; }
+html.light .bo-notation[style*="color:#facc15"] { color: #6a5502 !important; }
+html.light .bo-notation[style*="color:#fb923c"] { color: #793802 !important; }
+html.light .bo-notation[style*="color:#f87171"] { color: #890606 !important; }
+html.light .bo-notation[style*="color:#ef4444"] { color: #710909 !important; }
 .bo-bar {
   width: 100%; height: 5px; border-radius: 3px; margin-top: 4px;
   background: linear-gradient(90deg, var(--bo-c,var(--green)), transparent);
@@ -284,7 +260,6 @@
 @media (max-width:640px) {
   .dsa-stats { grid-template-columns: 1fr 1fr !important; }
   .exp-grid  { grid-template-columns: 1fr; }
-  .path-arrow { display: none; }
   .dh-cta { flex-direction: column; }
   .btn-dh-primary,.btn-dh-ghost { justify-content: center; min-height:44px; }
   .bigo-strip { grid-template-columns: repeat(4,1fr); }
@@ -318,18 +293,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
-    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -346,14 +337,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -363,6 +365,7 @@
     </div>
     <nav id="sidebarNav">
       <div class="sidebar-label">Foundations</div>
+      <a class="sb-link" href="logic-building.html"><span class="sb-num">00</span>Logic Building</a>
       <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
       <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
       <div class="sidebar-label" style="margin-top:16px;">Linear Structures</div>
@@ -398,6 +401,9 @@
       <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
       <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
       <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+        <div class="sidebar-label" style="margin-top:20px;">Practice</div>
+        <a class="sb-link" href="patterns.html"><span class="sb-num">30</span>Pattern Checklist</a>
+
     </nav>
   </aside>
 
@@ -433,39 +439,15 @@
       <div class="ds-box"><span class="ds-val" style="color:var(--amber)">O(?)</span><span class="ds-label">Complexity</span><span class="ds-sub">Every topic analyzed</span></div>
     </div>
 
-    <!-- ════ LEARNING PATH ════ -->
-    <div class="path-strip anim-in">
-      <div class="path-label">Recommended Learning Path</div>
-      <div class="path-steps">
-        <a class="path-step" href="bigo.html">
-          <span class="ps-num">01</span><span class="ps-name">Big-O</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="arrays.html">
-          <span class="ps-num">02</span><span class="ps-name">Arrays</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="sll.html">
-          <span class="ps-num">03</span><span class="ps-name">Linked Lists</span><span class="ps-diff diff-mid">Mid</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="stack.html">
-          <span class="ps-num">04</span><span class="ps-name">Stack / Queue</span><span class="ps-diff diff-starter">Starter</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="bst.html">
-          <span class="ps-num">05</span><span class="ps-name">Trees</span><span class="ps-diff diff-mid">Mid</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="graph.html">
-          <span class="ps-num">06</span><span class="ps-name">Graphs</span><span class="ps-diff diff-adv">Advanced</span>
-        </a>
-        <span class="path-arrow">→</span>
-        <a class="path-step" href="dp.html">
-          <span class="ps-num">07</span><span class="ps-name">DP</span><span class="ps-diff diff-adv">Advanced</span>
-        </a>
-      </div>
-    </div>
+    <!-- ════ ROADMAP CTA ════ -->
+    <a class="rm-cta anim-in" href="../roadmaps/dsa.html" style="--rm-c:var(--blue)">
+      <span class="rm-cta-icon"><i class="ti ti-sitemap" aria-hidden="true"></i></span>
+      <span class="rm-cta-body">
+        <span class="rm-cta-title">Open the DSA roadmap</span>
+        <span class="rm-cta-sub">Every topic as a connected roadmap, with prerequisites, branches, and your progress in one view.</span>
+      </span>
+      <span class="rm-cta-go">Explore →</span>
+    </a>
 
     <!-- ════ WHAT IS DSA ════ -->
     <div id="what-is-dsa" class="sec-block anim-in">
@@ -476,11 +458,11 @@
       <div class="exp-grid">
         <div class="exp-card">
           <span class="exp-icon"><i class="ti ti-device-floppy"></i></span>
-          <div><div class="exp-title">Data Structure</div><div class="exp-desc">A container that stores and organizes data — like a list of numbers, a stack of plates, or a tree of folders. The right structure makes operations fast; the wrong one makes them sluggish.</div></div>
+          <div><div class="exp-title">Data Structure</div><div class="exp-desc">A container that stores and organizes data: a list of numbers, a stack of plates, a tree of folders. The right structure makes operations fast; the wrong one makes them sluggish.</div></div>
         </div>
         <div class="exp-card">
           <span class="exp-icon"><i class="ti ti-ruler-2"></i></span>
-          <div><div class="exp-title">Algorithm</div><div class="exp-desc">A step-by-step procedure to solve a problem. Like a recipe — precise, repeatable, and measurable in time and memory cost. The same problem can have wildly different algorithms.</div></div>
+          <div><div class="exp-title">Algorithm</div><div class="exp-desc">A step-by-step procedure to solve a problem. Like a recipe: precise, repeatable, and measurable in time and memory cost. The same problem can have wildly different algorithms.</div></div>
         </div>
         <div class="exp-card">
           <span class="exp-icon"><i class="ti ti-clock"></i></span>
@@ -488,7 +470,7 @@
         </div>
         <div class="exp-card">
           <span class="exp-icon"><i class="ti ti-brain"></i></span>
-          <div><div class="exp-title">Space Complexity</div><div class="exp-desc">How much memory an algorithm consumes. Critical in constrained environments — mobile apps, embedded systems, or any service handling millions of requests per second.</div></div>
+          <div><div class="exp-title">Space Complexity</div><div class="exp-desc">How much memory an algorithm consumes. This matters most in constrained environments: mobile apps, embedded systems, or any service handling millions of requests per second.</div></div>
         </div>
       </div>
 
@@ -501,7 +483,7 @@
     <div id="bigo-strip" class="sec-block anim-in">
       <div class="sec-label">Quick Reference</div>
       <h2 class="sec-h2">Big-O Complexity at a Glance</h2>
-      <p class="sec-sub">From fastest to slowest — how algorithms scale with input size n.</p>
+      <p class="sec-sub">How algorithms scale with input size n, from fastest to slowest.</p>
 
       <div style="border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden;">
         <div class="bigo-strip">
@@ -524,7 +506,7 @@
     <div id="complexity-ref" class="sec-block anim-in">
       <div class="sec-label">Reference Table</div>
       <h2 class="sec-h2">Sorting Algorithm Complexities</h2>
-      <p class="sec-sub">Best, average, worst case — and space usage side by side.</p>
+      <p class="sec-sub">Best, average and worst case, with space usage side by side.</p>
 
       <div style="overflow-x:auto;">
         <table class="complexity-table">
@@ -554,7 +536,7 @@
     <div class="sec-block anim-in">
       <div class="sec-label">Reference Table</div>
       <h2 class="sec-h2">Data Structure Operation Complexities</h2>
-      <p class="sec-sub">Average and worst case for core operations — at a glance.</p>
+      <p class="sec-sub">Average and worst case for core operations, at a glance.</p>
       <div style="overflow-x:auto;">
         <table class="complexity-table">
           <thead>
@@ -682,6 +664,12 @@
           <span class="cat-count">7 topics</span>
         </div>
         <div class="topic-grid">
+          <a class="t-card cat-linear" href="logic-building.html">
+            <div class="t-card-icon"><i class="ti ti-brain"></i></div>
+            <div class="t-card-name">Logic Building</div>
+            <div class="t-card-desc">Before the data structures: dry runs, conditions, loops, recursion — 36 problems.</div>
+            <div class="t-card-meta"><span class="t-card-cat">Foundations</span><span class="t-card-diff diff-starter">Start here</span></div>
+          </a>
           <a class="t-card cat-linear" href="bigo.html">
             <div class="t-card-icon"><i class="ti ti-chart-bar"></i></div>
             <div class="t-card-name">Big-O Notation</div>
@@ -944,11 +932,11 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var progressFill = document.getElementById('progressFill');

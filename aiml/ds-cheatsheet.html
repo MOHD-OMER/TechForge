@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#030508"/>
-  <title>DS & AI Cheat Sheet — TechForge</title>
+  <title>DS &amp; AI Cheat Sheet — TechForge</title>
   <link rel="canonical" href="https://techforge-dev.vercel.app/aiml/ds-cheatsheet.html"/>
   <meta property="og:title" content="DS &amp; AI Cheat Sheet — TechForge"/>
   <meta property="og:description" content="DS &amp; AI Cheat Sheet — theory, examples, interview prep, and best practices on TechForge."/>
@@ -18,12 +18,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-      <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=3">
+      <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/aiml-lesson.css?v=2">
   <style>
-    :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim); }
+    :root { --accent: var(--purple); --accent-dim: var(--purple-dim); }
 </style>
 
 <script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
@@ -34,18 +34,34 @@
   <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link current" href="index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item current" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -59,14 +75,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -84,6 +111,10 @@
       <a class="sb-link" href="rl.html">Reinforcement Learning</a>
       <a class="sb-link" href="genai.html">Generative AI</a>
       <a class="sb-link active" href="ds-cheatsheet.html">DS &amp; AI Cheat Sheet</a>
+    <a class="sb-link" href="genai-eval.html"><span class="sb-num">•</span>Evaluating Generative Systems</a>
+    <a class="sb-link" href="regularisation.html"><span class="sb-num">•</span>Overfitting &amp;amp; Regularisation</a>
+    <a class="sb-link" href="training.html"><span class="sb-num">•</span>Optimisers &amp;amp; Training Tricks</a>
+    <a class="sb-link" href="vector-databases.html"><span class="sb-num">•</span>Vector Databases</a>
     </nav>
 </aside>
 
@@ -93,13 +124,17 @@
     <div class="pg-head">
       <div class="pg-head-glow"></div>
       <div class="pg-crumb"><a href="aiml-explained.html">AI / ML</a><span class="pg-crumb-sep">›</span>DS &amp; AI Cheat Sheet</div>
-      <div class="pg-title">Data Science &amp; AI Cheat Sheet</div>
+      <h1 class="pg-title">Data Science &amp; AI Cheat Sheet</h1>
       <div class="pg-sub">Every function, method, and syntax you need — Pandas, NumPy, SQL, Excel, Matplotlib, Scikit-Learn, PyTorch, and LangGraph. All in one searchable reference.</div>
       <div class="pg-badges">
         <span class="badge b-cyan">8 Libraries</span>
         <span class="badge b-purple">400+ Functions</span>
         <span class="badge b-green">Live Search</span>
       </div>
+
+    <div class="anim-in" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin:0 0 26px">
+      <svg viewBox="0 0 760 210" width="100%" role="img" aria-label="Data science lifecycle: collect data, clean it, explore it, engineer features, model, evaluate, then communicate results — iterating backwards whenever a later stage reveals problems" style="max-width:760px;display:block;margin:0 auto;font-family:var(--mono)"><defs><marker id="dsl-a-text3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--text3)"/></marker><marker id="dsl-a-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--amber)"/></marker></defs><rect x="15" y="70" width="95" height="60" rx="10" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/><text x="62.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Collect</text><text x="62.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">APIs · SQL · logs</text><rect x="140" y="70" width="95" height="60" rx="10" fill="var(--surface2)" stroke="var(--purple)" stroke-width="1.5"/><text x="187.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Clean</text><text x="187.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">nulls · dupes</text><rect x="265" y="70" width="95" height="60" rx="10" fill="var(--surface2)" stroke="var(--blue)" stroke-width="1.5"/><text x="312.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Explore</text><text x="312.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">EDA · plots</text><rect x="390" y="70" width="95" height="60" rx="10" fill="var(--surface2)" stroke="var(--cyan)" stroke-width="1.5"/><text x="437.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Features</text><text x="437.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">engineer + scale</text><rect x="515" y="70" width="95" height="60" rx="10" fill="var(--surface2)" stroke="var(--amber)" stroke-width="1.5"/><text x="562.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Model</text><text x="562.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">train + tune</text><rect x="640" y="70" width="105" height="60" rx="10" fill="var(--surface2)" stroke="var(--green)" stroke-width="1.5"/><text x="692.5" y="96" text-anchor="middle" fill="var(--text)" font-size="12.5" font-weight="700">Communicate</text><text x="692.5" y="113" text-anchor="middle" fill="var(--text3)" font-size="9.5">dashboards · report</text><line x1="110" y1="100" x2="132" y2="100" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dsl-a-text3)"/><line x1="235" y1="100" x2="257" y2="100" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dsl-a-text3)"/><line x1="360" y1="100" x2="382" y2="100" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dsl-a-text3)"/><line x1="485" y1="100" x2="507" y2="100" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dsl-a-text3)"/><line x1="610" y1="100" x2="632" y2="100" stroke="var(--text3)" stroke-width="1.5" marker-end="url(#dsl-a-text3)"/><line x1="560" y1="130" x2="300" y2="155" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#dsl-a-amber)"/><text x="430" y="172" text-anchor="middle" fill="var(--amber)" font-size="9.5">findings send you back — it loops</text><text x="380" y="40" text-anchor="middle" fill="var(--text3)" font-size="10">80% of the work is before "Model" — data quality beats algorithm choice</text></svg>
+    </div>
     </div>
 
     <!-- SEARCH -->
@@ -841,6 +876,68 @@
       </div>
     </div><!-- /langgraph -->
 
+    <div class="cs-section" id="quiz">
+      <div class="cs-section-header">
+        <span class="cs-icon"><i class="ti ti-help-circle"></i></span>
+        <div><div class="cs-title">Quick Quiz</div><div class="cs-subtitle">Five questions on picking the right tool and the right call</div></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. You have a CSV on disk and want it as a Pandas <code>DataFrame</code>. Which call?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>pd.open_csv()</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>pd.read_csv()</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>pd.load()</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>pd.DataFrame.from_csv()</code></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. What does <code>df.groupby("dept")["salary"].mean()</code> return?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The mean salary across the whole table</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">One mean salary per department</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The departments sorted by salary</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">A copy of the table with salary replaced by its mean</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. In NumPy, what does broadcasting let you do?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Send an array to another machine</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Combine arrays of different shapes without writing a loop or copying data</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Convert an array to a Python list</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Run an operation on the GPU</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. In Scikit-Learn, why is the split always fit on train and applied to test?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It runs faster that way</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Fitting on the test set leaks information about it into the model, so the score no longer predicts real performance</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">The test set is usually too small to fit on</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Scikit-Learn refuses to fit twice</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Which pairing is right?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>plt.hist()</code> for relationships between two variables</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>plt.scatter()</code> for the distribution of one variable</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>plt.hist()</code> for one variable’s distribution, <code>plt.scatter()</code> for the relationship between two</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Either one, they draw the same chart</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </div>
+
     <div class="page-nav">
       <a class="nav-link" href="aiml-explained.html">← AI/ML Home</a>
       <a class="nav-link next" href="ml.html">Machine Learning →</a>
@@ -856,11 +953,11 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 /* ── PROGRESS ── */
 const pbar = document.getElementById('progressFill');

@@ -103,9 +103,27 @@ document.addEventListener('DOMContentLoaded', function () {
     '.lang-toggle{display:inline-flex;gap:2px;background:var(--surface,rgba(0,0,0,.25));border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:12px}' +
     '.lt-btn{border:none;background:transparent;color:var(--text2);font-family:var(--mono,monospace);font-size:11px;font-weight:600;padding:6px 14px;border-radius:7px;cursor:pointer;transition:all .15s}' +
     '.lt-btn:hover{color:var(--text)}' +
-    '.lt-btn.active{background:var(--accent-dim,rgba(77,158,247,.15));color:var(--accent,var(--blue))}';
+    '.lt-btn.active{background:var(--accent-dim,rgba(77,158,247,.15));color:var(--accent,var(--blue))}' +
+    '@media (max-width:640px){.lt-btn{min-height:38px;padding:9px 14px}}';
   document.head.appendChild(st);
+  /* Wire up proper ARIA tabs relationships: .lang-toggle already has
+   * role="tablist" in markup, but the buttons/panes never got role="tab" /
+   * role="tabpanel", which makes the aria-selected set below invalid ARIA.
+   * Only one .lang-toggle group exists per page, so data-lang is a safe
+   * unique id suffix here. */
   document.querySelectorAll('.lt-btn').forEach(function (b) {
+    var tabId = 'lt-tab-' + b.dataset.lang;
+    var panelId = 'lt-panel-' + b.dataset.lang;
+    b.id = tabId;
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-controls', panelId);
+    var pane = document.querySelector('.lang-pane[data-lang="' + b.dataset.lang + '"]');
+    if (pane) {
+      pane.id = panelId;
+      pane.setAttribute('role', 'tabpanel');
+      pane.setAttribute('aria-labelledby', tabId);
+      pane.setAttribute('tabindex', '0');
+    }
     b.addEventListener('click', function () { tfLangSwitch(b.dataset.lang); });
   });
   var lang = 'python';
@@ -221,21 +239,32 @@ function tfInjectSidebarHomeNav() {
   if (!sidebar) return;
   if (sidebar.querySelector('.tf-mobile-home-nav')) return; // already injected
 
-  // Detect root path — check if we're in a subfolder
+  // Detect root path by directory depth (languages sit two levels deep:
+  // /programming/python/*.html → ../../).
   const path = window.location.pathname;
-  const inSubfolder = path.split('/').filter(p => p && p.includes('.')).length > 0 
-    && path.split('/').filter(Boolean).length > 1;
-  const root = inSubfolder ? '../' : '';
+  const segs = path.split('/').filter(Boolean);
+  const last = segs[segs.length - 1] || '';
+  const depth = last.includes('.') ? segs.length - 1 : segs.length;
+  const root = '../'.repeat(depth);
 
+  /* Same order as the navbar. Keep in step with tools/sync-navbar.mjs, which
+     renders this grid statically into every page that ships with one — this
+     runs only on the pages that do not. */
   const sections = [
     { href: root + 'index.html',               icon: '<i class="ti ti-home"></i>', label: 'Home' },
+    { href: root + 'roadmaps/index.html',       icon: '<i class="ti ti-route"></i>', label: 'Roadmaps' },
+    { href: root + 'roles/index.html',          icon: '<i class="ti ti-briefcase"></i>', label: 'Roles' },
+    { href: root + 'programming/index.html',    icon: '<i class="ti ti-code"></i>', label: 'Programming' },
     { href: root + 'dsa/index.html',            icon: '<i class="ti ti-chart-bar"></i>', label: 'DSA' },
-    { href: root + 'python/index.html',         icon: '<i class="ti ti-brand-python"></i>', label: 'Python' },
     { href: root + 'system-design/index.html',  icon: '<i class="ti ti-building"></i>', label: 'Sys Design' },
-    { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
-    { href: root + 'aiml/aiml-explained.html',  icon: '<i class="ti ti-robot"></i>', label: 'AI/ML' },
     { href: root + 'interview/index.html',      icon: '<i class="ti ti-target"></i>', label: 'Interview' },
-    { href: root + 'devops/index.html',         icon: '<i class="ti ti-server-2"></i>',  label: 'DevOps' },
+    { href: root + 'frontend/index.html',       icon: '<i class="ti ti-browser"></i>', label: 'Frontend' },
+    { href: root + 'databases/index.html',      icon: '<i class="ti ti-database"></i>', label: 'Databases' },
+    { href: root + 'devops/index.html',         icon: '<i class="ti ti-server-cog"></i>', label: 'DevOps' },
+    { href: root + 'systems/index.html',        icon: '<i class="ti ti-cpu"></i>', label: 'OS & Networks' },
+    { href: root + 'data/index.html',           icon: '<i class="ti ti-chart-donut"></i>', label: 'Data' },
+    { href: root + 'aiml/index.html',           icon: '<i class="ti ti-robot"></i>', label: 'AI & ML' },
+    { href: root + 'games/index.html',          icon: '<i class="ti ti-device-gamepad-2"></i>', label: 'Game Dev' },
     { href: root + 'about.html',                icon: '<i class="ti ti-info-circle"></i>', label: 'About' },
   ];
 
@@ -264,7 +293,60 @@ function tfInjectSidebarHomeNav() {
 // tfInjectMobileNavStyles: styles now live in forge_base.css — no JS injection needed.
 function tfInjectMobileNavStyles() {}
 
+/* The navbar's "More" menu. Open state lives on the wrapper as a data
+   attribute so CSS owns visibility: on mobile the same markup is shown flat
+   inside the hamburger panel, and this must not fight it. Lives here rather
+   than in platform.js because platform.js is not loaded on the home page. */
+function tfInitMoreMenu() {
+  const wrap = document.getElementById('tbMore');
+  const btn = document.getElementById('tbMoreBtn');
+  const menu = document.getElementById('tbMoreMenu');
+  if (!wrap || !btn || !menu) return;
+
+  const isOpen = () => wrap.getAttribute('data-open') === 'true';
+  function setOpen(open) {
+    wrap.setAttribute('data-open', open ? 'true' : 'false');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!isOpen());
+  });
+
+  // opening from the keyboard should land you on the first item
+  btn.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowDown') return;
+    e.preventDefault();
+    setOpen(true);
+    const first = menu.querySelector('.tb-more-item');
+    if (first) first.focus();
+  });
+
+  document.addEventListener('click', function (e) {
+    if (isOpen() && !wrap.contains(e.target)) setOpen(false);
+  });
+
+  wrap.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !isOpen()) return;
+    e.stopPropagation();
+    setOpen(false);
+    btn.focus();
+  });
+
+  /* Tabbing out closes it. focusout fires before the next element takes
+     focus, so the check has to wait a tick. */
+  wrap.addEventListener('focusout', function () {
+    setTimeout(function () {
+      if (isOpen() && !wrap.contains(document.activeElement)) setOpen(false);
+    }, 0);
+  });
+
+  setOpen(false);
+}
+
 function tfInitTopbarChrome() {
+  tfInitMoreMenu();
   const navToggle = document.getElementById('navToggle');
   const topNav = document.getElementById('topNav');
   const sidebarToggle = document.getElementById('sidebarToggle');
@@ -288,10 +370,44 @@ function tfInitTopbarChrome() {
     }
   }
 
+  /* One mobile surface everywhere. Pages with a sidebar show the grid inside
+     it; pages without one show the same grid in this panel. The stacked list
+     of nav links below is the fallback for anything that has neither, and it
+     is why the hamburger used to look different on the roadmaps. */
+  const mobilePanel = document.getElementById('tfHomeMobilePanel');
+
   if (sidebar && navToggle) {
     navToggle.setAttribute('hidden', 'hidden');
     navToggle.setAttribute('aria-hidden', 'true');
     navToggle.style.display = 'none';
+  } else if (navToggle && mobilePanel) {
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-controls', 'tfHomeMobilePanel');
+
+    const setPanel = (open) => {
+      mobilePanel.classList.toggle('open', open);
+      navToggle.classList.toggle('is-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    navToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setPanel(!mobilePanel.classList.contains('open'));
+    });
+    document.addEventListener('click', function (e) {
+      if (mobilePanel.classList.contains('open') && !mobilePanel.contains(e.target) && e.target !== navToggle) {
+        setPanel(false);
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mobilePanel.classList.contains('open')) {
+        setPanel(false);
+        navToggle.focus();
+      }
+    });
+    mobilePanel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setPanel(false);
+    });
   } else if (navToggle && topNav) {
     navToggle.setAttribute('aria-expanded', 'false');
     navToggle.addEventListener('click', function (e) {
@@ -397,4 +513,511 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.textContent = document.documentElement.classList.contains('light') ? '\u2600' : '\u263D';
     btn.addEventListener('click', tfToggleTheme);
   }
+});
+
+// a11y: .info-tabs, code blocks, and some canvas/viz wrappers scroll
+// horizontally when their content is wider than the container (narrow
+// viewports, long code lines, fixed-width canvases). WCAG 2.1 AA
+// (scrollable-region-focusable) requires any scrollable region to be
+// reachable by keyboard. Only made focusable when it actually overflows, so
+// pages where content already fits get no extra tab stop.
+function tfMakeScrollRegionsFocusable() {
+  var selectors = '.info-tabs, .code-pre, .code-block pre, .viz-body, [style*="overflow-x"]';
+  document.querySelectorAll(selectors).forEach(function (el) {
+    // Elements explicitly marked up as a scrollable region (role="region",
+    // added by hand around canvas visualizations) keep their tabindex
+    // unconditionally. Their content is a canvas whose drawing width is set
+    // by a later script, so on first load — before that resize logic runs —
+    // scrollWidth can still equal clientWidth even though the region is
+    // meant to be scrollable at other sizes/DPIs. Stripping tabindex here
+    // based on a premature measurement re-introduces the very
+    // scrollable-region-focusable violation this function exists to fix.
+    if (el.getAttribute('role') === 'region') {
+      el.setAttribute('tabindex', '0');
+      return;
+    }
+    if (el.scrollWidth > el.clientWidth) {
+      el.setAttribute('tabindex', '0');
+      if (!el.hasAttribute('aria-label')) {
+        el.setAttribute('aria-label', el.classList.contains('info-tabs') ? 'Scrollable tab list' : 'Scrollable content');
+      }
+    } else {
+      el.removeAttribute('tabindex');
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', tfMakeScrollRegionsFocusable);
+window.addEventListener('resize', tfMakeScrollRegionsFocusable);
+/* ─────────────────────────────────────────────────────────────
+   Keyboard access for legacy clickable divs/spans.
+   Many pages attach onclick to non-interactive elements
+   (.info-tab, .pq-item, .qna-q, .ftab, div.quiz-opt …), which are
+   unreachable by keyboard. Give every such element a tab stop,
+   a button role, and Enter/Space activation.
+───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+  var NATIVE = ['BUTTON', 'A', 'INPUT', 'SELECT', 'TEXTAREA', 'SUMMARY'];
+  document.querySelectorAll('[onclick]').forEach(function (el) {
+    if (NATIVE.indexOf(el.tagName) !== -1) return;
+    if (el.hasAttribute('tabindex')) return;
+    /* Never make a container interactive when it already holds an
+       interactive child (button/link inside a clickable card) — axe
+       "nested-interactive". Such cards need their own inner keyboard
+       path instead (e.g. a real <a> on the title). */
+    if (el.querySelector('button, a[href], input, select, textarea, [tabindex]')) return;
+    el.setAttribute('tabindex', '0');
+    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+});
+
+/* ── Animated page-nav buttons (uiverse-adapted, see forge_base .pn-anim) ──
+   Progressive enhancement: rebuild .page-nav links ending in "→" (next) or
+   starting with "←" (prev, mirrored) into the arrow-swap / circle-fill
+   structure. No-op if markup is absent. */
+document.addEventListener('DOMContentLoaded', function () {
+  var ARROW_R = 'M16.17 11 10.8 5.64l1.42-1.42L20 12l-7.78 7.78-1.41-1.42L16.17 13H4v-2z';
+  var ARROW_L = 'M7.83 11 13.2 5.64l-1.42-1.42L4 12l7.78 7.78 1.41-1.42L7.83 13H20v-2z';
+  document.querySelectorAll('.page-nav .nav-link').forEach(function (a) {
+    var t = (a.textContent || '').trim();
+    var isNext = /→$/.test(t);
+    var isPrev = /^←/.test(t);
+    if (!isNext && !isPrev) return;
+    var ARROW = isNext ? ARROW_R : ARROW_L;
+    var label = t.replace(/→$/, '').replace(/^←/, '').trim();
+    a.classList.add('pn-anim');
+    if (isPrev) a.classList.add('pn-prev');
+    a.textContent = '';
+    function svg(cls) {
+      var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      s.setAttribute('viewBox', '0 0 24 24');
+      s.setAttribute('aria-hidden', 'true');
+      s.setAttribute('class', 'pn-arr ' + cls);
+      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', ARROW);
+      s.appendChild(p);
+      return s;
+    }
+    var text = document.createElement('span');
+    text.className = 'pn-text';
+    text.textContent = label;
+    var circle = document.createElement('span');
+    circle.className = 'pn-circle';
+    circle.setAttribute('aria-hidden', 'true');
+    a.appendChild(svg('pn-arr2'));
+    a.appendChild(text);
+    a.appendChild(circle);
+    a.appendChild(svg('pn-arr1'));
+  });
+});
+
+/* ── Timed MCQ quiz (interview question banks) ────────────────────────────
+   Injected on pages with .qna-item + .filter-row: 10 random questions, each
+   rendered as a 4-option MCQ. The correct option is the question's own
+   answer; distractors are answers to other questions in the same bank.
+   30s per question, streak tracking, segmented progress, keyboard 1-4.
+   Progressive enhancement — no markup changes on the bank pages. */
+document.addEventListener('DOMContentLoaded', function () {
+  var filterRow = document.querySelector('.filter-row');
+  var items = [].slice.call(document.querySelectorAll('.qna-item'));
+  if (!filterRow || items.length < 6) return;
+
+  var QUIZ_N = Math.min(10, items.length);
+  var PER_Q_SECS = 30;
+  var bestKey = 'tf_timedquiz_' + (document.body.dataset.topicId || location.pathname);
+
+  function snippet(html) {
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    var t = (d.textContent || '').replace(/\s+/g, ' ').trim();
+    /* first sentence, capped: options must be scannable */
+    var m = t.match(/^.{40,}?[.!?](?=\s|$)/);
+    var s = m ? m[0] : t;
+    return s.length > 150 ? s.slice(0, 147).replace(/\s+\S*$/, '') + '…' : s;
+  }
+
+  var pool = items.map(function (it) {
+    return {
+      q: ((it.querySelector('.qna-text') || {}).textContent || '').trim(),
+      full: (it.querySelector('.qna-a') || {}).innerHTML || '',
+      opt: snippet((it.querySelector('.qna-a') || {}).innerHTML || ''),
+      diff: it.dataset.diff || ''
+    };
+  }).filter(function (x) { return x.q && x.opt; });
+  if (pool.length < 6) return;
+
+  var launch = document.createElement('button');
+  launch.type = 'button';
+  launch.className = 'tq-launch';
+  launch.innerHTML = '&#9201; Timed Quiz';
+  filterRow.appendChild(launch);
+
+  var state = null, timerId = null, lastFocus = null, qStart = 0;
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function close() {
+    clearInterval(timerId);
+    var o = document.querySelector('.tq-overlay');
+    if (o) o.remove();
+    document.removeEventListener('keydown', keys);
+    state = null;
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function newState() {
+    var qs = shuffle(pool).slice(0, QUIZ_N).map(function (cur) {
+      var others = shuffle(pool.filter(function (p) { return p !== cur; })).slice(0, 3);
+      var options = shuffle([cur].concat(others));
+      return { q: cur.q, full: cur.full, diff: cur.diff, options: options, correct: options.indexOf(cur) };
+    });
+    return { qs: qs, i: 0, right: 0, streak: 0, bestStreak: 0, times: [], missed: [], answered: [], started: Date.now(), locked: false };
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    state = newState();
+    var o = document.createElement('div');
+    o.className = 'tq-overlay';
+    o.innerHTML = '<div class="tq-modal" role="dialog" aria-modal="true" aria-label="Timed quiz"></div>';
+    o.addEventListener('click', function (e) { if (e.target === o) close(); });
+    document.body.appendChild(o);
+    document.addEventListener('keydown', keys);
+    renderQ();
+  }
+
+  function keys(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (!state || state.locked) return;
+    var n = parseInt(e.key, 10);
+    if (n >= 1 && n <= 4) {
+      var btn = document.querySelectorAll('.tq-opt')[n - 1];
+      if (btn) btn.click();
+    }
+  }
+
+  function modal() { return document.querySelector('.tq-modal'); }
+
+  function progressHtml() {
+    var segs = '';
+    for (var k = 0; k < state.qs.length; k++) {
+      var cls = 'tq-seg';
+      if (k < state.answered.length) cls += state.answered[k] ? ' tq-seg-ok' : ' tq-seg-no';
+      else if (k === state.i) cls += ' tq-seg-cur';
+      segs += '<span class="' + cls + '"></span>';
+    }
+    return '<div class="tq-progress" aria-hidden="true">' + segs + '</div>';
+  }
+
+  function startTimer(onExpire) {
+    clearInterval(timerId);
+    qStart = Date.now();
+    var fill = modal().querySelector('.tq-timer-fill');
+    var left = PER_Q_SECS;
+    requestAnimationFrame(function () {
+      fill.classList.add('tq-running');
+      fill.style.transitionDuration = PER_Q_SECS + 's';
+      fill.style.transform = 'scaleX(0)';
+    });
+    timerId = setInterval(function () {
+      left--;
+      if (left === 10) fill.classList.add('tq-low');
+      if (left <= 0) { clearInterval(timerId); onExpire(); }
+    }, 1000);
+  }
+
+  function renderQ() {
+    state.locked = false;
+    var cur = state.qs[state.i];
+    var optsHtml = cur.options.map(function (o, idx) {
+      return '<button type="button" class="tq-opt" data-i="' + idx + '">' +
+        '<span class="tq-key">' + (idx + 1) + '</span><span class="tq-opt-text"></span></button>';
+    }).join('');
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">' + (state.i + 1) + ' / ' + state.qs.length + '</span>' +
+      (state.streak >= 2 ? '<span class="tq-streak">streak ' + state.streak + '</span>' : '') +
+      '<button type="button" class="tq-close" aria-label="Close quiz">✕</button></div>' +
+      progressHtml() +
+      '<div class="tq-timer"><div class="tq-timer-fill"></div></div>' +
+      '<div class="tq-q"></div>' +
+      '<div class="tq-diff"></div>' +
+      '<div class="tq-opts">' + optsHtml + '</div>';
+    modal().querySelector('.tq-q').textContent = cur.q;
+    modal().querySelector('.tq-diff').textContent = 'pick the answer · keys 1-4';
+    var optEls = modal().querySelectorAll('.tq-opt');
+    optEls.forEach(function (b, idx) {
+      b.querySelector('.tq-opt-text').textContent = cur.options[idx].opt;
+      b.addEventListener('click', function () { if (!state.locked) resolve(idx); });
+    });
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    optEls[0].focus();
+    startTimer(function () { resolve(-1); });
+  }
+
+  function resolve(idx) {
+    state.locked = true;
+    clearInterval(timerId);
+    var cur = state.qs[state.i];
+    var ok = idx === cur.correct;
+    state.times.push((Date.now() - qStart) / 1000);
+    state.answered.push(ok);
+    if (ok) { state.right++; state.streak++; if (state.streak > state.bestStreak) state.bestStreak = state.streak; }
+    else { state.streak = 0; state.missed.push(cur); }
+    var opts = modal().querySelectorAll('.tq-opt');
+    opts.forEach(function (b, k) {
+      b.disabled = true;
+      if (k === cur.correct) b.classList.add('tq-ok');
+      else if (k === idx) b.classList.add('tq-no');
+      else b.classList.add('tq-dim');
+    });
+    var fill = modal().querySelector('.tq-timer-fill');
+    fill.style.transitionDuration = '0s';
+    setTimeout(function () {
+      state.i++;
+      if (state.i < state.qs.length) renderQ();
+      else summary();
+    }, ok ? 700 : 1400);
+  }
+
+  function summary() {
+    clearInterval(timerId);
+    var n = state.qs.length;
+    var pct = Math.round((state.right / n) * 100);
+    var avg = state.times.length ? Math.round(state.times.reduce(function (a, b) { return a + b; }, 0) / state.times.length * 10) / 10 : 0;
+    var best = 0;
+    try { best = parseInt(localStorage.getItem(bestKey) || '0', 10); } catch (e) {}
+    var isBest = state.right > best;
+    if (isBest) { try { localStorage.setItem(bestKey, String(state.right)); } catch (e) {} }
+    var verdict = pct === 100 ? 'Flawless.' : pct >= 80 ? 'Interview-ready.' : pct >= 60 ? 'Solid — review the misses.' : 'Keep drilling — the full bank is right behind this dialog.';
+    var html =
+      '<div class="tq-head"><span class="tq-count">QUIZ COMPLETE</span>' +
+      '<button type="button" class="tq-close" aria-label="Close quiz">✕</button></div>' +
+      progressHtml() +
+      '<div class="tq-score">' + state.right + '<span class="tq-score-of">/ ' + n + '</span></div>' +
+      '<div class="tq-sub">' + verdict + '</div>' +
+      '<div class="tq-stats">' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + pct + '%</span><span class="tq-stat-label">accuracy</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + avg + 's</span><span class="tq-stat-label">avg / question</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + state.bestStreak + '</span><span class="tq-stat-label">best streak</span></div>' +
+      '<div class="tq-stat"><span class="tq-stat-val">' + (isBest ? state.right : best) + '</span><span class="tq-stat-label">' + (isBest ? 'new best' : 'personal best') + '</span></div>' +
+      '</div>';
+    if (state.missed.length) {
+      html += '<div class="tq-sub" style="margin-top:14px"><strong>Review these:</strong></div><ul class="tq-missed"></ul>';
+    }
+    html += '<div class="tq-actions"><button type="button" class="tq-btn tq-primary tq-again">Run it again</button>' +
+      '<button type="button" class="tq-btn tq-done">Done</button></div>';
+    modal().innerHTML = html;
+    var ul = modal().querySelector('.tq-missed');
+    if (ul) state.missed.forEach(function (q) {
+      var li = document.createElement('li');
+      var qEl = document.createElement('div');
+      qEl.className = 'tq-missed-q';
+      qEl.textContent = q.q;
+      var aEl = document.createElement('div');
+      aEl.className = 'tq-missed-a';
+      aEl.innerHTML = q.full; /* answer markup comes from this same page */
+      li.appendChild(qEl);
+      li.appendChild(aEl);
+      ul.appendChild(li);
+    });
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    modal().querySelector('.tq-done').addEventListener('click', close);
+    modal().querySelector('.tq-again').addEventListener('click', function () { state = newState(); renderQ(); });
+    modal().querySelector('.tq-again').focus();
+  }
+
+  launch.addEventListener('click', open);
+});
+
+/* ── Copy button on every code block ─────────────────────────────────────
+   Some older pages only gave certain panes a copy button. Inject one into
+   any .code-block missing it, self-contained (no global copyCode needed). */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.code-block').forEach(function (blk) {
+    if (blk.querySelector('.copy-btn')) return;
+    var pre = blk.querySelector('pre');
+    if (!pre) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = 'COPY';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(pre.textContent).then(function () {
+        btn.textContent = 'COPIED!';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    });
+    blk.insertBefore(btn, pre);
+  });
+});
+
+/* ── Flashcards: spaced repetition (Leitner boxes) ────────────────────────
+   Injected on interview bank pages (.qna-item + .filter-row). Each Q&A is a
+   card. Boxes 0-5 with intervals [0,1,2,4,7,15] days; "Good" moves a card up
+   a box, "Again" resets it to box 1. Due cards resurface first; new cards
+   fill the rest, capped per session. State in localStorage only. */
+document.addEventListener('DOMContentLoaded', function () {
+  var filterRow = document.querySelector('.filter-row');
+  var items = [].slice.call(document.querySelectorAll('.qna-item'));
+  if (!filterRow || items.length < 6) return;
+
+  var SESSION_CAP = 20;
+  var INTERVALS = [0, 1, 2, 4, 7, 15]; /* days per box */
+  var storeKey = 'tf_flash_' + (document.body.dataset.topicId || location.pathname);
+
+  function hash(s) {
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  }
+  function today() { return Math.floor(Date.now() / 86400000); }
+  function load() { try { return JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch (e) { return {}; } }
+  function save(st) { try { localStorage.setItem(storeKey, JSON.stringify(st)); } catch (e) {} }
+
+  var pool = items.map(function (it) {
+    var q = ((it.querySelector('.qna-text') || {}).textContent || '').trim();
+    return { id: hash(q), q: q, a: (it.querySelector('.qna-a') || {}).innerHTML || '' };
+  }).filter(function (x) { return x.q && x.a; });
+  if (pool.length < 6) return;
+
+  function buildQueue() {
+    var st = load(), t = today();
+    var due = [], fresh = [];
+    pool.forEach(function (c) {
+      var rec = st[c.id];
+      if (!rec) fresh.push(c);
+      else if (rec.d <= t) due.push(c);
+    });
+    return due.concat(fresh).slice(0, SESSION_CAP);
+  }
+
+  var launch = document.createElement('button');
+  launch.type = 'button';
+  launch.className = 'fc-launch';
+  function refreshLaunch() {
+    var n = buildQueue().length;
+    launch.innerHTML = '&#9634; Flashcards' + (n ? ' <span class="fc-due">' + n + ' due</span>' : '');
+  }
+  refreshLaunch();
+  filterRow.appendChild(launch);
+
+  var state = null, lastFocus = null;
+
+  function close() {
+    var o = document.querySelector('.fc-overlay');
+    if (o) o.remove();
+    document.removeEventListener('keydown', keys);
+    state = null;
+    refreshLaunch();
+    if (lastFocus) lastFocus.focus();
+  }
+
+  function keys(e) {
+    if (e.key === 'Escape') { close(); return; }
+    if (!state) return;
+    if (e.key === ' ' || e.key === 'Enter') {
+      var card = document.querySelector('.fc-card');
+      if (card && !card.classList.contains('fc-flipped')) { e.preventDefault(); card.click(); }
+    }
+    if (e.key === '1') { var b = document.querySelector('.fc-again'); if (b) b.click(); }
+    if (e.key === '2') { var g = document.querySelector('.fc-good'); if (g) g.click(); }
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    state = { queue: buildQueue(), i: 0, reviewed: 0, again: 0 };
+    if (!state.queue.length) { state = null; return; }
+    var o = document.createElement('div');
+    o.className = 'tq-overlay fc-overlay';
+    o.innerHTML = '<div class="tq-modal" role="dialog" aria-modal="true" aria-label="Flashcards"></div>';
+    o.addEventListener('click', function (e) { if (e.target === o) close(); });
+    document.body.appendChild(o);
+    document.addEventListener('keydown', keys);
+    render();
+  }
+
+  function modal() { return document.querySelector('.fc-overlay .tq-modal'); }
+
+  function render() {
+    var cur = state.queue[state.i];
+    var st = load();
+    var box = (st[cur.id] || { b: 0 }).b;
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">CARD ' + (state.i + 1) + ' / ' + state.queue.length + '</span>' +
+      '<button type="button" class="tq-close" aria-label="Close flashcards">✕</button></div>' +
+      '<div class="fc-card" tabindex="0" role="button" aria-label="Reveal answer">' +
+      '<div class="fc-inner">' +
+      '<div class="fc-face fc-front"><div class="fc-face-label">Question</div><div class="fc-q"></div><div class="fc-hint">click / space to reveal</div></div>' +
+      '<div class="fc-face fc-back"><div class="fc-face-label">Answer</div><div class="fc-a"></div></div>' +
+      '</div></div>' +
+      '<div class="fc-grade" hidden>' +
+      '<button type="button" class="tq-btn tq-wrong fc-again">1 · Again <span style="opacity:.6;font-weight:500">(tomorrow)</span></button>' +
+      '<button type="button" class="tq-btn tq-right fc-good">2 · Good <span style="opacity:.6;font-weight:500">(+' + INTERVALS[Math.min(box + 1, 5)] + 'd)</span></button>' +
+      '</div>' +
+      '<div class="fc-box-info">box ' + box + ' of 5</div>';
+    modal().querySelector('.fc-q').textContent = cur.q;
+    modal().querySelector('.fc-a').innerHTML = cur.a; /* markup from this same page */
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    var card = modal().querySelector('.fc-card');
+    card.addEventListener('click', function () {
+      if (card.classList.contains('fc-flipped')) return;
+      card.classList.add('fc-flipped');
+      var g = modal().querySelector('.fc-grade');
+      g.hidden = false;
+      modal().querySelector('.fc-good').focus();
+    });
+    modal().querySelector('.fc-again').addEventListener('click', function () { grade(cur, false); });
+    modal().querySelector('.fc-good').addEventListener('click', function () { grade(cur, true); });
+    card.focus();
+  }
+
+  function grade(cur, good) {
+    var st = load(), t = today();
+    var box = (st[cur.id] || { b: 0 }).b;
+    var nb = good ? Math.min(box + 1, 5) : 1;
+    st[cur.id] = { b: nb, d: t + INTERVALS[nb] };
+    save(st);
+    state.reviewed++;
+    if (!good) state.again++;
+    state.i++;
+    if (state.i < state.queue.length) render();
+    else summary();
+  }
+
+  function summary() {
+    var nextDue = buildQueue().length;
+    modal().innerHTML =
+      '<div class="tq-head"><span class="tq-count">SESSION DONE</span>' +
+      '<button type="button" class="tq-close" aria-label="Close flashcards">✕</button></div>' +
+      '<div class="tq-score">' + state.reviewed + '<span class="tq-score-of">cards</span></div>' +
+      '<div class="tq-sub">' + (state.again === 0 ? 'Every card graded Good — the intervals stretch out from here.'
+        : state.again + ' back to box 1; they return tomorrow.') + '</div>' +
+      '<div class="tq-sub">' + (nextDue ? nextDue + ' more available now.' : 'Nothing else due — come back tomorrow.') + '</div>' +
+      '<div class="tq-actions">' +
+      (nextDue ? '<button type="button" class="tq-btn tq-primary fc-more">Keep going</button>' : '') +
+      '<button type="button" class="tq-btn fc-close2">Done</button></div>';
+    modal().querySelector('.tq-close').addEventListener('click', close);
+    modal().querySelector('.fc-close2').addEventListener('click', close);
+    var more = modal().querySelector('.fc-more');
+    if (more) more.addEventListener('click', function () {
+      state = { queue: buildQueue(), i: 0, reviewed: 0, again: 0 };
+      render();
+    });
+    (more || modal().querySelector('.fc-close2')).focus();
+  }
+
+  launch.addEventListener('click', open);
 });

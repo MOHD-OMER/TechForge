@@ -22,36 +22,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+  <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
 
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
-  :root { --accent: #f97316; --accent-dim: rgba(249,115,22,0.08); --accent-border: rgba(249,115,22,0.22); }
+  :root { --accent: var(--cyan); --accent-dim: rgba(249,115,22,0.08); --accent-border: rgba(249,115,22,0.22); }
 
   /* ── HERO ─────────────────────────────────────────── */
   .hero {
     position: relative; padding: 72px 0 60px; overflow: hidden;
   }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 65% 55% at 85% 15%, rgba(249,115,22,0.07), transparent 55%),
-      radial-gradient(ellipse 40% 40% at 5% 85%,  rgba(249,115,22,0.04), transparent 50%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(249,115,22,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(249,115,22,0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
-  }
+  .hero::before{content:none;}
+  .hero::after{content:none;}
   .hero-inner {
     max-width: 820px; margin: 0 auto; text-align: center;
     position: relative; z-index: 1;
@@ -178,15 +162,14 @@
     .bucket { border-right: none !important; border-top: 1px solid var(--border); }
     .bucket:first-child { border-top: none; }
     .ref-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .ref-table { min-width: 480px; }
+    .ref-table th, .ref-table td { padding: 6px 6px; font-size: 11.5px; }
   }
 
   /* ── TAB SYSTEM ──────────────────────────────────── */
   .tab-bar {
     display: flex; gap: 0; border-bottom: 1px solid var(--border);
-    overflow-x: auto; scrollbar-width: none;
+    flex-wrap: wrap;
   }
-  .tab-bar::-webkit-scrollbar { display: none; }
   .tab-btn {
     padding: 11px 18px; background: transparent;
     border: none; border-bottom: 2px solid transparent;
@@ -233,7 +216,7 @@
   .cmd-tip {
     display: flex; gap: 8px; padding: 10px 12px;
     background: rgba(249,115,22,.06); border: 1px solid rgba(249,115,22,.15);
-    border-radius: 8px; font-size: 12.5px; color: #fdba74; margin-top: 10px;
+    border-radius: 8px; font-size: 12.5px; color: var(--orange); margin-top: 10px;
     line-height: 1.55;
   }
   .cmd-tip-icon { flex-shrink: 0; }
@@ -251,7 +234,7 @@
   }
   .code-lang {
     font-family: var(--mono); font-size: 10px; font-weight: 600;
-    color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: .08em;
+    color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .08em;
   }
   .copy-btn {
     display: flex; align-items: center; gap: 5px;
@@ -264,7 +247,7 @@
   .copy-btn.copied { color: var(--accent); }
   .code-body {
     padding: 14px 16px; font-family: var(--mono); font-size: 12.5px;
-    line-height: 1.7; overflow-x: auto; white-space: pre; color: #e6edf3;
+    line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; color: #e6edf3;
   }
   /* Syntax */
   .kw  { color: #ff7b72; }
@@ -281,10 +264,10 @@
     font-size: 13px; line-height: 1.65; margin: 14px 0; border-left: 3px solid;
   }
   .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-  .c-orange { background: rgba(249,115,22,.07); border-color: var(--accent); color: #fdba74; }
-  .c-red    { background: rgba(248,113,113,.07); border-color: #f87171; color: #f87171; }
-  .c-blue   { background: rgba(77,158,247,.07);  border-color: var(--blue); color: #9ec8f9; }
-  .c-green  { background: rgba(34,197,94,.07);   border-color: var(--green); color: #6ee7b7; }
+  .c-orange { background: rgba(249,115,22,.07); border-color: var(--accent); color: var(--orange); }
+  .c-red    { background: rgba(248,113,113,.07); border-color: var(--red); color: var(--red); }
+  .c-blue   { background: rgba(77,158,247,.07);  border-color: var(--blue); color: var(--blue); }
+  .c-green  { background: rgba(34,197,94,.07);   border-color: var(--green); color: var(--green); }
 
   /* ── WORKFLOW SECTION ────────────────────────────── */
   .workflow-steps {
@@ -326,14 +309,14 @@
   .mistake-card:hover { border-left-color: #f87171; }
   .mistake-num {
     font-family: var(--mono); font-size: 10px; font-weight: 700;
-    color: #f87171; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px;
+    color: var(--red); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px;
   }
   .mistake-title { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
   .mistake-desc  { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
   .mistake-fix {
     margin-top: 10px; padding: 8px 10px;
     background: rgba(34,197,94,.06); border: 1px solid rgba(34,197,94,.15);
-    border-radius: 7px; font-size: 12px; color: #6ee7b7; line-height: 1.5;
+    border-radius: 7px; font-size: 12px; color: var(--green); line-height: 1.5;
   }
 
   /* ── GITIGNORE ───────────────────────────────────── */
@@ -375,7 +358,7 @@
   }
   .cat-daily   { background: rgba(34,197,94,.1);  color: var(--green); }
   .cat-team    { background: rgba(77,158,247,.1); color: var(--blue); }
-  .cat-rescue  { background: rgba(248,113,113,.1);color: #f87171; }
+  .cat-rescue  { background: rgba(248,113,113,.1);color: var(--red); }
   .cat-pro     { background: rgba(167,139,250,.1);color: var(--purple); }
 
   /* ── RESOURCES ───────────────────────────────────── */
@@ -418,12 +401,12 @@
   .gs-box:hover { background:rgba(249,115,22,.03); }
   .gs-box:hover::after { opacity:1; }
   .gs-val   { font-family:var(--font-mono); font-size:22px; font-weight:700; line-height:1; }
-  .gs-label { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
-  .gs-sub   { font-size:10.5px; color:var(--text3); }
+  .gs-label { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text2); }
+  .gs-sub   { font-size:10.5px; color:var(--text2); }
 
   /* ── TRUST BADGES ── */
   .hero-trust { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin-top:20px; }
-  .hero-trust-item { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text3); }
+  .hero-trust-item { display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:10px; color:var(--text2); }
   .hero-trust-dot  { width:5px; height:5px; border-radius:50%; background:#f97316; box-shadow:0 0 5px #f97316; }
 
   /* ── INTERVIEW CTA ── */
@@ -432,7 +415,7 @@
   .gicta-icon  { font-size:28px; flex-shrink:0; }
   .gicta-body  { flex:1; }
   .gicta-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
-  .gicta-desc  { font-size:12px; color:var(--text3); line-height:1.6; }
+  .gicta-desc  { font-size:12px; color:var(--text2); line-height:1.6; }
   .gicta-btn { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:var(--r-md); font-size:12px; font-weight:700; text-decoration:none; background:rgba(249,115,22,.1); border:1px solid rgba(249,115,22,.25); color:#f97316; transition:all .2s; flex-shrink:0; white-space:nowrap; cursor:pointer; }
   .gicta-btn:hover { background:rgba(249,115,22,.18); transform:translateY(-1px); }
 
@@ -479,18 +462,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&amp;A</a>
-    <a class="tb-link current" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item current" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -507,14 +506,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -526,7 +536,8 @@
     <a class="sb-link" href="#mistakes"><span class="sb-num">04</span>Common Mistakes</a>
     <a class="sb-link" href="#gitignore"><span class="sb-num">05</span>.gitignore</a>
     <a class="sb-link" href="#quickref"><span class="sb-num">06</span>Quick Reference</a>
-    <a class="sb-link" href="#resources"><span class="sb-num">07</span>Resources</a>
+    <a class="sb-link" href="#quiz"><span class="sb-num">07</span>Quick Quiz</a>
+    <a class="sb-link" href="#resources"><span class="sb-num">08</span>Resources</a>
 
     <div class="sidebar-label" style="margin-top:20px;">Command Groups</div>
     <a class="sb-link" href="#tab-daily"  onclick="switchToTab('daily',event)"><i class="ti ti-calendar"></i> Daily Use (1–5)</a>
@@ -566,7 +577,7 @@
 
     <!-- FORGE STATS STRIP -->
     <div class="git-stats anim-in">
-      <div class="gs-box" style="--gs-c:#f97316"><span class="gs-val" style="color:#f97316">20</span><span class="gs-label">Commands</span><span class="gs-sub">Daily to Pro level</span></div>
+      <div class="gs-box" style="--gs-c:#f97316"><span class="gs-val" style="color:var(--orange)">20</span><span class="gs-label">Commands</span><span class="gs-sub">Daily to Pro level</span></div>
       <div class="gs-box" style="--gs-c:var(--green)"><span class="gs-val" style="color:var(--green)">4</span><span class="gs-label">Groups</span><span class="gs-sub">Daily · Team · Rescue · Pro</span></div>
       <div class="gs-box" style="--gs-c:var(--blue)"><span class="gs-val" style="color:var(--blue)">5</span><span class="gs-label">Mistakes</span><span class="gs-sub">Freshers always make</span></div>
       <div class="gs-box" style="--gs-c:var(--cyan)"><span class="gs-val" style="color:var(--cyan)">8</span><span class="gs-label">Workflow Steps</span><span class="gs-sub">Real team PR cycle</span></div>
@@ -626,10 +637,10 @@
       <div class="sec-divider"></div>
 
       <div class="tab-bar" id="cmdTabBar">
-        <button class="tab-btn active" data-tab="daily"><i class="ti ti-calendar"></i> Daily Use <small style="opacity:.6">(1–5)</small></button>
-        <button class="tab-btn" data-tab="team"><i class="ti ti-users"></i> Team Work <small style="opacity:.6">(6–10)</small></button>
-        <button class="tab-btn" data-tab="rescue"><i class="ti ti-alert-octagon"></i> Survival Kit <small style="opacity:.6">(11–15)</small></button>
-        <button class="tab-btn" data-tab="pro"><i class="ti ti-bolt"></i> Pro Level <small style="opacity:.6">(16–20)</small></button>
+        <button class="tab-btn active" data-tab="daily"><i class="ti ti-calendar"></i> Daily Use <small style="opacity:.85">(1–5)</small></button>
+        <button class="tab-btn" data-tab="team"><i class="ti ti-users"></i> Team Work <small style="opacity:.85">(6–10)</small></button>
+        <button class="tab-btn" data-tab="rescue"><i class="ti ti-alert-octagon"></i> Survival Kit <small style="opacity:.85">(11–15)</small></button>
+        <button class="tab-btn" data-tab="pro"><i class="ti ti-bolt"></i> Pro Level <small style="opacity:.85">(16–20)</small></button>
       </div>
 
       <!-- ── DAILY USE ── -->
@@ -1272,7 +1283,7 @@ vendor/
 __pycache__/
 *.pyc
 
-<span class="cm"># Environment & Secrets</span>
+<span class="cm"># Environment &amp; Secrets</span>
 .env
 .env.local
 .env.production
@@ -1340,6 +1351,68 @@ desktop.ini</div>
       </div>
     </section>
 
+    <!-- ══════ QUIZ ══════ -->
+    <section class="section" id="quiz">
+      <div class="sec-header"><span class="sec-icon"><i class="ti ti-help-circle"></i></span><span class="sec-title">Quick Quiz</span></div>
+      <div class="sec-divider"></div>
+      <p class="prose">Five questions on the four places, the daily commands, and the two mistakes that cost the most time.</p>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. Which command moves a file from the working directory into the staging area?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git commit</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git add</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git push</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git stash</code></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. You have staged changes and want to see exactly what is about to be committed. Which command?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git diff</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git diff --staged</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git log -p</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git status --short</code></button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Why should <code>.gitignore</code> exist before your first commit?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Git refuses to commit without one</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">Once a secret or <code>node_modules</code> is committed it stays in history, even after deletion</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It makes clones faster</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It is what marks the repository root</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Why is <code>git push --force</code> onto a shared branch dangerous?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It locks the branch against other pushes</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It uploads every branch, not just the current one</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)">It overwrites the remote history, discarding commits your teammates already pulled</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">It skips the pre-push hooks</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. You are mid-task on a feature branch and need to switch to a hotfix without committing half-finished work. What do you reach for?</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git reset --hard</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>git stash</code>, then <code>git stash pop</code> when you return</button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>git revert HEAD</code></button>
+          <button class="quiz-opt" onclick="quizAnswer(this,false)">Delete the branch and re-clone</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
     <!-- ══════ RESOURCES ══════ -->
     <section class="section" id="resources">
       <div class="sec-header"><span class="sec-icon"><i class="ti ti-books"></i></span><span class="sec-title">What to Learn Next &amp; Resources</span></div>
@@ -1395,7 +1468,7 @@ desktop.ini</div>
       <div class="gicta-icon"><i class="ti ti-target"></i></div>
       <div class="gicta-body">
         <div class="gicta-title">Ready to interview? Git comes up more than you think.</div>
-        <div class="gicta-desc">DSA, Python, SQL, and OOP — 200+ interview questions tagged for FAANG and startups, with progress tracking in your browser.</div>
+        <div class="gicta-desc">DSA, Python, SQL, and OOP — 290+ interview questions tagged for FAANG and startups, with progress tracking in your browser.</div>
       </div>
       <a class="gicta-btn" href="../interview/index.html">Interview Prep Hub →</a>
     </div>
@@ -1415,11 +1488,11 @@ desktop.ini</div>
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 /* ── TABS ─────────────────────────────────────── */
 document.querySelectorAll('#cmdTabBar .tab-btn').forEach(function(btn) {

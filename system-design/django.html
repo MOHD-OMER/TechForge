@@ -20,10 +20,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-    <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+    <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
 
-      <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+      <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
     :root {
@@ -160,7 +160,7 @@
     }
     .code-lang {
       font-family: var(--mono); font-size: 10px; font-weight: 600;
-      color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: .08em;
+      color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: .08em;
     }
     .copy-btn {
       display: flex; align-items: center; gap: 5px;
@@ -174,7 +174,8 @@
     .code-body {
       padding: 14px 16px; font-family: var(--mono);
       font-size: 12.5px; line-height: 1.7;
-      overflow-x: auto; white-space: pre;
+      white-space: pre-wrap; overflow-wrap: anywhere;
+      color: #e2e8f4;
     }
     /* Syntax colours */
     .kw  { color: #ff7b72; }   /* keywords */
@@ -193,7 +194,7 @@
       margin: 16px 0; border-left: 3px solid;
     }
     .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-    .c-blue  { background: rgba(77,158,247,.08);  border-color: var(--blue);   color: #9ec8f9; }
+    .c-blue  { background: rgba(77,158,247,.08);  border-color: var(--blue);   color: var(--blue); }
     .c-amber { background: rgba(247,204,69,.07);  border-color: #fcd34d;       color: #fcd34d; }
     .c-green { background: rgba(34,197,94,.07);   border-color: var(--green);  color: #6ee7b7; }
 
@@ -360,7 +361,7 @@
     
   /* ── FORGE HERO ── */
   .bk-hero{position:relative;padding:44px 0 36px;margin-bottom:28px;border-bottom:1px solid var(--border);overflow:hidden;}
-  .bk-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(34,197,94,.07) 0%,transparent 58%);}
+  .bk-hero::before{content:none;}
   .bkh-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);padding:4px 12px;border-radius:var(--r-full);margin-bottom:14px;}
   .bkh-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:bkhdot 2s ease infinite;}
   @keyframes bkhdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
@@ -374,7 +375,7 @@
   .bks-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--bks-c,var(--green));opacity:0;transition:opacity .2s;}
   .bks-box:hover{background:rgba(34,197,94,.03);}.bks-box:hover::after{opacity:1;}
   .bks-val{font-family:var(--font-mono);font-size:20px;font-weight:700;line-height:1;}
-  .bks-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text3);}
+  .bks-label{font-family:var(--font-mono);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.bk-stats{grid-template-columns:repeat(2,1fr);}}
@@ -389,18 +390,34 @@
   <a class="tb-logo" href="../index.html"><div class="tb-logo-icon"><img src="../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div><span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span></a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
-    <a class="tb-link current" href="./">Backend</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -415,14 +432,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -442,6 +470,36 @@
     <a class="sb-link" href="./">← Overview</a>
     <a class="sb-link" href="flask.html"><i class="ti ti-flask"></i> Flask</a>
     <a class="sb-link" href="fastapi.html"><i class="ti ti-bolt"></i> FastAPI</a>
+    <a class="sb-link" href="api-gateway.html"><span class="sb-num">•</span>API Gateway</a>
+    <a class="sb-link" href="caching.html"><span class="sb-num">•</span>Caching Strategies</a>
+    <a class="sb-link" href="cap-theorem.html"><span class="sb-num">•</span>CAP Theorem</a>
+    <a class="sb-link" href="cdn.html"><span class="sb-num">•</span>CDN</a>
+    <a class="sb-link" href="consistency-models.html"><span class="sb-num">•</span>Consistency Models</a>
+    <a class="sb-link" href="database-sharding.html"><span class="sb-num">•</span>Database Sharding</a>
+    <a class="sb-link" href="distributed-systems.html"><span class="sb-num">•</span>Distributed Systems</a>
+    <div class="sidebar-label">Architecture Practice</div>
+    <a class="sb-link" href="patterns.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Design Patterns</a>
+    <a class="sb-link" href="ddd.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Domain-Driven Design</a>
+    <a class="sb-link" href="decisions.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Deciding &amp; Communicating</a>
+    <a class="sb-link" href="diagrams.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Diagramming &amp; C4</a>
+    <a class="sb-link" href="tradeoffs.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Trade-off Analysis</a>
+    <a class="sb-link" href="tech-debt.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Managing Technical Debt</a>
+    <a class="sb-link" href="event-driven.html"><span class="sb-num">•</span>Event-Driven Systems</a>
+    <a class="sb-link" href="fault-tolerance.html"><span class="sb-num">•</span>Fault Tolerance</a>
+    <a class="sb-link" href="fundamentals.html"><span class="sb-num">•</span>System Design Fundamentals</a>
+    <a class="sb-link" href="high-availability.html"><span class="sb-num">•</span>High Availability</a>
+    <a class="sb-link" href="kafka.html"><span class="sb-num">•</span>Apache Kafka</a>
+    <a class="sb-link" href="load-balancing.html"><span class="sb-num">•</span>Load Balancing</a>
+    <a class="sb-link" href="microservices.html"><span class="sb-num">•</span>Microservices</a>
+    <a class="sb-link" href="monolith.html"><span class="sb-num">•</span>Monolith</a>
+    <a class="sb-link" href="partitioning.html"><span class="sb-num">•</span>Partitioning</a>
+    <a class="sb-link" href="queues.html"><span class="sb-num">•</span>Message Queues</a>
+    <a class="sb-link" href="rabbitmq.html"><span class="sb-num">•</span>RabbitMQ</a>
+    <a class="sb-link" href="rate-limiting.html"><span class="sb-num">•</span>Rate Limiting</a>
+    <a class="sb-link" href="replication.html"><span class="sb-num">•</span>Replication</a>
+    <a class="sb-link" href="reverse-proxy.html"><span class="sb-num">•</span>Reverse Proxy</a>
+    <a class="sb-link" href="scalability.html"><span class="sb-num">•</span>Scalability</a>
+    <a class="sb-link" href="service-discovery.html"><span class="sb-num">•</span>Service Discovery</a>
   </aside>
 
   <main class="main">
@@ -554,7 +612,7 @@ SECURE_HSTS_SECONDS  = <span class="nm">31536000</span> <span class="cm"># HTTP 
           <div class="stat-card"><div class="sc-val" style="color:var(--green)">2005</div><div class="sc-label">Year Released</div><div class="sc-desc">Built at Lawrence Journal-World newspaper</div></div>
           <div class="stat-card"><div class="sc-val" style="color:var(--blue)">5.x</div><div class="sc-label">Current Version</div><div class="sc-desc">Full async support, improved ORM</div></div>
           <div class="stat-card"><div class="sc-val" style="color:var(--purple)">BSD</div><div class="sc-label">License</div><div class="sc-desc">Open source, maintained by DSF</div></div>
-          <div class="stat-card"><div class="sc-val" style="color:#fcd34d">1B+</div><div class="sc-label">Instagram Users</div><div class="sc-desc">Most famous Django-powered app</div></div>
+          <div class="stat-card"><div class="sc-val" style="color:var(--amber)">1B+</div><div class="sc-label">Instagram Users</div><div class="sc-desc">Most famous Django-powered app</div></div>
         </div>
       </div>
 
@@ -571,7 +629,7 @@ SECURE_HSTS_SECONDS  = <span class="nm">31536000</span> <span class="cm"># HTTP 
           <div class="mvt-box active-box">
             <div class="mvt-letter">M</div>
             <div class="mvt-name">Model</div>
-            <div class="mvt-role">Data & Database</div>
+            <div class="mvt-role">Data &amp; Database</div>
           </div>
           <div class="mvt-arrow">⇄</div>
           <div class="mvt-box active-box">
@@ -708,7 +766,7 @@ Post.objects.filter(published=<span class="nm">False</span>).delete()</div>
           <div class="step">
             <div class="step-num-col"><span class="step-num">02</span></div>
             <div class="step-body">
-              <div class="step-title">QuerySet Chaining & Lookups</div>
+              <div class="step-title">QuerySet Chaining &amp; Lookups</div>
               <div class="step-desc">Filter with double-underscore (dunder) field lookups. Queries are lazy — no DB hit until you evaluate.</div>
               <div class="code-block">
                 <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
@@ -1415,11 +1473,11 @@ admin.site.register(Product)  <span class="cm"># simple</span>
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 /* ── TABS ──────────────────────────────────────────── */
 document.querySelectorAll('.tab-btn').forEach(function(btn) {

@@ -4,6 +4,14 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
+  /* Motion tokens — one set of durations and curves so timings across the site
+     relate to each other instead of drifting into a dozen ad-hoc values. */
+  --m-fast:  .15s;
+  --m-base:  .28s;
+  --m-slow:  .5s;
+  --m-out:   cubic-bezier(.22, 1, .36, 1);   /* settles, no overshoot */
+  --m-inout: cubic-bezier(.65, 0, .35, 1);
+
   --bg:        #07090f;
   --bg2:       #0d1117;
   --bg3:       #111722;
@@ -14,7 +22,11 @@
 
   --text:      #e2e8f4;
   --text2:     #8da0bb;
-  --text3:     #5a7094;
+  /* text3 at #5a7094 reads as ~3.4-3.8:1 against --bg2/--surface, below the
+     4.5:1 AA floor for normal-size text — and it's used as real body copy
+     (breadcrumbs, meta tags, cheat-sheet items), not just decoration.
+     Brightened just enough to clear AA while staying visibly dimmer than text2. */
+  --text3:     #7e93b5;
 
   /* Theme Defaults (can be overridden in specific pages) */
   --accent:     #4d9ef7;       /* Default: Blue */
@@ -25,6 +37,10 @@
   --blue-dim:  #0c2444;
   --py:        #f7cc45;
   --py-dim:    #6b5700;
+  --js:        #f0db4f;
+  --js-dim:    #4a3f00;
+  --ts:        #5b9bd5;
+  --ts-dim:    #10293f;
   --green:     #34d399;
   --green-dim: #063a28;
   --amber:     #fbbf24;
@@ -43,7 +59,7 @@
   --code-fn:   #4d9ef7;
   --code-str:  #34d399;
   --code-nm:   #c084fc;
-  --code-cm:   #4a6078;
+  --code-cm:   #7e93b5;
 
   --radius:    10px;
   --radius-lg: 16px;
@@ -74,11 +90,17 @@ html.light {
 
   --text:      #241705;
   --text2:     #5c4a2e;
-  --text3:     #8c7a5a;
+  --text3:     #665538;
 
   --shadow-sm: 0 1px 2px rgba(36,23,5,.05);
   --shadow-md: 0 6px 20px rgba(36,23,5,.09);
 
+  /* --accent itself was missing from this light-theme swap — pages that use
+     the bare default (no page-local --accent override) got the dark-theme
+     bright blue (#4d9ef7) verbatim, which fails AA against pale backgrounds
+     (as low as 2.1:1). Matches --amber's light value since --accent-dim
+     already leans amber ("amber ledger" light direction). */
+  --accent: #431d00;
   --accent-dim: #fde9c8;
   --blue-dim:  #dceafd;
   --py-dim:    #fdf3d0;
@@ -88,6 +110,26 @@ html.light {
   --red-dim:   #fbdada;
   --cyan-dim:  #d3f3fa;
   --purple-dim:#e8e0fc;
+
+  /* The palette's base hue tokens (--blue, --py, etc.) are bright/saturated
+     shades tuned for dark backgrounds. In light theme they're frequently used
+     as text color on top of their own pale "-dim" background (badges, tags,
+     cheat-sheet chips) — bright-on-pale fails AA badly (as low as 2.1:1).
+     Reusing each color's own dark-theme "-dim" value as its light-theme *text*
+     color keeps the same hue family and clears AA with a wide margin (6-13:1)
+     against both the matching -dim background and the general page background. */
+  --blue:   #0c2444;
+  --py:     #6b5700;
+  --js:     #4a3f00;
+  --ts:     #10395c;
+  --green:  #063a28;
+  --amber:  #431d00;
+  --orange: #431200;
+  --red:    #3b0a0a;
+  --cyan:   #042533;
+  --purple: #200d45;
+  --pink:   #500724;
+  --teal:   #073a34;
 }
 
 /* Signature: graph-paper grid, amplified from the barely-visible dark-mode version.
@@ -197,6 +239,32 @@ body {
 }
 
 /* ══════════════════════════════════════════
+   ACCESSIBILITY UTILITIES
+══════════════════════════════════════════ */
+/* "Skip to content" link, present on every page. Previously had no CSS at
+   all, so it rendered as a plain, always-visible browser-default link
+   (default anchor blue on a dark bg fails contrast at 2.1:1). Standard
+   pattern: hidden off-screen until keyboard focus reveals it. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100001;
+  padding: 10px 18px;
+  background: var(--bg2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 0 0 8px 0;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ══════════════════════════════════════════
    SCROLLBAR
 ══════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -278,6 +346,103 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
   left: 12px; right: 12px; bottom: -1px;
   height: 2px; border-radius: 2px;
   background: var(--accent);
+}
+
+/* ── "More" ──────────────────────────────────────────────
+   Eleven links at one weight is a list, not a hierarchy. The five paths most
+   people are actually on stay in the bar; the rest sit behind this. The button
+   carries the same .tb-link styling — including the current underline, so a
+   page inside the menu still marks its place in the bar. */
+header.topbar .tb-more { position: relative; display: flex; align-items: center; }
+header.topbar .tb-more-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+}
+header.topbar .tb-more-chev {
+  display: inline-flex; font-size: 13px; line-height: 1;
+  transition: transform .18s ease;
+}
+header.topbar .tb-more[data-open="true"] .tb-more-chev { transform: rotate(180deg); }
+header.topbar .tb-more[data-open="true"] .tb-more-btn { color: var(--text); background: var(--surface); }
+
+header.topbar .tb-more-menu {
+  display: none;
+  /* 14px clears the gap between the nav row and the header edge — the links
+     are 30px inside a 58px bar — then 8px of air below the border. */
+  position: absolute; top: calc(100% + 22px); right: 0;
+  min-width: 208px; padding: 6px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.42);
+  flex-direction: column; gap: 2px;
+  z-index: 10000;
+}
+header.topbar .tb-more[data-open="true"] .tb-more-menu { display: flex; }
+header.topbar .tb-more-item {
+  font-family: var(--sans); font-size: 13.5px; font-weight: 500;
+  color: var(--text2); text-decoration: none;
+  padding: 9px 12px; border-radius: 8px;
+  white-space: nowrap; line-height: 1.2;
+  transition: color .18s ease, background-color .18s ease;
+}
+header.topbar .tb-more-label {
+  font-family: var(--sans); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--text3, var(--text2));
+  padding: 9px 12px 5px;
+}
+header.topbar .tb-more-label + .tb-more-item { margin-top: 0; }
+header.topbar .tb-more-item:hover { color: var(--text); background: var(--surface); }
+header.topbar .tb-more-item.current {
+  color: var(--text); font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  header.topbar .tb-more-chev { transition: none; }
+}
+
+/* ══════════════════════════════════════════
+   INTERACTIVE FEEDBACK
+   Nothing on the site acknowledged a click before this: buttons changed colour
+   on hover and then nothing happened on press. A small scale on :active is the
+   cheapest way to make the interface feel responsive rather than static.
+   transform only — it composites, never reflows.
+══════════════════════════════════════════ */
+.btn, .btn-primary, .btn-secondary, .copy-btn, .lesson-btn, .lt-btn,
+.pf-btn, .tab-btn, .theme-toggle, .nav-toggle, .sidebar-toggle {
+  transition: background-color var(--m-fast) ease,
+              border-color var(--m-fast) ease,
+              color var(--m-fast) ease,
+              transform var(--m-fast) var(--m-out);
+}
+.btn:active, .btn-primary:active, .btn-secondary:active, .copy-btn:active,
+.lesson-btn:active, .lt-btn:active, .pf-btn:active, .tab-btn:active,
+.theme-toggle:active, .nav-toggle:active, .sidebar-toggle:active {
+  transform: scale(.96);
+}
+
+/* Cards lift instead of only shifting their border colour. */
+.prog-card, .concept-card {
+  transition: transform var(--m-base) var(--m-out),
+              border-color var(--m-base) ease,
+              box-shadow var(--m-base) ease;
+}
+.prog-card:hover, .concept-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,.22);
+}
+.prog-card:active, .concept-card:active { transform: translateY(-1px) scale(.995); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn-primary, .btn-secondary, .copy-btn, .lesson-btn, .lt-btn,
+  .pf-btn, .tab-btn, .theme-toggle, .nav-toggle, .sidebar-toggle,
+  .prog-card, .concept-card { transition: none; }
+  .btn:active, .btn-primary:active, .btn-secondary:active, .copy-btn:active,
+  .lesson-btn:active, .lt-btn:active, .pf-btn:active, .tab-btn:active,
+  .theme-toggle:active, .nav-toggle:active, .sidebar-toggle:active,
+  .prog-card:hover, .concept-card:hover,
+  .prog-card:active, .concept-card:active { transform: none; box-shadow: none; }
 }
 
 /* Utility cluster sits apart from navigation, divided by a hairline. */
@@ -362,7 +527,9 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
   font-size: 10px; font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text3);
+  /* text3 fails WCAG AA contrast at this size/weight in both themes
+     (3.4-3.8:1, needs 4.5:1) — text2 passes comfortably (~7:1) in both. */
+  color: var(--text2);
   padding: 0 8px;
   margin-bottom: 10px;
 }
@@ -384,7 +551,7 @@ header.topbar .tb-nav { display: flex; align-items: center; gap: 2px; margin-lef
 .sb-num {
   font-family: var(--mono);
   font-size: 10px; font-weight: 600;
-  color: var(--text3);
+  color: var(--text2);
   width: 22px; flex-shrink: 0;
   text-align: right;
 }
@@ -514,6 +681,29 @@ button.badge {
 }
 .prose strong { color: var(--text); font-weight: 600; }
 .prose em { color: var(--text); font-style: italic; }
+/* An unstyled link falls back to the browser default #0000ee — 2.11:1 on the
+   dark background. This rule was written for .prose, then extended to
+   .lesson-prose, then to table cells, each time after the audit caught the
+   same 2.11 again in a container nobody had listed.
+   So it is stated by exclusion instead: any link inside the content area that
+   carries no class of its own. Every real component — .sb-link, .nav-link,
+   .rt-pill-node, .tb-link — has a class and keeps its own styling.
+   Underlined as well as coloured, so it does not rely on hue alone. */
+main a:not([class]),
+.prose a,
+.lesson-prose a,
+.iq p a,
+.callout a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+main a:not([class]):hover,
+.prose a:hover,
+.lesson-prose a:hover,
+.iq p a:hover,
+.callout a:hover { color: var(--text); text-decoration-color: var(--accent); }
 .prose code {
   font-family: var(--mono);
   font-size: 12.5px;
@@ -585,6 +775,13 @@ button.badge {
   color: var(--text);
   margin: 0;
   tab-size: 4;
+  /* Wrap the few lines that outrun the box instead of hiding their tail behind
+     a sideways scroll. `pre-wrap` keeps every space and newline the author
+     wrote, so the code's own indentation still reads; only over-long lines
+     fold. (A hanging indent for folded lines is not available here: text-indent
+     applies to the first line of the block, not to each wrapped line.) */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 /* Syntax token colors */
@@ -599,6 +796,8 @@ button.badge {
 .copy-btn {
   position: absolute;
   top: 8px; right: 56px;
+  min-width: 58px;
+  text-align: center;
   background: var(--surface2);
   border: 1px solid var(--border2);
   color: var(--text3);
@@ -622,7 +821,16 @@ button.badge {
   border-collapse: collapse;
   margin-bottom: 16px;
   font-size: 13.5px;
+  /* Divide the available width between the columns instead of letting the
+     longest cell decide. With `auto`, one long example pushed the table past
+     its container and the reader had to swipe sideways to finish a row. */
+  table-layout: fixed;
 }
+/* Fixed layout only helps if the content is allowed to wrap: a long unbroken
+   token (a URL, a code sample) would otherwise still overhang the cell.
+   `break-word` rather than `anywhere` so ordinary prose keeps breaking at
+   spaces — only a word with nowhere else to break is split. */
+.py-table th, .py-table td, table th, table td { overflow-wrap: break-word; }
 .py-table th, table th {
   font-family: var(--sans);
   font-weight: 600; font-size: 11.5px;
@@ -667,13 +875,13 @@ button.badge {
   border-left: 3px solid;
 }
 .callout::before { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.callout-blue   { background: var(--blue-dim);   border-color: var(--blue);   color: #9ec8f9; }
+.callout-blue   { background: var(--blue-dim);   border-color: var(--blue);   color: var(--blue); }
 .callout-blue::before   { content: 'ℹ'; color: var(--blue); }
-.callout-green  { background: var(--green-dim);  border-color: var(--green);  color: #6ee7b7; }
+.callout-green  { background: var(--green-dim);  border-color: var(--green);  color: var(--green); }
 .callout-green::before  { content: '✓'; color: var(--green); font-weight: 700; }
-.callout-amber  { background: var(--amber-dim);  border-color: var(--amber);  color: #fcd34d; }
+.callout-amber  { background: var(--amber-dim);  border-color: var(--amber);  color: var(--amber); }
 .callout-amber::before  { content: '⚠'; color: var(--amber); }
-.callout-red    { background: var(--red-dim);    border-color: var(--red);    color: #fca5a5; }
+.callout-red    { background: var(--red-dim);    border-color: var(--red);    color: var(--red); }
 .callout-red::before    { content: '!'; color: var(--red); font-weight: 700; }
 
 /* ══════════════════════════════════════════
@@ -722,6 +930,235 @@ button.badge {
 }
 .nav-link:hover { border-color: var(--accent); color: var(--accent); }
 .nav-link.next { margin-left: auto; }
+
+/* Next-page animated button (adapted from Uiverse.io by gharsh11032000, MIT).
+   Applied by utils.js to .page-nav links ending in "→": arrows swap sides
+   while a circle of the section accent floods the pill. Theme-safe via
+   var(--accent); label flips to ink-on-accent when the fill lands. */
+.nav-link.pn-anim {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 12px 46px 12px 22px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  box-shadow: 0 0 0 1.5px var(--accent, var(--blue));
+  color: var(--accent, var(--blue));
+  font-weight: 600;
+  overflow: hidden;
+  transition: all .6s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-arr {
+  position: absolute; width: 17px; height: 17px;
+  fill: var(--accent, var(--blue)); z-index: 1;
+  transition: all .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-arr1 { right: 16px; }
+.nav-link.pn-anim .pn-arr2 { left: -25%; }
+.nav-link.pn-anim .pn-circle {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 16px; height: 16px;
+  background: var(--accent, var(--blue));
+  border-radius: 50%; opacity: 0;
+  transition: transform .8s cubic-bezier(.23, 1, .32, 1), opacity .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim .pn-text {
+  position: relative; z-index: 1;
+  transform: translateX(-8px);
+  transition: all .8s cubic-bezier(.23, 1, .32, 1);
+}
+.nav-link.pn-anim:hover {
+  border-color: transparent;
+  box-shadow: 0 0 0 10px transparent;
+  color: #04070d;
+  border-radius: 10px;
+}
+.nav-link.pn-anim:hover .pn-arr1 { right: -25%; }
+.nav-link.pn-anim:hover .pn-arr2 { left: 16px; }
+.nav-link.pn-anim:hover .pn-text { transform: translateX(10px); }
+.nav-link.pn-anim:hover .pn-arr { fill: #04070d; }
+.nav-link.pn-anim:hover .pn-circle { transform: translate(-50%, -50%) scale(22); opacity: 1; }
+.nav-link.pn-anim:active { scale: .96; box-shadow: 0 0 0 3px var(--accent, var(--blue)); }
+/* Mirrored variant for previous-page links (arrows travel right→left) */
+.nav-link.pn-anim.pn-prev { padding: 12px 22px 12px 46px; }
+.nav-link.pn-anim.pn-prev .pn-arr1 { right: auto; left: 16px; }
+.nav-link.pn-anim.pn-prev .pn-arr2 { left: auto; right: -25%; }
+.nav-link.pn-anim.pn-prev .pn-text { transform: translateX(8px); }
+.nav-link.pn-anim.pn-prev:hover .pn-arr1 { left: -25%; }
+.nav-link.pn-anim.pn-prev:hover .pn-arr2 { right: 16px; }
+.nav-link.pn-anim.pn-prev:hover .pn-text { transform: translateX(-10px); }
+
+/* ══════════════════════════════════════════
+   TIMED QUIZ MODE (interview question banks)
+   Injected by utils.js on pages with #qnaList
+══════════════════════════════════════════ */
+.tq-launch {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 13px; border-radius: 100px;
+  font-family: var(--font-mono, monospace); font-size: 10px; font-weight: 700;
+  border: 1px solid var(--accent, var(--amber)); background: transparent;
+  color: var(--accent, var(--amber)); cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.tq-launch:hover { background: var(--accent, var(--amber)); color: #04070d; }
+html.light .tq-launch:hover { color: #fff; }
+.tq-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(2, 4, 8, .82); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.tq-modal {
+  width: 100%; max-width: 640px; max-height: 86vh; overflow-y: auto;
+  background: var(--bg2, #0d1117); border: 1px solid var(--border2, #263449);
+  border-radius: 14px; padding: 26px 28px;
+}
+.tq-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.tq-count { font-family: var(--font-mono, monospace); font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 1px; }
+.tq-close { background: none; border: none; color: var(--text3); font-size: 18px; cursor: pointer; padding: 4px 8px; }
+.tq-close:hover { color: var(--text); }
+.tq-timer { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 20px; }
+.tq-timer-fill {
+  height: 100%; width: 100%; background: var(--accent, var(--amber));
+  transform-origin: left; transform: scaleX(1);
+}
+.tq-timer-fill.tq-running { transition: transform linear; }
+.tq-timer-fill.tq-low { background: var(--red, #f87171); }
+.tq-q { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.6; margin-bottom: 8px; }
+.tq-diff { font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 18px; }
+.tq-a { font-size: 13.5px; color: var(--text2); line-height: 1.75; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 4px; }
+.tq-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+.tq-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 18px; border-radius: 8px; font-size: 12.5px; font-weight: 700;
+  border: 1px solid var(--border2); background: var(--surface); color: var(--text2);
+  cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tq-btn:hover { border-color: var(--accent, var(--amber)); color: var(--accent, var(--amber)); }
+.tq-btn.tq-primary { background: var(--accent, var(--amber)); border-color: transparent; color: #04070d; }
+.tq-btn.tq-primary:hover { filter: brightness(1.1); color: #04070d; }
+html.light .tq-btn.tq-primary, html.light .tq-btn.tq-primary:hover { color: #fff; }
+.tq-btn.tq-right { border-color: rgba(52,211,153,.4); color: var(--green, #34d399); }
+.tq-btn.tq-right:hover { background: rgba(52,211,153,.12); }
+.tq-btn.tq-wrong { border-color: rgba(248,113,113,.4); color: var(--red, #f87171); }
+.tq-btn.tq-wrong:hover { background: rgba(248,113,113,.12); }
+.tq-score { font-family: var(--font-mono, monospace); font-size: 40px; font-weight: 700; color: var(--accent, var(--amber)); margin: 6px 0 2px; }
+.tq-sub { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 6px; }
+.tq-missed { margin: 14px 0 4px; padding: 0; list-style: none; }
+.tq-missed > li { font-size: 12.5px; color: var(--text2); padding: 10px 0; border-bottom: 1px solid var(--border); }
+.tq-missed > li:last-child { border-bottom: none; }
+.tq-missed-a ul, .tq-missed-a ol { margin: 6px 0 0 18px; padding: 0; }
+.tq-missed-q { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.tq-missed-a { font-size: 12px; line-height: 1.7; }
+/* MCQ options */
+.tq-opts { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.tq-opt {
+  display: flex; align-items: flex-start; gap: 12px; width: 100%;
+  padding: 12px 14px; border-radius: 10px; text-align: left;
+  font-size: 13px; line-height: 1.55; font-weight: 500;
+  background: var(--surface); border: 1px solid var(--border2);
+  color: var(--text2); cursor: pointer;
+  transition: border-color .12s ease, background .12s ease, color .12s ease;
+}
+.tq-opt:hover:not(:disabled) { border-color: var(--accent, var(--amber)); color: var(--text); }
+.tq-opt:focus-visible { outline: 2px solid var(--accent, var(--amber)); outline-offset: 1px; }
+.tq-key {
+  flex-shrink: 0; width: 20px; height: 20px; margin-top: 1px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border2); border-radius: 5px;
+  font-family: var(--font-mono, monospace); font-size: 10px; font-weight: 700;
+  color: var(--text3);
+}
+.tq-opt.tq-ok { border-color: var(--green, #34d399); background: rgba(52,211,153,.1); color: var(--text); }
+.tq-opt.tq-ok .tq-key { border-color: var(--green, #34d399); color: var(--green, #34d399); }
+.tq-opt.tq-no { border-color: var(--red, #f87171); background: rgba(248,113,113,.1); color: var(--text); }
+.tq-opt.tq-no .tq-key { border-color: var(--red, #f87171); color: var(--red, #f87171); }
+.tq-opt.tq-dim { opacity: .45; }
+/* segmented progress */
+.tq-progress { display: flex; gap: 4px; margin-bottom: 12px; }
+.tq-seg { flex: 1; height: 3px; border-radius: 2px; background: var(--border); }
+.tq-seg-cur { background: var(--text3); }
+.tq-seg-ok { background: var(--green, #34d399); }
+.tq-seg-no { background: var(--red, #f87171); }
+.tq-streak {
+  font-family: var(--font-mono, monospace); font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--green, #34d399);
+}
+/* summary stats */
+.tq-score-of { font-size: 18px; color: var(--text3); margin-left: 6px; }
+.tq-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-top: 16px;
+}
+.tq-stat { background: var(--surface); padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.tq-stat-val { font-family: var(--font-mono, monospace); font-size: 16px; font-weight: 700; color: var(--text); }
+.tq-stat-label { font-family: var(--font-mono, monospace); font-size: 8.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); }
+@media (max-width: 600px) { .tq-stats { grid-template-columns: repeat(2, 1fr); } .tq-opt { min-height: 44px; } }
+
+/* ══════════════════════════════════════════
+   FLASHCARDS — spaced repetition (Leitner)
+   Injected by utils.js on interview bank pages
+══════════════════════════════════════════ */
+.fc-launch {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 13px; border-radius: 100px;
+  font-family: var(--font-mono, monospace); font-size: 10px; font-weight: 700;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--text2); cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.fc-launch:hover { border-color: var(--accent, var(--amber)); color: var(--accent, var(--amber)); }
+.fc-launch .fc-due {
+  font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700;
+  padding: 1px 7px; border-radius: 100px;
+  background: rgba(52,211,153,.12); color: var(--green, #34d399);
+}
+.fc-card {
+  perspective: 1200px; margin-top: 16px; cursor: pointer;
+}
+.fc-inner {
+  position: relative; width: 100%; min-height: 220px;
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+}
+.fc-card.fc-flipped .fc-inner { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 26px 24px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border2);
+  overflow-y: auto;
+}
+.fc-back { transform: rotateY(180deg); justify-content: flex-start; }
+.fc-face-label {
+  font-family: var(--font-mono, monospace); font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 12px;
+}
+.fc-q { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1.6; }
+.fc-a { font-size: 13px; color: var(--text2); line-height: 1.75; }
+.fc-hint { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); margin-top: 16px; }
+.fc-grade { display: flex; gap: 8px; margin-top: 18px; }
+.fc-box-info { font-family: var(--font-mono, monospace); font-size: 10px; color: var(--text3); margin-top: 12px; text-align: center; }
+@media (prefers-reduced-motion: reduce) {
+  .fc-inner { transition: none; }
+}
+@media (max-width: 600px) {
+  .fc-face { padding: 18px 16px; }
+  .fc-grade { flex-direction: column; }
+  .fc-grade .tq-btn { justify-content: center; min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { .tq-timer-fill.tq-running { transition: none; } }
+@media (max-width: 600px) { .tq-modal { padding: 20px 16px; } .tq-actions { flex-direction: column; } .tq-btn { justify-content: center; min-height: 44px; } }
+/* Light theme: accents are dark ink, so the flooded pill needs a light label */
+html.light .nav-link.pn-anim:hover { color: #fff; }
+html.light .nav-link.pn-anim:hover .pn-arr { fill: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .nav-link.pn-anim, .nav-link.pn-anim .pn-arr, .nav-link.pn-anim .pn-text, .nav-link.pn-anim .pn-circle { transition: none; }
+  .nav-link.pn-anim:hover .pn-circle { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  .nav-link.pn-anim:hover { background: var(--accent, var(--blue)); border-radius: 100px; }
+  .nav-link.pn-anim:active { scale: 1; }
+}
 
 /* ══════════════════════════════════════════
    MOBILE & TOOLS
@@ -835,7 +1272,6 @@ button.badge {
   }
   .pg-title { font-size: 22px; }
   .pg-sub { font-size: 14px; }
-  .tb-nav { display: none; }
   .tb-nav.mobile-visible {
     display: flex;
     flex-direction: column;
@@ -863,6 +1299,21 @@ button.badge {
     font-weight: 600;
     border-radius: 10px;
   }
+  /* In the hamburger panel there is no shortage of room, so "More" stops being
+     a menu and becomes what it is listing: the rest of the sections, flat.
+     One markup, no second mobile nav to keep in sync. */
+  .tb-nav.mobile-visible .tb-more { display: block; }
+  .tb-nav.mobile-visible .tb-more-btn { display: none; }
+  .tb-nav.mobile-visible .tb-more-menu {
+    display: flex; position: static;
+    min-width: 0; padding: 0; margin-top: 2px;
+    background: none; border: 0; border-radius: 0; box-shadow: none;
+  }
+  .tb-nav.mobile-visible .tb-more-item {
+    min-height: 48px; display: flex; align-items: center;
+    padding: 12px 16px; font-size: 16px; font-weight: 600; border-radius: 10px;
+  }
+  .tb-nav.mobile-visible .tb-more-label { padding: 14px 16px 4px; }
   /* Avoid iOS zoom on focus */
   .search-input { font-size: 16px !important; }
 }
@@ -897,9 +1348,8 @@ button.badge {
   .kv-grid { grid-template-columns: 1fr; }
   .pillar-grid { grid-template-columns: 1fr; }
   .inherit-grid { grid-template-columns: 1fr; }
-  .magic-grid { grid-template-columns: repeat(2, 1fr); }
 
-  .code-pre, pre { padding: 10px 12px; font-size: 12px; overflow-x: auto; }
+  .code-pre, pre { padding: 10px 12px; font-size: 12px; }
   .code-block { border-radius: 8px; }
 
   .py-section { margin-bottom: 20px; }
@@ -908,22 +1358,37 @@ button.badge {
   .callout { padding: 9px 11px; font-size: 11px; }
   .callout-icon { font-size: 12px; }
 
-  .table-wrap { border-radius: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .py-table, table { min-width: 380px; }
-  .py-table th, table th { font-size: 12px; padding: 6px 8px; }
-  .py-table td, table td { font-size: 13px; padding: 6px 8px; }
+  .table-wrap { border-radius: 6px; }
+  /* No min-width: 380px on a 375px screen guaranteed a sideways swipe on every
+     table on the site. Tighter padding buys the columns their room instead. */
+  .py-table th, table th { font-size: 11.5px; padding: 6px 7px; }
+  .py-table td, table td { font-size: 12.5px; padding: 6px 7px; }
+  .py-table code, table code { font-size: 11px; padding: 1px 3px; }
 
-  .page-nav { flex-direction: column; gap: 8px; }
+  .page-nav { flex-direction: column; gap: 10px; }
   .nav-link { width: 100%; justify-content: center; font-size: 11px; padding: 9px 14px; }
   .nav-link.next { margin-left: 0; }
-
-  .back-top {
-    bottom: max(16px, calc(10px + var(--safe-bottom)));
-    right: max(14px, calc(10px + var(--safe-right)));
-    width: 40px;
-    height: 40px;
-    font-size: 15px;
+  /* Animated nav buttons on touch: no hover exists, so the resting and
+     pressed states carry the design — full-width, centered label, calm
+     rectangle instead of a stretched pill, accent fill on press. */
+  .nav-link.pn-anim,
+  .nav-link.pn-anim.pn-prev {
+    width: 100%; justify-content: center;
+    min-height: 46px; padding: 12px 40px;
+    font-size: 12.5px; border-radius: 10px;
   }
+  .nav-link.pn-anim .pn-text,
+  .nav-link.pn-anim.pn-prev .pn-text { transform: none; }
+  .nav-link.pn-anim .pn-arr1 { right: 14px; }
+  .nav-link.pn-anim.pn-prev .pn-arr1 { left: 14px; right: auto; }
+  .nav-link.pn-anim:active {
+    scale: 1; background: var(--accent, var(--blue));
+    color: #04070d; box-shadow: none;
+  }
+  .nav-link.pn-anim:active .pn-arr { fill: #04070d; }
+  html.light .nav-link.pn-anim:active { color: #fff; }
+  html.light .nav-link.pn-anim:active .pn-arr { fill: #fff; }
+
 
   .search-input { font-size: 14px; padding: 6px 9px 6px 26px; }
 
@@ -937,13 +1402,6 @@ button.badge {
   .step-code { font-size: 11px; padding: 5px 8px; }
 
   .info-tabs { gap: 0; -webkit-overflow-scrolling: touch; }
-  .info-tab {
-    padding: 9px 12px;
-    font-size: 10px;
-    min-height: 38px;
-    display: inline-flex;
-    align-items: center;
-  }
 
   .quiz-wrap { padding: 14px 12px; }
   .quiz-q { font-size: 12px; }
@@ -1103,14 +1561,16 @@ button.badge {
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
   }
-  .ref-table,
-  .complexity-table {
-    min-width: 480px;
+  /* A 480px floor on a 375px screen is a guaranteed sideways swipe. These
+     tables wrap their cells and fit the screen instead. */
+  .ref-table th, .ref-table td,
+  .complexity-table th, .complexity-table td {
+    padding: 6px 6px;
+    font-size: 11.5px;
   }
 
   /* ── Code blocks ── */
   pre, .code-pre, .code-block pre, .code-block .code-pre {
-    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
   }
@@ -1153,7 +1613,6 @@ button.badge {
   .pg-title { font-size: 22px; }
   .sec-title { font-size: 18px; }
   .cell { width: 34px; height: 34px; font-size: 10px; }
-  .magic-grid { grid-template-columns: 1fr; }
   .btn { padding: 6px 12px; font-size: 11px; }
   .inp { width: 55px; font-size: 11px; }
 }
@@ -1263,15 +1722,15 @@ button.badge {
 ══════════════════════════════════════════ */
 .info-section { margin-top: 4px; }
 
+/* Tabs wrap onto a second row rather than scrolling. The strip used to scroll
+   with its scrollbar hidden, so a reader had no way to tell that six of the
+   nine tabs were off the right edge. */
 .info-tabs {
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
-.info-tabs::-webkit-scrollbar { display: none; }
 
 .info-tab {
   padding: 10px 20px;
@@ -1540,7 +1999,7 @@ button.badge {
 .viz-label {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--text3);
+  color: var(--text2);
   letter-spacing: 1.5px;
   display: flex;
   align-items: center;
@@ -2023,6 +2482,12 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
   gap: 10px;
   margin-bottom: 18px;
 }
+/* These live after the base rule on purpose: the unprefixed .magic-grid is
+   declared further down this file, so an override placed earlier loses on
+   source order no matter which media query matches. */
+@media (max-width: 600px) { .magic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 400px) { .magic-grid { grid-template-columns: 1fr; } }
+
 .magic-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2185,6 +2650,20 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
    MOBILE NAV — safety override
    Ensures hamburger shows on ALL pages
 ══════════════════════════════════════════ */
+/* Between the mobile breakpoint and a roomy desktop the nav has more items than
+   horizontal space. Tighten the spacing rather than dropping links — and never
+   make .tb-nav a scroll container, which would clip the "More" menu. */
+@media (min-width: 901px) and (max-width: 1300px) {
+  header.topbar .tb-logo, header.topbar .topbar-actions { flex-shrink: 0; }
+  header.topbar .tb-nav { gap: 0; min-width: 0; }
+  header.topbar .tb-link { padding: 7px 9px; font-size: 13px; letter-spacing: 0; }
+  header.topbar .tb-link.current::after { left: 9px; right: 9px; }
+}
+@media (min-width: 901px) and (max-width: 1080px) {
+  header.topbar .tb-link { padding: 7px 6px; font-size: 12.5px; }
+  header.topbar .tb-link.current::after { left: 6px; right: 6px; }
+}
+
 @media (max-width: 900px) {
   header.topbar .tb-nav:not(.mobile-visible) { display: none !important; }
   header.topbar .topbar-actions { display: flex !important; align-items: center !important; margin-left: auto !important; gap: 6px !important; padding-left: 0 !important; border-left: 0 !important; }
@@ -2274,4 +2753,148 @@ input[type=range] { accent-color: var(--accent); width: 90px; cursor: pointer; h
   max-width: 1100px;
   padding-left: max(20px, var(--safe-left));
   padding-right: max(20px, var(--safe-right));
+}
+/* ── Light theme: primary buttons ─────────────────────────────
+   The light palette repurposes every accent var (--blue --green
+   --amber --cyan --purple --accent) as dark ink, so accent-filled
+   buttons keep their dark slab but black label text vanishes.
+   Flip the label to white on all primary button variants. */
+html.light .btn-primary,
+html.light .btn-cta-primary,
+html.light .btn-sh-primary,
+html.light .btn-dh-primary,
+html.light .btn-ih-primary,
+html.light .btn-ph-primary,
+html.light .btn-aim-primary,
+html.light .cta-primary,
+html.light .icta-btn,
+html.light .pq-done-toggle.done {
+  color: #fff;
+}
+/* Light theme: hover lightens toward white which would wash out dark-ink
+   slabs — lighten far less so the fill stays clearly darker than the label. */
+html.light .btn-primary:hover,
+html.light .btn-cta-primary:hover,
+html.light .btn-sh-primary:hover,
+html.light .btn-dh-primary:hover,
+html.light .btn-ih-primary:hover,
+html.light .btn-ph-primary:hover,
+html.light .btn-aim-primary:hover,
+html.light .cta-primary:hover,
+html.light .icta-btn:hover {
+  color: #fff;
+  filter: brightness(1.25);
+  background: var(--blue);
+}
+html.light .btn-ih-primary:hover { background: var(--amber); }
+html.light .btn-ph-primary:hover { background: var(--green); }
+html.light .btn-aim-primary:hover, html.light .cta-primary:hover { background: var(--purple); }
+
+/* ── Roadmap CTA ──────────────────────────────────────────────
+   Every section hub links out to its roadmap with the same slab.
+   Set --rm-c per hub to pick up that section's accent. */
+.rm-cta {
+  --rm-c: var(--blue);
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; margin-bottom: 40px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r-xl); text-decoration: none;
+  transition: border-color var(--m-base) var(--m-out), transform var(--m-base) var(--m-out);
+}
+.rm-cta:hover { border-color: var(--rm-c); transform: translateY(-2px); }
+.rm-cta-icon { font-size: 26px; color: var(--rm-c); flex-shrink: 0; line-height: 1; }
+.rm-cta-body { flex: 1; min-width: 0; }
+.rm-cta-title { display: block; font-size: 15px; font-weight: 700; color: var(--text); }
+.rm-cta-sub { display: block; font-size: 12.5px; color: var(--text2); line-height: 1.55; margin-top: 3px; }
+.rm-cta-go { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--rm-c); flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 560px) { .rm-cta-go { display: none; } }
+
+/* ── Small-screen overrides that must sit last ──────────────────
+   These components declare their base rule late in this file, so an override
+   written earlier loses on source order however well its media query matches.
+   Keep them here, after every base rule, or they silently stop applying. */
+@media (max-width: 600px) {
+  .pq-item { flex-wrap: wrap; padding: 10px 14px; font-size: 12px; }
+  .pq-name { min-width: 0; }
+  .info-tab {
+    padding: 9px 12px;
+    font-size: 10px;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .back-top {
+    bottom: max(16px, calc(10px + var(--safe-bottom)));
+    right: max(14px, calc(10px + var(--safe-right)));
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+}
+
+/* ══════════════════════════════════════════
+   MOBILE NAV PANEL
+   One mobile navigation surface for the whole site. Pages with a section
+   sidebar show this grid inside it; pages without one — the roadmaps, the
+   dashboard, the roles hub — used to fall back to a stacked list of nav links,
+   which is why the hamburger looked different depending on where you were.
+   Both now render the same grid from tools/sync-navbar.mjs.
+══════════════════════════════════════════ */
+.tf-home-mobile-panel {
+  display: none;
+  position: fixed;
+  top: calc(var(--topbar-h, 58px) + var(--safe-top, 0px));
+  left: 0; right: 0;
+  max-height: min(78dvh, calc(100dvh - var(--topbar-h, 58px) - var(--safe-top, 0px)));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px max(16px, var(--safe-left)) max(16px, var(--safe-bottom)) max(16px, var(--safe-right));
+  z-index: 89;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+.tf-home-mobile-panel.open { display: block; }
+.tf-hmp-label {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+.tf-hmp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.tf-hmp-item {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  min-height: 62px;
+  padding: 10px 4px;
+  border-radius: 10px;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .15s ease;
+}
+.tf-hmp-item:hover,
+.tf-hmp-item:active,
+.tf-hmp-item:focus-visible {
+  background: var(--surface2);
+  border-color: var(--accent);
+}
+.tf-hmp-icon { font-size: 20px; line-height: 1; color: var(--text2); }
+.tf-hmp-text {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 600;
+  color: var(--text2);
+  text-align: center;
+}
+@media (min-width: 901px) {
+  .tf-home-mobile-panel { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tf-hmp-item { transition: none; }
 }

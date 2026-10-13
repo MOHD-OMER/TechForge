@@ -18,12 +18,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../assets/css/forge_base.css?v=10">
+  <link rel="stylesheet" href="../assets/css/forge_base.css?v=35">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
   <link href="../assets/css/lesson.css?v=3" rel="stylesheet"/>
 <style>
-  :root { --accent: var(--cyan); --accent-dim: var(--cyan-dim); }
+  :root { --accent: var(--blue); --accent-dim: var(--blue-dim); }
   .bss-row { display: flex; gap: 8px; flex-wrap: wrap; padding: 20px 0; justify-content: center; }
   .bss-cell {
       width: 44px; height: 44px; background: var(--surface); border: 2px solid var(--border);
@@ -32,6 +32,13 @@
       transition: all 0.3s ease;
   }
   .bss-cell-idx { position: absolute; top: -16px; font-size: 10px; color: var(--text2); }
+  /* .b-accent uses a semi-transparent rgba background that blends with the
+     always-dark .code-block backdrop, so its theme-swapping var(--accent) text
+     goes unreadable in light theme — override with a fixed dark-appropriate
+     color. (.b-surface is NOT touched: its background is fully opaque
+     var(--surface2), which legitimately swaps to a light surface of its own,
+     so var(--text2) is already correct there.) */
+  .code-block .badge.b-accent { color: #5b9cf6; }
   .cc-mid { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.1); box-shadow: 0 0 15px var(--accent-dim); }
   .cc-range { border-color: var(--blue); }
   .cc-checked { opacity: 0.3; filter: grayscale(1); }
@@ -49,7 +56,7 @@
     --red:         #f87171;
   }
   .dsa-hero{position:relative;padding:36px 0 28px;margin-bottom:24px;border-bottom:1px solid var(--border);overflow:hidden;}
-  .dsa-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 55% 70% at -5% 55%,rgba(77,142,247,.06) 0%,transparent 58%);}
+  .dsa-hero::before{content:none;}
   .dh2-ey{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent,var(--blue));background:rgba(77,142,247,.06);border:1px solid rgba(77,142,247,.18);padding:4px 12px;border-radius:var(--r-full);margin-bottom:12px;}
   .dh2-dot{width:5px;height:5px;border-radius:50%;background:var(--accent,var(--blue));box-shadow:0 0 5px var(--accent,var(--blue));animation:dh2dot 2s ease infinite;}
   @keyframes dh2dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
@@ -62,7 +69,7 @@
   .dss-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--dss-c,var(--blue));opacity:0;transition:opacity .2s;}
   .dss-box:hover{background:rgba(255,255,255,.02);}.dss-box:hover::after{opacity:1;}
   .dss-val{font-family:var(--font-mono);font-size:16px;font-weight:700;line-height:1;}
-  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+  .dss-label{font-family:var(--font-mono);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);}
   .anim-in{opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease;}
   .anim-in.visible{opacity:1;transform:none;}
   @media(max-width:640px){.dsa-stats2{grid-template-columns:repeat(3,1fr) !important;}}
@@ -79,18 +86,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
-    <a class="tb-link current" href="./">DSA</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
+    <a class="tb-link current" href="../dsa/index.html">DSA</a>
     <a class="tb-link" href="../system-design/index.html">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -103,14 +126,25 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
@@ -120,14 +154,15 @@
     </div>
     <nav id="sidebarNav">
       <div class="sidebar-label">Foundations</div>
-      <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
-      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays & Strings</a>
+      <a class="sb-link" href="logic-building.html"><span class="sb-num">00</span>Logic Building</a>
+    <a class="sb-link" href="bigo.html"><span class="sb-num">01</span>Big-O Notation</a>
+      <a class="sb-link" href="arrays.html"><span class="sb-num">02</span>Arrays &amp; Strings</a>
       <div class="sidebar-label" style="margin-top:20px;">Linear Data Structures</div>
       <a class="sb-link" href="sll.html"><span class="sb-num">03</span>Singly Linked List</a>
       <a class="sb-link" href="dll.html"><span class="sb-num">04</span>Doubly Linked List</a>
       <a class="sb-link" href="cll.html"><span class="sb-num">05</span>Circular Linked List</a>
       <a class="sb-link" href="stack.html"><span class="sb-num">06</span>Stack</a>
-      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue & Deque</a>
+      <a class="sb-link" href="queue.html"><span class="sb-num">07</span>Queue &amp; Deque</a>
       <div class="sidebar-label" style="margin-top:20px;">Non-Linear Data Structures</div>
       <a class="sb-link" href="bst.html"><span class="sb-num">08</span>Binary Search Tree</a>
       <a class="sb-link" href="avl.html"><span class="sb-num">09</span>AVL Tree</a>
@@ -155,6 +190,9 @@
       <a class="sb-link" href="twopointer.html"><span class="sb-num">27</span>Two Pointer</a>
       <a class="sb-link" href="sliding.html"><span class="sb-num">28</span>Sliding Window</a>
       <a class="sb-link" href="bits.html"><span class="sb-num">29</span>Bit Manipulation</a>
+        <div class="sidebar-label" style="margin-top:20px;">Practice</div>
+        <a class="sb-link" href="patterns.html"><span class="sb-num">30</span>Pattern Checklist</a>
+
     </nav>
   </aside>
   <main class="main" id="mainContent">
@@ -169,7 +207,7 @@
           <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
         </div>
       </div>
-      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(log n)</span><span class="dss-label">Time</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(1)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">Sorted</span><span class="dss-label">Required</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Divide</span><span class="dss-label">& Conquer</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">Interview Fav</span></div></div>
+      <div class="dsa-stats2 anim-in" style="grid-template-columns:repeat(5,1fr);"><div class="dss-box" style="--dss-c:var(--green)"><span class="dss-val" style="color:var(--green)">O(log n)</span><span class="dss-label">Time</span></div><div class="dss-box" style="--dss-c:var(--cyan)"><span class="dss-val" style="color:var(--cyan)">O(1)</span><span class="dss-label">Space</span></div><div class="dss-box" style="--dss-c:var(--amber)"><span class="dss-val" style="color:var(--amber)">Sorted</span><span class="dss-label">Required</span></div><div class="dss-box" style="--dss-c:var(--blue)"><span class="dss-val" style="color:var(--blue)">Divide</span><span class="dss-label">&amp; Conquer</span></div><div class="dss-box" style="--dss-c:var(--purple)"><span class="dss-val" style="color:var(--purple)">✓</span><span class="dss-label">Interview Fav</span></div></div>
 <div class="py-section">
   <div class="sec-header"><span class="sec-num">01</span><span class="sec-title">Step-by-Step Search</span></div>
   <div class="section-divider"></div>
@@ -179,17 +217,18 @@
       <button class="badge b-accent" onclick="bsrRun()" style="border:none; cursor:pointer;">▶ Find Target</button>
       <button class="badge b-surface" onclick="bsrReset()" style="border:none; cursor:pointer;">↺ Reset</button>
     </div>
-    <div style="overflow-x:auto;">
+    <div style="overflow-x:auto;" tabindex="0" role="region" aria-label="Binary search array visualization">
       <canvas id="bsr-canvas" style="height:80px;display:block;background:rgba(0,0,0,.2);border-radius:12px"></canvas>
     </div>
-    <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:var(--text2); margin-top:16px;">Array must be sorted. Press Find.</div>
+    <div id="bsr-status" style="font-family:var(--mono); font-size:12px; color:#8da0bb; margin-top:16px;">Array must be sorted. Press Find.</div>
   </div>
 </div>
 
 <div class="info-section">
   <div class="info-tabs">
     <div class="info-tab active" onclick="switchTab(this,'tp-bs-0')">Logic</div>
-    <div class="info-tab" onclick="switchTab(this,'tp-bs-1')">Python</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bs-1')">Code</div>
+    <div class="info-tab" onclick="switchTab(this,'tp-bs-quiz')">Quiz</div>
     <div class="info-tab" onclick="switchTab(this,'tp-bs-prac')">Practice <i class="ti ti-trophy"></i></div>
   </div>
 
@@ -202,6 +241,13 @@
   </div>
 
   <div class="info-pane" id="tp-bs-1">
+    <div class="lang-toggle" role="tablist" aria-label="Code language">
+      <button type="button" class="lt-btn active" data-lang="python">Python</button>
+      <button type="button" class="lt-btn" data-lang="javascript">JavaScript</button>
+      <button type="button" class="lt-btn" data-lang="java">Java</button>
+            <button type="button" class="lt-btn" data-lang="cpp">C++</button>
+    </div>
+    <div class="lang-pane" data-lang="python">
     <div class="code-block">
       <pre class="code-pre">def binary_search(arr, target):
     lo, hi = 0, len(arr) - 1
@@ -211,6 +257,106 @@
         elif arr[mid] &lt; target: lo = mid + 1
         else: hi = mid - 1
     return -1</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="javascript" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">function binarySearch(arr, target) {
+  let lo = 0, hi = arr.length - 1;
+  while (lo &lt;= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (arr[mid] === target) return mid;
+    else if (arr[mid] &lt; target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}</pre>
+    </div>
+    </div>
+    <div class="lang-pane" data-lang="java" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre">int binarySearch(int[] arr, int target) {
+    int lo = 0, hi = arr.length - 1;
+    while (lo &lt;= hi) {
+        int mid = lo + (hi - lo) / 2;  // overflow-safe
+        if (arr[mid] == target) return mid;
+        else if (arr[mid] &lt; target) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
+}</pre>
+    </div>
+    </div>
+          <div class="lang-pane" data-lang="cpp" style="display:none">
+    <div class="code-block">
+      <pre class="code-pre"><span class="kw">int</span> <span class="fn">binary_search</span>(<span class="kw">const</span> std::vector&lt;<span class="kw">int</span>&gt;&amp; arr, <span class="kw">int</span> target) {
+    <span class="kw">int</span> lo = <span class="nm">0</span>, hi = (<span class="kw">int</span>)arr.<span class="fn">size</span>() - <span class="nm">1</span>;
+    <span class="kw">while</span> (lo &lt;= hi) {
+        <span class="kw">int</span> mid = lo + (hi - lo) / <span class="nm">2</span>;   <span class="cm">// avoids overflow</span>
+        <span class="kw">if</span>      (arr[mid] == target) <span class="kw">return</span> mid;
+        <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; target)  lo = mid + <span class="nm">1</span>;
+        <span class="kw">else</span>                         hi = mid - <span class="nm">1</span>;
+    }
+    <span class="kw">return</span> -<span class="nm">1</span>;
+}</pre>
+    </div>
+    </div>
+  </div>
+
+  <div class="info-pane" id="tp-bs-quiz">
+    <div class="quiz-wrap">
+      <div class="quiz-q">1. What must be true of the array before binary search works?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It must contain no duplicates</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">It must be sorted</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Its length must be a power of two</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Nothing, it works on any array</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">2. Searching 1,000,000 sorted elements takes roughly how many comparisons?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1,000,000</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">1,000</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">About 20</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Exactly 2</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">3. <code>arr[mid]</code> is smaller than the target. What happens next?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,true)"><code>lo = mid + 1</code>, search the right half</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>hi = mid - 1</code>, search the left half</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)"><code>lo = mid</code>, keep mid in range</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Return -1, the target is absent</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">4. Why is <code>mid = lo + (hi - lo) // 2</code> preferred over <code>(lo + hi) // 2</code> in languages with fixed-width integers?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster to compute</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">It cannot overflow when lo and hi are both large</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It rounds up instead of down</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It handles unsorted input</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-wrap">
+      <div class="quiz-q">5. The loop ends with <code>lo &gt; hi</code>. What does that mean?</div>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The array was not sorted</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">The search space is empty, so the target is not present</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The target sits at index lo</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">The loop should restart from the beginning</button>
+      </div>
+      <div class="quiz-feedback"></div>
     </div>
   </div>
 
@@ -222,15 +368,15 @@
       <div class="pq-list" id="pql-binarysearch">
           <div class="pq-item" data-id="301" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/search-in-rotated-sorted-array/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,301,'binarysearch')"></button>
-              <span class="pq-num">#01</span><span class="pq-name">Search in Rotated Sorted</span><span class="pq-badge pq-pbc">Google</span>
+              <span class="pq-num">#01</span><span class="pq-name"><a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Search in Rotated Sorted</a></span><span class="pq-badge pq-pbc">Google</span>
           </div>
           <div class="pq-item" data-id="302" data-type="pbc" onclick="openQ(event,'https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,302,'binarysearch')"></button>
-              <span class="pq-num">#02</span><span class="pq-name">First and Last Position</span><span class="pq-badge pq-pbc">Meta</span>
+              <span class="pq-num">#02</span><span class="pq-name"><a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">First and Last Position</a></span><span class="pq-badge pq-pbc">Meta</span>
           </div>
           <div class="pq-item" data-id="303" data-type="startup" onclick="openQ(event,'https://leetcode.com/problems/search-insert-position/')">
               <button class="pq-done-toggle" onclick="toggleDone(event,303,'binarysearch')"></button>
-              <span class="pq-num">#03</span><span class="pq-name">Search Insert Position</span><span class="pq-badge pq-startup">Zomato</span>
+              <span class="pq-num">#03</span><span class="pq-name"><a href="https://leetcode.com/problems/search-insert-position/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" onclick="event.stopPropagation()">Search Insert Position</a></span><span class="pq-badge pq-startup">Zomato</span>
           </div>
       </div>
   </div>
@@ -247,11 +393,11 @@
   
   
   
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 document.addEventListener("DOMContentLoaded",function(){bsrReset();refreshProg("binarysearch");window.addEventListener('resize', bsrDraw);});
 
@@ -266,7 +412,13 @@ function bsrDraw() {
   let boxW = 44, gap = 6, pad = 4;
   let n = bsrArr.length;
   let cssH = 80;
-  let cssW = Math.max(cv.parentElement.clientWidth || 500, pad * 2 + n * boxW + (n - 1) * gap);
+  let cssW = cv.parentElement.clientWidth || 500;
+  // Shrink the cells to the space available rather than widening the canvas
+  // past its container, which is what forced a sideways scroll on a phone.
+  if (n) {
+    let need = pad * 2 + n * boxW + (n - 1) * gap;
+    if (need > cssW) boxW = Math.max(15, boxW - (need - cssW) / n);
+  }
   cv.width = cssW * dpr; cv.height = cssH * dpr;
   cv.style.width = cssW + 'px';
   let ctx = cv.getContext('2d');
@@ -347,14 +499,14 @@ window.bsrRun = async function(){
 
     if(bsrArr[mid]===target){
       bsrState[mid]='found'; bsrDraw();
-      document.getElementById('bsr-status').innerHTML = '<span style="color:var(--green)">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
+      document.getElementById('bsr-status').innerHTML = '<span style="color:#34d399">✓ Found '+target+' at index '+mid+' in '+steps+' steps!</span>';
       bsrOff=true; return;
     }
     else if(bsrArr[mid]<target){ lo=mid+1; }
     else { hi=mid-1; }
     await new Promise(r=>setTimeout(r, 400));
   }
-  document.getElementById('bsr-status').innerHTML = '<span style="color:var(--red)"><i class="ti ti-x"></i> '+target+' not found in array.</span>';
+  document.getElementById('bsr-status').innerHTML = '<span style="color:#f87171"><i class="ti ti-x"></i> '+target+' not found in array.</span>';
   bsrOff=true;
 }
 

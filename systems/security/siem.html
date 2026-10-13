@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+  <meta name="theme-color" content="#030508"/>
+  <title>SIEM &amp; Log Analysis — Security | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/systems/security/siem.html"/>
+  <meta property="og:title" content="SIEM &amp; Log Analysis — Security | TechForge"/>
+  <meta property="og:description" content="SIEM architecture, log sources and normalisation, detection rules, alert fatigue and tuning, and the SOC workflow."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=35" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+  <style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .compare-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+    @media (max-width: 600px) { .compare-strip { grid-template-columns: 1fr; } }
+    .cs-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .cs-head { padding: 10px 14px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .cs-ok { background: color-mix(in srgb, var(--accent) 8%, transparent); color: var(--accent); }
+    .cs-red { background: rgba(248,113,113,.08); color: var(--red); }
+    .cs-list { list-style: none; padding: 12px 14px; margin: 0; }
+    .cs-list li { font-size: 12.5px; color: var(--text2); margin-bottom: 6px; }
+    .cs-list li:last-child { margin-bottom: 0; }
+    .cs-list code { font-family: var(--mono); font-size: 11.5px; background: var(--bg2); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+    .lesson-diagram { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; margin: 18px 0; overflow-x: auto; }
+    .iq { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+    .iq q { display: block; font-weight: 700; font-size: 13.5px; color: var(--text); margin-bottom: 6px; }
+    .iq q::before { content: 'Q: '; color: var(--accent); }
+    .iq p { font-size: 12.5px; color: var(--text2); line-height: 1.7; margin: 0; }
+  </style>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="sys/sec-siem" data-section="systems">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../../roles/index.html">Roles</a>
+    <a class="tb-link" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn current" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../../devops/index.html">DevOps</a>
+        <a class="tb-more-item current" href="../../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../../data/index.html">Data</a>
+        <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="../../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+      <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Search topics…" autocomplete="off">
+      </div>
+      <a class="sb-link" href="index.html"><span class="sb-num">⬡</span> Security Roadmap</a>
+      <div class="sidebar-label" style="margin-top:16px">Security</div>
+      <a class="sb-link" href="fundamentals.html"><span class="sb-num">01</span> Security Fundamentals</a>
+      <a class="sb-link" href="crypto.html"><span class="sb-num">02</span> Cryptography Basics</a>
+      <a class="sb-link" href="authentication.html"><span class="sb-num">03</span> AuthN &amp; AuthZ</a>
+      <a class="sb-link" href="web-security.html"><span class="sb-num">04</span> Web Attacks (OWASP)</a>
+      <a class="sb-link" href="tls-pki.html"><span class="sb-num">05</span> TLS &amp; PKI</a>
+      <a class="sb-link" href="network-security.html"><span class="sb-num">06</span> Network Security</a>
+      <a class="sb-link" href="app-security.html"><span class="sb-num">07</span> Secure Development</a>
+      <a class="sb-link" href="incident-response.html"><span class="sb-num">08</span> Attacks &amp; Response</a>
+        <a class="sb-link" href="scanning.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Scanning &amp; Enumeration</a>
+        <a class="sb-link" href="pentesting.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Penetration Testing</a>
+        <a class="sb-link active" href="siem.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>SIEM &amp; Log Analysis</a>
+        <a class="sb-link" href="threat-intel.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Threat Intelligence</a>
+        <a class="sb-link" href="forensics.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Digital Forensics</a>
+        <a class="sb-link" href="compliance.html"><span class="sb-num"><i class="ti ti-shield-lock"></i></span>Compliance &amp; Frameworks</a>
+      <div class="sidebar-label" style="margin-top:20px">Other pillars</div>
+      <a class="sb-link" href="../os/index.html"><span class="sb-num">→</span> Operating Systems</a>
+      <a class="sb-link" href="../networking/index.html"><span class="sb-num">→</span> Networking</a>
+    </aside>
+        <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Security · Detection</div>
+        <h1 class="pg-title">SIEM &amp; <span>Log Analysis</span></h1>
+        <p class="pg-sub">Collecting the evidence, writing the detections, and keeping the alert queue small enough that someone reads it.</p>
+        <div class="pg-badges tf-learning-actions">
+          <span class="badge b-blue"><i class="ti ti-shield-lock"></i> Security</span>
+          <button type="button" class="lesson-btn" id="lessonBookmark"><i class="ti ti-star"></i> Save</button>
+          <button type="button" class="lesson-btn" id="lessonComplete">Mark complete</button>
+        </div>
+      </header>
+      <section class="py-section" id="sec-01">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-database"></i></span><h2 class="sec-title">One Place To Ask Questions</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">A SIEM — security information and event management — collects logs from across the estate, normalises them into a common shape, and lets you query and alert across all of them at once. Without one, an investigation means logging into fifteen systems and correlating timestamps by hand.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Function</th><th>Purpose</th></tr></thead><tbody><tr><td>Collection</td><td>Agents and forwarders pulling logs from everything</td></tr><tr><td>Normalisation</td><td>Different formats into common fields — user, source, action</td></tr><tr><td>Correlation</td><td>Rules across sources: a failed VPN login then a successful one elsewhere</td></tr><tr><td>Alerting</td><td>Turning a matched pattern into work for a human</td></tr><tr><td>Retention</td><td>Evidence still available months later, when you learn you were breached</td></tr></tbody></table></div>
+<div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Retention is the requirement people underestimate. Intrusions are frequently discovered months after the fact, and logs that rolled off after fourteen days make the investigation impossible.</span></div>
+      </section>
+      <section class="py-section" id="sec-02">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-file-info"></i></span><h2 class="sec-title">Log Sources That Earn Their Place</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">Ingesting everything is expensive and drowns the signal. The useful question for each source is which detection it enables.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Source</th><th>Detects</th></tr></thead><tbody><tr><td>Authentication and identity</td><td>Credential stuffing, impossible travel, privilege changes</td></tr><tr><td>Endpoint (EDR)</td><td>Malware, suspicious process trees, persistence</td></tr><tr><td>Network and DNS</td><td>Command and control, exfiltration, unusual destinations</td></tr><tr><td>Cloud control plane</td><td>New keys, policy changes, resources created in odd regions</td></tr><tr><td>Application logs</td><td>Business-logic abuse nothing else can see</td></tr><tr><td>Email gateway</td><td>Phishing — still the most common initial access</td></tr></tbody></table></div>
+<div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Log integrity matters as much as coverage. An attacker with administrative access will clear local logs, so forwarding to append-only storage the compromised host cannot edit is what preserves the evidence.</span></div>
+      </section>
+      <section class="py-section" id="sec-03">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-bell"></i></span><h2 class="sec-title">Detections &amp; Alert Fatigue</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">A detection is a rule that says this pattern is worth a human's attention. The whole craft is precision: an alert nobody can act on is worse than no alert, because it trains the team to close the queue without reading it.</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Detection type</th><th>Example</th></tr></thead><tbody><tr><td>Signature</td><td>A known malicious hash or domain</td></tr><tr><td>Threshold</td><td>Twenty failed logins in a minute</td></tr><tr><td>Correlation</td><td>Failed logins, then a success, then a new mailbox rule</td></tr><tr><td>Anomaly</td><td>A service account behaving unlike its baseline</td></tr><tr><td>Absence</td><td>A log source that stopped reporting — often the first sign</td></tr></tbody></table></div>
+<div class="callout callout-red"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><span>Alert fatigue is the dominant failure mode of security operations. A queue of 500 daily alerts at 90% false positive gets triaged by pattern-matching rather than reading, and the real one goes past unread. Tuning is not optional maintenance — it is the work.</span></div>
+<p class="prose">Every detection needs a written response: what it means, how to verify it, what to do if true, and what to check if false. A rule that fires with no runbook produces an alert nobody knows how to close.</p>
+      </section>
+      <section class="py-section" id="sec-04">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-users"></i></span><h2 class="sec-title">The SOC Workflow</h2></div>
+        <div class="section-divider"></div>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Stage</th><th>Question</th></tr></thead><tbody><tr><td>Triage</td><td>Is this real, and how urgent</td></tr><tr><td>Investigation</td><td>What else did this account or host do</td></tr><tr><td>Containment</td><td>Isolate, disable, block — stop it spreading</td></tr><tr><td>Eradication</td><td>Remove the access and close the way in</td></tr><tr><td>Recovery</td><td>Restore service, verify it is clean</td></tr><tr><td>Lessons learned</td><td>What detection would have caught this sooner</td></tr></tbody></table></div>
+<p class="prose">The metrics that matter are <strong>time to detect</strong> and <strong>time to contain</strong>. Alert volume and rule count measure activity, not effectiveness, and optimising for them makes the queue worse.</p>
+<div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Every incident should end by asking what detection would have caught it earlier, and then writing that detection. A SOC that does not convert incidents into rules relearns the same lesson every quarter.</span></div>
+      </section>
+      <section class="py-section" id="sec-05">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-search"></i></span><h2 class="sec-title">Threat Hunting</h2></div>
+        <div class="section-divider"></div>
+<p class="prose">Hunting is the deliberate search for what the detections missed — starting from a hypothesis rather than an alert. "If an attacker were using this technique, what would it look like in our logs?"</p>
+<div class="table-wrap"><table class="py-table"><thead><tr><th>Hunt starts from</th><th>Example</th></tr></thead><tbody><tr><td>A technique</td><td>Scheduled tasks used for persistence</td></tr><tr><td>An anomaly</td><td>A workstation talking to a cloud region nobody uses</td></tr><tr><td>Threat intelligence</td><td>Indicators tied to a group targeting your sector</td></tr><tr><td>A gap</td><td>An asset class with no detection coverage at all</td></tr></tbody></table></div>
+<p class="prose">Two outcomes are both successes: finding something, or finding nothing and converting the hunt into a permanent detection so it never has to be done manually again.</p>
+      </section>
+      <section class="py-section" id="sec-iq">
+        <div class="sec-header"><span class="sec-num">06</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Interview Questions</h2></div>
+        <div class="section-divider"></div>
+        <div class="iq"><q>What does a SIEM actually do?</q><p>Collects logs from across the estate, normalises them into common fields, correlates events across sources, raises alerts, and retains evidence long enough for an investigation months later.</p></div>
+        <div class="iq"><q>Why not ingest every log you have?</q><p>Cost and signal. Each source should justify itself by the detections it enables; ingesting everything drowns the useful events and inflates the bill.</p></div>
+        <div class="iq"><q>What is alert fatigue and why is it dangerous?</q><p>A queue so noisy that analysts triage by pattern rather than reading. The real alert passes unread — which is why tuning is the work rather than maintenance.</p></div>
+        <div class="iq"><q>Why alert on the absence of logs?</q><p>A source that stops reporting is often the first sign of a compromised host or a broken pipeline, and nothing else will notice it.</p></div>
+        <div class="iq"><q>Which SOC metrics matter?</q><p>Time to detect and time to contain. Alert volume and rule count measure activity, and optimising for them makes the queue worse.</p></div>
+        <div class="iq"><q>What is threat hunting?</q><p>Hypothesis-driven searching for what detections missed. Finding nothing is still a success if the hunt becomes a permanent detection.</p></div>
+      </section>
+      <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">&check;</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. The dominant failure mode of a SOC is…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Insufficient tooling</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Alert fatigue</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Log retention cost</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Too few rules</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. Logs should be forwarded off the host because…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It is faster</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">An attacker with admin can clear local logs</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">It saves disk</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Compliance requires it</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. A log source that goes silent should…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Be ignored</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">Raise an alert</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Be removed</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">Wait for review</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. Every detection rule needs…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A dashboard</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">A written response runbook</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A CVE reference</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">An owner in finance</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. Threat hunting starts from…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">An alert</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">A hypothesis</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A scan result</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">A ticket</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="pentesting.html">&larr; Penetration Testing</a>
+        <a class="nav-link next" href="threat-intel.html">Threat Intelligence &rarr;</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  <script src="../../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../../assets/js/site-index.js?v=26"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../../assets/js/utils.js?v=17"></script>
+  <script src="../../assets/js/platform.js?v=7"></script>
+<script>
+  window.addEventListener('scroll', function () {
+    var scrolled = window.scrollY, total = document.body.scrollHeight - window.innerHeight;
+    var f = document.getElementById('progressFill'); if (f) f.style.width = (scrolled / total * 100) + '%';
+    document.getElementById('backTop').classList.toggle('visible', scrolled > 300);
+  });
+  var sbLinks = document.querySelectorAll('.sb-link');
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) {
+      var a = document.querySelector('.sb-link[href="#' + e.target.id + '"]');
+      if (a) { sbLinks.forEach(function (l) { if (l.getAttribute('href') && l.getAttribute('href').startsWith('#')) l.classList.remove('active'); }); a.classList.add('active'); }
+    }});
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('.py-section').forEach(function (s) { obs.observe(s); });
+  function copyCode(btn) {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = 'COPIED!'; btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+</script>
+</body>
+</html>

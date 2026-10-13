@@ -25,9 +25,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 
-    <link href="../assets/css/forge_base.css?v=10" rel="stylesheet"/>
+    <link href="../assets/css/forge_base.css?v=35" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
-    <link href="../assets/css/platform.css?v=3" rel="stylesheet"/>
+    <link href="../assets/css/platform.css?v=5" rel="stylesheet"/>
 
     <style>
     :root { --accent: var(--green); --accent-dim: var(--green-dim); }
@@ -38,42 +38,18 @@
       padding: 72px 0 64px;
       overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 80% 20%, rgba(34,197,94,0.07), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(34,197,94,0.04), transparent 50%);
-      pointer-events: none;
-    }
-    /* Subtle grid texture */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(34,197,94,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,197,94,0.03) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 30%, transparent 100%);
-    }
+    .hero::before, .hero::after { content: none; }
     .hero-content {
       max-width: 820px;
-      margin: 0 auto;
-      text-align: center;
+      margin: 0;
+      text-align: left;
       position: relative;
       z-index: 1;
     }
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 16px; border-radius: 100px;
-      background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
-      color: var(--green); font-family: var(--mono); font-size: 11px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 28px;
-      animation: fadeSlideDown .5s ease both;
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--text3); font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 22px;
     }
     .hero-tag-dot {
       width: 6px; height: 6px; border-radius: 50%;
@@ -86,7 +62,7 @@
     }
     .hero-title {
       font-family: var(--display);
-      font-size: clamp(38px, 6vw, 62px);
+      font-size: clamp(28px, 5.5vw, 46px);
       font-weight: 700;
       line-height: 1.02;
       color: var(--text);
@@ -98,12 +74,12 @@
     .hero-title .dim { color: var(--text2); }
     .hero-sub {
       font-size: 16px; color: var(--text2);
-      max-width: 580px; margin: 0 auto 36px;
+      max-width: 580px; margin: 0 0 36px;
       line-height: 1.75;
       animation: fadeSlideDown .5s .2s ease both;
     }
     .hero-actions {
-      display: flex; justify-content: center; align-items: center;
+      display: flex; justify-content: flex-start; align-items: center;
       gap: 12px; flex-wrap: wrap;
       animation: fadeSlideDown .5s .3s ease both;
     }
@@ -171,18 +147,18 @@
     .prereq-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
     .prereq-body { flex: 1; }
     .prereq-title {
-      font-size: 13px; font-weight: 700; color: #fcd34d;
+      font-size: 13px; font-weight: 700; color: var(--amber);
       margin-bottom: 4px;
     }
     .prereq-text {
       font-size: 13px; color: var(--text2); line-height: 1.6;
     }
     .prereq-text a {
-      color: #fcd34d; font-weight: 600; text-decoration: none;
+      color: var(--amber); font-weight: 600; text-decoration: none;
       border-bottom: 1px solid rgba(247,204,69,0.3);
       transition: border-color .15s;
     }
-    .prereq-text a:hover { border-color: #fcd34d; }
+    .prereq-text a:hover { border-color: var(--amber); }
 
     /* ── SECTION ─────────────────────────────────────── */
     .py-section { padding: 0 0 56px; }
@@ -346,15 +322,22 @@
     }
     .compare-table tr:last-child td { border-bottom: none; }
     .compare-table tr:hover td { background: rgba(34,197,94,0.03); }
+    /* 20px of side padding inside an 81px column left ~41px for the text,
+       so the cell contents overhung the table on a phone. */
+    @media (max-width: 760px) {
+      .compare-table th, .compare-table td { padding: 8px 7px; font-size: 11.5px; }
+      .compare-table td:first-child { font-size: 11px; }
+      .td-best { font-size: 10px; padding: 2px 5px; }
+    }
     .compare-table td:first-child {
       font-family: var(--mono); font-size: 11.5px; font-weight: 700;
-      color: var(--text); white-space: nowrap;
+      color: var(--text); 
     }
     .td-best {
-      font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px;
+      font-size: 11px; max-width: 100%; overflow-wrap: anywhere; font-weight: 700; padding: 2px 8px; border-radius: 100px;
       background: rgba(34,197,94,0.1); color: var(--green);
       border: 1px solid rgba(34,197,94,0.2);
-      white-space: nowrap; display: inline-block; margin-top: 2px;
+      display: inline-block; margin-top: 2px;
     }
     .th-fw { display: flex; align-items: center; gap: 6px; }
 
@@ -369,7 +352,7 @@
     .bks-box:hover { background:rgba(34,197,94,.03); }
     .bks-box:hover::after { opacity:1; }
     .bks-val   { font-family:var(--font-mono); font-size:22px; font-weight:700; line-height:1; }
-    .bks-label { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); }
+    .bks-label { font-family:var(--font-mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text2); }
     .bks-sub   { font-size:10.5px; color:var(--text3); }
 
     /* ── TRUST BADGES ── */
@@ -400,7 +383,7 @@
     /* ── QUICK CODE PREVIEW ── */
     .fw-code { background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:8px; padding:10px 13px; margin:10px 0; overflow-x:auto; }
     .fw-code pre { margin:0; font-family:var(--font-mono); font-size:10.5px; line-height:1.65; color:var(--text2); }
-    .fkw  { color:#c792ea; } .ffn { color:#82aaff; } .fst { color:#c3e88d; } .fcm { color:#546e7a; font-style:italic; }
+    .fkw  { color:#c792ea; } .ffn { color:#82aaff; } .fst { color:#c3e88d; } .fcm { color:#7e93b5; font-style:italic; }
 
     /* ── DECISION GUIDE ── */
     .decision-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:32px; }
@@ -465,18 +448,34 @@
   </a>
   <nav class="tb-nav" id="topNav">
     <a class="tb-link" href="../index.html">Home</a>
+    <a class="tb-link" href="../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../roles/index.html">Roles</a>
+    <a class="tb-link" href="../programming/index.html">Programming</a>
     <a class="tb-link" href="../dsa/index.html">DSA</a>
-    <a class="tb-link current" href="./">System Design</a>
-    <a class="tb-link" href="../python/index.html">Python</a>
-    <a class="tb-link" href="../databases/index.html">Databases</a>
-    <a class="tb-link" href="../aiml/index.html">AI/ML</a>
-    <a class="tb-link" href="../interview/index.html">Interview Q&A</a>
-    <a class="tb-link" href="../devops/index.html">DevOps</a>
+    <a class="tb-link current" href="../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../data/index.html">Data</a>
+        <a class="tb-more-item" href="../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../games/index.html">Game Dev</a>
+      </div>
+    </div>
     <a class="tb-link" href="../about.html">About</a>
   </nav>
   <div class="topbar-actions">
-    <a class="theme-toggle" href="/roadmap.html" aria-label="Learning roadmaps" title="Learning roadmaps" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-route"></i></a>
-    <a class="theme-toggle" href="/dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <a class="theme-toggle" href="../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
     <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
   </div>
@@ -497,45 +496,66 @@
     <div class="tf-mobile-home-nav">
       <div class="tf-mhn-label">Navigate</div>
       <div class="tf-mhn-grid">
-        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon">⬡</span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
         <a class="tf-mhn-item" href="../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
-        <a class="tf-mhn-item" href="../python/index.html"><span class="tf-mhn-icon"><i class="ti ti-brand-python"></i></span><span class="tf-mhn-text">Python</span></a>
         <a class="tf-mhn-item" href="../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
-        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
-        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI/ML</span></a>
         <a class="tf-mhn-item" href="../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
-        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
       </div>
       <div class="tf-mhn-divider"></div>
     </div>
 
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" placeholder="Search topics…" type="text" autocomplete="off"/>
+    </div>
     <div class="sidebar-label">System Design</div>
-    <div class="sidebar-label" style="margin-top:4px;font-size:10px;opacity:.7">Fundamentals</div>
+    <div class="sidebar-label" style="margin-top:4px;font-size:10px;opacity:.85">Fundamentals</div>
     <a class="sb-link" href="fundamentals.html"><span class="sb-num"><i class="ti ti-ruler-2"></i></span>Fundamentals</a>
     <a class="sb-link" href="scalability.html"><span class="sb-num"><i class="ti ti-trending-up"></i></span>Scalability</a>
     <a class="sb-link" href="cap-theorem.html"><span class="sb-num"><i class="ti ti-scale"></i></span>CAP Theorem</a>
-    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.7">Traffic & Performance</div>
+    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.85">Traffic &amp; Performance</div>
     <a class="sb-link" href="load-balancing.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Load Balancing</a>
     <a class="sb-link" href="reverse-proxy.html"><span class="sb-num"><i class="ti ti-arrows-shuffle"></i></span>Reverse Proxy</a>
     <a class="sb-link" href="caching.html"><span class="sb-num"><i class="ti ti-device-floppy"></i></span>Caching</a>
     <a class="sb-link" href="cdn.html"><span class="sb-num"><i class="ti ti-world"></i></span>CDN</a>
     <a class="sb-link" href="rate-limiting.html"><span class="sb-num"><i class="ti ti-traffic-lights"></i></span>Rate Limiting</a>
     <a class="sb-link" href="api-gateway.html"><span class="sb-num"><i class="ti ti-door"></i></span>API Gateway</a>
-    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.7">Messaging & Events</div>
+    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.85">Messaging &amp; Events</div>
     <a class="sb-link" href="queues.html"><span class="sb-num"><i class="ti ti-mailbox"></i></span>Message Queues</a>
     <a class="sb-link" href="kafka.html"><span class="sb-num"><i class="ti ti-mail-fast"></i></span>Apache Kafka</a>
     <a class="sb-link" href="rabbitmq.html"><span class="sb-num"><i class="ti ti-carrot"></i></span>RabbitMQ</a>
     <a class="sb-link" href="event-driven.html"><span class="sb-num"><i class="ti ti-bolt"></i></span>Event-Driven</a>
-    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.7">Architecture Patterns</div>
+    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.85">Architecture Patterns</div>
     <a class="sb-link" href="microservices.html"><span class="sb-num"><i class="ti ti-puzzle"></i></span>Microservices</a>
     <a class="sb-link" href="monolith.html"><span class="sb-num"><i class="ti ti-building-bank"></i></span>Monolith</a>
     <a class="sb-link" href="distributed-systems.html"><span class="sb-num"><i class="ti ti-world"></i></span>Distributed Systems</a>
-    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.7">Data at Scale</div>
+    <div class="sidebar-label">Architecture Practice</div>
+    <a class="sb-link" href="patterns.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Design Patterns</a>
+    <a class="sb-link" href="ddd.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Domain-Driven Design</a>
+    <a class="sb-link" href="decisions.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Deciding &amp; Communicating</a>
+    <a class="sb-link" href="diagrams.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Diagramming &amp; C4</a>
+    <a class="sb-link" href="tradeoffs.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Trade-off Analysis</a>
+    <a class="sb-link" href="tech-debt.html"><span class="sb-num"><i class="ti ti-sitemap"></i></span>Managing Technical Debt</a>
+    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.85">Data at Scale</div>
     <a class="sb-link" href="consistency-models.html"><span class="sb-num"><i class="ti ti-link"></i></span>Consistency Models</a>
     <a class="sb-link" href="database-sharding.html"><span class="sb-num"><i class="ti ti-folders"></i></span>Database Sharding</a>
     <a class="sb-link" href="replication.html"><span class="sb-num"><i class="ti ti-checklist"></i></span>Replication</a>
     <a class="sb-link" href="partitioning.html"><span class="sb-num"><i class="ti ti-cut"></i></span>Partitioning</a>
-    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.7">Reliability</div>
+    <div class="sidebar-label" style="margin-top:12px;font-size:10px;opacity:.85">Reliability</div>
     <a class="sb-link" href="service-discovery.html"><span class="sb-num"><i class="ti ti-search"></i></span>Service Discovery</a>
     <a class="sb-link" href="high-availability.html"><span class="sb-num"><i class="ti ti-shield"></i></span>High Availability</a>
     <a class="sb-link" href="fault-tolerance.html"><span class="sb-num"><i class="ti ti-tool"></i></span>Fault Tolerance</a>
@@ -543,7 +563,6 @@
     <div class="sidebar-label" style="margin-top:20px;">On This Page</div>
     <a class="sb-link" href="#concepts"><span class="sb-num">00</span>Core Topics</a>
     <a class="sb-link" href="#prereq"><span class="sb-num">01</span>Prerequisites</a>
-    <a class="sb-link" href="#learning-path"><span class="sb-num">02</span>Learning Path</a>
     <a class="sb-link" href="#frameworks"><span class="sb-num">03</span>Backend Frameworks</a>
     <a class="sb-link" href="#comparison"><span class="sb-num">04</span>Comparison</a>
     <a class="sb-link" href="#pick"><span class="sb-num">05</span>Which to Pick?</a>
@@ -618,47 +637,20 @@
             comfortable with Python fundamentals — functions, classes, decorators, and
             virtual environments.
             <br/>
-            <a href="../python/index.html">→ Visit the Python guide to get up to speed</a>
+            <a href="../programming/python/index.html">→ Visit the Python guide to get up to speed</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="py-section" id="learning-path">
-      <div class="sec-header">
-        <span class="sec-icon"><i class="ti ti-map"></i></span>
-        <span class="sec-title">Recommended Learning Path</span>
-      </div>
-      <div class="section-divider"></div>
-      <p class="prose">New to backend? Follow this sequence. Each step builds on the previous one.</p>
-
-      <div class="path-grid">
-        <div class="path-step">
-          <div class="path-num">Step 01</div>
-          <div class="path-title">Python Fundamentals</div>
-          <div class="path-desc">Functions, classes, decorators, virtual environments, pip. These are the building blocks everything else depends on.</div>
-          <a href="../python/index.html" class="path-link">Python Guide <span>→</span></a>
-        </div>
-        <div class="path-step">
-          <div class="path-num">Step 02</div>
-          <div class="path-title">Start with Flask</div>
-          <div class="path-desc">Learn routing, templates, and request handling without magic. Flask forces you to understand every layer.</div>
-          <a href="flask.html" class="path-link">Flask Guide <span>→</span></a>
-        </div>
-        <div class="path-step">
-          <div class="path-num">Step 03</div>
-          <div class="path-title">Level Up with Django</div>
-          <div class="path-desc">ORM, admin panel, auth system — the full-featured framework for building production applications fast.</div>
-          <a href="django.html" class="path-link">Django Guide <span>→</span></a>
-        </div>
-        <div class="path-step">
-          <div class="path-num">Step 04</div>
-          <div class="path-title">APIs with FastAPI</div>
-          <div class="path-desc">Async, type-safe, auto-documented APIs. The modern choice for microservices and ML model serving.</div>
-          <a href="fastapi.html" class="path-link">FastAPI Guide <span>→</span></a>
-        </div>
-      </div>
-    </section>
+    <a class="rm-cta anim-in" href="../roadmaps/system-design.html" style="--rm-c:var(--green)">
+      <span class="rm-cta-icon"><i class="ti ti-sitemap" aria-hidden="true"></i></span>
+      <span class="rm-cta-body">
+        <span class="rm-cta-title">Open the System Design roadmap</span>
+        <span class="rm-cta-sub">Every topic here as one connected roadmap, from a single request through to data at scale.</span>
+      </span>
+      <span class="rm-cta-go">Explore &#8594;</span>
+    </a>
 
     <!-- FRAMEWORKS -->
     <section class="py-section" id="frameworks">
@@ -977,11 +969,11 @@ app = <span class="ffn">FastAPI</span>()
 
   
 
-<script src="../assets/js/topics-manifest.js?v=2"></script>
-  <script src="../assets/js/site-index.js?v=2"></script>
-<script src="../assets/js/search-modal.js?v=1" defer></script>
-  <script src="../assets/js/utils.js?v=5"></script>
-  <script src="../assets/js/platform.js?v=4"></script>
+<script src="../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../assets/js/site-index.js?v=26"></script>
+<script src="../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../assets/js/utils.js?v=17"></script>
+  <script src="../assets/js/platform.js?v=7"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     if (window.tfRenderHub) tfRenderHub('system-design', 'systemDesignHubTopics');

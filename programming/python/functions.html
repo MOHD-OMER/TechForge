@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('tf-theme')==='light')document.documentElement.classList.add('light');}catch(e){}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#030508"/>
+  <title>Python Functions — Recursion, Exceptions, File Handling | TechForge</title>
+  <link rel="canonical" href="https://techforge-dev.vercel.app/programming/python/functions.html"/>
+  <meta property="og:title" content="Python Functions — Recursion, Exceptions, File Handling | TechForge"/>
+  <meta property="og:description" content="Python Functions — theory, examples, interview prep, and best practices on TechForge."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://techforge-dev.vercel.app/assets/og-image.png?v=3"/>
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg"/>
+<link rel="manifest" href="../../manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="../../assets/css/forge_base.css?v=35" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css"/>
+    <link href="../../assets/css/platform.css?v=5" rel="stylesheet"/>
+  <link href="../../assets/css/lesson.css?v=3" rel="stylesheet"/>
+<style>
+    :root { --accent: var(--amber); --accent-dim: var(--amber-dim); }
+    .sub-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--text2); letter-spacing: .07em; text-transform: uppercase; margin: 28px 0 14px; }
+    .sub-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+</style>
+
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>
+</head>
+<body data-topic-id="py/functions" data-section="python">
+<a href="#mainContent" class="skip-link">Skip to content</a>
+  <header class="topbar">
+    <a class="tb-logo" href="../../index.html">
+      <div class="tb-logo-icon"><img src="../../assets/icon-192.png?v=3" width="18" height="18" alt="" style="border-radius:5px;display:block"/></div>
+      <span class="tb-logo-a">TECH</span><span class="tb-logo-b">FORGE</span>
+    </a>
+  <nav class="tb-nav" id="topNav">
+    <a class="tb-link" href="../../index.html">Home</a>
+    <a class="tb-link" href="../../roadmaps/index.html">Roadmaps</a>
+    <a class="tb-link" href="../../roles/index.html">Roles</a>
+    <a class="tb-link current" href="../../programming/index.html">Programming</a>
+    <a class="tb-link" href="../../dsa/index.html">DSA</a>
+    <a class="tb-link" href="../../system-design/index.html">System Design</a>
+    <a class="tb-link" href="../../interview/index.html">Interview</a>
+    <div class="tb-more" id="tbMore">
+      <button type="button" class="tb-link tb-more-btn" id="tbMoreBtn" aria-expanded="false" aria-controls="tbMoreMenu">More<span class="tb-more-chev" aria-hidden="true"><i class="ti ti-chevron-down"></i></span></button>
+      <div class="tb-more-menu" id="tbMoreMenu" aria-labelledby="tbMoreBtn">
+        <div class="tb-more-label">Core tracks</div>
+        <a class="tb-more-item" href="../../frontend/index.html">Frontend</a>
+        <a class="tb-more-item" href="../../backend/index.html">Backend</a>
+        <a class="tb-more-item" href="../../databases/index.html">Databases</a>
+        <a class="tb-more-item" href="../../devops/index.html">DevOps</a>
+        <a class="tb-more-item" href="../../systems/index.html">OS &amp; Networks</a>
+        <div class="tb-more-label">Specialisms</div>
+        <a class="tb-more-item" href="../../mobile/index.html">Mobile</a>
+        <a class="tb-more-item" href="../../blockchain/index.html">Blockchain</a>
+        <a class="tb-more-item" href="../../qa/index.html">QA &amp; Testing</a>
+        <a class="tb-more-item" href="../../data/index.html">Data</a>
+        <a class="tb-more-item" href="../../aiml/index.html">AI &amp; ML</a>
+        <a class="tb-more-item" href="../../games/index.html">Game Dev</a>
+      </div>
+    </div>
+    <a class="tb-link" href="../../about.html">About</a>
+  </nav>
+    <div class="topbar-actions">
+    <a class="theme-toggle" href="../../dashboard.html" aria-label="My progress" title="My progress" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center"><i class="ti ti-chart-donut"></i></a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">&#9789;</button>
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open section menu" aria-expanded="false">☰</button>
+  </div>
+  </header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="layout" id="mainContent">
+    <aside class="sidebar" id="sidebar">
+    <!-- Mobile section nav — only visible on mobile via CSS -->
+    <div class="tf-mobile-home-nav">
+      <div class="tf-mhn-label">Navigate</div>
+      <div class="tf-mhn-grid">
+        <a class="tf-mhn-item" href="../../index.html"><span class="tf-mhn-icon"><i class="ti ti-home"></i></span><span class="tf-mhn-text">Home</span></a>
+        <a class="tf-mhn-item" href="../../roadmaps/index.html"><span class="tf-mhn-icon"><i class="ti ti-route"></i></span><span class="tf-mhn-text">Roadmaps</span></a>
+        <a class="tf-mhn-item" href="../../roles/index.html"><span class="tf-mhn-icon"><i class="ti ti-briefcase"></i></span><span class="tf-mhn-text">Roles</span></a>
+        <a class="tf-mhn-item" href="../../programming/index.html"><span class="tf-mhn-icon"><i class="ti ti-code"></i></span><span class="tf-mhn-text">Programming</span></a>
+        <a class="tf-mhn-item" href="../../dsa/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-bar"></i></span><span class="tf-mhn-text">DSA</span></a>
+        <a class="tf-mhn-item" href="../../system-design/index.html"><span class="tf-mhn-icon"><i class="ti ti-building"></i></span><span class="tf-mhn-text">Sys Design</span></a>
+        <a class="tf-mhn-item" href="../../interview/index.html"><span class="tf-mhn-icon"><i class="ti ti-target"></i></span><span class="tf-mhn-text">Interview</span></a>
+        <a class="tf-mhn-item" href="../../frontend/index.html"><span class="tf-mhn-icon"><i class="ti ti-browser"></i></span><span class="tf-mhn-text">Frontend</span></a>
+        <a class="tf-mhn-item" href="../../backend/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-2"></i></span><span class="tf-mhn-text">Backend</span></a>
+        <a class="tf-mhn-item" href="../../databases/index.html"><span class="tf-mhn-icon"><i class="ti ti-database"></i></span><span class="tf-mhn-text">Databases</span></a>
+        <a class="tf-mhn-item" href="../../devops/index.html"><span class="tf-mhn-icon"><i class="ti ti-server-cog"></i></span><span class="tf-mhn-text">DevOps</span></a>
+        <a class="tf-mhn-item" href="../../systems/index.html"><span class="tf-mhn-icon"><i class="ti ti-cpu"></i></span><span class="tf-mhn-text">OS &amp; Networks</span></a>
+        <a class="tf-mhn-item" href="../../mobile/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-mobile"></i></span><span class="tf-mhn-text">Mobile</span></a>
+        <a class="tf-mhn-item" href="../../blockchain/index.html"><span class="tf-mhn-icon"><i class="ti ti-link"></i></span><span class="tf-mhn-text">Blockchain</span></a>
+        <a class="tf-mhn-item" href="../../qa/index.html"><span class="tf-mhn-icon"><i class="ti ti-checklist"></i></span><span class="tf-mhn-text">QA</span></a>
+        <a class="tf-mhn-item" href="../../data/index.html"><span class="tf-mhn-icon"><i class="ti ti-chart-donut"></i></span><span class="tf-mhn-text">Data</span></a>
+        <a class="tf-mhn-item" href="../../aiml/index.html"><span class="tf-mhn-icon"><i class="ti ti-robot"></i></span><span class="tf-mhn-text">AI &amp; ML</span></a>
+        <a class="tf-mhn-item" href="../../games/index.html"><span class="tf-mhn-icon"><i class="ti ti-device-gamepad-2"></i></span><span class="tf-mhn-text">Game Dev</span></a>
+        <a class="tf-mhn-item" href="../../about.html"><span class="tf-mhn-icon"><i class="ti ti-info-circle"></i></span><span class="tf-mhn-text">About</span></a>
+      </div>
+      <div class="tf-mhn-divider"></div>
+    </div>
+
+      <div class="search-wrap"><input class="search-input" id="searchInput" type="text" placeholder="Search topics…"></div>
+      <div class="sidebar-label">Other Python Topics</div>
+      <a class="sb-link" href="basics.html"><span class="sb-num">←</span> Basics</a>
+      <a class="sb-link" href="collections.html"><span class="sb-num">←</span> Collections</a>
+      <a class="sb-link" href="control.html"><span class="sb-num">←</span> Control Flow</a>
+      <div class="sidebar-label" style="margin-top:14px;">Functions &amp; I/O</div>
+      <a class="sb-link active" href="#sec-functions"><span class="sb-num">01</span> Functions</a>
+      <a class="sb-link" href="#sec-recursion"><span class="sb-num">02</span> Recursion</a>
+      <a class="sb-link" href="#sec-exceptions"><span class="sb-num">03</span> Exceptions</a>
+      <a class="sb-link" href="#sec-files"><span class="sb-num">04</span> File Handling</a>
+      <a class="sb-link" href="oop.html"><span class="sb-num">→</span> OOP</a>
+      <a class="sb-link" href="libraries.html"><span class="sb-num">→</span> Libraries</a>
+      <a class="sb-link" href="programs.html"><span class="sb-num">→</span> Programs</a>
+      <a class="sb-link" href="async.html"><span class="sb-num">→</span> Async / Await</a>
+    <a class="sb-link" href="modules.html"><span class="sb-num">•</span>Modules, Packages &amp; Project Layout</a>
+    </aside>
+    <main class="main">
+      <header class="pg-head">
+        <div class="pg-crumb">Python Functions &amp; I/O</div>
+        <h1 class="pg-title">Functions, Recursion &amp; <span>Error Handling</span></h1>
+        <p class="pg-sub">Learn to write reusable code, handle errors gracefully, and work with files in Python.</p>
+        <div class="pg-badges">
+          <span class="badge b-py"><i class="ti ti-brand-python"></i> Python 3</span>
+          <span class="badge b-green">✓ Essential</span>
+          <span class="badge b-blue">4 Topics</span>
+          <span class="badge b-amber"><i class="ti ti-flame"></i> Interview Key</span>
+        </div>
+      </header>
+      <section class="py-section" id="sec-functions">
+        <div class="sec-header"><span class="sec-num">01</span><span class="sec-icon"><i class="ti ti-settings"></i></span><h2 class="sec-title">Functions in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Functions</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="cm"># Default parameters</span>
+<span class="kw">def</span> <span class="fn">greet</span>(name=<span class="st">"Guest"</span>):
+    <span class="fn">print</span>(<span class="st">"Hello"</span>, name)
+
+<span class="cm"># *args — variable positional arguments</span>
+<span class="kw">def</span> <span class="fn">add_all</span>(*args):
+    <span class="kw">return</span> <span class="fn">sum</span>(args)
+
+<span class="cm"># **kwargs — keyword variable arguments</span>
+<span class="kw">def</span> <span class="fn">student_info</span>(**kwargs):
+    <span class="kw">for</span> k, v <span class="kw">in</span> kwargs.items():
+        <span class="fn">print</span>(k, <span class="st">":"</span>, v)
+
+<span class="cm"># Lambda (one-line function)</span>
+square = <span class="kw">lambda</span> x: x**<span class="nm">2</span></pre>
+        </div>
+        <div class="callout callout-green"><span class="callout-icon">✓</span><span><strong>print() vs return:</strong> <code>print()</code> displays output but can't be reused. <code>return</code> sends value back to the caller. Always prefer <code>return</code> in DSA functions.</span></div>
+      </section>
+
+      <section class="py-section" id="sec-scope">
+        <div class="sec-header"><span class="sec-num">02</span><span class="sec-icon"><i class="ti ti-box-multiple"></i></span><h2 class="sec-title">Scope, Namespaces &amp; Docstrings</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">A <strong>namespace</strong> is a mapping from names to objects. Python keeps several at once, and resolves a name by searching them in a fixed order known as <strong>LEGB</strong>: Local, then Enclosing, then Global, then Built-in.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — LEGB in action</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">x = <span class="st">'global'</span>          <span class="cm"># G</span>
+
+<span class="kw">def</span> <span class="fn">outer</span>():
+    x = <span class="st">'enclosing'</span>   <span class="cm"># E</span>
+    <span class="kw">def</span> <span class="fn">inner</span>():
+        x = <span class="st">'local'</span>   <span class="cm"># L</span>
+        <span class="fn">print</span>(x)      <span class="cm"># local wins</span>
+    <span class="fn">inner</span>()
+    <span class="fn">print</span>(x)          <span class="cm"># enclosing</span>
+
+<span class="fn">outer</span>()
+<span class="fn">print</span>(x)              <span class="cm"># global</span>
+<span class="fn">print</span>(<span class="fn">len</span>)            <span class="cm"># B — built-in, found last</span></pre>
+        </div>
+        <p class="prose">Assignment creates a local name, which is why reading a global then assigning to it raises <code>UnboundLocalError</code>. Two keywords opt out: <code>global</code> rebinds the module-level name, <code>nonlocal</code> rebinds the nearest enclosing one.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — global vs nonlocal</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre">count = <span class="st">0</span>
+
+<span class="kw">def</span> <span class="fn">bump</span>():
+    <span class="kw">global</span> count       <span class="cm"># without this: UnboundLocalError</span>
+    count += <span class="st">1</span>
+
+<span class="kw">def</span> <span class="fn">counter</span>():
+    n = <span class="st">0</span>
+    <span class="kw">def</span> <span class="fn">step</span>():
+        <span class="kw">nonlocal</span> n     <span class="cm"># rebinds counter's n, not a new local</span>
+        n += <span class="st">1</span>
+        <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">step</span></pre>
+        </div>
+        <div class="callout callout-amber"><span class="callout-icon"><i class="ti ti-alert-triangle"></i></span><div>Needing <code>global</code> is usually a design smell — it means a function is communicating through module state rather than arguments and return values. <code>nonlocal</code> is different: it is the ordinary way a closure keeps state.</div></div>
+        <p class="prose">A <strong>docstring</strong> is a string literal as the first statement of a module, class or function. Unlike a <code>#</code> comment it survives into the object as <code>__doc__</code>, which is what <code>help()</code>, IDE tooltips and documentation generators read.</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — docstrings</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">area</span>(radius):
+    <span class="st">"""Return the area of a circle.</span>
+
+<span class="st">    Args:</span>
+<span class="st">        radius: Distance from centre to edge, in metres.</span>
+
+<span class="st">    Returns:</span>
+<span class="st">        The area in square metres.</span>
+
+<span class="st">    Raises:</span>
+<span class="st">        ValueError: If radius is negative.</span>
+<span class="st">    """</span>
+    <span class="kw">if</span> radius &lt; <span class="st">0</span>:
+        <span class="kw">raise</span> <span class="fn">ValueError</span>(<span class="st">'radius must be non-negative'</span>)
+    <span class="kw">return</span> <span class="st">3.14159</span> * radius ** <span class="st">2</span>
+
+<span class="fn">help</span>(area)        <span class="cm"># prints the docstring</span>
+area.__doc__      <span class="cm"># the same text, as a string</span></pre>
+        </div>
+      </section>
+      <section class="py-section" id="sec-recursion">
+        <div class="sec-header"><span class="sec-num">03</span><span class="sec-icon"><i class="ti ti-spiral"></i></span><h2 class="sec-title">Recursion in Python</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose"><strong>Recursion</strong> — a function calls itself to solve a smaller version of the same problem. Every recursive function needs a <strong>Base Case</strong> and a <strong>Recursive Case</strong>.</p>
+        <div class="callout callout-red"><span class="callout-icon">!</span><span><strong>Without a base case → infinite recursion → stack overflow error!</strong></span></div>
+        <div class="sub-title">How Recursion Works (Step-by-Step)</div>
+        <p class="prose">For <code>factorial(3)</code>:</p>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Call Stack Visualization</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre">factorial(3) = 3 * factorial(2)
+             = 3 * 2 * factorial(1)
+             = 3 * 2 * 1
+             = 6
+
+<span class="cm"># Stack grows then shrinks:</span>
+<span class="cm"># Push: factorial(3) → factorial(2) → factorial(1)</span>
+<span class="cm"># Pop: returns 1 → 2 → 6</span></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — Recursion Examples</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">def</span> <span class="fn">factorial</span>(n):
+    <span class="kw">if</span> n == <span class="nm">1</span>: <span class="kw">return</span> <span class="nm">1</span>          <span class="cm"># Base case</span>
+    <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="nm">1</span>)   <span class="cm"># Recursive case</span>
+
+<span class="kw">def</span> <span class="fn">fibonacci</span>(n):
+    <span class="kw">if</span> n == <span class="nm">0</span>: <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">if</span> n == <span class="nm">1</span>: <span class="kw">return</span> <span class="nm">1</span>
+    <span class="kw">return</span> <span class="fn">fibonacci</span>(n-<span class="nm">1</span>) + <span class="fn">fibonacci</span>(n-<span class="nm">2</span>)
+
+<span class="kw">def</span> <span class="fn">sum_digits</span>(n):
+    <span class="kw">if</span> n == <span class="nm">0</span>: <span class="kw">return</span> <span class="nm">0</span>
+    <span class="kw">return</span> (n % <span class="nm">10</span>) + <span class="fn">sum_digits</span>(n // <span class="nm">10</span>)
+
+<span class="fn">print</span>(<span class="fn">sum_digits</span>(<span class="nm">1234</span>))  <span class="cm"># 10</span></pre>
+        </div>
+        <div class="sub-title">Recursion vs Iteration</div>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Aspect</th><th>Recursion</th><th>Iteration</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Approach</strong></td><td>Function calls itself</td><td>Loops (for, while)</td></tr>
+              <tr><td><strong>Memory</strong></td><td>Uses stack O(n)</td><td>More efficient O(1)</td></tr>
+              <tr><td><strong>Best For</strong></td><td>Trees, Graphs, Backtracking</td><td>Simple repetition</td></tr>
+              <tr><td><strong>Risk</strong></td><td>Stack overflow</td><td>Infinite loops</td></tr>
+              <tr><td><strong>Readability</strong></td><td>Cleaner for complex problems</td><td>Simpler for basic tasks</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sub-title">Common Recursion Interview Questions</div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Interview Questions</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+  <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+  <pre class="code-pre"><span class="cm"># 1. What is recursion?</span>
+A function calling itself to solve smaller subproblems.
+
+<span class="cm"># 2. Key components?</span>
+Base Case (stops) + Recursive Case (calls itself)
+
+<span class="cm"># 3. What happens without base case?</span>
+Stack Overflow Error (memory exhausted)
+
+<span class="cm"># 4. Time complexity?</span>
+Depends on number of recursive calls.
+Factorial: O(n), Fibonacci (naive): O(2ⁿ)
+
+<span class="cm"># 5. What is tail recursion?</span>
+Recursive call is LAST operation. Easier to optimize.
+Python does NOT optimize tail recursion.
+
+<span class="cm"># 6. What is memoization?</span>
+Caching results to avoid recomputation.
+Reduces Fibonacci from O(2ⁿ) to O(n).
+
+<span class="cm"># 7. When to avoid recursion?</span>
+- High memory usage risk
+- Stack overflow possible
+- Simple loop works better</pre>
+        </div>
+        <div class="callout callout-blue"><span class="callout-icon"><i class="ti ti-info-circle"></i></span><span>Recursion is heavily used in: tree traversal, DFS, binary search, merge sort, quick sort, and backtracking.</span></div>
+        <div class="callout callout-green"><span class="callout-icon"><i class="ti ti-bulb"></i></span><span><strong>Optimization Tip:</strong> Use Memoization to avoid repeated calculations. Essential for Fibonacci, climbing stairs, and other overlapping subproblem scenarios.</span></div>
+      </section>
+      <section class="py-section" id="sec-exceptions">
+        <div class="sec-header"><span class="sec-num">04</span><span class="sec-icon"><i class="ti ti-shield"></i></span><h2 class="sec-title">Exception Handling</h2></div>
+        <div class="section-divider"></div>
+        <p class="prose">Structure: <code>try → except → else → finally</code>. The <code>finally</code> block always runs — perfect for cleanup.</p>
+        <div class="table-wrap">
+          <table class="py-table">
+            <thead><tr><th>Exception</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>ZeroDivisionError</code></td><td>Dividing by zero</td></tr>
+              <tr><td><code>ValueError</code></td><td>Invalid value (e.g. <code>int("abc")</code>)</td></tr>
+              <tr><td><code>TypeError</code></td><td>Wrong data type</td></tr>
+              <tr><td><code>IndexError</code></td><td>Invalid list index</td></tr>
+              <tr><td><code>KeyError</code></td><td>Invalid dictionary key</td></tr>
+              <tr><td><code>FileNotFoundError</code></td><td>File does not exist</td></tr>
+              <tr><td><code>NameError</code></td><td>Variable not defined</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="py-section" id="sec-files">
+        <div class="sec-header"><span class="sec-num">05</span><span class="sec-icon"><i class="ti ti-folder"></i></span><h2 class="sec-title">File Handling in Python</h2></div>
+        <div class="section-divider"></div>
+        <div class="code-block">
+          <div class="code-hdr"><span class="code-lang">Python — File Handling</span>
+            <div class="code-dots"><div class="cd" style="background:#f87171"></div><div class="cd" style="background:#fbbf24"></div><div class="cd" style="background:#34d399"></div></div>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">COPY</button>
+          <pre class="code-pre"><span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.txt"</span>, <span class="st">"w"</span>) <span class="kw">as</span> file:
+    file.write(<span class="st">"Hello World\n"</span>)
+
+<span class="kw">with</span> <span class="fn">open</span>(<span class="st">"data.txt"</span>, <span class="st">"r"</span>) <span class="kw">as</span> file:
+    <span class="kw">for</span> line <span class="kw">in</span> file:
+        <span class="fn">print</span>(line.strip())
+
+<span class="cm"># File existence check</span>
+<span class="kw">import</span> os
+<span class="kw">if</span> os.path.exists(<span class="st">"data.txt"</span>):
+    os.remove(<span class="st">"data.txt"</span>)</pre>
+        </div>
+        <div class="callout callout-py"><span class="callout-icon"><i class="ti ti-bolt"></i></span><span>Always use the <strong><code>with</code> statement</strong> — it automatically closes the file even on errors, preventing memory leaks.</span></div>
+      </section>
+            <section class="py-section" id="sec-quiz">
+        <div class="sec-header"><span class="sec-num">✓</span><span class="sec-icon"><i class="ti ti-target"></i></span><h2 class="sec-title">Quick Quiz</h2></div>
+        <div class="section-divider"></div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">1. *args collects…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">keyword args dict</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">positional extras tuple</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only strings</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">global vars</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">2. **kwargs is a…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">tuple</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">list</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">dict of keyword args</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">set</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">3. Closure keeps access to…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">only globals</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">enclosing scope variables</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">builtins only</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">class attrs</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">4. @decorator syntax wraps…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">modules</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">the function defined below</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">imports</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">classes only</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      <div class="quiz-wrap">
+        <div class="quiz-q">5. lambda best suited for…</div>
+        <div class="quiz-opts">
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">multi-statement logic</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,true)">small anonymous one-liners</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">class definitions</button>
+        <button class="quiz-opt" onclick="quizAnswer(this,false)">file I/O</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+      </section>
+      <div class="page-nav">
+        <a class="nav-link" href="control.html">← Control Flow</a>
+        <a class="nav-link" href="oop.html">OOP →</a>
+      </div>
+    </main>
+  </div>
+  <button type="button" class="back-top" id="backTop" aria-label="Back to top">⬡</button>
+  
+  
+  
+  
+  <script src="../../assets/js/topics-manifest.js?v=19"></script>
+  <script src="../../assets/js/site-index.js?v=26"></script>
+<script src="../../assets/js/search-modal.js?v=2" defer></script>
+  <script src="../../assets/js/utils.js?v=17"></script>
+  <script src="../../assets/js/platform.js?v=7"></script>
+<script>
+    const pbar = document.getElementById('pbar') || document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      if (pbar) pbar.style.width = ((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100) + '%';
+      document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+    });
+    const sections = document.querySelectorAll('.py-section');
+    const sbLinks = document.querySelectorAll('.sb-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sbLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => observer.observe(s));
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      sbLinks.forEach(link => { link.style.display = (q && !link.textContent.toLowerCase().includes(q)) ? 'none' : 'flex'; });
+    });
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.textContent).then(() => {
+        btn.textContent = 'COPIED!'; btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1800);
+      });
+    }
+  </script>
+<script src="../../assets/js/pyrun.js?v=3" defer></script>
+</body>
+</html>
